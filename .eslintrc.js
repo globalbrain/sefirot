@@ -17,6 +17,7 @@ module.exports = {
   globals: {
     'describe': true,
     'expect': true,
+    'jest': true,
     'test': true
   },
   rules: {
