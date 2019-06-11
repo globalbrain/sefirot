@@ -17,6 +17,7 @@
           help="This is a help text."
           placeholder="Placeholder text."
           :validation="$v.form.input01"
+          :actions="actions"
           v-model="form.input01"
         />
       </div>
@@ -40,6 +41,11 @@ export default {
       form: {
         input01: ''
       },
+
+      actions: [
+        { type: 'secondary', label: 'RESET', callback: this.reset },
+        { type: 'primary', label: 'VALIDATE', callback: this.submit }
+      ],
 
       props: [
         {
@@ -68,7 +74,7 @@ export default {
           type: 'String',
           required: false,
           default: 'null',
-          description: 'The help text that will be displayed under the input. Usefull to add a little detailed information about the input.'
+          description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
         },
         {
           name: 'placeholder',
@@ -90,6 +96,13 @@ export default {
           required: false,
           default: 'null',
           description: 'You can pass Vuelidate validation object to let input display any errors.'
+        },
+        {
+          name: 'actions',
+          type: 'Array',
+          required: false,
+          default: 'null',
+          description: 'Adds action buttons after the input. The array should contain object with properties of `type`, `label`, and `callback`. `type` and `label` is same as "SButton" props, and `callback` should be a function which will be triggered when users clicks the button.'
         }
       ],
 
@@ -111,6 +124,18 @@ export default {
       input01: {
         required: Rules.required('The field is required.')
       }
+    }
+  },
+
+  methods: {
+    submit () {
+      this.$v.$touch()
+    },
+
+    reset () {
+      this.form.input01 = null
+
+      this.$v.$reset()
     }
   }
 }

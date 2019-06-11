@@ -17,16 +17,29 @@
         @input="emitInput"
         @blur="emitBlur"
       >
+
+      <div class="actions" v-if="actions">
+        <div class="action" :key="action.label" v-for="action in actions">
+          <SButton
+            :type="action.type"
+            size="large"
+            :label="action.label"
+            @click="action.callback"
+          />
+        </div>
+      </div>
     </div>
   </SInputBase>
 </template>
 
 <script>
 import Validation from '../../validation/Validation'
+import SButton from '../buttons/SButton'
 import SInputBase from './SInputBase'
 
 export default {
   components: {
+    SButton,
     SInputBase
   },
 
@@ -38,7 +51,8 @@ export default {
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: null },
     value: { type: [String, Number], default: null },
-    validation: { type: Object, default: null }
+    validation: { type: Object, default: null },
+    actions: { type: Array, default: null }
   },
 
   methods: {
@@ -64,8 +78,13 @@ export default {
   }
 }
 
+.container {
+  display: flex;
+}
+
 .input {
   display: block;
+  flex-grow: 1;
   border: 1px solid transparent;
   border-radius: 2px;
   padding: 11px 16px;
@@ -86,6 +105,17 @@ export default {
   &:focus {
     border-color: var(--c-black);
     background-color: var(--c-white);
+  }
+}
+
+.actions {
+  display: flex;
+  padding-left: 8px;
+}
+
+.action {
+  & + & {
+    padding-left: 8px;
   }
 }
 </style>
