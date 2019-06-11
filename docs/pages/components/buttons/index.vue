@@ -23,6 +23,8 @@ export default {
 
   head: {
     title: 'Buttons'
-  }
+  },
+
+  scrollToTop: true
 }
 </script>

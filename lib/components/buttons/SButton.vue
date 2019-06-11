@@ -48,7 +48,6 @@ export default {
   text-align: center;
   border: 1px solid transparent;
   border-radius: 2px;
-  width: 100%;
   min-width: 64px;
   font-size: 14px;
   transition: color .25s, border-color .25s, background-color .25s;
@@ -168,5 +167,6 @@ export default {
 
 .SButton.block {
   display: block;
+  width: 100%;
 }
 </style>

@@ -8,6 +8,9 @@
           <li class="nav-item">
             <nuxt-link class="nav-link" to="/components/buttons">Buttons</nuxt-link>
           </li>
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/components/inputs-text">Inputs: Text</nuxt-link>
+          </li>
         </ul>
       </nav>
 
@@ -36,6 +39,12 @@
 .nav-title {
   padding-bottom: 16px;
   color: var(--c-gray);
+}
+
+.nav-item {
+  & + & {
+    padding-top: 8px;
+  }
 }
 
 .nav-link {

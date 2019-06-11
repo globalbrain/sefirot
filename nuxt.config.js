@@ -42,5 +42,9 @@ export default {
     '@nuxtjs/dotenv'
   ],
 
+  plugins: [
+    '@/plugins/vuelidate.js'
+  ],
+
   loading: false
 }
