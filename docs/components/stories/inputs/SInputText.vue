@@ -140,19 +140,3 @@ export default {
   }
 }
 </script>
-
-<style lang="postcss" scoped>
-.group {
-  display: flex;
-}
-
-.input {
-  flex-shrink: 0;
-  width: calc((100% / 3) * 2);
-}
-
-.action {
-  flex-shrink: 0;
-  width: calc(100% / 1);
-}
-</style>
