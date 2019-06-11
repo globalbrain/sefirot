@@ -14,6 +14,11 @@ module.exports = {
   plugins: [
     'vue'
   ],
+  globals: {
+    'describe': true,
+    'expect': true,
+    'test': true
+  },
   rules: {
     'vue/attributes-order': 'off',
     'vue/component-name-in-template-casing': ['warn', 'PascalCase', {

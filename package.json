@@ -9,6 +9,9 @@
     "serve": "HOST=0.0.0.0 nuxt",
     "generate": "nuxt generate",
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "test:coverage": "jest --collect-coverage",
     "docs:deploy": "yarn generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "repository": {
@@ -26,15 +29,47 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.5",
     "@nuxtjs/dotenv": "^1.3.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.2",
+    "jest": "^24.8.0",
+    "jest-serializer-vue": "^2.0.2",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.8.1",
     "postcss-css-variables": "^0.12.0",
     "postcss-nested": "^4.1.2",
-    "push-dir": "^0.4.1"
+    "push-dir": "^0.4.1",
+    "vue": "^2.6.10",
+    "vue-jest": "^3.0.4",
+    "vue-loader": "^15.7.0",
+    "vue-server-renderer": "^2.6.10",
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.33.0",
+    "webpack-dev-server": "^3.7.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/lib/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-serializer-vue"
+    ],
+    "collectCoverageFrom": ["lib/**/*.{js,vue}", "!**/node_modules/**"]
   }
 }
