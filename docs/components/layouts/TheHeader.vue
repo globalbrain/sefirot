@@ -39,7 +39,7 @@ export default {
   display: flex;
   align-items: center;
   width: 102px;
-  height: 64px;
+  height: 96px;
 
   &:hover .logo-icon {
     fill: var(--c-gray);
