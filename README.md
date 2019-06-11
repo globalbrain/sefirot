@@ -1,6 +1,73 @@
 # Sefirot
 
-The Global Brain Design System Components.
+This repository contains Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
+
+The project is currently heavily under development and may drastically change while in progress.
+
+## Getting Started
+
+Install Sefirot via npm or yarn.
+
+```bash
+$ npm install @globalbrain/sefirot
+
+$ yarn add @globalbrain/sefirot
+```
+
+Now you may import components under `lib` directly and use them in your Vue Component.
+
+```vue
+<template>
+  <div>
+    <SButton label="BUTTON" />
+  </div>
+</template>
+
+<script>
+import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
+
+export default {
+  components: {
+    SButton
+  }
+}
+</script>
+```
+
+When compiling your project, don't forget to transpire the code. For example, in Nuxt, you should define the following settings at `nuxt.config.js`.
+
+```js
+export default {
+  // ...
+
+  build: {
+    transpile: ['@globalbrain/sefirot']
+  }
+
+  // ...
+}
+```
+
+Also, Sefirot assumes you have your CSS variables defined at `@/assets/styles/variables`. Make sure to copy styles to your project on the same location. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-css-variables`. Make sure to define them in your postcss config. Again for Nuxt, you should define:
+
+```js
+export default {
+  // ...
+
+  build: {
+    transpile: ['@globalbrain/sefirot'],
+
+    postcss: {
+      plugins: {
+        'postcss-nested': {},
+        'postcss-css-variables': {},
+      }
+    }
+  }
+
+  // ...
+}
+```
 
 ## Contribution
 
@@ -8,5 +75,7 @@ We're really excited that you are interested in contributing to Sefirot. Before 
 
 ### Code style guide
 
-> Every line of code should appear to be written by a single person, no matter the number of contributors.
+Sefirot follows official [Vue Style Guide](https://vuejs.org/v2/style-guide/). But always remember to follow the "Golden Rule" below.
+
+> Every line of code should appear to be written by a single person, no matter the number of contributors.  
 > &mdash; <cite>@mdo</cite>

@@ -1,9 +1,26 @@
 {
   "name": "@globalbrain/sefirot",
   "version": "0.1.0",
-  "private": true,
+  "description": "Attitude Is A Little Thing That Makes A Big Difference.",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:globalbrain/sefirot.git"
+  },
+  "keywords": [
+    "sefirot",
+    "vue",
+    "vue component"
+  ],
+  "author": "Kia Ishii",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
