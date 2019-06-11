@@ -8,7 +8,8 @@
   "scripts": {
     "serve": "HOST=0.0.0.0 nuxt",
     "generate": "nuxt generate",
-    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "docs:deploy": "yarn generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "normalize.css": "^8.0.1",
     "nuxt": "^2.8.1",
     "postcss-css-variables": "^0.12.0",
-    "postcss-nested": "^4.1.2"
+    "postcss-nested": "^4.1.2",
+    "push-dir": "^0.4.1"
   }
 }
