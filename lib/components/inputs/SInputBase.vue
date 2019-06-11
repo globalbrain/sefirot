@@ -56,7 +56,6 @@ export default {
 .label {
   display: block;
   padding-bottom: 8px;
-  padding-left: 2px;
   width: 100%;
   line-height: 20px;
   font-size: 14px;
@@ -76,7 +75,7 @@ export default {
 }
 
 .help-text {
-  padding: 4px 0 0 2px;
+  padding: 4px 0 0;
   line-height: 20px;
   font-size: 14px;
   color: var(--c-gray);
@@ -88,7 +87,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 4px 0 0 2px;
+  padding: 4px 0 0 0;
   line-height: 20px;
   font-size: 14px;
   color: var(--c-danger);

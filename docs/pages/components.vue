@@ -9,6 +9,9 @@
             <nuxt-link class="nav-link" to="/components/buttons">Buttons</nuxt-link>
           </li>
           <li class="nav-item">
+            <nuxt-link class="nav-link" to="/components/inputs-checkbox">Inputs: Checkbox</nuxt-link>
+          </li>
+          <li class="nav-item">
             <nuxt-link class="nav-link" to="/components/inputs-text">Inputs: Text</nuxt-link>
           </li>
           <li class="nav-item">
