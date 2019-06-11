@@ -37,6 +37,7 @@
     "babel-jest": "^24.8.0",
     "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
+    "codecov": "^3.5.0",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.2",
@@ -70,6 +71,12 @@
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
     ],
-    "collectCoverageFrom": ["lib/**/*.{js,vue}", "!**/node_modules/**"]
+    "collectCoverageFrom": [
+      "lib/**/*.{js,vue}",
+      "!**/node_modules/**"
+    ]
+  },
+  "dependencies": {
+    "css-loader": "^2.1.1"
   }
 }
