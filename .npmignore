@@ -1,3 +1,10 @@
+/.nuxt
+/coverage
+/dist
+/docs
+/test
 .*
+nuxt.config.js
+webpack.config.js
 yarn-debug.log*
 yarn-error.log*
