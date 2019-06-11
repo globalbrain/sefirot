@@ -11,6 +11,9 @@
           <li class="nav-item">
             <nuxt-link class="nav-link" to="/components/inputs-text">Inputs: Text</nuxt-link>
           </li>
+          <li class="nav-item">
+            <nuxt-link class="nav-link" to="/components/inputs-textarea">Inputs: Textarea</nuxt-link>
+          </li>
         </ul>
       </nav>
 
