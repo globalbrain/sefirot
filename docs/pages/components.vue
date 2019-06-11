@@ -28,7 +28,7 @@
 }
 
 .nav {
-  padding: 32px 48px 192px 0;
+  padding: 8px 48px 192px 0;
   flex-shrink: 0;
   width: 240px;
 }
