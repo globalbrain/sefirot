@@ -1,5 +1,17 @@
 # Sefirot
 
+<p>
+  <a href="https://travis-ci.org/globalbrain/sefirot">
+      <img src="https://travis-ci.org/globalbrain/sefirot.svg?branch=master" alt="Travis CI">
+  </a>
+  <a href="https://codecov.io/gh/globalbrain/sefirot">
+      <img src="https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg" alt="codecov">
+  </a>
+  <a href="https://github.com/globalbrain/sefirot/blob/master/LICENSE.md">
+      <img src="https://img.shields.io/npm/l/@globalbrain/sefirot.svg" alt="License">
+  </a>
+</p>
+
 This repository contains Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
 The project is currently heavily under development and may drastically change while in progress.
