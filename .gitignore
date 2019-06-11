@@ -1,3 +1,6 @@
+/.nuxt
+/dist
 /node_modules
+.env
 yarn-debug.log*
 yarn-error.log*

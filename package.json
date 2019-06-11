@@ -6,6 +6,8 @@
     "lib"
   ],
   "scripts": {
+    "serve": "HOST=0.0.0.0 nuxt",
+    "generate": "nuxt generate",
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "repository": {
@@ -23,9 +25,14 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.3.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-vue": "^5.2.2"
+    "eslint-plugin-vue": "^5.2.2",
+    "normalize.css": "^8.0.1",
+    "nuxt": "^2.8.1",
+    "postcss-css-variables": "^0.12.0",
+    "postcss-nested": "^4.1.2"
   }
 }
