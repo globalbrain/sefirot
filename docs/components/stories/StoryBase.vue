@@ -2,7 +2,7 @@
   <article class="StoryBase">
     <div class="header">
       <h1 class="name">{{ name }}</h1>
-      <p class="path">{{ path }}</p>
+      <p class="path" v-if="path">{{ path }}</p>
     </div>
 
     <div class="component">
@@ -49,7 +49,7 @@
 export default {
   props: {
     name: { type: String, required: true },
-    path: { type: String, required: true },
+    path: { type: String, default: null },
     props: { type: Array, default: null },
     events: { type: Array, default: null }
   }

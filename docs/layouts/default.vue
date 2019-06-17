@@ -7,17 +7,21 @@
     </div>
 
     <TheFooter />
+
+    <PortalSnackbars />
   </div>
 </template>
 
 <script>
 import TheHeader from '@/components/layouts/TheHeader'
 import TheFooter from '@/components/layouts/TheFooter'
+import PortalSnackbars from '@@/lib/components/portals/SPortalSnackbars'
 
 export default {
   components: {
     TheHeader,
-    TheFooter
+    TheFooter,
+    PortalSnackbars
   }
 }
 </script>
