@@ -10,6 +10,7 @@ describe('Store - Sefirot', () => {
       plugins: [Sefirot]
     })
 
+    expect(store.state.modal).toBeTruthy()
     expect(store.state.snackbars).toBeTruthy()
   })
 })

@@ -29,7 +29,7 @@ export default {
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: 'rgb(0, 0, 0)' },
       { rel: 'stylesheet', href: process.env.ADOBE_TYPEKIT },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Inconsolata&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto|Inconsolata&display=swap' }
     ]
   },
 
@@ -43,7 +43,8 @@ export default {
   ],
 
   plugins: [
-    '@/plugins/vuelidate.js'
+    '@/plugins/vuelidate.js',
+    '@/plugins/vue-thin-modal.js'
   ],
 
   loading: false
