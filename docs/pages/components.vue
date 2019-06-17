@@ -29,6 +29,7 @@ export default {
         { label: 'Inputs: Switches', path: '/components/inputs-switches' },
         { label: 'Inputs: Text', path: '/components/inputs-text' },
         { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
+        { label: 'Modals: Dialog', path: '/components/modals-dialog' },
         { label: 'Snackbars', path: '/components/snackbars' },
       ]
     }
