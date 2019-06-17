@@ -1,8 +1,8 @@
 <template>
   <div class="ComponentsInputsCheckbox u-story">
     <div class="u-story-content">
-      <h1>Inputs: Checkbox</h1>
-      <p>Checkbox let users toggle an item on and off.</p>
+      <h1>Inputs: Checkboxes</h1>
+      <p>Checkboxes allow the user to select one or more items from a set. Checkboxes can be used to turn an option on or off.</p>
 
       <section>
         <h2>Vue Component</h2>
@@ -22,7 +22,7 @@ export default {
   },
 
   head: {
-    title: 'Inputs: Checkbox'
+    title: 'Inputs: Checkboxes'
   },
 
   scrollToTop: true

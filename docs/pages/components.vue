@@ -5,17 +5,8 @@
         <p class="nav-title">Components</p>
 
         <ul class="nav-list">
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/components/buttons">Buttons</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/components/inputs-checkbox">Inputs: Checkbox</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/components/inputs-text">Inputs: Text</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/components/inputs-textarea">Inputs: Textarea</nuxt-link>
+          <li class="nav-item" :key="content.path" v-for="content in contents">
+            <nuxt-link class="nav-link" :to="content.path">{{ content.label }}</nuxt-link>
           </li>
         </ul>
       </nav>
@@ -26,6 +17,21 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data () {
+    return {
+      contents: [
+        { label: 'Buttons', path: '/components/buttons' },
+        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkbox' },
+        { label: 'Inputs: Text', path: '/components/inputs-text' },
+        { label: 'Inputs: Textarea', path: '/components/inputs-textarea' }
+      ]
+    }
+  }
+}
+</script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";

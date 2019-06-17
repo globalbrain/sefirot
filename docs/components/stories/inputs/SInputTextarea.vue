@@ -7,8 +7,8 @@
     :events="events"
   >
     <template #component>
-      <div class="section">
-        <p class="section-title">Filled Input</p>
+      <section>
+        <h3>Filled Input</h3>
 
         <SInputTextarea
           name="input01"
@@ -20,7 +20,7 @@
           :validation="$v.form.input01"
           v-model="form.input01"
         />
-      </div>
+      </section>
     </template>
   </StoryBase>
 </template>

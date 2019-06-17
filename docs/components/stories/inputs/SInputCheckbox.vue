@@ -7,8 +7,8 @@
     :events="events"
   >
     <template #component>
-      <div class="section">
-        <p class="section-title">Normal Checkbox</p>
+      <section>
+        <h3 class="section-title">Normal Checkbox</h3>
 
         <SInputCheckbox
           name="input01"
@@ -18,7 +18,7 @@
           help="This is a help text."
           v-model="form.input01"
         />
-      </div>
+      </section>
     </template>
   </StoryBase>
 </template>

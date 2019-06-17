@@ -7,8 +7,8 @@
     :events="events"
   >
     <template #component>
-      <div class="section">
-        <p class="section-title">Medium Buttons</p>
+      <section>
+        <h3>Medium Buttons</h3>
 
         <div class="list">
           <div class="item">
@@ -24,10 +24,10 @@
             <SButton label="MUTE" type="mute" />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section">
-        <p class="section-title">Large Buttons</p>
+      <section>
+        <h3>Large Buttons</h3>
 
         <div class="list">
           <div class="item">
@@ -43,10 +43,10 @@
             <SButton label="MUTE" type="mute" size="large" />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section section-dark">
-        <p class="section-title">Inverse Buttons</p>
+      <section class="dark">
+        <h3>Inverse Buttons</h3>
 
         <div class="list">
           <div class="item">
@@ -62,7 +62,7 @@
             <SButton label="MUTE" type="mute" :inverse="true" />
           </div>
         </div>
-      </div>
+      </section>
     </template>
   </StoryBase>
 </template>

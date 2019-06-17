@@ -81,17 +81,19 @@ export default {
 }
 
 .component {
-  .section {
+  section {
     margin: 48px 32px 48px;
+    border: 0;
+    padding: 0;
   }
 
-  .section-dark {
+  section.dark {
     margin: 0;
     padding: 48px 32px 48px;
     background-color: var(--c-black);
   }
 
-  .section-title {
+  h3 {
     padding-bottom: 16px;
     color: var(--c-gray);
   }
@@ -100,11 +102,12 @@ export default {
 .specs {
   margin: 0;
   border: 0;
-  padding: 48px 32px;
+  padding: 48px 32px 64px;
   background-color: var(--c-white-soft);
 
   & + & {
-    padding-top: 24px;
+    border-top: 1px solid var(--c-divider);
+    padding-top: 48px;
   }
 }
 
