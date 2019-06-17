@@ -7,6 +7,7 @@
       <section>
         <h2>Vue Component</h2>
 
+        <SInputCheckboxes />
         <SInputCheckbox />
       </section>
     </div>
@@ -15,10 +16,12 @@
 
 <script>
 import SInputCheckbox from '@/components/stories/inputs/SInputCheckbox'
+import SInputCheckboxes from '@/components/stories/inputs/SInputCheckboxes'
 
 export default {
   components: {
-    SInputCheckbox
+    SInputCheckbox,
+    SInputCheckboxes
   },
 
   head: {

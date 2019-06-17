@@ -5,6 +5,7 @@ describe('Components - Inputs - SInputCheckbox', () => {
   test('it emits `input` event when a user inputs the value', () => {
     const wrapper = mount(SInputCheckbox, {
       propsData: {
+        text: 'Checkbox text',
         value: false
       }
     })

@@ -9,7 +9,9 @@
     <div class="container">
       <div class="input" :class="{ on: value }" role="button" @click="emitChange">
         <div class="box">
-          <div class="check" />
+          <div class="check">
+            <SIconCheck class="check-icon" />
+          </div>
         </div>
 
         <p class="text">{{ text }}</p>
@@ -19,10 +21,12 @@
 </template>
 
 <script>
+import SIconCheck from '../icons/SIconCheck'
 import SInputBase from './SInputBase'
 
 export default {
   components: {
+    SIconCheck,
     SInputBase
   },
 
@@ -36,8 +40,8 @@ export default {
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
-    text: { type: String, default: null },
-    value: { type: Boolean, default: false }
+    text: { type: String, required: true },
+    value: { type: Boolean, required: true }
   },
 
   methods: {
@@ -71,6 +75,8 @@ export default {
 .input.on {
   .box {
     border-color: var(--c-black);
+    background-color: var(--c-black);
+    box-shadow: var(--shadow-depth-3);
   }
 
   .check {
@@ -81,23 +87,29 @@ export default {
 
 .box {
   position: relative;
-  border: 2px solid var(--c-gray);
+  border: 2px solid var(--c-gray-dark);
   border-radius: 2px;
   width: 18px;
   height: 18px;
-  transition: border-color .25s;
+  transition: border-color .25s, background-color .25s, box-shadow .25s;
 }
 
 .check {
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 10px;
-  height: 10px;
-  background-color: var(--c-black);
+  display: flex;
+  width: 16px;
+  height: 16px;
   opacity: 0;
   transform: scale(0);
   transition: opacity .25s, transform .1s;
+}
+
+.check-icon {
+  width: 10px;
+  height: 10px;
+  fill: var(--c-white);
 }
 
 .text {
