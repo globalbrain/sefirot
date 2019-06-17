@@ -18,6 +18,7 @@ export default {
     tag: { type: String, default: 'button' },
     to: { type: String, default: '/' },
     type: { type: String, default: 'primary' },
+    mode: { type: String, default: 'neutral' },
     size: { type: String, default: 'medium' },
     block: { type: Boolean, default: false },
     inverse: { type: Boolean, default: false }
@@ -30,6 +31,11 @@ export default {
         secondary: this.type === 'secondary',
         text: this.type === 'text',
         mute: this.type === 'mute',
+        neutral: this.mode === 'neutral',
+        info: this.mode === 'info',
+        success: this.mode === 'success',
+        warning: this.mode === 'warning',
+        danger: this.mode === 'danger',
         medium: this.size === 'medium',
         large: this.size === 'large',
         block: this.block,
@@ -58,23 +64,78 @@ export default {
   background-color: var(--c-black);
 
   &:hover {
-    background-color: rgba(0, 0, 0, .85);
+    background-color: rgba(0, 0, 0, .8);
   }
 
   &:active {
-    background-color: rgba(0, 0, 0, .75);
+    background-color: rgba(0, 0, 0, .7);
+  }
+
+  &.info {
+    background-color: var(--c-info);
+
+    &:hover  { background-color: var(--c-info-dark); }
+    &:active { background-color: var(--c-info-darker); }
+  }
+
+  &.success {
+    background-color: var(--c-success);
+
+    &:hover  { background-color: var(--c-success-dark); }
+    &:active { background-color: var(--c-success-darker); }
+  }
+
+  &.warning {
+    background-color: var(--c-warning);
+
+    &:hover  { background-color: var(--c-warning-dark); }
+    &:active { background-color: var(--c-warning-darker); }
+  }
+
+  &.danger {
+    background-color: var(--c-danger);
+
+    &:hover  { background-color: var(--c-danger-dark); }
+    &:active { background-color: var(--c-danger-darker); }
   }
 
   &.inverse {
     color: var(--c-black);
     background-color: var(--c-white);
 
-    &:hover {
-      background-color: rgba(255, 255, 255, .85);
+    &:hover  { background-color: rgba(255, 255, 255, .85); }
+    &:active { background-color: rgba(255, 255, 255, .75); }
+
+    &.info {
+      color: var(--c-white);
+      background-color: var(--c-info);
+
+      &:hover  { background-color: var(--c-info-dark); }
+      &:active { background-color: var(--c-info-darker); }
     }
 
-    &:active {
-      background-color: rgba(255, 255, 255, .75);
+    &.success {
+      color: var(--c-white);
+      background-color: var(--c-success);
+
+      &:hover  { background-color: var(--c-success-dark); }
+      &:active { background-color: var(--c-success-darker); }
+    }
+
+    &.warning {
+      color: var(--c-white);
+      background-color: var(--c-warning);
+
+      &:hover  { background-color: var(--c-warning-dark); }
+      &:active { background-color: var(--c-warning-darker); }
+    }
+
+    &.danger {
+      color: var(--c-white);
+      background-color: var(--c-danger);
+
+      &:hover  { background-color: var(--c-danger-dark); }
+      &:active { background-color: var(--c-danger-darker); }
     }
   }
 }

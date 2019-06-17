@@ -21,9 +21,17 @@
   --c-divider-dark: #454545;
 
   --c-info: #4681c4;
+  --c-info-dark: #3468a3;
+  --c-info-darker: #255489;
   --c-success: #00b489;
+  --c-success-dark: #068f6e;
+  --c-success-darker: #086b53;
   --c-warning: #f9a91e;
+  --c-warning-dark: #e0ad15;
+  --c-warning-darker: #bc9112;
   --c-danger: #ed3c50;
+  --c-danger-dark: #cd2d3f;
+  --c-danger-darker: #ab2131;
 
   /**
    * Typography

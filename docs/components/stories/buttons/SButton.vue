@@ -45,6 +45,28 @@
         </div>
       </section>
 
+      <section>
+        <h3>Button Modes</h3>
+
+        <div class="list">
+          <div class="item">
+            <SButton label="NEUTRAL" mode="neutral" />
+          </div>
+          <div class="item">
+            <SButton label="INFO" mode="info" />
+          </div>
+          <div class="item">
+            <SButton label="SUCCESS" mode="success" />
+          </div>
+          <div class="item">
+            <SButton label="WARNING" mode="warning" />
+          </div>
+          <div class="item">
+            <SButton label="DANGER" mode="danger" />
+          </div>
+        </div>
+      </section>
+
       <section class="dark">
         <h3>Inverse Buttons</h3>
 
@@ -60,6 +82,28 @@
           </div>
           <div class="item">
             <SButton label="MUTE" type="mute" :inverse="true" />
+          </div>
+        </div>
+      </section>
+
+      <section class="dark">
+        <h3>Inverse Modes</h3>
+
+        <div class="list">
+          <div class="item">
+            <SButton label="NEUTRAL" mode="neutral" :inverse="true" />
+          </div>
+          <div class="item">
+            <SButton label="INFO" mode="info" :inverse="true" />
+          </div>
+          <div class="item">
+            <SButton label="SUCCESS" mode="success" :inverse="true" />
+          </div>
+          <div class="item">
+            <SButton label="WARNING" mode="warning" :inverse="true" />
+          </div>
+          <div class="item">
+            <SButton label="DANGER" mode="danger" :inverse="true" />
           </div>
         </div>
       </section>
@@ -106,7 +150,14 @@ export default {
           type: 'String',
           required: false,
           default: '\'primary\'',
-          description: 'The mode of the button. Available types are: `primary`, `secondary`, `text`, and `mute`.'
+          description: 'The type of the button. Available types are: `primary`, `secondary`, `text`, and `mute`.'
+        },
+        {
+          name: 'mode',
+          type: 'String',
+          required: false,
+          default: '\'neutral\'',
+          description: 'The mode of the button. Available modes are: `neutral`, `info`, `success`, `warning`, and `danger`.'
         },
         {
           name: 'size',

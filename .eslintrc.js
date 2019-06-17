@@ -15,6 +15,7 @@ module.exports = {
     'vue'
   ],
   globals: {
+    'beforeAll': true,
     'describe': true,
     'expect': true,
     'jest': true,

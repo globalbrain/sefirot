@@ -8,9 +8,7 @@
     @closed="$emit('closed')"
   >
     <div class="SModalBase">
-      <div class="container">
-        <slot />
-      </div>
+      <slot />
     </div>
   </modal>
 </template>
@@ -36,16 +34,5 @@ export default {
   z-index: var(--z-index-backdrop);
   height: 100%;
   overflow: auto;
-}
-
-.container {
-  transition: opacity .25s, transform .25s;
-  transition-delay: .05;
-}
-
-.modal-content-enter .container,
-.modal-content-leave-to .container {
-  opacity: 0;
-  transform: translateY(8px);
 }
 </style>

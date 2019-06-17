@@ -1,6 +1,7 @@
 <template>
   <div class="SPortalModals">
     <SDialog />
+    <SAlert />
 
     <modal-portal />
   </div>
@@ -8,10 +9,12 @@
 
 <script>
 import SDialog from '../dialogs/SDialog'
+import SAlert from '../alerts/SAlert'
 
 export default {
   components: {
-    SDialog
+    SDialog,
+    SAlert
   },
 
   computed: {
