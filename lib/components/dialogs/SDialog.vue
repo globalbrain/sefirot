@@ -78,7 +78,7 @@ export default {
 
 .SDialog {
   margin: 48px 16px;
-  padding: 40px 32px;
+  padding: 32px;
   width: 100%;
   max-width: 512px;
   background-color: var(--c-white);

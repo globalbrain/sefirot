@@ -16,7 +16,6 @@
 <script>
 import TheHeader from '@/components/layouts/TheHeader'
 import TheFooter from '@/components/layouts/TheFooter'
-import HandlesModal from '@@/lib/mixins/HandlesModal'
 import SPortalModals from '@@/lib/components/portals/SPortalModals'
 import SPortalSnackbars from '@@/lib/components/portals/SPortalSnackbars'
 
@@ -26,9 +25,7 @@ export default {
     TheFooter,
     SPortalModals,
     SPortalSnackbars
-  },
-
-  mixins: [HandlesModal()]
+  }
 }
 </script>
 

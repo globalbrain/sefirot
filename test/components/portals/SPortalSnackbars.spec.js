@@ -9,7 +9,7 @@ localVue.use(Vuex)
 
 jest.useFakeTimers()
 
-describe('Components - Snackbars - SPortalSnackbars', () => {
+describe('Components - Portals - SPortalSnackbars', () => {
   test('it can handle snackbars', () => {
     const store = new Vuex.Store({
       modules: { snackbars }
