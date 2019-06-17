@@ -24,7 +24,8 @@ export default {
     return {
       contents: [
         { label: 'Buttons', path: '/components/buttons' },
-        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkbox' },
+        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
+        { label: 'Inputs: Radios', path: '/components/inputs-radios' },
         { label: 'Inputs: Text', path: '/components/inputs-text' },
         { label: 'Inputs: Textarea', path: '/components/inputs-textarea' }
       ]

@@ -1,6 +1,6 @@
 <template>
   <StoryBase
-    class="StorySInputCheckboxeses"
+    class="StorySInputCheckboxes"
     name="SInputCheckboxes"
     path="@globalbrain/sefirot/lib/components/inputs/SInputCheckboxes"
     :props="props"
@@ -14,7 +14,6 @@
           name="input01"
           label="Label"
           note="Note text"
-          text="Text for the checkbox"
           help="This is a help text."
           :options="options01"
           v-model="form.input01"
