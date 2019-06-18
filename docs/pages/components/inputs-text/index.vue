@@ -1,5 +1,5 @@
 <template>
-  <div class="ComponentsInputsText u-story">
+  <PageBase class="ComponentsInputsText u-story">
     <div class="u-story-content">
       <h1>Inputs: Text</h1>
       <p>Text input let users enter and edit single line text.</p>
@@ -10,14 +10,16 @@
         <SInputText />
       </section>
     </div>
-  </div>
+  </PageBase>
 </template>
 
 <script>
+import PageBase from '@/components/pages/PageBase'
 import SInputText from '@/components/stories/inputs/SInputText'
 
 export default {
   components: {
+    PageBase,
     SInputText
   },
 

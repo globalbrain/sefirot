@@ -12,7 +12,7 @@
       </nav>
 
       <div class="main">
-        <nuxt-child />
+        <nuxt-child :key="$route.path" />
       </div>
     </div>
   </div>

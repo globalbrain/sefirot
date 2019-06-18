@@ -1,5 +1,5 @@
 <template>
-  <div class="ComponentsInputsRadios u-story">
+  <PageBase class="ComponentsInputsRadios u-story">
     <div class="u-story-content">
       <h1>Inputs: Radios</h1>
       <p>Radio buttons allow the user to select one option from a set.</p>
@@ -10,14 +10,16 @@
         <SInputRadios />
       </section>
     </div>
-  </div>
+  </PageBase>
 </template>
 
 <script>
+import PageBase from '@/components/pages/PageBase'
 import SInputRadios from '@/components/stories/inputs/SInputRadios'
 
 export default {
   components: {
+    PageBase,
     SInputRadios
   },
 
