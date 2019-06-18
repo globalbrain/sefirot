@@ -24,6 +24,7 @@ export default {
     return {
       contents: [
         { label: 'Buttons', path: '/components/buttons' },
+        { label: 'Grids', path: '/components/grids' },
         { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
         { label: 'Inputs: Radios', path: '/components/inputs-radios' },
         { label: 'Inputs: Switches', path: '/components/inputs-switches' },
