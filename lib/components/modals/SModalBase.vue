@@ -7,7 +7,7 @@
     @before-close="$emit('before-close')"
     @closed="$emit('closed')"
   >
-    <div class="SModalBase">
+    <div class="SModalBase" @click="close">
       <slot />
     </div>
   </modal>
@@ -18,6 +18,12 @@ export default {
   props: {
     name: { type: String, required: true },
     closable: { type: Boolean, default: true }
+  },
+
+  methods: {
+    close () {
+      this.closable && this.$store.dispatch('modal/close')
+    }
   }
 }
 </script>

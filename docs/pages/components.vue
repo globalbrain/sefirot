@@ -31,7 +31,8 @@ export default {
         { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
         { label: 'Modals: Alert', path: '/components/modals-alert' },
         { label: 'Modals: Dialog', path: '/components/modals-dialog' },
-        { label: 'Snackbars', path: '/components/snackbars' },
+        { label: 'Modals: Window', path: '/components/modals-window' },
+        { label: 'Snackbars', path: '/components/snackbars' }
       ]
     }
   }

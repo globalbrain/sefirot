@@ -1,0 +1,163 @@
+<template>
+  <SModalBase
+    :name="name"
+    :closable="closable"
+    @before-open="$emit('before-open')"
+    @opened="$emit('opened')"
+    @before-close="$emit('before-close')"
+    @closed="$emit('closed')"
+  >
+    <div class="SWindow">
+      <button class="close" @click="close" v-if="closable">
+        <SIconX class="close-icon" />
+      </button>
+
+      <div class="header" v-if="showHeader">
+        <p class="title">{{ title }}</p>
+        <p class="lead" v-if="lead">{{ lead }}</p>
+      </div>
+
+      <div class="content">
+        <slot />
+      </div>
+
+      <div class="actions" v-if="actions">
+        <div class="action" :key="index" v-for="(action, index) in actions">
+          <SButton
+            :label="action.label"
+            :type="action.type"
+            :mode="action.mode"
+            size="large"
+            @click="action.callback"
+          />
+        </div>
+      </div>
+    </div>
+  </SModalBase>
+</template>
+
+<script>
+import SIconX from '../icons/SIconX'
+import SButton from '../buttons/SButton'
+import SModalBase from '../modals/SModalBase'
+
+export default {
+  components: {
+    SIconX,
+    SButton,
+    SModalBase
+  },
+
+  props: {
+    name: { type: String, required: true },
+    title: { type: String, default: null },
+    lead: { type: String, default: null },
+    actions: { type: Array, default: null },
+    closable: { type: Boolean, default: false }
+  },
+
+  computed: {
+    showHeader () {
+      return !!this.title
+    }
+  },
+
+  methods: {
+    close () {
+      this.$store.dispatch('window/close')
+    }
+  }
+}
+</script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.SWindow {
+  position: relative;
+  margin: 48px 24px;
+  max-width: 768px;
+  background-color: var(--c-white);
+  box-shadow: var(--shadow-depth-5);
+  transition: opacity .25s, transform .25s;
+  transition-delay: .05s;
+
+  @media (min-width: 768px) {
+    margin: 96px auto;
+  }
+}
+
+.modal-content-enter .SWindow,
+.modal-content-leave-to .SWindow {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+
+  &:hover .close-icon {
+    fill: var(--c-black);
+  }
+}
+
+.close-icon {
+  width: 16px;
+  height: 16px;
+  fill: var(--c-gray);
+  transition: fill .25s;
+}
+
+.header {
+  padding: 32px;
+  background-color: var(--c-white-soft);
+
+  @media (min-width: 768px) {
+    padding: 48px 64px 40px;
+  }
+}
+
+.title {
+  line-height: 32px;
+  text-align: center;
+  font-size: 24px;
+}
+
+.lead {
+  padding-top: 8px;
+  text-align: center;
+  color: var(--c-gray);
+}
+
+.content {
+  padding: 32px;
+
+  @media (min-width: 768px) {
+    padding: 48px 64px;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  padding: 32px;
+
+  @media (min-width: 768px) {
+    padding: 32px 64px 48px;
+  }
+}
+
+.action {
+  & + & {
+    padding-left: 16px;
+  }
+}
+</style>
