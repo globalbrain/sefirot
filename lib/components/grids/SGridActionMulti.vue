@@ -52,7 +52,7 @@ export default {
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.SGridActionSingle {
+.SGridActionMulti {
   position: relative;
   display: flex;
   justify-content: flex-end;
