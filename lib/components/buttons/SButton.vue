@@ -7,11 +7,20 @@
     role="button"
     @click="$emit('click')"
   >
-    {{ label }}
+    <span class="content">{{ label }}</span>
+
+    <transition name="fade">
+      <span class="loader" key="loading" v-if="loading">
+        <component :is="preloaderComponent" class="loader-icon" />
+      </span>
+    </transition>
   </component>
 </template>
 
 <script>
+import SIconPreloaderDark from '../icons/SIconPreloaderDark'
+import SIconPreloaderLight from '../icons/SIconPreloaderLight'
+
 export default {
   props: {
     label: { type: String, required: true },
@@ -21,7 +30,8 @@ export default {
     mode: { type: String, default: 'neutral' },
     size: { type: String, default: 'medium' },
     block: { type: Boolean, default: false },
-    inverse: { type: Boolean, default: false }
+    inverse: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false }
   },
 
   computed: {
@@ -39,8 +49,29 @@ export default {
         medium: this.size === 'medium',
         large: this.size === 'large',
         block: this.block,
-        inverse: this.inverse
+        inverse: this.inverse,
+        loading: this.loading
       }
+    },
+
+    preloaderComponent () {
+      if (this.mode !== 'neutral') {
+        return SIconPreloaderLight
+      }
+
+      if (!this.inverse && this.type === 'primary') {
+        return SIconPreloaderLight
+      }
+
+      if (!this.inverse && this.type !== 'primary') {
+        return SIconPreloaderDark
+      }
+
+      if (this.inverse && this.type === 'primary') {
+        return SIconPreloaderDark
+      }
+
+      return SIconPreloaderLight
     }
   }
 }
@@ -50,6 +81,7 @@ export default {
 @import "@/assets/styles/variables";
 
 .SButton {
+  position: relative;
   display: inline-block;
   text-align: center;
   border: 1px solid transparent;
@@ -57,6 +89,7 @@ export default {
   min-width: 64px;
   font-size: 14px;
   transition: color .25s, border-color .25s, background-color .25s;
+  overflow: hidden;
 }
 
 .SButton.primary {
@@ -229,5 +262,75 @@ export default {
 .SButton.block {
   display: block;
   width: 100%;
+}
+
+.SButton.loading {
+  &.primary {
+    &:hover  { background-color: var(--c-black); }
+    &:active { background-color: var(--c-black); }
+
+    &.info {
+      &:hover  { background-color: var(--c-info); }
+      &:active { background-color: var(--c-info); }
+    }
+
+    &.success {
+      &:hover  { background-color: var(--c-success); }
+      &:active { background-color: var(--c-success); }
+    }
+
+    &.warning {
+      &:hover  { background-color: var(--c-warning); }
+      &:active { background-color: var(--c-warning); }
+    }
+
+    &.danger {
+      &:hover  { background-color: var(--c-danger); }
+      &:active { background-color: var(--c-danger); }
+    }
+
+    &.inverse {
+      &:hover  { background-color: var(--c-white); }
+      &:active { background-color: var(--c-white); }
+    }
+  }
+
+  &.secondary,
+  &.text,
+  &.mute {
+    &:hover  { background-color: transparent; }
+    &:active { background-color: transparent; }
+  }
+
+  .content {
+    opacity: 0;
+    transform: scale(.9);
+  }
+}
+
+.content {
+  display: inline-block;
+  transition: opacity .25s, transform .25s;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+  transition: opacity .25s, transform .25s;
+}
+
+.loader.fade-enter,
+.loader.fade-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1.5);
+}
+
+.loader-icon {
+  width: 32px;
+  height: 32px;
 }
 </style>

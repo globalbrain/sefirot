@@ -67,6 +67,25 @@
         </div>
       </section>
 
+      <section>
+        <h3>Loading State</h3>
+
+        <div class="list">
+          <div class="item">
+            <SButton label="START LOAD" :loading="load01" @click="load('load01')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="secondary" :loading="load02" @click="load('load02')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="text" :loading="load03" @click="load('load03')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="mute" :loading="load04" @click="load('load04')" />
+          </div>
+        </div>
+      </section>
+
       <section class="dark">
         <h3>Inverse Buttons</h3>
 
@@ -107,6 +126,25 @@
           </div>
         </div>
       </section>
+
+      <section class="dark">
+        <h3>Loading State</h3>
+
+        <div class="list">
+          <div class="item">
+            <SButton label="START LOAD" :inverse="true" :loading="load05" @click="load('load05')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="secondary" :inverse="true" :loading="load06" @click="load('load06')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="text" :inverse="true" :loading="load07" @click="load('load07')" />
+          </div>
+          <div class="item">
+            <SButton label="START LOAD" type="mute" :inverse="true" :loading="load08" @click="load('load08')" />
+          </div>
+        </div>
+      </section>
     </template>
   </StoryBase>
 </template>
@@ -123,6 +161,15 @@ export default {
 
   data () {
     return {
+      load01: false,
+      load02: false,
+      load03: false,
+      load04: false,
+      load05: false,
+      load06: false,
+      load07: false,
+      load08: false,
+
       props: [
         {
           name: 'label',
@@ -188,6 +235,14 @@ export default {
           description: 'Fires when a user clicks the button.'
         }
       ]
+    }
+  },
+
+  methods: {
+    load (target) {
+      this[target] = true
+
+      setTimeout(() => { this[target] = false }, 5000)
     }
   }
 }
