@@ -44,6 +44,7 @@ export default {
 
   plugins: [
     '@/plugins/vuelidate.js',
+    '@/plugins/portal-vue.js',
     '@/plugins/vue-thin-modal.js'
   ],
 
