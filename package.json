@@ -1,7 +1,7 @@
 {
   "name": "@globalbrain/sefirot",
-  "version": "0.1.0",
-  "description": "Attitude Is A Little Thing That Makes A Big Difference.",
+  "version": "0.2.0",
+  "description": "Vue Components for Global Brain Design System.",
   "files": [
     "lib"
   ],
