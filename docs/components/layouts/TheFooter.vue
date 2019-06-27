@@ -2,7 +2,7 @@
   <div class="TheFooter">
     <div class="container">
       <p class="quote">We shape our buildings. Thereafter, they shape us.</p>
-      <p class="copyright">&copy; 2019 Global Brain Corporation</p>
+      <p class="copyright">&copy; 2019 <a class="link" href="https://globalbrains.com" target="_blank">Global Brain Corporation</a></p>
     </div>
   </div>
 </template>
@@ -25,5 +25,13 @@
   font-size: 12px;
   font-weight: 500;
   color: var(--c-gray);
+}
+
+.link {
+  transition: color .25s;
+
+  &:hover {
+    color: var(--c-black);
+  }
 }
 </style>
