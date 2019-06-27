@@ -1,11 +1,9 @@
 .u-story {
-  padding: 48px 0 192px;
+  margin: 0 auto;
+  max-width: 720px;
 }
 
 .u-story-content {
-  margin: 0 auto;
-  width: 720px;
-
   h1 {
     line-height: 56px;
     font-size: 48px;

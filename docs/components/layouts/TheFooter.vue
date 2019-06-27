@@ -10,13 +10,25 @@
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
+.TheFooter {
+  padding: 32px 24px;
+
+  @media (min-width: 375px) {
+    padding: 32px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 32px 48px;
+  }
+}
+
 .container {
   margin: 0 auto;
-  padding: 32px 0;
-  width: 960px;
+  max-width: 960px;
 }
 
 .quote {
+  line-height: 20px;
   font-size: 14px;
   font-weight: 500;
 }

@@ -251,10 +251,11 @@ export default {
 <style lang="postcss" scoped>
 .list {
   display: flex;
-  margin: 0 -8px;
+  flex-wrap: wrap;
+  margin: -8px;
 }
 
 .item {
-  padding: 0 8px;
+  padding: 8px;
 }
 </style>

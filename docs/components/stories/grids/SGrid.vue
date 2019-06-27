@@ -10,92 +10,106 @@
       <section>
         <h3>Basic Grid</h3>
 
-        <SGrid :columns="columns01" :records="records01" :clickable="false" #default="{ record }">
-          <p class="cell name-01">{{ record.name }}</p>
-          <p class="cell email-01">{{ record.email }}</p>
-          <p class="cell status-01">{{ record.status }}</p>
-        </SGrid>
+        <div class="holder">
+          <SGrid :columns="columns01" :records="records01" :clickable="false" #default="{ record }">
+            <p class="cell name-01">{{ record.name }}</p>
+            <p class="cell email-01">{{ record.email }}</p>
+            <p class="cell status-01">{{ record.status }}</p>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>Multi Items Grid</h3>
 
-        <SGrid :columns="columns02" :records="records02" :clickable="false" #default="{ record }">
-          <div class="cell name-02">
-            <p class="cell-main">{{ record.name }}</p>
-            <p class="cell-sub">{{ record.email }}</p>
-          </div>
-          <div class="cell company-02">
-            <p class="cell-main">{{ record.company }}</p>
-            <p class="cell-sub"><a href="#">{{ record.url }}</a></p>
-          </div>
-          <div class="cell status-02">
-            <p class="cell-main">{{ record.status }}</p>
-            <p class="cell-sub">{{ record.activated_at }}</p>
-          </div>
-        </SGrid>
+        <div class="holder">
+          <SGrid :columns="columns02" :records="records02" :clickable="false" #default="{ record }">
+            <div class="cell name-02">
+              <p class="cell-main">{{ record.name }}</p>
+              <p class="cell-sub">{{ record.email }}</p>
+            </div>
+            <div class="cell company-02">
+              <p class="cell-main">{{ record.company }}</p>
+              <p class="cell-sub"><a href="#">{{ record.url }}</a></p>
+            </div>
+            <div class="cell status-02">
+              <p class="cell-main">{{ record.status }}</p>
+              <p class="cell-sub">{{ record.activated_at }}</p>
+            </div>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>With Header</h3>
 
-        <SGrid :columns="columns03" :records="records03" :clickable="false">
-          <template #header>
-            <p class="title">Users</p>
-          </template>
+        <div class="holder">
+          <SGrid :columns="columns03" :records="records03" :clickable="false">
+            <template #header>
+              <p class="title">Users</p>
+            </template>
 
-          <template #default="{ record }">
-            <p class="cell name-03">{{ record.name }}</p>
-            <p class="cell email-03">{{ record.email }}</p>
-            <p class="cell value-03">{{ record.value }}</p>
-          </template>
-        </SGrid>
+            <template #default="{ record }">
+              <p class="cell name-03">{{ record.name }}</p>
+              <p class="cell email-03">{{ record.email }}</p>
+              <p class="cell value-03">{{ record.value }}</p>
+            </template>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>With Link Action</h3>
 
-        <SGrid :columns="columns04" :records="records04" actions="link" #default="{ record }">
-          <p class="cell name-04">{{ record.name }}</p>
-          <p class="cell email-04">{{ record.email }}</p>
-          <p class="cell value-04">{{ record.status }}</p>
-        </SGrid>
+        <div class="holder">
+          <SGrid :columns="columns04" :records="records04" actions="link" #default="{ record }">
+            <p class="cell name-04">{{ record.name }}</p>
+            <p class="cell email-04">{{ record.email }}</p>
+            <p class="cell value-04">{{ record.status }}</p>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>With Single Action</h3>
 
-        <SGrid :columns="columns05" :records="records05" :actions="actions05" #default="{ record }">
-          <p class="cell name-05">{{ record.name }}</p>
-          <p class="cell email-05">{{ record.email }}</p>
-          <p class="cell value-05">{{ record.status }}</p>
-        </SGrid>
+        <div class="holder">
+          <SGrid :columns="columns05" :records="records05" :actions="actions05" #default="{ record }">
+            <p class="cell name-05">{{ record.name }}</p>
+            <p class="cell email-05">{{ record.email }}</p>
+            <p class="cell value-05">{{ record.status }}</p>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>With Multi Actions</h3>
 
-        <SGrid :columns="columns06" :records="records06" :actions="actions06" #default="{ record }">
-          <p class="cell name-06">{{ record.name }}</p>
-          <p class="cell email-06">{{ record.email }}</p>
-          <p class="cell value-06">{{ record.status }}</p>
-        </SGrid>
+        <div class="holder">
+          <SGrid :columns="columns06" :records="records06" :actions="actions06" #default="{ record }">
+            <p class="cell name-06">{{ record.name }}</p>
+            <p class="cell email-06">{{ record.email }}</p>
+            <p class="cell value-06">{{ record.status }}</p>
+          </SGrid>
+        </div>
       </section>
 
       <section>
         <h3>Loading State</h3>
 
-        <SGrid :columns="columns07" :records="records07" :loading="loading07">
-          <template #header>
-            <SButton label="LOAD RECORDS" @click="load07" />
-          </template>
+        <div class="holder">
+          <SGrid :columns="columns07" :records="records07" :loading="loading07">
+            <template #header>
+              <SButton label="LOAD RECORDS" @click="load07" />
+            </template>
 
-          <template #default="{ record }">
-            <p class="cell name-07">{{ record.name }}</p>
-            <p class="cell email-07">{{ record.email }}</p>
-            <p class="cell value-07">{{ record.status }}</p>
-          </template>
-        </SGrid>
+            <template #default="{ record }">
+              <p class="cell name-07">{{ record.name }}</p>
+              <p class="cell email-07">{{ record.email }}</p>
+              <p class="cell value-07">{{ record.status }}</p>
+            </template>
+          </SGrid>
+        </div>
       </section>
     </template>
   </StoryBase>
@@ -282,6 +296,12 @@ export default {
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
+
+.holder {
+  margin: 0 -12px;
+  padding: 12px;
+  overflow-x: auto;
+}
 
 .SGrid >>> .name-01   { width: 128px; }
 .SGrid >>> .email-01  { width: 216px; }

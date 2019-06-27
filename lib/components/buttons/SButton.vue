@@ -7,7 +7,13 @@
     role="button"
     @click="$emit('click')"
   >
-    <span class="content">{{ label }}</span>
+    <span class="content">
+      <template v-if="icon">
+        <component :is="icon" class="icon" />
+      </template>
+
+      {{ label }}
+    </span>
 
     <transition name="fade">
       <span class="loader" key="loading" v-if="loading">
@@ -29,6 +35,7 @@ export default {
     type: { type: String, default: 'primary' },
     mode: { type: String, default: 'neutral' },
     size: { type: String, default: 'medium' },
+    icon: { type: Object, default: null },
     block: { type: Boolean, default: false },
     inverse: { type: Boolean, default: false },
     loading: { type: Boolean, default: false }
@@ -88,8 +95,9 @@ export default {
   border-radius: 2px;
   min-width: 64px;
   font-size: 14px;
-  transition: color .25s, border-color .25s, background-color .25s;
   overflow: hidden;
+  white-space: nowrap;
+  transition: color .25s, border-color .25s, background-color .25s;
 }
 
 .SButton.primary {
@@ -170,6 +178,14 @@ export default {
       &:hover  { background-color: var(--c-danger-dark); }
       &:active { background-color: var(--c-danger-darker); }
     }
+
+    .icon {
+      fill: var(--c-black);
+    }
+  }
+
+  .icon {
+    fill: var(--c-white);
   }
 }
 
@@ -196,6 +212,14 @@ export default {
     &:active {
       background-color: rgba(255, 255, 255, .25);
     }
+
+    .icon {
+      fill: var(--c-white);
+    }
+  }
+
+  .icon {
+    fill: var(--c-black);
   }
 }
 
@@ -220,6 +244,14 @@ export default {
     &:active {
       background-color: rgba(255, 255, 255, .25);
     }
+
+    .icon {
+      fill: var(--c-white);
+    }
+  }
+
+  .icon {
+    fill: var(--c-black);
   }
 }
 
@@ -246,6 +278,14 @@ export default {
       color: var(--c-white);
       background-color: rgba(255, 255, 255, .25);
     }
+
+    .icon {
+      fill: var(--c-gray);
+    }
+  }
+
+  .icon {
+    fill: var(--c-gray);
   }
 }
 
@@ -311,6 +351,13 @@ export default {
 .content {
   display: inline-block;
   transition: opacity .25s, transform .25s;
+}
+
+.icon {
+  margin-right: 6px;
+  width: 14px;
+  height: 14px;
+  transform: translateY(2px);
 }
 
 .loader {

@@ -21,11 +21,28 @@
       </div>
 
       <div class="specs-row" :key="index" v-for="(prop, index) in props">
-        <p class="specs-cell name">{{ prop.name }}</p>
-        <p class="specs-cell type">{{ prop.type }}</p>
-        <p class="specs-cell required">{{ prop.required ? 'Yes' : 'No' }}</p>
-        <p class="specs-cell default">{{ prop.default }}</p>
-        <p class="specs-cell description">{{ prop.description }}</p>
+        <div class="specs-record">
+          <div class="specs-cell name">
+            <p class="specs-label">NAME</p>
+            <p class="specs-value">{{ prop.name }}</p>
+          </div>
+          <div class="specs-cell type">
+            <p class="specs-label">TYPE</p>
+            <p class="specs-value">{{ prop.type }}</p>
+          </div>
+          <div class="specs-cell required">
+            <p class="specs-label">REQUIRED</p>
+            <p class="specs-value">{{ prop.required ? 'Yes' : 'No' }}</p>
+          </div>
+          <div class="specs-cell default">
+            <p class="specs-label">DEFAULT</p>
+            <p class="specs-value">{{ prop.default }}</p>
+          </div>
+          <div class="specs-cell description">
+            <p class="specs-label">DESCRIPTION</p>
+            <p class="specs-value">{{ prop.description }}</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -38,8 +55,16 @@
       </div>
 
       <div class="specs-row" :key="index" v-for="(event, index) in events">
-        <p class="specs-cell name">{{ event.name }}</p>
-        <p class="specs-cell description">{{ event.description }}</p>
+        <div class="specs-record">
+          <div class="specs-cell name">
+            <p class="specs-label">NAME</p>
+            <p class="specs-value">{{ event.name }}</p>
+          </div>
+          <div class="specs-cell description">
+            <p class="specs-label">DESCRIPTION</p>
+            <p class="specs-value">{{ event.description }}</p>
+          </div>
+        </div>
       </div>
     </section>
   </article>
@@ -60,12 +85,32 @@ export default {
 @import "@/assets/styles/variables";
 
 .StoryBase {
-  margin: 48px 0;
+  margin: 48px -12px;
   border: 1px solid var(--c-divider);
+
+  @media (min-width: 375px) {
+    margin: 48px -16px;
+  }
+
+  @media (min-width: 768px) {
+    margin: 48px -24px;
+  }
 }
 
 .header {
-  padding: 24px 32px 0;
+  padding: 24px 12px 0;
+
+  @media (min-width: 375px) {
+    padding: 24px 16px 0;
+  }
+
+  @media (min-width: 768px) {
+    padding: 24px 32px 0;
+  }
+
+  @media (min-width: 1056px) {
+    padding: 24px 48px 0;
+  }
 }
 
 .name {
@@ -74,23 +119,49 @@ export default {
 }
 
 .path {
-  padding-top: 0;
+  padding-top: 4px;
+  line-height: 20px;
   font-family: var(--font-family-mono);
   font-size: 14px;
   color: var(--c-gray);
+  word-break: break-all;
 }
 
 .component {
   section {
-    margin: 48px 32px 48px;
+    margin: 48px 12px;
     border: 0;
     padding: 0;
+
+    @media (min-width: 375px) {
+      margin: 48px 16px;
+    }
+
+    @media (min-width: 768px) {
+      margin: 48px 32px;
+    }
+
+    @media (min-width: 1056px) {
+      margin: 48px;
+    }
   }
 
   section.dark {
     margin: 0;
-    padding: 48px 32px 48px;
+    padding: 48px 12px;
     background-color: var(--c-black);
+
+    @media (min-width: 375px) {
+      padding: 48px 16px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 48px 32px;
+    }
+
+    @media (min-width: 1056px) {
+      padding: 48px;
+    }
   }
 
   h3 {
@@ -102,65 +173,128 @@ export default {
 .specs {
   margin: 0;
   border: 0;
-  padding: 48px 32px 64px;
+  padding: 48px 12px 64px;
   background-color: var(--c-white-soft);
 
   & + & {
     border-top: 1px solid var(--c-divider);
     padding-top: 48px;
   }
+
+  @media (min-width: 375px) {
+    padding: 48px 16px 64px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 48px 32px 64px;
+  }
+
+  @media (min-width: 1056px) {
+    padding: 48px 48px 64px;
+  }
 }
 
 .specs-title {
   margin: 0;
-  padding-bottom: 24px;
   line-height: 24px;
   font-size: 16px;
 }
 
 .specs-columns {
-  display: flex;
-  padding-bottom: 12px;
-}
+  display: none;
 
-.specs-column {
-  flex-shrink: 0;
-  font-size: 12px;
-  color: var(--c-gray);
-
-  & + & {
-    margin-left: 24px;
+  @media (min-width: 768px) {
+    display: flex;
+    border-bottom: 1px solid var(--c-divider);
+    padding-top: 24px;
+    padding-bottom: 12px;
   }
 }
 
-.specs-column.name        { width: 72px; }
-.specs-column.type        { width: 64px; }
-.specs-column.required    { width: 64px; }
-.specs-column.default     { width: 80px; }
-.specs-column.description { flex-grow: 1; }
+.specs-column {
+  font-size: 12px;
+  color: var(--c-gray);
+}
 
 .specs-row {
-  display: flex;
-  border-top: 1px solid var(--c-divider);
   padding-top: 16px;
 
   & + & {
-    margin-top: 16px;
+    border-top: 1px solid var(--c-divider);
+    margin-top: 24px;
+  }
+
+  @media (min-width: 768px) {
+    padding-top: 16px;
+
+    & + & {
+      margin-top: 16px;
+    }
+
+    .specs-record .specs-cell .specs-label {
+      display: none;
+    }
+  }
+}
+
+.specs-record {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -12px;
+
+  & + & {
+    border-top: 1px solid var(--c-divider);
+  }
+
+  @media (min-width: 375px) {
+    margin: 0 -16px;
+  }
+
+  @media (min-width: 768px) {
+    flex-wrap: nowrap;
+    margin: 0 -12px;
   }
 }
 
 .specs-cell {
   flex-shrink: 0;
-  font-size: 14px;
+  padding: 12px;
 
-  & + & {
-    margin-left: 24px;
+  @media (min-width: 375px) {
+    padding: 12px 16px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 0 12px;
   }
 }
 
-.specs-cell.name        { width: 72px; }
-.specs-cell.type        { width: 64px; }
-.specs-cell.required    { width: 64px; }
-.specs-cell.default     { width: 80px; }
-.specs-cell.description { flex-shrink: 1; flex-grow: 1; }
+.specs-label {
+  font-size: 12px;
+  color: var(--c-gray);
+}
+
+.specs-value {
+  font-size: 14px;
+}
+
+.specs-cell.name        { width: 96px; }
+.specs-cell.type        { width: 96px; }
+.specs-cell.required    { width: 96px; }
+.specs-cell.default     { width: 96px; }
+.specs-cell.description { width: 100%; }
+
+@media (min-width: 768px) {
+  .specs-column.name        { width: 96px; }
+  .specs-column.type        { width: 96px; }
+  .specs-column.required    { width: 80px; }
+  .specs-column.default     { width: 96px; }
+  .specs-column.description { flex-shrink: 1; flex-grow: 1; width: auto; }
+
+  .specs-cell.name        { width: 96px; }
+  .specs-cell.type        { width: 96px; }
+  .specs-cell.required    { width: 80px; }
+  .specs-cell.default     { width: 96px; }
+  .specs-cell.description { flex-shrink: 1; flex-grow: 1; width: auto; }
+}
 </style>

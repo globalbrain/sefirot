@@ -8,11 +8,11 @@
         <h3>Alerts</h3>
 
         <div class="actions">
-          <SButton class="button" mode="neutral" label="INFO" @click="openAlert01" />
-          <SButton class="button" mode="success" label="SUCCESS" @click="openAlert02" />
-          <SButton class="button" mode="warning" label="WARNING" @click="openAlert03" />
-          <SButton class="button" mode="danger" label="DANGER" @click="openAlert04" />
-          <SButton class="button" mode="danger" label="ERROR" @click="openAlert05" />
+          <div class="item"><SButton class="button" mode="neutral" label="INFO" @click="openAlert01" /></div>
+          <div class="item"><SButton class="button" mode="success" label="SUCCESS" @click="openAlert02" /></div>
+          <div class="item"><SButton class="button" mode="warning" label="WARNING" @click="openAlert03" /></div>
+          <div class="item"><SButton class="button" mode="danger" label="DANGER" @click="openAlert04" /></div>
+          <div class="item"><SButton class="button" mode="danger" label="ERROR" @click="openAlert05" /></div>
         </div>
       </section>
     </template>
@@ -99,9 +99,11 @@ export default {
 <style lang="postcss" scoped>
 .actions {
   display: flex;
+  flex-wrap: wrap;
+  margin: -8px;
 }
 
-.button + .button {
-  margin-left: 8px;
+.item {
+  padding: 8px;
 }
 </style>

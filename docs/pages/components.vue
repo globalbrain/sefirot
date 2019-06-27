@@ -1,15 +1,7 @@
 <template>
   <div class="Components">
     <div class="container">
-      <nav class="nav">
-        <p class="nav-title">Components</p>
-
-        <ul class="nav-list">
-          <li class="nav-item" :key="content.path" v-for="content in contents">
-            <nuxt-link class="nav-link" :to="content.path">{{ content.label }}</nuxt-link>
-          </li>
-        </ul>
-      </nav>
+      <SidebarNavigation />
 
       <div class="main">
         <nuxt-child :key="$route.path" />
@@ -19,24 +11,11 @@
 </template>
 
 <script>
+import SidebarNavigation from '@/components/pages/components/SidebarNavigation'
+
 export default {
-  data () {
-    return {
-      contents: [
-        { label: 'Buttons', path: '/components/buttons' },
-        { label: 'Grids', path: '/components/grids' },
-        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
-        { label: 'Inputs: Radios', path: '/components/inputs-radios' },
-        { label: 'Inputs: Switches', path: '/components/inputs-switches' },
-        { label: 'Inputs: Text', path: '/components/inputs-text' },
-        { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
-        { label: 'Modals: Alert', path: '/components/modals-alert' },
-        { label: 'Modals: Dialog', path: '/components/modals-dialog' },
-        { label: 'Modals: Window', path: '/components/modals-window' },
-        { label: 'Screens', path: '/components/screens' },
-        { label: 'Snackbars', path: '/components/snackbars' }
-      ]
-    }
+  components: {
+    SidebarNavigation
   }
 }
 </script>
@@ -44,40 +23,47 @@ export default {
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.container {
-  display: flex;
-  margin: 0 auto;
-  width: 960px;
-}
+.Components {
+  position: relative;
 
-.nav {
-  padding: 8px 48px 192px 0;
-  flex-shrink: 0;
-  width: 240px;
-}
+  @media (min-width: 768px) {
+    padding: 16px 0 0;
+  }
 
-.nav-title {
-  padding-bottom: 16px;
-  color: var(--c-gray);
-}
-
-.nav-item {
-  & + & {
-    padding-top: 8px;
+  @media (min-width: 1056px) {
+    padding: 0 48px 0;
   }
 }
 
-.nav-link {
-  transition: color .25s;
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 960px;
 
-  &:hover,
-  &.nuxt-link-active {
-    color: var(--c-gray);
+  @media (min-width: 1056px) {
+    display: flex;
   }
 }
 
 .main {
-  width: 720px;
+  flex-shrink: 0;
+  margin: 0 auto;
+  padding: 16px 24px 192px;
+  max-width: 816px;
+
+  @media (min-width: 375px) {
+    padding: 16px 32px 192px;
+  }
+
+  @media (min-width: 768px) {
+    padding: 16px 48px 192px;
+  }
+
+  @media (min-width: 1056px) {
+    padding: 0;
+    width: 720px;
+    max-width: 720px;
+  }
 }
 </style>
 

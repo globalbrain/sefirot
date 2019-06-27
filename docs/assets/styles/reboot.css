@@ -14,7 +14,7 @@ html {
 body {
   margin: 0;
   width: 100%;
-  min-width: 1056px;
+  min-width: 320px;
   min-height: 100vh;
   font-family: var(--font-family-base);
   letter-spacing: .4px;
@@ -122,7 +122,6 @@ a:not([href]):not([tabindex]) {
     outline: none;
   }
 }
-
 
 pre {
   margin: 0;
