@@ -41,7 +41,7 @@
     "css-loader": "^2.1.1",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
-    "eslint-plugin-vue": "^5.2.2",
+    "eslint-plugin-vue": "^5.2.3",
     "jest": "^24.8.0",
     "jest-serializer-vue": "^2.0.2",
     "normalize.css": "^8.0.1",
@@ -58,8 +58,8 @@
     "vue-template-compiler": "^2.6.10",
     "vue-thin-modal": "^1.3.0",
     "vuelidate": "^0.7.4",
-    "webpack": "^4.34.0",
-    "webpack-dev-server": "^3.7.1"
+    "webpack": "^4.35.0",
+    "webpack-dev-server": "^3.7.2"
   },
   "jest": {
     "moduleFileExtensions": [
