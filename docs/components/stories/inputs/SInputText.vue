@@ -21,12 +21,29 @@
           v-model="form.input01"
         />
       </section>
+
+      <section>
+        <h3>With Icon &amp; Clear Button</h3>
+
+        <div class="input">
+          <SInputText
+            name="input02"
+            label="Label"
+            placeholder="Placeholder text."
+            :icon="icon02"
+            :clearable="true"
+            @clear="form.input02 = ''"
+            v-model="form.input02"
+          />
+        </div>
+      </section>
     </template>
   </StoryBase>
 </template>
 
 <script>
 import Rules from '@@/lib/validation/rules/Rules'
+import SIconSearch from '@@/lib/components/icons/SIconSearch'
 import SInputText from '@@/lib/components/inputs/SInputText'
 import StoryBase from '@/components/stories/StoryBase'
 
@@ -39,13 +56,16 @@ export default {
   data () {
     return {
       form: {
-        input01: ''
+        input01: '',
+        input02: ''
       },
 
       actions: [
         { type: 'secondary', label: 'RESET', callback: this.reset },
         { type: 'primary', label: 'VALIDATE', callback: this.submit }
       ],
+
+      icon02: SIconSearch,
 
       props: [
         {
@@ -84,11 +104,18 @@ export default {
           description: 'The placeholder text for the input.'
         },
         {
-          name: 'value',
-          type: 'String | Number',
+          name: 'icon',
+          type: 'Object',
           required: false,
           default: 'null',
-          description: 'The value of the input. You may also use `v-model` to bind a value to the input.'
+          description: 'You may pass Vue Component (probably svg) to display icon in input field.'
+        },
+        {
+          name: 'clearable',
+          type: 'Boolean',
+          required: false,
+          default: 'false',
+          description: 'Show the "clear button" at end of input. If a user clicks the button, it fires `clear` event.'
         },
         {
           name: 'validation',
@@ -96,6 +123,13 @@ export default {
           required: false,
           default: 'null',
           description: 'You can pass Vuelidate validation object to let input display any errors.'
+        },
+        {
+          name: 'value',
+          type: 'String | Number',
+          required: false,
+          default: 'null',
+          description: 'The value of the input. You may also use `v-model` to bind a value to the input.'
         },
         {
           name: 'actions',
@@ -114,6 +148,10 @@ export default {
         {
           name: 'blur',
           description: 'Fires when a user blur focus from the filed.'
+        },
+        {
+          name: 'clear',
+          description: 'Fires when a user clicks the clear button. Only fires when `clearable` prop is seto to `true`.'
         }
       ]
     }
@@ -140,3 +178,11 @@ export default {
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.input {
+  max-width: 320px;
+}
+</style>

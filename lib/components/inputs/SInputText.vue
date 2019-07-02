@@ -8,15 +8,28 @@
     :validation="validation"
   >
     <div class="container">
-      <input
-        class="input"
-        :id="name"
-        :type="type"
-        :placeholder="placeholder"
-        :value="value"
-        @input="emitInput"
-        @blur="emitBlur"
-      >
+      <div class="box">
+        <input
+          class="input"
+          :class="{ 'has-icon': icon, 'is-clearable': clearable }"
+          :id="name"
+          :type="type"
+          :placeholder="placeholder"
+          :value="value"
+          ref="input"
+          @input="emitInput"
+          @blur="emitBlur"
+          @keypress.enter="emitEnter"
+        >
+
+        <div class="icon" role="button" @click="focus" v-if="icon">
+          <component :is="icon" class="icon-svg" />
+        </div>
+
+        <button class="clear" :class="{ show: showClearButton }" @click="clear" v-if="clearable">
+          <SIconX class="clear-svg" />
+        </button>
+      </div>
 
       <div class="actions" v-if="actions">
         <div class="action" :key="action.label" v-for="action in actions">
@@ -34,11 +47,13 @@
 
 <script>
 import Validation from '../../validation/Validation'
+import SIconX from '../icons/SIconX'
 import SButton from '../buttons/SButton'
 import SInputBase from './SInputBase'
 
 export default {
   components: {
+    SIconX,
     SButton,
     SInputBase
   },
@@ -50,12 +65,28 @@ export default {
     help: { type: String, default: null },
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: null },
-    value: { type: [String, Number], default: null },
+    icon: { type: Object, default: null },
+    clearable: { type: Boolean, default: false },
     validation: { type: Object, default: null },
+    value: { type: [String, Number], default: null },
     actions: { type: Array, default: null }
   },
 
+  computed: {
+    showClearButton () {
+      return this.value != null && this.value !== ''
+    }
+  },
+
   methods: {
+    focus () {
+      this.$refs.input.focus()
+    },
+
+    blur () {
+      this.$refs.input.blur()
+    },
+
     emitInput (e) {
       this.$emit('input', e.target.value)
     },
@@ -64,6 +95,16 @@ export default {
       Validation.touch(this.validation)
 
       this.$emit('blur', e.target.value)
+    },
+
+    emitEnter (e) {
+      this.blur()
+
+      this.$emit('enter', e.target.value)
+    },
+
+    clear () {
+      this.$emit('clear')
     }
   }
 }
@@ -82,9 +123,17 @@ export default {
   display: flex;
 }
 
+.box {
+  position: relative;
+  flex-grow: 1;
+
+  &:hover .input {
+    border-color: var(--c-gray);
+  }
+}
+
 .input {
   display: block;
-  flex-grow: 1;
   border: 1px solid transparent;
   border-radius: 2px;
   padding: 11px 16px;
@@ -98,14 +147,62 @@ export default {
     color: var(--c-gray);
   }
 
-  &:hover {
-    border-color: var(--c-gray);
-  }
-
   &:focus {
-    border-color: var(--c-black);
+    border-color: var(--c-black) !important;
     background-color: var(--c-white);
   }
+
+  &.has-icon {
+    padding-left: 40px;
+  }
+
+  &.is-clearable {
+    padding-right: 40px;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  cursor: text;
+}
+
+.icon-svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  fill: var(--c-gray-dark);
+}
+
+.clear {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity .25s;
+
+  &:hover .clear-svg {
+    fill: var(--c-gray);
+  }
+
+  &.show {
+    opacity: 1;
+  }
+}
+
+.clear-svg {
+  display: block;
+  width: 12px;
+  height: 12px;
+  fill: var(--c-black);
+  transition: fill .25s;
 }
 
 .actions {
