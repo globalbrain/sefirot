@@ -7,7 +7,8 @@
       <section>
         <h2>Vue Component</h2>
 
-        <SPlaceholder />
+        <SPlaceholderBlank />
+        <SPlaceholderImage />
       </section>
     </div>
   </PageBase>
@@ -15,12 +16,14 @@
 
 <script>
 import PageBase from '@/components/pages/PageBase'
-import SPlaceholder from '@/components/stories/placeholders/SPlaceholder'
+import SPlaceholderBlank from '@/components/stories/placeholders/SPlaceholderBlank'
+import SPlaceholderImage from '@/components/stories/placeholders/SPlaceholderImage'
 
 export default {
   components: {
     PageBase,
-    SPlaceholder
+    SPlaceholderBlank,
+    SPlaceholderImage
   },
 
   head: {

@@ -1,25 +1,19 @@
 <template>
-  <div class="SPlaceholderImage" :class="{ loaded }">
-    <div class="placeholder" :style="styles">
-      <div class="loader">
-        <div class="icon">
-          <SIconPreloaderDark class="icon-svg" />
-        </div>
-      </div>
+  <SPlaceholderBlank class="SPlaceholderImage" :loaded="loaded">
+    <div class="placeholder" :style="styles" />
 
-      <div class="img">
-        <img class="img-src" :src="img" :alt="alt" @load="load">
-      </div>
+    <div class="img">
+      <img class="img-src" :src="img" :alt="alt" @load="load">
     </div>
-  </div>
+  </SPlaceholderBlank>
 </template>
 
 <script>
-import SIconPreloaderDark from '../icons/SIconPreloaderDark'
+import SPlaceholderBlank from './SPlaceholderBlank'
 
 export default {
   components: {
-    SIconPreloaderDark
+    SPlaceholderBlank
   },
 
   props: {
@@ -70,29 +64,10 @@ export default {
   }
 }
 
-.loader {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: flex;
+.SPlaceholderImage >>> .loader {
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
   border: 1px solid var(--c-divider);
-}
-
-.icon {
-  width: 48px;
-  height: 48px;
-}
-
-.icon-svg {
-  display: block;
-  width: 48px;
-  height: 48px;
 }
 
 .img {

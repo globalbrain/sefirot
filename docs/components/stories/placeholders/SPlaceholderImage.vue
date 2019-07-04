@@ -1,6 +1,6 @@
 <template>
   <StoryBase
-    class="StorySPlaceholder"
+    class="StorySPlaceholderImage"
     name="SPlaceholderImage"
     path="@globalbrain/sefirot/lib/components/placeholders/SPlaceholderImage"
     :props="props"
@@ -8,7 +8,7 @@
   >
     <template #component>
       <section>
-        <h3>Medium Buttons</h3>
+        <h3>Image Placeholder</h3>
 
         <div class="image">
           <SPlaceholderImage
