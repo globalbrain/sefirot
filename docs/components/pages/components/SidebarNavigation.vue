@@ -52,6 +52,7 @@ export default {
         { label: 'Modals: Alert', path: '/components/modals-alert' },
         { label: 'Modals: Dialog', path: '/components/modals-dialog' },
         { label: 'Modals: Window', path: '/components/modals-window' },
+        { label: 'Placeholders', path: '/components/placeholders' },
         { label: 'Screens', path: '/components/screens' },
         { label: 'Snackbars', path: '/components/snackbars' }
       ],
