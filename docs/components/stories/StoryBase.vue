@@ -9,6 +9,12 @@
       <slot name="component" />
     </div>
 
+    <section class="specs" v-if="description">
+      <h2 class="specs-title">Description</h2>
+
+      <div class="desc" v-html="description" />
+    </section>
+
     <section class="specs" v-if="props">
       <h2 class="specs-title">Props</h2>
 
@@ -75,6 +81,7 @@ export default {
   props: {
     name: { type: String, required: true },
     path: { type: String, default: null },
+    description: { type: String, default: null },
     props: { type: Array, default: null },
     events: { type: Array, default: null }
   }
@@ -296,5 +303,39 @@ export default {
   .specs-cell.required    { width: 80px; }
   .specs-cell.default     { width: 96px; }
   .specs-cell.description { flex-shrink: 1; flex-grow: 1; width: auto; }
+}
+
+.desc {
+  padding-top: 24px;
+
+  & >>> section {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  & >>> p {
+    margin: 24px 0;
+
+    &:first-child {
+      margin: 0 0 24px;
+    }
+  }
+
+  & >>> pre {
+    margin: 24px 0;
+    border-radius: 2px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--c-white);
+    background-color: var(--c-black);
+  }
+
+  @media (min-width: 768px) {
+    & >>> pre {
+      margin: 0 -24px;
+      padding: 20px 24px;
+    }
+  }
 }
 </style>

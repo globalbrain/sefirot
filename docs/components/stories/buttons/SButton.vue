@@ -3,6 +3,7 @@
     class="StorySButton"
     name="SButton"
     path="@globalbrain/sefirot/lib/components/buttons/SButton"
+    :description="description"
     :props="props"
     :events="events"
   >
@@ -152,6 +153,7 @@
 <script>
 import SButton from '@@/lib/components/buttons/SButton'
 import StoryBase from '@/components/stories/StoryBase'
+import description from './_data/description.md'
 
 export default {
   components: {
@@ -169,6 +171,8 @@ export default {
       load06: false,
       load07: false,
       load08: false,
+
+      description,
 
       props: [
         {
@@ -226,6 +230,13 @@ export default {
           required: false,
           default: 'false',
           description: 'Inverse button theme.'
+        },
+        {
+          name: 'loading',
+          type: 'Boolean',
+          required: false,
+          default: 'false',
+          description: 'Show loading indicator.'
         }
       ],
 

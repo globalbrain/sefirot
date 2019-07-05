@@ -1,5 +1,6 @@
 @import "./variables";
 @import "./reboot";
+@import "./highlight";
 @import "./modal";
 @import "./screen";
 @import "./utilities";

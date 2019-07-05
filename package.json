@@ -31,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@nuxtjs/dotenv": "^1.3.0",
+    "@nuxtjs/markdownit": "^1.2.5",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.2",
@@ -45,6 +46,7 @@
     "eslint-plugin-vue": "^5.2.3",
     "jest": "^24.8.0",
     "jest-serializer-vue": "^2.0.2",
+    "markdown-it-highlight": "^0.2.0",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.8.1",
     "portal-vue": "^2.1.5",

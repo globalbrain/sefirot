@@ -1,5 +1,7 @@
 require('dotenv').config()
 
+import MarkdownItHighlight from 'markdown-it-highlight'
+
 export default {
   env: {
     app_env: process.env.APP_ENV
@@ -39,7 +41,8 @@ export default {
   ],
 
   modules: [
-    '@nuxtjs/dotenv'
+    '@nuxtjs/dotenv',
+    '@nuxtjs/markdownit'
   ],
 
   plugins: [
@@ -49,5 +52,9 @@ export default {
     '@/plugins/vue-thin-modal.js'
   ],
 
-  loading: false
+  loading: false,
+
+  markdownit: {
+    use: [MarkdownItHighlight]
+  }
 }
