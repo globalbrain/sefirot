@@ -112,11 +112,11 @@ export default {
   }
 
   @media (min-width: 768px) {
-    padding: 24px 32px 0;
+    padding: 32px 32px 0;
   }
 
   @media (min-width: 1056px) {
-    padding: 24px 48px 0;
+    padding: 48px 48px 0;
   }
 }
 
