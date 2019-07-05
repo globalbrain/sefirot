@@ -46,7 +46,7 @@ export default {
 </script>
 ```
 
-When compiling your project, don't forget to transpire the code. For example, in Nuxt, you should define the following settings at `nuxt.config.js`.
+When compiling your project, don't forget to transpile the code. For example, in Nuxt, you should define the following settings at `nuxt.config.js`.
 
 ```js
 export default {
