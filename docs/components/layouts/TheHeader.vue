@@ -1,10 +1,20 @@
 <template>
   <div class="TheHeader">
+    <TheHeaderNavScreen :open="isOpen" @close="close" />
+
     <div class="container">
       <div class="logo">
-        <nuxt-link class="logo-link" to="/">
+        <nuxt-link class="logo-link" to="/" @click.native="close">
           <IconSefirotH class="logo-icon" />
         </nuxt-link>
+      </div>
+
+      <div class="hamburger">
+        <IconHamburger color="black" :active="isOpen" @click="toggle" />
+      </div>
+
+      <div class="nav">
+        <TheHeaderNavBar />
       </div>
     </div>
   </div>
@@ -12,10 +22,32 @@
 
 <script>
 import IconSefirotH from '@/components/icons/IconSefirotH'
+import IconHamburger from '@/components/icons/IconHamburger'
+import TheHeaderNavScreen from './TheHeaderNavScreen'
+import TheHeaderNavBar from './TheHeaderNavBar'
 
 export default {
   components: {
-    IconSefirotH
+    IconSefirotH,
+    IconHamburger,
+    TheHeaderNavScreen,
+    TheHeaderNavBar
+  },
+
+  data () {
+    return {
+      isOpen: false
+    }
+  },
+
+  methods: {
+    close () {
+      setTimeout(() => { this.isOpen = false }, 150)
+    },
+
+    toggle () {
+      this.isOpen = !this.isOpen
+    }
   }
 }
 </script>
@@ -24,9 +56,15 @@ export default {
 @import "@/assets/styles/variables";
 
 .TheHeader {
-  padding: 0 24px;
+  position: relative;
+  z-index: var(--z-index-header);
+  padding: 0 0 0 24px;
 
   @media (min-width: 375px) {
+    padding: 0 8px 0 32px;
+  }
+
+  @media (min-width: 512px) {
     padding: 0 32px;
   }
 
@@ -36,7 +74,11 @@ export default {
 }
 
 .container {
+  position: relative;
+  z-index: var(--z-index-header);
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
   max-width: 960px;
 }
@@ -58,5 +100,22 @@ export default {
   height: 32px;
   fill: var(--c-black);
   transition: fill .25s;
+}
+
+.hamburger {
+  @media (min-width: 512px) {
+    display: none;
+  }
+}
+
+.nav {
+  display: none;
+  justify-content: flex-end;
+  flex-grow: 1;
+  width: 100%;
+
+  @media (min-width: 512px) {
+    display: flex;
+  }
 }
 </style>
