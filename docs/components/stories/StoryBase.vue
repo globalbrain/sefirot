@@ -172,7 +172,9 @@ export default {
   }
 
   h3 {
+    margin: 0;
     padding-bottom: 16px;
+    font-size: 16px;
     color: var(--c-gray);
   }
 }
@@ -203,6 +205,8 @@ export default {
 
 .specs-title {
   margin: 0;
+  border: 0;
+  padding: 0;
   line-height: 24px;
   font-size: 16px;
   font-weight: 700;

@@ -144,6 +144,7 @@ export default {
 
   .cell {
     flex-shrink: 0;
+    margin: 0;
     padding: 0 16px;
     line-height: 20px;
     font-size: 14px;
@@ -162,6 +163,7 @@ export default {
   }
 
   .cell-main {
+    margin: 0;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -169,6 +171,7 @@ export default {
   }
 
   .cell-sub {
+    margin: 0;
     width: 100%;
     font-size: 12px;
     color: var(--c-gray);

@@ -1,25 +1,16 @@
-<template>
-  <PageBase class="ComponentsInputsDates u-story">
-    <div class="u-story-content">
-      <h1>Inputs: Date</h1>
-      <p>Dates input let users enter and edit year, month, and date.</p>
+<template lang="md">
+# Inputs: Date
 
-      <section>
-        <h2>Vue Component</h2>
+Dates input let users enter and edit year, month, and date.
 
-        <SInputDate />
-      </section>
-    </div>
-  </PageBase>
+<SInputDate />
 </template>
 
 <script>
-import PageBase from '@/components/pages/PageBase'
 import SInputDate from '@/components/stories/inputs/SInputDate'
 
 export default {
   components: {
-    PageBase,
     SInputDate
   },
 

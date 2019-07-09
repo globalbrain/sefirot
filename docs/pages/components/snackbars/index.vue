@@ -1,25 +1,16 @@
-<template>
-  <PageBase class="ComponentsSnackbars u-story">
-    <div class="u-story-content">
-      <h1>Snackbars</h1>
-      <p>Snackbars provide brief messages about app processes at the bottom of the screen.</p>
+<template lang="md">
+# Snackbars
 
-      <section>
-        <h2>Vue Component</h2>
+Snackbars provide brief messages about app processes at the bottom of the screen.
 
-        <SSnackbar />
-      </section>
-    </div>
-  </PageBase>
+<SSnackbar />
 </template>
 
 <script>
-import PageBase from '@/components/pages/PageBase'
 import SSnackbar from '@/components/stories/snackbars/SSnackbar'
 
 export default {
   components: {
-    PageBase,
     SSnackbar
   },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="Components">
+  <div class="Mixins">
     <div class="container">
       <SidebarNavigation :contents="contents" />
 
@@ -23,20 +23,7 @@ export default {
   data () {
     return {
       contents: [
-        { label: 'Buttons', path: '/components/buttons' },
-        { label: 'Grids', path: '/components/grids' },
-        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
-        { label: 'Inputs: Dates', path: '/components/inputs-dates' },
-        { label: 'Inputs: Radios', path: '/components/inputs-radios' },
-        { label: 'Inputs: Switches', path: '/components/inputs-switches' },
-        { label: 'Inputs: Text', path: '/components/inputs-text' },
-        { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
-        { label: 'Modals: Alert', path: '/components/modals-alert' },
-        { label: 'Modals: Dialog', path: '/components/modals-dialog' },
-        { label: 'Modals: Window', path: '/components/modals-window' },
-        { label: 'Placeholders', path: '/components/placeholders' },
-        { label: 'Screens', path: '/components/screens' },
-        { label: 'Snackbars', path: '/components/snackbars' }
+        { label: 'Form', path: '/mixins/form' }
       ]
     }
   }
@@ -46,7 +33,7 @@ export default {
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.Components {
+.Mixins {
   position: relative;
 
   @media (min-width: 768px) {

@@ -1,27 +1,18 @@
-<template>
-  <PageBase class="ComponentsInputsSwitches u-story">
-    <div class="u-story-content">
-      <h1>Inputs: Switches</h1>
-      <p>Switches toggle the state of a single setting on or off.</p>
+<template lang="md">
+# Inputs: Switches
 
-      <section>
-        <h2>Vue Component</h2>
+Switches toggle the state of a single setting on or off.
 
-        <SInputSwitches />
-        <SInputSwitch />
-      </section>
-    </div>
-  </PageBase>
+<SInputSwitches />
+<SInputSwitch />
 </template>
 
 <script>
-import PageBase from '@/components/pages/PageBase'
 import SInputSwitches from '@/components/stories/inputs/SInputSwitches'
 import SInputSwitch from '@/components/stories/inputs/SInputSwitch'
 
 export default {
   components: {
-    PageBase,
     SInputSwitches,
     SInputSwitch
   },
