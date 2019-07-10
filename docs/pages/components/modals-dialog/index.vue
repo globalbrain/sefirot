@@ -3,15 +3,15 @@
 
 Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.
 
-<SDialog />
+<ShowcaseDialogs />
 </template>
 
 <script>
-import SDialog from '@/components/stories/modals/SDialog'
+import ShowcaseDialogs from '@/components/stories/modals/ShowcaseDialogs'
 
 export default {
   components: {
-    SDialog
+    ShowcaseDialogs
   },
 
   head: {

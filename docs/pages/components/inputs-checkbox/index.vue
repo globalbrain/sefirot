@@ -1,44 +1,36 @@
-<template>
-  <StoryBase
-    class="StorySInputCheckbox"
-    name="SInputCheckbox"
-    path="@globalbrain/sefirot/lib/components/inputs/SInputCheckbox"
-    :props="props"
-    :events="events"
-  >
-    <template #component>
-      <section>
-        <h3 class="section-title">Normal Checkbox</h3>
+<template lang="md">
+# Inputs: Checkbox
 
-        <SInputCheckbox
-          name="input01"
-          label="Label"
-          note="Note text"
-          text="Text for the checkbox"
-          help="This is a help text."
-          v-model="form.input01"
-        />
-      </section>
-    </template>
-  </StoryBase>
+Checkbox allow the user to select one item. Checkbox can be used to turn an option on or off.
+
+<ShowcaseCheckbox />
+
+## API
+
+<SpecProps :props="props" />
+<SpecEvents :events="events" />
 </template>
 
 <script>
-import SInputCheckbox from '@@/lib/components/inputs/SInputCheckbox'
-import StoryBase from '@/components/stories/StoryBase'
+import ShowcaseCheckbox from '@/components/stories/inputs/ShowcaseCheckbox'
+import SpecProps from '@/components/specs/SpecProps'
+import SpecEvents from '@/components/specs/SpecEvents'
 
 export default {
   components: {
-    SInputCheckbox,
-    StoryBase
+    ShowcaseCheckbox,
+    SpecProps,
+    SpecEvents
   },
+
+  head: {
+    title: 'Inputs: Checkbox'
+  },
+
+  scrollToTop: true,
 
   data () {
     return {
-      form: {
-        input01: false
-      },
-
       props: [
         {
           name: 'name',

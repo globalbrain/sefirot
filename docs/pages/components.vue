@@ -23,16 +23,19 @@ export default {
       contents: [
         { label: 'Buttons', path: '/components/buttons' },
         { label: 'Grids', path: '/components/grids' },
+        { label: 'Inputs: Checkbox', path: '/components/inputs-checkbox' },
         { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
         { label: 'Inputs: Dates', path: '/components/inputs-dates' },
         { label: 'Inputs: Radios', path: '/components/inputs-radios' },
+        { label: 'Inputs: Switch', path: '/components/inputs-switch' },
         { label: 'Inputs: Switches', path: '/components/inputs-switches' },
         { label: 'Inputs: Text', path: '/components/inputs-text' },
         { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
         { label: 'Modals: Alert', path: '/components/modals-alert' },
         { label: 'Modals: Dialog', path: '/components/modals-dialog' },
         { label: 'Modals: Window', path: '/components/modals-window' },
-        { label: 'Placeholders', path: '/components/placeholders' },
+        { label: 'Placeholders: Blank', path: '/components/placeholders-blank' },
+        { label: 'Placeholders: Image', path: '/components/placeholders-image' },
         { label: 'Screens', path: '/components/screens' },
         { label: 'Snackbars', path: '/components/snackbars' }
       ]

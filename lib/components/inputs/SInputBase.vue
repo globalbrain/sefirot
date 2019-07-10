@@ -75,6 +75,7 @@ export default {
 }
 
 .help-text {
+  margin: 0;
   padding: 4px 0 0;
   line-height: 20px;
   font-size: 14px;
@@ -87,6 +88,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  margin: 0;
   padding: 4px 0 0 0;
   line-height: 20px;
   font-size: 14px;

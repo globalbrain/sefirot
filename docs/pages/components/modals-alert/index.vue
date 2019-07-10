@@ -3,15 +3,15 @@
 
 Alert dialogs interrupt users with urgent information, details, or actions.
 
-<SAlert />
+<ShowcaseAlerts />
 </template>
 
 <script>
-import SAlert from '@/components/stories/modals/SAlert'
+import ShowcaseAlerts from '@/components/stories/modals/ShowcaseAlerts'
 
 export default {
   components: {
-    SAlert
+    ShowcaseAlerts
   },
 
   head: {

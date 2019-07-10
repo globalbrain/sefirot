@@ -33,18 +33,6 @@
     margin-bottom: 24px;
   }
 
-  section {
-    margin-top: 72px;
-    border-top: 1px solid var(--c-divider);
-    padding-top: 48px;
-
-    &:first-child {
-      margin-top: 0;
-      border-top: 0;
-      padding-top: 0;
-    }
-  }
-
   a {
     text-decoration: underline;
     transition: color .25s;
@@ -79,6 +67,12 @@
       color: var(--c-white);
       background-color: var(--c-black);
     }
+  }
+
+  .StoryBase + pre {
+    margin-top: 0;
+    border-top: 1px solid var(--c-black-mute);
+    border-radius: 0 0 2px 2px;
   }
 
   @media (min-width: 375px) {

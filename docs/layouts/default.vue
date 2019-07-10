@@ -17,6 +17,7 @@
 <script>
 import TheHeader from '@/components/layouts/TheHeader'
 import TheFooter from '@/components/layouts/TheFooter'
+import HandlesValidationError from '@@/lib/mixins/HandlesValidationError'
 import SPortalModals from '@@/lib/components/portals/SPortalModals'
 import SPortalScreens from '@@/lib/components/portals/SPortalScreens'
 import SPortalSnackbars from '@@/lib/components/portals/SPortalSnackbars'
@@ -28,7 +29,9 @@ export default {
     SPortalModals,
     SPortalScreens,
     SPortalSnackbars
-  }
+  },
+
+  mixins: [HandlesValidationError()]
 }
 </script>
 

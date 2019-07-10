@@ -42,6 +42,7 @@ export default {
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: var(--z-index-screen);
   width: 100%;
   min-height: 100vh;
   background-color: var(--c-white);

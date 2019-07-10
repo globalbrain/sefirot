@@ -3,15 +3,15 @@
 
 Snackbars provide brief messages about app processes at the bottom of the screen.
 
-<SSnackbar />
+<ShowcaseSnackbar />
 </template>
 
 <script>
-import SSnackbar from '@/components/stories/snackbars/SSnackbar'
+import ShowcaseSnackbar from '@/components/stories/snackbars/ShowcaseSnackbar'
 
 export default {
   components: {
-    SSnackbar
+    ShowcaseSnackbar
   },
 
   head: {

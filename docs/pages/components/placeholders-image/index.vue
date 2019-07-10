@@ -1,37 +1,34 @@
-<template>
-  <StoryBase
-    class="StorySPlaceholderImage"
-    name="SPlaceholderImage"
-    path="@globalbrain/sefirot/lib/components/placeholders/SPlaceholderImage"
-    :props="props"
-    :events="events"
-  >
-    <template #component>
-      <section>
-        <h3>Image Placeholder</h3>
+<template lang="md">
+# Placeholders: Image
 
-        <div class="image">
-          <SPlaceholderImage
-            img="/img/fixtures/image-1536x1024-001.jpg"
-            :width="768"
-            :height="512"
-            :delay="3000"
-          />
-        </div>
-      </section>
-    </template>
-  </StoryBase>
+Placeholders are for showing temporary state when waiting for a certain component to be loaded, for example, a preloader icon could be shown while waiting for an image to be downloaded.
+
+
+<ShowcasePlaceholderImage />
+
+## API
+
+<SpecProps :props="props" />
+<SpecEvents :events="events" />
 </template>
 
 <script>
-import SPlaceholderImage from '@@/lib/components/placeholders/SPlaceholderImage'
-import StoryBase from '@/components/stories/StoryBase'
+import ShowcasePlaceholderImage from '@/components/stories/placeholders/ShowcasePlaceholderImage'
+import SpecProps from '@/components/specs/SpecProps'
+import SpecEvents from '@/components/specs/SpecEvents'
 
 export default {
   components: {
-    SPlaceholderImage,
-    StoryBase
+    ShowcasePlaceholderImage,
+    SpecProps,
+    SpecEvents
   },
+
+  head: {
+    title: 'Placeholders: Image'
+  },
+
+  scrollToTop: true,
 
   data () {
     return {
