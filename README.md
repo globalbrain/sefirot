@@ -4,7 +4,7 @@
 
 <h1 align="center">Sefirot</h1>
 
-<p>
+<p align="center">
   <a href="https://travis-ci.org/globalbrain/sefirot">
       <img src="https://travis-ci.org/globalbrain/sefirot.svg?branch=master" alt="Travis CI">
   </a>
