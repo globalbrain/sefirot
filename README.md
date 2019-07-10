@@ -91,3 +91,39 @@ Sefirot follows official [Vue Style Guide](https://vuejs.org/v2/style-guide/). B
 
 > Every line of code should appear to be written by a single person, no matter the number of contributors.  
 > &mdash; <cite>@mdo</cite>
+
+### Development
+
+```bash
+$ npm run serve
+```
+
+Serve documentation website at http://localhost:3000.
+
+```bash
+$ npm run lint
+```
+
+Lint files using a rule of Standard JS.
+
+```bash
+$ npm run test
+```
+
+Run the test.
+
+```bash
+$ npm run test:watch
+```
+
+Run the test in watch mode.
+
+```bash
+$ npm run test:coverage
+```
+
+Generate test coverage in `coverage` directory.
+
+## License
+
+Sefirot is open-sourced software licensed under the [MIT license](LICENSE.md).
