@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="192" src="https://github.com/globalbrain/sefirot/raw/master/logo-sefirot.png" alt="Sefirot">
+  <img width="128" src="https://github.com/globalbrain/sefirot/raw/master/logo-sefirot.png" alt="Sefirot">
 </p>
 
 <h1 align="center">Sefirot</h1>
