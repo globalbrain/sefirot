@@ -4,6 +4,7 @@
 /docs
 /test
 .*
+logo-sefirot.png
 nuxt.config.js
 webpack.config.js
 yarn-debug.log*
