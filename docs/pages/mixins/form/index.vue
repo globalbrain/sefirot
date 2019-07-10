@@ -55,13 +55,13 @@ export default {
 
 ### Validate Form
 
-You may use `validate` method to validate all Vuelidate validations. The method will throw `ValidationError` when the form is invalid.
+You may use `validate` method to validate all Vuelidate validations. The method will throw `ValidationError` when the form is invalid. It's advised to use the method in conjunction with [HandlesValidationError](/mixins/handles-validation-error) mixin so that the error can be caught in higher component and prevent crashing the app.
 
 ```html
 <template>
   <div>
-    <input v-model="form.name">
-    <input v-model="form.age">
+    <input :validation="$v.form.name" v-model="form.name">
+    <input :validation="$v.form.age" v-model="form.age">
 
     <button @click="submit">SUBMIT</button>
   </div>

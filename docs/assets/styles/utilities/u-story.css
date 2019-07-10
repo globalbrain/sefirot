@@ -47,6 +47,15 @@
     }
   }
 
+  a {
+    text-decoration: underline;
+    transition: color .25s;
+
+    &:hover {
+      color: var(--c-gray);
+    }
+  }
+
   code {
     display: inline-block;
     border-radius: 2px;

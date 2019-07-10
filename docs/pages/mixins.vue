@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       contents: [
-        { label: 'Form', path: '/mixins/form' }
+        { label: 'Form', path: '/mixins/form' },
+        { label: 'HandlesValidationError', path: '/mixins/handles-validation-error' }
       ]
     }
   }
