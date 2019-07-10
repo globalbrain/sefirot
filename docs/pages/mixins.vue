@@ -3,10 +3,8 @@
     <div class="container">
       <SidebarNavigation :contents="contents" />
 
-      <div class="main u-story">
-        <div class="u-story-content">
-          <nuxt-child :key="$route.path" />
-        </div>
+      <div class="main u-medium">
+        <nuxt-child :key="$route.path" />
       </div>
     </div>
   </div>
