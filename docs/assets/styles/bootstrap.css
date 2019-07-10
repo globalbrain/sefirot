@@ -3,4 +3,5 @@
 @import "./highlight";
 @import "./modal";
 @import "./screen";
+@import "./transitions";
 @import "./utilities";

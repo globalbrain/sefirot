@@ -1,25 +1,16 @@
-<template>
-  <PageBase class="ComponentsScreens u-story">
-    <div class="u-story-content">
-      <h1>Screens</h1>
-      <p>Screens is full screen modal like component.</p>
+<template lang="md">
+# Screens
 
-      <section>
-        <h2>Vue Component</h2>
+Screens is full screen modal like component.
 
-        <SScreen />
-      </section>
-    </div>
-  </PageBase>
+<SScreen />
 </template>
 
 <script>
-import PageBase from '@/components/pages/PageBase'
 import SScreen from '@/components/stories/screens/SScreen'
 
 export default {
   components: {
-    PageBase,
     SScreen
   },
 

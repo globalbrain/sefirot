@@ -89,6 +89,7 @@ export default {
 
 .text {
   flex-grow: 1;
+  margin: 0;
   padding-right: 12px;
   line-height: 20px;
   font-size: 14px;
