@@ -29,7 +29,7 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.5.4",
     "@nuxtjs/dotenv": "^1.3.0",
     "@nuxtjs/markdownit": "^1.2.5",
     "@vue/test-utils": "^1.0.0-beta.29",
@@ -40,7 +40,7 @@
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.5.0",
     "css-loader": "^2.1.1",
-    "dayjs": "^1.8.14",
+    "dayjs": "^1.8.15",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.1.2",
     "eslint-plugin-vue": "^5.2.3",
@@ -57,12 +57,12 @@
     "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
     "vue-loader": "^15.7.0",
-    "vue-router": "^3.0.6",
+    "vue-router": "^3.0.7",
     "vue-server-renderer": "^2.6.10",
     "vue-template-compiler": "^2.6.10",
     "vue-thin-modal": "^1.3.0",
     "vuelidate": "^0.7.4",
-    "webpack": "^4.35.0",
+    "webpack": "^4.35.3",
     "webpack-dev-server": "^3.7.2"
   },
   "jest": {
