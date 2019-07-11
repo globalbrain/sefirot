@@ -42,7 +42,8 @@ export default {
 
   modules: [
     '@nuxtjs/dotenv',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/google-analytics'
   ],
 
   plugins: [
