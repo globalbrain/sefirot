@@ -56,5 +56,12 @@ export default {
 
   markdownit: {
     use: [MarkdownItHighlight]
+  },
+
+  googleAnalytics: {
+    id: 'UA-122636981-4',
+    debug: {
+      sendHitTask: process.env.NODE_ENV === 'production'
+    }
   }
 }
