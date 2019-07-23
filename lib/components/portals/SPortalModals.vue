@@ -17,6 +17,12 @@ export default {
     SAlert
   },
 
+  data () {
+    return {
+      scrollBarWidth: 17
+    }
+  },
+
   computed: {
     modalName () {
       return this.$store.state.modal.name
@@ -45,23 +51,49 @@ export default {
     }
   },
 
+  mounted () {
+    this.getScrollBarWidth()
+  },
+
   methods: {
     openModal (name) {
-      const body = document.getElementsByTagName('body')[0]
+      this.setStyle()
 
-      body.classList.add('modal-open')
+      document.body.classList.add('modal-open')
 
       this.$modal.push(name)
     },
 
     closeModal () {
-      const body = document.getElementsByTagName('body')[0]
-
       this.$modal.pop()
 
       setTimeout(() => {
-        body.classList.remove('modal-open')
+        this.removeStyle()
+
+        document.body.classList.remove('modal-open')
       }, 300)
+    },
+
+    setStyle () {
+      if (!document.body.classList.contains('screen-open')) {
+        document.body.style.paddingRight = `${this.scrollBarWidth}px`
+      }
+    },
+
+    removeStyle () {
+      if (!document.body.classList.contains('screen-open')) {
+        document.body.style.paddingRight = null
+
+        return
+      }
+
+      setTimeout(() => {
+        document.body.style.paddingRight = `${this.scrollBarWidth}px`
+      }, 100)
+    },
+
+    getScrollBarWidth () {
+      this.scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
     }
   }
 }

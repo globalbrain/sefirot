@@ -40,5 +40,6 @@ export default {
   z-index: var(--z-index-backdrop);
   height: 100%;
   overflow: auto;
+  overflow-y: scroll;
 }
 </style>

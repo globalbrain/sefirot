@@ -14,13 +14,7 @@ export default {
 
   watch: {
     screenName (value) {
-      if (value === null) {
-        this.closeScreen()
-
-        return
-      }
-
-      this.openScreen()
+      value === null ? this.closeScreen() : this.openScreen()
     },
 
     $route () {
@@ -30,17 +24,19 @@ export default {
 
   methods: {
     openScreen () {
-      const body = document.getElementsByTagName('body')[0]
-
-      body.classList.add('screen-open')
+      document.body.style.paddingRight = `${this.scrollBarWidth()}px`
+      document.body.classList.add('screen-open')
     },
 
     closeScreen () {
-      const body = document.getElementsByTagName('body')[0]
-
       setTimeout(() => {
-        body.classList.remove('screen-open')
+        document.body.style.paddingRight = null
+        document.body.classList.remove('screen-open')
       }, 300)
+    },
+
+    scrollBarWidth () {
+      return window.innerWidth - document.documentElement.clientWidth
     }
   }
 }
