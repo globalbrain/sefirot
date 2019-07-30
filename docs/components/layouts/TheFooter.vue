@@ -23,6 +23,8 @@
 }
 
 .container {
+  border-top: 1px solid var(--c-divider);
+  padding-top: 32px;
   margin: 0 auto;
   max-width: 960px;
 }
