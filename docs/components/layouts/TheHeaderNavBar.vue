@@ -2,10 +2,16 @@
   <nav class="TheHeaderNavBar">
     <ul class="list">
       <li class="item">
+        <NuxtLink class="link" to="/guide" @click.native="$emit('close')">Guide</NuxtLink>
+      </li>
+      <li class="item">
         <NuxtLink class="link" to="/components" @click.native="$emit('close')">Components</NuxtLink>
       </li>
       <li class="item">
         <NuxtLink class="link" to="/mixins" @click.native="$emit('close')">Mixins</NuxtLink>
+      </li>
+      <li class="item">
+        <a class="link" href="https://github.com/globalbrain/sefirot" target="_blank">GitHub</a>
       </li>
     </ul>
   </nav>

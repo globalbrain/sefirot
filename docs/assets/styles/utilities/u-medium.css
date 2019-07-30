@@ -42,6 +42,12 @@
     }
   }
 
+  blockquote {
+    border-left: 4px solid var(--c-divider);
+    padding-left: 24px;
+    font-style: italic;
+  }
+
   code {
     display: inline-block;
     border-radius: 2px;
