@@ -1,0 +1,82 @@
+:root {
+
+  /**
+   * Colors
+   * --------------------------------------------------------------------- */
+
+  --c-black: #000000;
+  --c-black-soft: #121212;
+  --c-black-mute: #262626;
+
+  --c-white: #ffffff;
+  --c-white-soft: #fafafa;
+  --c-white-mute: #f2f2f2;
+
+  --c-gray: #979fa4;
+  --c-gray-light: #c4cbcf;
+  --c-gray-lighter: #ebeef0;
+  --c-gray-lighter-mute: #e3e6e8;
+  --c-gray-dark: #6a7378;
+
+  --c-divider: #e0e0e0;
+  --c-divider-dark: #454545;
+
+  --c-info: #4681c4;
+  --c-info-dark: #3468a3;
+  --c-info-darker: #255489;
+  --c-success: #00b489;
+  --c-success-dark: #068f6e;
+  --c-success-darker: #086b53;
+  --c-warning: #f9a91e;
+  --c-warning-dark: #e0ad15;
+  --c-warning-darker: #bc9112;
+  --c-danger: #ed3c50;
+  --c-danger-dark: #cd2d3f;
+  --c-danger-darker: #ab2131;
+
+  /**
+   * Typography
+   * --------------------------------------------------------------------- */
+
+  --font-family-base: "interstate", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-number: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-mono: "Iconsolata", "monospace", "Hiragino Sans", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", "Meiryo", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue";
+
+  /**
+   * Z Indexes
+   * --------------------------------------------------------------------- */
+
+  --z-index-header: 1000;
+  --z-index-header-content: 1010;
+  --z-index-screen: 2000;
+  --z-index-backdrop: 3000;
+  --z-index-modal: 3010;
+
+  /**
+   * Shadows
+   * --------------------------------------------------------------------- */
+
+  --shadow-depth-1: 0 1px 2px rgba(0, 0, 0, .04), 0 1px 2px rgba(0, 0, 0, .06);
+  --shadow-depth-2: 0 3px 6px rgba(0, 0, 0, .16), 0 3px 6px rgba(0, 0, 0, .23);
+  --shadow-depth-3: 0 12px 32px rgba(0, 0, 0, .10), 0 2px 6px rgba(0, 0, 0, .08);
+  --shadow-depth-4: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .22);
+  --shadow-depth-5: 0 18px 56px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .16);
+
+  --shadow-depth-edge-1: 0 2px 2px rgba(0, 0, 0, .08);
+
+  /**
+   * Easings
+   * --------------------------------------------------------------------- */
+
+  --ease-in-quint: cubic-bezier(.755, .05, .855, .06);
+  --ease-in-back: cubic-bezier(1, -.75, 1, 1);
+
+  --ease-out-quint: cubic-bezier(.23, 1, .32, 1);
+  --ease-out-expo: cubic-bezier(.19, 1, .22, 1);
+  --ease-out-back: cubic-bezier(.175, .885, .320, 1.275);
+  --ease-out-back-quint: cubic-bezier(.175, .885, .280, 1.5);
+
+  --ease-in-out-quint: cubic-bezier(.86, 0, .07, 1);
+  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
+
+}

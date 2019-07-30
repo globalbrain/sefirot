@@ -18,19 +18,27 @@
 
 This repository contains Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
-The project is currently heavily under development and may drastically change while in progress.
+Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.
+
+That's being said, feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.
+
+## Documentation
+
+You can check out the documentation for Sefirot at https://sefirot.globalbrains.com.
 
 ## Getting Started
 
-Install Sefirot via npm or yarn.
+At first, install Sefirot via npm or yarn.
 
 ```bash
+# Via NPM.
 $ npm install @globalbrain/sefirot
 
+# Via Yarn.
 $ yarn add @globalbrain/sefirot
 ```
 
-Now you may import components under `lib` directly and use them in your Vue Component.
+To begin using the components, you should directly import them from `lib` directory under the Sefirot package.
 
 ```vue
 <template>
@@ -50,21 +58,15 @@ export default {
 </script>
 ```
 
-When compiling your project, don't forget to transpile the code. For example, in Nuxt, you should define the following settings at `nuxt.config.js`.
+By design, Sefirot doesn't ship with pre-built files, so you must compile the code in your project. Please follow the following instruction to set up your build system.
 
-```js
-export default {
-  // ...
+Sefirot assumes you have your CSS placed at `@/assets/styles` directory. Make sure to copy styles to your project on the same location. To copy CSS files, simply run the following command. The destination directly (`@`) should depend on your project setup.
 
-  build: {
-    transpile: ['@globalbrain/sefirot']
-  }
-
-  // ...
-}
+```bash
+$ cp ./node_modules/@globalbrain/sefirot/lib/assets/styles ./assets/
 ```
 
-Also, Sefirot assumes you have your CSS variables defined at `@/assets/styles/variables`. Make sure to copy styles to your project on the same location. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-css-variables`. Make sure to define them in your postcss config. Again for Nuxt, you should define:
+To compile Vue Components, you must have appropriate build settings. For example, in [Nuxt.js](https://nuxtjs.org/), you should define the following settings at `nuxt.config.js`. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-css-variables`. Make sure to define them in your postcss config as well. And the last thing, don't forget to include base bootstrapping global CSS as well.
 
 ```js
 export default {
@@ -79,10 +81,62 @@ export default {
         'postcss-css-variables': {},
       }
     }
+  },
+
+  css: ['@/assets/styles/bootstrap']
+
+  // ...
+}
+```
+
+## Easier Component Import
+
+If you think importing components from `@globalbrain/sefirot/lib` is too long to type, you can set up an alias to reduce the boilerplate. Again, this is an example set up on `nuxt.config.js`.
+
+```js
+export default {
+  // ...
+
+  build: {
+    // Alias the package path.
+    extend (config) {
+      config.resolve.alias['sefirot'] = '@globalbrain/sefirot/lib'
+    },
+
+    transpile: ['@globalbrain/sefirot'],
+
+    postcss: {
+      plugins: {
+        'postcss-nested': {},
+        'postcss-css-variables': {},
+      }
+    },
+
+    extractCSS: process.env.NODE_ENV === 'production'
   }
 
   // ...
 }
+```
+
+With the above setting,  you can import components from `sefirot`.
+
+```vue
+<template>
+  <div>
+    <SButton label="BUTTON" />
+  </div>
+</template>
+
+<script>
+import SButton from 'sefirot/components/buttons/SButton'
+
+export default {
+  components: {
+    SButton
+  }
+}
+</script>
 ```
 
 ## Contribution

@@ -23,7 +23,7 @@
     "vue",
     "vue component"
   ],
-  "author": "Kia Ishii",
+  "author": "Kia Ishii <ka.ishii@globalbrains.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/globalbrain/sefirot/issues"
@@ -37,10 +37,8 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
-    "babel-loader": "^8.0.6",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.5.0",
-    "css-loader": "^2.1.1",
     "dayjs": "^1.8.15",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.2.1",
@@ -57,14 +55,11 @@
     "v-calendar": "^0.9.7",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
-    "vue-loader": "^15.7.1",
     "vue-router": "^3.0.7",
     "vue-server-renderer": "^2.6.10",
     "vue-template-compiler": "^2.6.10",
     "vue-thin-modal": "^1.3.0",
-    "vuelidate": "^0.7.4",
-    "webpack": "^4.36.1",
-    "webpack-dev-server": "^3.7.2"
+    "vuelidate": "^0.7.4"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -85,5 +80,8 @@
       "lib/**/*.{js,vue}",
       "!**/node_modules/**"
     ]
+  },
+  "dependencies": {
+    "webpack": "^4.38.0"
   }
 }
