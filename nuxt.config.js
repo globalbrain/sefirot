@@ -42,7 +42,7 @@ export default {
   ],
 
   modules: [
-    '@nuxtjs/dotenv',
+    ['@nuxtjs/dotenv', { path: __dirname }],
     '@nuxtjs/markdownit',
     '@nuxtjs/google-analytics'
   ],
