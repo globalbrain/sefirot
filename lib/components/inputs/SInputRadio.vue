@@ -9,9 +9,7 @@
     <div class="container">
       <div class="input" :class="{ on: value }" role="button" @click="emitChange">
         <div class="box">
-          <div class="check">
-            <div class="check-circle" />
-          </div>
+          <div class="check" />
         </div>
 
         <p class="text">{{ text }}</p>
@@ -76,9 +74,9 @@ export default {
     box-shadow: var(--shadow-depth-3);
   }
 
-  .check-circle {
+  .check {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(.6);
   }
 }
 
@@ -98,15 +96,10 @@ export default {
   bottom: 0;
   left: 0;
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
-}
-
-.check-circle {
   border-radius: 50%;
-  width: 8px;
-  height: 8px;
+  width: 100%;
   background-color: var(--c-black);
   opacity: 0;
   transform: scale(0);
