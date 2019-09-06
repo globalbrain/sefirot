@@ -1,5 +1,7 @@
 <template lang="md">
 <StoryBase>
+  <SButton class="button" label="START LOADING" @click="startLoading" />
+
   <SPlaceholderBlank :loaded="loaded">
     <p class="text">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
   </SPlaceholderBlank>
@@ -7,6 +9,8 @@
 
 ```html
 <template>
+  <SButton label="START LOADING" @click="startLoading" />
+
   <SPlaceholderBlank :loaded="loaded">
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -21,10 +25,12 @@
 </template>
 
 <script>
+import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
 import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/placeholders/SPlaceholderBlank'
 
 export default {
   components: {
+    SButton,
     SPlaceholderBlank
   },
 
@@ -36,6 +42,14 @@ export default {
 
   mounted () {
     setTimeout(() => { this.loaded = true }, 3000)
+  },
+
+  methods: {
+    startLoading () {
+      this.loaded = false
+
+      setTimeout(() => { this.loaded = true }, 3000)
+    }
   }
 }
 </script>
@@ -43,11 +57,13 @@ export default {
 </template>
 
 <script>
+import SButton from '@@/lib/components/buttons/SButton'
 import SPlaceholderBlank from '@@/lib/components/placeholders/SPlaceholderBlank'
 import StoryBase from '@/components/stories/StoryBase'
 
 export default {
   components: {
+    SButton,
     SPlaceholderBlank,
     StoryBase
   },
@@ -60,12 +76,24 @@ export default {
 
   mounted () {
     setTimeout(() => { this.loaded = true }, 3000)
+  },
+
+  methods: {
+    startLoading () {
+      this.loaded = false
+
+      setTimeout(() => { this.loaded = true }, 3000)
+    }
   }
 }
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
+
+.button {
+  margin-bottom: 32px;
+}
 
 .text {
   margin: 0;

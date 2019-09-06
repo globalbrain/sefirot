@@ -1,9 +1,61 @@
 <template lang="md">
 # Placeholders: Blank
 
-Placeholders are for showing temporary state when waiting for a certain component to be loaded, for example, a preloader icon could be shown while waiting for an image to be downloaded.
+Placeholders display preloader until the certain component is loaded. For example, when a component is waiting for the response from the external API service.
 
 <ShowcasePlaceholderBlank />
+
+## Description
+
+Any element wrapped with `SPlaceholderBlank` will be hidden, and preloader will be shown until you pass the `loaded` prop to the `SPlaceholderBlank` component.
+
+Especially useful when you want to wait for an asynchronous operation to be completed before a component can be rendered, for example, waiting for an external API call.
+
+
+When `loaded` prop is `true`, it adds `loaded` CSS class to the root element. You may use this class to style your child component. The following example shows that the `p` element will do slide up animation when loading is completed.
+
+```html
+<template>
+  <SPlaceholderBlank class="my-component" :loaded="loaded">
+    <p class="text">...</p>
+  </SPlaceholderBlank>
+</template>
+
+<script>
+import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/placeholders/SPlaceholderBlank'
+
+export default {
+  components: {
+    SPlaceholderBlank
+  },
+
+  data () {
+    return {
+      loaded: false
+    }
+  },
+
+  mounted () {
+    setTimeout(() => { this.loaded = true }, 3000)
+  }
+}
+</script>
+
+<style scoped>
+.my-component.loaded .text {
+  transform: translateY(0);
+}
+
+.text {
+  transform: translateY(-8px);
+  transition: transform .5s;
+}
+</style>
+```
+
+## Examples
+
+<ExamplePlaceholderBlankPositions />
 
 ## API
 
@@ -12,11 +64,13 @@ Placeholders are for showing temporary state when waiting for a certain componen
 
 <script>
 import ShowcasePlaceholderBlank from '@/components/stories/placeholders/ShowcasePlaceholderBlank'
+import ExamplePlaceholderBlankPositions from '@/components/stories/placeholders/ExamplePlaceholderBlankPositions'
 import SpecProps from '@/components/specs/SpecProps'
 
 export default {
   components: {
     ShowcasePlaceholderBlank,
+    ExamplePlaceholderBlankPositions,
     SpecProps
   },
 
@@ -35,6 +89,13 @@ export default {
           required: true,
           default: '—',
           description: 'Whether the content is loaded or not.'
+        },
+        {
+          name: 'loaderPosition',
+          type: 'String',
+          required: false,
+          default: 'left',
+          description: 'Define where to show preloader against the element. The acceptable values are `left`, `center`, and `right`.'
         }
       ]
     }
