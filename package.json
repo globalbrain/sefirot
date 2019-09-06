@@ -80,6 +80,12 @@
     "collectCoverageFrom": [
       "lib/**/*.{js,vue}",
       "!**/node_modules/**"
+    ],
+    "coverageReporters": [
+      "html",
+      "json",
+      "lcov",
+      "text-summary"
     ]
   }
 }
