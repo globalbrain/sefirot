@@ -39,7 +39,7 @@
     "babel-jest": "^24.9.0",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.5.0",
-    "dayjs": "^1.8.15",
+    "dayjs": "^1.8.16",
     "eslint": "^5.16.0",
     "eslint-loader": "^3.0.0",
     "eslint-plugin-vue": "^5.2.3",
@@ -47,7 +47,7 @@
     "jest-serializer-vue": "^2.0.2",
     "markdown-it-highlight": "^0.2.0",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.9.1",
+    "nuxt": "^2.9.2",
     "portal-vue": "^2.1.6",
     "postcss-css-variables": "^0.13.0",
     "postcss-nested": "^4.1.2",
@@ -55,11 +55,12 @@
     "v-calendar": "^0.9.7",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
-    "vue-router": "^3.1.2",
+    "vue-router": "^3.1.3",
     "vue-server-renderer": "^2.6.10",
     "vue-template-compiler": "^2.6.10",
     "vue-thin-modal": "^1.3.0",
-    "vuelidate": "^0.7.4"
+    "vuelidate": "^0.7.4",
+    "webpack": "^4.39.3"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -80,8 +81,5 @@
       "lib/**/*.{js,vue}",
       "!**/node_modules/**"
     ]
-  },
-  "dependencies": {
-    "webpack": "^4.39.2"
   }
 }
