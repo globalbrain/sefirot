@@ -1,5 +1,5 @@
 <template>
-  <div class="SPlaceholderBlank" :class="{ loaded }">
+  <div class="SPlaceholderBlank" :class="classes">
     <transition name="fade">
       <div class="loader" v-if="!loaded">
         <div class="icon">
@@ -23,7 +23,19 @@ export default {
   },
 
   props: {
-    loaded: { type: Boolean, required: true }
+    loaded: { type: Boolean, required: true },
+    loaderPosition: { type: String, default: 'left' }
+  },
+
+  computed: {
+    classes () {
+      return {
+        loaded: this.loaded,
+        left: this.loaderPosition === 'left',
+        center: this.loaderPosition === 'center',
+        right: this.loaderPosition === 'right'
+      }
+    }
   }
 }
 </script>
@@ -43,6 +55,22 @@ export default {
   }
 }
 
+.SPlaceholderBlank.left .icon {
+  top: 0;
+  left: 0;
+}
+
+.SPlaceholderBlank.center .icon {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.SPlaceholderBlank.right .icon {
+  top: 0;
+  right: 0;
+}
+
 .loader {
   position: absolute;
   top: 0;
@@ -57,11 +85,14 @@ export default {
   transition: opacity .5s;
 }
 
+.loader.fade-enter,
 .loader.fade-leave-to {
   opacity: 0;
 }
 
 .icon {
+  position: absolute;
+  display: block;
   width: 48px;
   height: 48px;
 }
