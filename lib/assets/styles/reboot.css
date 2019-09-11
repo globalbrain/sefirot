@@ -213,12 +213,17 @@ textarea {
 }
 
 input,
-textarea {
-  border: 0;
+textarea,
+select {
   font-family: var(--font-family-base);
   font-weight: 500;
-  background-color: transparent;
   -webkit-appearance: none;
+}
+
+input,
+textarea {
+  border: 0;
+  background-color: transparent;
 }
 
 input[type="radio"],
