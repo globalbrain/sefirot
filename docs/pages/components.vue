@@ -27,6 +27,7 @@ export default {
         { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
         { label: 'Inputs: Dates', path: '/components/inputs-dates' },
         { label: 'Inputs: Radios', path: '/components/inputs-radios' },
+        { label: 'Inputs: Select', path: '/components/inputs-select' },
         { label: 'Inputs: Switch', path: '/components/inputs-switch' },
         { label: 'Inputs: Switches', path: '/components/inputs-switches' },
         { label: 'Inputs: Text', path: '/components/inputs-text' },
