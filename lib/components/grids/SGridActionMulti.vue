@@ -114,7 +114,7 @@ export default {
   }
 
   &:active {
-    background-color: var(--c-gray-lighter-mute);
+    background-color: var(--c-gray-light);
   }
 }
 

@@ -104,13 +104,8 @@ export default {
   color: var(--c-white);
   background-color: var(--c-black);
 
-  &:hover {
-    background-color: rgba(0, 0, 0, .8);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, .7);
-  }
+  &:hover  { background-color: var(--c-black-light); }
+  &:active { background-color: var(--c-gray-darker); }
 
   &.info {
     background-color: var(--c-info);
@@ -193,13 +188,8 @@ export default {
   border-color: var(--c-black);
   color: var(--c-black);
 
-  &:hover {
-    background-color: rgba(0, 0, 0, .05);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, .1);
-  }
+  &:hover  { background-color: var(--c-white-mute); }
+  &:active { background-color: var(--c-white-dark); }
 
   &.inverse {
     border-color: var(--c-white);
@@ -226,13 +216,8 @@ export default {
 .SButton.text {
   color: var(--c-black);
 
-  &:hover {
-    background-color: rgba(0, 0, 0, .05);
-  }
-
-  &:active {
-    background-color: rgba(0, 0, 0, .1);
-  }
+  &:hover  { background-color: var(--c-white-mute); }
+  &:active { background-color: var(--c-white-dark); }
 
   &.inverse {
     color: var(--c-white);
@@ -258,15 +243,8 @@ export default {
 .SButton.mute {
   color: var(--c-gray);
 
-  &:hover {
-    color: var(--c-black);
-    background-color: rgba(0, 0, 0, .05);
-  }
-
-  &:active {
-    color: var(--c-black);
-    background-color: rgba(0, 0, 0, .1);
-  }
+  &:hover  { background-color: var(--c-white-mute); }
+  &:active { background-color: var(--c-white-dark); }
 
   &.inverse {
     &:hover {

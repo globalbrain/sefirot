@@ -4,43 +4,62 @@
    * Colors
    * --------------------------------------------------------------------- */
 
-  --c-black: #000000;
-  --c-black-soft: #121212;
-  --c-black-mute: #262626;
-
   --c-white: #ffffff;
   --c-white-soft: #fafafa;
   --c-white-mute: #f2f2f2;
+  --c-white-dark: #e8e8e8;
 
-  --c-gray: #979fa4;
-  --c-gray-light: #c4cbcf;
-  --c-gray-lighter: #ebeef0;
-  --c-gray-lighter-mute: #e3e6e8;
-  --c-gray-dark: #6a7378;
+  --c-black: #000000;
+  --c-black-soft: #121212;
+  --c-black-mute: #212121;
+  --c-black-light: #303030;
 
-  --c-divider: #e0e0e0;
-  --c-divider-dark: #454545;
+  --c-gray: #888888;
+  --c-gray-light: #b8b8b8;
+  --c-gray-lighter: #e0e0e0;
+  --c-gray-dark: #757575;
+  --c-gray-darker: #525252;
+
+  --c-divider: var(--c-gray-lighter);
+  --c-divider-dark: var(--c-gray-darker);
 
   --c-info: #4681c4;
+  --c-info-light: #549ced;
+  --c-info-lighter: #50a2ff;
   --c-info-dark: #3468a3;
   --c-info-darker: #255489;
+
   --c-success: #00b489;
+  --c-success-light: #0fcea0;
+  --c-success-lighter: #27e8ba;
   --c-success-dark: #068f6e;
   --c-success-darker: #086b53;
-  --c-warning: #f9a91e;
+
+  --c-warning: #ffc517;
+  --c-warning-light: #ffe417;
+  --c-warning-lighter: #ffff17;
   --c-warning-dark: #e0ad15;
   --c-warning-darker: #bc9112;
+
   --c-danger: #ed3c50;
+  --c-danger-light: #f43771;
+  --c-danger-lighter: #fd1d7c;
   --c-danger-dark: #cd2d3f;
   --c-danger-darker: #ab2131;
+
+  --c-alternative: #a159a2;
+  --c-alternative-light: #c05fc1;
+  --c-alternative-lighter: #db4fdd;
+  --c-alternative-dark: #823c83;
+  --c-alternative-darker: #602960;
 
   /**
    * Typography
    * --------------------------------------------------------------------- */
 
   --font-family-base: "interstate", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-number: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-mono: "Iconsolata", "monospace", "Hiragino Sans", "ヒラギノ角ゴシック", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "メイリオ", "Meiryo", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue";
+  --font-family-number: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-mono: "Iconsolata", "monospace", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue";
 
   /**
    * Z Indexes
