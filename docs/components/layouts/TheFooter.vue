@@ -11,6 +11,7 @@
 @import "@/assets/styles/variables";
 
 .TheFooter {
+  border-top: 1px solid var(--c-divider);
   padding: 32px 24px;
 
   @media (min-width: 375px) {
@@ -23,8 +24,6 @@
 }
 
 .container {
-  border-top: 1px solid var(--c-divider);
-  padding-top: 32px;
   margin: 0 auto;
   max-width: 960px;
 }
@@ -32,12 +31,10 @@
 .quote {
   line-height: 20px;
   font-size: 14px;
-  font-weight: 500;
 }
 
 .copyright {
   font-size: 12px;
-  font-weight: 500;
   color: var(--c-gray);
 }
 
