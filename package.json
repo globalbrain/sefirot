@@ -29,7 +29,7 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.6.2",
     "@nuxtjs/dotenv": "^1.4.1",
     "@nuxtjs/google-analytics": "^2.2.0",
     "@nuxtjs/markdownit": "^1.2.6",
@@ -38,7 +38,7 @@
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "babel-preset-env": "^1.7.0",
-    "codecov": "^3.5.0",
+    "codecov": "^3.6.1",
     "dayjs": "^1.8.16",
     "eslint": "^5.16.0",
     "eslint-loader": "^3.0.0",
