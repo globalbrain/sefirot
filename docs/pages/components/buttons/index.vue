@@ -35,6 +35,7 @@ export default {
 
 <ExampleMediumButtons />
 <ExampleLargeButtons />
+<ExampleRoundedButton />
 <ExampleButtonModes />
 <ExampleLoadingState />
 
@@ -48,6 +49,7 @@ export default {
 import ShowcaseButtons from '@/components/stories/buttons/ShowcaseButtons'
 import ExampleMediumButtons from '@/components/stories/buttons/ExampleMediumButtons'
 import ExampleLargeButtons from '@/components/stories/buttons/ExampleLargeButtons'
+import ExampleRoundedButton from '@/components/stories/buttons/ExampleRoundedButton'
 import ExampleButtonModes from '@/components/stories/buttons/ExampleButtonModes'
 import ExampleLoadingState from '@/components/stories/buttons/ExampleLoadingState'
 import SpecProps from '@/components/specs/SpecProps'
@@ -58,6 +60,7 @@ export default {
     ShowcaseButtons,
     ExampleMediumButtons,
     ExampleLargeButtons,
+    ExampleRoundedButton,
     ExampleButtonModes,
     ExampleLoadingState,
     SpecProps,

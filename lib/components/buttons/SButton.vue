@@ -35,6 +35,7 @@ export default {
     type: { type: String, default: 'primary' },
     mode: { type: String, default: 'neutral' },
     size: { type: String, default: 'medium' },
+    rounded: { type: Boolean, default: false },
     icon: { type: Object, default: null },
     block: { type: Boolean, default: false },
     inverse: { type: Boolean, default: false },
@@ -55,6 +56,7 @@ export default {
         danger: this.mode === 'danger',
         medium: this.size === 'medium',
         large: this.size === 'large',
+        rounded: this.rounded,
         block: this.block,
         inverse: this.inverse,
         loading: this.loading
@@ -272,9 +274,17 @@ export default {
   line-height: 38px;
 }
 
+.SButton.medium.rounded {
+  border-radius: 20px;
+}
+
 .SButton.large {
   padding: 0 32px;
   line-height: 46px;
+}
+
+.SButton.large.rounded {
+  border-radius: 24px;
 }
 
 .SButton.block {
