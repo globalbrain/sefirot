@@ -1,19 +1,21 @@
+import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import VueThinModal from 'vue-thin-modal'
+import PortalVue, { Wormhole } from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SPortalModals from '@/components/portals/SPortalModals'
 
-const localVue = createLocalVue()
-
-localVue.use(Vuex)
-
-localVue.use(VueThinModal, {
-  autoMountPortal: false
-})
+global.MutationObserver = MutationObserver
+Wormhole.trackInstances = false
 
 describe('Components - Portals - SPortalModals - Dialog', () => {
   test('it can open and close a confirm dialog', async () => {
+    const localVue = createLocalVue()
+
+    localVue.use(Vuex)
+
+    localVue.use(PortalVue)
+
     const store = new Vuex.Store({
       plugins: [Sefirot]
     })
@@ -34,16 +36,22 @@ describe('Components - Portals - SPortalModals - Dialog', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.findAll('.SPortalModals .SDialog').length).toBe(1)
+    expect(wrapper.findAll('.SDialog').length).toBe(1)
 
     store.dispatch('dialog/close')
 
     await localVue.nextTick()
 
-    expect(wrapper.findAll('.SPortalModals .SDialog').length).toBe(0)
+    expect(wrapper.findAll('.SDialog').length).toBe(0)
   })
 
   test('it can open and close a loading dialog', async () => {
+    const localVue = createLocalVue()
+
+    localVue.use(Vuex)
+
+    localVue.use(PortalVue)
+
     const store = new Vuex.Store({
       plugins: [Sefirot]
     })
@@ -61,10 +69,18 @@ describe('Components - Portals - SPortalModals - Dialog', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.findAll('.SPortalModals .SDialog').length).toBe(1)
+    expect(wrapper.findAll('.SDialog').length).toBe(1)
+
+    store.dispatch('dialog/close')
   })
 
   test('it can open and close a progress dialog', async () => {
+    const localVue = createLocalVue()
+
+    localVue.use(Vuex)
+
+    localVue.use(PortalVue)
+
     const store = new Vuex.Store({
       plugins: [Sefirot]
     })
@@ -83,7 +99,7 @@ describe('Components - Portals - SPortalModals - Dialog', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.findAll('.SPortalModals .SDialog').length).toBe(1)
+    expect(wrapper.findAll('.SDialog').length).toBe(1)
 
     store.dispatch('dialog/update', {
       progress: { now: 50, max: 100 }
@@ -91,6 +107,6 @@ describe('Components - Portals - SPortalModals - Dialog', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.findAll('.SPortalModals .SDialog').length).toBe(1)
+    expect(wrapper.findAll('.SDialog').length).toBe(1)
   })
 })

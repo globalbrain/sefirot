@@ -1,8 +1,11 @@
+import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SScreenMinimal from './_fixtures/SScreenMinimal'
+
+global.MutationObserver = MutationObserver
 
 const localVue = createLocalVue()
 

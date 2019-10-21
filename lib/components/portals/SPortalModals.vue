@@ -1,9 +1,13 @@
 <template>
   <div class="SPortalModals">
+    <transition name="fade">
+      <div class="backdrop" v-if="showBackdrop" />
+    </transition>
+
     <SDialog />
     <SAlert />
 
-    <modal-portal />
+    <portal-target name="modal" multiple />
   </div>
 </template>
 
@@ -17,33 +21,19 @@ export default {
     SAlert
   },
 
-  data () {
-    return {
-      scrollBarWidth: 17
-    }
-  },
-
   computed: {
     modalName () {
       return this.$store.state.modal.name
+    },
+
+    showBackdrop () {
+      return this.modalName !== null
     }
   },
 
   watch: {
-    modalName (newValue, oldValue) {
-      if (newValue === null) {
-        this.closeModal()
-
-        return
-      }
-
-      if (oldValue !== null) {
-        this.$modal.replace(newValue)
-
-        return
-      }
-
-      this.openModal(newValue)
+    modalName (value) {
+      value === null ? this.closeScreen() : this.openScreen()
     },
 
     $route () {
@@ -51,50 +41,53 @@ export default {
     }
   },
 
-  mounted () {
-    this.getScrollBarWidth()
-  },
-
   methods: {
-    openModal (name) {
-      this.setStyle()
-
-      document.body.classList.add('modal-open')
-
-      this.$modal.push(name)
+    openScreen () {
+      document.body.style.paddingRight = `${this.scrollBarWidth()}px`
+      document.body.style.top = `-${window.scrollY}px`
+      document.body.style.position = 'fixed'
     },
 
-    closeModal () {
-      this.$modal.pop()
-
+    closeScreen () {
       setTimeout(() => {
-        this.removeStyle()
+        const scrollY = document.body.style.top
 
-        document.body.classList.remove('modal-open')
+        document.body.style.paddingRight = null
+        document.body.style.position = null
+        document.body.style.top = null
+
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
       }, 300)
     },
 
-    setStyle () {
-      if (!document.body.classList.contains('screen-open')) {
-        document.body.style.paddingRight = `${this.scrollBarWidth}px`
-      }
-    },
-
-    removeStyle () {
-      if (!document.body.classList.contains('screen-open')) {
-        document.body.style.paddingRight = null
-
-        return
-      }
-
-      setTimeout(() => {
-        document.body.style.paddingRight = `${this.scrollBarWidth}px`
-      }, 100)
-    },
-
-    getScrollBarWidth () {
-      this.scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+    scrollBarWidth () {
+      return window.innerWidth - document.documentElement.clientWidth
     }
   }
 }
 </script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-index-backdrop);
+  background-color: rgba(0, 0, 0, .8);
+  opacity: 1;
+}
+
+.backdrop.fade-enter-active,
+.backdrop.fade-leave-active {
+  transition: opacity .25s;
+}
+
+.backdrop.fade-enter,
+.backdrop.fade-leave-active {
+  opacity: 0;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <SModalBase name="dialog">
+  <SModalBase name="dialog" :closable="false">
     <div class="SDialog">
       <p class="title" v-if="data.title">{{ data.title }}</p>
       <p class="text" v-if="data.text">{{ data.text }}</p>
@@ -78,6 +78,7 @@ export default {
 
 .SDialog {
   margin: 48px 16px;
+  border-radius: 2px;
   padding: 32px;
   width: 100%;
   max-width: 512px;
@@ -91,20 +92,14 @@ export default {
   }
 }
 
-.modal-content-enter .SDialog,
-.modal-content-leave-to .SDialog {
-  opacity: 0;
-  transform: translateY(8px);
-}
-
 .title {
-  line-height: 32px;
-  font-size: 24px;
+  line-height: 38px;
+  font-size: 20px;
 }
 
 .text {
   .title + & {
-    padding-top: 24px;
+    padding-top: 8px;
   }
 }
 

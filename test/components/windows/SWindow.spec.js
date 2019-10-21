@@ -1,17 +1,19 @@
+import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import VueThinModal from 'vue-thin-modal'
+import PortalVue, { Wormhole } from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SWindowFull from './_fixtures/SWindowFull'
 import SWindowBlank from './_fixtures/SWindowBlank'
+
+global.MutationObserver = MutationObserver
+Wormhole.trackInstances = false
 
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-localVue.use(VueThinModal, {
-  autoMountPortal: false
-})
+localVue.use(PortalVue)
 
 describe('Components - Windows - SWindow', () => {
   let store = {}
@@ -56,9 +58,5 @@ describe('Components - Windows - SWindow', () => {
     expect(wrapper.find('.SWindow .actions').exists()).toBe(false)
 
     wrapper.find('.SWindow .close').trigger('click')
-
-    await localVue.nextTick()
-
-    expect(wrapper.find('.SWindow').exists()).toBe(false)
   })
 })
