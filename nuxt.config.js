@@ -50,8 +50,7 @@ export default {
   plugins: [
     '@/plugins/vuelidate.js',
     { src: '@/plugins/v-calendar.js', ssr: false },
-    '@/plugins/portal-vue.js',
-    '@/plugins/vue-thin-modal.js'
+    '@/plugins/portal-vue.js'
   ],
 
   loading: false,

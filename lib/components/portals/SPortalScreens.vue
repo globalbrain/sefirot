@@ -25,13 +25,19 @@ export default {
   methods: {
     openScreen () {
       document.body.style.paddingRight = `${this.scrollBarWidth()}px`
-      document.body.classList.add('screen-open')
+      document.body.style.top = `-${window.scrollY}px`
+      document.body.style.position = 'fixed'
     },
 
     closeScreen () {
       setTimeout(() => {
+        const scrollY = document.body.style.top
+
         document.body.style.paddingRight = null
-        document.body.classList.remove('screen-open')
+        document.body.style.position = null
+        document.body.style.top = null
+
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
       }, 300)
     },
 

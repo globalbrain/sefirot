@@ -1,9 +1,13 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-import VueThinModal from 'vue-thin-modal'
+import PortalVue, { Wormhole } from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SPortalModals from '@/components/portals/SPortalModals'
+
+Wormhole.trackInstances = false
+
+Object.defineProperty(window, 'scrollTo', { value: () => {}, writable: true })
 
 jest.useFakeTimers()
 
@@ -13,9 +17,7 @@ localVue.use(Vuex)
 
 localVue.use(VueRouter)
 
-localVue.use(VueThinModal, {
-  autoMountPortal: false
-})
+localVue.use(PortalVue)
 
 describe('Components - Portals - SPortalModals', () => {
   test('it can open and close a modal', async () => {
@@ -23,7 +25,7 @@ describe('Components - Portals - SPortalModals', () => {
       plugins: [Sefirot]
     })
 
-    const wrapper = mount(SPortalModals, {
+    mount(SPortalModals, {
       localVue,
       store
     })
@@ -34,13 +36,11 @@ describe('Components - Portals - SPortalModals', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.modalName).toBe('modal')
+    expect(store.state.modal.name).toBe('modal')
 
     store.dispatch('modal/close')
 
     await localVue.nextTick()
-
-    jest.runAllTimers()
   })
 
   test('it can replace a modal', async () => {
@@ -48,39 +48,10 @@ describe('Components - Portals - SPortalModals', () => {
       plugins: [Sefirot]
     })
 
-    const wrapper = mount(SPortalModals, {
+    mount(SPortalModals, {
       localVue,
       store
     })
-
-    store.dispatch('modal/open', {
-      name: 'modal-1'
-    })
-
-    await localVue.nextTick()
-
-    expect(wrapper.vm.modalName).toBe('modal-1')
-
-    store.dispatch('modal/open', {
-      name: 'modal-2'
-    })
-
-    await localVue.nextTick()
-
-    expect(wrapper.vm.modalName).toBe('modal-2')
-  })
-
-  test('it opens modal but keep body padding if screen is open', async () => {
-    const store = new Vuex.Store({
-      plugins: [Sefirot]
-    })
-
-    const wrapper = mount(SPortalModals, {
-      localVue,
-      store
-    })
-
-    document.body.classList.add('screen-open')
 
     store.dispatch('modal/open', {
       name: 'modal'
@@ -88,13 +59,15 @@ describe('Components - Portals - SPortalModals', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.modalName).toBe('modal')
+    expect(store.state.modal.name).toBe('modal')
 
-    store.dispatch('modal/close')
+    store.dispatch('modal/open', {
+      name: 'modal'
+    })
 
     await localVue.nextTick()
 
-    jest.runAllTimers()
+    expect(store.state.modal.name).toBe('modal')
   })
 
   test('it closes the modal on route change', async () => {
@@ -116,45 +89,13 @@ describe('Components - Portals - SPortalModals', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.modalName).toBe('modal')
+    expect(store.state.modal.name).toBe('modal')
 
     wrapper.vm.$router.push('/another-path')
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.modalName).toBe(null)
-
-    jest.runAllTimers()
-  })
-
-  test('it closes modal but keep body padding if screen is open', async () => {
-    const router = new VueRouter()
-
-    const store = new Vuex.Store({
-      plugins: [Sefirot]
-    })
-
-    const wrapper = mount(SPortalModals, {
-      localVue,
-      router,
-      store
-    })
-
-    document.body.classList.add('screen-open')
-
-    store.dispatch('modal/open', {
-      name: 'modal'
-    })
-
-    await localVue.nextTick()
-
-    expect(wrapper.vm.modalName).toBe('modal')
-
-   store.dispatch('modal/close')
-
-    await localVue.nextTick()
-
-    expect(wrapper.vm.modalName).toBe(null)
+    expect(store.state.modal.name).toBe(null)
 
     jest.runAllTimers()
   })

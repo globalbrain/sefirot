@@ -1,9 +1,14 @@
+import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SPortalScreens from '@/components/portals/SPortalScreens'
+
+global.MutationObserver = MutationObserver
+
+Object.defineProperty(window, 'scrollTo', { value: () => {}, writable: true })
 
 jest.useFakeTimers()
 

@@ -1,16 +1,18 @@
+import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
-import VueThinModal from 'vue-thin-modal'
+import PortalVue, { Wormhole } from 'portal-vue'
 import Sefirot from '@/store/Sefirot'
 import SPortalModals from '@/components/portals/SPortalModals'
+
+global.MutationObserver = MutationObserver
+Wormhole.trackInstances = false
 
 const localVue = createLocalVue()
 
 localVue.use(Vuex)
 
-localVue.use(VueThinModal, {
-  autoMountPortal: false
-})
+localVue.use(PortalVue)
 
 describe('Components - Portals - SPortalModals - Alert', () => {
   let store = {}

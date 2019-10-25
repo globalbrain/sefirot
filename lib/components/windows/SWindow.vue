@@ -1,12 +1,5 @@
 <template>
-  <SModalBase
-    :name="name"
-    :closable="closable"
-    @before-open="$emit('before-open')"
-    @opened="$emit('opened')"
-    @before-close="$emit('before-close')"
-    @closed="$emit('closed')"
-  >
+  <SModalBase :name="name" :closable="closable">
     <div class="SWindow">
       <button class="close" @click="close" v-if="closable">
         <SIconX class="close-icon" />
@@ -76,6 +69,7 @@ export default {
 .SWindow {
   position: relative;
   margin: 48px 24px;
+  border-radius: 2px;
   max-width: 768px;
   background-color: var(--c-white);
   box-shadow: var(--shadow-depth-5);
@@ -85,12 +79,6 @@ export default {
   @media (min-width: 768px) {
     margin: 96px auto;
   }
-}
-
-.modal-content-enter .SWindow,
-.modal-content-leave-to .SWindow {
-  opacity: 0;
-  transform: translateY(8px);
 }
 
 .close {
@@ -117,6 +105,7 @@ export default {
 }
 
 .header {
+  border-radius: 2px 2px 0 0;
   padding: 32px;
   background-color: var(--c-white-soft);
 

@@ -1,5 +1,5 @@
 <template>
-  <SModalBase name="alert">
+  <SModalBase name="alert" :closable="false">
     <div class="SAlert" :class="classes">
       <div class="icon">
         <component :is="icon" class="icon-svg" />
@@ -89,22 +89,18 @@ export default {
 
 .SAlert {
   margin: 48px 16px;
+  border-radius: 2px;
   padding: 48px;
   width: 100%;
   max-width: 512px;
   background-color: var(--c-white);
   box-shadow: var(--shadow-depth-5);
   transition: opacity .25s, transform .5s var(--ease-out-quint);
-  transition-delay: .05s;
+  transition-delay: .5s;
 
   @media (min-width: 544px) {
     margin: 128px auto;
   }
-}
-
-.modal-content-enter .SAlert,
-.modal-content-leave-to .SAlert {
-  opacity: 0;
 }
 
 .modal-content-enter .SAlert {
