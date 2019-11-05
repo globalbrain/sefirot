@@ -6,7 +6,12 @@
 
     <div class="columns">
       <div class="columns-row">
-        <div :class="`columns-cell ${column.name}`" :key="column.label" v-for="column in columns">
+        <div
+          :class="`columns-cell ${column.name}`"
+          :style="column.width && { width: column.width }"
+          :key="column.label"
+          v-for="column in columns"
+        >
           {{ column.label }}
         </div>
       </div>

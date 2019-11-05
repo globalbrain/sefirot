@@ -61,7 +61,7 @@ export default {
           type: 'Array',
           required: true,
           default: '—',
-          description: 'The columns for the grid. The array should contain object with properties of `name` and  `label`. `name` is used as class name for the column.'
+          description: 'The columns for the grid. The array should contain an object with properties of `name` ,  `label`, and `style`. `name` is used as a class name for the column. If `style` is defined, it will be added as inline CSS style for the column.'
         },
         {
           name: 'records',
