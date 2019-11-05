@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@nuxtjs/dotenv": "^1.4.1",
-    "@nuxtjs/google-analytics": "^2.2.0",
+    "@nuxtjs/google-analytics": "^2.2.1",
     "@nuxtjs/markdownit": "^1.2.7",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "^6.26.3",
