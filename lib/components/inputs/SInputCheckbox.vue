@@ -87,7 +87,7 @@ export default {
 
 .box {
   position: relative;
-  border: 2px solid var(--c-gray-dark);
+  border: 2px solid var(--c-gray-dark-1);
   border-radius: 2px;
   width: 18px;
   height: 18px;

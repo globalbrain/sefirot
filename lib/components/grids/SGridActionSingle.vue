@@ -40,7 +40,7 @@ export default {
   }
 
   &:hover {
-    background-color: var(--c-gray-lighter);
+    background-color: var(--c-gray-light-2);
   }
 
   &:hover .icon-svg {
@@ -48,7 +48,7 @@ export default {
   }
 
   &:active {
-    background-color: var(--c-gray-light);
+    background-color: var(--c-gray-light-1);
   }
 }
 
@@ -56,7 +56,7 @@ export default {
   display: block;
   width: 12px;
   height: 12px;
-  fill: var(--c-gray-light);
+  fill: var(--c-gray-light-1);
   transition: fill .25s;
 }
 </style>

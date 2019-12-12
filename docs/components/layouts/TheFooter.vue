@@ -11,7 +11,7 @@
 @import "@/assets/styles/variables";
 
 .TheFooter {
-  border-top: 1px solid var(--c-divider);
+  border-top: 1px solid var(--c-divider-light);
   padding: 32px 24px;
 
   @media (min-width: 375px) {

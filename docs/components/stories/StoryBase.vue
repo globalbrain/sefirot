@@ -21,7 +21,7 @@ export default {
 
 .StoryBase {
   margin: 48px -12px 0;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--c-divider-light);
   border-radius: 2px 2px 0 0;
   border-bottom: 0;
 

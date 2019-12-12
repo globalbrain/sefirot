@@ -46,7 +46,7 @@ export default {
   display: block;
   width: 12px;
   height: 12px;
-  fill: var(--c-gray-light);
+  fill: var(--c-gray-light-1);
   transition: fill .25s;
 }
 </style>

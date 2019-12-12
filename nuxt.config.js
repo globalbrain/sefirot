@@ -32,7 +32,7 @@ export default {
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: 'rgb(0, 0, 0)' },
       { rel: 'stylesheet', href: process.env.ADOBE_TYPEKIT },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto|Inconsolata&display=swap' }
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,500,700|Inconsolata&display=swap' }
     ]
   },
 

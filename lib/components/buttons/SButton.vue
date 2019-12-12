@@ -96,18 +96,20 @@ export default {
   border: 1px solid transparent;
   border-radius: 2px;
   min-width: 64px;
+  letter-spacing: 1px;
   font-size: 14px;
+  font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
   transition: color .25s, border-color .25s, background-color .25s;
 }
 
 .SButton.primary {
-  color: var(--c-white);
+  color: var(--c-text-dark-1);
   background-color: var(--c-black);
 
-  &:hover  { background-color: var(--c-black-light); }
-  &:active { background-color: var(--c-gray-darker); }
+  &:hover  { background-color: var(--c-gray-dark-4); }
+  &:active { background-color: var(--c-gray-dark-3); }
 
   &.info {
     background-color: var(--c-info);
@@ -191,7 +193,7 @@ export default {
   color: var(--c-black);
 
   &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-white-dark); }
+  &:active { background-color: var(--c-gray-light-4); }
 
   &.inverse {
     border-color: var(--c-white);
@@ -219,7 +221,7 @@ export default {
   color: var(--c-black);
 
   &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-white-dark); }
+  &:active { background-color: var(--c-gray-light-4); }
 
   &.inverse {
     color: var(--c-white);
@@ -246,7 +248,7 @@ export default {
   color: var(--c-gray);
 
   &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-white-dark); }
+  &:active { background-color: var(--c-gray-light-4); }
 
   &.inverse {
     &:hover {

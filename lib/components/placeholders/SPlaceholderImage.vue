@@ -67,7 +67,7 @@ export default {
 .SPlaceholderImage >>> .loader {
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--c-divider-light);
 }
 
 .img {

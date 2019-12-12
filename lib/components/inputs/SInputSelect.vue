@@ -135,6 +135,6 @@ export default {
   display: block;
   width: 14px;
   height: 14px;
-  fill: var(--c-gray-dark);
+  fill: var(--c-gray-dark-1);
 }
 </style>

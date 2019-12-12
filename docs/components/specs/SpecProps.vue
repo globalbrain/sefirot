@@ -58,7 +58,7 @@ export default {
   @media (min-width: 768px) {
     display: flex;
     margin-bottom: 24px;
-    border-bottom: 1px solid var(--c-divider);
+    border-bottom: 1px solid var(--c-divider-light);
     padding-top: 12px;
     padding-bottom: 12px;
   }
@@ -71,7 +71,7 @@ export default {
 }
 
 .specs-row {
-  border-bottom: 1px solid var(--c-divider);
+  border-bottom: 1px solid var(--c-divider-light);
   padding-bottom: 24px;
 
   & + & {

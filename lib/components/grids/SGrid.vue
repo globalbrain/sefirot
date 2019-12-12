@@ -117,7 +117,7 @@ export default {
 
 .body {
   position: relative;
-  border-top: 1px solid var(--c-divider);
+  border-top: 1px solid var(--c-divider-light);
 
   .body-records {
     transition: opacity .25s;
@@ -129,7 +129,7 @@ export default {
 
   .row {
     display: flex;
-    border-top: 1px solid var(--c-divider);
+    border-top: 1px solid var(--c-divider-light);
     padding: 22px 16px 21px;
     transition: background-color .25s;
     cursor: default;

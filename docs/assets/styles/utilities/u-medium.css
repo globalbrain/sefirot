@@ -16,7 +16,7 @@
   h2 {
     margin-top: 72px;
     margin-bottom: 24px;
-    border-top: 1px solid var(--c-divider);
+    border-top: 1px solid var(--c-divider-light);
     padding-top: 40px;
     line-height: 40px;
     font-size: 32px;
@@ -43,7 +43,7 @@
   }
 
   blockquote {
-    border-left: 4px solid var(--c-divider);
+    border-left: 4px solid var(--c-divider-light);
     padding-left: 24px;
     font-style: italic;
   }

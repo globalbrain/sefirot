@@ -7,21 +7,44 @@
   --c-white: #ffffff;
   --c-white-soft: #fafafa;
   --c-white-mute: #f2f2f2;
-  --c-white-dark: #e8e8e8;
 
   --c-black: #000000;
-  --c-black-soft: #121212;
-  --c-black-mute: #212121;
-  --c-black-light: #303030;
+  --c-black-soft: #1c1c1e;
+  --c-black-mute: #2c2c2e;
 
-  --c-gray: #888888;
-  --c-gray-light: #b8b8b8;
-  --c-gray-lighter: #e0e0e0;
-  --c-gray-dark: #757575;
-  --c-gray-darker: #525252;
+  --c-black-elevated: #1c1c1e;
+  --c-black-elevated-soft: #2c2c2e;
+  --c-black-elevated-mute: #3a3a3c;
 
-  --c-divider: var(--c-gray-lighter);
-  --c-divider-dark: var(--c-gray-darker);
+  --c-gray: #8E8E93;
+
+  --c-gray-dark-1: #636366;
+  --c-gray-dark-2: #48484a;
+  --c-gray-dark-3: #3a3a3c;
+  --c-gray-dark-4: #2c2c2e;
+  --c-gray-dark-5: #1c1c1e;
+
+  --c-gray-light-1: #aeaeb2;
+  --c-gray-light-2: #c7c7cc;
+  --c-gray-light-3: #d1d1d6;
+  --c-gray-light-4: #e5e5ea;
+  --c-gray-light-5: #f2f2f7;
+
+  --c-divider-light: rgba(60, 60, 67, .29);
+  --c-divider-light-solid: #c6c6c8;
+
+  --c-divider-dark: rgba(84, 84, 88, .65);
+  --c-divider-dark-solid: #38383a;
+
+  --c-text-light-1: var(--c-black);
+  --c-text-light-2: rgba(60, 60, 67, .6);
+  --c-text-light-3: rgba(60, 60, 67, .3);
+  --c-text-light-4: rgba(60, 60, 67, .18);
+
+  --c-text-dark-1: var(--c-white);
+  --c-text-dark-2: rgba(235, 235, 245, .6);
+  --c-text-dark-3: rgba(235, 235, 245, .3);
+  --c-text-dark-4: rgba(235, 235, 245, .18);
 
   --c-info: #4681c4;
   --c-info-light: #549ced;
@@ -57,7 +80,8 @@
    * Typography
    * --------------------------------------------------------------------- */
 
-  --font-family-base: "interstate", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-base: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-primary: "interstate", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
   --font-family-number: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
   --font-family-mono: "Iconsolata", "monospace", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue";
 

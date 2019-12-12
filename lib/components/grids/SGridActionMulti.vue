@@ -85,7 +85,7 @@ export default {
   display: block;
   width: 12px;
   height: 12px;
-  fill: var(--c-gray-light);
+  fill: var(--c-gray-light-1);
   transition: fill .25s;
 }
 
@@ -106,7 +106,7 @@ export default {
   }
 
   &:hover {
-    background-color: var(--c-gray-lighter);
+    background-color: var(--c-gray-light-2);
 
     .action-icon {
       fill: var(--c-black);
@@ -114,7 +114,7 @@ export default {
   }
 
   &:active {
-    background-color: var(--c-gray-light);
+    background-color: var(--c-gray-light-1);
   }
 }
 
