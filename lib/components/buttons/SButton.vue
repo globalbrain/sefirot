@@ -97,7 +97,7 @@ export default {
   border-radius: 4px;
   min-width: 64px;
   letter-spacing: 1px;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
   overflow: hidden;
   white-space: nowrap;
@@ -283,6 +283,7 @@ export default {
 .SButton.large {
   padding: 0 32px;
   line-height: 46px;
+  font-size: 14px;
 }
 
 .SButton.large.rounded {
