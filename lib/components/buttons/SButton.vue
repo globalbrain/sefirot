@@ -94,7 +94,7 @@ export default {
   display: inline-block;
   text-align: center;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
   min-width: 64px;
   letter-spacing: 1px;
   font-size: 14px;
