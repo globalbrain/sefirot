@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  head: {
-    title: 'Mixins'
-  },
 
   fetch ({ redirect }) {
     return redirect('/mixins/form')
+  },
+  head: {
+    title: 'Mixins'
   }
 }
 </script>

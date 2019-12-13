@@ -23,12 +23,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Inputs: Text'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -119,6 +113,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Inputs: Text'
+  },
+
+  scrollToTop: true
 }
 </script>

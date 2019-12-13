@@ -23,12 +23,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Inputs: Checkbox'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -83,6 +77,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Inputs: Checkbox'
+  },
+
+  scrollToTop: true
 }
 </script>

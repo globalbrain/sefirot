@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  head: {
-    title: 'Guide'
-  },
 
   fetch ({ redirect }) {
     return redirect('/guide/getting-started')
+  },
+  head: {
+    title: 'Guide'
   }
 }
 </script>

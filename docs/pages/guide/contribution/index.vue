@@ -70,16 +70,16 @@ export default {
     IconGitHub
   },
 
-  head: {
-    title: 'Contribution'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       iconGitHub: IconGitHub
     }
-  }
+  },
+
+  head: {
+    title: 'Contribution'
+  },
+
+  scrollToTop: true
 }
 </script>

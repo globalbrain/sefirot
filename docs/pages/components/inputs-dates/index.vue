@@ -23,12 +23,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Inputs: Dates'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -111,6 +105,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Inputs: Dates'
+  },
+
+  scrollToTop: true
 }
 </script>

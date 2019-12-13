@@ -24,12 +24,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Placeholders: Image'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -70,6 +64,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Placeholders: Image'
+  },
+
+  scrollToTop: true
 }
 </script>

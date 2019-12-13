@@ -60,14 +60,14 @@ export default {
     SButton
   },
 
-  head: {
-    title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
-  },
-
   data () {
     return {
       iconGitHub: IconGitHub
     }
+  },
+
+  head: {
+    title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
   }
 }
 </script>

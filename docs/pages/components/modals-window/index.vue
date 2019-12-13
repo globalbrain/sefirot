@@ -23,12 +23,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Modals: Window'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -88,6 +82,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Modals: Window'
+  },
+
+  scrollToTop: true
 }
 </script>

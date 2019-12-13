@@ -47,12 +47,6 @@ export default {
     SpecEvents
   },
 
-  head: {
-    title: 'Grids'
-  },
-
-  scrollToTop: true,
-
   data () {
     return {
       props: [
@@ -107,6 +101,12 @@ export default {
         }
       ]
     }
-  }
+  },
+
+  head: {
+    title: 'Grids'
+  },
+
+  scrollToTop: true
 }
 </script>

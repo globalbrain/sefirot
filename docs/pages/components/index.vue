@@ -4,12 +4,12 @@
 
 <script>
 export default {
-  head: {
-    title: 'Components'
-  },
 
   fetch ({ redirect }) {
     return redirect('/components/buttons')
+  },
+  head: {
+    title: 'Components'
   }
 }
 </script>
