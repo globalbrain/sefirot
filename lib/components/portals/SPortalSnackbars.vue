@@ -41,6 +41,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  z-index: var(--z-index-modal);
   padding: 16px;
   width: 100%;
   max-width: 560px;

@@ -31,10 +31,10 @@
   --c-gray-light-5: #f2f2f7;
 
   --c-divider-light: rgba(60, 60, 67, .29);
-  --c-divider-light-solid: #c6c6c8;
+  --c-divider-lighter: rgba(60, 60, 67, .12);
 
   --c-divider-dark: rgba(84, 84, 88, .65);
-  --c-divider-dark-solid: #38383a;
+  --c-divider-darker: rgba(84, 84, 88, .65);
 
   --c-text-light-1: var(--c-black);
   --c-text-light-2: rgba(60, 60, 67, .6);
@@ -89,11 +89,9 @@
    * Z Indexes
    * --------------------------------------------------------------------- */
 
-  --z-index-header: 1000;
-  --z-index-header-content: 1010;
-  --z-index-screen: 2000;
-  --z-index-backdrop: 3000;
-  --z-index-modal: 3010;
+  --z-index-screen: 1000;
+  --z-index-backdrop: 2000;
+  --z-index-modal: 2010;
 
   /**
    * Shadows
