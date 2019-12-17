@@ -29,7 +29,7 @@ export default {
     progress () {
       const value = this.now / this.max
 
-      const pow = Math.pow(10, 4)
+      const pow = 10 ** 4
 
       return Math.round(value * pow) / pow
     },

@@ -2,9 +2,9 @@ import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vuex from 'vuex'
 import PortalVue, { Wormhole } from 'portal-vue'
-import Sefirot from '@/store/Sefirot'
 import SWindowFull from './_fixtures/SWindowFull'
 import SWindowBlank from './_fixtures/SWindowBlank'
+import Sefirot from '@/store/Sefirot'
 
 global.MutationObserver = MutationObserver
 Wormhole.trackInstances = false

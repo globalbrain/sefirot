@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import IconSefirotH from '@/components/icons/IconSefirotH'
-import IconHamburger from '@/components/icons/IconHamburger'
 import TheHeaderNavScreen from './TheHeaderNavScreen'
 import TheHeaderNavBar from './TheHeaderNavBar'
+import IconSefirotH from '@/components/icons/IconSefirotH'
+import IconHamburger from '@/components/icons/IconHamburger'
 
 export default {
   components: {

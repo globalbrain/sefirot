@@ -69,7 +69,7 @@ export default {
       }
 
       return SIconInfo
-    },
+    }
   },
 
   methods: {

@@ -4,7 +4,7 @@ import SPlaceholderImage from '@/components/placeholders/SPlaceholderImage'
 jest.useFakeTimers()
 
 describe('Components - Placeholders - SPlaceholderImage', () => {
-  test('it emits `load` event when image is loaded', async () => {
+  test('it emits `load` event when image is loaded', () => {
     const wrapper = mount(SPlaceholderImage, {
       propsData: {
         img: 'example.jpg',

@@ -1,10 +1,11 @@
-require('dotenv').config()
-
+import { Configuration } from '@nuxt/types'
 import MarkdownItHighlight from 'markdown-it-highlight'
 
-export default {
+require('dotenv').config()
+
+const config: Configuration = {
   env: {
-    app_env: process.env.APP_ENV
+    app_env: process.env.APP_ENV ?? 'local'
   },
 
   srcDir: 'docs/',
@@ -66,3 +67,5 @@ export default {
     }
   }
 }
+
+export default config

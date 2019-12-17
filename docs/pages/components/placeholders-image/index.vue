@@ -3,7 +3,6 @@
 
 Placeholders are for showing temporary state when waiting for a certain component to be loaded, for example, a preloader icon could be shown while waiting for an image to be downloaded.
 
-
 <ShowcasePlaceholderImage />
 
 ## API

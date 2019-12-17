@@ -68,7 +68,6 @@ export default {
   &.left   { transform: translate(0, -50%); }
 }
 
-
 .tip.top {
   top: -40px;
   left: 50%;

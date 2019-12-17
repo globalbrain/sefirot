@@ -74,8 +74,6 @@ export default {
         clearInterval(this.interval)
 
         this.close()
-
-        return
       }, 250)
     },
 

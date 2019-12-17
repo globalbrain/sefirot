@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import HandlesValidationError from '@/mixins/HandlesValidationError'
 import HandlesValidationErrorChildComponent from './HandlesValidationErrorChildComponent'
+import HandlesValidationError from '@/mixins/HandlesValidationError'
 
 export default {
   components: {

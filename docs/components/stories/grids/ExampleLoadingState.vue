@@ -41,7 +41,7 @@ import SGrid from '@globalbrain/sefirot/lib/components/grids/SGrid'
 export default {
   components: {
     SButton,
-    SGrid,
+    SGrid
   },
 
   data () {

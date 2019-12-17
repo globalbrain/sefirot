@@ -6,8 +6,8 @@
     "lib"
   ],
   "scripts": {
-    "serve": "HOST=0.0.0.0 nuxt",
-    "generate": "nuxt generate",
+    "serve": "HOST=0.0.0.0 nuxt-ts",
+    "generate": "nuxt-ts generate",
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
     "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest",
@@ -31,7 +31,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.5",
+    "@nuxt/typescript-build": "^0.5.1",
+    "@nuxt/typescript-runtime": "^0.3.2",
     "@nuxtjs/dotenv": "^1.4.1",
+    "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.2.2",
     "@nuxtjs/markdownit": "^1.2.7",
     "@vue/test-utils": "^1.0.0-beta.29",
@@ -55,6 +58,8 @@
     "postcss-nested": "^4.2.1",
     "push-dir": "^0.4.1",
     "simplebar-vue": "^1.3.7",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.3",
     "v-calendar": "^0.9.7",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.5",
@@ -68,13 +73,17 @@
   "jest": {
     "moduleFileExtensions": [
       "js",
+      "ts",
       "vue"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/lib/$1"
+      "^@/(.*)$": "<rootDir>/lib/$1",
+      "^test/(.*)$": "<rootDir>/test/$1"
     },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "ts-jest",
       ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
     },
     "snapshotSerializers": [

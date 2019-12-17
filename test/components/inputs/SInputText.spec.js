@@ -44,7 +44,7 @@ describe('Components - Inputs - SInputText', () => {
 
     wrapper.find('.SInputText .icon').trigger('click')
 
-    expect(input).toBe(document.activeElement);
+    expect(input).toBe(document.activeElement)
   })
 
   test('it shows clear button only when the `value` is not empty', () => {
