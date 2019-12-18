@@ -1,17 +1,13 @@
 import require from './require'
 
 interface Rule {
+  name: string
   message: string
-  validate (value: any): boolean
-}
-
-function createRule (message: string, validate: (value: any) => boolean): Rule {
-  return { message, validate }
+  validate (value: any, data: Record<string, any>): boolean
 }
 
 export {
   Rule,
-  createRule,
   require
 }
 

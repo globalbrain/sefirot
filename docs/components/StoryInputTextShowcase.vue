@@ -29,15 +29,13 @@ export default createComponent({
     StoryBase
   },
 
-  setup () {
+  setup (props, context) {
     const { data, validation } = useForm({
       data: {
         name: ''
       },
       rules: {
-        name: [
-          new require('Name is required.')
-        ]
+        name: [require('Name is required.')]
       }
     })
 
