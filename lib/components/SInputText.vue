@@ -7,54 +7,39 @@
     :help="help"
     :validation="validation"
   >
-    <div class="container">
-      <div class="box">
-        <input
-          class="input"
-          :class="{ 'has-icon': icon, 'is-clearable': clearable }"
-          :id="name"
-          :type="type"
-          :placeholder="placeholder"
-          :value="value"
-          ref="input"
-          @input="emitInput"
-          @blur="emitBlur"
-          @keypress.enter="emitEnter"
-        >
+    <div class="box">
+      <input
+        class="input"
+        :class="{ 'has-icon': icon, 'is-clearable': clearable }"
+        :id="name"
+        :type="type"
+        :placeholder="placeholder"
+        :value="value"
+        ref="input"
+        @input="emitInput"
+        @blur="emitBlur"
+        @keypress.enter="emitEnter"
+      >
 
-        <div class="icon" role="button" @click="focus" v-if="icon">
-          <component :is="icon" class="icon-svg" />
-        </div>
-
-        <button class="clear" :class="{ show: showClearButton }" @click="clear" v-if="clearable">
-          <SIconX class="clear-svg" />
-        </button>
+      <div class="icon" role="button" @click="focus" v-if="icon">
+        <component :is="icon" class="icon-svg" />
       </div>
 
-      <div class="actions" v-if="actions">
-        <div class="action" :key="action.label" v-for="action in actions">
-          <SButton
-            :type="action.type"
-            size="large"
-            :label="action.label"
-            @click="action.callback"
-          />
-        </div>
-      </div>
+      <button class="clear" :class="{ show: showClearButton }" @click="clear" v-if="clearable">
+        <SIconX class="clear-svg" />
+      </button>
     </div>
   </SInputBase>
 </template>
 
-<script>
-import Validation from '../../validation/Validation'
-import SIconX from '../icons/SIconX'
-import SButton from '../buttons/SButton'
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SIconX from './icons/SIconX.vue'
+import SInputBase from './SInputBase.vue'
 
-export default {
+export default createComponent({
   components: {
     SIconX,
-    SButton,
     SInputBase
   },
 
@@ -92,7 +77,7 @@ export default {
     },
 
     emitBlur (e) {
-      Validation.touch(this.validation)
+      // Validation.touch(this.validation)
 
       this.$emit('blur', e.target.value)
     },
@@ -107,7 +92,7 @@ export default {
       this.$emit('clear')
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -119,13 +104,8 @@ export default {
   }
 }
 
-.container {
-  display: flex;
-}
-
 .box {
   position: relative;
-  flex-grow: 1;
 
   &:hover .input {
     border-color: var(--c-gray);
@@ -135,7 +115,7 @@ export default {
 .input {
   display: block;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 11px 16px;
   width: 100%;
   line-height: 24px;
@@ -144,7 +124,7 @@ export default {
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--c-gray);
+    color: var(--c-text-light-2);
   }
 
   &:focus {
@@ -203,16 +183,5 @@ export default {
   height: 12px;
   fill: var(--c-black);
   transition: fill .25s;
-}
-
-.actions {
-  display: flex;
-  padding-left: 8px;
-}
-
-.action {
-  & + & {
-    padding-left: 8px;
-  }
 }
 </style>

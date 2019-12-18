@@ -16,10 +16,10 @@
   </div>
 </template>
 
-<script>
-import Validation from '../../validation/Validation'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
 
-export default {
+export default createComponent({
   props: {
     name: { type: String, default: null },
     note: { type: String, default: null },
@@ -30,14 +30,14 @@ export default {
 
   computed: {
     hasError () {
-      return Validation.hasError(this.validation)
+      // return Validation.hasError(this.validation)
     },
 
     errorMsg () {
-      return Validation.getErrorMsg(this.validation)
+      // return Validation.getErrorMsg(this.validation)
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -59,6 +59,7 @@ export default {
   width: 100%;
   line-height: 20px;
   font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
   transition: color .25s;
 }
@@ -67,7 +68,8 @@ export default {
   display: inline-block;
   margin-left: 8px;
   font-size: 12px;
-  color: var(--c-gray);
+  font-weight: 500;
+  color: var(--c-text-light-2);
 }
 
 .help {
@@ -76,10 +78,11 @@ export default {
 
 .help-text {
   margin: 0;
-  padding: 4px 0 0;
+  padding: 6px 0 0;
   line-height: 20px;
-  font-size: 14px;
-  color: var(--c-gray);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-light-2);
   transition: transform .25s;
 }
 
