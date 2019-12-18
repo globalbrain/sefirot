@@ -19,6 +19,8 @@ const config: Configuration = {
     }
   },
 
+  buildModules: ['@nuxt/typescript-build'],
+
   head: {
     titleTemplate: '%s | Sefirot',
 
@@ -49,9 +51,9 @@ const config: Configuration = {
   ],
 
   plugins: [
-    '@/plugins/vuelidate.js',
-    { src: '@/plugins/v-calendar.js', ssr: false },
-    '@/plugins/portal-vue.js'
+    { src: '@@/lib/plugins/vue-composition-api' },
+    { src: '@@/lib/plugins/portal-vue' },
+    { src: '@@/lib/plugins/v-calendar', mode: 'client' }
   ],
 
   loading: false,

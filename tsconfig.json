@@ -16,14 +16,21 @@
     "baseUrl": ".",
     "paths": {
       "~/*": [
-        "./*"
+        "./docs/*"
       ],
       "@/*": [
+        "./docs/*"
+      ],
+      "@@/*": [
         "./*"
+      ],
+      "sefirot/*": [
+        "./lib/*"
       ]
     },
     "types": [
       "@types/node",
+      "@types/jest",
       "@nuxt/types",
       "./types/markdown-it-hightlight"
     ]

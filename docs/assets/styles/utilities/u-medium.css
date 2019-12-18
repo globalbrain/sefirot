@@ -3,58 +3,64 @@
   max-width: 720px;
 
   h1 {
-    line-height: 56px;
-    font-size: 48px;
+    line-height: 40px;
+    font-family: var(--font-family-primary);
+    font-size: 32px;
+    font-weight: 500;
   }
 
   h1 + p {
     padding-top: 16px;
-    line-height: 28px;
-    font-size: 20px;
+    line-height: 24px;
+    font-size: 16px;
   }
 
   h2 {
     margin-top: 72px;
     margin-bottom: 24px;
-    border-top: 1px solid var(--c-divider-light);
-    padding-top: 40px;
-    line-height: 40px;
-    font-size: 32px;
+    border-top: 1px solid var(--c-divider-lighter);
+    padding-top: 32px;
+    line-height: 32px;
+    font-family: var(--font-family-primary);
+    font-size: 24px;
+    font-weight: 500;
   }
 
   h3 {
     margin-top: 48px;
     margin-bottom: 24px;
     line-height: 32px;
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: 500;
   }
 
   p {
     margin-bottom: 24px;
+    font-weight: 400;
   }
 
   a {
-    text-decoration: underline;
+    color: var(--c-info-light);
     transition: color .25s;
 
     &:hover {
-      color: var(--c-gray);
+      color: var(--c-info-dark);
     }
   }
 
   blockquote {
-    border-left: 4px solid var(--c-divider-light);
+    border-left: 4px solid var(--c-divider-lighter);
     padding-left: 24px;
     font-style: italic;
   }
 
   code {
     display: inline-block;
-    border-radius: 2px;
+    border-radius: 4px;
     padding: 0 6px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 20px;
-    color: var(--c-black);
+    color: var(--c-info-light);
     background-color: var(--c-white-mute);
   }
 
@@ -77,8 +83,8 @@
 
   .StoryBase + pre {
     margin-top: 0;
-    border-top: 1px solid var(--c-black-mute);
-    border-radius: 0 0 2px 2px;
+    border-top: 1px solid var(--c-divider-darker);
+    border-radius: 0 0 4px 4px;
   }
 
   @media (min-width: 375px) {

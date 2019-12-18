@@ -10,36 +10,39 @@
   </div>
 </template>
 
-<script>
-import SidebarNavigation from '@/components/layouts/SidebarNavigation'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SidebarNavigation, { Content } from '@/components/SidebarNavigation.vue'
 
 export default {
   components: {
     SidebarNavigation
   },
 
-  data () {
+  setup () {
+    const contents: Content[] = [
+      { label: 'Buttons', path: '/components/buttons' },
+      { label: 'Grids', path: '/components/grids' },
+      { label: 'Inputs: Checkbox', path: '/components/inputs-checkbox' },
+      { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
+      { label: 'Inputs: Dates', path: '/components/inputs-dates' },
+      { label: 'Inputs: Radios', path: '/components/inputs-radios' },
+      { label: 'Inputs: Select', path: '/components/inputs-select' },
+      { label: 'Inputs: Switch', path: '/components/inputs-switch' },
+      { label: 'Inputs: Switches', path: '/components/inputs-switches' },
+      { label: 'Inputs: Text', path: '/components/inputs-text' },
+      { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
+      { label: 'Modals: Alert', path: '/components/modals-alert' },
+      { label: 'Modals: Dialog', path: '/components/modals-dialog' },
+      { label: 'Modals: Window', path: '/components/modals-window' },
+      { label: 'Placeholders: Blank', path: '/components/placeholders-blank' },
+      { label: 'Placeholders: Image', path: '/components/placeholders-image' },
+      { label: 'Screens', path: '/components/screens' },
+      { label: 'Snackbars', path: '/components/snackbars' }
+    ]
+
     return {
-      contents: [
-        { label: 'Buttons', path: '/components/buttons' },
-        { label: 'Grids', path: '/components/grids' },
-        { label: 'Inputs: Checkbox', path: '/components/inputs-checkbox' },
-        { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
-        { label: 'Inputs: Dates', path: '/components/inputs-dates' },
-        { label: 'Inputs: Radios', path: '/components/inputs-radios' },
-        { label: 'Inputs: Select', path: '/components/inputs-select' },
-        { label: 'Inputs: Switch', path: '/components/inputs-switch' },
-        { label: 'Inputs: Switches', path: '/components/inputs-switches' },
-        { label: 'Inputs: Text', path: '/components/inputs-text' },
-        { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
-        { label: 'Modals: Alert', path: '/components/modals-alert' },
-        { label: 'Modals: Dialog', path: '/components/modals-dialog' },
-        { label: 'Modals: Window', path: '/components/modals-window' },
-        { label: 'Placeholders: Blank', path: '/components/placeholders-blank' },
-        { label: 'Placeholders: Image', path: '/components/placeholders-image' },
-        { label: 'Screens', path: '/components/screens' },
-        { label: 'Snackbars', path: '/components/snackbars' }
-      ]
+      contents
     }
   }
 }
@@ -56,7 +59,7 @@ export default {
   }
 
   @media (min-width: 1056px) {
-    padding: 0 48px 0;
+    padding: 32px 48px 0;
   }
 }
 

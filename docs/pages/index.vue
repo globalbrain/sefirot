@@ -5,37 +5,17 @@
         <h1 class="title">Vue Components for Global Brain Design System.</h1>
         <p class="lead">We Shape Our Buildings. Thereafter, They Shape Us.</p>
 
-        <div class="action">
-          <SButton tag="nuxt-link" size="large" label="GET STARTED" to="/guide" />
-        </div>
-      </div>
-
-      <div class="sections">
-        <section class="section">
-          <h2 class="section-title">What is Sefirot?</h2>
-
-          <p class="section-text">Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
-
-          <p class="section-text">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
-
-          <p class="section-text">Please feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.</p>
-
-          <div class="section-action">
+        <div class="actions">
+          <div class="action">
             <SButton
               tag="nuxt-link"
               size="large"
-              label="SEE DOCUMENTATION"
+              label="GET STARTED"
               to="/guide"
+              block
             />
           </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-title">Contribution</h2>
-
-          <p class="section-text">Sefirot is open-sourced software licensed under the MIT license. If you are interested in contributing to Sefirot, we’ll be really excited. If there’s anything, please open an issue or even send us pull request on GitHub.</p>
-
-          <div class="section-action">
+          <div class="action">
             <SButton
               tag="a"
               size="large"
@@ -43,24 +23,38 @@
               label="SEE ON GITHUB"
               href="https://github.com/globalbrain/sefirot"
               target="_blank"
+              block
             />
           </div>
-        </section>
+        </div>
+      </div>
+
+      <div class="description">
+        <div class="column">
+          <p class="text">Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
+
+          <p class="text">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
+        </div>
+
+        <div class="column">
+          <p class="text">Please feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.</p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-import SButton from '@@/lib/components/buttons/SButton'
-import IconGitHub from '@/components/icons/IconGitHub'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SButton from '@@/lib/components/SButton.vue'
+import IconGitHub from '@/components/icons/IconGitHub.vue'
 
-export default {
+export default createComponent({
   components: {
     SButton
   },
 
-  data () {
+  setup () {
     return {
       iconGitHub: IconGitHub
     }
@@ -69,7 +63,7 @@ export default {
   head: {
     title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -108,7 +102,9 @@ export default {
 .title {
   line-height: 32px;
   text-align: center;
+  font-family: var(--font-family-primary);
   font-size: 24px;
+  font-weight: 500;
 
   @media (min-width: 375px) {
     line-height: 40px;
@@ -124,6 +120,8 @@ export default {
 .lead {
   padding-top: 8px;
   text-align: center;
+  font-family: var(--font-family-primary);
+  font-weight: 500;
 
   @media (min-width: 375px) {
     line-height: 28px;
@@ -137,75 +135,55 @@ export default {
   }
 }
 
-.action {
+.actions {
   padding-top: 24px;
-  text-align: center;
 
-  @media (min-width: 375px) {
+  @media (min-width: 512px) {
+    display: flex;
+    margin: 0 auto;
+    max-width: 460px;
+  }
+
+  @media (min-width: 768px) {
     padding-top: 32px;
   }
 }
 
-.sections {
+.action {
   margin: 0 auto;
+  width: 224px;
+
+  & + & {
+    padding-top: 12px;
+  }
+
+  @media (min-width: 512px) {
+    & + & {
+      padding-top: 0;
+      padding-left: 12px;
+    }
+  }
+}
+
+.description {
+  margin: 0 auto;
+  padding-top: 48px;
   max-width: 512px;
-  padding-top: 64px;
-
-  @media (min-width: 375px) {
-    padding-top: 96px;
-  }
 
   @media (min-width: 768px) {
-    display: flex;
-    max-width: 100%;
-  }
-
-  @media (min-width: 1056px) {
-    padding-top: 128px;
+    padding-top: 64px;
   }
 }
 
-.section {
-  @media (min-width: 768px) {
-    flex-shrink: 0;
-    width: 50%;
-
-    &:first-child {
-      padding-right: 24px;
-    }
-
-    &:last-child {
-      padding-left: 24px;
-    }
-  }
-
-  @media (min-width: 1056px) {
-    &:first-child {
-      padding-right: 32px;
-    }
-
-    &:last-child {
-      padding-left: 32px;
-    }
-  }
-}
-
-.section-title {
-  padding-bottom: 24px;
-  font-size: 24px;
-
-  @media (min-width: 375px) {
-    font-size: 32px;
-  }
-}
-
-.section-text {
+.column {
   & + & {
     padding-top: 24px;
   }
 }
 
-.section-action {
-  padding-top: 32px;
+.text {
+  & + & {
+    padding-top: 24px;
+  }
 }
 </style>

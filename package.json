@@ -37,7 +37,9 @@
     "@nuxtjs/eslint-config-typescript": "^1.0.0",
     "@nuxtjs/google-analytics": "^2.2.2",
     "@nuxtjs/markdownit": "^1.2.7",
-    "@vue/test-utils": "^1.0.0-beta.29",
+    "@types/jest": "^24.0.23",
+    "@vue/composition-api": "^0.3.4",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -52,23 +54,23 @@
     "markdown-it-highlight": "^0.2.0",
     "mutation-observer": "^1.0.3",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.10.1",
+    "nuxt": "^2.11.0",
     "portal-vue": "^2.1.6",
     "postcss-css-variables": "^0.14.0",
     "postcss-nested": "^4.2.1",
     "push-dir": "^0.4.1",
-    "simplebar-vue": "^1.3.7",
+    "simplebar-vue": "^1.4.0",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3",
-    "v-calendar": "^0.9.7",
-    "vue": "^2.6.10",
+    "v-calendar": "^1.0.0-beta.23",
+    "vue": "^2.6.11",
     "vue-jest": "^3.0.5",
     "vue-router": "^3.1.3",
-    "vue-server-renderer": "^2.6.10",
-    "vue-template-compiler": "^2.6.10",
+    "vue-server-renderer": "^2.6.11",
+    "vue-template-compiler": "^2.6.11",
     "vue-thin-modal": "^1.3.0",
     "vuelidate": "^0.7.4",
-    "webpack": "^4.41.2"
+    "webpack": "^4.41.3"
   },
   "jest": {
     "moduleFileExtensions": [
@@ -77,18 +79,19 @@
       "vue"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/lib/$1",
+      "^sefirot/(.*)$": "<rootDir>/lib/$1",
       "^test/(.*)$": "<rootDir>/test/$1"
     },
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.js$": "babel-jest",
       "^.+\\.tsx?$": "ts-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+      ".*\\.(vue)$": "vue-jest"
     },
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-serializer-vue"
     ],
+    "setupFilesAfterEnv": ["./test/setup.ts"],
     "collectCoverageFrom": [
       "lib/**/*.{js,vue}",
       "!**/node_modules/**"

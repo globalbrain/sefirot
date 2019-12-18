@@ -25,7 +25,7 @@ To begin using the components, you should directly import them from `lib` direct
 </template>
 
 <script>
-import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
+import SButton from '@globalbrain/sefirot/lib/components/SButton'
 
 export default {
   components: {
@@ -117,12 +117,14 @@ export default {
 ```
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+
+export default createComponent({
   head: {
     title: 'Getting Started'
   },
 
   scrollToTop: true
-}
+})
 </script>

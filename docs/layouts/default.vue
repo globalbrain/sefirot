@@ -7,32 +7,20 @@
     </div>
 
     <TheFooter />
-
-    <SPortalModals />
-    <SPortalScreens />
-    <SPortalSnackbars />
   </div>
 </template>
 
-<script>
-import HandlesValidationError from '@@/lib/mixins/HandlesValidationError'
-import SPortalModals from '@@/lib/components/portals/SPortalModals'
-import SPortalScreens from '@@/lib/components/portals/SPortalScreens'
-import SPortalSnackbars from '@@/lib/components/portals/SPortalSnackbars'
-import TheFooter from '@/components/layouts/TheFooter'
-import TheHeader from '@/components/layouts/TheHeader'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import TheFooter from '@/components/TheFooter.vue'
+import TheHeader from '@/components/TheHeader.vue'
 
-export default {
+export default createComponent({
   components: {
     TheHeader,
-    TheFooter,
-    SPortalModals,
-    SPortalScreens,
-    SPortalSnackbars
-  },
-
-  mixins: [HandlesValidationError()]
-}
+    TheFooter
+  }
+})
 </script>
 
 <style lang="postcss" scoped>

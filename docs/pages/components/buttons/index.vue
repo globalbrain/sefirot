@@ -3,41 +3,30 @@
 
 Buttons allow users to take actions, and make choices, with a single tap.
 
-<ShowcaseButtons />
+<StoryButtonShowcase />
 
-## Description
+## Sizes
 
-It's a very simple button component with various options.
+Button has 2 sizes, `medium` and `large`. You can control the sizes through `size` prop. The default size is `medium`.
 
-```html
-<template>
-  <SButton label="BUTTON" @click="submit" />
-</template>
+<StoryButtonEXMedium />
+<StoryButtonEXLarge />
 
-<script>
-import SButton from '@globalbrains/sefirot/lib/components/buttons/SButton'
+## Rounded Corner
 
-export default {
-  components: {
-    SButton
-  },
+By setting `rounded` prop to `true`, you'll get the rounded button.
 
-  methods: {
-    submit () {
-      // ...
-    }
-  }
-}
-</script>
-```
+<StoryButtonEXRounded />
 
-## Examples
+## Modes
 
-<ExampleMediumButtons />
-<ExampleLargeButtons />
-<ExampleRoundedButton />
-<ExampleButtonModes />
-<ExampleLoadingState />
+The button comes with various colors, and you can control it through `mode` prop. Available values are `neutral`, `info`, `success`, `warning`, and `danger`.
+
+<StoryButtonEXModes />
+
+## Loading State
+
+<StoryButtonEXLoadingState />
 
 ## API
 
@@ -45,24 +34,25 @@ export default {
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import ShowcaseButtons from '@/components/stories/buttons/ShowcaseButtons'
-import ExampleMediumButtons from '@/components/stories/buttons/ExampleMediumButtons'
-import ExampleLargeButtons from '@/components/stories/buttons/ExampleLargeButtons'
-import ExampleRoundedButton from '@/components/stories/buttons/ExampleRoundedButton'
-import ExampleButtonModes from '@/components/stories/buttons/ExampleButtonModes'
-import ExampleLoadingState from '@/components/stories/buttons/ExampleLoadingState'
-import SpecProps from '@/components/specs/SpecProps'
-import SpecEvents from '@/components/specs/SpecEvents'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import StoryButtonShowcase from '@/components/StoryButtonShowcase.vue'
+import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
+import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
+import StoryButtonEXRounded from '@/components/StoryButtonEXRounded.vue'
+import StoryButtonEXModes from '@/components/StoryButtonEXModes.vue'
+import StoryButtonEXLoadingState from '@/components/StoryButtonEXLoadingState.vue'
+import SpecProps, { Prop } from '@/components/SpecProps.vue'
+import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 
-export default {
+export default createComponent({
   components: {
-    ShowcaseButtons,
-    ExampleMediumButtons,
-    ExampleLargeButtons,
-    ExampleRoundedButton,
-    ExampleButtonModes,
-    ExampleLoadingState,
+    StoryButtonShowcase,
+    StoryButtonEXMedium,
+    StoryButtonEXLarge,
+    StoryButtonEXRounded,
+    StoryButtonEXModes,
+    StoryButtonEXLoadingState,
     SpecProps,
     SpecEvents
   },
@@ -73,81 +63,84 @@ export default {
 
   scrollToTop: true,
 
-  data () {
-    return {
-      props: [
-        {
-          name: 'label',
-          type: 'String',
-          required: true,
-          default: '—',
-          description: 'The label text for the button.'
-        },
-        {
-          name: 'tag',
-          type: 'String',
-          required: false,
-          default: '\'button\'',
-          description: 'The tag for the button. It can be any valid html tag including `nuxt-link`.'
-        },
-        {
-          name: 'to',
-          type: 'String',
-          required: false,
-          default: '\'/\'',
-          description: 'The `to` prop for the `nuxt-link` tag. This prop is only useful when `tag` is set to `nuxt-link`.'
-        },
-        {
-          name: 'type',
-          type: 'String',
-          required: false,
-          default: '\'primary\'',
-          description: 'The type of the button. Available types are: `primary`, `secondary`, `text`, and `mute`.'
-        },
-        {
-          name: 'mode',
-          type: 'String',
-          required: false,
-          default: '\'neutral\'',
-          description: 'The mode of the button. Available modes are: `neutral`, `info`, `success`, `warning`, and `danger`.'
-        },
-        {
-          name: 'size',
-          type: 'String',
-          required: false,
-          default: '\'medium\'',
-          description: 'The size of the button. Available sizes are: `medium`, and `large`.'
-        },
-        {
-          name: 'block',
-          type: 'Boolean',
-          required: false,
-          default: 'false',
-          description: 'Apply `display: block` to the button.'
-        },
-        {
-          name: 'inverse',
-          type: 'Boolean',
-          required: false,
-          default: 'false',
-          description: 'Inverse button theme.'
-        },
-        {
-          name: 'loading',
-          type: 'Boolean',
-          required: false,
-          default: 'false',
-          description: 'Show loading indicator.'
-        }
-      ],
+  setup () {
+    const props: Prop[] = [
+      {
+        name: 'label',
+        type: 'string',
+        required: true,
+        default: '—',
+        description: 'The label text for the button.'
+      },
+      {
+        name: 'tag',
+        type: 'string',
+        required: false,
+        default: '\'button\'',
+        description: 'The tag for the button. It can be any valid html tag including `nuxt-link`.'
+      },
+      {
+        name: 'to',
+        type: 'string',
+        required: false,
+        default: '\'/\'',
+        description: 'The `to` prop for the `nuxt-link` tag. This prop is only useful when `tag` is set to `nuxt-link`.'
+      },
+      {
+        name: 'type',
+        type: 'string',
+        required: false,
+        default: '\'primary\'',
+        description: 'The type of the button. Available types are: `primary`, `secondary`, `text`, and `mute`.'
+      },
+      {
+        name: 'mode',
+        type: 'string',
+        required: false,
+        default: '\'neutral\'',
+        description: 'The mode of the button. Available modes are: `neutral`, `info`, `success`, `warning`, and `danger`.'
+      },
+      {
+        name: 'size',
+        type: 'string',
+        required: false,
+        default: '\'medium\'',
+        description: 'The size of the button. Available sizes are: `medium`, and `large`.'
+      },
+      {
+        name: 'block',
+        type: 'boolean',
+        required: false,
+        default: 'false',
+        description: 'Apply `display: block` to the button.'
+      },
+      {
+        name: 'inverse',
+        type: 'boolean',
+        required: false,
+        default: 'false',
+        description: 'Inverse button theme.'
+      },
+      {
+        name: 'loading',
+        type: 'boolean',
+        required: false,
+        default: 'false',
+        description: 'Show loading indicator.'
+      }
+    ]
 
-      events: [
-        {
-          name: 'click',
-          description: 'Fires when a user clicks the button.'
-        }
-      ]
+    const events: Event[] = [
+      {
+        name: 'click',
+        description: 'Fires when an user clicks the button.'
+      }
+    ]
+
+    return {
+      props,
+      events
     }
   }
-}
+})
 </script>

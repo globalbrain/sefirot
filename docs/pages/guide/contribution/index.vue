@@ -60,17 +60,18 @@ Generate test coverage in `coverage` directory.
 Sefirot is open-sourced software licensed under the [MIT license](LICENSE.md).
 </template>
 
-<script>
-import SButton from '@@/lib/components/buttons/SButton'
-import IconGitHub from '@/components/icons/IconGitHub'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SButton from '@@/lib/components/SButton.vue'
+import IconGitHub from '@/components/icons/IconGitHub.vue'
 
-export default {
+export default createComponent({
   components: {
     SButton,
     IconGitHub
   },
 
-  data () {
+  setup () {
     return {
       iconGitHub: IconGitHub
     }
@@ -81,5 +82,5 @@ export default {
   },
 
   scrollToTop: true
-}
+})
 </script>

@@ -10,29 +10,32 @@
   </div>
 </template>
 
-<script>
-import SidebarNavigation from '@/components/layouts/SidebarNavigation'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SidebarNavigation, { Content } from '@/components/SidebarNavigation.vue'
 
-export default {
+export default createComponent({
   components: {
     SidebarNavigation
   },
 
-  data () {
+  setup () {
+    const contents: Content[] = [
+      { label: 'Getting Started', path: '/guide/getting-started' },
+      { label: 'Contribution', path: '/guide/contribution' }
+    ]
+
     return {
-      contents: [
-        { label: 'Getting Started', path: '/guide/getting-started' },
-        { label: 'Contribution', path: '/guide/contribution' }
-      ]
+      contents
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.Mixins {
+.Guide {
   position: relative;
 
   @media (min-width: 768px) {
@@ -40,7 +43,7 @@ export default {
   }
 
   @media (min-width: 1056px) {
-    padding: 0 48px 0;
+    padding: 32px 48px 0;
   }
 }
 
