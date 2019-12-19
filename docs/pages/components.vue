@@ -14,7 +14,7 @@
 import { createComponent } from '@vue/composition-api'
 import SidebarNavigation, { Content } from '@/components/SidebarNavigation.vue'
 
-export default {
+export default createComponent({
   components: {
     SidebarNavigation
   },
@@ -45,7 +45,7 @@ export default {
       contents
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

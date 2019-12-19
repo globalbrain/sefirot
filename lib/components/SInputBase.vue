@@ -10,14 +10,15 @@
       <p class="help-text" v-if="help">{{ help }}</p>
 
       <transition name="slide" mode="out-in">
-        <p class="help-error" v-if="hasError" :key="errorMsg">{{ errorMsg }}</p>
+        <p class="help-error" v-if="showError" :key="errorMsg">{{ errorMsg }}</p>
       </transition>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { createComponent, computed, PropType } from '@vue/composition-api'
+import { Validation } from '../validation/Validation'
 
 export default createComponent({
   props: {
@@ -25,16 +26,25 @@ export default createComponent({
     note: { type: String, default: null },
     label: { type: String, default: null },
     help: { type: String, default: null },
-    validation: { type: Object, default: null }
+    validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  computed: {
-    hasError () {
-      // return Validation.hasError(this.validation)
-    },
+  setup (props) {
+    const hasError = computed(() => {
+      return props.validation.$isDirty.value && !props.validation.$isValid.value
+    })
 
-    errorMsg () {
-      // return Validation.getErrorMsg(this.validation)
+    const errorMsg = computed(() => {
+      const errors = props.validation.$errors.value
+      return errors.length > 0 ? errors[0][1] : null
+    })
+
+    const showError = computed(() => hasError.value && errorMsg.value)
+
+    return {
+      hasError,
+      errorMsg,
+      showError
     }
   }
 })
@@ -49,7 +59,7 @@ export default createComponent({
   }
 
   .help-text {
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
 }
 
@@ -94,7 +104,8 @@ export default createComponent({
   margin: 0;
   padding: 4px 0 0 0;
   line-height: 20px;
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--c-danger);
   transition: opacity .25s, transform .25s;
 }

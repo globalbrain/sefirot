@@ -25,7 +25,7 @@
         <component :is="icon" class="icon-svg" />
       </div>
 
-      <button class="clear" :class="{ show: showClearButton }" @click="clear" v-if="clearable">
+      <button class="clear" :class="{ show: showClearButton }" @click="emitClear" v-if="clearable">
         <SIconX class="clear-svg" />
       </button>
     </div>
@@ -33,7 +33,8 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { createComponent, ref, computed, PropType } from '@vue/composition-api'
+import { Validation } from '../validation/Validation'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
@@ -52,44 +53,52 @@ export default createComponent({
     placeholder: { type: String, default: null },
     icon: { type: Object, default: null },
     clearable: { type: Boolean, default: false },
-    validation: { type: Object, default: null },
     value: { type: [String, Number], default: null },
-    actions: { type: Array, default: null }
+    validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  computed: {
-    showClearButton () {
-      return this.value != null && this.value !== ''
+  setup (props, context) {
+    const input = ref<HTMLElement | null>(null)
+
+    const showClearButton = computed(() => {
+      return props.value !== null && props.value !== undefined && props.value !== ''
+    })
+
+    function focus () {
+      (input.value as HTMLElement).focus()
     }
-  },
 
-  methods: {
-    focus () {
-      this.$refs.input.focus()
-    },
+    function blur () {
+      (input.value as HTMLElement).blur()
+    }
 
-    blur () {
-      this.$refs.input.blur()
-    },
+    function emitInput (e: InputEvent) {
+      context.emit('input', (e.target as HTMLInputElement).value)
+    }
 
-    emitInput (e) {
-      this.$emit('input', e.target.value)
-    },
+    function emitBlur (e: InputEvent) {
+      props.validation.$touch()
+      context.emit('blur', (e.target as HTMLInputElement).value)
+    }
 
-    emitBlur (e) {
-      // Validation.touch(this.validation)
+    function emitEnter (e: InputEvent) {
+      blur()
+      context.emit('enter', (e.target as HTMLInputElement).value)
+    }
 
-      this.$emit('blur', e.target.value)
-    },
+    function emitClear () {
+      context.emit('clear')
+    }
 
-    emitEnter (e) {
-      this.blur()
-
-      this.$emit('enter', e.target.value)
-    },
-
-    clear () {
-      this.$emit('clear')
+    return {
+      input,
+      showClearButton,
+      focus,
+      blur,
+      emitInput,
+      emitBlur,
+      emitEnter,
+      emitClear
     }
   }
 })
@@ -101,6 +110,10 @@ export default createComponent({
 .SInputText.has-error {
   .input {
     border-color: var(--c-danger);
+
+    &:focus {
+      border-color: var(--c-danger);
+    }
   }
 }
 
@@ -128,7 +141,7 @@ export default createComponent({
   }
 
   &:focus {
-    border-color: var(--c-black) !important;
+    border-color: var(--c-black);
     background-color: var(--c-white);
   }
 

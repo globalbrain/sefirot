@@ -1,4 +1,4 @@
-import require from './require'
+import required from './required'
 
 interface Rule {
   name: string
@@ -8,9 +8,5 @@ interface Rule {
 
 export {
   Rule,
-  require
-}
-
-export default {
-  require
+  required
 }
