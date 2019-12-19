@@ -8,31 +8,37 @@
     :validation="validation"
   >
     <div class="container">
-      <no-ssr>
+      <ClientOnly>
         <v-date-picker
-          class="input"
-          mode="single"
-          tint-color="#000000"
-          :theme-styles="styles"
-          popover-visibility="focus"
-          :formats="formats"
-          :min-date="minDate"
-          :max-date="maxDate"
-          :available-dates="availableDates"
-          :disabled-dates="disabledDates"
+          v-slot="{ inputProps, inputEvents }"
           :value="value"
+          color="blue"
+          is-dark
+          :masks="{ input: 'YYYY-MM-DD' }"
+          :popover="{ placement: 'bottom', visibility: 'click' }"
           @input="emitInput"
-        />
-      </no-ssr>
+        >
+          <input
+            class="input"
+            :id="name"
+            type="text"
+            placeholder="YYYY-MM-DD"
+            v-bind="inputProps"
+            v-on="inputEvents"
+            @blur="emitBlur"
+          >
+        </v-date-picker>
+      </ClientOnly>
     </div>
   </SInputBase>
 </template>
 
-<script>
-import Validation from '../../validation/Validation'
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { createComponent, PropType } from '@vue/composition-api'
+import { Validation } from '../validation/Validation'
+import SInputBase from './SInputBase.vue'
 
-export default {
+export default createComponent({
   components: {
     SInputBase
   },
@@ -42,74 +48,51 @@ export default {
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
-    minDate: { type: null, default: null },
-    maxDate: { type: null, default: null },
-    availableDates: { type: Object, default: null },
-    disabledDates: { type: Object, default: null },
-    value: { type: null, required: true },
-    validation: { type: Object, default: null }
+    value: { type: Date, default: null },
+    validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  data () {
-    return {
-      styles: {
-        wrapper: {
-          borderColor: '#ffffff',
-          borderRadius: 0,
-          backgroundColor: '#ffffff',
-          boxShadow: '0 18px 56px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .16)'
-        },
-
-        header: {
-          padding: '16px 16px'
-        },
-
-        weekdays: {
-          padding: '0 16px'
-        },
-
-        weeks: {
-          padding: '8px 16px 16px'
-        },
-
-        dayPopoverContent: {
-          borderRadius: 0,
-          fontSize: '12px',
-          color: '#ffffff',
-          whiteSpace: 'nowrap',
-          backgroundColor: '#000000',
-          boxShadow: '0 12px 32px rgba(0, 0, 0, .10), 0 2px 6px rgba(0, 0, 0, .08)'
-        }
-      },
-
-      formats: {
-        input: ['YYYY.MM.DD', 'YYYY-MM-DD']
-      }
+  setup (props, context) {
+    function emitInput (date: Date | null) {
+      context.emit('input', date)
     }
-  },
 
-  methods: {
-    emitInput (value) {
-      this.$emit('input', value)
+    function emitBlur (e: InputEvent) {
+      setTimeout(() => {
+        props.validation && props.validation.$touch()
+        context.emit('blur', (e.target as HTMLInputElement).value)
+      }, 100)
+    }
 
-      Validation.touch(this.validation)
+    return {
+      emitInput,
+      emitBlur
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
+.SInputDate.has-error {
+  .input {
+    border-color: var(--c-danger);
+
+    &:focus {
+      border-color: var(--c-danger);
+    }
+  }
+}
+
 .container {
   height: 48px;
 }
 
-.input >>> input {
+.input {
   display: block;
-  flex-grow: 1;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 11px 16px;
   width: 100%;
   line-height: 24px;
@@ -118,11 +101,7 @@ export default {
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--c-gray);
-  }
-
-  &:hover {
-    border-color: var(--c-gray);
+    color: var(--c-text-light-2);
   }
 
   &:focus {
