@@ -62,6 +62,7 @@
     line-height: 20px;
     color: var(--c-info-light);
     background-color: var(--c-white-mute);
+    word-break: break-all;
   }
 
   pre {
@@ -78,6 +79,7 @@
       font-size: 14px;
       color: var(--c-white);
       background-color: var(--c-black);
+      word-break: keep-all;
     }
   }
 

@@ -23,6 +23,7 @@ export default createComponent({
     const contents: Content[] = [
       { label: 'Buttons', path: '/components/buttons' },
       { label: 'Grids', path: '/components/grids' },
+      { label: 'Icons', path: '/components/icons' },
       { label: 'Inputs: Checkbox', path: '/components/inputs-checkbox' },
       { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
       { label: 'Inputs: Dates', path: '/components/inputs-dates' },
