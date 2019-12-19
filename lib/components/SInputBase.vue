@@ -31,11 +31,20 @@ export default createComponent({
 
   setup (props) {
     const hasError = computed(() => {
+      if (!props.validation) {
+        return false
+      }
+
       return props.validation.$isDirty.value && !props.validation.$isValid.value
     })
 
     const errorMsg = computed(() => {
+      if (!props.validation) {
+        return null
+      }
+
       const errors = props.validation.$errors.value
+
       return errors.length > 0 ? errors[0][1] : null
     })
 

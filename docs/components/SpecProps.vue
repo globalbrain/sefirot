@@ -132,7 +132,9 @@ export default createComponent({
 
 .specs-value {
   margin: 0;
+  line-height: 20px;
   font-size: 14px;
+  word-break: break-all;
 }
 
 .specs-cell.name        { width: 96px; }

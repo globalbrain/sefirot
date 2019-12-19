@@ -77,7 +77,7 @@ export default createComponent({
     }
 
     function emitBlur (e: InputEvent) {
-      props.validation.$touch()
+      props.validation && props.validation.$touch()
       context.emit('blur', (e.target as HTMLInputElement).value)
     }
 
@@ -182,7 +182,7 @@ export default createComponent({
   transition: opacity .25s;
 
   &:hover .clear-svg {
-    fill: var(--c-gray);
+    fill: var(--c-text-light-1);
   }
 
   &.show {
@@ -192,9 +192,9 @@ export default createComponent({
 
 .clear-svg {
   display: block;
-  width: 12px;
-  height: 12px;
-  fill: var(--c-black);
+  width: 10px;
+  height: 10px;
+  fill: var(--c-text-light-2);
   transition: fill .25s;
 }
 </style>

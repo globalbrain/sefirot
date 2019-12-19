@@ -42,18 +42,19 @@ export default createComponent({
 
 .title {
   margin: 0;
-  padding: 24px 12px 0;
+  padding: 12px 12px 0;
   line-height: 24px;
-  font-size: 16px;
+  font-family: var(--font-family-base);
+  font-size: 14px;
   font-weight: 500;
   color: var(--c-text-light-2);
 
   @media (min-width: 375px) {
-    padding: 24px 16px 0;
+    padding: 16px 16px 0;
   }
 
   @media (min-width: 768px) {
-    padding: 32px 24px 0;
+    padding: 24px 24px 0;
   }
 }
 

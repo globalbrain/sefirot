@@ -1,8 +1,9 @@
 import { mount } from '@vue/test-utils'
-import SIconSearch from '@/components/icons/SIconSearch'
-import SInputText from '@/components/inputs/SInputText'
+import useForm from 'sefirot/compositions/useForm'
+import SIconSearch from 'sefirot/components/icons/SIconSearch.vue'
+import SInputText from 'sefirot/components/SInputText.vue'
 
-describe('Components - Inputs - SInputText', () => {
+describe('Components - SInputText', () => {
   test('it emits `input` event when a user inputs the value', () => {
     const wrapper = mount(SInputText)
 
@@ -16,10 +17,28 @@ describe('Components - Inputs - SInputText', () => {
 
     const input = wrapper.find('.SInputText .input')
 
-    input.element.value = 'ok'
+    input.setValue('ok')
     input.trigger('blur')
 
     expect(wrapper.emitted('blur')[0][0]).toBe('ok')
+  })
+
+  test('it "touches" the validation on blur event', () => {
+    const { data, validation } = useForm({
+      data: { name: '' },
+      rules: { name: [] }
+    })
+
+    const wrapper = mount(SInputText, {
+      propsData: { value: data.name, validation }
+    })
+
+    const input = wrapper.find('.SInputText .input')
+
+    input.setValue('ok')
+    input.trigger('blur')
+
+    expect(validation.name.$isDirty.value).toBe(true)
   })
 
   test('it emits `enter` event when a user key down enter', () => {
@@ -27,7 +46,7 @@ describe('Components - Inputs - SInputText', () => {
 
     const input = wrapper.find('.SInputText .input')
 
-    input.element.value = 'ok'
+    input.setValue('ok')
     input.trigger('keypress.enter')
 
     expect(wrapper.emitted('enter')[0][0]).toBe('ok')
@@ -47,9 +66,10 @@ describe('Components - Inputs - SInputText', () => {
     expect(input).toBe(document.activeElement)
   })
 
-  test('it shows clear button only when the `value` is not empty', () => {
+  test('it shows clear button only when the `value` is not empty', async () => {
     const wrapper = mount(SInputText, {
       propsData: {
+        value: '',
         clearable: true
       }
     })
@@ -63,6 +83,8 @@ describe('Components - Inputs - SInputText', () => {
     expect(clear.classes('show')).toBe(false)
 
     wrapper.setProps({ value: 'ok' })
+
+    await wrapper.vm.$nextTick()
 
     expect(clear.classes('show')).toBe(true)
   })
