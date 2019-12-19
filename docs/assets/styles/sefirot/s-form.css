@@ -1,0 +1,17 @@
+.s-form {}
+
+.s-form__row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -12px;
+}
+
+.s-form__row + .s-form__row {
+  padding-top: 12px;
+}
+
+.s-form__col {
+  flex-shrink: 0;
+  padding: 12px;
+  width: 100%;
+}

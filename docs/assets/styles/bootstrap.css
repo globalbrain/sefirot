@@ -2,6 +2,7 @@
 
 @import "./variables";
 @import "./reboot";
+@import "./sefirot/s-form";
 @import "./highlight";
 @import "./transitions";
 @import "./utilities";

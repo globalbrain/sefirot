@@ -68,7 +68,7 @@ export default createComponent({
   }
 
   .help-text {
-    transform: translateY(16px);
+    transform: translateY(14px);
   }
 }
 
@@ -111,7 +111,7 @@ export default createComponent({
   left: 0;
   width: 100%;
   margin: 0;
-  padding: 4px 0 0 0;
+  padding: 2px 0 0 0;
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
