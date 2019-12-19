@@ -11,6 +11,8 @@ const config: Configuration = {
   srcDir: 'docs/',
 
   build: {
+    transpile: ['@juggle/resize-observer'],
+
     postcss: {
       plugins: {
         'postcss-nested': {},

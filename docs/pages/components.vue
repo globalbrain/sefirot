@@ -38,6 +38,7 @@ export default createComponent({
       { label: 'Modals: Window', path: '/components/modals-window' },
       { label: 'Placeholders: Blank', path: '/components/placeholders-blank' },
       { label: 'Placeholders: Image', path: '/components/placeholders-image' },
+      { label: 'Responsive', path: '/components/responsive' },
       { label: 'Screens', path: '/components/screens' },
       { label: 'Snackbars', path: '/components/snackbars' }
     ]
