@@ -91,7 +91,7 @@ export default createComponent({
         type: 'string',
         required: false,
         default: '\'primary\'',
-        description: 'The type of the button. Available types are: `primary`, `secondary`, `text`, and `mute`.'
+        description: 'The type of the button. Available types are: `primary`, `secondary`, `tertiary`, `text`, and `mute`.'
       },
       {
         name: 'mode',

@@ -8,6 +8,9 @@
       <SButton label="SECONDARY" type="secondary" size="medium" />
     </div>
     <div class="item">
+      <SButton label="TERTIARY" type="tertiary" />
+    </div>
+    <div class="item">
       <SButton label="TEXT" type="text" size="medium" />
     </div>
     <div class="item">
@@ -24,6 +27,9 @@
     </div>
     <div class="item">
       <SButton label="SECONDARY" type="secondary" size="medium" />
+    </div>
+    <div class="item">
+      <SButton label="TERTIARY" type="tertiary" />
     </div>
     <div class="item">
       <SButton label="TEXT" type="text" size="medium" />

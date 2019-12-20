@@ -8,10 +8,13 @@
       <SButton label="START LOAD" type="secondary" :loading="state.load2" @click="load('load2')" />
     </div>
     <div class="item">
-      <SButton label="START LOAD" type="text" :loading="state.load3" @click="load('load3')" />
+      <SButton label="START LOAD" type="tertiary" :loading="state.load3" @click="load('load3')" />
     </div>
     <div class="item">
-      <SButton label="START LOAD" type="mute" :loading="state.load4" @click="load('load4')" />
+      <SButton label="START LOAD" type="text" :loading="state.load4" @click="load('load4')" />
+    </div>
+    <div class="item">
+      <SButton label="START LOAD" type="mute" :loading="state.load5" @click="load('load5')" />
     </div>
   </div>
 </StoryBase>
@@ -26,10 +29,13 @@
       <SButton label="START LOAD" type="secondary" :loading="state.load2" @click="load('load2')" />
     </div>
     <div class="item">
-      <SButton label="START LOAD" type="text" :loading="state.load3" @click="load('load3')" />
+      <SButton label="START LOAD" type="tertiary" :loading="state.load3" @click="load('load3')" />
     </div>
     <div class="item">
-      <SButton label="START LOAD" type="mute" :loading="state.load4" @click="load('load4')" />
+      <SButton label="START LOAD" type="text" :loading="state.load4" @click="load('load4')" />
+    </div>
+    <div class="item">
+      <SButton label="START LOAD" type="mute" :loading="state.load5" @click="load('load5')" />
     </div>
   </div>
 </template>
@@ -48,7 +54,8 @@ export default createComponent({
       load1: false,
       load2: false,
       load3: false,
-      load4: false
+      load4: false,
+      load5: false
     })
 
     function load (target: string): void {
@@ -95,7 +102,8 @@ export default createComponent({
       load1: false,
       load2: false,
       load3: false,
-      load4: false
+      load4: false,
+      load5: false
     })
 
     function load (target: string): void {

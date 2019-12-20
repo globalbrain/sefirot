@@ -8,6 +8,9 @@
       <SButton label="SECONDARY" type="secondary" rounded />
     </div>
     <div class="item">
+      <SButton label="TERTIARY" type="tertiary" rounded />
+    </div>
+    <div class="item">
       <SButton label="TEXT" type="text" rounded />
     </div>
     <div class="item">
@@ -24,6 +27,9 @@
     </div>
     <div class="item">
       <SButton label="SECONDARY" type="secondary" rounded />
+    </div>
+    <div class="item">
+      <SButton label="TERTIARY" type="tertiary" rounded />
     </div>
     <div class="item">
       <SButton label="TEXT" type="text" rounded />

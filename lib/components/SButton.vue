@@ -48,6 +48,7 @@ export default createComponent({
       return {
         primary: props.type === 'primary',
         secondary: props.type === 'secondary',
+        tertiary: props.type === 'tertiary',
         text: props.type === 'text',
         mute: props.type === 'mute',
         neutral: props.mode === 'neutral',
@@ -196,7 +197,7 @@ export default createComponent({
 
 .SButton.secondary {
   border-color: var(--c-black);
-  color: var(--c-black);
+  color: var(--c-text-light-1);
 
   &:hover  { background-color: var(--c-white-mute); }
   &:active { background-color: var(--c-gray-light-4); }
@@ -204,6 +205,37 @@ export default createComponent({
   &.inverse {
     border-color: var(--c-white);
     color: var(--c-white);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, .15);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, .25);
+    }
+
+    .icon {
+      fill: var(--c-white);
+    }
+  }
+
+  .icon {
+    fill: var(--c-black);
+  }
+}
+
+.SButton.tertiary {
+  border-color: transparent;
+  color: var(--c-text-light-1);
+  background-color: var(--c-white-mute);
+
+  &:hover  { background-color: var(--c-gray-light-4); }
+  &:active { background-color: var(--c-gray-light-3); }
+
+  &.inverse {
+    border-color: transparent;
+    color: var(--c-text-dark-1);
+    background-color: var(--c-white-mute);
 
     &:hover {
       background-color: rgba(255, 255, 255, .15);
@@ -251,10 +283,10 @@ export default createComponent({
 }
 
 .SButton.mute {
-  color: var(--c-gray);
+  color: var(--c-text-light-2);
 
-  &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-gray-light-4); }
+  &:hover  { color: var(--c-text-light-1); background-color: var(--c-white-mute); }
+  &:active { color: var(--c-text-light-1); background-color: var(--c-gray-light-4); }
 
   &.inverse {
     &:hover {
@@ -287,7 +319,7 @@ export default createComponent({
 }
 
 .SButton.large {
-  padding: 0 32px;
+  padding: 0 20px;
   line-height: 46px;
   font-size: 14px;
 }
