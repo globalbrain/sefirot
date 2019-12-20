@@ -1,3 +1,4 @@
+import { resolve } from 'path'
 import { Configuration } from '@nuxt/types'
 import MarkdownItHighlight from 'markdown-it-highlight'
 
@@ -15,10 +16,13 @@ const config: Configuration = {
 
     postcss: {
       plugins: {
+        tailwindcss: resolve(__dirname, './tailwind.config.js') as any,
         'postcss-nested': {},
-        'postcss-css-variables': {},
+        'postcss-custom-properties': {}
       }
-    }
+    },
+
+    extractCSS: process.env.NODE_ENV === 'production'
   },
 
   buildModules: ['@nuxt/typescript-build'],
@@ -42,7 +46,6 @@ const config: Configuration = {
   },
 
   css: [
-    'normalize.css',
     '@/assets/styles/bootstrap.css'
   ],
 

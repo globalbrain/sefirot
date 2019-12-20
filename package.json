@@ -7,6 +7,8 @@
   ],
   "scripts": {
     "serve": "HOST=0.0.0.0 nuxt-ts",
+    "start": "HOST=0.0.0.0 nuxt-ts start",
+    "build": "nuxt-ts build",
     "generate": "nuxt-ts generate",
     "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
     "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore .",
@@ -54,13 +56,13 @@
     "jest-serializer-vue": "^2.0.2",
     "markdown-it-highlight": "^0.2.0",
     "mutation-observer": "^1.0.3",
-    "normalize.css": "^8.0.1",
     "nuxt": "^2.11.0",
     "portal-vue": "^2.1.6",
-    "postcss-css-variables": "^0.14.0",
+    "postcss-custom-properties": "^9.0.2",
     "postcss-nested": "^4.2.1",
     "push-dir": "^0.4.1",
     "simplebar-vue": "^1.4.0",
+    "tailwindcss": "^1.1.4",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3",
     "v-calendar": "^1.0.0-beta.23",
@@ -107,5 +109,6 @@
       "lcov",
       "text-summary"
     ]
-  }
+  },
+  "dependencies": {}
 }

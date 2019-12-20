@@ -327,10 +327,13 @@ export default createComponent({
   height: 40px;
   line-height: 38px;
 
+  .label {
+    transform: translateY(1px);
+  }
+
   .icon-svg {
     width: 14px;
     height: 14px;
-    transform: translateY(3px);
   }
 }
 
@@ -346,7 +349,6 @@ export default createComponent({
   .icon-svg {
     width: 13px;
     height: 13px;
-    transform: translateY(2px);
   }
 }
 
@@ -356,10 +358,13 @@ export default createComponent({
   line-height: 46px;
   font-size: 14px;
 
+  .label {
+    transform: translateY(.5px);
+  }
+
   .icon-svg {
     width: 14px;
     height: 14px;
-    transform: translate(-2px, 2px);
   }
 }
 
@@ -375,7 +380,6 @@ export default createComponent({
   .icon-svg {
     width: 13px;
     height: 13px;
-    transform: translateY(2px);
   }
 }
 
@@ -391,7 +395,7 @@ export default createComponent({
 .SButton.has-icon {
   .label {
     padding-right: 2px;
-    padding-left: 6px;
+    padding-left: 8px;
   }
 }
 
@@ -440,8 +444,14 @@ export default createComponent({
 }
 
 .content {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: opacity .25s, transform .25s;
+}
+
+.label {
+  transform: translateY(.5px);
 }
 
 .icon-svg {

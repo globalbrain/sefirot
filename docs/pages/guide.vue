@@ -3,7 +3,7 @@
     <div class="container">
       <SidebarNavigation :contents="contents" />
 
-      <div class="main u-medium">
+      <div class="main c-medium">
         <nuxt-child :key="$route.path" />
       </div>
     </div>

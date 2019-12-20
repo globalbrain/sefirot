@@ -17,6 +17,7 @@
           </div>
           <div class="action">
             <SButton
+              class="github-button"
               tag="a"
               size="large"
               :icon="iconGitHub"
@@ -29,16 +30,12 @@
         </div>
       </div>
 
-      <div class="description">
-        <div class="column">
-          <p class="text">Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
+      <div class="pt-48 at768:pt-64 mx-auto max-w-512">
+        <p>Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
 
-          <p class="text">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
-        </div>
+        <p class="pt-24">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
 
-        <div class="column">
-          <p class="text">Please feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.</p>
-        </div>
+        <p class="pt-24">Please feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.</p>
       </div>
     </div>
   </div>
@@ -165,25 +162,12 @@ export default createComponent({
   }
 }
 
-.description {
-  margin: 0 auto;
-  padding-top: 48px;
-  max-width: 512px;
-
-  @media (min-width: 768px) {
-    padding-top: 64px;
-  }
+.github-button >>> .label {
+  padding-left: 12px !important;
 }
 
-.column {
-  & + & {
-    padding-top: 24px;
-  }
-}
-
-.text {
-  & + & {
-    padding-top: 24px;
-  }
+.github-button >>> .icon-svg {
+  width: 20px !important;
+  height: 20px !important;
 }
 </style>

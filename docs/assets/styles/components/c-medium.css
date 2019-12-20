@@ -1,4 +1,4 @@
-.u-medium {
+.c-medium {
   margin: 0 auto;
   max-width: 720px;
 
@@ -87,6 +87,8 @@
     margin-top: 0;
     border-top: 1px solid var(--c-divider-darker);
     border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    overflow-x: auto;
   }
 
   @media (min-width: 375px) {
