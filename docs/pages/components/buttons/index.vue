@@ -24,6 +24,12 @@ The button comes with various colors, and you can control it through `mode` prop
 
 <StoryButtonEXModes />
 
+## With Icon
+
+You can also prepend icon by passing in Vue Component to the `icon` prop. The button can also be an icon-only button.
+
+<StoryButtonEXIcon />
+
 ## Loading State
 
 <StoryButtonEXLoadingState />
@@ -41,6 +47,7 @@ import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
 import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
 import StoryButtonEXRounded from '@/components/StoryButtonEXRounded.vue'
 import StoryButtonEXModes from '@/components/StoryButtonEXModes.vue'
+import StoryButtonEXIcon from '@/components/StoryButtonEXIcon.vue'
 import StoryButtonEXLoadingState from '@/components/StoryButtonEXLoadingState.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
@@ -52,6 +59,7 @@ export default createComponent({
     StoryButtonEXLarge,
     StoryButtonEXRounded,
     StoryButtonEXModes,
+    StoryButtonEXIcon,
     StoryButtonEXLoadingState,
     SpecProps,
     SpecEvents
@@ -68,8 +76,8 @@ export default createComponent({
       {
         name: 'label',
         type: 'string',
-        required: true,
-        default: '—',
+        required: false,
+        default: 'null',
         description: 'The label text for the button.'
       },
       {
@@ -106,6 +114,13 @@ export default createComponent({
         required: false,
         default: '\'medium\'',
         description: 'The size of the button. Available sizes are: `medium`, and `large`.'
+      },
+      {
+        name: 'icon',
+        type: 'VueComponent',
+        required: false,
+        default: 'null',
+        description: 'Adds given Vue Component as an icon for the button.'
       },
       {
         name: 'block',

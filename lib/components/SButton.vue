@@ -8,11 +8,8 @@
     @click="$emit('click')"
   >
     <span class="content">
-      <template v-if="icon">
-        <component :is="icon" class="icon" />
-      </template>
-
-      {{ label }}
+      <span v-if="icon" class="icon"><component :is="icon" class="icon-svg" /></span>
+      <span v-if="label" class="label">{{ label }}</span>
     </span>
 
     <transition name="fade">
@@ -30,7 +27,7 @@ import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
 
 export default createComponent({
   props: {
-    label: { type: String, required: true },
+    label: { type: String, default: null },
     tag: { type: String, default: 'button' },
     to: { type: String, default: '/' },
     type: { type: String, default: 'primary' },
@@ -61,6 +58,8 @@ export default createComponent({
         rounded: props.rounded,
         block: props.block,
         inverse: props.inverse,
+        'has-label': props.label,
+        'has-icon': props.icon,
         loading: props.loading
       }
     })
@@ -102,7 +101,6 @@ export default createComponent({
   text-align: center;
   border: 1px solid transparent;
   border-radius: 4px;
-  min-width: 64px;
   letter-spacing: 1px;
   font-size: 13px;
   font-weight: 500;
@@ -285,8 +283,23 @@ export default createComponent({
 .SButton.mute {
   color: var(--c-text-light-2);
 
-  &:hover  { color: var(--c-text-light-1); background-color: var(--c-white-mute); }
-  &:active { color: var(--c-text-light-1); background-color: var(--c-gray-light-4); }
+  &:hover  {
+    color: var(--c-text-light-1);
+    background-color: var(--c-white-mute);
+
+    .icon {
+      fill: var(--c-text-light-1);
+    }
+  }
+
+  &:active {
+    color: var(--c-text-light-1);
+    background-color: var(--c-gray-light-4);
+
+    .icon {
+      fill: var(--c-text-light-1);
+    }
+  }
 
   &.inverse {
     &:hover {
@@ -300,37 +313,86 @@ export default createComponent({
     }
 
     .icon {
-      fill: var(--c-gray);
+      fill: var(--c-text-light-2);
     }
   }
 
   .icon {
-    fill: var(--c-gray);
+    fill: var(--c-text-light-2);
   }
 }
 
 .SButton.medium {
-  padding: 0 16px;
+  width: 40px;
+  height: 40px;
   line-height: 38px;
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+    transform: translateY(3px);
+  }
 }
 
 .SButton.medium.rounded {
   border-radius: 20px;
 }
 
+.SButton.medium.has-label {
+  padding: 0 14px;
+  width: auto;
+  height: auto;
+
+  .icon-svg {
+    width: 13px;
+    height: 13px;
+    transform: translateY(2px);
+  }
+}
+
 .SButton.large {
-  padding: 0 20px;
+  width: 48px;
+  height: 48px;
   line-height: 46px;
   font-size: 14px;
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+    transform: translate(-2px, 2px);
+  }
 }
 
 .SButton.large.rounded {
   border-radius: 24px;
 }
 
+.SButton.large.has-label {
+  padding: 0 14px;
+  width: auto;
+  height: auto;
+
+  .icon-svg {
+    width: 13px;
+    height: 13px;
+    transform: translateY(2px);
+  }
+}
+
+.SButton.large.has-icon {
+  padding: 0 18px;
+}
+
 .SButton.block {
   display: block;
   width: 100%;
+}
+
+.SButton.has-icon {
+  .label {
+    padding-right: 2px;
+    padding-left: 6px;
+  }
 }
 
 .SButton.loading {
@@ -382,11 +444,8 @@ export default createComponent({
   transition: opacity .25s, transform .25s;
 }
 
-.icon {
-  margin-right: 6px;
-  width: 14px;
-  height: 14px;
-  transform: translateY(2px);
+.icon-svg {
+  transition: fill .25s;
 }
 
 .loader {
