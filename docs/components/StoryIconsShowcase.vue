@@ -1,10 +1,10 @@
 <template lang="md">
 <StoryBase>
-  <ul class="list">
-    <li v-for="icon in icons" class="item" :key="icon.name">
-      <div class="box">
-        <component :is="icon.component" class="icon" />
-        <p class="name">{{ icon.name }}</p>
+  <ul class="flex flex-wrap -m-4">
+    <li v-for="icon in icons" :key="icon.name" class="relative p-4 w-1/2 at375:w-1/3 at512:w-1/4 at768:w-1/5">
+      <div class="box flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
+        <component :is="icon.component" class="icon w-20 h-20" />
+        <p class="name pt-32">{{ icon.name }}</p>
       </div>
     </li>
   </ul>
@@ -64,49 +64,16 @@ export default createComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -4px;
-}
-
-.item {
-  position: relative;
-  padding: 4px;
-  width: 50%;
-
-  @media (min-width: 375px) {
-    width: calc(100% / 3);
-  }
-
-  @media (min-width: 512px) {
-    width: 25%;
-  }
-
-  @media (min-width: 768px) {
-    width: 20%;
-  }
-}
-
 .box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  padding: 32px 0 16px;
   background-color: var(--c-white-mute);
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
   fill: var(--c-text-light-1);
 }
 
 .name {
   margin-bottom: 0;
-  padding-top: 32px;
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;

@@ -332,8 +332,8 @@ export default createComponent({
   }
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -345,10 +345,12 @@ export default createComponent({
   padding: 0 14px;
   width: auto;
   height: auto;
+}
 
-  .icon-svg {
-    width: 13px;
-    height: 13px;
+.SButton.medium.has-icon {
+  .label {
+    padding-right: 1px;
+    padding-left: 8px;
   }
 }
 
@@ -363,8 +365,8 @@ export default createComponent({
   }
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -376,27 +378,20 @@ export default createComponent({
   padding: 0 14px;
   width: auto;
   height: auto;
-
-  .icon-svg {
-    width: 13px;
-    height: 13px;
-  }
 }
 
 .SButton.large.has-icon {
   padding: 0 18px;
+
+  .label {
+    padding-right: 2px;
+    padding-left: 10px;
+  }
 }
 
 .SButton.block {
   display: block;
   width: 100%;
-}
-
-.SButton.has-icon {
-  .label {
-    padding-right: 2px;
-    padding-left: 8px;
-  }
 }
 
 .SButton.loading {

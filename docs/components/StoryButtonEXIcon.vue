@@ -2,7 +2,7 @@
 <StoryBase title="With Icon">
   <div class="list">
     <div class="item">
-      <SButton :icon="SIconSearch" />
+      <SButton :icon="SIconImage" />
     </div>
     <div class="item">
       <SButton label="SEARCH" :icon="SIconSearch" />
@@ -26,7 +26,7 @@
 <template>
   <div class="list">
     <div class="item">
-      <SButton :icon="SIconSearch" />
+      <SButton :icon="SIconImage" />
     </div>
     <div class="item">
       <SButton label="SEARCH" :icon="SIconSearch" />
