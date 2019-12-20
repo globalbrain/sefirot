@@ -2,9 +2,9 @@
 <StoryBase>
   <ul class="flex flex-wrap -m-4">
     <li v-for="icon in icons" :key="icon.name" class="relative p-4 w-1/2 at375:w-1/3 at512:w-1/4 at768:w-1/5">
-      <div class="box flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
-        <component :is="icon.component" class="icon w-20 h-20" />
-        <p class="name pt-32">{{ icon.name }}</p>
+      <div class="bg-white-mute flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
+        <component :is="icon.component" class="w-20 h-20 text-light-1 fill-current" />
+        <p class="name pt-32 leading-20 text-12 text-light-2">{{ icon.name }}</p>
       </div>
     </li>
   </ul>
@@ -62,21 +62,8 @@ export default createComponent({
 </script>
 
 <style lang="postcss" scoped>
-@import "@/assets/styles/variables";
-
-.box {
-  background-color: var(--c-white-mute);
-}
-
-.icon {
-  fill: var(--c-text-light-1);
-}
-
 .name {
   margin-bottom: 0;
-  line-height: 20px;
-  font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-light-2);
 }
 </style>
