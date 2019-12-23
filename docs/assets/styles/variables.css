@@ -94,6 +94,7 @@
   --z-index-screen: 2000;
   --z-index-backdrop: 3000;
   --z-index-modal: 3010;
+  --z-index-snackbar: 4000;
 
   /**
    * Shadows

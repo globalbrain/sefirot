@@ -6,12 +6,12 @@
 
     <p class="content">{{ text }}</p>
 
-    <div class="actions" v-if="actions">
-      <div class="action" :key="index" v-for="(action, index) in actions">
+    <div v-if="actions" class="actions">
+      <div v-for="(action, index) in actions" :key="index" class="action">
         <SButton
-          :type="getActionType(action.type)"
+          :type="action.type"
           :label="action.label"
-          :inverse="true"
+          inverse
           @click="action.callback"
         />
       </div>
@@ -19,11 +19,13 @@
   </div>
 </template>
 
-<script>
-import SIconX from '../icons/SIconX'
-import SButton from '../buttons/SButton'
+<script lang="ts">
+import { createComponent, PropType } from '@vue/composition-api'
+import { Action } from '../store/snackbars'
+import SIconX from './icons/SIconX.vue'
+import SButton from './SButton.vue'
 
-export default {
+export default createComponent({
   components: {
     SIconX,
     SButton
@@ -32,23 +34,19 @@ export default {
   props: {
     id: { type: Number, required: true },
     text: { type: String, required: true },
-    actions: { type: Array, default: null }
+    actions: { type: Array as PropType<Action[]>, default: null }
   },
 
-  methods: {
-    getActionType (value) {
-      if (value === 'mute') {
-        return 'mute'
-      }
+  setup (props, context) {
+    function close (): void {
+      context.root.$store.dispatch('snackbars/pop', props.id)
+    }
 
-      return 'text'
-    },
-
-    close () {
-      this.$store.dispatch('snackbars/pop', this.id)
+    return {
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -56,9 +54,9 @@ export default {
 
 .SSnackbar {
   position: relative;
-  border-radius: 2px;
+  border-radius: 4px;
   width: 100%;
-  color: var(--c-white);
+  color: var(--c-text-dark-1);
   background-color: rgba(0, 0, 0, .9);
   box-shadow: var(--shadow-depth-5);
 }
@@ -76,7 +74,7 @@ export default {
 
   &:hover {
     .close-icon {
-      fill: var(--c-white);
+      fill: var(--c-text-dark-1);
     }
   }
 }
@@ -84,7 +82,7 @@ export default {
 .close-icon {
   width: 12px;
   height: 12px;
-  fill: var(--c-gray);
+  fill: var(--c-text-dark-2);
   transition: fill .25s;
 }
 
@@ -103,7 +101,7 @@ export default {
 
 .action {
   & + & {
-    padding-left: 4px;
+    padding-left: 8px;
   }
 }
 </style>

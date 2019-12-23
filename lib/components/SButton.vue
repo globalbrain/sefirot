@@ -302,18 +302,20 @@ export default createComponent({
   }
 
   &.inverse {
+    color: var(--c-text-dark-2);
+
     &:hover {
-      color: var(--c-white);
+      color: var(--c-text-dark-1);
       background-color: rgba(255, 255, 255, .15);
     }
 
     &:active {
-      color: var(--c-white);
+      color: var(--c-text-dark-1);
       background-color: rgba(255, 255, 255, .25);
     }
 
     .icon {
-      fill: var(--c-text-light-2);
+      fill: var(--c-text-dark-2);
     }
   }
 

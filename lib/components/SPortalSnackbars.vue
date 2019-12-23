@@ -1,8 +1,8 @@
 <template>
   <transition name="fade">
-    <div class="SPortalSnackbars" v-if="hasItem">
+    <div v-if="hasItem" class="SPortalSnackbars">
       <transition-group name="fade-up">
-        <div class="item" :key="item.id" v-for="item in items">
+        <div v-for="item in items" :key="item.id" class="item">
           <SSnackbar
             :id="item.id"
             :text="item.text"
@@ -14,24 +14,25 @@
   </transition>
 </template>
 
-<script>
-import SSnackbar from '../snackbars/SSnackbar'
+<script lang="ts">
+import { createComponent, computed } from '@vue/composition-api'
+import SSnackbar from './SSnackbar.vue'
 
-export default {
+export default createComponent({
   components: {
     SSnackbar
   },
 
-  computed: {
-    items () {
-      return this.$store.state.snackbars.items
-    },
+  setup (_props, context) {
+    const items = computed(() => context.root.$store.state.snackbars.items)
+    const hasItem = computed(() => items.value.length > 0)
 
-    hasItem () {
-      return this.items.length > 0
+    return {
+      items,
+      hasItem
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -41,7 +42,7 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  z-index: var(--z-index-modal);
+  z-index: var(--z-index-snackbar);
   padding: 16px;
   width: 100%;
   max-width: 560px;
@@ -67,7 +68,7 @@ export default {
   transition: opacity .25s, transform .25s;
 
   & + & {
-    padding-top: 12px;
+    padding-top: 8px;
   }
 }
 

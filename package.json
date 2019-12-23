@@ -100,7 +100,9 @@
     "collectCoverageFrom": [
       "lib/**/*.{js,vue}",
       "!lib/compositions/useResizeObserver.ts",
-      "!lib/components/Responsive.vue",
+      "!lib/components/SPortalSnackbars.vue",
+      "!lib/components/SResponsive.vue",
+      "!lib/components/SSnackbar.vue",
       "!**/node_modules/**"
     ],
     "coverageReporters": [
