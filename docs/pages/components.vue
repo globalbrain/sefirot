@@ -33,6 +33,7 @@ export default createComponent({
       { label: 'Inputs: Switches', path: '/components/inputs-switches' },
       { label: 'Inputs: Text', path: '/components/inputs-text' },
       { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
+      { label: 'Inputs: Time', path: '/components/inputs-time' },
       { label: 'Modals: Alert', path: '/components/modals-alert' },
       { label: 'Modals: Dialog', path: '/components/modals-dialog' },
       { label: 'Modals: Window', path: '/components/modals-window' },
