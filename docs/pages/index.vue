@@ -1,6 +1,6 @@
 <template>
   <div class="Home">
-    <div class="container">
+    <div class="mx-auto max-w-960">
       <div class="hero">
         <h1 class="title">Vue Components for Global Brain Design System.</h1>
         <p class="lead">We Shape Our Buildings. Thereafter, They Shape Us.</p>
@@ -80,11 +80,6 @@ export default createComponent({
   @media (min-width: 1056px) {
     padding: 56px 48px 192px;
   }
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 960px;
 }
 
 .hero {

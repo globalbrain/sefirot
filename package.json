@@ -62,7 +62,7 @@
     "postcss-nested": "^4.2.1",
     "push-dir": "^0.4.1",
     "simplebar-vue": "^1.4.0",
-    "tailwindcss": "^1.1.4",
+    "tailwindcss": "^1.2.0-canary.5",
     "ts-jest": "^24.2.0",
     "typescript": "^3.7.3",
     "v-calendar": "^1.0.0-beta.23",
@@ -113,5 +113,8 @@
       "text-summary"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "add": "^2.0.6",
+    "yarn": "^1.21.1"
+  }
 }
