@@ -1,4 +1,4 @@
-import ResizeObserver from '@juggle/resize-observer'
+import { ResizeObserver } from '@juggle/resize-observer'
 import { createComponent, ref, reactive, toRefs, onMounted, onUnmounted, Ref, } from '@vue/composition-api'
 
 export interface EL {
@@ -11,8 +11,8 @@ export default function useResizeObserver (target: Ref<HTMLElement | null>) {
 
   const ro = new ResizeObserver((entries) => {
     const entry = entries[0]
-    el.w = entry.contentBoxSize.inlineSize
-    el.h = entry.contentBoxSize.blockSize
+    el.w = entry.contentBoxSize[0].inlineSize
+    el.h = entry.contentBoxSize[0].blockSize
   })
 
   onMounted(() => { ro.observe(target.value as HTMLElement) })
