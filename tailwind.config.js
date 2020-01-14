@@ -65,6 +65,11 @@ module.exports = {
       'alternative-darker': '#602960'
     },
     spacing: {
+      '-24': '-24px',
+      '-16': '-16px',
+      '-12': '-12px',
+      '-8': '-8px',
+      '-4': '-4px',
       0: '0',
       4: '4px',
       8: '8px',
@@ -73,6 +78,7 @@ module.exports = {
       20: '20px',
       24: '24px',
       32: '32px',
+      40: '40px',
       48: '48px',
       64: '64px',
       256: '256px',
@@ -92,6 +98,28 @@ module.exports = {
       24: '24px',
       '1/2': '50%'
     },
+    width: {
+      8: '8px',
+      12: '12px',
+      16: '16px',
+      20: '20px',
+      24: '24px',
+      32: '32px',
+      40: '40px',
+      48: '48px',
+      64: '64px',
+      96: '96px',
+      128: '128px',
+      256: '256px',
+      512: '512px',
+      768: '768px',
+      960: '960px',
+      '1/1': '100%',
+      '1/2': '50%',
+      '1/3': 'calc(100% / 3)',
+      '1/4': '25%',
+      '1/5': '20%'
+    },
     maxWidth: {
       128: '128px',
       256: '256px',
@@ -99,7 +127,32 @@ module.exports = {
       768: '768px',
       960: '960px',
       '1/1': '100%',
-      '1/2': '50%'
+      '1/2': '50%',
+      '1/3': 'calc(100% / 3)',
+      '1/4': '25%',
+      '1/5': '20%'
+    },
+    height: {
+      8: '8px',
+      12: '12px',
+      16: '16px',
+      20: '20px',
+      24: '24px',
+      32: '32px',
+      40: '40px',
+      48: '48px',
+      64: '64px',
+      96: '96px',
+      128: '128px',
+      256: '256px',
+      512: '512px',
+      768: '768px',
+      960: '960px',
+      '1/1': '100%',
+      '1/2': '50%',
+      '1/3': 'calc(100% / 3)',
+      '1/4': '25%',
+      '1/5': '20%'
     },
     lineHeight: {
       14: '14px',
@@ -113,6 +166,12 @@ module.exports = {
       48: '48px',
       56: '56px',
       64: '64px'
+    },
+    fontFamily: {
+      base: ['Roboto', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+      primary: ['interstate', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+      number: ['Roboto', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
+      mono: ['Iconsolata', 'monospace', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"']
     },
     fontSize: {
       12: '12px',
@@ -161,15 +220,17 @@ module.exports = {
       'in-out-expo': 'cubic-bezier(1, 0, 0, 1)'
     },
     transitionDuration: {
-      '100': '100ms',
-      '150': '150ms',
-      '200': '200ms',
-      '250': '250ms',
-      '500': '500ms',
-      '750': '750ms',
-      '1000': '1000ms'
-    },
+      100: '100ms',
+      150: '150ms',
+      200: '200ms',
+      250: '250ms',
+      500: '500ms',
+      750: '750ms',
+      1000: '1000ms'
+    }
   },
-  variants: {},
+  variants: {
+    fontFamily: false
+  },
   plugins: []
 }
