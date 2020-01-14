@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import SIconChevronRight from '../icons/SIconChevronRight'
+import SIconChevronRight from './icons/SIconChevronRight'
 
 export default {
   components: {

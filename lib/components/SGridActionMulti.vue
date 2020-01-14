@@ -22,8 +22,8 @@
 </template>
 
 <script>
-import SIconMoreHorizontal from '../icons/SIconMoreHorizontal'
-import STooltip from '../tooltips/STooltip'
+import SIconMoreHorizontal from './icons/SIconMoreHorizontal'
+import STooltip from './STooltip'
 
 export default {
   components: {
