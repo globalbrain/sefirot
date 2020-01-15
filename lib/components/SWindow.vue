@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import SIconX from '../icons/SIconX'
-import SButton from '../buttons/SButton'
-import SModalBase from '../modals/SModalBase'
+import SIconX from './icons/SIconX'
+import SButton from './SButton'
+import SModalBase from './SModalBase'
 
 export default {
   components: {

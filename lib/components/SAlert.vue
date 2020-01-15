@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import SIconInfo from '../icons/SIconInfo'
-import SIconCheckCircleThin from '../icons/SIconCheckCircleThin'
-import SIconWarning from '../icons/SIconWarning'
-import SIconXCircleThin from '../icons/SIconXCircleThin'
-import SButton from '../buttons/SButton'
-import SModalBase from '../modals/SModalBase'
+import SIconInfo from './icons/SIconInfo'
+import SIconCheckCircleThin from './icons/SIconCheckCircleThin'
+import SIconWarning from './icons/SIconWarning'
+import SIconXCircleThin from './icons/SIconXCircleThin'
+import SButton from './SButton'
+import SModalBase from './SModalBase'
 
 export default {
   components: {

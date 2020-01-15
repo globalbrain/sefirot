@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import SIconPreloaderDark from '../icons/SIconPreloaderDark'
-import SButton from '../buttons/SButton'
-import SProgressBar from '../progress/SProgressBar'
-import SModalBase from '../modals/SModalBase'
+import SIconPreloaderDark from './icons/SIconPreloaderDark'
+import SButton from './SButton'
+import SProgressBar from './SProgressBar'
+import SModalBase from './SModalBase'
 
 export default {
   components: {

@@ -36,8 +36,7 @@
 </template>
 
 <script>
-import Validation from '../../validation/Validation'
-import SIconChevronDown from '../icons/SIconChevronDown'
+import SIconChevronDown from './icons/SIconChevronDown'
 import SInputBase from './SInputBase'
 
 export default {
@@ -74,7 +73,7 @@ export default {
     },
 
     emitChange (e) {
-      Validation.touch(this.validation)
+      this.validation && this.validation.$touch()
 
       const option = JSON.parse(e.target.value)
 

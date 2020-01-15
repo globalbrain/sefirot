@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import SIconPreloaderDark from '../icons/SIconPreloaderDark'
+import SIconPreloaderDark from './icons/SIconPreloaderDark'
 
 export default {
   components: {

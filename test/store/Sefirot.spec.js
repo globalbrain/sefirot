@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Sefirot from '@/store/Sefirot'
+import Sefirot from 'sefirot/store/Sefirot'
 
 Vue.use(Vuex)
 

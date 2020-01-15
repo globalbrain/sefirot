@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import Validation from '../../validation/Validation'
 import SInputBase from './SInputBase'
 
 export default {
@@ -59,7 +58,7 @@ export default {
     },
 
     emitBlur (e) {
-      Validation.touch(this.validation)
+      this.validation && this.validation.$touch()
 
       this.$emit('blur', e.target.value)
     }

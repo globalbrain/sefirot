@@ -43,7 +43,15 @@ textarea {
   touch-action: manipulation;
 }
 
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+}
+
 button:focus,
-input:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
 }

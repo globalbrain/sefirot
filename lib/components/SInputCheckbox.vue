@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import SIconCheck from '../icons/SIconCheck'
+import SIconCheck from './icons/SIconCheck'
 import SInputBase from './SInputBase'
 
 export default {

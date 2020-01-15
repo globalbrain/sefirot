@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import SDialog from '../dialogs/SDialog'
-import SAlert from '../alerts/SAlert'
+import SDialog from './SDialog'
+import SAlert from './SAlert'
 
 export default {
   components: {
