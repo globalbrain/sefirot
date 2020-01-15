@@ -177,7 +177,7 @@ $ npm run test:watch
 Run the test in watch mode.
 
 ```bash
-$ npm run test:coverage
+$ npm run coverage
 ```
 
 Generate test coverage in `coverage` directory.
