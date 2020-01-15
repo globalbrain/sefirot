@@ -12,30 +12,33 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { createComponent, ref, computed } from '@vue/composition-api'
+
+export default createComponent({
   props: {
     text: { type: String, required: true },
     position: { type: String, default: 'top' }
   },
 
-  data () {
-    return {
-      on: false
-    }
-  },
+  setup (props) {
+    const on = ref(false)
 
-  computed: {
-    classes () {
+    const classes = computed(() => {
       return {
-        top: this.position === 'top',
-        right: this.position === 'right',
-        bottom: this.position === 'bottom',
-        left: this.position === 'left'
+        top: props.position === 'top',
+        right: props.position === 'right',
+        bottom: props.position === 'bottom',
+        left: props.position === 'left'
       }
+    })
+
+    return {
+      on,
+      classes
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -53,7 +56,7 @@ export default {
   line-height: 32px;
   text-align: center;
   font-size: 12px;
-  color: var(--c-white);
+  color: var(--c-text-dark-1);
   background-color: rgba(0, 0, 0, .9);
   transition: opacity .25s, transform .25s;
 }

@@ -41,13 +41,14 @@
   </div>
 </template>
 
-<script>
-import SIconPreloaderDark from './icons/SIconPreloaderDark'
-import SGridActionLink from './SGridActionLink'
-import SGridActionSingle from './SGridActionSingle'
-import SGridActionMulti from './SGridActionMulti'
+<script lang="ts">
+import { createComponent, computed } from '@vue/composition-api'
+import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
+import SGridActionLink from './SGridActionLink.vue'
+import SGridActionSingle from './SGridActionSingle.vue'
+import SGridActionMulti from './SGridActionMulti.vue'
 
-export default {
+export default createComponent({
   components: {
     SIconPreloaderDark
   },
@@ -60,26 +61,29 @@ export default {
     loading: { type: Boolean, default: false }
   },
 
-  computed: {
-    actionComponent () {
-      if (typeof this.actions === 'string') {
+  setup (props, context) {
+    const actionComponent = computed(() => {
+      if (typeof props.actions === 'string') {
         return SGridActionLink
       }
 
-      if (Array.isArray(this.actions)) {
+      if (Array.isArray(props.actions)) {
         return SGridActionMulti
       }
 
       return SGridActionSingle
-    }
-  },
+    })
 
-  methods: {
-    handleClick (record) {
-      this.clickable && this.$emit('click', record)
+    function handleClick (record: object): void {
+      props.clickable && context.emit('click', record)
+    }
+
+    return {
+      actionComponent,
+      handleClick
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -169,11 +173,11 @@ export default {
     text-overflow: ellipsis;
 
     a {
-      text-decoration: underline;
+      color: var(--c-info-light);
       transition: color .25s;
 
       &:hover {
-        color: var(--c-gray);
+        color: var(--c-info-dark);
       }
     }
   }
@@ -190,14 +194,11 @@ export default {
     margin: 0;
     width: 100%;
     font-size: 12px;
-    color: var(--c-gray);
+    font-weight: 500;
+    color: var(--c-text-light-2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    a:hover {
-      color: var(--c-black);
-    }
   }
 
   .actions {

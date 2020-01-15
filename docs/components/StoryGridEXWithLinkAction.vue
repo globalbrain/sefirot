@@ -1,100 +1,93 @@
 <template lang="md">
 <StoryBase title="With Link Action">
-  <div class="holder">
-    <SGrid :columns="columns" :records="records" actions="link" #default="{ record }">
-      <p class="cell name">{{ record.name }}</p>
-      <p class="cell email">{{ record.email }}</p>
-      <p class="cell value">{{ record.status }}</p>
-    </SGrid>
-  </div>
+  <SGrid :records="records" actions="link">
+    <template #columns>
+      <div class="cell name">NAME</div>
+      <div class="cell company">COMPANY</div>
+      <div class="cell status">STATUS</div>
+    </template>
+    <template #default="{ record }">
+      <div class="cell name">{{ record.name }}</div>
+      <div class="cell email">{{ record.email }}</div>
+      <div class="cell value">{{ record.status }}</div>
+    </template>
+  </SGrid>
 </StoryBase>
 
 ```html
 <template>
-  <SGrid
-    :columns="columns"
-    :records="records"
-    actions="link"
-    #default="{ record }"
-  >
-    <p class="cell">{{ '\{\{ record.name \}\}' }}</p>
-    <p class="cell">{{ '\{\{ record.email \}\}' }}</p>
-    <p class="cell">{{ '\{\{ record.status \}\}' }}</p>
+  <SGrid :records="records" actions="link">
+    <template #columns>
+      <div class="cell name">NAME</div>
+      <div class="cell company">COMPANY</div>
+      <div class="cell status">STATUS</div>
+    </template>
+    <template #default="{ record }">
+      <div class="cell">{{ '\{\{ record.name \}\}' }}</div>
+      <div class="cell">{{ '\{\{ record.email \}\}' }}</div>
+      <div class="cell">{{ '\{\{ record.status \}\}' }}</div>
+    </template>
   </SGrid>
 </template>
 
-<script>
-import SGrid from '@globalbrain/sefirot/lib/components/grids/SGrid'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SGrid from '@globalbrains/sefirot/lib/components/SGrid.vue'
 
-export default {
+export default createComponent({
   components: {
     SGrid
   },
 
-  data () {
-    return {
-      columns: [
-        { name: 'name', label: 'NAME' },
-        { name: 'email', label: 'EMAIL' },
-        { name: 'status', label: 'STATUS' }
-      ],
+  setup () {
+    const records = [
+      { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
+      { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
+    ]
 
-      records: [
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
-        { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
-        { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
-      ]
+    return {
+      records
     }
   }
-}
+})
 </script>
+
+<style lang="postcss" scoped>
+.name   { width: 128px; }
+.email  { width: 216px; }
+.status { width: 96px; }
+</style>
 ```
 </template>
 
-<script>
-import SGrid from '@@/lib/components/grids/SGrid'
-import StoryBase from '@/components/stories/StoryBase'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SGrid from '@@/lib/components/SGrid.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default createComponent({
   components: {
     SGrid,
     StoryBase
   },
 
-  data () {
+  setup () {
+    const records = [
+      { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
+      { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
+    ]
+
     return {
-      columns: [
-        { name: 'name', label: 'NAME' },
-        { name: 'email', label: 'EMAIL' },
-        { name: 'status', label: 'STATUS' }
-      ],
-
-      records: [
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
-        { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
-        { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
-      ],
-
-      columns05: [
-        { name: 'name-05', label: 'NAME' },
-        { name: 'email-05', label: 'EMAIL' },
-        { name: 'status-05', label: 'STATUS' }
-      ]
+      records
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
-@import "@/assets/styles/variables";
-
-.holder {
-  margin: 0 -12px;
-  padding: 12px;
-  overflow-x: auto;
-}
-
-.SGrid >>> .name   { width: 128px; }
-.SGrid >>> .email  { width: 216px; }
-.SGrid >>> .status { width: 96px; }
+.name   { width: 128px; }
+.email  { width: 216px; }
+.status { width: 96px; }
 </style>

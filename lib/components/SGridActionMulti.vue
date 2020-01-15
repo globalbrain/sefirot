@@ -21,11 +21,12 @@
   </div>
 </template>
 
-<script>
-import SIconMoreHorizontal from './icons/SIconMoreHorizontal'
-import STooltip from './STooltip'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
+import STooltip from './STooltip.vue'
 
-export default {
+export default createComponent({
   components: {
     SIconMoreHorizontal,
     STooltip
@@ -35,18 +36,21 @@ export default {
     actions: { type: Array, required: true }
   },
 
-  methods: {
-    actionStyles (index) {
-      const size = this.actions.length
-
+  setup (props) {
+    function actionStyles (index: number): Record<string, string> {
+      const size = props.actions.length
       const sec = (size - (index + 1)) * 0.1
 
       return {
         transition: `background-color .25s, opacity .25s ${sec}s, transform .25s ${sec}s`
       }
     }
+
+    return {
+      actionStyles
+    }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -85,7 +89,7 @@ export default {
   display: block;
   width: 12px;
   height: 12px;
-  fill: var(--c-gray-light-1);
+  fill: var(--c-gray);
   transition: fill .25s;
 }
 
@@ -106,7 +110,7 @@ export default {
   }
 
   &:hover {
-    background-color: var(--c-gray-light-2);
+    background-color: var(--c-gray-light-3);
 
     .action-icon {
       fill: var(--c-black);
@@ -114,7 +118,7 @@ export default {
   }
 
   &:active {
-    background-color: var(--c-gray-light-1);
+    background-color: var(--c-gray-light-2);
   }
 }
 

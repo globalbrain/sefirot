@@ -6,12 +6,14 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+
+export default createComponent({
   props: {
     action: { type: Object, required: true }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -40,7 +42,7 @@ export default {
   }
 
   &:hover {
-    background-color: var(--c-gray-light-2);
+    background-color: var(--c-gray-light-3);
   }
 
   &:hover .icon-svg {
@@ -48,7 +50,7 @@ export default {
   }
 
   &:active {
-    background-color: var(--c-gray-light-1);
+    background-color: var(--c-gray-light-2);
   }
 }
 

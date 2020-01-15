@@ -1,106 +1,101 @@
 <template lang="md">
 <StoryBase title="With Single Action">
-  <div class="holder">
-    <SGrid :columns="columns" :records="records" :actions="actions" #default="{ record }">
-      <p class="cell name">{{ record.name }}</p>
-      <p class="cell email">{{ record.email }}</p>
-      <p class="cell value">{{ record.status }}</p>
-    </SGrid>
-  </div>
+  <SGrid :records="records" :actions="action">
+    <template #columns>
+      <div class="cell name">NAME</div>
+      <div class="cell company">COMPANY</div>
+      <div class="cell status">STATUS</div>
+    </template>
+    <template #default="{ record }">
+      <div class="cell name">{{ record.name }}</div>
+      <div class="cell email">{{ record.email }}</div>
+      <div class="cell value">{{ record.status }}</div>
+    </template>
+  </SGrid>
 </StoryBase>
 
 ```html
 <template>
-  <SGrid
-    :columns="columns"
-    :records="records"
-    :actions="actions"
-    #default="{ record }"
-  >
-    <p class="cell">{{ '\{\{ record.name \}\}' }}</p>
-    <p class="cell">{{ '\{\{ record.email \}\}' }}</p>
-    <p class="cell">{{ '\{\{ record.status \}\}' }}</p>
+  <SGrid :records="records" :actions="action">
+    <template #columns>
+      <div class="cell name">NAME</div>
+      <div class="cell company">COMPANY</div>
+      <div class="cell status">STATUS</div>
+    </template>
+    <template #default="{ record }">
+      <div class="cell">{{ '\{\{ record.name \}\}' }}</div>
+      <div class="cell">{{ '\{\{ record.email \}\}' }}</div>
+      <div class="cell">{{ '\{\{ record.status \}\}' }}</div>
+    </template>
   </SGrid>
 </template>
 
-<script>
-import SIconMoreHorizontal from '@globalbrain/sefirot/lib/components/icons/SIconMoreHorizontal'
-import SGrid from '@globalbrain/sefirot/lib/components/grids/SGrid'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SIconMoreHorizontal from '@globalbrains/sefirot/lib/components/icons/SIconMoreHorizontal.vue'
+import SGrid from '@globalbrains/sefirot/lib/components/SGrid.vue'
 
-export default {
+export default createComponent({
   components: {
     SGrid
   },
 
-  data () {
+  setup () {
+    const records = [
+      { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
+      { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
+    ]
+
+    const action = { icon: SIconMoreHorizontal, callback: () => {} }
+
     return {
-      columns: [
-        { name: 'name', label: 'NAME' },
-        { name: 'email', label: 'EMAIL' },
-        { name: 'status', label: 'STATUS' }
-      ],
-
-      records: [
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
-        { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
-        { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
-      ],
-
-      actions: {
-        icon: SIconMoreHorizontal,
-        callback: () => {}
-      }
+      records,
+      action
     }
   }
-}
+})
 </script>
+
+<style lang="postcss" scoped>
+.name   { width: 128px; }
+.email  { width: 216px; }
+.status { width: 96px; }
+</style>
 ```
 </template>
 
-<script>
-import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal'
-import SGrid from '@@/lib/components/grids/SGrid'
-import StoryBase from '@/components/stories/StoryBase'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
+import SGrid from '@@/lib/components/SGrid.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default createComponent({
   components: {
     SGrid,
     StoryBase
   },
 
-  data () {
+  setup () {
+    const records = [
+      { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
+      { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
+      { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
+    ]
+
+    const action = { icon: SIconMoreHorizontal, callback: () => {} }
+
     return {
-      columns: [
-        { name: 'name', label: 'NAME' },
-        { name: 'email', label: 'EMAIL' },
-        { name: 'status', label: 'STATUS' }
-      ],
-
-      records: [
-        { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
-        { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },
-        { id: 3, name: 'Johnny Doe', email: 'johnny.doe@example.com', status: 'Active' }
-      ],
-
-      actions: {
-        icon: SIconMoreHorizontal,
-        callback: () => {}
-      }
+      records,
+      action
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
-@import "@/assets/styles/variables";
-
-.holder {
-  margin: 0 -12px;
-  padding: 12px;
-  overflow-x: auto;
-}
-
-.SGrid >>> .name   { width: 128px; }
-.SGrid >>> .email  { width: 216px; }
-.SGrid >>> .status { width: 96px; }
+.name   { width: 128px; }
+.email  { width: 216px; }
+.status { width: 96px; }
 </style>

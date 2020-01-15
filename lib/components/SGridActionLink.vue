@@ -6,14 +6,15 @@
   </div>
 </template>
 
-<script>
-import SIconChevronRight from './icons/SIconChevronRight'
+<script lang="ts">
+import { createComponent } from '@vue/composition-api'
+import SIconChevronRight from './icons/SIconChevronRight.vue'
 
-export default {
+export default createComponent({
   components: {
     SIconChevronRight
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -44,8 +45,8 @@ export default {
 
 .icon-svg {
   display: block;
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   fill: var(--c-gray-light-1);
   transition: fill .25s;
 }
