@@ -22,7 +22,7 @@ describe('Components - SButton', () => {
       [{ label: 'B', type: 'secondary', loading: true }, SIconPreloaderDark],
       [{ label: 'B', type: 'primary', inverse: true, loading: true }, SIconPreloaderDark],
       [{ label: 'B', type: 'secondary', inverse: true, loading: true }, SIconPreloaderLight],
-      [{ label: 'B', mode: 'info', inverse: true, loading: true }, SIconPreloaderLight],
+      [{ label: 'B', mode: 'info', inverse: true, loading: true }, SIconPreloaderLight]
     ]
 
     checks.forEach((check) => {

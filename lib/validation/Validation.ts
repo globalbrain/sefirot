@@ -1,4 +1,4 @@
-import { ref, reactive, computed, toRefs, isRef, Ref } from '@vue/composition-api'
+import { ref, computed, toRefs, Ref } from '@vue/composition-api'
 import { Rule } from './rules'
 
 export interface Validation {

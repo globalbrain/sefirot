@@ -1,5 +1,5 @@
 import { ResizeObserver } from '@juggle/resize-observer'
-import { createComponent, ref, reactive, toRefs, onMounted, onUnmounted, Ref, } from '@vue/composition-api'
+import { reactive, toRefs, onMounted, onUnmounted, Ref } from '@vue/composition-api'
 
 export interface EL {
   w: number
