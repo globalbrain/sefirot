@@ -98,12 +98,7 @@
       "./test/setup.ts"
     ],
     "collectCoverageFrom": [
-      "lib/**/*.{js,vue}",
-      "!lib/compositions/useResizeObserver.ts",
-      "!lib/components/SInputTime.vue",
-      "!lib/components/SPortalSnackbars.vue",
-      "!lib/components/SResponsive.vue",
-      "!lib/components/SSnackbar.vue",
+      "lib/**/*.{js,ts,vue}",
       "!**/node_modules/**"
     ],
     "coverageReporters": [
