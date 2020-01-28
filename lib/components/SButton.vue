@@ -345,7 +345,7 @@ export default createComponent({
 
 .SButton.medium.has-label {
   padding: 0 14px;
-  width: auto;
+  width: 100%;
   height: auto;
 }
 
@@ -378,7 +378,7 @@ export default createComponent({
 
 .SButton.large.has-label {
   padding: 0 14px;
-  width: auto;
+  width: 100%;
   height: auto;
 }
 

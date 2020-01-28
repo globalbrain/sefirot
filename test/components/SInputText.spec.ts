@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils'
 import useForm from 'sefirot/compositions/useForm'
-import SIconSearch from 'sefirot/components/icons/SIconSearch.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
 
 describe('Components - SInputText', () => {
