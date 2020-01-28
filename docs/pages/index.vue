@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="pt-48 at768:pt-64 mx-auto max-w-512">
+      <div class="pt-48 md:pt-64 mx-auto max-w-512">
         <p>Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
 
         <p class="pt-24">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>

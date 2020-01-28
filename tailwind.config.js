@@ -1,9 +1,9 @@
 module.exports = {
   theme: {
     screens: {
-      at480: '480px',
-      at768: '768px',
-      at1056: '1056px'
+      sm: '480px',
+      md: '768px',
+      lg: '1056px'
     },
     colors: {
       white: '#ffffff',
