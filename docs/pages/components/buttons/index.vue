@@ -24,6 +24,12 @@ The button comes with various colors, and you can control it through `mode` prop
 
 <StoryButtonEXModes />
 
+## Block Size
+
+By default, buttons are displayed as `inline-block`. By passing a `block` prop, the button becomes a block-level element. Useful for controlling button sizes.
+
+<StoryButtonEXBlock />
+
 ## With Icon
 
 You can also prepend icon by passing in Vue Component to the `icon` prop. The button can also be an icon-only button.
@@ -47,6 +53,7 @@ import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
 import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
 import StoryButtonEXRounded from '@/components/StoryButtonEXRounded.vue'
 import StoryButtonEXModes from '@/components/StoryButtonEXModes.vue'
+import StoryButtonEXBlock from '@/components/StoryButtonEXBlock.vue'
 import StoryButtonEXIcon from '@/components/StoryButtonEXIcon.vue'
 import StoryButtonEXLoadingState from '@/components/StoryButtonEXLoadingState.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
@@ -59,6 +66,7 @@ export default createComponent({
     StoryButtonEXLarge,
     StoryButtonEXRounded,
     StoryButtonEXModes,
+    StoryButtonEXBlock,
     StoryButtonEXIcon,
     StoryButtonEXLoadingState,
     SpecProps,
