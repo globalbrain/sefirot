@@ -1,4 +1,4 @@
-import VueTestUtils, { mount, createLocalVue } from '@vue/test-utils'
+import { config, mount, createLocalVue } from '@vue/test-utils'
 import Vue from 'vue'
 import VCalendar from 'v-calendar'
 import SInputDate from 'sefirot/components/SInputDate'
@@ -11,7 +11,7 @@ window.matchMedia = window.matchMedia || function () {
   }
 }
 
-VueTestUtils.config.stubs.ClientOnly = '<span><slot /></span>'
+config.stubs.ClientOnly = '<span><slot /></span>'
 
 Vue.use(VCalendar, {
   firstDayOfWeek: 1

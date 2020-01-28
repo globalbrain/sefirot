@@ -52,20 +52,6 @@ describe('Components - SInputText', () => {
     expect(wrapper.emitted('enter')[0][0]).toBe('ok')
   })
 
-  test('it focuses the input when a user clicks the icon', () => {
-    const wrapper = mount(SInputText, {
-      propsData: {
-        icon: SIconSearch
-      }
-    })
-
-    const input = wrapper.find('.SInputText .input').element
-
-    wrapper.find('.SInputText .icon').trigger('click')
-
-    expect(input).toBe(document.activeElement)
-  })
-
   test('it shows clear button only when the `value` is not empty', async () => {
     const wrapper = mount(SInputText, {
       propsData: {
