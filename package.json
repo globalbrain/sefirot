@@ -14,6 +14,7 @@
     "lint:fail": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
     "test": "jest",
     "test:watch": "jest --watchAll",
+    "test:all": "yarn lint && yarn coverage",
     "coverage": "jest --collect-coverage",
     "docs:deploy": "yarn generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
