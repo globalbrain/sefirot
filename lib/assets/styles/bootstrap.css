@@ -2,10 +2,4 @@
 
 @import "./variables";
 
-@import "tailwindcss/base";
 @import "./base";
-
-@import "./sefirot";
-@import "./components";
-
-@import "tailwindcss/utilities";
