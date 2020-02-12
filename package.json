@@ -51,8 +51,6 @@
     "codecov": "^3.6.2",
     "dayjs": "^1.8.19",
     "eslint": "^6.8.0",
-    "eslint-loader": "^3.0.3",
-    "eslint-plugin-vue": "^6.1.2",
     "jest": "^25.1.0",
     "jest-serializer-vue": "^2.0.2",
     "markdown-it-highlight": "^0.2.0",
@@ -72,7 +70,6 @@
     "vue-router": "^3.1.5",
     "vue-server-renderer": "^2.6.11",
     "vue-template-compiler": "^2.6.11",
-    "vue-thin-modal": "^1.3.0",
     "vuelidate": "^0.7.5",
     "webpack": "^4.41.5"
   },
