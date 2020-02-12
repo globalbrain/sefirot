@@ -46,7 +46,7 @@ Sefirot assumes you have your CSS placed at `@/assets/styles` directory. Make su
 $ cp ./node_modules/@globalbrain/sefirot/lib/assets/styles ./assets/
 ```
 
-To compile Vue Components, you must have appropriate build settings. For example, in [Nuxt.js](https://nuxtjs.org/), you should define the following settings at `nuxt.config.js`. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-css-variables`. Make sure to define them in your postcss config as well. And the last thing, don't forget to include base bootstrapping global CSS as well.
+To compile Vue Components, you must have appropriate build settings. For example, in [Nuxt.js](https://nuxtjs.org/), you should define the following settings at `nuxt.config.js`. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-custom-properties`. Make sure to define them in your postcss config as well. And the last thing, don't forget to include base bootstrapping global CSS as well.
 
 ```ts
 const config: Configuration = {
