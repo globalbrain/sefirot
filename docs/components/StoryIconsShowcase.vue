@@ -28,8 +28,11 @@ import SIconChevronDown from '@@/lib/components/icons/SIconChevronDown.vue'
 import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
+import SIconDownload from '@@/lib/components/icons/SIconDownload.vue'
+import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
+import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
 export default createComponent({
@@ -50,8 +53,11 @@ export default createComponent({
       { component: SIconChevronLeft, name: 'ChevronLeft' },
       { component: SIconChevronRight, name: 'ChevronRight' },
       { component: SIconChevronUp, name: 'ChevronUp' },
+      { component: SIconDownload, name: 'Download' },
+      { component: SIconDownloadCloud, name: 'DownloadCloud' },
       { component: SIconEdit, name: 'Edit' },
-      { component: SIconEye, name: 'Eye' }
+      { component: SIconEye, name: 'Eye' },
+      { component: SIconSave, name: 'Save' }
     ]
 
     return {
