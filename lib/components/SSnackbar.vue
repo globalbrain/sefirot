@@ -20,12 +20,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 import { Action } from '../store/snackbars'
 import SIconX from './icons/SIconX.vue'
 import SButton from './SButton.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SIconX,
     SButton

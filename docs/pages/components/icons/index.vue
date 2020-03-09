@@ -9,10 +9,10 @@ All icons can be imported from under `@globalbrain/sefirot/lib/components/icons`
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import StoryIconsShowcase from '@/components/StoryIconsShowcase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StoryIconsShowcase
   },

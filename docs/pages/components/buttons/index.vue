@@ -47,7 +47,7 @@ You can also prepend icon by passing in Vue Component to the `icon` prop. The bu
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import StoryButtonShowcase from '@/components/StoryButtonShowcase.vue'
 import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
 import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
@@ -59,7 +59,7 @@ import StoryButtonEXLoadingState from '@/components/StoryButtonEXLoadingState.vu
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StoryButtonShowcase,
     StoryButtonEXMedium,

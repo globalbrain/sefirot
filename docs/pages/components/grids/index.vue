@@ -20,7 +20,7 @@ Grids displays sets of data.
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import StoryGridShowcase from '@/components/StoryGridShowcase.vue'
 import StoryGridEXBasic from '@/components/StoryGridEXBasic.vue'
 import StoryGridEXMultiItem from '@/components/StoryGridEXMultiItem.vue'
@@ -30,7 +30,7 @@ import StoryGridEXWithMultiActions from '@/components/StoryGridEXWithMultiAction
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StoryGridShowcase,
     StoryGridEXBasic,

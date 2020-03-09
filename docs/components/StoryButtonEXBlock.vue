@@ -23,10 +23,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton
   }
@@ -49,11 +49,11 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SButton from '@@/lib/components/SButton.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton,
     StoryBase

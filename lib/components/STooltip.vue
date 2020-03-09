@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed } from '@vue/composition-api'
+import { defineComponent, ref, computed } from '@vue/composition-api'
 
-export default createComponent({
+export default defineComponent({
   props: {
     text: { type: String, required: true },
     position: { type: String, default: 'top' }

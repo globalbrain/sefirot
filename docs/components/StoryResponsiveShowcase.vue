@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SResponsive, { BP } from '@@/lib/components/SResponsive.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SResponsive
   },
@@ -54,11 +54,11 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SResponsive, { BP } from '@@/lib/components/SResponsive.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SResponsive,
     StoryBase

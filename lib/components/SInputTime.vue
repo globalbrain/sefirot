@@ -57,12 +57,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed, onMounted, onUnmounted, PropType } from '@vue/composition-api'
+import { defineComponent, ref, computed, onMounted, onUnmounted, PropType } from '@vue/composition-api'
 import useTime from '../compositions/useTime'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SInputBase
   },

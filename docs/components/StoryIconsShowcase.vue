@@ -16,7 +16,7 @@ All icons by Feather.
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconArrowDown from '@@/lib/components/icons/SIconArrowDown.vue'
 import SIconArrowLeft from '@@/lib/components/icons/SIconArrowLeft.vue'
 import SIconArrowRight from '@@/lib/components/icons/SIconArrowRight.vue'
@@ -35,7 +35,7 @@ import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StoryBase
   },

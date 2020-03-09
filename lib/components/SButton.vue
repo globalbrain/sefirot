@@ -21,11 +21,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
 
-export default createComponent({
+export default defineComponent({
   props: {
     label: { type: String, default: null },
     tag: { type: String, default: 'button' },

@@ -30,10 +30,10 @@ Next, register the portal component to the top-level component. Probably this co
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SPortalSnackbars from '@globalbrain/lib/components/SPortalSnackbars.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SPortalSnackbars
   }
@@ -82,10 +82,10 @@ Actions will take 3 arguments.
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import StorySnackbarShowcase from '@/components/StorySnackbarShowcase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StorySnackbarShowcase
   },

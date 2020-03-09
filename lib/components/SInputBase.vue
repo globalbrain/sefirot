@@ -17,10 +17,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed, PropType } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 
-export default createComponent({
+export default defineComponent({
   props: {
     name: { type: String, default: null },
     note: { type: String, default: null },

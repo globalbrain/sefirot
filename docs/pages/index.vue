@@ -42,11 +42,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SButton from '@@/lib/components/SButton.vue'
 import IconGitHub from '@/components/icons/IconGitHub.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton
   },

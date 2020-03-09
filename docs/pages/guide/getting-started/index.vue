@@ -27,10 +27,10 @@ To begin using the components, you should directly import them from `lib` direct
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton
   }
@@ -109,10 +109,10 @@ With the above setting,  you can import components from `sefirot`.
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SButton from 'sefirot/components/SButton.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton
   }
@@ -122,9 +122,9 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 
-export default createComponent({
+export default defineComponent({
   head: {
     title: 'Getting Started'
   },

@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SGrid from '@globalbrain/sefirot/lib/components/SGrid.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SGrid
   },
@@ -80,11 +80,11 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SGrid from '@@/lib/components/SGrid.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SGrid,
     StoryBase

@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 import SpecBase from './SpecBase.vue'
 
 export interface Prop {
@@ -47,7 +47,7 @@ export interface Prop {
   description: string
 }
 
-export default createComponent({
+export default defineComponent({
   components: {
     SpecBase
   },

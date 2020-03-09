@@ -33,12 +33,12 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed, PropType } from '@vue/composition-api'
+import { defineComponent, ref, computed, PropType } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SIconX,
     SInputBase

@@ -26,14 +26,14 @@ Coming soon...
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { required } from '@@/lib/validation/rules'
 import useForm from '@@/lib/compositions/useForm'
 import SButton from '@@/lib/components/SButton.vue'
 import SInputTime from '@@/lib/components/SInputTime.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton,
     SInputTime,

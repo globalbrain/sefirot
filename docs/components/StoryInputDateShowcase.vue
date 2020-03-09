@@ -47,13 +47,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { required } from '@globalbrain/sefirot/lib/validation/rules'
 import useForm from '@globalbrain/sefirot/lib/compositions/useForm'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import SInputDate from '@globalbrain/sefirot/lib/components/SInputDate.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton,
     SInputDate
@@ -97,14 +97,14 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { required } from '@@/lib/validation/rules'
 import useForm from '@@/lib/compositions/useForm'
 import SButton from '@@/lib/components/SButton.vue'
 import SInputDate from '@@/lib/components/SInputDate.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton,
     SInputDate,

@@ -22,11 +22,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 import STooltip from './STooltip.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SIconMoreHorizontal,
     STooltip

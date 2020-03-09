@@ -34,11 +34,11 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SInputBase
   },

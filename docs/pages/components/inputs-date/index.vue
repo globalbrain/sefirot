@@ -12,12 +12,12 @@ Date input let users select date from the calendar.
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import StoryInputDateShowcase from '@/components/StoryInputDateShowcase.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     StoryInputDateShowcase,
     SpecProps,

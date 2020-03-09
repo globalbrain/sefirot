@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, computed, watch } from '@vue/composition-api'
+import { defineComponent, ref, computed, watch } from '@vue/composition-api'
 
-export default createComponent({
+export default defineComponent({
   props: {
     open: { type: Boolean, required: true }
   },

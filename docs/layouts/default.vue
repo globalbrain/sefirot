@@ -15,14 +15,14 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SPortalModals from '@@/lib/components/SPortalModals.vue'
 import SPortalScreens from '@@/lib/components/SPortalScreens.vue'
 import SPortalSnackbars from '@@/lib/components/SPortalSnackbars.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import TheHeader from '@/components/TheHeader.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SPortalModals,
     SPortalScreens,

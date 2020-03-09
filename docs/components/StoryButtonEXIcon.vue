@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconImage from '@globalbrain/sefirot/components/icons/SIconImage.vue'
 import SIconSearch from '@globalbrain/sefirot/components/icons/SIconSearch.vue'
 import SIconCheckCircle from '@globalbrain/sefirot/components/icons/SIconCheckCircle.vue'
@@ -56,7 +56,7 @@ import SIconEdit from '@globalbrain/sefirot/components/icons/SIconEdit.vue'
 import SIconTrash from '@globalbrain/sefirot/components/icons/SIconTrash.vue'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton
   },
@@ -89,7 +89,7 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconImage from '@@/lib/components/icons/SIconImage.vue'
 import SIconSearch from '@@/lib/components/icons/SIconSearch.vue'
 import SIconCheckCircle from '@@/lib/components/icons/SIconCheckCircle.vue'
@@ -99,7 +99,7 @@ import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
 import SButton from '@@/lib/components/SButton.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SButton,
     StoryBase

@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SidebarNavigation, { Content } from '@/components/SidebarNavigation.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SidebarNavigation
   },

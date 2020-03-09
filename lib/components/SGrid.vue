@@ -42,13 +42,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SGridActionLink from './SGridActionLink.vue'
 import SGridActionSingle from './SGridActionSingle.vue'
 import SGridActionMulti from './SGridActionMulti.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SIconPreloaderDark
   },

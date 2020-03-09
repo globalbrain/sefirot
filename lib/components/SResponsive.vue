@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent, ref, reactive, computed, PropType } from '@vue/composition-api'
+import { defineComponent, ref, reactive, computed, PropType } from '@vue/composition-api'
 import useResizeObserver, { EL as BaseEL } from '../compositions/useResizeObserver'
 
 export interface EL extends BaseEL {
@@ -16,7 +16,7 @@ export interface BP {
   [name: string]: (el: EL) => boolean
 }
 
-export default createComponent({
+export default defineComponent({
   props: {
     bp: { type: Object as PropType<BP>, default: () => ({}) }
   },

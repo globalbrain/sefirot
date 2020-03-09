@@ -31,13 +31,13 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconEye from '@globalbrain/sefirot/lib/components/icons/SIconEye.vue'
 import SIconEdit from '@globalbrain/sefirot/lib/components/icons/SIconEdit.vue'
 import SIconTrash from '@globalbrain/sefirot/lib/components/icons/SIconTrash.vue'
 import SGrid from '@globalbrain/sefirot/lib/components/SGrid.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SGrid
   },
@@ -72,14 +72,14 @@ export default createComponent({
 </template>
 
 <script lang="ts">
-import { createComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
 import SGrid from '@@/lib/components/SGrid.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SGrid,
     StoryBase

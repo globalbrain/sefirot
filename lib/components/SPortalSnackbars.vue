@@ -15,10 +15,10 @@
 </template>
 
 <script lang="ts">
-import { createComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import SSnackbar from './SSnackbar.vue'
 
-export default createComponent({
+export default defineComponent({
   components: {
     SSnackbar
   },
