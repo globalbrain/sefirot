@@ -28,11 +28,17 @@ import SIconChevronDown from '@@/lib/components/icons/SIconChevronDown.vue'
 import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
+import SIconClock from '@@/lib/components/icons/SIconClock.vue'
 import SIconDownload from '@@/lib/components/icons/SIconDownload.vue'
 import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
+import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
+import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
+import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
+import SIconUser from '@@/lib/components/icons/SIconUser.vue'
+import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
 export default defineComponent({
@@ -53,11 +59,17 @@ export default defineComponent({
       { component: SIconChevronLeft, name: 'ChevronLeft' },
       { component: SIconChevronRight, name: 'ChevronRight' },
       { component: SIconChevronUp, name: 'ChevronUp' },
+      { component: SIconClock, name: 'Clock' },
       { component: SIconDownload, name: 'Download' },
       { component: SIconDownloadCloud, name: 'DownloadCloud' },
       { component: SIconEdit, name: 'Edit' },
       { component: SIconEye, name: 'Eye' },
-      { component: SIconSave, name: 'Save' }
+      { component: SIconGlobe, name: 'Globe' },
+      { component: SIconMapPin, name: 'MapPin' },
+      { component: SIconSave, name: 'Save' },
+      { component: SIconShare2, name: 'Share2' },
+      { component: SIconUser, name: 'User' },
+      { component: SIconUsers, name: 'Users' }
     ]
 
     return {
