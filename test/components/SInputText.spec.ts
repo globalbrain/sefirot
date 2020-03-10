@@ -8,7 +8,7 @@ describe('Components - SInputText', () => {
 
     wrapper.find('.SInputText .input').setValue('ok')
 
-    expect(wrapper.emitted('input')[0][0]).toBe('ok')
+    expect((wrapper.emitted('input') as any)[0][0]).toBe('ok')
   })
 
   test('it emits `blur` event when a user blur from the input', () => {
@@ -19,7 +19,7 @@ describe('Components - SInputText', () => {
     input.setValue('ok')
     input.trigger('blur')
 
-    expect(wrapper.emitted('blur')[0][0]).toBe('ok')
+    expect((wrapper.emitted('blur') as any)[0][0]).toBe('ok')
   })
 
   test('it "touches" the validation on blur event', () => {
@@ -48,7 +48,7 @@ describe('Components - SInputText', () => {
     input.setValue('ok')
     input.trigger('keypress.enter')
 
-    expect(wrapper.emitted('enter')[0][0]).toBe('ok')
+    expect((wrapper.emitted('enter') as any)[0][0]).toBe('ok')
   })
 
   test('it shows clear button only when the `value` is not empty', async () => {
@@ -83,6 +83,6 @@ describe('Components - SInputText', () => {
 
     wrapper.find('.SInputText .clear').trigger('click')
 
-    expect(wrapper.emitted('clear')[0][0]).toBe(undefined)
+    expect((wrapper.emitted('clear') as any)[0][0]).toBe(undefined)
   })
 })
