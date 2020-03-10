@@ -52,16 +52,10 @@ $ npm run lint
 Lint files using a rule of Standard JS.
 
 ```bash
-$ npm run test
+$ npm run jest
 ```
 
 Run the test.
-
-```bash
-$ npm run test:watch
-```
-
-Run the test in watch mode.
 
 ```bash
 $ npm run coverage

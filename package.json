@@ -12,10 +12,9 @@
     "generate": "nuxt-ts generate",
     "lint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
     "lint:fail": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-    "test": "jest",
-    "test:watch": "jest --watchAll",
-    "test:all": "yarn lint && yarn coverage",
-    "coverage": "jest --collect-coverage",
+    "jest": "jest --config test/jest.config.js",
+    "test": "yarn lint && yarn coverage",
+    "coverage": "yarn jest --collect-coverage",
     "docs:deploy": "yarn generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "repository": {
@@ -72,38 +71,5 @@
     "vue-template-compiler": "^2.6.11",
     "vuelidate": "^0.7.5",
     "webpack": "^4.42.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "vue"
-    ],
-    "moduleNameMapper": {
-      "^sefirot/(.*)$": "<rootDir>/lib/$1",
-      "^test/(.*)$": "<rootDir>/test/$1"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      "^.+\\.tsx?$": "ts-jest",
-      ".*\\.(vue)$": "vue-jest"
-    },
-    "snapshotSerializers": [
-      "<rootDir>/node_modules/jest-serializer-vue"
-    ],
-    "setupFilesAfterEnv": [
-      "./test/setup.ts"
-    ],
-    "collectCoverageFrom": [
-      "lib/**/*.{js,ts,vue}",
-      "!**/node_modules/**"
-    ],
-    "coverageReporters": [
-      "html",
-      "json",
-      "lcov",
-      "text-summary"
-    ]
   }
 }
