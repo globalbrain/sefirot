@@ -11,9 +11,9 @@ module.exports = {
   },
   testRegex: '/test/.*\\.spec\\.(js|ts)$',
   transform: {
-    '^.+\\.js$': 'babel-jest',
-    '^.+\\.tsx?$': 'ts-jest',
-    '.*\\.(vue)$': 'vue-jest'
+    '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
+    '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
+    '.*\\.vue$': '<rootDir>/node_modules/vue-jest'
   },
   snapshotSerializers: [
     '<rootDir>/node_modules/jest-serializer-vue'

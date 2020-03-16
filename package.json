@@ -48,7 +48,7 @@
     "babel-jest": "^25.1.0",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.6.5",
-    "dayjs": "^1.8.22",
+    "dayjs": "^1.8.23",
     "eslint": "^6.8.0",
     "jest": "^25.1.0",
     "jest-serializer-vue": "^2.0.2",
@@ -71,5 +71,8 @@
     "vue-template-compiler": "^2.6.11",
     "vuelidate": "^0.7.5",
     "webpack": "^4.42.0"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3"
   }
 }

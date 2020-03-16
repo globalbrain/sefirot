@@ -2,10 +2,11 @@
   "presets": [
     ["env", { "modules": false }]
   ],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"],
   "env": {
     "test": {
       "presets": [
-        ["env", { "targets": { "node": "current" }}]
+        ["env", { "targets": { "node": "current" } }]
       ]
     }
   }
