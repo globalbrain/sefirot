@@ -327,11 +327,6 @@ export default defineComponent({
 .SButton.medium {
   width: 40px;
   height: 40px;
-  line-height: 38px;
-
-  .label {
-    transform: translateY(1px);
-  }
 
   .icon-svg {
     width: 16px;
@@ -346,7 +341,10 @@ export default defineComponent({
 .SButton.medium.has-label {
   padding: 0 14px;
   width: auto;
-  height: auto;
+}
+
+.SButton.medium.has-label.block {
+  width: 100%;
 }
 
 .SButton.medium.has-icon {
@@ -359,7 +357,6 @@ export default defineComponent({
 .SButton.large {
   width: 48px;
   height: 48px;
-  line-height: 46px;
   font-size: 14px;
 
   .label {
@@ -379,7 +376,10 @@ export default defineComponent({
 .SButton.large.has-label {
   padding: 0 14px;
   width: auto;
-  height: auto;
+}
+
+.SButton.large.has-label.block {
+  width: 100%;
 }
 
 .SButton.large.has-icon {
@@ -445,10 +445,6 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   transition: opacity .25s, transform .25s;
-}
-
-.label {
-  transform: translateY(.5px);
 }
 
 .icon-svg {

@@ -32,7 +32,6 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
     "@juggle/resize-observer": "^3.1.1",
     "@nuxt/typescript-build": "^0.6.0",
     "@nuxt/typescript-runtime": "^0.4.0",
@@ -46,6 +45,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "codecov": "^3.6.5",
     "dayjs": "^1.8.23",
@@ -71,8 +71,5 @@
     "vue-template-compiler": "^2.6.11",
     "vuelidate": "^0.7.5",
     "webpack": "^4.42.0"
-  },
-  "dependencies": {
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3"
   }
 }
