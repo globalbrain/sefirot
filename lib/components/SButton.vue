@@ -480,6 +480,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
   transition: opacity .25s, transform .25s;
 }
 
