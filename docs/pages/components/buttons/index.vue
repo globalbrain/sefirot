@@ -7,10 +7,11 @@ Buttons allow users to take actions, and make choices, with a single tap.
 
 ## Sizes
 
-Button has 2 sizes, `medium` and `large`. You can control the sizes through `size` prop. The default size is `medium`.
+Button has 2 sizes, `medium`, `large`, and `jumbo`. You can control the sizes through `size` prop. The default size is `medium`.
 
 <StoryButtonEXMedium />
 <StoryButtonEXLarge />
+<StoryButtonEXJumbo />
 
 ## Rounded Corner
 
@@ -51,6 +52,7 @@ import { defineComponent } from '@vue/composition-api'
 import StoryButtonShowcase from '@/components/StoryButtonShowcase.vue'
 import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
 import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
+import StoryButtonEXJumbo from '@/components/StoryButtonEXJumbo.vue'
 import StoryButtonEXRounded from '@/components/StoryButtonEXRounded.vue'
 import StoryButtonEXModes from '@/components/StoryButtonEXModes.vue'
 import StoryButtonEXBlock from '@/components/StoryButtonEXBlock.vue'
@@ -64,6 +66,7 @@ export default defineComponent({
     StoryButtonShowcase,
     StoryButtonEXMedium,
     StoryButtonEXLarge,
+    StoryButtonEXJumbo,
     StoryButtonEXRounded,
     StoryButtonEXModes,
     StoryButtonEXBlock,
@@ -121,7 +124,7 @@ export default defineComponent({
         type: 'string',
         required: false,
         default: '\'medium\'',
-        description: 'The size of the button. Available sizes are: `medium`, and `large`.'
+        description: 'The size of the button. Available sizes are: `medium`, `large`, and `jumbo`.'
       },
       {
         name: 'icon',
