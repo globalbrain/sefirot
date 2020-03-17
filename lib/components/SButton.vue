@@ -21,9 +21,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
+
+type Size = 'medium' | 'large' | 'jumbo'
 
 export default defineComponent({
   props: {
@@ -32,7 +34,7 @@ export default defineComponent({
     to: { type: String, default: '/' },
     type: { type: String, default: 'primary' },
     mode: { type: String, default: 'neutral' },
-    size: { type: String, default: 'medium' },
+    size: { type: String as PropType<Size>, default: 'medium' },
     rounded: { type: Boolean, default: false },
     icon: { type: Object, default: null },
     block: { type: Boolean, default: false },
@@ -55,6 +57,7 @@ export default defineComponent({
         danger: props.mode === 'danger',
         medium: props.size === 'medium',
         large: props.size === 'large',
+        jumbo: props.size === 'jumbo',
         rounded: props.rounded,
         block: props.block,
         inverse: props.inverse,
@@ -383,6 +386,39 @@ export default defineComponent({
 }
 
 .SButton.large.has-icon {
+  padding: 0 18px;
+
+  .label {
+    padding-right: 2px;
+    padding-left: 10px;
+  }
+}
+
+.SButton.jumbo {
+  width: 64px;
+  height: 64px;
+  font-size: 14px;
+
+  .icon-svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.SButton.jumbo.rounded {
+  border-radius: 32px;
+}
+
+.SButton.jumbo.has-label {
+  padding: 0 24px;
+  width: auto;
+}
+
+.SButton.jumbo.has-label.block {
+  width: 100%;
+}
+
+.SButton.jumbo.has-icon {
   padding: 0 18px;
 
   .label {
