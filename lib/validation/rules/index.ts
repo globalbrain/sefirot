@@ -1,4 +1,5 @@
 import required from './required'
+import email from './email'
 
 export interface Rule {
   name: string
@@ -7,5 +8,6 @@ export interface Rule {
 }
 
 export {
-  required
+  required,
+  email
 }
