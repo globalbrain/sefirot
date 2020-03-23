@@ -32,8 +32,12 @@ export default {
   },
 
   watch: {
-    modalName (value) {
-      value === null ? this.closeScreen() : this.openScreen()
+    modalName (newValue, oldValue) {
+      if (newValue === null) {
+        return this.closeScreen()
+      }
+
+      oldValue === null && this.openScreen()
     },
 
     $route () {
