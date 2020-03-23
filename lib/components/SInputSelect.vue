@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SInputBase from './SInputBase.vue'
 
