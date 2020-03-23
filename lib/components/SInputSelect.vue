@@ -8,7 +8,12 @@
     :validation="validation"
   >
     <div class="box">
-      <select class="select" :class="{ 'is-not-selected': isNotSelected }" :id="name" @change="emitChange">
+      <select
+        class="select"
+        :class="{ 'is-not-selected': isNotSelected }"
+        :id="name"
+        @change="emitChange"
+      >
         <option
           v-if="placeholder"
           value=""
@@ -35,11 +40,17 @@
   </SInputBase>
 </template>
 
-<script>
-import SIconChevronDown from './icons/SIconChevronDown'
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { defineComponent, ref, computed, PropType } from '@vue/composition-api'
+import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SInputBase from './SInputBase.vue'
 
-export default {
+interface Option {
+  label: string
+  value: boolean | number | string
+}
+
+export default defineComponent({
   components: {
     SIconChevronDown,
     SInputBase
@@ -56,31 +67,35 @@ export default {
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
-    options: { type: Array, required: true },
+    options: { type: Array as PropType<Option[]>, required: true },
     validation: { type: Object, default: null },
     value: { type: [String, Number, Boolean], default: null }
   },
 
-  computed: {
-    isNotSelected () {
-      return this.value === undefined || this.value === null || this.value === ''
+  setup (props, context) {
+    const isNotSelected = computed(() => {
+      return props.value === undefined || props.value === null || props.value === ''
+    })
+
+    function isSelectedOption (option: Option): boolean {
+      return option.value === props.value
     }
-  },
 
-  methods: {
-    isSelectedOption (option) {
-      return option.value === this.value
-    },
+    function emitChange (e: Event): void {
+      props.validation && props.validation.$touch()
 
-    emitChange (e) {
-      this.validation && this.validation.$touch()
+      const option = JSON.parse((e.target as HTMLInputElement).value)
 
-      const option = JSON.parse(e.target.value)
+      context.emit('change', option.value)
+    }
 
-      this.$emit('change', option.value)
+    return {
+      isNotSelected,
+      isSelectedOption,
+      emitChange
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -95,7 +110,7 @@ export default {
 .box {
   position: relative;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
   width: 100%;
   height: 48px;
   background-color: var(--c-white-mute);
@@ -112,28 +127,31 @@ export default {
   z-index: 20;
   display: block;
   border: 0;
-  border-radius: 2px;
-  padding: 12px 16px;
+  border-radius: 4px;
+  padding: 11px 16px;
   width: 100%;
   line-height: 24px;
   font-size: 16px;
+  background-color: transparent;
+  cursor: pointer;
 
   &.select.is-not-selected {
-    color: var(--c-gray);
+    color: var(--c-text-light-2);
   }
 }
 
 .icon {
   position: absolute;
   z-index: 10;
-  top: 18px;
+  top: 16px;
   right: 16px;
+  cursor: pointer;
 }
 
 .icon-svg {
   display: block;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   fill: var(--c-gray-dark-1);
 }
 </style>
