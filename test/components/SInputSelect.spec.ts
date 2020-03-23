@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import SInputSelect from 'sefirot/components/SInputSelect'
+import SInputSelect from 'sefirot/components/SInputSelect.vue'
 
 describe('Components - Inputs - SInputSelect', () => {
   test('it emits correct value when an user select an option', () => {
@@ -15,6 +15,6 @@ describe('Components - Inputs - SInputSelect', () => {
 
     wrapper.find('.SInputSelect .select').setValue(JSON.stringify({ label: 'Option 2', value: 2 }))
 
-    expect(wrapper.emitted('change')[0][0]).toEqual(2)
+    expect((wrapper as any).emitted('change')[0][0]).toEqual(2)
   })
 })

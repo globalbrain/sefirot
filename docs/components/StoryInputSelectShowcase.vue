@@ -2,80 +2,92 @@
 <StoryBase>
   <div class="input">
     <SInputSelect
+      v-model="input"
       name="input"
       label="Label"
       note="Note text"
       help="This is a help text."
       placeholder="Please select an item"
       :options="options"
-      v-model="form.input"
     />
   </div>
 </StoryBase>
 
 ```html
 <template>
-  <SInputSelect
-    name="input"
-    label="Label"
-    note="Note text"
-    help="This is a help text."
-    placeholder="Please select an item"
-    :options="options"
-    v-model="form.input"
-  />
+  <div class="input">
+    <SInputSelect
+      v-model="input"
+      name="input"
+      label="Label"
+      note="Note text"
+      help="This is a help text."
+      placeholder="Please select an item"
+      :options="options"
+    />
+  </div>
 </template>
 
-<script>
-import SInputSelect from '@globalbrain/sefirot/lib/components/inputs/SInputSelect'
+<script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+import SInputSelect from '@globalbrain/sefirot/lib/components/SInputSelect.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputSelect
   },
 
-  data () {
-    return {
-      form: {
-        input: null
-      },
+  setup () {
+    const input = ref<number | null>(null)
 
-      options: [
-        { label: 'First option', value: 1 },
-        { label: 'Second option', value: 2 },
-        { label: 'Third option', value: 3 }
-      ]
+    const options = [
+      { label: 'First option', value: 1 },
+      { label: 'Second option', value: 2 },
+      { label: 'Third option', value: 3 }
+    ]
+
+    return {
+      input,
+      options
     }
   }
-}
+})
 </script>
+
+<style lang="postcss" scoped>
+.input {
+  max-width: 320px;
+}
+</style>
 ```
 </template>
 
-<script>
-import SInputSelect from '@@/lib/components/SInputSelect'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+import SInputSelect from '@@/lib/components/SInputSelect.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputSelect,
     StoryBase
   },
 
-  data () {
-    return {
-      form: {
-        input: null
-      },
+  setup () {
+    const input = ref<number | null>(null)
 
-      options: [
-        { label: 'First option', value: 1 },
-        { label: 'Second option', value: 2 },
-        { label: 'Third option', value: 3 }
-      ]
+    const options = [
+      { label: 'First option', value: 1 },
+      { label: 'Second option', value: 2 },
+      { label: 'Third option', value: 3 }
+    ]
+
+    return {
+      input,
+      options
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

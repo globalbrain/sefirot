@@ -54,6 +54,7 @@
     "jest-serializer-vue": "^2.0.2",
     "markdown-it-highlight": "^0.2.0",
     "mutation-observer": "^1.0.3",
+    "normalize.css": "^8.0.1",
     "nuxt": "^2.12.0",
     "portal-vue": "^2.1.7",
     "postcss-custom-properties": "^9.1.1",
@@ -70,8 +71,5 @@
     "vue-template-compiler": "^2.6.11",
     "vuelidate": "^0.7.5",
     "webpack": "^4.42.0"
-  },
-  "dependencies": {
-    "normalize.css": "^8.0.1"
   }
 }

@@ -67,7 +67,8 @@
     display: inline-block;
     border-radius: 4px;
     padding: 0 6px;
-    font-size: 14px;
+    font-family: var(--font-family-mono);
+    font-size: 16px;
     line-height: 20px;
     color: var(--c-info-light);
     background-color: var(--c-white-mute);
@@ -84,8 +85,9 @@
 
     & > code {
       padding: 0;
-      line-height: 24px;
-      font-size: 14px;
+      line-height: 28px;
+      font-family: var(--font-family-mono);
+      font-size: 16px;
       color: var(--c-white);
       background-color: var(--c-black);
       word-break: keep-all;
