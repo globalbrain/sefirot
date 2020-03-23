@@ -1,7 +1,7 @@
 <template lang="md">
 <StoryBase>
   <ul class="flex flex-wrap -m-4">
-    <li v-for="icon in icons" :key="icon.name" class="item relative p-4 w-1/2 at375:w-1/3 at512:w-1/4 md:w-1/5">
+    <li v-for="icon in icons" :key="icon.name" class="item relative">
       <div class="bg-white-mute flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
         <component :is="icon.component" class="w-20 h-20 text-light-1 fill-current" />
         <p class="name pt-32 leading-20 text-12 text-light-2">{{ icon.name }}</p>
@@ -83,6 +83,23 @@ export default defineComponent({
 .name {
   margin-bottom: 0;
   font-weight: 500;
+}
+
+.item {
+  padding: 4px;
+  width: 50%;
+
+  @media (min-width: 375px) {
+    width: calc(100% / 3);
+  }
+
+  @media (min-width: 512px) {
+    width: calc(100% / 4);
+  }
+
+  @media (min-width: 768px) {
+    width: calc(100% / 5);
+  }
 }
 
 .item + .item {
