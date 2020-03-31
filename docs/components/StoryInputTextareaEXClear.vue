@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase title="Button Modes">
+<StoryBase title="Clear Mode">
   <SInputTextarea
     v-model="input"
     mode="clear"

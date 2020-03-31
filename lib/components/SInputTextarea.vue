@@ -22,10 +22,12 @@
   </SInputBase>
 </template>
 
-<script>
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { Validation } from '../validation/Validation'
+import SInputBase from './SInputBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputBase
   },
@@ -35,43 +37,43 @@ export default {
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
-    type: { type: String, default: 'text' },
     mode: { type: String, default: 'default' },
     placeholder: { type: String, default: null },
     rows: { type: Number, default: 3 },
     value: { type: [String, Number], default: null },
-    validation: { type: Object, default: null }
+    validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  computed: {
-    classes () {
-      return {
-        default: this.mode === 'default',
-        clear: this.mode === 'clear'
-      }
+  setup (props, context) {
+    const classes = computed(() => ({
+      default: props.mode === 'default',
+      clear: props.mode === 'clear'
+    }))
+
+    function emitInput (e: InputEvent): void {
+      context.emit('input', (e.target as HTMLInputElement).value)
     }
-  },
 
-  methods: {
-    emitInput (e) {
-      this.$emit('input', e.target.value)
-    },
-
-    emitBlur (e) {
-      this.validation && this.validation.$touch()
-
-      this.$emit('blur', e.target.value)
+    function emitBlur (e: InputEvent): void {
+      props.validation && props.validation.$touch()
+      context.emit('blur', (e.target as HTMLInputElement).value)
     }
+
+    return { classes, emitInput, emitBlur }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.SInputText.has-error {
+.SInputTextarea.has-error {
   .input {
     border-color: var(--c-danger);
+
+    &:focus {
+      border-color: var(--c-danger);
+    }
   }
 }
 
