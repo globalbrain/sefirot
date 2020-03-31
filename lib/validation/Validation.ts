@@ -51,7 +51,13 @@ function createNestedValidation (name: string, data: Data, rootData: Data, valid
 
   const errors = computed(() => {
     return validators.reduce<Error[]>((errors, validator) => {
-      if (!validator.validate(data[name], rootData)) {
+      const d = data[name]
+
+      if (validator.optional && (d === undefined || d === null || d === '')) {
+        return errors
+      }
+
+      if (!validator.validate(d, rootData)) {
         errors.push([validator.name, validator.message])
       }
 

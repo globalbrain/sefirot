@@ -5,6 +5,7 @@ export default function required (message: string): Rule {
   return {
     name: 'required',
     message,
+    optional: false,
     validate: baseRequired
   }
 }
