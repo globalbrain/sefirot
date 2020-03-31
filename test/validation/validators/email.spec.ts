@@ -1,6 +1,6 @@
 import { email } from 'sefirot/validation/validators'
 
-describe('Validation - Validators - email', () => {
+describe('validation/validators/email', () => {
   test('it validates if the value valid email address', () => {
     const checks = [
       ['john.doe@example.com', true],

@@ -1,6 +1,6 @@
 import { required } from 'sefirot/validation/validators'
 
-describe('Validation - Validators - require', () => {
+describe('validation/validators/require', () => {
   test('it validates if the value is present', () => {
     const checks = [
       [undefined, false],
