@@ -21,6 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 blockquote,
 dl,
 dd,
@@ -140,6 +141,7 @@ button:focus {
 
 button:focus,
 input:focus,
+textarea:focus,
 select:focus {
   outline: none;
 }

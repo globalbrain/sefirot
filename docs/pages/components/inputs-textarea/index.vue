@@ -79,6 +79,13 @@ export default {
           description: 'The rows of the textarea. The minimum height is set to 3 rows, so passing lower value than 3 would not take effect.'
         },
         {
+          name: 'mode',
+          type: "'default' | 'clear'",
+          required: false,
+          default: 'default',
+          description: 'The mode of the input style. If it’s set to `clear`, it will hide border styles.'
+        },
+        {
           name: 'value',
           type: 'String | Number',
           required: false,
