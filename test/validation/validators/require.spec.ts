@@ -1,4 +1,4 @@
-import required from 'sefirot/validation/validators/required'
+import { required } from 'sefirot/validation/validators'
 
 describe('Validation - Validators - require', () => {
   test('it validates if the value is present', () => {

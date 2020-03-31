@@ -1,4 +1,4 @@
-import email from 'sefirot/validation/validators/email'
+import { email } from 'sefirot/validation/validators'
 
 describe('Validation - Validators - email', () => {
   test('it validates if the value valid email address', () => {
