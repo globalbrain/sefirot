@@ -48,6 +48,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.2.4",
     "codecov": "^3.6.5",
+    "core-js": "^2.6.10",
     "dayjs": "^1.8.23",
     "eslint": "^6.8.0",
     "jest": "^25.2.4",
