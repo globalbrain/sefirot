@@ -128,7 +128,7 @@ export default defineComponent({
   display: block;
   border: 0;
   border-radius: 4px;
-  padding: 11px 16px;
+  padding: 11px 48px 11px 16px;
   width: 100%;
   line-height: 24px;
   font-size: 16px;
