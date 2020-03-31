@@ -15,6 +15,7 @@
     "jest": "jest --config test/jest.config.js",
     "test": "yarn lint && yarn coverage",
     "coverage": "yarn jest --collect-coverage",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "docs:deploy": "yarn generate && push-dir --dir=dist --branch=gh-pages --cleanup"
   },
   "repository": {
@@ -48,6 +49,7 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.2.4",
     "codecov": "^3.6.5",
+    "conventional-changelog-cli": "^2.0.31",
     "core-js": "^2.6.10",
     "dayjs": "^1.8.23",
     "eslint": "^6.8.0",
