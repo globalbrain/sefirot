@@ -11,16 +11,16 @@
         <div class="body">
           <div class="body-records" :class="{ loading }">
             <div
+              v-for="record in records"
+              :key="record[primaryKey]"
               class="row"
               :class="{ clickable }"
               role="button"
-              :key="record[primaryKey]"
               @click="handleClick(record)"
-              v-for="record in records"
             >
               <slot :record="record" />
 
-              <div class="actions" v-if="actions">
+              <div v-if="actions" class="actions">
                 <component
                   :is="actionComponent"
                   :action="actions"
@@ -31,7 +31,7 @@
           </div>
 
           <transition name="fade">
-            <div class="body-loading" v-if="loading">
+            <div v-if="loading" class="body-loading">
               <SIconPreloaderDark class="body-loading-icon" />
             </div>
           </transition>

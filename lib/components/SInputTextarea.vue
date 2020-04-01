@@ -9,9 +9,9 @@
   >
     <div class="container">
       <textarea
+        :id="name"
         class="input"
         :class="classes"
-        :id="name"
         :placeholder="placeholder"
         :value="value"
         :rows="rows"

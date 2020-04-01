@@ -19,8 +19,8 @@
           @input="emitInput"
         >
           <input
-            class="input"
             :id="name"
+            class="input"
             type="text"
             placeholder="YYYY-MM-DD"
             v-bind="inputProps"

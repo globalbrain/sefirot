@@ -8,7 +8,7 @@
       <p class="specs-column description">DESCRIPTION</p>
     </div>
 
-    <div class="specs-row" :key="index" v-for="(prop, index) in props">
+    <div v-for="(prop, index) in props" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
           <p class="specs-label">NAME</p>

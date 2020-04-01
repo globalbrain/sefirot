@@ -1,7 +1,7 @@
 <template>
   <div class="SPlaceholderBlank" :class="classes">
     <transition name="fade">
-      <div class="loader" v-if="!loaded">
+      <div v-if="!loaded" class="loader">
         <div class="icon">
           <SIconPreloaderDark class="icon-svg" />
         </div>

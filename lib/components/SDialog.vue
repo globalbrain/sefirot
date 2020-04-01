@@ -1,21 +1,21 @@
 <template>
   <SModalBase name="dialog" :closable="false">
     <div class="SDialog">
-      <p class="title" v-if="data.title">{{ data.title }}</p>
-      <p class="text" v-if="data.text">{{ data.text }}</p>
+      <p v-if="data.title" class="title">{{ data.title }}</p>
+      <p v-if="data.text" class="text">{{ data.text }}</p>
 
-      <div class="load" v-if="isTypeLoading">
+      <div v-if="isTypeLoading" class="load">
         <div class="load-icon">
           <SIconPreloaderDark class="load-svg" />
         </div>
       </div>
 
-      <div class="progress" v-if="isTypeProgress">
+      <div v-if="isTypeProgress" class="progress">
         <SProgressBar :now="data.progress.now" :max="data.progress.max" />
       </div>
 
-      <div class="actions" v-if="hasActions">
-        <div class="action" :key="index" v-for="(action, index) in data.actions">
+      <div v-if="hasActions" class="actions">
+        <div v-for="(action, index) in data.actions" :key="index" class="action">
           <SButton
             :type="getActionType(action.type)"
             :label="action.label"

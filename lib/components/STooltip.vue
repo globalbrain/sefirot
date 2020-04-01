@@ -5,7 +5,7 @@
     </div>
 
     <transition name="fade">
-      <div class="tip" :class="classes" v-show="on">
+      <div v-show="on" class="tip" :class="classes">
         {{ text }}
       </div>
     </transition>

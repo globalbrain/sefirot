@@ -9,7 +9,7 @@
       <p class="text">{{ data.text }}</p>
 
       <div class="actions">
-        <div class="action" :key="index" v-for="(action, index) in data.actions">
+        <div v-for="(action, index) in data.actions" :key="index" class="action">
           <SButton
             :label="action.label"
             :type="getActionType(action.type)"

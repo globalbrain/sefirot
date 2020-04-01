@@ -1,7 +1,7 @@
 <template>
   <portal to="modal">
     <transition name="fade" mode="out-in" appear>
-      <VueSimplebar class="SModalBase" :key="id" @click.native="close" v-if="show">
+      <VueSimplebar v-if="show" :key="id" class="SModalBase" @click.native="close">
         <div class="content">
           <slot />
         </div>

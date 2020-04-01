@@ -5,7 +5,7 @@
       <p class="specs-column description">DESCRIPTION</p>
     </div>
 
-    <div class="specs-row" :key="index" v-for="(event, index) in events">
+    <div v-for="(event, index) in events" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
           <p class="specs-label">NAME</p>

@@ -13,7 +13,7 @@
     </span>
 
     <transition name="fade">
-      <span class="loader" key="loading" v-if="loading">
+      <span v-if="loading" key="loading" class="loader">
         <component :is="preloaderComponent" class="loader-icon" />
       </span>
     </transition>

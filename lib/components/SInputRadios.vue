@@ -8,7 +8,7 @@
   >
     <div class="container">
       <div class="row">
-        <div class="col" :key="option.value" v-for="option in options">
+        <div v-for="option in options" :key="option.value" class="col">
           <SInputRadio
             :text="option.label"
             :value="isChecked(option.value)"

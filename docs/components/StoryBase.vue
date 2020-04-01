@@ -1,6 +1,6 @@
 <template>
   <article class="StoryBase">
-    <h1 class="title" v-if="title">{{ title }}</h1>
+    <h1 v-if="title" class="title">{{ title }}</h1>
 
     <div class="component">
       <slot />

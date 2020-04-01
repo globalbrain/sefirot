@@ -9,23 +9,23 @@
   >
     <div class="box">
       <input
+        :id="name"
+        ref="input"
         class="input"
         :class="{ 'has-icon': icon, 'is-clearable': clearable }"
-        :id="name"
         :type="type"
         :placeholder="placeholder"
         :value="value"
-        ref="input"
         @input="emitInput"
         @blur="emitBlur"
         @keypress.enter="emitEnter"
       >
 
-      <div class="icon" role="button" @click="focus" v-if="icon">
+      <div v-if="icon" class="icon" role="button" @click="focus">
         <component :is="icon" class="icon-svg" />
       </div>
 
-      <button class="clear" :class="{ show: showClearButton }" @click="emitClear" v-if="clearable">
+      <button v-if="clearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
         <SIconX class="clear-svg" />
       </button>
     </div>

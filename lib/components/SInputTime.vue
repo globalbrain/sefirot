@@ -9,11 +9,11 @@
   >
     <div class="box">
       <input
-        class="input"
         :id="name"
+        ref="input"
+        class="input"
         :value="value"
         placeholder="HH:MM"
-        ref="input"
         @click.stop
         @blur="handleBlur"
         @focus="openSelector"

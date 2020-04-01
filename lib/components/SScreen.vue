@@ -1,8 +1,8 @@
 <template>
   <portal to="screen">
     <transition name="screen">
-      <VueSimplebar class="SScreen" :key="screenName" v-if="show">
-        <div class="header" v-if="title">
+      <VueSimplebar v-if="show" :key="screenName" class="SScreen">
+        <div v-if="title" class="header">
           <p class="header-title">{{ title }}</p>
         </div>
 

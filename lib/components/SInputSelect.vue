@@ -9,9 +9,9 @@
   >
     <div class="box">
       <select
+        :id="name"
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
-        :id="name"
         @change="emitChange"
       >
         <option

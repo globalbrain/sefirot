@@ -1,16 +1,16 @@
 <template>
   <div class="SInputBase" :class="{ 'has-error': hasError }">
-    <label class="label" v-if="label" :for="name">
+    <label v-if="label" class="label" :for="name">
       {{ label }} <span class="note">{{ note }}</span>
     </label>
 
     <slot />
 
     <div class="help">
-      <p class="help-text" v-if="help">{{ help }}</p>
+      <p v-if="help" class="help-text">{{ help }}</p>
 
       <transition name="slide" mode="out-in">
-        <p class="help-error" v-if="showError" :key="errorMsg">{{ errorMsg }}</p>
+        <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
       </transition>
     </div>
   </div>

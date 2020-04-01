@@ -14,7 +14,7 @@
       <nav class="nav">
         <div class="nav-container">
           <ul class="nav-list">
-            <li class="nav-item" :key="content.path" v-for="content in contents">
+            <li v-for="content in contents" :key="content.path" class="nav-item">
               <nuxt-link class="nav-link" :to="content.path" @click.native="delayClose">{{ content.label }}</nuxt-link>
             </li>
           </ul>

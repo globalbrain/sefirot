@@ -1,21 +1,21 @@
 <template>
   <SModalBase :name="name" :closable="closable">
     <div class="SWindow">
-      <button class="close" @click="close" v-if="closable">
+      <button v-if="closable" class="close" @click="close">
         <SIconX class="close-icon" />
       </button>
 
-      <div class="header" v-if="showHeader">
+      <div v-if="showHeader" class="header">
         <p class="title">{{ title }}</p>
-        <p class="lead" v-if="lead">{{ lead }}</p>
+        <p v-if="lead" class="lead">{{ lead }}</p>
       </div>
 
       <div class="content">
         <slot />
       </div>
 
-      <div class="actions" v-if="actions">
-        <div class="action" :key="index" v-for="(action, index) in actions">
+      <div v-if="actions" class="actions">
+        <div v-for="(action, index) in actions" :key="index" class="action">
           <SButton
             :label="action.label"
             :type="action.type"

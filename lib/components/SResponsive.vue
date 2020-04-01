@@ -1,5 +1,5 @@
 <template>
-  <div class="SResponsive" :class="el.classes" ref="target">
+  <div ref="target" class="SResponsive" :class="el.classes">
     <slot :el="el" />
   </div>
 </template>

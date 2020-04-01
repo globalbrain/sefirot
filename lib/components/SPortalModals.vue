@@ -1,7 +1,7 @@
 <template>
   <div class="SPortalModals">
     <transition name="fade">
-      <div class="backdrop" v-if="showBackdrop" />
+      <div v-if="showBackdrop" class="backdrop" />
     </transition>
 
     <SDialog />

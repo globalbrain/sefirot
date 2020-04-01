@@ -6,12 +6,12 @@
 
     <div class="actions">
       <STooltip
+        v-for="(action, index) in actions"
+        :key="index"
         class="action"
         :style="actionStyles(index)"
-        :key="index"
         :text="action.name"
         position="top"
-        v-for="(action, index) in actions"
       >
         <div class="action-content">
           <component :is="action.icon" class="action-icon" />
