@@ -4,10 +4,6 @@ import MarkdownItHighlight from 'markdown-it-highlight'
 require('dotenv').config()
 
 const config: Configuration = {
-  env: {
-    app_env: process.env.APP_ENV ?? 'local'
-  },
-
   srcDir: 'docs/',
 
   build: {
