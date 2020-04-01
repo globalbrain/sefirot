@@ -55,9 +55,9 @@ const config: Configuration = {
   ],
 
   plugins: [
-    { src: '@@/lib/plugins/vue-composition-api' },
-    { src: '@@/lib/plugins/portal-vue' },
-    { src: '@@/lib/plugins/v-calendar', mode: 'client' }
+    { src: '@/plugins/vue-composition-api' },
+    { src: '@/plugins/portal-vue' },
+    { src: '@/plugins/v-calendar', mode: 'client' }
   ],
 
   loading: false,
