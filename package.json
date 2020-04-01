@@ -58,7 +58,7 @@
     "markdown-it-highlight": "^0.2.0",
     "mutation-observer": "^1.0.3",
     "normalize.css": "^8.0.1",
-    "nuxt": "^2.12.1",
+    "nuxt": "^2.12.2",
     "portal-vue": "^2.1.7",
     "postcss-custom-properties": "^9.1.1",
     "postcss-nested": "^4.2.1",
