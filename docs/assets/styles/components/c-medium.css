@@ -68,7 +68,8 @@
     border-radius: 4px;
     padding: 0 6px;
     font-family: var(--font-family-mono);
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 500;
     line-height: 20px;
     color: var(--c-info-light);
     background-color: var(--c-white-mute);
@@ -81,15 +82,15 @@
     padding: 12px;
     font-size: 14px;
     color: var(--c-white);
-    background-color: var(--c-black);
+    background-color: #282c34;
 
     & > code {
       padding: 0;
       line-height: 28px;
       font-family: var(--font-family-mono);
-      font-size: 16px;
+      font-size: 14px;
       color: var(--c-white);
-      background-color: var(--c-black);
+      background-color: #282c34;
       word-break: keep-all;
     }
   }
