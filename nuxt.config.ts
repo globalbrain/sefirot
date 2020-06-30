@@ -4,6 +4,8 @@ import MarkdownItHighlight from 'markdown-it-highlight'
 require('dotenv').config()
 
 const config: Configuration = {
+  target: 'static',
+
   srcDir: 'docs/',
 
   build: {
