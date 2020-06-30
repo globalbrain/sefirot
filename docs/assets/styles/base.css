@@ -13,8 +13,8 @@ body {
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
-  color: var(--c-text-light-1);
-  background-color: var(--c-white);
+  color: var(--c-text-1);
+  background-color: var(--c-bg);
   direction: ltr;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -152,17 +152,17 @@ table {
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: var(--c-text-light-3);
+  color: var(--c-text-3);
 }
 
 input::-ms-input-placeholder,
 textarea::-ms-input-placeholder {
-  color: var(--c-text-light-3);
+  color: var(--c-text-3);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: var(--c-text-light-3);
+  color: var(--c-text-3);
 }
 
 textarea {
