@@ -11,7 +11,7 @@ A Responsive component handles content size changes, and add as a class name. It
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import StoryResponsiveShowcase from '@/components/StoryResponsiveShowcase.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 

@@ -21,11 +21,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
-import TheHeaderNavScreen from './TheHeaderNavScreen.vue'
-import TheHeaderNavBar from './TheHeaderNavBar.vue'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import IconSefirotH from '@/components/icons/IconSefirotH.vue'
 import IconHamburger from '@/components/icons/IconHamburger.vue'
+import TheHeaderNavScreen from './TheHeaderNavScreen.vue'
+import TheHeaderNavBar from './TheHeaderNavBar.vue'
 
 export default defineComponent({
   components: {

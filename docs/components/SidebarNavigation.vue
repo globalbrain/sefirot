@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType } from '@vue/composition-api'
+import { defineComponent, ref, PropType } from '@nuxtjs/composition-api'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconX from '@@/lib/components/icons/SIconX.vue'
 import SButton from '@@/lib/components/SButton.vue'

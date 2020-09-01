@@ -51,29 +51,6 @@ describe('Components - SInputText', () => {
     expect((wrapper.emitted('enter') as any)[0][0]).toBe('ok')
   })
 
-  test('it shows clear button only when the `value` is not empty', async () => {
-    const wrapper = mount(SInputText, {
-      propsData: {
-        value: '',
-        clearable: true
-      }
-    })
-
-    const clear = wrapper.find('.SInputText .clear')
-
-    expect(clear.classes('show')).toBe(false)
-
-    wrapper.setProps({ value: '' })
-
-    expect(clear.classes('show')).toBe(false)
-
-    wrapper.setProps({ value: 'ok' })
-
-    await wrapper.vm.$nextTick()
-
-    expect(clear.classes('show')).toBe(true)
-  })
-
   test('it emits `clear` event when a user clicks the clear button', () => {
     const wrapper = mount(SInputText, {
       propsData: {

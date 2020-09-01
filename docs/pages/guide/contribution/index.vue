@@ -61,7 +61,7 @@ Sefirot is open-sourced software licensed under the [MIT license](LICENSE.md).
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SButton from '@@/lib/components/SButton.vue'
 import IconGitHub from '@/components/icons/IconGitHub.vue'
 

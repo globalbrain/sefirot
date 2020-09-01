@@ -27,7 +27,7 @@ To begin using the components, you should directly import them from `lib` direct
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 export default defineComponent({
@@ -109,7 +109,7 @@ With the above setting,  you can import components from `sefirot`.
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SButton from 'sefirot/components/SButton.vue'
 
 export default defineComponent({
@@ -122,7 +122,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   head: {

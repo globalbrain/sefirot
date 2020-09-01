@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SIconImage from '@globalbrain/sefirot/components/icons/SIconImage.vue'
 import SIconSearch from '@globalbrain/sefirot/components/icons/SIconSearch.vue'
 import SIconCheckCircle from '@globalbrain/sefirot/components/icons/SIconCheckCircle.vue'
@@ -89,7 +89,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SIconImage from '@@/lib/components/icons/SIconImage.vue'
 import SIconSearch from '@@/lib/components/icons/SIconSearch.vue'
 import SIconCheckCircle from '@@/lib/components/icons/SIconCheckCircle.vue'

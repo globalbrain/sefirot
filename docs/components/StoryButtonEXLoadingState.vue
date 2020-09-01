@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api'
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 export default defineComponent({
@@ -87,7 +87,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from '@vue/composition-api'
+import { defineComponent, reactive } from '@nuxtjs/composition-api'
 import SButton from '@@/lib/components/SButton.vue'
 import StoryBase from '@/components/StoryBase.vue'
 

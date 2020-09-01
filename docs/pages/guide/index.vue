@@ -3,15 +3,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  fetch ({ redirect }) {
+  middleware ({ redirect }) {
     return redirect('/guide/getting-started')
   },
 
-  head: {
-    title: 'Guide'
+  head () {
+    return {
+      title: 'Guide'
+    }
   }
 })
 </script>

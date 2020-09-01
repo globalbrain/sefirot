@@ -16,7 +16,7 @@ All icons by Feather.
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SIconArrowDown from '@@/lib/components/icons/SIconArrowDown.vue'
 import SIconArrowLeft from '@@/lib/components/icons/SIconArrowLeft.vue'
 import SIconArrowRight from '@@/lib/components/icons/SIconArrowRight.vue'

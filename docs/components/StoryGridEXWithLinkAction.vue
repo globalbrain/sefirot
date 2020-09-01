@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SGrid from '@globalbrains/sefirot/lib/components/SGrid.vue'
 
 export default defineComponent({
@@ -62,7 +62,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SGrid from '@@/lib/components/SGrid.vue'
 import StoryBase from '@/components/StoryBase.vue'
 

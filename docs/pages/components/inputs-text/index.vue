@@ -24,7 +24,7 @@ By setting `clearable` props, the input filed will show the "clear" button when 
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputTextShowcase from '@/components/StoryInputTextShowcase.vue'
 import StoryInputTextEXIcon from '@/components/StoryInputTextEXIcon.vue'
 import StoryInputTextEXClearable from '@/components/StoryInputTextEXClearable.vue'

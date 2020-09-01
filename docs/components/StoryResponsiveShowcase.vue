@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SResponsive, { BP } from '@@/lib/components/SResponsive.vue'
 
 export default defineComponent({
@@ -54,7 +54,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SResponsive, { BP } from '@@/lib/components/SResponsive.vue'
 import StoryBase from '@/components/StoryBase.vue'
 

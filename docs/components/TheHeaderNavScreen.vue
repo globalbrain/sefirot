@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from '@vue/composition-api'
+import { defineComponent, ref, computed, watch } from '@nuxtjs/composition-api'
 
 export default defineComponent({
   props: {

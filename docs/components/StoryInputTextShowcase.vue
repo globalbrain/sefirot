@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@globalbrain/sefirot/lib/validation/rules'
 import useForm from '@globalbrain/sefirot/lib/compositions/useForm'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
@@ -99,7 +99,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@@/lib/validation/rules'
 import useForm from '@@/lib/compositions/useForm'
 import SButton from '@@/lib/components/SButton.vue'

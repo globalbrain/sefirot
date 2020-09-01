@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SIconSearch from '@globalbrain/sefirot/lib/components/icons/SIconSearch.vue'
 import SInputText from '@globalbrain/sefirot/lib/components/SInputText.vue'
 
@@ -56,7 +56,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SIconSearch from '@@/lib/components/icons/SIconSearch.vue'
 import SInputText from '@@/lib/components/SInputText.vue'
 import StoryBase from '@/components/StoryBase.vue'

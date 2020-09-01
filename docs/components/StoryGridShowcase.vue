@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SIconEye from '@globalbrain/sefirot/lib/components/icons/SIconEye.vue'
 import SIconEdit from '@globalbrain/sefirot/lib/components/icons/SIconEdit.vue'
 import SIconTrash from '@globalbrain/sefirot/lib/components/icons/SIconTrash.vue'
@@ -72,7 +72,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'

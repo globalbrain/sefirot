@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@nuxtjs/composition-api'
 import SPortalModals from '@@/lib/components/SPortalModals.vue'
 import SPortalScreens from '@@/lib/components/SPortalScreens.vue'
 import SPortalSnackbars from '@@/lib/components/SPortalSnackbars.vue'

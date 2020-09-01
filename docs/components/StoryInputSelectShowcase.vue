@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SInputSelect from '@globalbrain/sefirot/lib/components/SInputSelect.vue'
 
 export default defineComponent({
@@ -63,7 +63,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@vue/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SInputSelect from '@@/lib/components/SInputSelect.vue'
 import StoryBase from '@/components/StoryBase.vue'
 

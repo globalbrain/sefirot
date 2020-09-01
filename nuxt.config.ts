@@ -49,12 +49,12 @@ const config: Configuration = {
 
   modules: [
     ['@nuxtjs/dotenv', { path: __dirname }],
+    '@nuxtjs/composition-api',
     '@nuxtjs/markdownit',
     '@nuxtjs/google-analytics'
   ],
 
   plugins: [
-    { src: '@/plugins/vue-composition-api' },
     { src: '@/plugins/portal-vue' },
     { src: '@/plugins/v-calendar', mode: 'client' }
   ],
