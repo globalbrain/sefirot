@@ -1,3 +1,12 @@
+## [0.8.10](https://github.com/globalbrain/sefirot/compare/v0.8.9...v0.8.10) (2020-09-01)
+
+
+### Bug Fixes
+
+* **validation:** fix reactivity not working as expected ([049cc1a](https://github.com/globalbrain/sefirot/commit/049cc1a5a7342319a062a6801b6e8850257a9789))
+
+
+
 ## [0.8.9](https://github.com/globalbrain/sefirot/compare/v0.8.8...v0.8.9) (2020-03-31)
 
 
