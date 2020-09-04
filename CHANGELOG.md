@@ -1,3 +1,17 @@
+# [0.9.0](https://github.com/globalbrain/sefirot/compare/v0.8.10...v0.9.0) (2020-09-04)
+
+
+### Bug Fixes
+
+* fix messed up shadow variables ([311f94d](https://github.com/globalbrain/sefirot/commit/311f94d668c9ff7fb9821f50954ffa0098b1015e))
+
+
+### Features
+
+* add header and footer support for SGrid component ([20ff160](https://github.com/globalbrain/sefirot/commit/20ff160841d68e1410492b571caf5f2bbce2104a))
+
+
+
 ## [0.8.10](https://github.com/globalbrain/sefirot/compare/v0.8.9...v0.8.10) (2020-09-01)
 
 
