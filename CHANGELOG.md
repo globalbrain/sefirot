@@ -1,3 +1,12 @@
+## [0.9.1](https://github.com/globalbrain/sefirot/compare/v0.9.0...v0.9.1) (2020-09-04)
+
+
+### Bug Fixes
+
+* **grid:** add missing border-top in empty slot ([3e72345](https://github.com/globalbrain/sefirot/commit/3e7234510967fce16e5189183a8eb2e99837e9b7))
+
+
+
 # [0.9.0](https://github.com/globalbrain/sefirot/compare/v0.8.10...v0.9.0) (2020-09-04)
 
 
