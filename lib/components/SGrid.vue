@@ -201,6 +201,11 @@ export default defineComponent({
   }
 }
 
+.body-empty {
+  border-top: 1px solid var(--c-divider-lighter);
+  min-width: 100%;
+}
+
 .footer {
   border-top: 1px solid var(--c-divider);
 }
