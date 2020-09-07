@@ -1,6 +1,6 @@
 <template>
-  <SModalBase :name="name" :closable="closable">
-    <div class="SWindow">
+  <SModalBase :name="name" :closable="closable" @click.stop>
+    <div class="SWindow" @click.stop>
       <button v-if="closable" class="close" @click="close">
         <SIconX class="close-icon" />
       </button>
