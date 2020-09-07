@@ -1,9 +1,11 @@
-import required from './required'
 import email from './email'
+import regex from './regex'
+import required from './required'
 import url from './url'
 
 export {
-  required,
   email,
+  regex,
+  required,
   url
 }
