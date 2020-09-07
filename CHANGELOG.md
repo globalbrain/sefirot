@@ -1,3 +1,18 @@
+# [0.10.0](https://github.com/globalbrain/sefirot/compare/v0.9.1...v0.10.0) (2020-09-07)
+
+
+### Bug Fixes
+
+* **input:** break words in `help` to better display for example long url ([cdc1faa](https://github.com/globalbrain/sefirot/commit/cdc1faa07c9ae54bdd5be1a8e769deebc608add0))
+* **window:** do not close the window when clicking on window box ([0ac8630](https://github.com/globalbrain/sefirot/commit/0ac8630cc21d86376eb0ea63ef4e669f05eb3029))
+
+
+### Features
+
+* **validation:** add regex validator ([e593a15](https://github.com/globalbrain/sefirot/commit/e593a15e63c061b7dde44065d250f894c1206e75))
+
+
+
 ## [0.9.1](https://github.com/globalbrain/sefirot/compare/v0.9.0...v0.9.1) (2020-09-04)
 
 

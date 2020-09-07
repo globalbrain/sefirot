@@ -1,6 +1,6 @@
 {
   "name": "@globalbrain/sefirot",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "description": "Vue Components for Global Brain Design System.",
   "files": [
     "lib"
