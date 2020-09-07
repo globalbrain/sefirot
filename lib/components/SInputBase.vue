@@ -93,6 +93,7 @@ export default defineComponent({
 
 .help {
   position: relative;
+  word-break: break-all;
 }
 
 .help-text {
