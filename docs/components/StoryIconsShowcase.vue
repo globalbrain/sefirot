@@ -34,7 +34,9 @@ import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
+import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
+import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconUser from '@@/lib/components/icons/SIconUser.vue'
@@ -65,7 +67,9 @@ export default defineComponent({
       { component: SIconEdit, name: 'Edit' },
       { component: SIconEye, name: 'Eye' },
       { component: SIconGlobe, name: 'Globe' },
+      { component: SIconInfo, name: 'Info' },
       { component: SIconMapPin, name: 'MapPin' },
+      { component: SIconPlus, name: 'Plus' },
       { component: SIconSave, name: 'Save' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconUser, name: 'User' },
