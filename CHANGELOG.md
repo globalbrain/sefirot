@@ -1,3 +1,12 @@
+# [0.11.0](https://github.com/globalbrain/sefirot/compare/v0.10.0...v0.11.0) (2020-09-11)
+
+
+### Features
+
+* **icons:** add "info" and "add" icons ([a148dd8](https://github.com/globalbrain/sefirot/commit/a148dd8c87474c8e13ec5d76679c679066e3553f))
+
+
+
 # [0.10.0](https://github.com/globalbrain/sefirot/compare/v0.9.1...v0.10.0) (2020-09-07)
 
 
