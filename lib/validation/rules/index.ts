@@ -1,6 +1,7 @@
 import email from './email'
 import regex from './regex'
 import required from './required'
+import rule from './rule'
 import url from './url'
 
 export interface Rule {
@@ -14,5 +15,6 @@ export {
   email,
   regex,
   required,
+  rule,
   url
 }
