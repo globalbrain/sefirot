@@ -5,7 +5,7 @@ export default function required (regExp: RegExp, message: string): Rule {
   return {
     name: 'regex',
     message,
-    optional: false,
+    optional: true,
     validate: value => baseRegex(value, regExp)
   }
 }
