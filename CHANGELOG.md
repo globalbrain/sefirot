@@ -1,3 +1,17 @@
+# [0.12.0](https://github.com/globalbrain/sefirot/compare/v0.11.0...v0.12.0) (2020-09-14)
+
+
+### Bug Fixes
+
+* **validation:** mark regex rule as optional ([d66e7ee](https://github.com/globalbrain/sefirot/commit/d66e7ee0b44797fff8de8418c92974ccc1d24b36))
+
+
+### Features
+
+* **validation:** add generic validation rule ([6250af1](https://github.com/globalbrain/sefirot/commit/6250af100265691f51589b5585701a209b54ccb7))
+
+
+
 # [0.11.0](https://github.com/globalbrain/sefirot/compare/v0.10.0...v0.11.0) (2020-09-11)
 
 
