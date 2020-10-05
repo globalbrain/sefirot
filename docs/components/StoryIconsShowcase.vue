@@ -17,10 +17,13 @@ All icons by Feather.
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import SIconActivity from '@@/lib/components/icons/SIconActivity.vue'
 import SIconArrowDown from '@@/lib/components/icons/SIconArrowDown.vue'
 import SIconArrowLeft from '@@/lib/components/icons/SIconArrowLeft.vue'
 import SIconArrowRight from '@@/lib/components/icons/SIconArrowRight.vue'
 import SIconArrowUp from '@@/lib/components/icons/SIconArrowUp.vue'
+import SIconBarChart from '@@/lib/components/icons/SIconBarChart.vue'
+import SIconBriefcase from '@@/lib/components/icons/SIconBriefcase.vue'
 import SIconCalendar from '@@/lib/components/icons/SIconCalendar.vue'
 import SIconCheck from '@@/lib/components/icons/SIconCheck.vue'
 import SIconCheckCircle from '@@/lib/components/icons/SIconCheckCircle.vue'
@@ -39,6 +42,7 @@ import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
+import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
 import SIconUser from '@@/lib/components/icons/SIconUser.vue'
 import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
 import StoryBase from '@/components/StoryBase.vue'
@@ -50,10 +54,13 @@ export default defineComponent({
 
   setup () {
     const icons = [
+      { component: SIconActivity, name: 'Activity' },
       { component: SIconArrowDown, name: 'ArrowDown' },
       { component: SIconArrowLeft, name: 'ArrowLeft' },
       { component: SIconArrowRight, name: 'ArrowRight' },
       { component: SIconArrowUp, name: 'ArrowUp' },
+      { component: SIconBarChart, name: 'BarChart' },
+      { component: SIconBriefcase, name: 'Briefcase' },
       { component: SIconCalendar, name: 'Calendar' },
       { component: SIconCheck, name: 'Check' },
       { component: SIconCheckCircle, name: 'CheckCircle' },
@@ -72,6 +79,7 @@ export default defineComponent({
       { component: SIconPlus, name: 'Plus' },
       { component: SIconSave, name: 'Save' },
       { component: SIconShare2, name: 'Share2' },
+      { component: SIconSliders, name: 'Sliders' },
       { component: SIconUser, name: 'User' },
       { component: SIconUsers, name: 'Users' }
     ]
