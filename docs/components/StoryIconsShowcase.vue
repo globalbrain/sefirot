@@ -40,6 +40,7 @@ import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
+import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
@@ -77,6 +78,7 @@ export default defineComponent({
       { component: SIconInfo, name: 'Info' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconPlus, name: 'Plus' },
+      { component: SIconPlusCircle, name: 'PlusCircle' },
       { component: SIconSave, name: 'Save' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
