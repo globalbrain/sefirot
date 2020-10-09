@@ -1,3 +1,12 @@
+# [0.14.0](https://github.com/globalbrain/sefirot/compare/v0.13.0...v0.14.0) (2020-10-09)
+
+
+### Features
+
+* **icons:** add plus circle icon ([f33a346](https://github.com/globalbrain/sefirot/commit/f33a346a960008458913f40fdbec6907d3aebb53))
+
+
+
 # [0.13.0](https://github.com/globalbrain/sefirot/compare/v0.12.0...v0.13.0) (2020-10-05)
 
 
