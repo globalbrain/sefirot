@@ -23,6 +23,8 @@ export default {
     SpecEvents
   },
 
+  scrollToTop: true,
+
   data () {
     return {
       props: [
@@ -95,8 +97,6 @@ export default {
 
   head: {
     title: 'Inputs: Select'
-  },
-
-  scrollToTop: true
+  }
 }
 </script>

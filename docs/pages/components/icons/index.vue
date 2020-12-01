@@ -17,10 +17,10 @@ export default defineComponent({
     StoryIconsShowcase
   },
 
+  scrollToTop: true,
+
   head: {
     title: 'Icons'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>

@@ -24,6 +24,8 @@ export default defineComponent({
     SpecEvents
   },
 
+  scrollToTop: true,
+
   setup () {
     const props: Prop[] = [
       {
@@ -96,8 +98,6 @@ export default defineComponent({
 
   head: {
     title: 'Inputs: Date'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>

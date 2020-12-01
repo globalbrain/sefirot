@@ -76,10 +76,6 @@ export default defineComponent({
     SpecEvents
   },
 
-  head: {
-    title: 'Buttons'
-  },
-
   scrollToTop: true,
 
   setup () {
@@ -167,6 +163,10 @@ export default defineComponent({
       props,
       events
     }
+  },
+
+  head: {
+    title: 'Buttons'
   }
 })
 </script>

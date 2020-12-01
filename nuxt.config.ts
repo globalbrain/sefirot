@@ -1,10 +1,13 @@
 import { Configuration } from '@nuxt/types'
-import MarkdownItHighlight from 'markdown-it-highlight'
+import { highlight } from './docs/markdown/Highlight'
+import { preWrapper } from './docs/markdown/PreWrapper'
 
 require('dotenv').config()
 
 const config: Configuration = {
   target: 'static',
+
+  ssr: false,
 
   srcDir: 'docs/',
 
@@ -62,7 +65,8 @@ const config: Configuration = {
   loading: false,
 
   markdownit: {
-    use: [MarkdownItHighlight]
+    highlight,
+    use: [preWrapper]
   },
 
   googleAnalytics: {

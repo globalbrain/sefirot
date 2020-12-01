@@ -20,6 +20,8 @@ export default {
     SpecProps
   },
 
+  scrollToTop: true,
+
   data () {
     return {
       props: [
@@ -43,8 +45,6 @@ export default {
 
   head: {
     title: 'Screens'
-  },
-
-  scrollToTop: true
+  }
 }
 </script>

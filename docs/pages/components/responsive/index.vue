@@ -21,6 +21,8 @@ export default defineComponent({
     SpecProps
   },
 
+  scrollToTop: true,
+
   setup () {
     const props: Prop[] = [
       {
@@ -39,8 +41,6 @@ export default defineComponent({
 
   head: {
     title: 'Responsive'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>

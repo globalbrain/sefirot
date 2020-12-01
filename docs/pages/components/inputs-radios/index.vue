@@ -23,6 +23,8 @@ export default {
     SpecEvents
   },
 
+  scrollToTop: true,
+
   data () {
     return {
       props: [
@@ -88,8 +90,6 @@ export default {
 
   head: {
     title: 'Inputs: Radios'
-  },
-
-  scrollToTop: true
+  }
 }
 </script>

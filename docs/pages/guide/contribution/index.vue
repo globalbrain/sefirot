@@ -71,6 +71,8 @@ export default defineComponent({
     IconGitHub
   },
 
+  scrollToTop: true,
+
   setup () {
     return {
       iconGitHub: IconGitHub
@@ -79,8 +81,6 @@ export default defineComponent({
 
   head: {
     title: 'Contribution'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>

@@ -32,8 +32,7 @@
     "types": [
       "@types/node",
       "@types/jest",
-      "@nuxt/types",
-      "./types/markdown-it-hightlight"
+      "@nuxt/types"
     ]
   },
   "exclude": [

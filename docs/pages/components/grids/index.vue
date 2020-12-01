@@ -42,12 +42,6 @@ export default defineComponent({
     SpecEvents
   },
 
-  head () {
-    return {
-      title: 'Grids'
-    }
-  },
-
   scrollToTop: true,
 
   setup () {
@@ -92,6 +86,12 @@ export default defineComponent({
     return {
       props,
       events
+    }
+  },
+
+  head () {
+    return {
+      title: 'Grids'
     }
   }
 })

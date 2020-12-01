@@ -14,10 +14,10 @@ export default {
     StoryDialogsShowcase
   },
 
+  scrollToTop: true,
+
   head: {
     title: 'Modals: Dialog'
-  },
-
-  scrollToTop: true
+  }
 }
 </script>

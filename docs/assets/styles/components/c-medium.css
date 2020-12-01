@@ -76,15 +76,17 @@
     word-break: break-all;
   }
 
-  pre {
-    margin: 32px -12px;
-    border-radius: 4px;
-    padding: 12px;
+  [class*='language-'] {
+    position: relative;
+    margin: 24px -24px;
+    font-family: var(--font-family-mono);
     font-size: 14px;
     color: var(--c-white);
     background-color: #282c34;
+    overflow: hidden;
+    overflow-x: auto;
 
-    & > code {
+    pre > code {
       padding: 0;
       line-height: 28px;
       font-family: var(--font-family-mono);
@@ -93,9 +95,52 @@
       background-color: #282c34;
       word-break: keep-all;
     }
+
+    @media (min-width: 375px) {
+      margin: 24px -32px;
+    }
+
+    @media (min-width: 768px) {
+      margin: 24px -24px;
+      border-radius: 4px;
+    }
   }
 
-  .StoryBase + pre {
+  [class*='language-'] pre,
+  [class*='language-'] code {
+    margin: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  [class*='language-'] pre {
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    padding: 24px;
+    background: transparent;
+    overflow-x: auto;
+
+    @media (min-width: 375px) {
+      padding: 24px 32px;
+    }
+
+    @media (min-width: 768px) {
+      padding: 24px;
+    }
+  }
+
+  .StoryBase + [class*='language-'] {
     margin-top: 0;
     border-top: 1px solid var(--c-divider-darker);
     border-radius: 0 0 4px 4px;
@@ -110,19 +155,5 @@
 
   .StoryBase li + li {
     padding-top: 0;
-  }
-
-  @media (min-width: 375px) {
-    pre {
-      margin: 32px -16px;
-      padding: 16px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    pre {
-      margin: 32px -24px;
-      padding: 24px;
-    }
   }
 }

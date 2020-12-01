@@ -14,10 +14,10 @@ export default {
     StoryAlertsShowcase
   },
 
+  scrollToTop: true,
+
   head: {
     title: 'Modals: Alert'
-  },
-
-  scrollToTop: true
+  }
 }
 </script>
