@@ -85,19 +85,33 @@ export default defineComponent({
 
 .SideBarNavigation {
   flex-shrink: 0;
-  padding: 0 24px;
+  margin-top: 65px;
+  border-bottom: 1px solid var(--c-divider);
+  padding: 4px 24px;
+  width: 100%;
+  background-color: var(--c-bg);
 
   @media (min-width: 375px) {
-    padding: 0 32px;
+    padding: 4px 32px;
   }
 
   @media (min-width: 768px) {
-    padding: 0 48px;
+    padding: 4px 32px;
   }
 
   @media (min-width: 1056px) {
-    padding: 0 48px 0 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--z-index-sidebar);
+    border-right: 1px solid var(--c-divider);
+    border-bottom: 0;
+    margin: 0;
+    padding: 65px 0 0;
     width: 240px;
+    overflow: hidden;
+    overflow-y: auto;
   }
 }
 
@@ -113,7 +127,6 @@ export default defineComponent({
 
 .container {
   margin: 0 auto;
-  max-width: 720px;
 }
 
 .action {
@@ -122,7 +135,7 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: -16px;
+  margin-left: -12px;
 
   @media (min-width: 1056px) {
     display: none;
@@ -147,32 +160,33 @@ export default defineComponent({
 }
 
 .nav {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 114px;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 10;
   display: none;
   width: 100%;
-  height: 100%;
-  padding: 64px 24px 96px;
-  background-color: var(--c-white);
+  padding: 24px 24px 48px;
+  background-color: var(--c-bg);
   opacity: 0;
   transition: opacity .25s;
+  overflow: hidden;
+  overflow-y: auto;
 
   @media (min-width: 375px) {
-    padding: 64px 32px 96px;
+    padding: 24px 32px 96px;
   }
 
   @media (min-width: 768px) {
-    padding: 80px 48px 96px;
+    padding: 24px 32px 96px;
   }
 
   @media (min-width: 1056px) {
     position: static;
     display: block;
-    padding: 0;
+    padding: 24px 24px 64px 32px;
     opacity: 1;
   }
 }
@@ -180,7 +194,6 @@ export default defineComponent({
 .nav-container {
   margin: 0 auto;
   width: 100%;
-  max-width: 720px;
 }
 
 .nav-list {
@@ -189,21 +202,34 @@ export default defineComponent({
   margin: -8px -16px;
   transform: translateY(4px);
   transition: transform .25s;
+
+  @media (min-width: 768px) {
+    margin: -4px -16px;
+  }
 }
 
 .nav-item {
   padding: 8px 16px;
   width: 192px;
+
+  @media (min-width: 768px) {
+    padding: 4px 16px;
+  }
 }
 
 .nav-link {
-  font-family: var(--font-family-primary);
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
   transition: color .25s;
 
   &:hover,
   &.nuxt-link-active {
-    color: var(--c-gray);
+    color: var(--c-text-2);
+  }
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+    font-weight: 400;
   }
 }
 </style>

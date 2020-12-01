@@ -69,18 +69,14 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .Home {
-  padding: 16px 24px 128px;
+  padding: 96px 24px 96px;
 
   @media (min-width: 375px) {
-    padding: 32px 32px 128px;
+    padding: 96px 32px 128px;
   }
 
   @media (min-width: 768px) {
-    padding: 48px 48px 192px;
-  }
-
-  @media (min-width: 1056px) {
-    padding: 56px 48px 192px;
+    padding: 128px 48px 128px;
   }
 }
 

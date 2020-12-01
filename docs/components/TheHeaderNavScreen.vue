@@ -63,15 +63,15 @@ export default defineComponent({
 
 .TheHeaderNavScreen {
   position: fixed;
-  top: 0;
+  top: 65px;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: var(--z-index-header);
   display: none;
   width: 100%;
-  height: 100%;
   opacity: 0;
-  background-color: var(--c-white);
+  background-color: var(--c-bg);
   transition: opacity .25s;
 }
 
@@ -95,10 +95,10 @@ export default defineComponent({
 }
 
 .container {
-  padding: 104px 24px;
+  padding: 24px;
 
   @media (min-width: 375px) {
-    padding: 104px 32px;
+    padding: 32px;
   }
 }
 
@@ -115,7 +115,7 @@ export default defineComponent({
   transition: color .25s;
 
   &:hover {
-    color: var(--c-gray);
+    color: var(--c-text-2);
   }
 }
 </style>

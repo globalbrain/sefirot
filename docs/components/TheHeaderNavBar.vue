@@ -37,7 +37,7 @@
 
 .link {
   font-family: var(--font-family-primary);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
   transition: color .25s;
 

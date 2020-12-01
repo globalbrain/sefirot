@@ -59,9 +59,14 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .TheHeader {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: var(--z-index-header);
+  border-bottom: 1px solid var(--c-divider-light);
   padding: 0 0 0 24px;
+  width: 100%;
+  background-color: var(--c-bg);
 
   @media (min-width: 375px) {
     padding: 0 8px 0 32px;
@@ -69,10 +74,6 @@ export default defineComponent({
 
   @media (min-width: 512px) {
     padding: 0 32px;
-  }
-
-  @media (min-width: 768px) {
-    padding: 0 48px;
   }
 }
 
@@ -82,15 +83,13 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
-  max-width: 960px;
 }
 
 .logo-link {
   display: flex;
   align-items: center;
-  width: 102px;
-  height: 96px;
+  width: 90px;
+  height: 64px;
 
   &:hover .logo-icon {
     fill: var(--c-gray);
@@ -99,8 +98,8 @@ export default defineComponent({
 
 .logo-icon {
   display: block;
-  width: 102px;
-  height: 32px;
+  width: 90px;
+  height: 28px;
   fill: var(--c-black);
   transition: fill .25s;
 }

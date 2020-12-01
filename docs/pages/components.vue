@@ -1,8 +1,8 @@
 <template>
   <div class="Components">
-    <div class="container">
-      <SidebarNavigation :contents="contents" />
+    <SidebarNavigation :contents="contents" />
 
+    <div class="container">
       <div class="main c-medium">
         <nuxt-child :key="$route.path" />
       </div>
@@ -53,46 +53,33 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.Components {
-  position: relative;
-
-  @media (min-width: 768px) {
-    padding: 16px 0 0;
-  }
-
-  @media (min-width: 1056px) {
-    padding: 32px 48px 0;
-  }
-}
-
 .container {
   margin: 0 auto;
   width: 100%;
-  max-width: 960px;
 
   @media (min-width: 1056px) {
-    display: flex;
+    padding-left: 240px;
   }
 }
 
 .main {
   flex-shrink: 0;
   margin: 0 auto;
-  padding: 16px 24px 192px;
+  padding: 32px 24px 192px;
   max-width: 816px;
 
   @media (min-width: 375px) {
-    padding: 16px 32px 192px;
+    padding: 32px 32px 192px;
   }
 
   @media (min-width: 768px) {
-    padding: 16px 48px 192px;
+    padding: 48px 48px 192px;
   }
 
   @media (min-width: 1056px) {
-    padding: 0 0 128px;
-    width: 720px;
-    max-width: 720px;
+    padding: 112px 32px 128px;
+    width: 100%;
+    max-width: 784px;
   }
 }
 </style>
