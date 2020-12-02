@@ -55,7 +55,7 @@ export default defineComponent({
         name: 'type',
         type: 'string',
         required: false,
-        default: 'text',
+        default: "'text'",
         description: 'The type of the input. It can be any valid html input types such as `email` or `password`.'
       },
       {

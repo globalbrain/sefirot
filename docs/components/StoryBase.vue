@@ -23,26 +23,29 @@ export default defineComponent({
 
 .StoryBase {
   margin-top: 32px;
-  margin-right: -12px;
-  margin-left: -12px;
-  border: 1px solid var(--c-divider-light);
-  border-radius: 4px 4px 0 0;
+  margin-right: -24px;
+  margin-left: -24px;
+  border-top: 1px solid var(--c-divider-light);
+  border-radius: 0;
   border-bottom: 0;
 
   @media (min-width: 375px) {
-    margin-right: -16px;
-    margin-left: -16px;
+    margin-right: -32px;
+    margin-left: -32px;
   }
 
   @media (min-width: 768px) {
     margin-right: -24px;
     margin-left: -24px;
+    border-right: 1px solid var(--c-divider-light);
+    border-left: 1px solid var(--c-divider-light);
+    border-radius: 4px 4px 0 0;
   }
 }
 
 .title {
   margin: 0;
-  padding: 12px 12px 0;
+  padding: 12px 24px 0;
   line-height: 24px;
   font-family: var(--font-family-base);
   font-size: 14px;
@@ -50,7 +53,7 @@ export default defineComponent({
   color: var(--c-text-light-2);
 
   @media (min-width: 375px) {
-    padding: 16px 16px 0;
+    padding: 16px 32px 0;
   }
 
   @media (min-width: 768px) {
@@ -59,10 +62,10 @@ export default defineComponent({
 }
 
 .component {
-  padding: 24px 12px;
+  padding: 24px;
 
   @media (min-width: 375px) {
-    padding: 24px 16px;
+    padding: 24px 32px;
   }
 
   @media (min-width: 768px) {

@@ -87,6 +87,7 @@
     overflow-x: auto;
 
     pre > code {
+      border-radius: 0;
       padding: 0;
       line-height: 28px;
       font-family: var(--font-family-mono);
@@ -143,9 +144,12 @@
   .StoryBase + [class*='language-'] {
     margin-top: 0;
     border-top: 1px solid var(--c-divider-darker);
-    border-radius: 0 0 4px 4px;
     overflow: hidden;
     overflow-x: auto;
+
+    @media (min-width: 768px) {
+      border-radius: 0 0 4px 4px;
+    }
   }
 
   .StoryBase ul {

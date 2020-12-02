@@ -1,18 +1,10 @@
 <template>
   <SpecBase class="SpecProps" title="Props">
-    <div class="specs-columns">
-      <p class="specs-column name">NAME</p>
-      <p class="specs-column type">TYPE</p>
-      <p class="specs-column required">REQUIRED</p>
-      <p class="specs-column default">DEFAULT</p>
-      <p class="specs-column description">DESCRIPTION</p>
-    </div>
-
     <div v-for="(prop, index) in props" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
           <p class="specs-label">NAME</p>
-          <p class="specs-value">{{ prop.name }}</p>
+          <p class="specs-value">{{ prop.name }}</code></p>
         </div>
         <div class="specs-cell type">
           <p class="specs-label">TYPE</p>
@@ -20,7 +12,7 @@
         </div>
         <div class="specs-cell required">
           <p class="specs-label">REQUIRED</p>
-          <p class="specs-value">{{ prop.required ? 'Yes' : 'No' }}</p>
+          <p class="specs-value">{{ prop.required ? 'true' : 'false' }}</p>
         </div>
         <div class="specs-cell default">
           <p class="specs-label">DEFAULT</p>
@@ -61,37 +53,12 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.specs-columns {
-  display: none;
-
-  @media (min-width: 768px) {
-    display: flex;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--c-divider-lighter);
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-}
-
-.specs-column {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-text-light-2);
-}
-
 .specs-row {
   border-bottom: 1px solid var(--c-divider-lighter);
   padding-bottom: 24px;
 
   & + & {
     padding-top: 24px;
-  }
-
-  @media (min-width: 768px) {
-    .specs-record .specs-cell .specs-label {
-      display: none;
-    }
   }
 }
 
@@ -102,11 +69,6 @@ export default defineComponent({
 
   @media (min-width: 375px) {
     margin: 0 -16px;
-  }
-
-  @media (min-width: 768px) {
-    flex-wrap: nowrap;
-    margin: 0 -12px;
   }
 }
 
@@ -119,7 +81,7 @@ export default defineComponent({
   }
 
   @media (min-width: 768px) {
-    padding: 0 12px;
+    padding: 12px 16px;
   }
 }
 
@@ -134,26 +96,30 @@ export default defineComponent({
   margin: 0;
   line-height: 20px;
   font-size: 14px;
-  word-break: break-all;
 }
 
-.specs-cell.name        { width: 96px; }
-.specs-cell.type        { width: 96px; }
-.specs-cell.required    { width: 96px; }
-.specs-cell.default     { width: 96px; }
-.specs-cell.description { width: 100%; }
+.specs-cell.name .specs-value,
+.specs-cell.type .specs-value,
+.specs-cell.required .specs-value
+.specs-cell.default .specs-value {
+  font-family: var(--font-family-mono);
+  font-size: 13px;
+}
+
+.specs-cell.description .specs-value {
+  line-height: 24px;
+}
+
+.specs-cell.name        { width: 144px; }
+.specs-cell.type        { width: 144px; }
+.specs-cell.required    { width: 144px; }
+.specs-cell.default     { width: 144px; }
+.specs-cell.description { width: 100%; max-width: 592px; }
 
 @media (min-width: 768px) {
-  .specs-column.name        { width: 128px; }
-  .specs-column.type        { width: 96px; }
-  .specs-column.required    { width: 80px; }
-  .specs-column.default     { width: 96px; }
-  .specs-column.description { flex-shrink: 1; flex-grow: 1; width: auto; }
-
-  .specs-cell.name        { width: 128px; }
-  .specs-cell.type        { width: 96px; }
-  .specs-cell.required    { width: 80px; }
-  .specs-cell.default     { width: 96px; }
-  .specs-cell.description { flex-shrink: 1; flex-grow: 1; width: auto; }
+  .specs-cell.name        { width: 25%; }
+  .specs-cell.type        { width: 25%; }
+  .specs-cell.required    { width: 25%; }
+  .specs-cell.default     { width: 25%; }
 }
 </style>

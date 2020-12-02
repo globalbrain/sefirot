@@ -1,10 +1,5 @@
 <template>
   <SpecBase class="SpecEvents" title="Events">
-    <div class="specs-columns">
-      <p class="specs-column name">NAME</p>
-      <p class="specs-column description">DESCRIPTION</p>
-    </div>
-
     <div v-for="(event, index) in events" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
@@ -43,37 +38,12 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.specs-columns {
-  display: none;
-
-  @media (min-width: 768px) {
-    display: flex;
-    margin-bottom: 24px;
-    border-bottom: 1px solid var(--c-divider-lighter);
-    padding-top: 12px;
-    padding-bottom: 12px;
-  }
-}
-
-.specs-column {
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-gray);
-}
-
 .specs-row {
   border-bottom: 1px solid var(--c-divider-lighter);
   padding-bottom: 24px;
 
   & + & {
     padding-top: 24px;
-  }
-
-  @media (min-width: 768px) {
-    .specs-record .specs-cell .specs-label {
-      display: none;
-    }
   }
 }
 
@@ -85,11 +55,6 @@ export default defineComponent({
   @media (min-width: 375px) {
     margin: 0 -16px;
   }
-
-  @media (min-width: 768px) {
-    flex-wrap: nowrap;
-    margin: 0 -12px;
-  }
 }
 
 .specs-cell {
@@ -98,10 +63,6 @@ export default defineComponent({
 
   @media (min-width: 375px) {
     padding: 12px 16px;
-  }
-
-  @media (min-width: 768px) {
-    padding: 0 12px;
   }
 }
 
@@ -117,14 +78,11 @@ export default defineComponent({
   font-size: 14px;
 }
 
-.specs-cell.name        { width: 96px; }
-.specs-cell.description { width: 100%; }
-
-@media (min-width: 768px) {
-  .specs-column.name        { width: 160px; }
-  .specs-column.description { flex-shrink: 1; flex-grow: 1; width: auto; }
-
-  .specs-cell.name        { width: 160px; }
-  .specs-cell.description { flex-shrink: 1; flex-grow: 1; width: auto; }
+.specs-cell.name .specs-value {
+  font-family: var(--font-family-mono);
+  font-size: 13px;
 }
+
+.specs-cell.name        { width: 100%; }
+.specs-cell.description { width: 100%; }
 </style>
