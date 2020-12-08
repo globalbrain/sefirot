@@ -11,6 +11,8 @@
 @import "@/assets/styles/variables";
 
 .TheFooter {
+  position: relative;
+  z-index: var(--z-index-footer);
   padding: 32px;
 
   @media (min-width: 768px) {

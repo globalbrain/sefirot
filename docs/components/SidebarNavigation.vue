@@ -186,7 +186,7 @@ export default defineComponent({
   @media (min-width: 1056px) {
     position: static;
     display: block;
-    padding: 24px 24px 64px 32px;
+    padding: 24px 24px 160px 32px;
     opacity: 1;
   }
 }
