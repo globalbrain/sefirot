@@ -27,6 +27,7 @@ import SIconBriefcase from '@@/lib/components/icons/SIconBriefcase.vue'
 import SIconCalendar from '@@/lib/components/icons/SIconCalendar.vue'
 import SIconCheck from '@@/lib/components/icons/SIconCheck.vue'
 import SIconCheckCircle from '@@/lib/components/icons/SIconCheckCircle.vue'
+import SIconCheckSquare from '@@/lib/components/icons/SIconCheckSquare.vue'
 import SIconChevronDown from '@@/lib/components/icons/SIconChevronDown.vue'
 import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
@@ -39,8 +40,10 @@ import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
+import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
+import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
@@ -65,6 +68,7 @@ export default defineComponent({
       { component: SIconCalendar, name: 'Calendar' },
       { component: SIconCheck, name: 'Check' },
       { component: SIconCheckCircle, name: 'CheckCircle' },
+      { component: SIconCheckSquare, name: 'CheckSquare' },
       { component: SIconChevronDown, name: 'ChevronDown' },
       { component: SIconChevronLeft, name: 'ChevronLeft' },
       { component: SIconChevronRight, name: 'ChevronRight' },
@@ -77,8 +81,10 @@ export default defineComponent({
       { component: SIconGlobe, name: 'Globe' },
       { component: SIconInfo, name: 'Info' },
       { component: SIconMapPin, name: 'MapPin' },
+      { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
       { component: SIconPlus, name: 'Plus' },
       { component: SIconPlusCircle, name: 'PlusCircle' },
+      { component: SIconPlayCircle, name: 'PlayCircle' },
       { component: SIconSave, name: 'Save' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
