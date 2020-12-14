@@ -201,22 +201,22 @@ export default defineComponent({
 
 .SInputText.filled {
   .input {
-    background-color: var(--input-text-filled-bg);
+    background-color: var(--input-filled-bg);
 
     &:focus {
-      border-color: var(--input-text-focus-border);
-      background-color: var(--input-text-focus-bg);
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
     }
   }
 }
 
 .SInputText.outlined {
   .input {
-    border-color: var(--input-text-outlined-border);
+    border-color: var(--input-outlined-border);
 
     &:focus {
-      border-color: var(--input-text-focus-border);
-      background-color: var(--input-text-focus-bg);
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
     }
   }
 }
@@ -236,7 +236,7 @@ export default defineComponent({
   position: relative;
 
   &:hover .input {
-    border-color: var(--input-text-focus-border);
+    border-color: var(--input-focus-border);
   }
 }
 
@@ -248,7 +248,7 @@ export default defineComponent({
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--input-text-placeholder);
+    color: var(--input-placeholder);
   }
 }
 
@@ -259,7 +259,7 @@ export default defineComponent({
 
 .icon-svg {
   display: block;
-  fill: var(--input-text-placeholder);
+  fill: var(--input-placeholder);
 }
 
 .clear {
@@ -282,7 +282,7 @@ export default defineComponent({
 
 .clear-svg {
   display: block;
-  fill: var(--input-text-placeholder);
+  fill: var(--input-placeholder);
   transition: fill .25s;
 }
 </style>

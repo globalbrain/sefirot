@@ -5,6 +5,18 @@ Select input let users choose an item from the list of options.
 
 <StoryInputSelectShowcase />
 
+## Outlined Style
+
+Input select also has a outlined style. Pass `mode` prop to control the looks of the input.
+
+<StoryInputSelectEXOutlined />
+
+## Sizes
+
+The select input comes in several different sizes. You may pass `size` prop to control the size of the input.
+
+<StoryInputSelectEXSizes />
+
 ## API
 
 <SpecProps :props="props" />
@@ -13,12 +25,16 @@ Select input let users choose an item from the list of options.
 
 <script>
 import StoryInputSelectShowcase from '@/components/StoryInputSelectShowcase'
+import StoryInputSelectEXOutlined from '@/components/StoryInputSelectEXOutlined'
+import StoryInputSelectEXSizes from '@/components/StoryInputSelectEXSizes'
 import SpecProps from '@/components/SpecProps'
 import SpecEvents from '@/components/SpecEvents'
 
 export default {
   components: {
     StoryInputSelectShowcase,
+    StoryInputSelectEXOutlined,
+    StoryInputSelectEXSizes,
     SpecProps,
     SpecEvents
   },
@@ -28,6 +44,20 @@ export default {
   data () {
     return {
       props: [
+        {
+          name: 'size',
+          type: "'medium' | 'mini'",
+          required: false,
+          default: "'medium'",
+          description: 'The size of the input.'
+        },
+        {
+          name: 'mode',
+          type: "'filled' | 'outlined'",
+          required: false,
+          default: "'filled'",
+          description: 'The style of the input.'
+        },
         {
           name: 'name',
           type: 'String',
