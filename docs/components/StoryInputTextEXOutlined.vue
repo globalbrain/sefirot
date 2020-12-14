@@ -1,13 +1,12 @@
 <template lang="md">
-<StoryBase title="Clearable Input">
+<StoryBase title="Outlined input">
   <div class="input">
     <SInputText
       v-model="text"
-      name="name"
-      label="Label"
-      clearable
-      placeholder="Start searching..."
-      @clear="text = ''"
+      mode="outlined"
+      name="name-outlined"
+      label="Name"
+      placeholder="John Doe"
     />
   </div>
 </StoryBase>
@@ -17,11 +16,10 @@
   <div class="input">
     <SInputText
       v-model="text"
+      mode="outlined"
       name="name"
       label="Label"
-      clearable
-      placeholder="Start searching..."
-      @clear="text = ''"
+      placeholder="John Doe"
     />
   </div>
 </template>
@@ -36,7 +34,7 @@ export default defineComponent({
   },
 
   setup () {
-    const text = ref('Initial value')
+    const text = ref('')
 
     return {
       text
@@ -67,7 +65,7 @@ export default defineComponent({
   },
 
   setup () {
-    const text = ref('Initial value')
+    const text = ref('')
 
     return {
       text

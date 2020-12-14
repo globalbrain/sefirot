@@ -1,13 +1,20 @@
 <template lang="md">
-<StoryBase title="Clearable Input">
+<StoryBase title="Input in other sizes">
   <div class="input">
     <SInputText
-      v-model="text"
-      name="name"
-      label="Label"
-      clearable
-      placeholder="Start searching..."
-      @clear="text = ''"
+      v-model="textMedium"
+      name="size-medium-name"
+      label="Medium input"
+      placeholder="John Doe"
+    />
+  </div>
+  <div class="input">
+    <SInputText
+      v-model="textMini"
+      size="mini"
+      name="size-mini-name"
+      label="Mini input"
+      placeholder="John Doe"
     />
   </div>
 </StoryBase>
@@ -16,12 +23,19 @@
 <template>
   <div class="input">
     <SInputText
-      v-model="text"
-      name="name"
-      label="Label"
-      clearable
-      placeholder="Start searching..."
-      @clear="text = ''"
+      v-model="textMedium"
+      name="size-medium-name"
+      label="Medium input"
+      placeholder="John Doe"
+    />
+  </div>
+  <div class="input">
+    <SInputText
+      v-model="textMini"
+      size="mini"
+      name="size-mini-name"
+      label="Mini input"
+      placeholder="John Doe"
     />
   </div>
 </template>
@@ -36,10 +50,12 @@ export default defineComponent({
   },
 
   setup () {
-    const text = ref('Initial value')
+    const textMedium = ref('')
+    const textMini = ref('')
 
     return {
-      text
+      textMedium,
+      textMini
     }
   }
 })
@@ -51,12 +67,17 @@ export default defineComponent({
 .input {
   max-width: 320px;
 }
+
+.input + .input {
+  padding-top: 24px;
+}
 </style>
 ```
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SIconSearch from '@@/lib/components/icons/SIconSearch.vue'
 import SInputText from '@@/lib/components/SInputText.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
@@ -67,10 +88,13 @@ export default defineComponent({
   },
 
   setup () {
-    const text = ref('Initial value')
+    const textMedium = ref('')
+    const textMini = ref('')
 
     return {
-      text
+      icon: SIconSearch,
+      textMedium,
+      textMini
     }
   }
 })
@@ -81,5 +105,9 @@ export default defineComponent({
 
 .input {
   max-width: 320px;
+}
+
+.input + .input {
+  padding-top: 24px;
 }
 </style>

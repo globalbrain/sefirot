@@ -5,6 +5,18 @@ Text input let users enter and edit single line text.
 
 <StoryInputTextShowcase />
 
+## Outlined Style
+
+Input text also has a outlined style. Pass `mode` prop to control the looks of the input.
+
+<StoryInputTextEXOutlined />
+
+## Sizes
+
+The text input comes in several different sizes. You may pass `size` prop to control the size of the input.
+
+<StoryInputTextEXSizes />
+
 ## With Icon
 
 You can supply an icon to the input field by passing in the icon component to the `icon` prop.
@@ -26,6 +38,8 @@ By setting `clearable` props, the input filed will show the "clear" button when 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputTextShowcase from '@/components/StoryInputTextShowcase.vue'
+import StoryInputTextEXOutlined from '@/components/StoryInputTextEXOutlined.vue'
+import StoryInputTextEXSizes from '@/components/StoryInputTextEXSizes.vue'
 import StoryInputTextEXIcon from '@/components/StoryInputTextEXIcon.vue'
 import StoryInputTextEXClearable from '@/components/StoryInputTextEXClearable.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
@@ -34,6 +48,8 @@ import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 export default defineComponent({
   components: {
     StoryInputTextShowcase,
+    StoryInputTextEXOutlined,
+    StoryInputTextEXSizes,
     StoryInputTextEXIcon,
     StoryInputTextEXClearable,
     SpecProps,
@@ -44,6 +60,20 @@ export default defineComponent({
 
   setup () {
     const props: Prop[] = [
+      {
+        name: 'size',
+        type: "'medium' | 'mini'",
+        required: false,
+        default: "'medium'",
+        description: 'The size of the input.'
+      },
+      {
+        name: 'mode',
+        type: "'filled' | 'outlined'",
+        required: false,
+        default: "'filled'",
+        description: 'The style of the input.'
+      },
       {
         name: 'name',
         type: 'string',

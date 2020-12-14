@@ -25,11 +25,11 @@
   --c-gray-light-4: #e5e5ea;
   --c-gray-light-5: #f2f2f7;
 
-  --c-divider-light: rgba(60, 60, 67, .29);
-  --c-divider-lighter: rgba(60, 60, 67, .12);
+  --c-divider-light-1: rgba(60, 60, 67, .29);
+  --c-divider-light-2: rgba(60, 60, 67, .12);
 
-  --c-divider-dark: rgba(84, 84, 88, .65);
-  --c-divider-darker: rgba(84, 84, 88, .65);
+  --c-divider-dark-1: rgba(84, 84, 88, .65);
+  --c-divider-dark-2: rgba(84, 84, 88, .65);
 
   --c-text-light-1: var(--c-black);
   --c-text-light-2: rgba(60, 60, 67, .6);
@@ -77,13 +77,24 @@
   --c-bg-soft: var(--c-white-soft);
   --c-bg-mute: var(--c-white-mute);
 
-  --c-divider: var(--c-divider-light);
-  --c-divider-light: var(--c-divider-lighter);
+  --c-divider: var(--c-divider-light-1);
+  --c-divider-light: var(--c-divider-light-2);
 
   --c-text-1: var(--c-text-light-1);
   --c-text-2: var(--c-text-light-2);
   --c-text-3: var(--c-text-light-3);
   --c-text-4: var(--c-text-light-4);
+
+  --input-label: var(--c-text-1);
+  --input-note: var(--c-text-2);
+  --input-help: var(--c-text-2);
+
+  --input-text: var(--c-text-1);
+  --input-text-filled-bg: var(--c-white-mute);
+  --input-text-outlined-border: var(--c-divider);
+  --input-text-focus-border: var(--c-black);
+  --input-text-focus-bg: var(--c-white);
+  --input-text-placeholder: var(--c-text-2);
 }
 
 .dark-mode {
@@ -91,8 +102,8 @@
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
 
-  --c-divider: var(--c-divider-dark);
-  --c-divider-light: var(--c-divider-darker);
+  --c-divider: var(--c-divider-dark-1);
+  --c-divider-light: var(--c-divider-dark-2);
 
   --c-text-1: var(--c-text-dark-1);
   --c-text-2: var(--c-text-dark-2);

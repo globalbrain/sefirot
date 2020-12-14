@@ -7,11 +7,8 @@
     <slot />
 
     <div class="help">
+      <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
       <p v-if="help" class="help-text">{{ help }}</p>
-
-      <transition name="slide" mode="out-in">
-        <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
-      </transition>
     </div>
   </div>
 </template>
@@ -62,13 +59,24 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.SInputBase.has-error {
+.SInputBase.mini {
   .label {
-    color: var(--c-danger);
+    padding-bottom: 4px;
+    font-size: 12px;
+  }
+
+  .help-error + .help-text {
+    padding: 0;
   }
 
   .help-text {
-    transform: translateY(14px);
+    padding-top: 4px;
+  }
+}
+
+.SInputBase.has-error {
+  .label {
+    color: var(--c-danger);
   }
 }
 
@@ -79,6 +87,7 @@ export default defineComponent({
   line-height: 20px;
   font-size: 14px;
   font-weight: 500;
+  color: var(--input-label);
   cursor: pointer;
   transition: color .25s;
 }
@@ -88,12 +97,27 @@ export default defineComponent({
   margin-left: 8px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-light-2);
+  color: var(--input-note);
 }
 
 .help {
   position: relative;
   word-break: break-all;
+}
+
+.help-error {
+  width: 100%;
+  margin: 0;
+  padding: 4px 0 0 0;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-danger);
+  transition: opacity .25s, transform .25s;
+}
+
+.help-error + .help-text {
+  padding: 0;
 }
 
 .help-text {
@@ -102,27 +126,6 @@ export default defineComponent({
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-light-2);
-  transition: transform .25s;
-}
-
-.help-error {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  margin: 0;
-  padding: 2px 0 0 0;
-  line-height: 20px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-danger);
-  transition: opacity .25s, transform .25s;
-}
-
-.help-error.slide-enter,
-.help-error.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-8px);
+  color: var(--input-help);
 }
 </style>

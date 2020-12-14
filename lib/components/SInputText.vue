@@ -1,6 +1,7 @@
 <template>
   <SInputBase
     class="SInputText"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
@@ -38,6 +39,9 @@ import { Validation } from '../validation/Validation'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
+type Size = 'medium' | 'mini'
+type Mode = 'filled' | 'outlined'
+
 export default defineComponent({
   components: {
     SIconX,
@@ -45,6 +49,8 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'medium' },
+    mode: { type: String as PropType<Mode>, default: 'filled' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
@@ -60,8 +66,15 @@ export default defineComponent({
   setup (props, context) {
     const input = ref<HTMLElement | null>(null)
 
+    const classes = computed(() => ({
+      medium: props.size === 'medium',
+      mini: props.size === 'mini',
+      filled: props.mode === 'filled',
+      outlined: props.mode === 'outlined'
+    }))
+
     const showClearButton = computed(() => {
-      return props.value !== null && props.value !== undefined && props.value !== ''
+      return props.value !== null && props.value !== ''
     })
 
     function focus () {
@@ -92,6 +105,7 @@ export default defineComponent({
 
     return {
       input,
+      classes,
       showClearButton,
       focus,
       blur,
@@ -107,10 +121,111 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
+.SInputText.mini {
+  .input {
+    padding: 3px 12px;
+    width: 100%;
+    line-height: 24px;
+    font-size: 14px;
+
+    &.has-icon {
+      padding-left: 30px;
+    }
+
+    &.is-clearable {
+      padding-right: 40px;
+    }
+  }
+
+  .icon {
+    top: 9px;
+    left: 10px;
+  }
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .clear {
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  .clear-svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.SInputText.medium {
+  .input {
+    padding: 11px 16px;
+    width: 100%;
+    line-height: 24px;
+    font-size: 16px;
+
+    &.has-icon {
+      padding-left: 36px;
+    }
+
+    &.is-clearable {
+      padding-right: 40px;
+    }
+  }
+
+  .icon {
+    top: 16px;
+    left: 12px;
+  }
+
+  .icon-svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .clear {
+    top: 4px;
+    right: 4px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .clear-svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+.SInputText.filled {
+  .input {
+    background-color: var(--input-text-filled-bg);
+
+    &:focus {
+      border-color: var(--input-text-focus-border);
+      background-color: var(--input-text-focus-bg);
+    }
+  }
+}
+
+.SInputText.outlined {
+  .input {
+    border-color: var(--input-text-outlined-border);
+
+    &:focus {
+      border-color: var(--input-text-focus-border);
+      background-color: var(--input-text-focus-bg);
+    }
+  }
+}
+
 .SInputText.has-error {
   .input {
     border-color: var(--c-danger);
 
+    &:hover,
     &:focus {
       border-color: var(--c-danger);
     }
@@ -121,7 +236,7 @@ export default defineComponent({
   position: relative;
 
   &:hover .input {
-    border-color: var(--c-gray);
+    border-color: var(--input-text-focus-border);
   }
 }
 
@@ -129,51 +244,26 @@ export default defineComponent({
   display: block;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding: 11px 16px;
-  width: 100%;
-  line-height: 24px;
-  font-size: 16px;
-  background-color: var(--c-white-mute);
+  color: var(--input-text);
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--c-text-light-2);
-  }
-
-  &:focus {
-    border-color: var(--c-black);
-    background-color: var(--c-white);
-  }
-
-  &.has-icon {
-    padding-left: 40px;
-  }
-
-  &.is-clearable {
-    padding-right: 40px;
+    color: var(--input-text-placeholder);
   }
 }
 
 .icon {
   position: absolute;
-  top: 16px;
-  left: 16px;
   cursor: text;
 }
 
 .icon-svg {
   display: block;
-  width: 14px;
-  height: 14px;
-  fill: var(--c-gray-dark-1);
+  fill: var(--input-text-placeholder);
 }
 
 .clear {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 40px;
-  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -182,7 +272,7 @@ export default defineComponent({
   transition: opacity .25s;
 
   &:hover .clear-svg {
-    fill: var(--c-text-light-1);
+    fill: var(--input-text);
   }
 
   &.show {
@@ -192,9 +282,7 @@ export default defineComponent({
 
 .clear-svg {
   display: block;
-  width: 10px;
-  height: 10px;
-  fill: var(--c-text-light-2);
+  fill: var(--input-text-placeholder);
   transition: fill .25s;
 }
 </style>
