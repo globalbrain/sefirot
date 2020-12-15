@@ -8,27 +8,44 @@
     :help="help"
     :validation="validation"
   >
-    <div class="box">
-      <input
-        :id="name"
-        ref="input"
-        class="input"
-        :class="{ 'has-icon': icon, 'is-clearable': clearable }"
-        :type="type"
-        :placeholder="placeholder"
-        :value="value"
-        @input="emitInput"
-        @blur="emitBlur"
-        @keypress.enter="emitEnter"
+    <div class="container">
+      <div
+        v-if="action"
+        class="action"
+        :class="{ clickable: !!action.clickable }"
+        :role="action.clickable ? 'button' : null"
+        @click="action.clickable && $emit('action')"
       >
-
-      <div v-if="icon" class="icon" role="button" @click="focus">
-        <component :is="icon" class="icon-svg" />
+        <component :is="action.icon" v-if="action.icon" class="action-icon" />
+        <p v-if="action.text" class="action-text">{{ action.text }}</p>
+        <div v-if="action.type === 'select'" class="action-select">
+          <SIconChevronUp class="action-select-icon up" />
+          <SIconChevronDown class="action-select-icon down" />
+        </div>
       </div>
 
-      <button v-if="clearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
-        <SIconX class="clear-svg" />
-      </button>
+      <div class="box">
+        <input
+          :id="name"
+          ref="input"
+          class="input"
+          :class="{ 'has-icon': icon, 'is-clearable': clearable }"
+          :type="type"
+          :placeholder="placeholder"
+          :value="value"
+          @input="emitInput"
+          @blur="emitBlur"
+          @keypress.enter="emitEnter"
+        >
+
+        <div v-if="icon" class="icon" role="button" @click="focus">
+          <component :is="icon" class="icon-svg" />
+        </div>
+
+        <button v-if="clearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
+          <SIconX class="clear-svg" />
+        </button>
+      </div>
     </div>
   </SInputBase>
 </template>
@@ -36,14 +53,25 @@
 <script lang="ts">
 import { defineComponent, ref, computed, PropType } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
+import SIconChevronUp from './icons/SIconChevronUp.vue'
+import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'medium' | 'mini'
 type Mode = 'filled' | 'outlined'
 
+interface Action {
+  type?: 'button' | 'select'
+  icon?: any
+  text?: string
+  clickable?: boolean
+}
+
 export default defineComponent({
   components: {
+    SIconChevronUp,
+    SIconChevronDown,
     SIconX,
     SInputBase
   },
@@ -57,6 +85,7 @@ export default defineComponent({
     help: { type: String, default: null },
     type: { type: String, default: 'text' },
     placeholder: { type: String, default: null },
+    action: { type: Object as PropType<Action>, default: null },
     icon: { type: Object, default: null },
     clearable: { type: Boolean, default: false },
     value: { type: [String, Number], default: null },
@@ -122,6 +151,26 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .SInputText.mini {
+  .action {
+    padding: 3px 10px;
+    line-height: 24px;
+  }
+
+  .action-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .action-icon + .action-text,
+  .action-icon + .action-select,
+  .action-text + .action-select {
+    margin-left: 6px;
+  }
+
+  .action-text {
+    font-size: 14px;
+  }
+
   .input {
     padding: 3px 12px;
     width: 100%;
@@ -161,6 +210,26 @@ export default defineComponent({
 }
 
 .SInputText.medium {
+  .action {
+    padding: 11px 12px;
+    line-height: 24px;
+  }
+
+  .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .action-icon + .action-text,
+  .action-icon + .action-select,
+  .action-text + .action-select {
+    margin-left: 8px;
+  }
+
+  .action-text {
+    font-size: 14px;
+  }
+
   .input {
     padding: 11px 16px;
     width: 100%;
@@ -200,6 +269,13 @@ export default defineComponent({
 }
 
 .SInputText.filled {
+  .action {
+    background-color: var(--input-action-filled-bg);
+
+    &.clickable:hover  { background-color: var(--input-action-filled-bg-hover); }
+    &.clickable:active { background-color: var(--input-action-filled-bg-focus); }
+  }
+
   .input {
     background-color: var(--input-filled-bg);
 
@@ -211,6 +287,14 @@ export default defineComponent({
 }
 
 .SInputText.outlined {
+  .action {
+    border-color: var(--input-action-outlined-border);
+    background-color: var(--input-action-outlined-bg);
+
+    &.clickable:hover  { background-color: var(--input-action-outlined-bg-hover); }
+    &.clickable:active { background-color: var(--input-action-outlined-bg-focus); }
+  }
+
   .input {
     border-color: var(--input-outlined-border);
 
@@ -232,8 +316,56 @@ export default defineComponent({
   }
 }
 
+.container {
+  display: flex;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  border-right: 0;
+  border-radius: 4px 0 0 4px;
+  color: var(--c-text-2);
+  transition: background-color .25s;
+}
+
+.action.clickable {
+  color: var(--c-text-1);
+}
+
+.action.clickable:active {
+  transition: background-color .1s;
+}
+
+.action + .box .input {
+  border-radius: 0 4px 4px 0;
+  border-left-color: var(--c-divider);
+}
+
+.action-icon {
+  fill: currentColor;
+}
+
+.action-text {
+  margin: 0;
+  font-weight: 500;
+}
+
+.action-select-icon {
+  width: 13px;
+  height: 13px;
+  fill: var(--input-placeholder);
+}
+
+.action-select-icon.up {
+  margin-bottom: -4px;
+}
+
 .box {
   position: relative;
+  flex-grow: 1;
 
   &:hover .input {
     border-color: var(--input-focus-border);

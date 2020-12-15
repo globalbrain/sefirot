@@ -143,6 +143,14 @@
   --input-focus-border: var(--c-black);
   --input-focus-bg: var(--c-white);
   --input-help: var(--c-text-2);
+
+  --input-action-filled-bg: var(--c-white-mute);
+  --input-action-filled-bg-hover: var(--c-gray-light-4);
+  --input-action-filled-bg-focus: var(--c-gray-light-3);
+  --input-action-outlined-bg: var(--c-white-mute);
+  --input-action-outlined-border: var(--c-divider);
+  --input-action-outlined-bg-hover: var(--c-gray-light-4);
+  --input-action-outlined-bg-focus: var(--c-gray-light-3);
 }
 
 .dark-mode {

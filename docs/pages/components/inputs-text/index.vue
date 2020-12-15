@@ -23,6 +23,23 @@ You can supply an icon to the input field by passing in the icon component to th
 
 <StoryInputTextEXIcon />
 
+## Action
+
+You may add leading action to the input by passing config to the `action` prop.
+
+<StoryInputTextEXAction />
+
+The `action` props takes the following object.
+
+```ts
+interface Action {
+  type?: 'button' | 'select'
+  icon?: any
+  text?: string
+  clickable?: boolean
+}
+```
+
 ## Clearable Input
 
 By setting `clearable` props, the input filed will show the "clear" button when there's any value is set. When the "clear" button is clicked, it will emit the `clear` event. It's up to you to handle the `clear` event. The component will not touch the value passed in.
@@ -41,6 +58,7 @@ import StoryInputTextShowcase from '@/components/StoryInputTextShowcase.vue'
 import StoryInputTextEXOutlined from '@/components/StoryInputTextEXOutlined.vue'
 import StoryInputTextEXSizes from '@/components/StoryInputTextEXSizes.vue'
 import StoryInputTextEXIcon from '@/components/StoryInputTextEXIcon.vue'
+import StoryInputTextEXAction from '@/components/StoryInputTextEXAction.vue'
 import StoryInputTextEXClearable from '@/components/StoryInputTextEXClearable.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
@@ -51,6 +69,7 @@ export default defineComponent({
     StoryInputTextEXOutlined,
     StoryInputTextEXSizes,
     StoryInputTextEXIcon,
+    StoryInputTextEXAction,
     StoryInputTextEXClearable,
     SpecProps,
     SpecEvents
@@ -124,6 +143,13 @@ export default defineComponent({
         description: 'You may pass Vue Component (probably svg) to display icon in input field.'
       },
       {
+        name: 'action',
+        type: 'Action',
+        required: false,
+        default: 'null',
+        description: 'The action to be prepened to the input.'
+      },
+      {
         name: 'clearable',
         type: 'boolean',
         required: false,
@@ -158,6 +184,10 @@ export default defineComponent({
       {
         name: 'enter',
         description: 'Fires when the user hit enter key.'
+      },
+      {
+        name: 'action',
+        description: 'Fires when the user clicks prepended action. Only fires when `action.clickable` property is set to true.'
       },
       {
         name: 'clear',
