@@ -169,6 +169,7 @@ textarea {
   resize: vertical;
 }
 
+input[type="select"],
 select {
   -webkit-appearance: none;
 }
