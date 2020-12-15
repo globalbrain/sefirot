@@ -1,3 +1,15 @@
+# [0.15.0](https://github.com/globalbrain/sefirot/compare/v0.14.0...v0.15.0) (2020-12-15)
+
+### Bug Fixes
+
+* **styles:** correct shadow depth level ([f548988](https://github.com/globalbrain/sefirot/commit/f548988cc7ae35989ea3c7fc5f5727378b4dda20))
+
+### Features
+
+* **icon:** add more icons ([cf4f700](https://github.com/globalbrain/sefirot/commit/cf4f700eaa35c5653e64c68c21642931d7d8de7d))
+* **input-text:** add outlined style and mini size ([f8989eb](https://github.com/globalbrain/sefirot/commit/f8989eb2ac21471b4447aeaa7d1e63d5519391d4))
+* **input-select:** add outlined style and mini size ([2e09f3e](https://github.com/globalbrain/sefirot/commit/2e09f3e437236c56dcd2fa5f324e689e29d0bd22))
+
 # [0.14.0](https://github.com/globalbrain/sefirot/compare/v0.13.0...v0.14.0) (2020-10-09)
 
 
