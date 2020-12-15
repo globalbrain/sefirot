@@ -25,7 +25,7 @@ import { defineComponent, computed, PropType } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
 
-type Size = 'medium' | 'large' | 'jumbo'
+type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
 export default defineComponent({
   props: {
@@ -55,6 +55,8 @@ export default defineComponent({
         success: props.mode === 'success',
         warning: props.mode === 'warning',
         danger: props.mode === 'danger',
+        mini: props.size === 'mini',
+        small: props.size === 'small',
         medium: props.size === 'medium',
         large: props.size === 'large',
         jumbo: props.size === 'jumbo',
@@ -113,11 +115,11 @@ export default defineComponent({
 }
 
 .SButton.primary {
-  color: var(--c-text-dark-1);
-  background-color: var(--c-black);
+  color: var(--button-primary-text);
+  background-color: var(--button-primary-bg);
 
-  &:hover  { background-color: var(--c-gray-dark-4); }
-  &:active { background-color: var(--c-gray-dark-3); }
+  &:hover  { background-color: var(--button-primary-bg-hover); }
+  &:active { background-color: var(--button-primary-bg-focus); }
 
   &.info {
     background-color: var(--c-info-light);
@@ -148,14 +150,14 @@ export default defineComponent({
   }
 
   &.inverse {
-    color: var(--c-black);
-    background-color: var(--c-white);
+    color: var(--button-primary-inverse-text);
+    background-color: var(--button-primary-inverse-bg);
 
-    &:hover  { background-color: rgba(255, 255, 255, .85); }
-    &:active { background-color: rgba(255, 255, 255, .75); }
+    &:hover  { background-color: var(--button-primary-inverse-bg-hover); }
+    &:active { background-color: var(--button-primary-inverse-bg-focus); }
 
     &.info {
-      color: var(--c-white);
+      color: var(--c-text-light-1);
       background-color: var(--c-info-light);
 
       &:hover  { background-color: var(--c-info); }
@@ -163,7 +165,7 @@ export default defineComponent({
     }
 
     &.success {
-      color: var(--c-white);
+      color: var(--c-text-light-1);
       background-color: var(--c-success);
 
       &:hover  { background-color: var(--c-success-dark); }
@@ -171,7 +173,7 @@ export default defineComponent({
     }
 
     &.warning {
-      color: var(--c-white);
+      color: var(--c-text-light-1);
       background-color: var(--c-warning);
 
       &:hover  { background-color: var(--c-warning-dark); }
@@ -179,7 +181,7 @@ export default defineComponent({
     }
 
     &.danger {
-      color: var(--c-white);
+      color: var(--c-text-light-1);
       background-color: var(--c-danger);
 
       &:hover  { background-color: var(--c-danger-dark); }
@@ -187,108 +189,93 @@ export default defineComponent({
     }
 
     .icon {
-      fill: var(--c-black);
+      fill: var(--c-text-light-1);
     }
   }
 
   .icon {
-    fill: var(--c-white);
+    fill: var(--c-text-dark-1);
   }
 }
 
 .SButton.secondary {
-  border-color: var(--c-black);
-  color: var(--c-text-light-1);
+  border-color: var(--button-secondary-border);
+  color: var(--button-secondary-text);
 
-  &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-gray-light-4); }
+  &:hover  { background-color: var(--button-secondary-bg-hover); }
+  &:active { background-color: var(--button-secondary-bg-focus); }
 
   &.inverse {
-    border-color: var(--c-white);
-    color: var(--c-white);
+    border-color: var(--button-secondary-inverse-border);
+    color: var(--button-secondary-inverse-text);
 
-    &:hover {
-      background-color: rgba(255, 255, 255, .15);
-    }
-
-    &:active {
-      background-color: rgba(255, 255, 255, .25);
-    }
+    &:hover  { background-color: var(--button-secondary-inverse-bg-hover); }
+    &:active { background-color: var(--button-secondary-inverse-bg-focus); }
 
     .icon {
-      fill: var(--c-white);
+      fill: var(--c-text-dark-1);
     }
   }
 
   .icon {
-    fill: var(--c-black);
+    fill: var(--c-text-light-1);
   }
 }
 
 .SButton.tertiary {
   border-color: transparent;
-  color: var(--c-text-light-1);
-  background-color: var(--c-white-mute);
+  color: var(--button-tertiary-text);
+  background-color: var(--button-tertiary-bg);
 
-  &:hover  { background-color: var(--c-gray-light-4); }
-  &:active { background-color: var(--c-gray-light-3); }
+  &:hover  { background-color: var(--button-tertiary-bg-hover); }
+  &:active { background-color: var(--button-tertiary-bg-focus); }
 
   &.inverse {
     border-color: transparent;
-    color: var(--c-text-dark-1);
-    background-color: var(--c-white-mute);
+    color: var(--button-tertiary-inverse-text);
+    background-color: var(--button-tertiary-inverse-bg);
 
-    &:hover {
-      background-color: rgba(255, 255, 255, .15);
-    }
-
-    &:active {
-      background-color: rgba(255, 255, 255, .25);
-    }
+    &:hover  { background-color: var(--button-tertiary-inverse-bg-hover); }
+    &:active { background-color: var(--button-tertiary-inverse-bg-focus); }
 
     .icon {
-      fill: var(--c-white);
+      fill: var(--c-text-dark-1);
     }
   }
 
   .icon {
-    fill: var(--c-black);
+    fill: var(--c-text-light-1);
   }
 }
 
 .SButton.text {
-  color: var(--c-black);
+  color: var(--button-text-text);
 
-  &:hover  { background-color: var(--c-white-mute); }
-  &:active { background-color: var(--c-gray-light-4); }
+  &:hover  { background-color: var(--button-text-bg-hover); }
+  &:active { background-color: var(--button-text-bg-focus); }
 
   &.inverse {
-    color: var(--c-white);
+    color: var(--button-text-inverse-text);
 
-    &:hover {
-      background-color: rgba(255, 255, 255, .15);
-    }
-
-    &:active {
-      background-color: rgba(255, 255, 255, .25);
-    }
+    &:hover  { background-color: var(--button-text-inverse-bg-hover); }
+    &:active { background-color: var(--button-text-inverse-bg-focus); }
 
     .icon {
-      fill: var(--c-white);
+      fill: var(--c-text-dark-1);
     }
   }
 
   .icon {
-    fill: var(--c-black);
+    fill: var(--c-text-light-1);
   }
 }
 
 .SButton.mute {
-  color: var(--c-text-light-2);
+  color: var(--button-mute-text);
 
   &:hover  {
-    color: var(--c-text-light-1);
-    background-color: var(--c-white-mute);
+    color: var(--button-mute-text-hover);
+    background-color: var(--button-mute-bg-hover);
 
     .icon {
       fill: var(--c-text-light-1);
@@ -296,8 +283,8 @@ export default defineComponent({
   }
 
   &:active {
-    color: var(--c-text-light-1);
-    background-color: var(--c-gray-light-4);
+    color: var(--button-mute-text-hover);
+    background-color: var(--button-mute-bg-focus);
 
     .icon {
       fill: var(--c-text-light-1);
@@ -305,16 +292,16 @@ export default defineComponent({
   }
 
   &.inverse {
-    color: var(--c-text-dark-2);
+    color: var(--button-mute-inverse-text);
 
     &:hover {
-      color: var(--c-text-dark-1);
-      background-color: rgba(255, 255, 255, .15);
+      color: var(--button-mute-inverse-text-hover);
+      background-color: var(--button-mute-inverse-bg-hover);
     }
 
     &:active {
-      color: var(--c-text-dark-1);
-      background-color: rgba(255, 255, 255, .25);
+      color: var(--button-mute-inverse-text);
+      background-color: var(--button-mute-inverse-bg-focus);
     }
 
     .icon {
@@ -327,9 +314,72 @@ export default defineComponent({
   }
 }
 
+.SButton.mini {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.SButton.mini.rounded {
+  border-radius: 14px;
+}
+
+.SButton.mini.has-label {
+  padding: 0 8px;
+  width: auto;
+}
+
+.SButton.mini.has-label.block {
+  width: 100%;
+}
+
+.SButton.mini.has-icon {
+  .label {
+    padding-right: 1px;
+    padding-left: 6px;
+  }
+}
+
+.SButton.small {
+  width: 32px;
+  height: 32px;
+  font-size: 12px;
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.SButton.small.rounded {
+  border-radius: 16px;
+}
+
+.SButton.small.has-label {
+  padding: 0 10px;
+  width: auto;
+}
+
+.SButton.small.has-label.block {
+  width: 100%;
+}
+
+.SButton.small.has-icon {
+  .label {
+    padding-right: 1px;
+    padding-left: 8px;
+  }
+}
+
 .SButton.medium {
   width: 40px;
   height: 40px;
+  font-size: 13px;
 
   .icon-svg {
     width: 16px;
@@ -342,7 +392,7 @@ export default defineComponent({
 }
 
 .SButton.medium.has-label {
-  padding: 0 14px;
+  padding: 0 12px;
   width: auto;
 }
 
@@ -386,8 +436,6 @@ export default defineComponent({
 }
 
 .SButton.large.has-icon {
-  padding: 0 18px;
-
   .label {
     padding-right: 2px;
     padding-left: 10px;
@@ -419,8 +467,6 @@ export default defineComponent({
 }
 
 .SButton.jumbo.has-icon {
-  padding: 0 18px;
-
   .label {
     padding-right: 2px;
     padding-left: 10px;

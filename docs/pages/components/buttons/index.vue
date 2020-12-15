@@ -7,8 +7,10 @@ Buttons allow users to take actions, and make choices, with a single tap.
 
 ## Sizes
 
-Button has 2 sizes, `medium`, `large`, and `jumbo`. You can control the sizes through `size` prop. The default size is `medium`.
+Button has many sizes, `mini`, `small`, `medium`, `large`, and `jumbo`. You can control the sizes through `size` prop. The default size is `medium`.
 
+<StoryButtonEXMini />
+<StoryButtonEXSmall />
 <StoryButtonEXMedium />
 <StoryButtonEXLarge />
 <StoryButtonEXJumbo />
@@ -50,6 +52,8 @@ You can also prepend icon by passing in Vue Component to the `icon` prop. The bu
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryButtonShowcase from '@/components/StoryButtonShowcase.vue'
+import StoryButtonEXMini from '@/components/StoryButtonEXMini.vue'
+import StoryButtonEXSmall from '@/components/StoryButtonEXSmall.vue'
 import StoryButtonEXMedium from '@/components/StoryButtonEXMedium.vue'
 import StoryButtonEXLarge from '@/components/StoryButtonEXLarge.vue'
 import StoryButtonEXJumbo from '@/components/StoryButtonEXJumbo.vue'
@@ -64,6 +68,8 @@ import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 export default defineComponent({
   components: {
     StoryButtonShowcase,
+    StoryButtonEXMini,
+    StoryButtonEXSmall,
     StoryButtonEXMedium,
     StoryButtonEXLarge,
     StoryButtonEXJumbo,
@@ -117,10 +123,10 @@ export default defineComponent({
       },
       {
         name: 'size',
-        type: 'string',
+        type: "'mini' | 'small' | 'medium' | 'large' | 'jumbo'",
         required: false,
         default: '\'medium\'',
-        description: 'The size of the button. Available sizes are: `medium`, `large`, and `jumbo`.'
+        description: 'The size of the button.'
       },
       {
         name: 'icon',
