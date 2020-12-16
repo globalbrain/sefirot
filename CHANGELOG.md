@@ -1,3 +1,17 @@
+# [0.16.0](https://github.com/globalbrain/sefirot/compare/v0.15.0...v0.16.0) (2020-12-16)
+
+### Bug Fixes
+
+* remove webkit appearance from search input ([c6c366b](https://github.com/globalbrain/sefirot/commit/c6c366b716f82c73ec7d54d47a7b533ea1536cf6))
+
+### Features
+
+* add store and router composables ([b533582](https://github.com/globalbrain/sefirot/commit/b533582f68f3fb5022256012a7be7e0a1ce7971b))
+* **button:** add mini and small size ([691f559](https://github.com/globalbrain/sefirot/commit/691f5594154818397331035fc3f7d0f8d974cf94))
+* **button:** add mode feature to text type button ([7853d07](https://github.com/globalbrain/sefirot/commit/7853d074ff6b1628795c9b7c446a00e9f602b1f4))
+* **input-text:** add leading/trailing text option ([50b9519](https://github.com/globalbrain/sefirot/commit/50b951985a4feea09ad5983fb9e6d84c2f752247))
+* **input-text:** add action feature ([94d632d](https://github.com/globalbrain/sefirot/commit/94d632dd99a29dafc38477e31c1f7a7af8d68d82))
+
 # [0.15.0](https://github.com/globalbrain/sefirot/compare/v0.14.0...v0.15.0) (2020-12-15)
 
 ### Bug Fixes
