@@ -1,4 +1,4 @@
-import { Store } from 'vuex'
+import { Store, Plugin } from 'vuex'
 import modal, { State as ModalState } from './modal'
 import dialog from './dialog'
 import alert from './alert'
@@ -12,7 +12,7 @@ export interface State {
   snackbars: SnackbarState
 }
 
-export default function Sefirot <S = any> (store: Store<S & State>): void {
+const Sefirot: Plugin<State> = <S = any> (store: Store<S & State>): void => {
   store.registerModule('modal', modal)
   store.registerModule('dialog', dialog)
   store.registerModule('alert', alert)
@@ -20,3 +20,5 @@ export default function Sefirot <S = any> (store: Store<S & State>): void {
   store.registerModule('screen', screen)
   store.registerModule('snackbars', snackbars)
 }
+
+export default Sefirot
