@@ -21,7 +21,7 @@ export interface Action {
 }
 
 export const actions: ActionTree<any, RootState> = {
-  open (context: ActionContext<any, RootState>, { type = 'confirm', title, text, progress, actions }: PayloadOpen): void {
+  open (context: ActionContext<any, RootState>, { type = 'confirm', title, text, progress, actions = [] }: PayloadOpen): void {
     context.dispatch('modal/open', {
       name: 'dialog',
       data: { type, title, text, progress, actions }

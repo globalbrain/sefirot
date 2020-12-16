@@ -59,7 +59,7 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .TheHeader {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   z-index: var(--z-index-header);

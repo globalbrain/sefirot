@@ -77,7 +77,7 @@ export default defineComponent({
   }
 
   @media (min-width: 1056px) {
-    padding: 112px 32px 128px;
+    padding: 48px 32px 128px;
     width: 100%;
     max-width: 784px;
   }

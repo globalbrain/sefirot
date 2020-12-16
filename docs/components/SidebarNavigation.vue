@@ -85,7 +85,6 @@ export default defineComponent({
 
 .SideBarNavigation {
   flex-shrink: 0;
-  margin-top: 65px;
   border-bottom: 1px solid var(--c-divider);
   padding: 4px 24px;
   width: 100%;

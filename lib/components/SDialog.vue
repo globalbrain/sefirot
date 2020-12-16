@@ -1,6 +1,6 @@
 <template>
   <SModalBase name="dialog" :closable="false">
-    <div class="SDialog">
+    <div class="SDialog" :class="{ 'load-only': isLoadOnly }">
       <p v-if="data.title" class="title">{{ data.title }}</p>
       <p v-if="data.text" class="text">{{ data.text }}</p>
 
@@ -17,6 +17,7 @@
       <div v-if="hasActions" class="actions">
         <div v-for="(action, index) in data.actions" :key="index" class="action">
           <SButton
+            size="small"
             :type="getActionType(action.type)"
             :label="action.label"
             @click="action.callback"
@@ -27,13 +28,15 @@
   </SModalBase>
 </template>
 
-<script>
-import SIconPreloaderDark from './icons/SIconPreloaderDark'
-import SButton from './SButton'
-import SProgressBar from './SProgressBar'
-import SModalBase from './SModalBase'
+<script lang="ts">
+import { defineComponent, computed } from '@vue/composition-api'
+import { useStore } from '../composables/Store'
+import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
+import SButton from './SButton.vue'
+import SProgressBar from './SProgressBar.vue'
+import SModalBase from './SModalBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SIconPreloaderDark,
     SButton,
@@ -41,94 +44,130 @@ export default {
     SModalBase
   },
 
-  computed: {
-    data () {
-      return this.$store.state.modal.data
-    },
+  setup () {
+    const store = useStore()
 
-    hasActions () {
-      const actions = this.data.actions
+    const data = computed(() => store.state.modal.data)
+
+    const hasActions = computed(() => {
+      const actions = data.value.actions
 
       return actions ? actions.length > 0 : false
-    },
+    })
 
-    isTypeLoading () {
-      return this.data.type === 'loading'
-    },
+    const isTypeLoading = computed(() => data.value.type === 'loading')
+    const isTypeProgress = computed(() => data.value.type === 'progress')
+    const isLoadOnly = computed(() => isTypeLoading.value && !data.value.title && !data.value.text)
 
-    isTypeProgress () {
-      return this.data.type === 'progress'
+    function getActionType (value?: string): string {
+      return value !== 'mute' ? 'text' : 'mute'
     }
-  },
 
-  methods: {
-    getActionType (value) {
-      if (value === 'mute') {
-        return 'mute'
-      }
-
-      return 'text'
+    return {
+      data,
+      hasActions,
+      isTypeLoading,
+      isTypeProgress,
+      isLoadOnly,
+      getActionType
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
 .SDialog {
-  margin: 48px 16px;
-  border-radius: 2px;
-  padding: 32px;
-  width: 100%;
-  max-width: 512px;
-  background-color: var(--c-white);
+  margin: 96px 16px;
+  border-radius: 8px;
+  padding: 16px 16px 8px;
+  max-width: 392px;
+  background-color: var(--modal-content-bg);
   box-shadow: var(--shadow-depth-5);
-  transition: opacity .25s, transform .25s;
-  transition-delay: .05s;
 
-  @media (min-width: 544px) {
+  @media (min-width: 424px) {
     margin: 128px auto;
+    padding: 24px 24px 16px;
+  }
+}
+
+.SDialog.load-only {
+  margin: 128px auto;
+  padding: 0;
+  width: 80px;
+  height: 80px;
+
+  .load {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width: 80px;
+    height: 80px;
+  }
+
+  .load-svg {
+    transform: translate(0);
+  }
+
+  @media (min-width: 424px) {
+    margin: 160px auto;
   }
 }
 
 .title {
-  line-height: 38px;
-  font-size: 20px;
+  line-height: 28px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .text {
-  .title + & {
-    padding-top: 8px;
-  }
+  line-height: 20px;
+  font-size: 14px;
 }
 
 .load {
-  margin-bottom: -16px;
-  margin-left: -8px;
-  padding-top: 24px;
+  margin-top: 2px;
+  transform: translateY(1px);
 }
 
 .load-svg {
   width: 48px;
   height: 48px;
+  transform: translate(-10px, 2px);
+
+  @media (min-width: 424px) {
+    transform: translate(-12px, 6px);
+  }
 }
 
 .progress {
-  padding-top: 32px;
+  padding-top: 14px;
+  padding-bottom: 8px;
+
+  @media (min-width: 424px) {
+    padding-top: 16px;
+    padding-bottom: 4px;
+  }
 }
 
 .actions {
   display: flex;
-  margin-right: -16px;
-  margin-bottom: -16px;
-  padding-top: 32px;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  margin: 0 -8px;
+  padding-top: 12px;
+
+  @media (min-width: 424px) {
+    margin: 0 -10px;
+  }
 }
 
 .action {
-  & + & {
-    padding-left: 4px;
+  @media (min-width: 424px) {
+    padding: 0 4px;
   }
 }
 </style>

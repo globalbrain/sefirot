@@ -3,170 +3,213 @@
   <div class="list">
     <div class="item"><SButton label="CONFIRM" @click="openDialog01" /></div>
     <div class="item"><SButton label="LOADING" @click="openDialog02" /></div>
-    <div class="item"><SButton label="PROGRESS" @click="openDialog03" /></div>
+    <div class="item"><SButton label="LOADING MESSAGE" @click="openDialog03" /></div>
+    <div class="item"><SButton label="PROGRESS" @click="openDialog04" /></div>
   </div>
 </StoryBase>
 
 ```html
 <template>
-  <SButton label="CONFIRM" @click="openDialog01" />
-  <SButton label="LOADING" @click="openDialog02" />
-  <SButton label="PROGRESS" @click="openDialog03" />
+  <div class="list">
+    <div class="item"><SButton label="CONFIRM" @click="openDialog01" /></div>
+    <div class="item"><SButton label="LOADING" @click="openDialog02" /></div>
+    <div class="item"><SButton label="LOADING MESSAGE" @click="openDialog03" /></div>
+    <div class="item"><SButton label="PROGRESS" @click="openDialog04" /></div>
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useStore } from '@globalbrain/sefirot/lib/composables/Store'
 import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
 
-export default {
+export default defineComponent({
   components: {
     SButton
   },
 
-  data () {
-    return {
-      interval: null
-    }
-  },
+  setup () {
+    const store = useStore()
 
-  methods: {
-    openDialog01 () {
-      this.$store.dispatch('dialog/open', {
+    let interval: any = null
+
+    function openDialog01 () {
+      store.dispatch('dialog/open', {
         title: 'The dialog title.',
         text: 'This is the dialog message.',
         actions: [
-          { type: 'mute', label: 'DISMISS', callback: this.close },
-          { label: 'CLOSE DIALOG', callback: this.close }
+          { type: 'mute', label: 'DISMISS', callback: close },
+          { label: 'CLOSE', callback: close }
         ]
       })
-    },
+    }
 
-    openDialog02 () {
-      this.$store.dispatch('dialog/open', {
-        type: 'loading',
-        title: 'The dialog title.',
-        text: 'This is the dialog message. The dialog will be closed after 5 sec for this demo.'
+    function openDialog02 () {
+      store.dispatch('dialog/open', {
+        type: 'loading'
       })
 
-      setTimeout(() => { this.close() }, 5000)
-    },
+      setTimeout(close, 3000)
+    }
 
-    openDialog03 () {
+    function openDialog03 () {
+      store.dispatch('dialog/open', {
+        type: 'loading',
+        title: 'The dialog title.',
+        text: 'This is the dialog message. The dialog will be closed after 3 sec for this demo.'
+      })
+
+      setTimeout(close, 3000)
+    }
+
+    function openDialog04 () {
       let now = 0
 
-      this.$store.dispatch('dialog/open', {
+      store.dispatch('dialog/open', {
         type: 'progress',
         title: 'The dialog title.',
         text: 'This is the dialog message.',
         progress: { now, max: 100 }
       })
 
-      this.interval = setInterval(() => {
+      interval = setInterval(() => {
         now = now + 2.125
 
         if (now < 100) {
-          this.$store.dispatch('dialog/update', {
+          store.dispatch('dialog/update', {
             progress: { now, max: 100 }
           })
 
           return
         }
 
-        clearInterval(this.interval)
-
-        this.close()
+        clearInterval(interval)
+        close()
       }, 250)
-    },
-
-    close () {
-      this.$store.dispatch('modal/close')
     }
-  }
-}
-</script>
-```
-</template>
 
-<script>
-import SButton from '@@/lib/components/SButton'
-import StoryBase from '@/components/StoryBase'
+    function close () {
+      store.dispatch('modal/close')
+    }
 
-export default {
-  components: {
-    SButton,
-    StoryBase
-  },
-
-  data () {
     return {
-      interval: null
-    }
-  },
-
-  methods: {
-    openDialog01 () {
-      this.$store.dispatch('dialog/open', {
-        title: 'The dialog title.',
-        text: 'This is the dialog message.',
-        actions: [
-          { type: 'mute', label: 'DISMISS', callback: this.close },
-          { label: 'CLOSE DIALOG', callback: this.close }
-        ]
-      })
-    },
-
-    openDialog02 () {
-      this.$store.dispatch('dialog/open', {
-        type: 'loading',
-        title: 'The dialog title.',
-        text: 'This is the dialog message. The dialog will be closed after 5 sec for this demo.'
-      })
-
-      setTimeout(() => { this.close() }, 5000)
-    },
-
-    openDialog03 () {
-      let now = 0
-
-      this.$store.dispatch('dialog/open', {
-        type: 'progress',
-        title: 'The dialog title.',
-        text: 'This is the dialog message.',
-        progress: { now, max: 100 }
-      })
-
-      this.interval = setInterval(() => {
-        now = now + 2.125
-
-        if (now < 100) {
-          this.$store.dispatch('dialog/update', {
-            progress: { now, max: 100 }
-          })
-
-          return
-        }
-
-        clearInterval(this.interval)
-
-        this.close()
-
-        return
-      }, 250)
-    },
-
-    close () {
-      this.$store.dispatch('modal/close')
+      openDialog01,
+      openDialog02,
+      openDialog03,
+      openDialog04
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 .list {
   display: flex;
-  margin: 0 -8px;
+  flex-wrap: wrap;
+  margin: -4px;
 }
 
 .item {
-  padding: 0 8px;
+  padding: 4px;
+}
+</style>
+```
+</template>
+
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useStore } from '@@/lib/composables/Store'
+import SButton from '@@/lib/components/SButton.vue'
+import StoryBase from '@/components/StoryBase.vue'
+
+export default defineComponent({
+  components: {
+    SButton,
+    StoryBase
+  },
+
+  setup () {
+    const store = useStore()
+
+    let interval: any = null
+
+    function openDialog01 () {
+      store.dispatch('dialog/open', {
+        title: 'The dialog title.',
+        text: 'This is the dialog message.',
+        actions: [
+          { type: 'mute', label: 'DISMISS', callback: close },
+          { label: 'CLOSE', callback: close }
+        ]
+      })
+    }
+
+    function openDialog02 () {
+      store.dispatch('dialog/open', {
+        type: 'loading'
+      })
+
+      setTimeout(close, 3000)
+    }
+
+    function openDialog03 () {
+      store.dispatch('dialog/open', {
+        type: 'loading',
+        title: 'The dialog title.',
+        text: 'This is the dialog message. The dialog will be closed after 3 sec for this demo.'
+      })
+
+      setTimeout(close, 3000)
+    }
+
+    function openDialog04 () {
+      let now = 0
+
+      store.dispatch('dialog/open', {
+        type: 'progress',
+        title: 'The dialog title.',
+        text: 'This is the dialog message.',
+        progress: { now, max: 100 }
+      })
+
+      interval = setInterval(() => {
+        now = now + 2.125
+
+        if (now < 100) {
+          store.dispatch('dialog/update', {
+            progress: { now, max: 100 }
+          })
+
+          return
+        }
+
+        clearInterval(interval)
+        close()
+      }, 250)
+    }
+
+    function close () {
+      store.dispatch('modal/close')
+    }
+
+    return {
+      openDialog01,
+      openDialog02,
+      openDialog03,
+      openDialog04
+    }
+  }
+})
+</script>
+
+<style lang="postcss" scoped>
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+}
+
+.item {
+  padding: 4px;
 }
 </style>

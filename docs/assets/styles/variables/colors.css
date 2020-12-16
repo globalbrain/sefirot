@@ -151,6 +151,8 @@
   --input-action-outlined-border: var(--c-divider);
   --input-action-outlined-bg-hover: var(--c-gray-light-4);
   --input-action-outlined-bg-focus: var(--c-gray-light-3);
+
+  --modal-content-bg: var(--c-white);
 }
 
 .dark-mode {

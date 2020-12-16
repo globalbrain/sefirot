@@ -70,6 +70,8 @@
   --c-alternative-lighter: #f616f8;
   --c-alternative-dark: #823c83;
   --c-alternative-darker: #602960;
+
+  --modal-content-bg: var(--c-white);
 }
 
 :root {

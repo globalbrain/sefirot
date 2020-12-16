@@ -1,74 +1,80 @@
 <template>
   <div class="SPortalModals">
     <transition name="fade">
-      <div v-if="showBackdrop" class="backdrop" />
+      <div v-if="show" class="backdrop" />
     </transition>
 
     <SDialog />
     <SAlert />
 
-    <portal-target name="modal" multiple />
+    <div ref="el" class="modal-content" :class="{ show }">
+      <portal-target name="modal" multiple />
+    </div>
   </div>
 </template>
 
-<script>
-import SDialog from './SDialog'
-import SAlert from './SAlert'
+<script lang="ts">
+import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
+import { defineComponent, ref, computed, watch } from '@vue/composition-api'
+import { useStore } from '../composables/Store'
+import SDialog from './SDialog.vue'
+import SAlert from './SAlert.vue'
 
-export default {
+export default defineComponent({
   components: {
     SDialog,
     SAlert
   },
 
-  computed: {
-    modalName () {
-      return this.$store.state.modal.name
-    },
+  setup () {
+    const store = useStore()
 
-    showBackdrop () {
-      return this.modalName !== null
+    const el = ref<any>(null)
+
+    const show = ref(false)
+
+    const name = computed(() => store.state.modal.name)
+
+    watch(name, (value, oldValue) => {
+      if (value === null) {
+        return close()
+      }
+
+      oldValue === null && open()
+    })
+
+    function open (): void {
+      show.value = true
+      lock()
+    }
+
+    function close (): void {
+      setTimeout(() => {
+        show.value = false
+        release()
+      }, 250)
+    }
+
+    function lock (): void {
+      el.value && disableBodyScroll(el.value, { reserveScrollBarGap: true })
+    }
+
+    function release (): void {
+      el.value && clearAllBodyScrollLocks()
+    }
+
+    return {
+      el,
+      show
     }
   },
 
   watch: {
-    modalName (newValue, oldValue) {
-      if (newValue === null) {
-        return this.closeScreen()
-      }
-
-      oldValue === null && this.openScreen()
-    },
-
     $route () {
       this.$store.dispatch('modal/close')
     }
-  },
-
-  methods: {
-    openScreen () {
-      document.body.style.paddingRight = `${this.scrollBarWidth()}px`
-      document.body.style.top = `-${window.scrollY}px`
-      document.body.style.position = 'fixed'
-    },
-
-    closeScreen () {
-      setTimeout(() => {
-        const scrollY = document.body.style.top
-
-        document.body.style.paddingRight = null
-        document.body.style.position = null
-        document.body.style.top = null
-
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
-      }, 300)
-    },
-
-    scrollBarWidth () {
-      return window.innerWidth - document.documentElement.clientWidth
-    }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -93,5 +99,22 @@ export default {
 .backdrop.fade-enter,
 .backdrop.fade-leave-active {
   opacity: 0;
+}
+
+.modal-content {
+  display: none;
+}
+
+.modal-content.show {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: var(--z-index-modal);
+  display: block;
+  height: 100%;
+  overflow-y: auto;
+  transition: all .25s;
 }
 </style>
