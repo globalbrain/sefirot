@@ -16,6 +16,21 @@
     <div class="item">
       <SButton label="DANGER" mode="danger" />
     </div>
+    <div class="item">
+      <SButton type="text" label="NEUTRAL" mode="neutral" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="INFO" mode="info" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="SUCCESS" mode="success" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="WARNING" mode="warning" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="DANGER" mode="danger" />
+    </div>
   </div>
 </StoryBase>
 
@@ -37,6 +52,21 @@
     <div class="item">
       <SButton label="DANGER" mode="danger" />
     </div>
+    <div class="item">
+      <SButton type="text" label="NEUTRAL" mode="neutral" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="INFO" mode="info" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="SUCCESS" mode="success" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="WARNING" mode="warning" />
+    </div>
+    <div class="item">
+      <SButton type="text" label="DANGER" mode="danger" />
+    </div>
   </div>
 </template>
 
@@ -50,6 +80,18 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="postcss" scoped>
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+}
+
+.item {
+  padding: 4px;
+}
+</style>
 ```
 </template>
 
@@ -70,10 +112,10 @@ export default defineComponent({
 .list {
   display: flex;
   flex-wrap: wrap;
-  margin: -8px;
+  margin: -4px;
 }
 
 .item {
-  padding: 8px;
+  padding: 4px;
 }
 </style>

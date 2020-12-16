@@ -122,7 +122,7 @@ export default defineComponent({
   &:active { background-color: var(--button-primary-bg-focus); }
 
   &.info {
-    background-color: var(--c-info-light);
+    background-color: var(--c-info);
 
     &:hover  { background-color: var(--c-info); }
     &:active { background-color: var(--c-info-dark); }
@@ -187,14 +187,6 @@ export default defineComponent({
       &:hover  { background-color: var(--c-danger-dark); }
       &:active { background-color: var(--c-danger-darker); }
     }
-
-    .icon {
-      fill: var(--c-text-light-1);
-    }
-  }
-
-  .icon {
-    fill: var(--c-text-dark-1);
   }
 }
 
@@ -211,14 +203,6 @@ export default defineComponent({
 
     &:hover  { background-color: var(--button-secondary-inverse-bg-hover); }
     &:active { background-color: var(--button-secondary-inverse-bg-focus); }
-
-    .icon {
-      fill: var(--c-text-dark-1);
-    }
-  }
-
-  .icon {
-    fill: var(--c-text-light-1);
   }
 }
 
@@ -237,14 +221,6 @@ export default defineComponent({
 
     &:hover  { background-color: var(--button-tertiary-inverse-bg-hover); }
     &:active { background-color: var(--button-tertiary-inverse-bg-focus); }
-
-    .icon {
-      fill: var(--c-text-dark-1);
-    }
-  }
-
-  .icon {
-    fill: var(--c-text-light-1);
   }
 }
 
@@ -254,19 +230,16 @@ export default defineComponent({
   &:hover  { background-color: var(--button-text-bg-hover); }
   &:active { background-color: var(--button-text-bg-focus); }
 
+  &.info    { color: var(--c-info); }
+  &.success { color: var(--c-success); }
+  &.warning { color: var(--c-warning); }
+  &.danger  { color: var(--c-danger); }
+
   &.inverse {
     color: var(--button-text-inverse-text);
 
     &:hover  { background-color: var(--button-text-inverse-bg-hover); }
     &:active { background-color: var(--button-text-inverse-bg-focus); }
-
-    .icon {
-      fill: var(--c-text-dark-1);
-    }
-  }
-
-  .icon {
-    fill: var(--c-text-light-1);
   }
 }
 
@@ -276,19 +249,11 @@ export default defineComponent({
   &:hover  {
     color: var(--button-mute-text-hover);
     background-color: var(--button-mute-bg-hover);
-
-    .icon {
-      fill: var(--c-text-light-1);
-    }
   }
 
   &:active {
     color: var(--button-mute-text-hover);
     background-color: var(--button-mute-bg-focus);
-
-    .icon {
-      fill: var(--c-text-light-1);
-    }
   }
 
   &.inverse {
@@ -303,14 +268,6 @@ export default defineComponent({
       color: var(--button-mute-inverse-text);
       background-color: var(--button-mute-inverse-bg-focus);
     }
-
-    .icon {
-      fill: var(--c-text-dark-2);
-    }
-  }
-
-  .icon {
-    fill: var(--c-text-light-2);
   }
 }
 
@@ -531,6 +488,7 @@ export default defineComponent({
 }
 
 .icon-svg {
+  fill: currentColor;
   transition: fill .25s;
 }
 
