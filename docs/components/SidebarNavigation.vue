@@ -104,7 +104,7 @@ export default defineComponent({
     bottom: 0;
     left: 0;
     z-index: var(--z-index-sidebar);
-    border-right: 1px solid var(--c-divider);
+    border-right: 1px solid var(--c-divider-light);
     border-bottom: 0;
     margin: 0;
     padding: 65px 0 0;
