@@ -27,9 +27,10 @@
       <div class="box">
         <input
           :id="name"
-          ref="input"
+          ref="inputEl"
           class="input"
           :class="{ 'has-icon': icon, 'is-clearable': clearable }"
+          :style="inputStyles"
           :type="type"
           :placeholder="placeholder"
           :value="value"
@@ -42,6 +43,14 @@
           <component :is="icon" class="icon-svg" />
         </div>
 
+        <p v-if="text" ref="textEl" class="text" role="button" @click="focus">
+          {{ text }}
+        </p>
+
+        <p v-if="textAfter" ref="textAfterEl" class="text-after" role="button" @click="focus">
+          {{ textAfter }}
+        </p>
+
         <button v-if="clearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
           <SIconX class="clear-svg" />
         </button>
@@ -51,7 +60,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType } from '@vue/composition-api'
+import {
+  defineComponent,
+  ref,
+  reactive,
+  computed,
+  watch,
+  onMounted,
+  PropType
+} from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
@@ -87,13 +104,17 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
     icon: { type: Object, default: null },
+    text: { type: String, default: null },
+    textAfter: { type: String, default: null },
     clearable: { type: Boolean, default: false },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
   setup (props, context) {
-    const input = ref<HTMLElement | null>(null)
+    const inputEl = ref<HTMLElement | null>(null)
+    const textEl = ref<HTMLElement | null>(null)
+    const textAfterEl = ref<HTMLElement | null>(null)
 
     const classes = computed(() => ({
       medium: props.size === 'medium',
@@ -102,16 +123,27 @@ export default defineComponent({
       outlined: props.mode === 'outlined'
     }))
 
+    const inputStyles = reactive({
+      paddingRight: '',
+      paddingLeft: ''
+    })
+
     const showClearButton = computed(() => {
       return props.value !== null && props.value !== ''
     })
 
+    onMounted(() => {
+      setTextPadding()
+      watch(() => props.text, () => setTextPadding())
+      watch(() => props.textAfter, () => setTextPadding())
+    })
+
     function focus () {
-      (input.value as HTMLElement).focus()
+      (inputEl.value as HTMLElement).focus()
     }
 
     function blur () {
-      (input.value as HTMLElement).blur()
+      (inputEl.value as HTMLElement).blur()
     }
 
     function emitInput (e: InputEvent) {
@@ -132,9 +164,25 @@ export default defineComponent({
       context.emit('clear')
     }
 
+    function setTextPadding (): void {
+      textEl.value && setLeadingTextPadding()
+      textAfterEl.value && setTrailingTextPadding()
+    }
+
+    function setLeadingTextPadding (): void {
+      inputStyles.paddingLeft = `${textEl.value!.offsetWidth}px`
+    }
+
+    function setTrailingTextPadding (): void {
+      inputStyles.paddingRight = `${textAfterEl.value!.offsetWidth}px`
+    }
+
     return {
-      input,
+      inputEl,
+      textEl,
+      textAfterEl,
       classes,
+      inputStyles,
       showClearButton,
       focus,
       blur,
@@ -196,6 +244,18 @@ export default defineComponent({
     height: 14px;
   }
 
+  .text {
+    padding: 0 8px 0 12px;
+    line-height: 32px;
+    font-size: 14px;
+  }
+
+  .text-after {
+    padding: 0 12px 0 8px;
+    line-height: 32px;
+    font-size: 14px;
+  }
+
   .clear {
     top: 0;
     right: 0;
@@ -253,6 +313,16 @@ export default defineComponent({
   .icon-svg {
     width: 16px;
     height: 16px;
+  }
+
+  .text {
+    padding: 0 8px 0 16px;
+    line-height: 48px;
+  }
+
+  .text-after {
+    padding: 0 16px 0 8px;
+    line-height: 48px;
   }
 
   .clear {
@@ -365,6 +435,7 @@ export default defineComponent({
 
 .box {
   position: relative;
+  display: flex;
   flex-grow: 1;
 
   &:hover .input {
@@ -392,6 +463,25 @@ export default defineComponent({
 .icon-svg {
   display: block;
   fill: var(--input-placeholder);
+}
+
+.text,
+.text-after {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  color: var(--input-text);
+  cursor: text;
+}
+
+.text {
+  left: 0;
+  color: var(--input-text);
+}
+
+.text-after {
+  right: 0;
+  color: var(--input-placeholder);
 }
 
 .clear {

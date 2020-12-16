@@ -23,6 +23,12 @@ You can supply an icon to the input field by passing in the icon component to th
 
 <StoryInputTextEXIcon />
 
+## With Text
+
+You can also supply additional texts to the input field via the `text` and `text-after` props.
+
+<StoryInputTextEXText />
+
 ## Action
 
 You may add leading action to the input by passing config to the `action` prop.
@@ -58,6 +64,7 @@ import StoryInputTextShowcase from '@/components/StoryInputTextShowcase.vue'
 import StoryInputTextEXOutlined from '@/components/StoryInputTextEXOutlined.vue'
 import StoryInputTextEXSizes from '@/components/StoryInputTextEXSizes.vue'
 import StoryInputTextEXIcon from '@/components/StoryInputTextEXIcon.vue'
+import StoryInputTextEXText from '@/components/StoryInputTextEXText.vue'
 import StoryInputTextEXAction from '@/components/StoryInputTextEXAction.vue'
 import StoryInputTextEXClearable from '@/components/StoryInputTextEXClearable.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
@@ -69,6 +76,7 @@ export default defineComponent({
     StoryInputTextEXOutlined,
     StoryInputTextEXSizes,
     StoryInputTextEXIcon,
+    StoryInputTextEXText,
     StoryInputTextEXAction,
     StoryInputTextEXClearable,
     SpecProps,
@@ -136,6 +144,13 @@ export default defineComponent({
         description: 'The placeholder text for the input.'
       },
       {
+        name: 'action',
+        type: 'Action',
+        required: false,
+        default: 'null',
+        description: 'The action to be prepened to the input.'
+      },
+      {
         name: 'icon',
         type: 'VueComponent',
         required: false,
@@ -143,11 +158,18 @@ export default defineComponent({
         description: 'You may pass Vue Component (probably svg) to display icon in input field.'
       },
       {
-        name: 'action',
-        type: 'Action',
+        name: 'text',
+        type: 'string',
         required: false,
         default: 'null',
-        description: 'The action to be prepened to the input.'
+        description: 'Add the leading text to the input.'
+      },
+      {
+        name: 'text-after',
+        type: 'string',
+        required: false,
+        default: 'null',
+        description: 'Add the trailing text to the input.'
       },
       {
         name: 'clearable',

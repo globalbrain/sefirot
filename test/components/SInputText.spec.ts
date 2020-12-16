@@ -41,7 +41,7 @@ describe('components/SInputText', () => {
     expect(validation.name.$isDirty.value).toBe(true)
   })
 
-  it('it emits `enter` event when a user key down enter', () => {
+  it('emits `enter` event when a user key down enter', () => {
     const wrapper = mount(SInputText)
 
     const input = wrapper.find('.SInputText .input')
@@ -52,7 +52,7 @@ describe('components/SInputText', () => {
     expect((wrapper.emitted('enter') as any)[0][0]).toBe('ok')
   })
 
-  it('it focus the input when the user clicks the icon', async () => {
+  it('focus the input when the user clicks the icon', async () => {
     const wrapper = mount(SInputText, {
       propsData: {
         icon: SIconSearch
@@ -67,7 +67,19 @@ describe('components/SInputText', () => {
     expect(input.element === document.activeElement)
   })
 
-  it('it emits `clear` event when a user clicks the clear button', async () => {
+  it('sets correct padding styles when there is `text`', () => {
+    const wrapper = mount(SInputText, {
+      propsData: {
+        text: 'a',
+        textAfter: 'b'
+      }
+    })
+
+    expect((wrapper.vm as any).inputStyles.paddingRight).toBe('0px')
+    expect((wrapper.vm as any).inputStyles.paddingLeft).toBe('0px')
+  })
+
+  it('emits `clear` event when a user clicks the clear button', async () => {
     const wrapper = mount(SInputText, {
       propsData: {
         clearable: true
