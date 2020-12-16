@@ -124,8 +124,8 @@ export default defineComponent({
   &.info {
     background-color: var(--c-info);
 
-    &:hover  { background-color: var(--c-info); }
-    &:active { background-color: var(--c-info-dark); }
+    &:hover  { background-color: var(--c-info-dark); }
+    &:active { background-color: var(--c-info-darker); }
   }
 
   &.success {
