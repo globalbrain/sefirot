@@ -33,10 +33,17 @@ import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
 import SIconClock from '@@/lib/components/icons/SIconClock.vue'
+import SIconDollarSign from '@@/lib/components/icons/SIconDollarSign.vue'
 import SIconDownload from '@@/lib/components/icons/SIconDownload.vue'
 import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
+import SIconEdit2 from '@@/lib/components/icons/SIconEdit2.vue'
+import SIconEdit3 from '@@/lib/components/icons/SIconEdit3.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
+import SIconFlag from '@@/lib/components/icons/SIconFlag.vue'
+import SIconGitBranch from '@@/lib/components/icons/SIconGitBranch.vue'
+import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
+import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
@@ -45,10 +52,15 @@ import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
 import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
+import SIconSettings from '@@/lib/components/icons/SIconSettings.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
+import SIconTrello from '@@/lib/components/icons/SIconTrello.vue'
 import SIconUser from '@@/lib/components/icons/SIconUser.vue'
 import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
+import SIconX from '@@/lib/components/icons/SIconX.vue'
+import SIconXCircle from '@@/lib/components/icons/SIconXCircle.vue'
+import SIconXSquare from '@@/lib/components/icons/SIconXSquare.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
 export default defineComponent({
@@ -74,10 +86,17 @@ export default defineComponent({
       { component: SIconChevronRight, name: 'ChevronRight' },
       { component: SIconChevronUp, name: 'ChevronUp' },
       { component: SIconClock, name: 'Clock' },
+      { component: SIconDollarSign, name: 'DollarSign' },
       { component: SIconDownload, name: 'Download' },
       { component: SIconDownloadCloud, name: 'DownloadCloud' },
       { component: SIconEdit, name: 'Edit' },
+      { component: SIconEdit2, name: 'Edit2' },
+      { component: SIconEdit3, name: 'Edit3' },
       { component: SIconEye, name: 'Eye' },
+      { component: SIconFlag, name: 'Flag' },
+      { component: SIconGitBranch, name: 'GitBranch' },
+      { component: SIconGitCommit, name: 'GitCommit' },
+      { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
       { component: SIconInfo, name: 'Info' },
       { component: SIconMapPin, name: 'MapPin' },
@@ -86,10 +105,15 @@ export default defineComponent({
       { component: SIconPlusCircle, name: 'PlusCircle' },
       { component: SIconPlayCircle, name: 'PlayCircle' },
       { component: SIconSave, name: 'Save' },
+      { component: SIconSettings, name: 'Settings' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
+      { component: SIconTrello, name: 'Trello' },
       { component: SIconUser, name: 'User' },
-      { component: SIconUsers, name: 'Users' }
+      { component: SIconUsers, name: 'Users' },
+      { component: SIconX, name: 'X' },
+      { component: SIconXCircle, name: 'XCircle' },
+      { component: SIconXSquare, name: 'XSquare' }
     ]
 
     return {
