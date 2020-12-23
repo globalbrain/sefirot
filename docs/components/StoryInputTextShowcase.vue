@@ -67,7 +67,7 @@ export default defineComponent({
     })
 
     const validation = useValidation(data, {
-      name: [required('Name is required.')]
+      name: [required()]
     })
 
     return {
@@ -118,7 +118,7 @@ export default defineComponent({
     })
 
     const validation = useValidation(data, {
-      name: [required('Name is required.')]
+      name: [required()]
     })
 
     return {
