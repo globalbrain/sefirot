@@ -1,3 +1,15 @@
+# [0.17.0](https://github.com/globalbrain/sefirot/compare/v0.16.0...v0.17.0) (2020-12-23)
+
+### Bug Fixes
+
+* **button:** info mode hover style not working ([56bbdbe](https://github.com/globalbrain/sefirot/commit/56bbdbe8ebe8b4f9ebbcb4adbdee6a5c6a5e33a8))
+
+### Features
+
+* **icon:** add more icons ([ba9cc4e](https://github.com/globalbrain/sefirot/commit/ba9cc4e0c9322790106796a60e78f2f070163146))
+* **validation:** add Form composable function ([dfc4c38](https://github.com/globalbrain/sefirot/commit/dfc4c38292c3b30ee427f522dad01800dd9641a6))
+* **validation:** add default error messages ([cdb6d97](https://github.com/globalbrain/sefirot/commit/cdb6d97d5b8406c52cd125b8cc4776829f958651))
+
 # [0.16.0](https://github.com/globalbrain/sefirot/compare/v0.15.0...v0.16.0) (2020-12-16)
 
 ### Bug Fixes
