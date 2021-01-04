@@ -58,6 +58,7 @@ export default defineComponent({
   font-size: 12px;
   color: var(--c-text-dark-1);
   background-color: rgba(0, 0, 0, .9);
+  white-space: nowrap;
   transition: opacity .25s, transform .25s;
 }
 
