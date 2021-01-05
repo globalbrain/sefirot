@@ -1,3 +1,9 @@
+# [0.18.0](https://github.com/globalbrain/sefirot/compare/v0.17.0...v0.18.0) (2021-01-05)
+
+### Features
+
+* **tooltip:** add tooltip component ([87ddfdf](https://github.com/globalbrain/sefirot/commit/87ddfdf318cc3a729fb719ab46f7aafdbfabb13a))
+
 # [0.17.0](https://github.com/globalbrain/sefirot/compare/v0.16.0...v0.17.0) (2020-12-23)
 
 ### Bug Fixes
