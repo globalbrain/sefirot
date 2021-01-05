@@ -1,37 +1,33 @@
 <template>
-  <div class="STooltip">
-    <div class="content" @mouseenter="on = true" @mouseleave="on = false">
+  <component :is="tag" class="STooltip">
+    <span class="STooltip-content" @mouseenter="on = true" @mouseleave="on = false">
       <slot />
-    </div>
+    </span>
 
     <transition name="fade">
-      <div v-show="on" class="tip" :class="classes">
+      <span v-show="on" class="STooltip-tip" :class="classes">
         {{ text }}
-      </div>
+      </span>
     </transition>
-  </div>
+  </component>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from '@vue/composition-api'
+import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
+
+type Position = 'top' | 'right' | 'bottom' | 'left'
 
 export default defineComponent({
   props: {
+    tag: { type: String, default: 'span' },
     text: { type: String, required: true },
-    position: { type: String, default: 'top' }
+    position: { type: String as PropType<Position>, default: 'top' }
   },
 
   setup (props) {
     const on = ref(false)
 
-    const classes = computed(() => {
-      return {
-        top: props.position === 'top',
-        right: props.position === 'right',
-        bottom: props.position === 'bottom',
-        left: props.position === 'left'
-      }
-    })
+    const classes = computed(() => [props.position])
 
     return {
       on,
@@ -46,11 +42,11 @@ export default defineComponent({
 
 .STooltip {
   position: relative;
-  display: inline-block;
 }
 
-.tip {
+.STooltip-tip {
   position: absolute;
+  display: block;
   border-radius: 4px;
   padding: 0 12px;
   line-height: 32px;
@@ -62,35 +58,35 @@ export default defineComponent({
   transition: opacity .25s, transform .25s;
 }
 
-.tip.fade-enter,
-.tip.fade-leave-to {
+.STooltip-tip.fade-enter,
+.STooltip-tip.fade-leave-to {
   opacity: 0;
 
-  &.top    { transform: translate(-50%, 8px); }
+  &.top    { transform: translate(-50%, -100%); }
   &.right  { transform: translate(0, -50%); }
-  &.bottom { transform: translate(-50%, -8px); }
+  &.bottom { transform: translate(-50%, 100%); }
   &.left   { transform: translate(0, -50%); }
 }
 
-.tip.top {
-  top: -40px;
+.STooltip-tip.top {
+  top: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, calc(-100% - 8px));
 }
 
-.tip.right {
+.STooltip-tip.right {
   top: 50%;
   left: 100%;
   transform: translate(8px, -50%);
 }
 
-.tip.bottom {
-  bottom: -40px;
+.STooltip-tip.bottom {
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  transform: translate(-50%, calc(100% + 8px));
 }
 
-.tip.left {
+.STooltip-tip.left {
   top: 50%;
   right: 100%;
   transform: translate(-8px, -50%);

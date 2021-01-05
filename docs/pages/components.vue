@@ -40,7 +40,8 @@ export default defineComponent({
       { label: 'Placeholders: Image', path: '/components/placeholders-image' },
       { label: 'Responsive', path: '/components/responsive' },
       { label: 'Screens', path: '/components/screens' },
-      { label: 'Snackbars', path: '/components/snackbars' }
+      { label: 'Snackbars', path: '/components/snackbars' },
+      { label: 'Tooltips', path: '/components/tooltips' }
     ]
 
     return {
