@@ -28,12 +28,12 @@ export default defineComponent({
     SButton
   },
 
-  setup () {
+  setup() {
     const store = useStore()
 
     let interval: any = null
 
-    function openDialog01 () {
+    function openDialog01() {
       store.dispatch('dialog/open', {
         title: 'The dialog title.',
         text: 'This is the dialog message.',
@@ -44,7 +44,7 @@ export default defineComponent({
       })
     }
 
-    function openDialog02 () {
+    function openDialog02() {
       store.dispatch('dialog/open', {
         type: 'loading'
       })
@@ -52,7 +52,7 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog03 () {
+    function openDialog03() {
       store.dispatch('dialog/open', {
         type: 'loading',
         title: 'The dialog title.',
@@ -62,7 +62,7 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog04 () {
+    function openDialog04() {
       let now = 0
 
       store.dispatch('dialog/open', {
@@ -88,7 +88,7 @@ export default defineComponent({
       }, 250)
     }
 
-    function close () {
+    function close() {
       store.dispatch('modal/close')
     }
 

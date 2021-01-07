@@ -26,7 +26,7 @@ export default defineComponent({
     SAlert
   },
 
-  setup () {
+  setup() {
     const store = useStore()
 
     const el = ref<any>(null)
@@ -43,23 +43,23 @@ export default defineComponent({
       oldValue === null && open()
     })
 
-    function open (): void {
+    function open(): void {
       show.value = true
       lock()
     }
 
-    function close (): void {
+    function close(): void {
       setTimeout(() => {
         show.value = false
         release()
       }, 250)
     }
 
-    function lock (): void {
+    function lock(): void {
       el.value && disableBodyScroll(el.value, { reserveScrollBarGap: true })
     }
 
-    function release (): void {
+    function release(): void {
       el.value && clearAllBodyScrollLocks()
     }
 
@@ -70,7 +70,7 @@ export default defineComponent({
   },
 
   watch: {
-    $route () {
+    $route() {
       this.$store.dispatch('modal/close')
     }
   }

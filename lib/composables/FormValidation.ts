@@ -26,7 +26,7 @@ export interface Validators {
 
 export type Error = [string, string]
 
-export function useFormValidation (data: Data, rules: Rules, rootData?: Data): Validation {
+export function useFormValidation(data: Data, rules: Rules, rootData?: Data): Validation {
   const validation = {} as Validation
 
   setValidations(validation, data, rules, rootData ?? data)
@@ -36,7 +36,7 @@ export function useFormValidation (data: Data, rules: Rules, rootData?: Data): V
   return validation
 }
 
-function setValidations (validation: Validation, data: Data, rules: Rules, rootData: Data): void {
+function setValidations(validation: Validation, data: Data, rules: Rules, rootData: Data): void {
   for (const name in rules) {
     const validatorsOrRules = rules[name]
 
@@ -46,20 +46,20 @@ function setValidations (validation: Validation, data: Data, rules: Rules, rootD
   }
 }
 
-function createValidation (name: string, data: Data, rules: Rule[], rootData: Data): Validation {
+function createValidation(name: string, data: Data, rules: Rule[], rootData: Data): Validation {
   const isDirty = ref(false)
   const isValid = computed(() => errors.value.length === 0)
   const errors = computed(() => getErrors(name, data, rules, rootData))
 
-  function touch (): void {
+  function touch(): void {
     isDirty.value = true
   }
 
-  function reset (): void {
+  function reset(): void {
     isDirty.value = false
   }
 
-  function validate (): boolean {
+  function validate(): boolean {
     touch()
     return isValid.value
   }
@@ -75,7 +75,7 @@ function createValidation (name: string, data: Data, rules: Rule[], rootData: Da
   }
 }
 
-function setupValidation (validation: Validation): void {
+function setupValidation(validation: Validation): void {
   const isDirty = computed(() => {
     return Object.keys(validation).every((field) => {
       const v = validation[field]
@@ -93,11 +93,11 @@ function setupValidation (validation: Validation): void {
     }, [])
   })
 
-  function touch (): void {
+  function touch(): void {
     callAll(validation, 'touch')
   }
 
-  function reset (): void {
+  function reset(): void {
     callAll(validation, 'reset')
   }
 
@@ -114,7 +114,7 @@ function setupValidation (validation: Validation): void {
   validation.$validate = validate
 }
 
-function getErrors (name: string, data: Data, rules: Rule[], rootData: Data): Error[] {
+function getErrors(name: string, data: Data, rules: Rule[], rootData: Data): Error[] {
   return rules.reduce<Error[]>((errors, rule) => {
     const value = data[name]
 
@@ -130,13 +130,13 @@ function getErrors (name: string, data: Data, rules: Rule[], rootData: Data): Er
   }, [])
 }
 
-function callAll (validation: Validation, method: 'touch' | 'reset'): void {
+function callAll(validation: Validation, method: 'touch' | 'reset'): void {
   for (const field in validation) {
     const v = validation[field]
     isValidation(v) && v[`$${method}`]()
   }
 }
 
-function isValidation (obj: any): obj is Validation {
+function isValidation(obj: any): obj is Validation {
   return obj !== null && typeof obj === 'object' && !Array.isArray(obj) && obj.$isValidation
 }

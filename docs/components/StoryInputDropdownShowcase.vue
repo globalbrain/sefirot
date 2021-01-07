@@ -40,7 +40,7 @@ export default defineComponent({
     SInputDropdown
   },
 
-  setup () {
+  setup() {
     const value = ref([])
 
     const search = useSearch({

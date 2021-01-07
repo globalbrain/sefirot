@@ -61,7 +61,7 @@ export default defineComponent({
     SButton
   },
 
-  setup () {
+  setup() {
     return {
       SIconImage,
       SIconSearch,

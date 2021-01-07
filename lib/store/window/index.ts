@@ -6,11 +6,11 @@ interface PayloadOpen {
 }
 
 export const actions: ActionTree<any, RootState> = {
-  open (context: ActionContext<any, RootState>, { name }: PayloadOpen): void {
+  open(context: ActionContext<any, RootState>, { name }: PayloadOpen): void {
     context.dispatch('modal/open', { name }, { root: true })
   },
 
-  close (context: ActionContext<any, RootState>): void {
+  close(context: ActionContext<any, RootState>): void {
     context.dispatch('modal/close', null, { root: true })
   }
 }

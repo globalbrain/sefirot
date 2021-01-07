@@ -44,7 +44,7 @@ export default defineComponent({
     SModalBase
   },
 
-  setup () {
+  setup() {
     const store = useStore()
 
     const data = computed(() => store.state.modal.data)
@@ -59,7 +59,7 @@ export default defineComponent({
     const isTypeProgress = computed(() => data.value.type === 'progress')
     const isLoadOnly = computed(() => isTypeLoading.value && !data.value.title && !data.value.text)
 
-    function getActionType (value?: string): string {
+    function getActionType(value?: string): string {
       return value !== 'mute' ? 'text' : 'mute'
     }
 

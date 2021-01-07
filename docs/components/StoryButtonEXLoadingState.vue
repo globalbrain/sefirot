@@ -49,7 +49,7 @@ export default defineComponent({
     SButton
   },
 
-  setup () {
+  setup() {
     const state = reactive({
       load1: false,
       load2: false,
@@ -58,7 +58,7 @@ export default defineComponent({
       load5: false
     })
 
-    function load (target: string): void {
+    function load(target: string): void {
       (state as any)[target] = true
 
       setTimeout(() => { (state as any)[target] = false }, 5000)

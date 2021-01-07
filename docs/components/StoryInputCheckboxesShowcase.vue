@@ -30,7 +30,7 @@ export default {
     SInputCheckboxes
   },
 
-  data () {
+  data() {
     return {
       form: {
         input: []

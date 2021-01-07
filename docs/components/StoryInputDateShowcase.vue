@@ -59,7 +59,7 @@ export default defineComponent({
     SInputDate
   },
 
-  setup () {
+  setup() {
     const { data, validation } = useForm({
       data: {
         birthday: null

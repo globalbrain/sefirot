@@ -51,13 +51,13 @@ export default defineComponent({
     SButton
   },
 
-  setup () {
+  setup() {
     return {
       iconGitHub: IconGitHub
     }
   },
 
-  head () {
+  head() {
     return {
       title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
     }

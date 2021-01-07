@@ -25,7 +25,7 @@ export default defineComponent({
     actions: { type: Array as PropType<Action[]>, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const classes = computed(() => [props.size])
 
     return {

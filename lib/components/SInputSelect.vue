@@ -81,7 +81,7 @@ export default defineComponent({
     value: { type: [String, Number, Boolean], default: null }
   },
 
-  setup (props, context) {
+  setup(props, context) {
     const classes = computed(() => ({
       medium: props.size === 'medium',
       mini: props.size === 'mini',
@@ -93,11 +93,11 @@ export default defineComponent({
       return props.value === undefined || props.value === null || props.value === ''
     })
 
-    function isSelectedOption (option: Option): boolean {
+    function isSelectedOption(option: Option): boolean {
       return option.value === props.value
     }
 
-    function emitChange (e: Event): void {
+    function emitChange(e: Event): void {
       props.validation && props.validation.$touch()
 
       const option = JSON.parse((e.target as HTMLInputElement).value)

@@ -30,7 +30,7 @@ export default {
     SInputSwitches
   },
 
-  data () {
+  data() {
     return {
       form: {
         input: [2]

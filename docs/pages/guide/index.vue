@@ -6,11 +6,11 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  middleware ({ redirect }) {
+  middleware({ redirect }) {
     return redirect('/guide/getting-started')
   },
 
-  head () {
+  head() {
     return {
       title: 'Guide'
     }

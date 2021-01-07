@@ -35,7 +35,7 @@ export default defineComponent({
     SInputText
   },
 
-  setup () {
+  setup() {
     const text = ref('Initial value')
 
     return {

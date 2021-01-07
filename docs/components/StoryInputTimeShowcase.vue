@@ -40,7 +40,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const { data, validation } = useForm({
       data: {
         time: null

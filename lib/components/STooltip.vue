@@ -24,7 +24,7 @@ export default defineComponent({
     position: { type: String as PropType<Position>, default: 'top' }
   },
 
-  setup (props) {
+  setup(props) {
     const on = ref(false)
 
     const classes = computed(() => [props.position])

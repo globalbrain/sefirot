@@ -19,7 +19,7 @@ export default defineComponent({
     SidebarNavigation
   },
 
-  setup () {
+  setup() {
     const contents: Content[] = [
       { label: 'Buttons', path: '/components/buttons' },
       { label: 'Grids', path: '/components/grids' },

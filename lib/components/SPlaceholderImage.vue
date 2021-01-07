@@ -24,14 +24,14 @@ export default {
     delay: { type: Number, default: 0 }
   },
 
-  data () {
+  data() {
     return {
       loaded: false
     }
   },
 
   computed: {
-    styles () {
+    styles() {
       return {
         paddingBottom: `calc((${this.height} / ${this.width}) * 100%)`
       }
@@ -39,7 +39,7 @@ export default {
   },
 
   methods: {
-    load () {
+    load() {
       setTimeout(() => {
         this.loaded = true
 

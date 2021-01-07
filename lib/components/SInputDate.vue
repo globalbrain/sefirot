@@ -52,12 +52,12 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup (props, context) {
-    function emitInput (date: Date | null) {
+  setup(props, context) {
+    function emitInput(date: Date | null) {
       context.emit('input', date)
     }
 
-    function emitBlur (e: InputEvent) {
+    function emitBlur(e: InputEvent) {
       setTimeout(() => {
         props.validation && props.validation.$touch()
         context.emit('blur', (e.target as HTMLInputElement).value)

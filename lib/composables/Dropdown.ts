@@ -52,7 +52,7 @@ export interface UseDropdownSearchOptions {
   missing: string
 }
 
-export function useDropdown (dropdown: UseDropdownOptions): Dropdown {
+export function useDropdown(dropdown: UseDropdownOptions): Dropdown {
   const title = dropdown.title
   const search = dropdown.search && useSearch(dropdown.search)
   const closeOnClick = dropdown.closeOnClick ?? false
@@ -70,12 +70,12 @@ export function useDropdown (dropdown: UseDropdownOptions): Dropdown {
   }
 }
 
-export function useSearch (search: UseDropdownSearchOptions): Search {
+export function useSearch(search: UseDropdownSearchOptions): Search {
   const placeholder = search.placeholder
   const missing = search.missing
   const value = ref('')
 
-  function onInput (text: string): void {
+  function onInput(text: string): void {
     value.value = text
   }
 
@@ -87,7 +87,7 @@ export function useSearch (search: UseDropdownSearchOptions): Search {
   }
 }
 
-function useItems (items: Item[], search?: Search): ComputedRef<Item[]> {
+function useItems(items: Item[], search?: Search): ComputedRef<Item[]> {
   const fuse = createFuse(items, search)
 
   return computed(() => {
@@ -97,16 +97,16 @@ function useItems (items: Item[], search?: Search): ComputedRef<Item[]> {
   })
 }
 
-function createFuse <T extends Item> (items: T[], search?: Search): Fuse<T> | null {
+function createFuse <T extends Item>(items: T[], search?: Search): Fuse<T> | null {
   return search
     ? new Fuse(items, { keys: ['text', 'name'], threshold: 0.3 })
     : null
 }
 
-export function useTextItem (item: Omit<TextItem, 'type'>): TextItem {
+export function useTextItem(item: Omit<TextItem, 'type'>): TextItem {
   return { type: 'text', ...item }
 }
 
-export function useUserItem (item: Omit<UserItem, 'type'>): UserItem {
+export function useUserItem(item: Omit<UserItem, 'type'>): UserItem {
   return { type: 'user', ...item }
 }

@@ -35,14 +35,14 @@ export default defineComponent({
     TheHeaderNavBar
   },
 
-  setup () {
+  setup() {
     const isOpen = ref(false)
 
-    function toggle (): void {
+    function toggle(): void {
       isOpen.value = !isOpen.value
     }
 
-    function close (): void {
+    function close(): void {
       setTimeout(() => { isOpen.value = false }, 150)
     }
 

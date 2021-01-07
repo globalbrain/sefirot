@@ -37,8 +37,8 @@ export default defineComponent({
     actions: { type: Array as PropType<Action[]>, default: null }
   },
 
-  setup (props, context) {
-    function close (): void {
+  setup(props, context) {
+    function close(): void {
       context.root.$store.dispatch('snackbars/pop', props.id)
     }
 

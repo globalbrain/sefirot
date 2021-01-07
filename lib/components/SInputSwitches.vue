@@ -45,11 +45,11 @@ export default {
   },
 
   methods: {
-    isChecked (value) {
+    isChecked(value) {
       return this.value.includes(value)
     },
 
-    handleChange (value) {
+    handleChange(value) {
       const difference = this.value
         .filter(v => v !== value)
         .concat(this.value.includes(value) ? [] : [value])

@@ -18,14 +18,14 @@ export default defineComponent({
     item: { type: [Object, Array] as PropType<Item | Item[]>, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const isItemArray = computed(() => isArray(props.item))
 
     const arrayItem = computed(() => {
       return isArray(props.item) ? props.item : [props.item]
     })
 
-    function component (item: Item) {
+    function component(item: Item) {
       if (item.type === 'text') {
         return isItemArray.value ? SInputDropdownItemTextTag : SInputDropdownItemText
       }

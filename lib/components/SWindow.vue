@@ -50,13 +50,13 @@ export default {
   },
 
   computed: {
-    showHeader () {
+    showHeader() {
       return !!this.title
     }
   },
 
   methods: {
-    close () {
+    close() {
       this.$store.dispatch('window/close')
     }
   }

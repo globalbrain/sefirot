@@ -71,7 +71,7 @@ export default defineComponent({
     value: { type: [String, Number, Boolean, Array, Object] as PropType<any>, default: null }
   },
 
-  setup (props, { emit }) {
+  setup(props, { emit }) {
     const { container, isOpen, open } = useMenu()
 
     const classes = computed(() => [props.size, props.mode])
@@ -95,7 +95,7 @@ export default defineComponent({
         : !isNullish(props.value) && props.value !== ''
     })
 
-    async function handleOpen (): Promise<void> {
+    async function handleOpen(): Promise<void> {
       open()
 
       await nextTick()
@@ -105,11 +105,11 @@ export default defineComponent({
       el && (el as any).focus()
     }
 
-    function handleCallback (item: Item): void {
+    function handleCallback(item: Item): void {
       isArray(props.value) ? handleArray(item.value) : handlePrimitive(item.value)
     }
 
-    function handlePrimitive (value: any): void {
+    function handlePrimitive(value: any): void {
       if (!isEqual(props.value, value)) {
         emit('change', value)
 
@@ -121,7 +121,7 @@ export default defineComponent({
       }
     }
 
-    function handleArray (value: any): void {
+    function handleArray(value: any): void {
       const difference = getDifference(value)
 
       if (!props.nullable && difference.length === 0) {
@@ -131,7 +131,7 @@ export default defineComponent({
       emit('change', difference)
     }
 
-    function getDifference (value: any): any[] {
+    function getDifference(value: any): any[] {
       return (props.value as any)
         .filter((v: any) => !isEqual(v, value))
         .concat((props.value as any).includes(value) ? [] : [value])

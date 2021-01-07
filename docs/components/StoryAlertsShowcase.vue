@@ -27,7 +27,7 @@ export default {
   },
 
   methods: {
-    openAlert01 () {
+    openAlert01() {
       this.$store.dispatch('alert/open', {
         title: 'The alert title.',
         text: 'This is the alert message.',
@@ -38,7 +38,7 @@ export default {
       })
     },
 
-    openAlert02 () {
+    openAlert02() {
       this.$store.dispatch('alert/open', {
         type: 'success',
         title: 'The alert title.',
@@ -50,7 +50,7 @@ export default {
       })
     },
 
-    openAlert03 () {
+    openAlert03() {
       this.$store.dispatch('alert/open', {
         type: 'warning',
         title: 'The alert title.',
@@ -62,7 +62,7 @@ export default {
       })
     },
 
-    openAlert04 () {
+    openAlert04() {
       this.$store.dispatch('alert/open', {
         type: 'danger',
         title: 'The alert title.',
@@ -74,7 +74,7 @@ export default {
       })
     },
 
-    openAlert05 () {
+    openAlert05() {
       this.$store.dispatch('alert/open', {
         type: 'error',
         title: 'The alert title.',
@@ -86,7 +86,7 @@ export default {
       })
     },
 
-    close () {
+    close() {
       this.$store.dispatch('alert/close')
     }
   }

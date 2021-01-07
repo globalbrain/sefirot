@@ -17,7 +17,7 @@ export default defineComponent({
     name: { type: String, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const classes = computed(() => [props.size])
 
     const initial = computed(() => props.name.charAt(0).toUpperCase())

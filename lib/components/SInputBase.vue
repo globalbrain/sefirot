@@ -26,7 +26,7 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup (props) {
+  setup(props) {
     const hasError = computed(() => {
       if (!props.validation) {
         return false

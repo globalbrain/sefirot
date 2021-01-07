@@ -11,7 +11,7 @@ export interface PayloadOpen {
   data?: Record<string, any>
 }
 
-export function state (): State {
+export function state(): State {
   return {
     name: null,
     data: {}
@@ -19,11 +19,11 @@ export function state (): State {
 }
 
 export const actions: ActionTree<State, RootState> = {
-  open (context: ActionContext<State, RootState>, { name, data }: PayloadOpen): void {
+  open(context: ActionContext<State, RootState>, { name, data }: PayloadOpen): void {
     context.commit('set', { name, data })
   },
 
-  close (context: ActionContext<State, RootState>): void {
+  close(context: ActionContext<State, RootState>): void {
     context.commit('set', {
       name: null,
       data: {}
@@ -32,7 +32,7 @@ export const actions: ActionTree<State, RootState> = {
 }
 
 export const mutations: MutationTree<State> = {
-  set (state: State, { name, data = {} }: PayloadOpen): void {
+  set(state: State, { name, data = {} }: PayloadOpen): void {
     state.name = name
     state.data = data
   }

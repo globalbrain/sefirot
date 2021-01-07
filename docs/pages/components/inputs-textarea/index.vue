@@ -35,7 +35,7 @@ export default {
 
   scrollToTop: true,
 
-  data () {
+  data() {
     return {
       props: [
         {

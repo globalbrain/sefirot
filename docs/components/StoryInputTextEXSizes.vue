@@ -49,7 +49,7 @@ export default defineComponent({
     SInputText
   },
 
-  setup () {
+  setup() {
     const textMedium = ref('')
     const textMini = ref('')
 

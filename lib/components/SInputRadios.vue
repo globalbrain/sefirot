@@ -46,11 +46,11 @@ export default {
   },
 
   methods: {
-    isChecked (value) {
+    isChecked(value) {
       return value === this.value
     },
 
-    handleChange (value) {
+    handleChange(value) {
       if (value !== this.value) {
         this.$emit('change', value)
 

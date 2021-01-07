@@ -32,7 +32,7 @@ export default {
     SInputTextarea
   },
 
-  data () {
+  data() {
     return {
       form: {
         input: ''

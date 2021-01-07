@@ -31,14 +31,14 @@ export default defineComponent({
     SButton
   },
 
-  setup (_props, context) {
-    function openNormalSnackbar (): void {
+  setup(_props, context) {
+    function openNormalSnackbar(): void {
       context.root.$store.dispatch('snackbars/push', {
         text: 'This is the snackbar message.'
       })
     }
 
-    function openWithActions (): void {
+    function openWithActions(): void {
       context.root.$store.dispatch('snackbars/push', {
         text: 'This is the snackbar message with actions.',
         actions: [

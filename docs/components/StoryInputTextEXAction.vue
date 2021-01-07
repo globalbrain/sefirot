@@ -33,7 +33,7 @@ export default defineComponent({
     SInputText
   },
 
-  setup () {
+  setup() {
     const action = {
       type: 'select',
       icon: SIconSliders,

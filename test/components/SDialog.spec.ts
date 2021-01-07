@@ -82,7 +82,7 @@ describe('components/SDialog', () => {
   })
 })
 
-function setup () {
+function setup() {
   const localVue = createLocalVue()
 
   localVue.use(Vuex)

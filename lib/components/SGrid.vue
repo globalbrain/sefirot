@@ -71,7 +71,7 @@ export default defineComponent({
     loading: { type: Boolean, default: false }
   },
 
-  setup (props, context) {
+  setup(props, context) {
     const actionComponent = computed(() => {
       if (typeof props.actions === 'string') {
         return SGridActionLink
@@ -84,7 +84,7 @@ export default defineComponent({
       return SGridActionSingle
     })
 
-    function handleClick (record: object): void {
+    function handleClick(record: object): void {
       props.clickable && context.emit('click', record)
     }
 

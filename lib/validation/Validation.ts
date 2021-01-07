@@ -21,14 +21,14 @@ export type InitData = any
 export type Error = [string, string]
 export type MaybeValidation = any | boolean | Ref<boolean> | Ref<readonly Error[]> | Function | Validation
 
-export function createValidation (data: Data, rules: Rules, rootData?: Data): Validation {
+export function createValidation(data: Data, rules: Rules, rootData?: Data): Validation {
   const validation = createInitialValidation()
   setNestedValidations(validation, data, rootData ?? data, rules)
   setValidation(validation)
   return validation
 }
 
-function createInitialValidation (): Validation {
+function createInitialValidation(): Validation {
   return {
     _isValidation: true,
     $data: ref(null),
@@ -43,7 +43,7 @@ function createInitialValidation (): Validation {
   }
 }
 
-function createNestedValidation (name: string, data: Data, rootData: Data, validators: Rule[]): Validation {
+function createNestedValidation(name: string, data: Data, rootData: Data, validators: Rule[]): Validation {
   const initData = data[name]
   const dataRef = toRefs(data)[name]
 
@@ -94,7 +94,7 @@ function createNestedValidation (name: string, data: Data, rootData: Data, valid
   }
 }
 
-function setValidation (validation: Validation): void {
+function setValidation(validation: Validation): void {
   const isDirty = computed(() => {
     return Object.keys(validation).every((field) => {
       const v = validation[field]
@@ -129,7 +129,7 @@ function setValidation (validation: Validation): void {
   validation.$validate = validate
 }
 
-function setNestedValidations (validation: Validation, data: Data, rootData: Data, rules: Rules): void {
+function setNestedValidations(validation: Validation, data: Data, rootData: Data, rules: Rules): void {
   for (const name in rules) {
     const validators = rules[name]
 
@@ -139,13 +139,13 @@ function setNestedValidations (validation: Validation, data: Data, rootData: Dat
   }
 }
 
-function callAll (validation: Validation, method: 'touch' | 'reset' | 'init'): void {
+function callAll(validation: Validation, method: 'touch' | 'reset' | 'init'): void {
   for (const field in validation) {
     const v = validation[field]
     isValidation(v) && v[`$${method}`]()
   }
 }
 
-function isValidation (value: MaybeValidation): value is Validation {
+function isValidation(value: MaybeValidation): value is Validation {
   return value !== null && typeof value === 'object' && !Array.isArray(value) && value._isValidation
 }

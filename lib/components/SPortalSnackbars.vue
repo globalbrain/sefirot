@@ -23,7 +23,7 @@ export default defineComponent({
     SSnackbar
   },
 
-  setup (_props, context) {
+  setup(_props, context) {
     const items = computed(() => context.root.$store.state.snackbars.items)
     const hasItem = computed(() => items.value.length > 0)
 

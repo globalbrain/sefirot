@@ -30,7 +30,7 @@ export default defineComponent({
     title: { type: String, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const classes = computed(() => [
       props.size, { collapsed: props.isCollapsed }
     ])

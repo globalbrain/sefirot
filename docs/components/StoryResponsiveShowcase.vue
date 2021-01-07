@@ -25,7 +25,7 @@ export default defineComponent({
     SResponsive
   },
 
-  setup () {
+  setup() {
     const bp: BP = {
       sm: ({ w }) => w >= 320,
       md: ({ w }) => w >= 480,

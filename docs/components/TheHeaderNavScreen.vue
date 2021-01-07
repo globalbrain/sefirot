@@ -24,7 +24,7 @@ export default defineComponent({
     open: { type: Boolean, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const active = ref(false)
     const on = ref(false)
 
@@ -39,12 +39,12 @@ export default defineComponent({
       value ? show() : hide()
     })
 
-    function show (): void {
+    function show(): void {
       active.value = true
       setTimeout(() => { on.value = true }, 50)
     }
 
-    function hide (): void {
+    function hide(): void {
       on.value = false
       setTimeout(() => { active.value = false }, 50)
     }

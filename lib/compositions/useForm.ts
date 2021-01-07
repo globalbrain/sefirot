@@ -6,7 +6,7 @@ export interface FormDefinition {
   rules: Rules
 }
 
-export default function useForm (definition: FormDefinition) {
+export default function useForm(definition: FormDefinition) {
   const data = reactive(definition.data)
   const validation = markRaw(createValidation(data, definition.rules))
 

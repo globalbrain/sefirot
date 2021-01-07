@@ -20,13 +20,13 @@ export default {
   },
 
   computed: {
-    styles () {
+    styles() {
       return {
         transform: `scaleX(${this.progress})`
       }
     },
 
-    progress () {
+    progress() {
       const value = this.now / this.max
 
       const pow = 10 ** 4
@@ -34,7 +34,7 @@ export default {
       return Math.round(value * pow) / pow
     },
 
-    progressForNumber () {
+    progressForNumber() {
       const progress = this.progress * 100
 
       return progress.toFixed(2)

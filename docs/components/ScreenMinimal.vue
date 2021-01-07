@@ -19,7 +19,7 @@ export default {
   },
 
   methods: {
-    close () {
+    close() {
       this.$store.dispatch('screen/close')
     }
   }

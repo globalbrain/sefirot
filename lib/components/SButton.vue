@@ -42,7 +42,7 @@ export default defineComponent({
     loading: { type: Boolean, default: false }
   },
 
-  setup (props) {
+  setup(props) {
     const classes = computed(() => {
       return {
         primary: props.type === 'primary',

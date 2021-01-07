@@ -21,18 +21,18 @@ export interface Action {
 }
 
 export const actions: ActionTree<any, RootState> = {
-  open (context: ActionContext<any, RootState>, { type = 'confirm', title, text, progress, actions = [] }: PayloadOpen): void {
+  open(context: ActionContext<any, RootState>, { type = 'confirm', title, text, progress, actions = [] }: PayloadOpen): void {
     context.dispatch('modal/open', {
       name: 'dialog',
       data: { type, title, text, progress, actions }
     }, { root: true })
   },
 
-  update (context: ActionContext<any, RootState>, data): void {
+  update(context: ActionContext<any, RootState>, data): void {
     context.dispatch('modal/update', data, { root: true })
   },
 
-  close (context: ActionContext<any, RootState>): void {
+  close(context: ActionContext<any, RootState>): void {
     context.dispatch('modal/close', null, { root: true })
   }
 }

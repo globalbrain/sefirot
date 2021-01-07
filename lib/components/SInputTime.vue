@@ -81,7 +81,7 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup (props, context) {
+  setup(props, context) {
     const input = ref<HTMLInputElement | null>(null)
 
     const on = ref(false)
@@ -100,15 +100,15 @@ export default defineComponent({
       window.removeEventListener('click', closeSelector)
     })
 
-    function openSelector (): void {
+    function openSelector(): void {
       on.value = true
     }
 
-    function closeSelector (): void {
+    function closeSelector(): void {
       on.value = false
     }
 
-    function handleBlur (e: Event): void {
+    function handleBlur(e: Event): void {
       let value: string | null = (e.target as HTMLInputElement).value
 
       if (!value) {
@@ -121,15 +121,15 @@ export default defineComponent({
       updateInput(value ?? '')
     }
 
-    function updateInput (value: string): void {
+    function updateInput(value: string): void {
       (input.value as HTMLInputElement).value = value
     }
 
-    function setHour (hour: string): void {
+    function setHour(hour: string): void {
       context.emit('change', [hour, mValue.value].join(':'))
     }
 
-    function setMin (minute: string): void {
+    function setMin(minute: string): void {
       context.emit('change', [hValue.value, minute].join(':'))
     }
 

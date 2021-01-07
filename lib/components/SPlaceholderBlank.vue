@@ -28,7 +28,7 @@ export default {
   },
 
   computed: {
-    classes () {
+    classes() {
       return {
         loaded: this.loaded,
         left: this.loaderPosition === 'left',

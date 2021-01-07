@@ -37,11 +37,11 @@ export default {
   },
 
   computed: {
-    data () {
+    data() {
       return this.$store.state.modal.data
     },
 
-    classes () {
+    classes() {
       return {
         info: this.data.type === 'info',
         success: this.data.type === 'success',
@@ -51,7 +51,7 @@ export default {
       }
     },
 
-    icon () {
+    icon() {
       if (this.data.type === 'success') {
         return SIconCheckCircleThin
       }
@@ -73,7 +73,7 @@ export default {
   },
 
   methods: {
-    getActionType (value) {
+    getActionType(value) {
       if (value === 'mute') {
         return 'mute'
       }

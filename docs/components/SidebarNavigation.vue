@@ -45,25 +45,25 @@ export default defineComponent({
     contents: { type: Array as PropType<Content[]>, required: true }
   },
 
-  setup () {
+  setup() {
     const show = ref(false)
     const on = ref(false)
 
-    function toggle (): void {
+    function toggle(): void {
       show.value ? close() : open()
     }
 
-    function open (): void {
+    function open(): void {
       show.value = true
       setTimeout(() => { on.value = true }, 50)
     }
 
-    function close (): void {
+    function close(): void {
       on.value = false
       setTimeout(() => { show.value = false }, 250)
     }
 
-    function delayClose (): void {
+    function delayClose(): void {
       setTimeout(close, 300)
     }
 

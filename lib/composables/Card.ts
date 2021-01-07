@@ -20,13 +20,13 @@ export interface Action {
   callback? (): void
 }
 
-export function useHeader (options: Header): Header {
+export function useHeader(options: Header): Header {
   return {
     title: options.title
   }
 }
 
-export function useFooter (options: Footer): Footer {
+export function useFooter(options: Footer): Footer {
   return {
     actions: options.actions
   }

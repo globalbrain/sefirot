@@ -21,7 +21,7 @@ export default {
   },
 
   methods: {
-    openScreen () {
+    openScreen() {
       this.$store.dispatch('screen/open', {
         name: 'story-screens-s-screen-minimal'
       })

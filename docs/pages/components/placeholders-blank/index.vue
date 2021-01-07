@@ -28,13 +28,13 @@ export default {
     SPlaceholderBlank
   },
 
-  data () {
+  data() {
     return {
       loaded: false
     }
   },
 
-  mounted () {
+  mounted() {
     setTimeout(() => { this.loaded = true }, 3000)
   }
 }

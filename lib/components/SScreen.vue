@@ -28,11 +28,11 @@ export default {
   },
 
   computed: {
-    screenName () {
+    screenName() {
       return this.$store.state.screen.name
     },
 
-    show () {
+    show() {
       return this.name === this.screenName
     }
   }

@@ -18,13 +18,13 @@ export default defineComponent({
     closable: { type: Boolean, default: true }
   },
 
-  setup (props) {
+  setup(props) {
     const store = useStore()
 
     const id = computed(() => store.state.modal.id)
     const show = computed(() => props.name === store.state.modal.name)
 
-    function close (): void {
+    function close(): void {
       props.closable && store.dispatch('modal/close')
     }
 

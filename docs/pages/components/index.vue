@@ -6,7 +6,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  middleware ({ redirect }) {
+  middleware({ redirect }) {
     return redirect('/components/buttons')
   },
 

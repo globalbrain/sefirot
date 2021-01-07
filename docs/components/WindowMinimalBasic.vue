@@ -17,7 +17,7 @@ export default {
     SWindow
   },
 
-  data () {
+  data() {
     return {
       actions: [
         { type: 'mute', label: 'DISMISS', callback: this.close },
@@ -27,7 +27,7 @@ export default {
   },
 
   methods: {
-    close () {
+    close() {
       this.$store.dispatch('window/close')
     }
   }

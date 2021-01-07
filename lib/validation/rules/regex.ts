@@ -1,7 +1,7 @@
 import { regex as baseRegex } from '../validators'
 import { Rule } from './'
 
-export default function required (regExp: RegExp, message?: string): Rule {
+export default function required(regExp: RegExp, message?: string): Rule {
   return {
     name: 'regex',
     message: message ?? 'The value is invalid.',

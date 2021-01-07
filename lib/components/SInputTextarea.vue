@@ -44,17 +44,17 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup (props, context) {
+  setup(props, context) {
     const classes = computed(() => ({
       default: props.mode === 'default',
       clear: props.mode === 'clear'
     }))
 
-    function emitInput (e: InputEvent): void {
+    function emitInput(e: InputEvent): void {
       context.emit('input', (e.target as HTMLInputElement).value)
     }
 
-    function emitBlur (e: InputEvent): void {
+    function emitBlur(e: InputEvent): void {
       props.validation && props.validation.$touch()
       context.emit('blur', (e.target as HTMLInputElement).value)
     }

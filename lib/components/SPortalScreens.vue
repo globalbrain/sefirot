@@ -7,29 +7,29 @@
 <script>
 export default {
   computed: {
-    screenName () {
+    screenName() {
       return this.$store.state.screen.name
     }
   },
 
   watch: {
-    screenName (value) {
+    screenName(value) {
       value === null ? this.closeScreen() : this.openScreen()
     },
 
-    $route () {
+    $route() {
       this.$store.dispatch('screen/close')
     }
   },
 
   methods: {
-    openScreen () {
+    openScreen() {
       document.body.style.paddingRight = `${this.scrollBarWidth()}px`
       document.body.style.top = `-${window.scrollY}px`
       document.body.style.position = 'fixed'
     },
 
-    closeScreen () {
+    closeScreen() {
       setTimeout(() => {
         const scrollY = document.body.style.top
 
@@ -41,7 +41,7 @@ export default {
       }, 300)
     },
 
-    scrollBarWidth () {
+    scrollBarWidth() {
       return window.innerWidth - document.documentElement.clientWidth
     }
   }

@@ -28,7 +28,7 @@ export default defineComponent({
     item: { type: Object as PropType<Item>, required: true }
   },
 
-  setup (props) {
+  setup(props) {
     const component = computed(() => {
       if (props.item.type === 'text') {
         return SDropdownItemText

@@ -27,19 +27,19 @@ export default {
   },
 
   methods: {
-    openWindow01 () {
+    openWindow01() {
       this.$store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal'
       })
     },
 
-    openWindow02 () {
+    openWindow02() {
       this.$store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-with-lead'
       })
     },
 
-    openWindow03 () {
+    openWindow03() {
       this.$store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-blank'
       })

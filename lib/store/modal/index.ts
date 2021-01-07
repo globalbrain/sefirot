@@ -12,7 +12,7 @@ export interface PayloadOpen {
   data?: Record<string, any>
 }
 
-export function state (): State {
+export function state(): State {
   return {
     id: 0,
     name: null,
@@ -21,31 +21,31 @@ export function state (): State {
 }
 
 export const actions: ActionTree<State, RootState> = {
-  open (context: ActionContext<State, RootState>, { name, data }: PayloadOpen): void {
+  open(context: ActionContext<State, RootState>, { name, data }: PayloadOpen): void {
     context.commit('set', { name, data })
   },
 
-  update (context: ActionContext<State, RootState>, data: Record<string, any>): void {
+  update(context: ActionContext<State, RootState>, data: Record<string, any>): void {
     context.commit('update', data)
   },
 
-  close (context: ActionContext<State, RootState>): void {
+  close(context: ActionContext<State, RootState>): void {
     context.commit('delete')
   }
 }
 
 export const mutations: MutationTree<State> = {
-  set (state: State, { name, data = {} }: PayloadOpen): void {
+  set(state: State, { name, data = {} }: PayloadOpen): void {
     state.id++
     state.name = name
     state.data = data
   },
 
-  update (state: State, data: Record<string, any>): void {
+  update(state: State, data: Record<string, any>): void {
     state.data = { ...state.data, ...data }
   },
 
-  delete (state: State): void {
+  delete(state: State): void {
     state.id = 0
     state.name = null
     state.data = {}

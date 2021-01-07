@@ -39,7 +39,7 @@ export default defineComponent({
     SGrid
   },
 
-  setup () {
+  setup() {
     const records = [
       { id: 1, name: 'John Doe', email: 'john.doe@example.com', status: 'Active' },
       { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', status: 'Active' },

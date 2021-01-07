@@ -5,7 +5,7 @@ import escapeHtml from 'escape-html'
 // required to make embedded highlighting work...
 loadLanguages(['markup', 'css', 'javascript'])
 
-function wrap (code: string, lang: string): string {
+function wrap(code: string, lang: string): string {
   if (lang === 'text') {
     code = escapeHtml(code)
   }

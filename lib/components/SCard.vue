@@ -41,7 +41,7 @@ export default defineComponent({
     footer: { type: Object as PropType<Footer>, default: null }
   },
 
-  setup (props) {
+  setup(props) {
     const isCollapsed = ref(false)
 
     const classes = computed(() => [
@@ -51,7 +51,7 @@ export default defineComponent({
       `depth${props.depth}`
     ])
 
-    function toggleCollapse (): void {
+    function toggleCollapse(): void {
       isCollapsed.value = !isCollapsed.value
     }
 

@@ -34,18 +34,18 @@ export default {
     SPlaceholderBlank
   },
 
-  data () {
+  data() {
     return {
       loaded: false
     }
   },
 
-  mounted () {
+  mounted() {
     setTimeout(() => { this.loaded = true }, 3000)
   },
 
   methods: {
-    startLoading () {
+    startLoading() {
       this.loaded = false
 
       setTimeout(() => { this.loaded = true }, 3000)

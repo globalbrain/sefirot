@@ -21,7 +21,7 @@ export default defineComponent({
     bp: { type: Object as PropType<BP>, default: () => ({}) }
   },
 
-  setup (props) {
+  setup(props) {
     const target = ref<HTMLElement | null>(null)
 
     const { el: baseEl } = useResizeObserver(target)

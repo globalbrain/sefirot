@@ -35,7 +35,7 @@ export default defineComponent({
     SInputSelect
   },
 
-  setup () {
+  setup() {
     const input = ref<number | null>(null)
 
     const options = [

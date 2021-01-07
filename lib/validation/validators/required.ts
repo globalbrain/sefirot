@@ -1,4 +1,4 @@
-export default function required (value: any): boolean {
+export default function required(value: any): boolean {
   if (Array.isArray(value)) {
     return !!value.length
   }

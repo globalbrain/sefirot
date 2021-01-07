@@ -84,7 +84,7 @@ export default defineComponent({
 
   scrollToTop: true,
 
-  setup () {
+  setup() {
     const props: Prop[] = [
       {
         name: 'label',

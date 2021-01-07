@@ -61,7 +61,7 @@ export default defineComponent({
     SInputText
   },
 
-  setup () {
+  setup() {
     const { data } = useData({
       name: ''
     })

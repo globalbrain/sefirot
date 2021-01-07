@@ -68,7 +68,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const icons = [
       { component: SIconActivity, name: 'Activity' },
       { component: SIconArrowDown, name: 'ArrowDown' },

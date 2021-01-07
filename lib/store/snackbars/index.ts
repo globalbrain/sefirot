@@ -25,14 +25,14 @@ export interface Action {
   callback: Function
 }
 
-export function state (): State {
+export function state(): State {
   return {
     items: []
   }
 }
 
 export const actions: ActionTree<State, RootState> = {
-  push (context: ActionContext<State, RootState>, payload: Snackbar): void {
+  push(context: ActionContext<State, RootState>, payload: Snackbar): void {
     const id = nextId++
 
     context.commit('push', {
@@ -44,13 +44,13 @@ export const actions: ActionTree<State, RootState> = {
     setTimeout(() => { context.commit('pop', id) }, payload.timeout ?? 10000)
   },
 
-  pop (context: ActionContext<State, RootState>, id: number): void {
+  pop(context: ActionContext<State, RootState>, id: number): void {
     context.commit('pop', id)
   }
 }
 
 export const mutations: MutationTree<State> = {
-  push (state: State, item: SnackbarWithId): void {
+  push(state: State, item: SnackbarWithId): void {
     if (state.items.length > maxItemSize) {
       state.items.shift()
     }
@@ -58,7 +58,7 @@ export const mutations: MutationTree<State> = {
     state.items.push(item)
   },
 
-  pop (state: State, id: number): void {
+  pop(state: State, id: number): void {
     state.items = state.items.filter(item => item.id !== id)
   }
 }

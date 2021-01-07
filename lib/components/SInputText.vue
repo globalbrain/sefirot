@@ -111,7 +111,7 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup (props, context) {
+  setup(props, context) {
     const inputEl = ref<HTMLElement | null>(null)
     const textEl = ref<HTMLElement | null>(null)
     const textAfterEl = ref<HTMLElement | null>(null)
@@ -138,42 +138,42 @@ export default defineComponent({
       watch(() => props.textAfter, () => setTextPadding())
     })
 
-    function focus () {
+    function focus() {
       (inputEl.value as HTMLElement).focus()
     }
 
-    function blur () {
+    function blur() {
       (inputEl.value as HTMLElement).blur()
     }
 
-    function emitInput (e: InputEvent) {
+    function emitInput(e: InputEvent) {
       context.emit('input', (e.target as HTMLInputElement).value)
     }
 
-    function emitBlur (e: InputEvent) {
+    function emitBlur(e: InputEvent) {
       props.validation && props.validation.$touch()
       context.emit('blur', (e.target as HTMLInputElement).value)
     }
 
-    function emitEnter (e: InputEvent) {
+    function emitEnter(e: InputEvent) {
       blur()
       context.emit('enter', (e.target as HTMLInputElement).value)
     }
 
-    function emitClear () {
+    function emitClear() {
       context.emit('clear')
     }
 
-    function setTextPadding (): void {
+    function setTextPadding(): void {
       textEl.value && setLeadingTextPadding()
       textAfterEl.value && setTrailingTextPadding()
     }
 
-    function setLeadingTextPadding (): void {
+    function setLeadingTextPadding(): void {
       inputStyles.paddingLeft = `${textEl.value!.offsetWidth}px`
     }
 
-    function setTrailingTextPadding (): void {
+    function setTrailingTextPadding(): void {
       inputStyles.paddingRight = `${textAfterEl.value!.offsetWidth}px`
     }
 

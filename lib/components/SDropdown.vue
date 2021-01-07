@@ -50,8 +50,8 @@ export default defineComponent({
     options: { type: Object as PropType<Dropdown>, required: true }
   },
 
-  setup (props, { emit }) {
-    function onClick (item: Item): void {
+  setup(props, { emit }) {
+    function onClick(item: Item): void {
       if (item.callback) {
         item.callback()
       } else if (props.options.callback) {

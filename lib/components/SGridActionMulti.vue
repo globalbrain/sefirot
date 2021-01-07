@@ -36,8 +36,8 @@ export default defineComponent({
     actions: { type: Array, required: true }
   },
 
-  setup (props) {
-    function actionStyles (index: number): Record<string, string> {
+  setup(props) {
+    function actionStyles(index: number): Record<string, string> {
       const size = props.actions.length
       const sec = (size - (index + 1)) * 0.1
 

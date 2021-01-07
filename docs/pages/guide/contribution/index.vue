@@ -73,7 +73,7 @@ export default defineComponent({
 
   scrollToTop: true,
 
-  setup () {
+  setup() {
     return {
       iconGitHub: IconGitHub
     }

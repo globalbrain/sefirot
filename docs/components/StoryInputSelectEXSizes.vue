@@ -53,7 +53,7 @@ export default defineComponent({
     SInputSelect
   },
 
-  setup () {
+  setup() {
     const inputMedium = ref<number | null>(null)
     const inputMini = ref<number | null>(null)
 

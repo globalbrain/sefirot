@@ -44,7 +44,7 @@ export default defineComponent({
 
   scrollToTop: true,
 
-  setup () {
+  setup() {
     const props: Prop[] = [
       {
         name: 'records',
@@ -89,7 +89,7 @@ export default defineComponent({
     }
   },
 
-  head () {
+  head() {
     return {
       title: 'Grids'
     }

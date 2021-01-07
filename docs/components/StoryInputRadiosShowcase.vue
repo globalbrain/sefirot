@@ -32,7 +32,7 @@ export default {
     SInputRadios
   },
 
-  data () {
+  data() {
     return {
       form: {
         input: 1

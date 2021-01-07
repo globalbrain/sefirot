@@ -19,7 +19,7 @@ export default defineComponent({
     SidebarNavigation
   },
 
-  setup () {
+  setup() {
     const contents: Content[] = [
       { label: 'Getting Started', path: '/guide/getting-started' },
       { label: 'Contribution', path: '/guide/contribution' }
