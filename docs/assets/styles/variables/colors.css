@@ -152,6 +152,16 @@
   --input-action-outlined-bg-hover: var(--c-gray-light-4);
   --input-action-outlined-bg-focus: var(--c-gray-light-3);
 
+  --card-bg: var(--c-white);
+  --card-bg-mute: var(--c-white-soft);
+  --card-shadow-depth-1: var(--shadow-depth-1);
+  --card-shadow-depth-2: var(--shadow-depth-2);
+  --card-shadow-depth-3: var(--shadow-depth-3);
+  --card-shadow-depth-4: var(--shadow-depth-4);
+  --card-shadow-depth-5: var(--shadow-depth-5);
+
+  --dropdown-item-hover-bg: var(--c-white-soft);
+
   --modal-content-bg: var(--c-white);
 }
 
