@@ -1,3 +1,9 @@
+# [0.19.0](https://github.com/globalbrain/sefirot/compare/v0.18.0...v0.19.0) (2021-01-07)
+
+### Features
+
+* **input-dropdown:** add dropdown input component ([9fbb802](https://github.com/globalbrain/sefirot/commit/9fbb8025658bacb503ed65cb82da30efdc0b663e))
+
 # [0.18.0](https://github.com/globalbrain/sefirot/compare/v0.17.0...v0.18.0) (2021-01-05)
 
 ### Features
