@@ -147,17 +147,25 @@ export default defineComponent({
     }
 
     function emitInput(e: InputEvent) {
-      context.emit('input', (e.target as HTMLInputElement).value)
+      context.emit('input', getValue((e.target as HTMLInputElement).value))
     }
 
     function emitBlur(e: InputEvent) {
       props.validation && props.validation.$touch()
-      context.emit('blur', (e.target as HTMLInputElement).value)
+      context.emit('blur', getValue((e.target as HTMLInputElement).value))
     }
 
     function emitEnter(e: InputEvent) {
       blur()
-      context.emit('enter', (e.target as HTMLInputElement).value)
+      context.emit('enter', getValue((e.target as HTMLInputElement).value))
+    }
+
+    function getValue(value: string): string | number {
+      if (props.type !== 'number') {
+        return value
+      }
+
+      return value === '' ? null : Number(value)
     }
 
     function emitClear() {
