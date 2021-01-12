@@ -160,7 +160,7 @@ export default defineComponent({
       context.emit('enter', getValue((e.target as HTMLInputElement).value))
     }
 
-    function getValue(value: string): string | number {
+    function getValue(value: string): string | number | null {
       if (props.type !== 'number') {
         return value
       }

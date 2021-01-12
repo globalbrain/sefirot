@@ -1,6 +1,7 @@
 <template>
   <SInputBase
     class="SInputTextarea"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
@@ -11,7 +12,6 @@
       <textarea
         :id="name"
         class="input"
-        :class="classes"
         :placeholder="placeholder"
         :value="value"
         :rows="rows"
@@ -23,9 +23,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
+
+type Size = 'medium' | 'mini'
+type Mode = 'filled' | 'outlined' | 'clear'
 
 export default defineComponent({
   components: {
@@ -33,11 +36,12 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'medium' },
+    mode: { type: String as PropType<Mode>, default: 'filled' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
-    mode: { type: String, default: 'default' },
     placeholder: { type: String, default: null },
     rows: { type: Number, default: 3 },
     value: { type: [String, Number], default: null },
@@ -45,10 +49,7 @@ export default defineComponent({
   },
 
   setup(props, context) {
-    const classes = computed(() => ({
-      default: props.mode === 'default',
-      clear: props.mode === 'clear'
-    }))
+    const classes = computed(() => [props.size, props.mode])
 
     function emitInput(e: InputEvent): void {
       context.emit('input', (e.target as HTMLInputElement).value)
@@ -67,6 +68,58 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
+.SInputTextarea.mini {
+  .input {
+    padding: 6px 12px;
+    width: 100%;
+    min-height: 80px;
+    line-height: 20px;
+    font-size: 14px;
+  }
+}
+
+.SInputTextarea.medium {
+  .input {
+    padding: 11px 16px;
+    width: 100%;
+    min-height: 96px;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
+.SInputTextarea.filled {
+  .input {
+    background-color: var(--input-filled-bg);
+
+    &:focus {
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
+    }
+  }
+}
+
+.SInputTextarea.outlined {
+  .input {
+    border-color: var(--input-outlined-border);
+
+    &:hover {
+      border-color: var(--input-focus-border);
+    }
+
+    &:focus {
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
+    }
+  }
+}
+
+.SInputTextarea.clear {
+  .input {
+    padding: 0;
+  }
+}
+
 .SInputTextarea.has-error {
   .input {
     border-color: var(--c-danger);
@@ -82,32 +135,12 @@ export default defineComponent({
   flex-grow: 1;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding: 11px 16px;
   width: 100%;
-  min-height: 96px;
-  line-height: 24px;
-  font-size: 16px;
   font-weight: 400;
-  background-color: var(--c-white-mute);
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--c-gray);
+    color: var(--input-placeholder);
   }
-
-  &:hover {
-    border-color: var(--c-gray);
-  }
-
-  &:focus {
-    border-color: var(--c-black);
-    background-color: var(--c-white);
-  }
-}
-
-.input.clear {
-  border-color: transparent;
-  padding: 0;
-  background-color: transparent;
 }
 </style>

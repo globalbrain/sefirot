@@ -39,6 +39,20 @@ export default {
     return {
       props: [
         {
+          name: 'size',
+          type: "'medium' | 'mini'",
+          required: false,
+          default: "'medium'",
+          description: 'The size of the input.'
+        },
+        {
+          name: 'mode',
+          type: "'filled' | 'outlined' | 'clear'",
+          required: false,
+          default: "'filled'",
+          description: 'The style of the input.'
+        },
+        {
           name: 'name',
           type: 'String',
           required: false,
