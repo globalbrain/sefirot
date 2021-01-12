@@ -68,7 +68,7 @@ export default defineComponent({
       const dates: TextItem[] = []
 
       for (let i = 1; i <= range; i++) {
-        dates.push(useTextOption({ value: i, text: i }))
+        dates.push(useTextOption({ value: i, text: String(i) }))
       }
 
       if (props.nullable) {
