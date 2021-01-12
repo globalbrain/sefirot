@@ -22,7 +22,7 @@
       </div>
 
       <div v-if="isOpen" class="SInputDropdown-dropdown">
-        <SDropdown :options="dropdownOptions" />
+        <SDropdown :options="dropdownOptions" @close="close" />
       </div>
     </div>
   </SInputBase>
@@ -67,20 +67,24 @@ export default defineComponent({
     search: { type: Object as PropType<Search>, default: null },
     nullable: { type: Boolean, default: true },
     options: { type: Array as PropType<Item[]>, required: true },
+    closeOnClick: { type: Boolean, default: false },
     validation: { type: Object, default: null },
     value: { type: [String, Number, Boolean, Array, Object] as PropType<any>, default: null }
   },
 
   setup(props, { emit }) {
-    const { container, isOpen, open } = useMenu()
+    const { container, isOpen, open, close } = useMenu()
 
     const classes = computed(() => [props.size, props.mode])
 
-    const dropdownOptions = useDropdown({
-      search: props.search,
-      items: props.options,
-      selected: computed(() => props.value),
-      callback: handleCallback
+    const dropdownOptions = computed(() => {
+      return useDropdown({
+        search: props.search,
+        items: props.options,
+        closeOnClick: props.closeOnClick,
+        selected: computed(() => props.value),
+        callback: handleCallback
+      })
     })
 
     const selected = computed(() => {
@@ -90,9 +94,9 @@ export default defineComponent({
     })
 
     const hasSelected = computed(() => {
-      return isArray(props.value)
-        ? (props.value as any).length > 0
-        : !isNullish(props.value) && props.value !== ''
+      return isArray(selected.value)
+        ? (selected.value as any).length > 0
+        : !isNullish(selected.value) && selected.value.value !== ''
     })
 
     async function handleOpen(): Promise<void> {
@@ -106,6 +110,8 @@ export default defineComponent({
     }
 
     function handleCallback(item: Item): void {
+      props.validation && props.validation.$touch()
+
       isArray(props.value) ? handleArray(item.value) : handlePrimitive(item.value)
     }
 
@@ -141,6 +147,7 @@ export default defineComponent({
       classes,
       container,
       isOpen,
+      close,
       dropdownOptions,
       selected,
       hasSelected,
@@ -253,5 +260,6 @@ export default defineComponent({
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
+  z-index: 10;
 }
 </style>

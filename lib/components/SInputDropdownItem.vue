@@ -1,7 +1,12 @@
 <template>
   <div class="SInputDropdownItem">
     <div v-for="(i, index) in arrayItem" :key="index" class="item">
-      <component :is="component(i)" :item="i" @remove="$emit('remove', i)" />
+      <component
+        :is="component(i)"
+        :mute="i.value === null"
+        :item="i"
+        @remove="$emit('remove', i)"
+      />
     </div>
   </div>
 </template>

@@ -1,4 +1,4 @@
-export type { Search, Item } from './Dropdown'
+export type { Search, Item, TextItem } from './Dropdown'
 export {
   useSearch,
   useTextItem as useTextOption,
