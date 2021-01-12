@@ -1,3 +1,9 @@
+## [0.20.1](https://github.com/globalbrain/sefirot/compare/v0.20.0...v0.20.1) (2021-01-12)
+
+### Bug Fixes
+
+* **input-day:** fix wrong type date options ([ff55790](https://github.com/globalbrain/sefirot/commit/ff557909bcb857513d608d29a3b20a60b3648632))
+
 # [0.20.0](https://github.com/globalbrain/sefirot/compare/v0.19.0...v0.20.0) (2021-01-12)
 
 ### Features
