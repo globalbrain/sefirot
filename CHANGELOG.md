@@ -1,3 +1,14 @@
+# [0.21.0](https://github.com/globalbrain/sefirot/compare/v0.20.1...v0.21.0) (2021-01-12)
+
+### Bug Fixes
+
+* **input-dropdown:** search not working as expected ([50f1445](https://github.com/globalbrain/sefirot/commit/50f1445f4b1793f822b8831ac05a1c944c3f5cec))
+
+### Features
+
+* **input-text:** emit value as number when the input type is number ([3ad5b98](https://github.com/globalbrain/sefirot/commit/3ad5b98b876b64a4326227472c9f2286e235ce74))
+* **input-textarea:** add size and mode options ([f9eea98](https://github.com/globalbrain/sefirot/commit/f9eea9820296b5521d034ecb8282e54783e6a77b))
+
 ## [0.20.1](https://github.com/globalbrain/sefirot/compare/v0.20.0...v0.20.1) (2021-01-12)
 
 ### Bug Fixes
