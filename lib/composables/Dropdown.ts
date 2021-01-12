@@ -1,5 +1,5 @@
 import Fuse from 'fuse.js'
-import { Ref, ComputedRef, ref, computed } from '@vue/composition-api'
+import { Ref, ComputedRef, ref, computed, isRef } from '@vue/composition-api'
 
 export interface Dropdown {
   title?: string
@@ -43,7 +43,7 @@ export interface UseDropdownOptions {
   search?: UseDropdownSearchOptions
   closeOnClick?: boolean
   selected?: ComputedRef<any>
-  items: Item[]
+  items: Item[] | ComputedRef<Item[]>
   callback? (item: Item): void
 }
 
@@ -87,13 +87,19 @@ export function useSearch(search: UseDropdownSearchOptions): Search {
   }
 }
 
-function useItems(items: Item[], search?: Search): ComputedRef<Item[]> {
-  const fuse = createFuse(items, search)
+function useItems(items: Item[] | ComputedRef<Item[]>, search?: Search): ComputedRef<Item[]> {
+  const fuse = computed(() => {
+    return createFuse(isRef(items) ? items.value : items, search)
+  })
 
   return computed(() => {
     const value = search?.value.value
 
-    return value ? fuse!.search(value).map(result => result.item) : items
+    if (!value) {
+      return isRef(items) ? items.value : items
+    }
+
+    return fuse.value!.search(value).map(result => result.item)
   })
 }
 

@@ -77,14 +77,12 @@ export default defineComponent({
 
     const classes = computed(() => [props.size, props.mode])
 
-    const dropdownOptions = computed(() => {
-      return useDropdown({
-        search: props.search,
-        items: props.options,
-        closeOnClick: props.closeOnClick,
-        selected: computed(() => props.value),
-        callback: handleCallback
-      })
+    const dropdownOptions = useDropdown({
+      search: props.search,
+      items: computed(() => props.options),
+      closeOnClick: props.closeOnClick,
+      selected: computed(() => props.value),
+      callback: handleCallback
     })
 
     const selected = computed(() => {
