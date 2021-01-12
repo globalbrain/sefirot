@@ -1,3 +1,9 @@
+# [0.20.0](https://github.com/globalbrain/sefirot/compare/v0.19.0...v0.20.0) (2021-01-12)
+
+### Features
+
+* **input:** add input year, month, and day component ([1ffa50c](https://github.com/globalbrain/sefirot/commit/1ffa50c61a8e98328fb3f4ddcc1777815f807947))
+
 # [0.19.0](https://github.com/globalbrain/sefirot/compare/v0.18.0...v0.19.0) (2021-01-07)
 
 ### Features
