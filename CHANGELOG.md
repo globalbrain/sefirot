@@ -1,3 +1,9 @@
+# [0.23.0](https://github.com/globalbrain/sefirot/compare/v0.22.0...v0.23.0) (2021-01-13)
+
+### Features
+
+* **validation:** add not, sameAs, include rules ([e6e958d](https://github.com/globalbrain/sefirot/commit/e6e958d2f88c404f2d9715905103695415e319f1))
+
 # [0.22.0](https://github.com/globalbrain/sefirot/compare/v0.21.0...v0.22.0) (2021-01-13)
 
 ### Bug Fixes
