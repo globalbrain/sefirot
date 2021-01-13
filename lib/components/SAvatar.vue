@@ -8,7 +8,7 @@
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 
-type Size = 'mini' | 'small' | 'medium' | 'large'
+type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large'
 
 export default defineComponent({
   props: {
@@ -42,6 +42,12 @@ export default defineComponent({
 
 .img {
   object-fit: cover;
+}
+
+.SAvatar.nano {
+  width: 20px;
+  height: 20px;
+  .initial { font-size: 12px; }
 }
 
 .SAvatar.mini {
