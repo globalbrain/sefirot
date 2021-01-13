@@ -6,6 +6,7 @@ module.exports = {
     'vue'
   ],
   moduleNameMapper: {
+    '^lodash-es/(.*)$': 'lodash/$1',
     '^sefirot/(.*)$': '<rootDir>/lib/$1',
     '^test/(.*)$': '<rootDir>/test/$1'
   },
