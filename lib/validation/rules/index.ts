@@ -1,11 +1,14 @@
+import day from './day'
 import email from './email'
+import include from './include'
+import month from './month'
+import not from './not'
 import regex from './regex'
 import required from './required'
 import rule from './rule'
+import sameAs from './sameAs'
 import url from './url'
 import year from './year'
-import month from './month'
-import day from './day'
 
 export interface Rule {
   name: string
@@ -15,12 +18,15 @@ export interface Rule {
 }
 
 export {
+  day,
   email,
+  include,
+  month,
+  not,
   regex,
   required,
   rule,
+  sameAs,
   url,
-  year,
-  month,
-  day
+  year
 }
