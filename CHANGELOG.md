@@ -1,3 +1,14 @@
+# [0.22.0](https://github.com/globalbrain/sefirot/compare/v0.21.0...v0.22.0) (2021-01-13)
+
+### Bug Fixes
+
+* **input-dropdown:** z-index overwrapping on other inputs ([e0d019c](https://github.com/globalbrain/sefirot/commit/e0d019c5a5d00c9202e807c4882189643862ecd0))
+
+### Features
+
+* **avatar:** add "nano" size ([91399f4](https://github.com/globalbrain/sefirot/commit/91399f44859f3d686c5c2054d5ab515924ff8279))
+* **input-dropdown:** add user item type ([d160c96](https://github.com/globalbrain/sefirot/commit/d160c964150360766c2330e423b01412fd69e3a3))
+
 # [0.21.0](https://github.com/globalbrain/sefirot/compare/v0.20.1...v0.21.0) (2021-01-12)
 
 ### Bug Fixes
