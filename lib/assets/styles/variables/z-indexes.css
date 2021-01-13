@@ -1,6 +1,7 @@
 :root {
-  --z-index-screen: 1000;
-  --z-index-backdrop: 2000;
-  --z-index-modal: 2010;
-  --z-index-snackbar: 3000;
+  --z-index-dropdown: 1000;
+  --z-index-screen: 2000;
+  --z-index-backdrop: 3000;
+  --z-index-modal: 3010;
+  --z-index-snackbar: 4000;
 }

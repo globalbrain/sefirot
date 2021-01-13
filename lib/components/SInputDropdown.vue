@@ -258,6 +258,6 @@ export default defineComponent({
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
-  z-index: 10;
+  z-index: var(--z-index-dropdown);
 }
 </style>
