@@ -17,6 +17,8 @@ import { isArray } from '../support/Util'
 import { Item } from '../composables/Dropdown'
 import SInputDropdownItemText from './SInputDropdownItemText.vue'
 import SInputDropdownItemTextTag from './SInputDropdownItemTextTag.vue'
+import SInputDropdownItemUser from './SInputDropdownItemUser.vue'
+import SInputDropdownItemUserTag from './SInputDropdownItemUserTag.vue'
 
 export default defineComponent({
   props: {
@@ -33,6 +35,10 @@ export default defineComponent({
     function component(item: Item) {
       if (item.type === 'text') {
         return isItemArray.value ? SInputDropdownItemTextTag : SInputDropdownItemText
+      }
+
+      if (item.type === 'user') {
+        return isItemArray.value ? SInputDropdownItemUserTag : SInputDropdownItemUser
       }
 
       throw new Error('Invalid item type.')
