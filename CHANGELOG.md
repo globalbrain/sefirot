@@ -1,3 +1,9 @@
+# [0.24.0](https://github.com/globalbrain/sefirot/compare/v0.23.0...v0.24.0) (2021-01-14)
+
+### Features
+
+* **card:** add header actions feature ([ffc99a9](https://github.com/globalbrain/sefirot/commit/ffc99a9031551a7ea53b7140be6ee6a6e01777d2))
+
 # [0.23.0](https://github.com/globalbrain/sefirot/compare/v0.22.0...v0.23.0) (2021-01-13)
 
 ### Features
