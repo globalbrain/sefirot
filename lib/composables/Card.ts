@@ -6,6 +6,7 @@ export interface Card {
 
 export interface Header {
   title: string
+  actions?: Action[]
 }
 
 export interface Footer {
@@ -13,21 +14,18 @@ export interface Footer {
 }
 
 export interface Action {
-  type?: 'primary' | 'mute'
+  type?: 'primary' | 'text' | 'mute'
   mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+  icon?: string
   label: string
   link?: string
   callback? (): void
 }
 
 export function useHeader(options: Header): Header {
-  return {
-    title: options.title
-  }
+  return options
 }
 
 export function useFooter(options: Footer): Footer {
-  return {
-    actions: options.actions
-  }
+  return options
 }

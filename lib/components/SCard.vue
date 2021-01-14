@@ -6,6 +6,7 @@
         :is-collapsed="isCollapsed"
         :size="size"
         :title="header.title"
+        :actions="header.actions || []"
         @collapse="toggleCollapse"
       />
     </div>

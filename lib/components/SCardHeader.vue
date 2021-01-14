@@ -3,6 +3,17 @@
     <p class="title">{{ title }}</p>
 
     <div class="actions">
+      <div v-for="(action, index) in actions" :key="index" class="action">
+        <SButton
+          size="small"
+          :type="action.type"
+          :mode="action.mode"
+          :icon="actionIcon(action)"
+          :label="action.label"
+          @click="action.callback"
+        />
+      </div>
+
       <div v-if="collapsable" class="action">
         <button class="collapse" @click="$emit('collapse')">
           <SIconChevronDown class="collapse-icon" />
@@ -13,21 +24,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { Action } from '../composables/Card'
+import SIconEdit3 from './icons/SIconEdit3.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SButton from './SButton.vue'
 
 type Size = 'compact' | 'wide'
 
 export default defineComponent({
   components: {
-    SIconChevronDown
+    SIconChevronDown,
+    SButton
   },
 
   props: {
     collapsable: { type: Boolean, required: true },
     isCollapsed: { type: Boolean, required: true },
     size: { type: String as PropType<Size>, default: 'compact' },
-    title: { type: String, required: true }
+    title: { type: String, required: true },
+    actions: { type: Array as PropType<Action[]>, required: true }
   },
 
   setup(props) {
@@ -35,8 +51,18 @@ export default defineComponent({
       props.size, { collapsed: props.isCollapsed }
     ])
 
+    function actionIcon(action: Action): any {
+      switch (action.icon) {
+        case 'edit':
+          return SIconEdit3
+        default:
+          return null
+      }
+    }
+
     return {
-      classes
+      classes,
+      actionIcon
     }
   }
 })
@@ -81,7 +107,17 @@ export default defineComponent({
 }
 
 .actions {
-  margin: -4px -8px -4px 0;
+  display: flex;
+  margin: -4px -10px -4px -2px;
+}
+
+.action {
+  padding: 0 2px;
+}
+
+.action >>> .SButton .label,
+.action >>> .SButton .icon {
+  transform: translateY(1px);
 }
 
 .collapse {
