@@ -1,3 +1,12 @@
+# [0.27.0](https://github.com/globalbrain/sefirot/compare/v0.26.1...v0.27.0) (2021-01-15)
+
+### Features
+
+* **link:** add link component ([0eb920c](https://github.com/globalbrain/sefirot/commit/0eb920cf1d9a6b3467ee0ebbac79322a81f61c8a))
+* **tag:** add tag component ([50e488d](https://github.com/globalbrain/sefirot/commit/50e488db979e2c8ffa6d36d004291b00731a9f2e))
+* **header:** add large size ([125a295](https://github.com/globalbrain/sefirot/commit/125a295a67292f5e762e323b2ec7ca3e769ebd42))
+* **header:** add tags option ([96a32cb](https://github.com/globalbrain/sefirot/commit/96a32cbd7efc601e1a89e3424a2760708060fa8e))
+
 ## [0.26.1](https://github.com/globalbrain/sefirot/compare/v0.26.0...v0.26.1) (2021-01-15)
 
 ### Bug Fixes
