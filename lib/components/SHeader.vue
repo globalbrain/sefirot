@@ -75,6 +75,16 @@ export default defineComponent({
   .action  { padding: 0 4px; }
 }
 
+.SHeader.large {
+  .title {
+    line-height: 32px;
+    font-size: 20px;
+  }
+
+  .actions { margin: 0 -4px; }
+  .action  { padding: 0 4px; }
+}
+
 .primary {
   flex-grow: 1;
 }

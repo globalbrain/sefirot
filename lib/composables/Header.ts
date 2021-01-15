@@ -16,7 +16,8 @@ export type Size = Values<typeof Sizes>
 
 export const Sizes = {
   Small: 'small',
-  Medium: 'medium'
+  Medium: 'medium',
+  Large: 'large'
 } as const
 
 export interface Search {
