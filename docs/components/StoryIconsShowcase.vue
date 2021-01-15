@@ -40,12 +40,14 @@ import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconEdit2 from '@@/lib/components/icons/SIconEdit2.vue'
 import SIconEdit3 from '@@/lib/components/icons/SIconEdit3.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
+import SIconExternalLink from '@@/lib/components/icons/SIconExternalLink.vue'
 import SIconFlag from '@@/lib/components/icons/SIconFlag.vue'
 import SIconGitBranch from '@@/lib/components/icons/SIconGitBranch.vue'
 import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
 import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
+import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
@@ -55,6 +57,8 @@ import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconSettings from '@@/lib/components/icons/SIconSettings.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
+import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
+import SIconTrash2 from '@@/lib/components/icons/SIconTrash2.vue'
 import SIconTrello from '@@/lib/components/icons/SIconTrello.vue'
 import SIconUser from '@@/lib/components/icons/SIconUser.vue'
 import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
@@ -93,12 +97,14 @@ export default defineComponent({
       { component: SIconEdit2, name: 'Edit2' },
       { component: SIconEdit3, name: 'Edit3' },
       { component: SIconEye, name: 'Eye' },
+      { component: SIconExternalLink, name: 'ExternalLink' },
       { component: SIconFlag, name: 'Flag' },
       { component: SIconGitBranch, name: 'GitBranch' },
       { component: SIconGitCommit, name: 'GitCommit' },
       { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
       { component: SIconInfo, name: 'Info' },
+      { component: SIconList, name: 'List' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
       { component: SIconPlus, name: 'Plus' },
@@ -108,6 +114,8 @@ export default defineComponent({
       { component: SIconSettings, name: 'Settings' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
+      { component: SIconTrash, name: 'Trash' },
+      { component: SIconTrash2, name: 'Trash2' },
       { component: SIconTrello, name: 'Trello' },
       { component: SIconUser, name: 'User' },
       { component: SIconUsers, name: 'Users' },
