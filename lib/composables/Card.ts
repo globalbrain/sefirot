@@ -19,7 +19,7 @@ export type Size = Values<typeof Sizes>
 
 export const Sizes = {
   Compact: 'compact',
-  Wide: 'Wide'
+  Wide: 'wide'
 } as const
 
 export interface Module {
