@@ -1,3 +1,9 @@
+## [0.26.1](https://github.com/globalbrain/sefirot/compare/v0.26.0...v0.26.1) (2021-01-15)
+
+### Bug Fixes
+
+* **card:** size "wide" was not working correctly ([018e75e](https://github.com/globalbrain/sefirot/commit/018e75e192d0d8422f9328c3b1988073bea31cdf))
+
 # [0.26.0](https://github.com/globalbrain/sefirot/compare/v0.25.0...v0.26.0) (2021-01-15)
 
 ### Features
