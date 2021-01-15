@@ -2,6 +2,7 @@
   <div class="SHeader" :class="[size]">
     <div class="primary">
       <p v-if="title" class="title">{{ title }}</p>
+      <slot />
     </div>
 
     <div class="actions">
