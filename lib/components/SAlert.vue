@@ -38,7 +38,7 @@ export default {
 
   computed: {
     data() {
-      return this.$store.state.modal.data
+      return this.$store.getters['modal/active']?.data ?? {}
     },
 
     classes() {

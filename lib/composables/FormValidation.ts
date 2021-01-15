@@ -1,7 +1,7 @@
 import { Ref, ComputedRef, ref, computed } from '@vue/composition-api'
 import { required } from '../validation/validators'
 import { Rule } from '../validation/rules'
-import { Data } from './FormData'
+import { State } from './FormData'
 
 export interface Validation {
   $isValidation: boolean
@@ -26,7 +26,7 @@ export interface Validators {
 
 export type Error = [string, string]
 
-export function useFormValidation(data: Data, rules: Rules, rootData?: Data): Validation {
+export function useFormValidation<T extends State>(data: T, rules: Rules, rootData?: T): Validation {
   const validation = {} as Validation
 
   setValidations(validation, data, rules, rootData ?? data)
@@ -36,7 +36,7 @@ export function useFormValidation(data: Data, rules: Rules, rootData?: Data): Va
   return validation
 }
 
-function setValidations(validation: Validation, data: Data, rules: Rules, rootData: Data): void {
+function setValidations<T extends State>(validation: Validation, data: T, rules: Rules, rootData: T): void {
   for (const name in rules) {
     const validatorsOrRules = rules[name]
 
@@ -46,7 +46,7 @@ function setValidations(validation: Validation, data: Data, rules: Rules, rootDa
   }
 }
 
-function createValidation(name: string, data: Data, rules: Rule[], rootData: Data): Validation {
+function createValidation<T extends State>(name: string, data: T, rules: Rule[], rootData: T): Validation {
   const isDirty = ref(false)
   const isValid = computed(() => errors.value.length === 0)
   const errors = computed(() => getErrors(name, data, rules, rootData))
@@ -114,7 +114,7 @@ function setupValidation(validation: Validation): void {
   validation.$validate = validate
 }
 
-function getErrors(name: string, data: Data, rules: Rule[], rootData: Data): Error[] {
+function getErrors<T extends State>(name: string, data: T, rules: Rule[], rootData: T): Error[] {
   return rules.reduce<Error[]>((errors, rule) => {
     const value = data[name]
 

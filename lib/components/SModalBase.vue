@@ -1,10 +1,12 @@
 <template>
   <portal to="modal">
-    <transition name="fade" mode="out-in" appear>
-      <div v-if="show" :key="id" class="SModalBase" @click="close">
-        <slot />
-      </div>
-    </transition>
+    <template v-if="mount">
+      <transition name="fade" mode="out-in" appear>
+        <div v-show="show" :key="name" class="SModalBase" :class="{ first }" @click="close">
+          <slot />
+        </div>
+      </transition>
+    </template>
   </portal>
 </template>
 
@@ -21,7 +23,8 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    const id = computed(() => store.state.modal.id)
+    const first = computed(() => store.state.modal.first)
+    const mount = computed(() => store.state.modal.history.some((h: any) => h.name === props.name))
     const show = computed(() => props.name === store.state.modal.name)
 
     function close(): void {
@@ -29,7 +32,8 @@ export default defineComponent({
     }
 
     return {
-      id,
+      first,
+      mount,
       show,
       close
     }
@@ -41,12 +45,25 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .SModalBase {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  min-height: 100vh;
   transition: all .25s;
 }
 
 .SModalBase.fade-enter-active,
 .SModalBase.fade-leave-active {
   transition: opacity .25s, transform .25s;
+}
+
+.SModalBase.fade-enter-active {
+  transition-delay: .25s;
+}
+
+.SModalBase.first.fade-enter-active {
+  transition-delay: 0s;
 }
 
 .SModalBase.fade-enter {

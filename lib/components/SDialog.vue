@@ -1,8 +1,8 @@
 <template>
-  <SModalBase name="dialog" :closable="false">
+  <SModalBase :name="name" :closable="false">
     <div class="SDialog" :class="{ 'load-only': isLoadOnly }">
-      <p v-if="data.title" class="title">{{ data.title }}</p>
-      <p v-if="data.text" class="text">{{ data.text }}</p>
+      <p v-if="title" class="title">{{ title }}</p>
+      <p v-if="text" class="text">{{ text }}</p>
 
       <div v-if="isTypeLoading" class="load">
         <div class="load-icon">
@@ -11,11 +11,11 @@
       </div>
 
       <div v-if="isTypeProgress" class="progress">
-        <SProgressBar :now="data.progress.now" :max="data.progress.max" />
+        <SProgressBar :now="progress.now" :max="progress.max" />
       </div>
 
-      <div v-if="hasActions" class="actions">
-        <div v-for="(action, index) in data.actions" :key="index" class="action">
+      <div v-if="actions.length > 0" class="actions">
+        <div v-for="(action, index) in actions" :key="index" class="action">
           <SButton
             size="small"
             :type="getActionType(action.type)"
@@ -30,7 +30,6 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { useStore } from '../composables/Store'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SButton from './SButton.vue'
 import SProgressBar from './SProgressBar.vue'
@@ -44,28 +43,25 @@ export default defineComponent({
     SModalBase
   },
 
-  setup() {
-    const store = useStore()
+  props: {
+    type: { type: String, required: true },
+    name: { type: String, required: true },
+    title: { type: String, default: null },
+    text: { type: String, default: null },
+    progress: { type: Object, default: () => ({}) },
+    actions: { type: Array, default: () => [] }
+  },
 
-    const data = computed(() => store.state.modal.data)
-
-    const hasActions = computed(() => {
-      const actions = data.value.actions
-
-      return actions ? actions.length > 0 : false
-    })
-
-    const isTypeLoading = computed(() => data.value.type === 'loading')
-    const isTypeProgress = computed(() => data.value.type === 'progress')
-    const isLoadOnly = computed(() => isTypeLoading.value && !data.value.title && !data.value.text)
+  setup(props) {
+    const isTypeLoading = computed(() => props.type === 'loading')
+    const isTypeProgress = computed(() => props.type === 'progress')
+    const isLoadOnly = computed(() => isTypeLoading.value && !props.title && !props.text)
 
     function getActionType(value?: string): string {
       return value !== 'mute' ? 'text' : 'mute'
     }
 
     return {
-      data,
-      hasActions,
       isTypeLoading,
       isTypeProgress,
       isLoadOnly,

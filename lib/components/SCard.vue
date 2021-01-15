@@ -2,16 +2,21 @@
   <div class="SCard" :class="classes">
     <div v-if="header" class="header">
       <SCardHeader
-        :collapsable="collapsable"
         :is-collapsed="isCollapsed"
         :size="size"
         :title="header.title"
-        :actions="header.actions || []"
+        :search="header.search"
+        :actions="header.actions"
+        :collapsable="collapsable"
         @collapse="toggleCollapse"
       />
     </div>
 
     <slot />
+
+    <template v-for="(module, index) in modules">
+      <component :is="module.component" :key="index" v-bind="module.data" />
+    </template>
 
     <div v-if="footer" class="footer">
       <SCardFooter :size="size" :actions="footer.actions" />
@@ -21,11 +26,9 @@
 
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
-import { Header, Footer } from '../composables/Card'
+import { Header, Module, Footer, Size } from '../composables/Card'
 import SCardHeader from './SCardHeader.vue'
 import SCardFooter from './SCardFooter.vue'
-
-type Size = 'compact' | 'wide'
 
 export default defineComponent({
   components: {
@@ -34,12 +37,13 @@ export default defineComponent({
   },
 
   props: {
-    collapsable: { type: Boolean, default: true },
     size: { type: String as PropType<Size>, default: 'compact' },
+    header: { type: Object as PropType<Header>, default: null },
+    modules: { type: Array as PropType<Module[]>, default: () => [] },
+    footer: { type: Object as PropType<Footer>, default: null },
     round: { type: Number, default: 8 },
     depth: { type: Number, default: 1 },
-    header: { type: Object as PropType<Header>, default: null },
-    footer: { type: Object as PropType<Footer>, default: null }
+    collapsable: { type: Boolean, default: true }
   },
 
   setup(props) {
@@ -91,5 +95,15 @@ export default defineComponent({
 
 .footer {
   overflow: hidden;
+}
+
+.SCard >>> .SCard {
+  border: 1px solid var(--c-divider-light);
+
+  &.depth1 { box-shadow: none; }
+  &.depth2 { box-shadow: none; }
+  &.depth3 { box-shadow: none; }
+  &.depth4 { box-shadow: none; }
+  &.depth5 { box-shadow: none; }
 }
 </style>

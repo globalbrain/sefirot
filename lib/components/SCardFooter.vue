@@ -1,8 +1,8 @@
 <template>
   <div class="SCardFooter" :class="classes">
     <div v-if="actions.length > 0" class="actions">
-      <div v-for="action in actions" :key="action.label" class="action">
-        <SCardFooterAction :size="size" :action="action" />
+      <div v-for="(action, index) in computedActions" :key="index" class="action">
+        <SAction :action="action" />
       </div>
     </div>
   </div>
@@ -10,14 +10,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from '@vue/composition-api'
-import { Action } from '../composables/Card'
-import SCardFooterAction from './SCardFooterAction.vue'
-
-type Size = 'compact' | 'wide'
+import { Size, Sizes, Action } from '../composables/Card'
+import SAction from './SAction.vue'
 
 export default defineComponent({
   components: {
-    SCardFooterAction
+    SAction
   },
 
   props: {
@@ -28,8 +26,16 @@ export default defineComponent({
   setup(props) {
     const classes = computed(() => [props.size])
 
+    const computedActions = computed(() => {
+      return (props.actions ?? []).map(action => ({
+        size: props.size === Sizes.Wide ? 'medium' : 'small',
+        ...action
+      }))
+    })
+
     return {
-      classes
+      classes,
+      computedActions
     }
   }
 })

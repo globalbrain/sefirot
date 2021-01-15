@@ -76,6 +76,7 @@ export default defineComponent({
 .SDropdown {
   display: inline-block;
   overflow: hidden;
+  box-shadow: var(--shadow-depth-3) !important;
 }
 
 .header {

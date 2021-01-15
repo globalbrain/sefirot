@@ -1,31 +1,44 @@
+import { Values } from '../types/Utils'
+import { Header } from './Header'
+import { Action } from './Action'
+
+export * from './Header'
+export * from './Action'
+
 export interface Card {
-  collapsable: boolean
+  size?: Size
   header?: Header
+  modules?: Module[]
   footer?: Footer
+  round?: number
+  depth?: number
+  collapsable?: boolean
 }
 
-export interface Header {
-  title: string
-  actions?: Action[]
+export type Size = Values<typeof Sizes>
+
+export const Sizes = {
+  Compact: 'compact',
+  Wide: 'Wide'
+} as const
+
+export interface Module {
+  component: any
+  data?: Record<string, any>
 }
 
 export interface Footer {
   actions: Action[]
 }
 
-export interface Action {
-  type?: 'primary' | 'text' | 'mute'
-  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-  icon?: string
-  label: string
-  link?: string
-  callback? (): void
+export function useCard(card: Card): Card {
+  return card
 }
 
-export function useHeader(options: Header): Header {
-  return options
+export function useModule(module: Module): Module {
+  return module
 }
 
-export function useFooter(options: Footer): Footer {
-  return options
+export function useFooter(footer: Footer): Footer {
+  return footer
 }

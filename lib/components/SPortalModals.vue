@@ -4,7 +4,10 @@
       <div v-if="show" class="backdrop" />
     </transition>
 
-    <SDialog />
+    <template v-for="dialog in dialogs">
+      <SDialog :key="dialog.name" :name="dialog.name" v-bind="dialog.data" />
+    </template>
+
     <SAlert />
 
     <div ref="el" class="modal-content" :class="{ show }">
@@ -33,14 +36,19 @@ export default defineComponent({
 
     const show = ref(false)
 
-    const name = computed(() => store.state.modal.name)
+    const active = computed(() => store.state.modal.history.length > 0)
+    const current = computed(() => store.state.modal.name)
 
-    watch(name, (value, oldValue) => {
-      if (value === null) {
-        return close()
-      }
+    const dialogs = computed(() => {
+      return store.state.modal.history.filter((h: any) => {
+        return h.name.startsWith('dialog')
+      })
+    })
 
-      oldValue === null && open()
+    watch(active, (value) => { value ? open() : close() })
+
+    watch(current, () => {
+      setTimeout(() => { el.value.scrollTo(0, 0) }, 250)
     })
 
     function open(): void {
@@ -49,10 +57,8 @@ export default defineComponent({
     }
 
     function close(): void {
-      setTimeout(() => {
-        show.value = false
-        release()
-      }, 250)
+      show.value = false
+      release()
     }
 
     function lock(): void {
@@ -60,12 +66,14 @@ export default defineComponent({
     }
 
     function release(): void {
+      el.value.scrollTo(0, 0)
       el.value && clearAllBodyScrollLocks()
     }
 
     return {
       el,
-      show
+      show,
+      dialogs
     }
   },
 
