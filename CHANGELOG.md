@@ -1,3 +1,9 @@
+# [0.26.0](https://github.com/globalbrain/sefirot/compare/v0.25.0...v0.26.0) (2021-01-15)
+
+### Features
+
+* **header:** add default slot ([e29f664](https://github.com/globalbrain/sefirot/commit/e29f66456d72cc7cef7532f62b9848ee374c7570))
+
 # [0.25.0](https://github.com/globalbrain/sefirot/compare/v0.24.0...v0.25.0) (2021-01-15)
 
 ### Features
