@@ -4,6 +4,7 @@ export type Action = Values<Actions>
 
 export interface Actions {
   ButtonAction: ButtonAction
+  PillAction: PillAction
   AvatarAction: AvatarAction
 }
 
@@ -18,7 +19,8 @@ export type Type = Values<typeof Types>
 
 export const Types = {
   Button: 'button',
-  Avatar: 'avatar'
+  Avatar: 'avatar',
+  Pill: 'pill'
 } as const
 
 export type Size = Values<typeof Sizes>
@@ -60,6 +62,22 @@ export const ButtonActionModes = {
   Danger: 'danger'
 } as const
 
+export interface PillAction extends ActionBase {
+  type: typeof Types.Pill
+  mode?: PillActionMode
+  label: string
+}
+
+export type PillActionMode = Values<typeof PillActionModes>
+
+export const PillActionModes = {
+  Neutral: 'neutral',
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+  Danger: 'danger'
+} as const
+
 export interface AvatarAction extends ActionBase {
   type: typeof Types.Avatar
   avatars: AvatarActionAvatar[]
@@ -76,6 +94,10 @@ export function useAction<T extends Action>(action: T): T {
 
 export function useButtonAction(action: OmitType<ButtonAction>): ButtonAction {
   return { type: Types.Button, ...action }
+}
+
+export function usePillAction(action: OmitType<PillAction>): PillAction {
+  return { type: Types.Pill, ...action }
 }
 
 export function useAvatarAction(action: OmitType<AvatarAction>): AvatarAction {

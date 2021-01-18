@@ -124,11 +124,16 @@ export default defineComponent({
 
 .actions {
   display: flex;
+  align-items: center;
 }
 
-.action       { padding-left: 8px; }
-.action.gap-4 { padding-left: 4px; }
-.action.gap-8 { padding-left: 8px; }
+.action        { padding-left: 8px; }
+.action.gap-4  { padding-left: 4px; }
+.action.gap-8  { padding-left: 8px; }
+.action.gap-12 { padding-left: 12px; }
+.action.gap-16 { padding-left: 16px; }
+.action.gap-24 { padding-left: 24px; }
+.action.gap-32 { padding-left: 32px; }
 
 .sub {
   padding-top: 2px;
