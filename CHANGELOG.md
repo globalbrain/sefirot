@@ -1,3 +1,10 @@
+# [0.28.0](https://github.com/globalbrain/sefirot/compare/v0.27.0...v0.28.0) (2021-01-18)
+
+### Features
+
+* **header:** add avatar action type ([38fe231](https://github.com/globalbrain/sefirot/commit/38fe231781c786cf57653f39f643071febe03dec))
+* **header:** add pill action type ([a5a76e6](https://github.com/globalbrain/sefirot/commit/a5a76e66c50284561b5f12d97e9789cd1f5f5727))
+
 # [0.27.0](https://github.com/globalbrain/sefirot/compare/v0.26.1...v0.27.0) (2021-01-15)
 
 ### Features
