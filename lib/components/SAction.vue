@@ -6,6 +6,7 @@
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Action, Types } from '../composables/Action'
 import SActionButton from './SActionButton.vue'
+import SActionAvatar from './SActionAvatar.vue'
 
 export default defineComponent({
   props: {
@@ -17,6 +18,8 @@ export default defineComponent({
       switch (props.action.type) {
         case Types.Button:
           return SActionButton
+        case Types.Avatar:
+          return SActionAvatar
       }
     })
 

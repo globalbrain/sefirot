@@ -14,7 +14,7 @@ export default defineComponent({
   props: {
     size: { type: String as PropType<Size>, default: 'medium' },
     avatar: { type: String, required: true },
-    name: { type: String, required: true }
+    name: { type: String, default: '' }
   },
 
   setup(props) {

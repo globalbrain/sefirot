@@ -4,18 +4,21 @@ export type Action = Values<Actions>
 
 export interface Actions {
   ButtonAction: ButtonAction
+  AvatarAction: AvatarAction
 }
 
 export interface ActionBase {
   type: Type
   size?: Size
+  gap?: number
   callback?(): void
 }
 
 export type Type = Values<typeof Types>
 
 export const Types = {
-  Button: 'button'
+  Button: 'button',
+  Avatar: 'avatar'
 } as const
 
 export type Size = Values<typeof Sizes>
@@ -57,10 +60,24 @@ export const ButtonActionModes = {
   Danger: 'danger'
 } as const
 
+export interface AvatarAction extends ActionBase {
+  type: typeof Types.Avatar
+  avatars: AvatarActionAvatar[]
+}
+
+export interface AvatarActionAvatar {
+  avatar: string
+  name?: string
+}
+
 export function useAction<T extends Action>(action: T): T {
   return action
 }
 
 export function useButtonAction(action: OmitType<ButtonAction>): ButtonAction {
   return { type: Types.Button, ...action }
+}
+
+export function useAvatarAction(action: OmitType<AvatarAction>): AvatarAction {
+  return { type: Types.Avatar, ...action }
 }

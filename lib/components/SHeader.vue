@@ -7,7 +7,12 @@
       </div>
 
       <div class="actions">
-        <div v-for="(action, index) in cActions" :key="index" class="action">
+        <div
+          v-for="(action, index) in cActions"
+          :key="index"
+          class="action"
+          :class="[`gap-${action.gap}`]"
+        >
           <SAction :action="action" />
         </div>
 
@@ -81,10 +86,8 @@ export default defineComponent({
     font-size: 14px;
   }
 
-  .actions { margin: 0 -2px; }
-  .action  { padding: 0 2px; }
-  .tags    { margin: 0 -8px; }
-  .tag     { padding: 0 8px; }
+  .tags { margin: 0 -8px; }
+  .tag  { padding: 0 8px; }
 }
 
 .SHeader.medium {
@@ -93,10 +96,8 @@ export default defineComponent({
     font-size: 16px;
   }
 
-  .actions { margin: 0 -4px; }
-  .action  { padding: 0 4px; }
-  .tags    { margin: 0 -8px; }
-  .tag     { padding: 0 8px; }
+  .tags { margin: 0 -8px; }
+  .tag  { padding: 0 8px; }
 }
 
 .SHeader.large {
@@ -105,10 +106,8 @@ export default defineComponent({
     font-size: 20px;
   }
 
-  .actions { margin: 0 -4px; }
-  .action  { padding: 0 4px; }
-  .tags    { margin: 0 -8px; }
-  .tag     { padding: 0 8px; }
+  .tags { margin: 0 -8px; }
+  .tag  { padding: 0 8px; }
 }
 
 .main {
@@ -126,6 +125,10 @@ export default defineComponent({
 .actions {
   display: flex;
 }
+
+.action       { padding-left: 8px; }
+.action.gap-4 { padding-left: 4px; }
+.action.gap-8 { padding-left: 8px; }
 
 .sub {
   padding-top: 2px;

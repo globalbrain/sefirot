@@ -7,7 +7,7 @@
       :actions="actions"
     >
       <template #after-actions>
-        <div v-if="collapsable" class="action">
+        <div v-if="collapsable" class="action action-collapse">
           <button class="collapse" @click="$emit('collapse')">
             <SIconChevronDown class="collapse-icon" />
           </button>
@@ -79,6 +79,10 @@ export default defineComponent({
 
 .SCardHeader.collapsed .collapse-icon {
   transform: translateY(1px);
+}
+
+.action-collapse {
+  padding-left: 4px;
 }
 
 .collapse {
