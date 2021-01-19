@@ -1,3 +1,9 @@
+# [0.29.0](https://github.com/globalbrain/sefirot/compare/v0.28.0...v0.29.0) (2021-01-19)
+
+### Features
+
+* **card:** add different border color feature ([2942d41](https://github.com/globalbrain/sefirot/commit/2942d4116a257d4e931f756f545f565bbcadc10b))
+
 # [0.28.0](https://github.com/globalbrain/sefirot/compare/v0.27.0...v0.28.0) (2021-01-18)
 
 ### Features
