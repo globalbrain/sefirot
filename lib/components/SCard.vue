@@ -1,32 +1,34 @@
 <template>
   <div class="SCard" :class="classes">
-    <div v-if="header" class="header">
-      <SCardHeader
-        :is-collapsed="isCollapsed"
-        :size="size"
-        :title="header.title"
-        :search="header.search"
-        :actions="header.actions"
-        :collapsable="collapsable"
-        @collapse="toggleCollapse"
-      />
-    </div>
+    <div class="SCard-container">
+      <div v-if="header" class="header">
+        <SCardHeader
+          :is-collapsed="isCollapsed"
+          :size="size"
+          :title="header.title"
+          :search="header.search"
+          :actions="header.actions"
+          :collapsable="collapsable"
+          @collapse="toggleCollapse"
+        />
+      </div>
 
-    <slot />
+      <slot />
 
-    <template v-for="(module, index) in modules">
-      <component :is="module.component" :key="index" v-bind="module.data" />
-    </template>
+      <template v-for="(module, index) in modules">
+        <component :is="module.component" :key="index" v-bind="module.data" />
+      </template>
 
-    <div v-if="footer" class="footer">
-      <SCardFooter :size="size" :actions="footer.actions" />
+      <div v-if="footer" class="footer">
+        <SCardFooter :size="size" :actions="footer.actions" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
-import { Header, Module, Footer, Size } from '../composables/Card'
+import { Header, Module, Footer, Size, Mode } from '../composables/Card'
 import SCardHeader from './SCardHeader.vue'
 import SCardFooter from './SCardFooter.vue'
 
@@ -38,6 +40,7 @@ export default defineComponent({
 
   props: {
     size: { type: String as PropType<Size>, default: 'compact' },
+    border: { type: String as PropType<Mode>, default: 'default' },
     header: { type: Object as PropType<Header>, default: null },
     modules: { type: Array as PropType<Module[]>, default: () => [] },
     footer: { type: Object as PropType<Footer>, default: null },
@@ -52,6 +55,7 @@ export default defineComponent({
     const classes = computed(() => [
       { collapsed: isCollapsed.value },
       props.size,
+      `border-${props.border}`,
       `round${props.round}`,
       `depth${props.depth}`
     ])
@@ -76,13 +80,16 @@ export default defineComponent({
   background-color: var(--card-bg);
 }
 
-.SCard.collapsed {
-  overflow: hidden;
+.SCard.collapsed .SCard-container {
   height: 48px;
+  overflow: hidden;
 }
 
 .SCard.round4 { border-radius: 4px; }
 .SCard.round8 { border-radius: 8px; }
+
+.SCard.round4 .SCard-container { border-radius: 4px; }
+.SCard.round8 .SCard-container { border-radius: 8px; }
 
 .SCard.round4 .footer { border-radius: 0 0 4px 4px; }
 .SCard.round8 .footer { border-radius: 0 0 8px 8px; }
@@ -92,6 +99,8 @@ export default defineComponent({
 .SCard.depth3 { box-shadow: var(--card-shadow-depth-3); }
 .SCard.depth4 { box-shadow: var(--card-shadow-depth-4); }
 .SCard.depth5 { box-shadow: var(--card-shadow-depth-5); }
+
+.SCard.border-danger .SCard-container { box-shadow: inset 0 0 0 1px var(--c-danger); }
 
 .footer {
   overflow: hidden;
