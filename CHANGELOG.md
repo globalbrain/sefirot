@@ -1,3 +1,9 @@
+# [0.30.0](https://github.com/globalbrain/sefirot/compare/v0.29.0...v0.30.0) (2021-01-20)
+
+### Features
+
+* **input-switch:** add size and mode option ([29f7100](https://github.com/globalbrain/sefirot/commit/29f7100112dcb43246800953fd429b8e93e30593))
+
 # [0.29.0](https://github.com/globalbrain/sefirot/compare/v0.28.0...v0.29.0) (2021-01-19)
 
 ### Features
