@@ -1,75 +1,100 @@
 <template lang="md">
 <StoryBase>
-  <SInputSwitches
-    name="input"
-    label="Label"
-    note="Note text"
-    help="This is a help text."
-    :options="options"
-    v-model="form.input"
-  />
+  <div class="items">
+    <SInputSwitches
+      mode="info"
+      name="input"
+      label="Label"
+      note="Note text"
+      help="This is a help text."
+      :options="options"
+      v-model="data"
+    />
+  </div>
 </StoryBase>
 
 ```html
 <template>
-  <SInputSwitches
-    name="input"
-    label="Label"
-    note="Note text"
-    help="This is a help text."
-    :options="options"
-    v-model="form.input"
-  />
+  <div class="items">
+    <SInputSwitches
+      name="input"
+      label="Label"
+      note="Note text"
+      help="This is a help text."
+      :options="options"
+      v-model="data"
+    />
+  </div>
 </template>
 
-<script>
-import SInputSwitches from '@globalbrain/sefirot/lib/components/inputs/SInputSwitches'
+<script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+import SInputSwitches from '@globalbrain/sefirot/lib/components/SInputSwitches.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputSwitches
   },
 
-  data() {
-    return {
-      form: {
-        input: [2]
-      },
+  setup() {
+    const data = ref([2])
 
-      options: [
-        { label: 'Switch 1', value: 1 },
-        { label: 'Switch 2', value: 2 },
-        { label: 'Switch 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Switch 1', value: 1 },
+      { label: 'Switch 2', value: 2 },
+      { label: 'Switch 3', value: 3 }
+    ]
+
+    return {
+      data,
+      options
     }
   }
-}
+})
 </script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.items {
+  width: 192px;
+}
+</style>
 ```
 </template>
 
-<script>
-import SInputSwitches from '@@/lib/components/SInputSwitches'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+import SInputSwitches from '@@/lib/components/SInputSwitches.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputSwitches,
     StoryBase
   },
 
-  data () {
-    return {
-      form: {
-        input: [2]
-      },
+  setup() {
+    const data = ref([2])
 
-      options: [
-        { label: 'Switch 1', value: 1 },
-        { label: 'Switch 2', value: 2 },
-        { label: 'Switch 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Switch 1', value: 1 },
+      { label: 'Switch 2', value: 2 },
+      { label: 'Switch 3', value: 3 }
+    ]
+
+    return {
+      data,
+      options
     }
   }
-}
+})
 </script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.items {
+  width: 192px;
+}
+</style>

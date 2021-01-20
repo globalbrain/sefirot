@@ -1,27 +1,32 @@
 <template>
   <SInputBase
     class="SInputSwitch"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
     :help="help"
   >
-    <div class="container">
-      <div class="input" :class="{ on: value }" role="button" @click="emitChange">
-        <p class="text">{{ text }}</p>
+    <div class="SInputSwitch-container">
+      <div class="SInputSwitch-input" :class="{ on: value }" role="button" @click="emitChange">
+        <p v-if="text" class="SInputSwitch-text">{{ text }}</p>
 
-        <div class="box">
-          <div class="check" />
+        <div class="SInputSwitch-box">
+          <div class="SInputSwitch-check" />
         </div>
       </div>
     </div>
   </SInputBase>
 </template>
 
-<script>
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { PropType, defineComponent, computed } from '@vue/composition-api'
+import SInputBase from './SInputBase.vue'
 
-export default {
+type Size = 'mini' | 'small'
+type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+
+export default defineComponent({
   components: {
     SInputBase
   },
@@ -32,87 +37,136 @@ export default {
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'small' },
+    mode: { type: String as PropType<Mode>, default: 'neutral' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
+    text: { type: String, default: null },
     help: { type: String, default: null },
-    text: { type: String, required: true },
     value: { type: Boolean, required: true }
   },
 
-  methods: {
-    emitChange() {
-      this.$emit('change', !this.value)
+  setup(props, { emit }) {
+    const classes = computed(() => [
+      props.size,
+      props.mode
+    ])
+
+    function emitChange(): void {
+      emit('change', !props.value)
+    }
+
+    return {
+      classes,
+      emitChange
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.container {
+.SInputSwitch.mini {
+  .SInputSwitch-box {
+    margin: 1px 0 0;
+    border-radius: 9px;
+    width: 36px;
+    height: 18px;
+  }
+
+  .SInputSwitch-check {
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    transition: background-color .25s, transform .25s;
+  }
+}
+
+.SInputSwitch.small {
+  .SInputSwitch-box {
+    margin: -1px 0 -1px;
+    border-radius: 11px;
+    width: 40px;
+    height: 22px;
+  }
+
+  .SInputSwitch-check {
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    transition: background-color .25s, transform .25s;
+  }
+}
+
+.SInputSwitch.neutral .SInputSwitch-input.on .SInputSwitch-box {
+  border-color: var(--c-black);
+  background-color: var(--c-black);
+}
+
+.SInputSwitch.info .SInputSwitch-input.on .SInputSwitch-box {
+  border-color: var(--c-info);
+  background-color: var(--c-info);
+}
+
+.SInputSwitch.success .SInputSwitch-input.on .SInputSwitch-box {
+  border-color: var(--c-success);
+  background-color: var(--c-success);
+}
+
+.SInputSwitch.warning .SInputSwitch-input.on .SInputSwitch-box {
+  border-color: var(--c-warning);
+  background-color: var(--c-warning);
+}
+
+.SInputSwitch.danger .SInputSwitch-input.on .SInputSwitch-box {
+  border-color: var(--c-danger);
+  background-color: var(--c-danger);
+}
+
+.SInputSwitch-container {
   display: flex;
 }
 
-.input {
+.SInputSwitch-input {
   position: relative;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
-  height: 32px;
 
   &:hover {
-    .box {
-      border-color: var(--c-black);
-    }
-
-    .check {
-      background-color: var(--c-black);
-    }
+    .SInputSwitch-box   { border-color: var(--c-black); }
+    .SInputSwitch-check { background-color: var(--c-black); }
   }
 }
 
-.input.on {
-  .box {
-    border-color: var(--c-black);
-    background-color: var(--c-black);
-    box-shadow: var(--shadow-depth-3);
-  }
-
-  .check {
-    background-color: var(--c-white);
-    transform: translateX(18px);
-  }
+.SInputSwitch-input.on .SInputSwitch-check {
+  background-color: var(--c-white);
+  transform: translateX(18px);
 }
 
-.text {
+.SInputSwitch-text {
   flex-grow: 1;
   margin: 0;
-  padding-right: 12px;
+  padding-right: 16px;
   line-height: 20px;
   font-size: 14px;
 }
 
-.box {
+.SInputSwitch-box {
   position: relative;
-  border: 1px solid var(--c-gray-dark-1);
-  border-radius: 9px;
-  width: 36px;
-  height: 18px;
+  flex-shrink: 0;
+  border: 1px solid var(--c-gray);
   background-color: var(--c-white-mute);
   transition: border-color .25s, background-color .25s, box-shadow .25s;
 }
 
-.check {
+.SInputSwitch-check {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  display: flex;
   border-radius: 50%;
-  width: 12px;
-  height: 12px;
   background-color: var(--c-black);
   transition: background-color .25s, transform .25s;
 }
