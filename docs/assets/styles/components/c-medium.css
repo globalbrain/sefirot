@@ -103,7 +103,7 @@
 
     @media (min-width: 768px) {
       margin: 24px -24px;
-      border-radius: 4px;
+      border-radius: 8px;
     }
   }
 
@@ -142,13 +142,14 @@
   }
 
   .StoryBase + [class*='language-'] {
+    display: none;
     margin-top: 0;
     border-top: 1px solid var(--c-divider-darker);
     overflow: hidden;
     overflow-x: auto;
 
     @media (min-width: 768px) {
-      border-radius: 0 0 4px 4px;
+      border-radius: 0 0 8px 8px;
     }
   }
 
