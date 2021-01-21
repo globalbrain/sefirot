@@ -42,6 +42,9 @@ import SIconEdit2 from '@@/lib/components/icons/SIconEdit2.vue'
 import SIconEdit3 from '@@/lib/components/icons/SIconEdit3.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconExternalLink from '@@/lib/components/icons/SIconExternalLink.vue'
+import SIconFile from '@@/lib/components/icons/SIconFile.vue'
+import SIconFilePlus from '@@/lib/components/icons/SIconFilePlus.vue'
+import SIconFileText from '@@/lib/components/icons/SIconFileText.vue'
 import SIconFlag from '@@/lib/components/icons/SIconFlag.vue'
 import SIconGitBranch from '@@/lib/components/icons/SIconGitBranch.vue'
 import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
@@ -100,6 +103,9 @@ export default defineComponent({
       { component: SIconEdit3, name: 'Edit3' },
       { component: SIconEye, name: 'Eye' },
       { component: SIconExternalLink, name: 'ExternalLink' },
+      { component: SIconFile, name: 'File' },
+      { component: SIconFilePlus, name: 'FilePlus' },
+      { component: SIconFileText, name: 'FileText' },
       { component: SIconFlag, name: 'Flag' },
       { component: SIconGitBranch, name: 'GitBranch' },
       { component: SIconGitCommit, name: 'GitCommit' },
