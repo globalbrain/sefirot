@@ -1,9 +1,9 @@
 import MutationObserver from 'mutation-observer'
 import { mount, createLocalVue } from '@vue/test-utils'
-import Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from 'sefirot/store/Sefirot'
-import SScreenMinimal from './_fixtures/SScreenMinimal'
+import SScreenMinimal from './_fixtures/SScreenMinimal.vue'
 
 global.MutationObserver = MutationObserver
 
@@ -14,7 +14,7 @@ localVue.use(Vuex)
 localVue.use(PortalVue)
 
 describe('Components - Screens - SScreen', () => {
-  let store = {}
+  let store = {} as Store<{}>
 
   beforeAll(() => {
     store = new Vuex.Store({

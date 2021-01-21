@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
-import SInputRadios from 'sefirot/components/SInputRadios'
+import SInputRadios from 'sefirot/components/SInputRadios.vue'
 
-describe('Components - Inputs - SInputRadios', () => {
+describe('components/SInputRadios', () => {
   test('it emits correct value when an user clicks a radio button', () => {
     const options = [
       { label: 'Radio button 1', value: 1 },
@@ -23,7 +23,7 @@ describe('Components - Inputs - SInputRadios', () => {
 
     wrapper2.find('.SInputRadios .col:nth-child(2) .input').trigger('click')
 
-    expect(wrapper2.emitted('change')[0][0]).toEqual(2)
+    expect(wrapper2.emitted('change')?.[0][0]).toEqual(2)
   })
 
   test('it can accept no radio to be checked when the `nullable` option are set', () => {
@@ -39,7 +39,7 @@ describe('Components - Inputs - SInputRadios', () => {
 
     wrapper1.find('.SInputRadios .col:nth-child(1) .input').trigger('click')
 
-    expect(wrapper1.emitted('change')[0][0]).toBe(null)
+    expect(wrapper1.emitted('change')?.[0][0]).toBe(null)
 
     const wrapper2 = mount(SInputRadios, {
       propsData: { value: 1, nullable: true, options }
@@ -47,6 +47,6 @@ describe('Components - Inputs - SInputRadios', () => {
 
     wrapper2.find('.SInputRadios .col:nth-child(2) .input').trigger('click')
 
-    expect(wrapper2.emitted('change')[0][0]).toEqual(2)
+    expect(wrapper2.emitted('change')?.[0][0]).toEqual(2)
   })
 })

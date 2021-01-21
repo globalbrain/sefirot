@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from 'sefirot/store/Sefirot'
-import SPortalScreens from 'sefirot/components/SPortalScreens'
+import SPortalScreens from 'sefirot/components/SPortalScreens.vue'
 
 global.MutationObserver = MutationObserver
 
@@ -40,7 +40,7 @@ describe('Components - Portals - SPortalScreens', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.screenName).toBe('screen')
+    expect((wrapper.vm as any).screenName).toBe('screen')
 
     store.dispatch('screen/close')
 
@@ -54,7 +54,7 @@ describe('Components - Portals - SPortalScreens', () => {
 
     await localVue.nextTick()
 
-    expect(wrapper.vm.screenName).toBe(null)
+    expect((wrapper.vm as any).screenName).toBe(null)
 
     jest.runAllTimers()
   })

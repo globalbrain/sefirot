@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
-import SPlaceholderImage from 'sefirot/components/SPlaceholderImage'
+import SPlaceholderImage from 'sefirot/components/SPlaceholderImage.vue'
 
 jest.useFakeTimers()
 
-describe('Components - Placeholders - SPlaceholderImage', () => {
+describe('components/placeholders/SPlaceholderImage', () => {
   test('it emits `load` event when image is loaded', () => {
     const wrapper = mount(SPlaceholderImage, {
       propsData: {
@@ -17,6 +17,6 @@ describe('Components - Placeholders - SPlaceholderImage', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.emitted('load').length).toBe(1)
+    expect(wrapper.emitted('load')?.length).toBe(1)
   })
 })

@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
-import SIconX from 'sefirot/components/icons/SIconX'
-import SGrid from 'sefirot/components/SGrid'
+import SIconX from 'sefirot/components/icons/SIconX.vue'
+import SGrid from 'sefirot/components/SGrid.vue'
 
-describe('Components - Grids - SGrid', () => {
+describe('components/SGrid', () => {
   test('if clickable, it emits `click` event when a user clicks the record', () => {
     const wrapper = mount(SGrid, {
       propsData: {
@@ -14,7 +14,7 @@ describe('Components - Grids - SGrid', () => {
 
     wrapper.find('.SGrid .row').trigger('click')
 
-    expect(wrapper.emitted('click')[0][0]).toEqual({ id: 1, name: 'John Doe' })
+    expect(wrapper.emitted('click')?.[0][0]).toEqual({ id: 1, name: 'John Doe' })
   })
 
   test('if not clickable, it will not emits `click` event when a user clicks the record', () => {

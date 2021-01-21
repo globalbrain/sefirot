@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
-import SInputCheckbox from 'sefirot/components/SInputCheckbox'
+import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 
-describe('Components - Inputs - SInputCheckbox', () => {
+describe('components/SInputCheckbox', () => {
   test('it emits `input` event when a user inputs the value', () => {
     const wrapper = mount(SInputCheckbox, {
       propsData: {
@@ -12,6 +12,6 @@ describe('Components - Inputs - SInputCheckbox', () => {
 
     wrapper.find('.SInputCheckbox .input').trigger('click')
 
-    expect(wrapper.emitted('change')[0][0]).toBe(true)
+    expect(wrapper.emitted('change')?.[0][0]).toBe(true)
   })
 })

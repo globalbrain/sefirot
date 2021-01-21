@@ -13,11 +13,12 @@
   </div>
 </template>
 
-<script>
-import SPortalModals from 'sefirot/components/SPortalModals'
-import SWindow from 'sefirot/components/SWindow'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SPortalModals from 'sefirot/components/SPortalModals.vue'
+import SWindow from 'sefirot/components/SWindow.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPortalModals,
     SWindow
@@ -36,5 +37,5 @@ export default {
       this.$store.dispatch('window/close')
     }
   }
-}
+})
 </script>

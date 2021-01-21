@@ -4,7 +4,7 @@ import Sefirot from 'sefirot/store/Sefirot'
 
 Vue.use(Vuex)
 
-describe('Store - Sefirot', () => {
+describe('store/Sefirot', () => {
   test('it registers Sefirot modules', () => {
     const store = new Vuex.Store({
       plugins: [Sefirot]

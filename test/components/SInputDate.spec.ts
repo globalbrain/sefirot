@@ -1,7 +1,7 @@
 import { mount, createLocalVue } from '@vue/test-utils'
 import Vue from 'vue'
 import VCalendar from 'v-calendar'
-import SInputDate from 'sefirot/components/SInputDate'
+import SInputDate from 'sefirot/components/SInputDate.vue'
 
 window.matchMedia = window.matchMedia || function () {
   return {
@@ -24,8 +24,8 @@ describe('Components - Inputs - SInputDate', () => {
       propsData: { value: null }
     })
 
-    wrapper.vm.emitInput('stub')
+    ;(wrapper.vm as any).emitInput('stub')
 
-    expect(wrapper.emitted('input')[0][0]).toBe('stub')
+    expect(wrapper.emitted('input')?.[0][0]).toBe('stub')
   })
 })

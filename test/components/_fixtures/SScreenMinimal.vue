@@ -11,14 +11,15 @@
   </div>
 </template>
 
-<script>
-import SPortalScreens from 'sefirot/components/SPortalScreens'
-import SScreen from 'sefirot/components/SScreen'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SPortalScreens from 'sefirot/components/SPortalScreens.vue'
+import SScreen from 'sefirot/components/SScreen.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPortalScreens,
     SScreen
   }
-}
+})
 </script>
