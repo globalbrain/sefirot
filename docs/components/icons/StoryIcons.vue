@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase>
+<StoryBase title="Icons">
   <ul class="flex flex-wrap -m-4">
     <li v-for="icon in icons" :key="icon.name" class="item relative">
       <div class="bg-white-mute flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
@@ -33,6 +33,7 @@ import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
 import SIconClock from '@@/lib/components/icons/SIconClock.vue'
+import SIconCode from '@@/lib/components/icons/SIconCode.vue'
 import SIconDollarSign from '@@/lib/components/icons/SIconDollarSign.vue'
 import SIconDownload from '@@/lib/components/icons/SIconDownload.vue'
 import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
@@ -90,6 +91,7 @@ export default defineComponent({
       { component: SIconChevronRight, name: 'ChevronRight' },
       { component: SIconChevronUp, name: 'ChevronUp' },
       { component: SIconClock, name: 'Clock' },
+      { component: SIconCode, name: 'Code' },
       { component: SIconDollarSign, name: 'DollarSign' },
       { component: SIconDownload, name: 'Download' },
       { component: SIconDownloadCloud, name: 'DownloadCloud' },
