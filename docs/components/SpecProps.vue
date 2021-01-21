@@ -54,45 +54,40 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .specs-row {
-  border-bottom: 1px solid var(--c-divider-lighter);
+  border-bottom: 1px solid var(--c-divider-light);
   padding-bottom: 24px;
 
   & + & {
-    padding-top: 24px;
-  }
-}
-
-.specs-record {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -12px;
-
-  @media (min-width: 375px) {
-    margin: 0 -16px;
+    padding-top: 20px;
   }
 }
 
 .specs-cell {
   flex-shrink: 0;
-  padding: 12px;
 
-  @media (min-width: 375px) {
-    padding: 12px 16px;
+  & + & {
+    padding-top: 12px;
   }
 
-  @media (min-width: 768px) {
-    padding: 12px 16px;
+  @media (min-width: 512px) {
+    display: flex;
   }
 }
 
 .specs-label {
+  flex-shrink: 0;
   margin: 0;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-text-light-2);
+
+  @media (min-width: 512px) {
+    width: 128px;
+  }
 }
 
 .specs-value {
+  flex-grow: 1;
   margin: 0;
   line-height: 20px;
   font-size: 14px;
@@ -106,20 +101,11 @@ export default defineComponent({
   font-size: 13px;
 }
 
-.specs-cell.description .specs-value {
-  line-height: 24px;
+.specs-cell.name .specs-value {
+  font-weight: 700;
 }
 
-.specs-cell.name        { width: 144px; }
-.specs-cell.type        { width: 144px; }
-.specs-cell.required    { width: 144px; }
-.specs-cell.default     { width: 144px; }
-.specs-cell.description { width: 100%; max-width: 592px; }
-
-@media (min-width: 768px) {
-  .specs-cell.name        { width: 25%; }
-  .specs-cell.type        { width: 25%; }
-  .specs-cell.required    { width: 25%; }
-  .specs-cell.default     { width: 25%; }
+.specs-cell.description .specs-value {
+  line-height: 24px;
 }
 </style>

@@ -19,7 +19,7 @@
   h2 {
     margin-top: 72px;
     margin-bottom: 24px;
-    border-top: 1px solid var(--c-divider-lighter);
+    border-top: 1px solid var(--c-divider-light);
     padding-top: 32px;
     line-height: 32px;
     font-family: var(--font-family-primary);

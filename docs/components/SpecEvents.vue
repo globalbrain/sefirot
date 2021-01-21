@@ -39,50 +39,52 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .specs-row {
-  border-bottom: 1px solid var(--c-divider-lighter);
+  border-bottom: 1px solid var(--c-divider-light);
   padding-bottom: 24px;
 
   & + & {
-    padding-top: 24px;
-  }
-}
-
-.specs-record {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 -12px;
-
-  @media (min-width: 375px) {
-    margin: 0 -16px;
+    padding-top: 20px;
   }
 }
 
 .specs-cell {
   flex-shrink: 0;
-  padding: 12px;
 
-  @media (min-width: 375px) {
-    padding: 12px 16px;
+  & + & {
+    padding-top: 12px;
+  }
+
+  @media (min-width: 512px) {
+    display: flex;
   }
 }
 
 .specs-label {
+  flex-shrink: 0;
   margin: 0;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-gray);
+  color: var(--c-text-light-2);
+
+  @media (min-width: 512px) {
+    width: 128px;
+  }
 }
 
 .specs-value {
+  flex-grow: 1;
   margin: 0;
+  line-height: 20px;
   font-size: 14px;
 }
 
 .specs-cell.name .specs-value {
   font-family: var(--font-family-mono);
   font-size: 13px;
+  font-weight: 700;
 }
 
-.specs-cell.name        { width: 100%; }
-.specs-cell.description { width: 100%; }
+.specs-cell.description .specs-value {
+  line-height: 24px;
+}
 </style>

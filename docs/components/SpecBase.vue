@@ -29,9 +29,9 @@ export default defineComponent({
 
 .title {
   margin: 0;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   border: 0;
-  border-bottom: 1px solid var(--c-divider);
+  border-bottom: 1px solid var(--c-divider-light);
   padding: 0 0 12px;
   line-height: 24px;
   font-size: 20px;
