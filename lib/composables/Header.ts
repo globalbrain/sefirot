@@ -1,5 +1,6 @@
 import { ComputedRef } from '@vue/composition-api'
 import { Values } from '../types/Utils'
+import { Refish } from './Utils'
 import { Action } from './Action'
 import { Tag } from './Tag'
 import { Dropdown, UseDropdownOptions, useDropdown } from './Dropdown'
@@ -9,10 +10,10 @@ export * from './Tag'
 
 export interface Header {
   size?: Size
-  title?: string
+  title?: Refish<string>
   search?: Search
-  actions?: Action[]
-  tags?: Tag[]
+  actions?: Refish<Action[]>
+  tags?: Refish<Tag[]>
 }
 
 export type Size = Values<typeof Sizes>
