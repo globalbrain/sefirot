@@ -1,3 +1,17 @@
+# [0.31.0](https://github.com/globalbrain/sefirot/compare/v0.30.0...v0.31.0) (2021-01-25)
+
+### Bug Fixes
+
+* **tag:** make font size a bit bolder ([913448d](https://github.com/globalbrain/sefirot/commit/913448de48f092d3d8424317b0a3773e17f2075a))
+
+### Features
+
+* **icon:** add code icon ([2f56557](https://github.com/globalbrain/sefirot/commit/2f56557e0574bad1340fbb9efb25d0ce88811514))
+* **icon:** add file icons ([aacf9d2](https://github.com/globalbrain/sefirot/commit/aacf9d2c0200923f25dd8edf36a26b7a2aefdbca))
+* **card:** add loading state option ([8ce9d81](https://github.com/globalbrain/sefirot/commit/8ce9d819e6841d53e21d1f21bef74233f4e34418))
+* **header:** support ref for the options ([a0bbc56](https://github.com/globalbrain/sefirot/commit/a0bbc560f9a77d5a9d49198248be6a5e4c6a1937))
+* add composable utility functions ([7c0a4a0](https://github.com/globalbrain/sefirot/commit/7c0a4a03e926c488a9dfd7e1e29c88958a7c16bc))
+
 # [0.30.0](https://github.com/globalbrain/sefirot/compare/v0.29.0...v0.30.0) (2021-01-20)
 
 ### Features
