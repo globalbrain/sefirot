@@ -33,6 +33,7 @@ export default defineComponent({
   .text {
     line-height: 20px;
     font-size: 12px;
+    font-weight: 500;
   }
 
   .icon {
