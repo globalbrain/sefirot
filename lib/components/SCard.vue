@@ -13,14 +13,22 @@
         />
       </div>
 
-      <slot />
+      <div class="SCard-content">
+        <slot />
 
-      <template v-for="(module, index) in modules">
-        <component :is="module.component" :key="index" v-bind="module.data" />
-      </template>
+        <template v-for="(module, index) in modules">
+          <component :is="module.component" :key="index" v-bind="module.data" />
+        </template>
 
-      <div v-if="footer" class="footer">
-        <SCardFooter :size="size" :actions="footer.actions" />
+        <div v-if="footer" class="footer">
+          <SCardFooter :size="size" :actions="footer.actions" />
+        </div>
+
+        <div v-if="loading" class="SCard-loader">
+          <div class="SCard-loader-icon">
+            <SIconPreloaderDark class="SCard-loader-svg" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,11 +37,13 @@
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
 import { Header, Module, Footer, Size, Mode } from '../composables/Card'
+import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SCardHeader from './SCardHeader.vue'
 import SCardFooter from './SCardFooter.vue'
 
 export default defineComponent({
   components: {
+    SIconPreloaderDark,
     SCardHeader,
     SCardFooter
   },
@@ -46,7 +56,8 @@ export default defineComponent({
     footer: { type: Object as PropType<Footer>, default: null },
     round: { type: Number, default: 8 },
     depth: { type: Number, default: 1 },
-    collapsable: { type: Boolean, default: true }
+    collapsable: { type: Boolean, default: true },
+    loading: { type: Boolean, default: false }
   },
 
   setup(props) {
@@ -54,6 +65,7 @@ export default defineComponent({
 
     const classes = computed(() => [
       { collapsed: isCollapsed.value },
+      { loading: props.loading },
       props.size,
       `border-${props.border}`,
       `round${props.round}`,
@@ -85,11 +97,19 @@ export default defineComponent({
   overflow: hidden;
 }
 
+.SCard.loading .SCard-content {
+  height: 128px;
+  overflow: hidden;
+}
+
 .SCard.round4 { border-radius: 4px; }
 .SCard.round8 { border-radius: 8px; }
 
 .SCard.round4 .SCard-container { border-radius: 4px; }
 .SCard.round8 .SCard-container { border-radius: 8px; }
+
+.SCard.round4 .SCard-content { border-radius: 4px; }
+.SCard.round8 .SCard-content { border-radius: 8px; }
 
 .SCard.round4 .footer { border-radius: 0 0 4px 4px; }
 .SCard.round8 .footer { border-radius: 0 0 8px 8px; }
@@ -102,8 +122,34 @@ export default defineComponent({
 
 .SCard.border-danger .SCard-container { box-shadow: inset 0 0 0 1px var(--c-danger); }
 
+.SCard-content {
+  position: relative;
+}
+
 .footer {
   overflow: hidden;
+}
+
+.SCard-loader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--c-white);
+}
+
+.SCard-loader-icon {
+  width: 48px;
+  height: 48px;
+}
+
+.SCard-loader-svg {
+  width: 48px;
+  height: 48px;
 }
 
 .SCard >>> .SCard {

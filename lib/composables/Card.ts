@@ -1,4 +1,5 @@
 import { Values } from '../types/Utils'
+import { Refish } from './Utils'
 import { Header } from './Header'
 import { Action } from './Action'
 
@@ -14,6 +15,7 @@ export interface Card {
   round?: number
   depth?: number
   collapsable?: boolean
+  loading?: Refish<boolean>
 }
 
 export type Size = Values<typeof Sizes>
