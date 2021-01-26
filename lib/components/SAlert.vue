@@ -24,7 +24,7 @@ import SIconCheckCircle from './icons/SIconCheckCircle.vue'
 import SIconWarning from './icons/SIconWarning.vue'
 import SIconXCircle from './icons/SIconXCircle.vue'
 import SCard from './SCard.vue'
-import SModalBase from './SModalBase'
+import SModalBase from './SModalBase.vue'
 
 export default defineComponent({
   components: {
@@ -42,13 +42,13 @@ export default defineComponent({
 
   setup(props) {
     const header = useHeader({
-      mode: props.type,
+      mode: props.type as any,
       icon: getIcon(),
       title: props.title
     })
 
     const footer = useFooter({
-      actions: props.actions.map((action) => {
+      actions: props.actions.map((action: any) => {
         return useButtonAction({
           kind: action.type,
           mode: action.mode,
