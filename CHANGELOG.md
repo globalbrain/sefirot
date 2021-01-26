@@ -1,3 +1,9 @@
+# [0.32.0](https://github.com/globalbrain/sefirot/compare/v0.31.0...v0.32.0) (2021-01-26)
+
+### Features
+
+* **alert:** make alert component better ([62996e5](https://github.com/globalbrain/sefirot/commit/62996e5de480a036055e69bcea6ca5e1277ec908))
+
 # [0.31.0](https://github.com/globalbrain/sefirot/compare/v0.30.0...v0.31.0) (2021-01-25)
 
 ### Bug Fixes
