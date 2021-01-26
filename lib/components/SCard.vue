@@ -5,6 +5,8 @@
         <SCardHeader
           :is-collapsed="isCollapsed"
           :size="size"
+          :mode="header.mode"
+          :icon="header.icon"
           :title="header.title"
           :search="header.search"
           :actions="header.actions"

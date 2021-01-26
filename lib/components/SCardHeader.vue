@@ -2,6 +2,8 @@
   <div class="SCardHeader" :class="classes">
     <SHeader
       size="small"
+      :mode="mode"
+      :icon="icon"
       :title="title"
       :search="search"
       :actions="actions"
@@ -19,7 +21,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Size, Search, Action } from '../composables/Card'
+import { Size, Mode, Search, Action } from '../composables/Card'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SHeader from './SHeader.vue'
 
@@ -32,6 +34,8 @@ export default defineComponent({
   props: {
     isCollapsed: { type: Boolean, required: true },
     size: { type: String as PropType<Size>, default: 'compact' },
+    mode: { type: String as PropType<Mode>, default: 'neutral' },
+    icon: { type: Object, default: null },
     title: { type: String, default: null },
     search: { type: Object as PropType<Search>, default: null },
     actions: { type: Array as PropType<Action[]>, default: () => [] },

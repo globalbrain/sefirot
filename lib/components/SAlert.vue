@@ -1,166 +1,102 @@
 <template>
-  <SModalBase name="alert" :closable="false">
-    <div class="SAlert" :class="classes">
-      <div class="icon">
-        <component :is="icon" class="icon-svg" />
-      </div>
-
-      <p class="title">{{ data.title }}</p>
-      <p class="text">{{ data.text }}</p>
-
-      <div class="actions">
-        <div v-for="(action, index) in data.actions" :key="index" class="action">
-          <SButton
-            :label="action.label"
-            :type="getActionType(action.type)"
-            :mode="action.mode"
-            @click="action.callback"
-          />
+  <SModalBase :name="name" :closable="false">
+    <div class="SAlert">
+      <SCard
+        size="wide"
+        :header="header"
+        :footer="footer"
+        :collapsable="false"
+        :depth="3"
+      >
+        <div class="SAlert-content">
+          <p class="SAlert-text">{{ text }}</p>
         </div>
-      </div>
+      </SCard>
     </div>
   </SModalBase>
 </template>
 
-<script>
-import SIconInfo from './icons/SIconInfo'
-import SIconCheckCircleThin from './icons/SIconCheckCircleThin'
-import SIconWarning from './icons/SIconWarning'
-import SIconXCircleThin from './icons/SIconXCircleThin'
-import SButton from './SButton'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useHeader, useFooter, useButtonAction } from '../composables/Card'
+import SIconInfo from './icons/SIconInfo.vue'
+import SIconCheckCircle from './icons/SIconCheckCircle.vue'
+import SIconWarning from './icons/SIconWarning.vue'
+import SIconXCircle from './icons/SIconXCircle.vue'
+import SCard from './SCard.vue'
 import SModalBase from './SModalBase'
 
-export default {
+export default defineComponent({
   components: {
-    SButton,
+    SCard,
     SModalBase
   },
 
-  computed: {
-    data() {
-      return this.$store.getters['modal/active']?.data ?? {}
-    },
-
-    classes() {
-      return {
-        info: this.data.type === 'info',
-        success: this.data.type === 'success',
-        warning: this.data.type === 'warning',
-        danger: this.data.type === 'danger',
-        error: this.data.type === 'error'
-      }
-    },
-
-    icon() {
-      if (this.data.type === 'success') {
-        return SIconCheckCircleThin
-      }
-
-      if (this.data.type === 'warning') {
-        return SIconWarning
-      }
-
-      if (this.data.type === 'danger') {
-        return SIconWarning
-      }
-
-      if (this.data.type === 'error') {
-        return SIconXCircleThin
-      }
-
-      return SIconInfo
-    }
+  props: {
+    type: { type: String, required: true },
+    name: { type: String, required: true },
+    title: { type: String, default: null },
+    text: { type: String, default: null },
+    actions: { type: Array, default: () => [] }
   },
 
-  methods: {
-    getActionType(value) {
-      if (value === 'mute') {
-        return 'mute'
-      }
+  setup(props) {
+    const header = useHeader({
+      mode: props.type,
+      icon: getIcon(),
+      title: props.title
+    })
 
-      return 'primary'
+    const footer = useFooter({
+      actions: props.actions.map((action) => {
+        return useButtonAction({
+          kind: action.type,
+          mode: action.mode,
+          label: action.label,
+          callback: action.callback
+        })
+      })
+    })
+
+    function getIcon() {
+      switch (props.type) {
+        case 'info':
+          return SIconInfo
+        case 'success':
+          return SIconCheckCircle
+        case 'warning':
+          return SIconWarning
+        case 'danger':
+          return SIconXCircle
+      }
+    }
+
+    return {
+      header,
+      footer
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
 .SAlert {
-  margin: 48px 16px;
-  border-radius: 2px;
-  padding: 48px;
-  width: 100%;
+  margin: 64px 16px;
+  border-radius: 8px;
   max-width: 512px;
-  background-color: var(--c-white);
-  box-shadow: var(--shadow-depth-5);
-  transition: opacity .25s, transform .5s var(--ease-out-quint);
-  transition-delay: .5s;
 
   @media (min-width: 544px) {
-    margin: 128px auto;
+    margin: 96px auto;
   }
 }
 
-.modal-content-enter .SAlert {
-  transform: scale(1.1);
+.SAlert-content {
+  padding: 16px 24px;
 }
 
-.modal-content-leave-to .SAlert {
-  transform: scale(.9);
-}
-
-.SAlert.info {
-  .icon-svg { fill: var(--c-gray); }
-}
-
-.SAlert.success {
-  .icon-svg { fill: var(--c-success); }
-}
-
-.SAlert.warning {
-  .icon-svg { fill: var(--c-warning); }
-}
-
-.SAlert.danger {
-  .title    { color: var(--c-danger); }
-  .icon-svg { fill: var(--c-danger); }
-}
-
-.SAlert.error {
-  .title    { color: var(--c-danger); }
-  .icon-svg { fill: var(--c-danger); }
-}
-
-.icon-svg {
-  display: block;
-  margin: 0 auto;
-  width: 48px;
-  height: 48px;
-}
-
-.title {
-  padding-top: 24px;
-  text-align: center;
-  line-height: 32px;
-  font-size: 24px;
-}
-
-.text {
-  padding-top: 12px;
-  text-align: center;
-}
-
-.actions {
-  display: flex;
-  padding-top: 48px;
-  justify-content: center;
-}
-
-.action {
-  & + & {
-    padding-left: 8px;
-  }
+.SAlert-text {
+  font-size: 14px;
 }
 </style>

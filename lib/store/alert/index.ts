@@ -10,6 +10,7 @@ export interface PayloadOpen {
 
 export interface Action {
   type?: 'primary' | 'mute'
+  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
   label: string
   callback: Function
 }

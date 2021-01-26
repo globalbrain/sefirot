@@ -8,7 +8,9 @@
       <SDialog :key="dialog.name" :name="dialog.name" v-bind="dialog.data" />
     </template>
 
-    <SAlert />
+    <template v-for="alert in alerts">
+      <SAlert :key="alert.name" :name="alert.name" v-bind="alert.data" />
+    </template>
 
     <div ref="el" class="modal-content" :class="{ show }">
       <portal-target name="modal" multiple />
@@ -45,6 +47,12 @@ export default defineComponent({
       })
     })
 
+    const alerts = computed(() => {
+      return store.state.modal.history.filter((h: any) => {
+        return h.name.startsWith('alert')
+      })
+    })
+
     watch(active, (value) => { value ? open() : close() })
 
     watch(current, () => {
@@ -73,7 +81,8 @@ export default defineComponent({
     return {
       el,
       show,
-      dialogs
+      dialogs,
+      alerts
     }
   },
 

@@ -10,6 +10,8 @@ export * from './Tag'
 
 export interface Header {
   size?: Size
+  mode?: Mode
+  icon?: any
   title?: Refish<string>
   search?: Search
   actions?: Refish<Action[]>
@@ -22,6 +24,16 @@ export const Sizes = {
   Small: 'small',
   Medium: 'medium',
   Large: 'large'
+} as const
+
+export type Mode = Values<typeof Modes>
+
+export const Modes = {
+  Neutral: 'neutral',
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+  Danger: 'danger'
 } as const
 
 export interface Search {

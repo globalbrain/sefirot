@@ -1,7 +1,8 @@
 <template>
-  <div class="SHeader" :class="[size]">
+  <div class="SHeader" :class="[size, mode]">
     <div class="main">
       <div class="primary">
+        <component :is="icon" v-if="icon" class="SHeader-icon" />
         <p v-if="title" class="title">{{ title }}</p>
         <slot />
       </div>
@@ -32,7 +33,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Size, Search, Action, Tag } from '../composables/Header'
+import { Size, Mode, Search, Action, Tag } from '../composables/Header'
 import SAction from './SAction.vue'
 import STag from './STag.vue'
 
@@ -44,6 +45,8 @@ export default defineComponent({
 
   props: {
     size: { type: String as PropType<Size>, default: 'medium' },
+    mode: { type: String as PropType<Mode>, default: 'neutral' },
+    icon: { type: Object, default: null },
     title: { type: String, default: null },
     search: { type: Object as PropType<Search>, default: null },
     actions: { type: Array as PropType<Action[]>, default: () => [] },
@@ -81,6 +84,12 @@ export default defineComponent({
 }
 
 .SHeader.small {
+  .SHeader-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+  }
+
   .title {
     line-height: 32px;
     font-size: 14px;
@@ -91,6 +100,12 @@ export default defineComponent({
 }
 
 .SHeader.medium {
+  .SHeader-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+  }
+
   .title {
     line-height: 32px;
     font-size: 16px;
@@ -101,6 +116,12 @@ export default defineComponent({
 }
 
 .SHeader.large {
+  .SHeader-icon {
+    margin-right: 8px;
+    width: 16px;
+    height: 16px;
+  }
+
   .title {
     line-height: 32px;
     font-size: 20px;
@@ -110,11 +131,25 @@ export default defineComponent({
   .tag  { padding: 0 8px; }
 }
 
+.SHeader.neutral .title { color: var(--c-text-1); }
+.SHeader.info .title    { color: var(--c-text-1); }
+.SHeader.success .title { color: var(--c-text-1); }
+.SHeader.warning .title { color: var(--c-text-1); }
+.SHeader.danger .title  { color: var(--c-danger); }
+
+.SHeader.neutral .SHeader-icon { fill: var(--c-text-1); }
+.SHeader.info .SHeader-icon    { fill: var(--c-info); }
+.SHeader.success .SHeader-icon { fill: var(--c-success); }
+.SHeader.warning .SHeader-icon { fill: var(--c-warning); }
+.SHeader.danger .SHeader-icon  { fill: var(--c-danger); }
+
 .main {
   display: flex;
 }
 
 .primary {
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 }
 
