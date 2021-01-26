@@ -1,3 +1,9 @@
+## [0.32.1](https://github.com/globalbrain/sefirot/compare/v0.32.0...v0.32.1) (2021-01-26)
+
+### Bug Fixes
+
+* **types:** fix type error in alert modal ([70baf12](https://github.com/globalbrain/sefirot/commit/70baf12f23a2e14b1277e7677571af57cdecc690))
+
 # [0.32.0](https://github.com/globalbrain/sefirot/compare/v0.31.0...v0.32.0) (2021-01-26)
 
 ### Features
