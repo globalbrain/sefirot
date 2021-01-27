@@ -1,3 +1,9 @@
+# [0.33.0](https://github.com/globalbrain/sefirot/compare/v0.32.1...v0.33.0) (2021-01-27)
+
+### Features
+
+* **form:** add callback data creation support in useData composable ([0622618](https://github.com/globalbrain/sefirot/commit/0622618af60646041a1cafb027ac68370c3c3b61))
+
 ## [0.32.1](https://github.com/globalbrain/sefirot/compare/v0.32.0...v0.32.1) (2021-01-26)
 
 ### Bug Fixes
