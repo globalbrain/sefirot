@@ -1,3 +1,9 @@
+## [0.34.1](https://github.com/globalbrain/sefirot/compare/v0.34.0...v0.34.1) (2021-01-28)
+
+### Bug Fixes
+
+* **input-date:** selection not reactive to the input field ([7743fa0](https://github.com/globalbrain/sefirot/commit/7743fa08dc2b4a7b4a51de895902084611ba3605))
+
 # [0.34.0](https://github.com/globalbrain/sefirot/compare/v0.33.0...v0.34.0) (2021-01-28)
 
 ### Bug Fixes
