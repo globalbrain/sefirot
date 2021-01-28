@@ -1,3 +1,13 @@
+# [0.34.0](https://github.com/globalbrain/sefirot/compare/v0.33.0...v0.34.0) (2021-01-28)
+
+### Bug Fixes
+
+* **modal:** not current modals propery ([82c2399](https://github.com/globalbrain/sefirot/commit/82c23990b0985b78cba358dda8aa773a019ee57e))
+
+### Features
+
+* add computedIfOnly composable utility function ([a8ada61](https://github.com/globalbrain/sefirot/commit/a8ada615c07e4864266027a7409baa9b46043e69))
+
 # [0.33.0](https://github.com/globalbrain/sefirot/compare/v0.32.1...v0.33.0) (2021-01-27)
 
 ### Features
