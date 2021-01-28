@@ -1,31 +1,47 @@
-import { Ref, ComputedRef, computed, isRef } from '@vue/composition-api'
+import { Ref, ComputedRef, UnwrapRef, ref, computed, watch, isRef } from '@vue/composition-api'
 
 export type Refish<T = any> = T | Ref<T> | ComputedRef<T>
 
-export function get<T>(ref: Refish<T>): T {
-  return isRef(ref) ? ref.value : ref
+export function get<T>(refish: Refish<T>): T {
+  return isRef(refish) ? refish.value : refish
 }
 
 export function computedIf<T, R, E>(
-  ref: Refish<T | null>,
+  refish: Refish<T | null>,
   callback: (value: T) => R,
   empty: E
 ): ComputedRef<R | E> {
   return computed(() => {
-    const value = get(ref)
+    const value = get(refish)
 
     return value ? callback(value) : empty
   })
 }
 
+export function computedIfOnly<T, R, E>(
+  refish: Ref<T | null> | ComputedRef<T | null>,
+  callback: (value: T) => R,
+  empty: E
+): Ref<R | E> {
+  const value = ref<R | E>(empty)
+
+  watch(refish, (newValue) => {
+    value.value = newValue
+      ? callback(newValue) as UnwrapRef<R>
+      : empty as UnwrapRef<E>
+  })
+
+  return value as Ref<R | E>
+}
+
 export function computedArrayIf<T, D extends any[]>(
-  ref: Refish<T | null>,
+  refish: Refish<T | null>,
   callback: (carry: D, value: T) => void
 ): ComputedRef<D> {
   return computed(() => {
     const carry = [] as any
 
-    const value = get(ref)
+    const value = get(refish)
 
     value && callback(carry, value)
 
