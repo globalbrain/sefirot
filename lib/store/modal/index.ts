@@ -69,9 +69,10 @@ export const mutations: MutationTree<State> = {
   },
 
   back(state: State): void {
-    const latestItem = state.history[state.history.length - 2]
+    const latestIndex = state.history.findIndex(h => h.name === state.name)
+    const previousItem = state.history[latestIndex - 1]
 
-    state.name = latestItem ? latestItem.name : null
+    state.name = previousItem ? previousItem.name : null
   },
 
   reset(state: State): void {
