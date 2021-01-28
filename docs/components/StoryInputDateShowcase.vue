@@ -3,12 +3,12 @@
   <div class="form">
     <div class="input">
       <SInputDate
-        v-model="data.birthday"
         name="birthday"
         label="Birthday"
         note="Required"
         help="Please fill in your birthday."
-        :validation="validation.birthday"
+        :validation="validation.date"
+        v-model="data.date"
       />
     </div>
     <ul class="actions">
@@ -27,17 +27,17 @@
   <div class="form">
     <div class="input">
       <SInputDate
-        v-model="data.birthday"
         name="birthday"
         label="Birthday"
         note="Required"
         help="Please fill in your birthday."
-        :validation="validation.birthday"
+        :validation="validation.date"
+        v-model="data.date"
       />
     </div>
     <ul class="actions">
       <li class="action">
-        <SButton label="RESET" type="secondary" @click="validation.$reset" />
+        <SButton type="secondary" label="RESET" @click="validation.$reset" />
       </li>
       <li class="action">
         <SButton label="VALIDATE" @click="validation.$validate" />
@@ -47,9 +47,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { required } from '@globalbrain/sefirot/lib/validation/rules'
-import useForm from '@globalbrain/sefirot/lib/compositions/useForm'
+import { useData, useValidation } from '@globalbrain/sefirot/lib/composables/Form'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import SInputDate from '@globalbrain/sefirot/lib/components/SInputDate.vue'
 
@@ -60,13 +60,12 @@ export default defineComponent({
   },
 
   setup() {
-    const { data, validation } = useForm({
-      data: {
-        birthday: null
-      },
-      rules: {
-        birthday: [required('The field is required.')]
-      }
+    const { data } = useData({
+      date: null
+    })
+
+    const validation = useValidation(data, {
+      date: [required()]
     })
 
     return {
@@ -99,7 +98,7 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@@/lib/validation/rules'
-import useForm from '@@/lib/compositions/useForm'
+import { useData, useValidation } from '@@/lib/composables/Form'
 import SButton from '@@/lib/components/SButton.vue'
 import SInputDate from '@@/lib/components/SInputDate.vue'
 import StoryBase from '@/components/StoryBase.vue'
@@ -112,13 +111,12 @@ export default defineComponent({
   },
 
   setup () {
-    const { data, validation } = useForm({
-      data: {
-        birthday: null
-      },
-      rules: {
-        birthday: [required('The field is required.')]
-      }
+    const { data } = useData({
+      date: null
+    })
+
+    const validation = useValidation(data, {
+      date: [required()]
     })
 
     return {

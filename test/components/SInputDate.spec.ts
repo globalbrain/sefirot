@@ -17,8 +17,8 @@ Vue.use(VCalendar, {
 
 const localVue = createLocalVue()
 
-describe('Components - Inputs - SInputDate', () => {
-  test('it emits `input` event when a user inputs the value', () => {
+describe('components/SInputDate', () => {
+  it('emits `input` event when a user inputs the value', () => {
     const wrapper = mount(SInputDate, {
       localVue,
       propsData: { value: null }

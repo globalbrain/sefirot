@@ -1,6 +1,7 @@
 <template>
   <SInputBase
     class="SInputDate"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
@@ -10,11 +11,12 @@
     <div class="container">
       <ClientOnly>
         <v-date-picker
-          v-slot="{ inputProps, inputEvents }"
+          v-slot="{ inputValue, inputEvents }"
           :value="value"
           color="blue"
           is-dark
           :masks="{ input: 'YYYY-MM-DD' }"
+          :model-config="{ type: 'string', mask: 'YYYY-MM-DD' }"
           :popover="{ placement: 'bottom', visibility: 'click' }"
           @input="emitInput"
         >
@@ -23,7 +25,8 @@
             class="input"
             type="text"
             placeholder="YYYY-MM-DD"
-            v-bind="inputProps"
+            :value="inputValue"
+            autocomplete="off"
             v-on="inputEvents"
             @blur="emitBlur"
           >
@@ -34,9 +37,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
+
+type Size = 'medium' | 'mini'
+type Mode = 'filled' | 'outlined'
 
 export default defineComponent({
   components: {
@@ -44,27 +50,32 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'medium' },
+    mode: { type: String as PropType<Mode>, default: 'filled' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
-    value: { type: Date, default: null },
+    value: { type: String, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup(props, context) {
-    function emitInput(date: Date | null) {
-      context.emit('input', date)
+  setup(props, { emit }) {
+    const classes = computed(() => [props.size, props.mode])
+
+    function emitInput(date: string | null) {
+      emit('input', date)
     }
 
     function emitBlur(e: InputEvent) {
       setTimeout(() => {
         props.validation && props.validation.$touch()
-        context.emit('blur', (e.target as HTMLInputElement).value)
+        emit('blur', (e.target as HTMLInputElement).value)
       }, 100)
     }
 
     return {
+      classes,
       emitInput,
       emitBlur
     }
@@ -75,12 +86,52 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
+.SInputDate.mini {
+  .input {
+    padding: 3px 12px;
+    width: 100%;
+    line-height: 24px;
+    font-size: 14px;
+  }
+}
+
+.SInputDate.medium {
+  .input {
+    padding: 11px 16px;
+    width: 100%;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
 .SInputDate.has-error {
   .input {
     border-color: var(--c-danger);
 
     &:focus {
       border-color: var(--c-danger);
+    }
+  }
+}
+
+.SInputDate.filled {
+  .input {
+    background-color: var(--input-filled-bg);
+
+    &:focus {
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
+    }
+  }
+}
+
+.SInputDate.outlined {
+  .input {
+    border-color: var(--input-outlined-border);
+
+    &:focus {
+      border-color: var(--input-focus-border);
+      background-color: var(--input-focus-bg);
     }
   }
 }
@@ -93,20 +144,12 @@ export default defineComponent({
   display: block;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding: 11px 16px;
   width: 100%;
-  line-height: 24px;
-  font-size: 16px;
-  background-color: var(--c-white-mute);
+  color: var(--input-text);
   transition: border-color .25s, background-color .25s;
 
   &::placeholder {
-    color: var(--c-text-light-2);
-  }
-
-  &:focus {
-    border-color: var(--c-black);
-    background-color: var(--c-white);
+    color: var(--input-placeholder);
   }
 }
 </style>
