@@ -1,3 +1,9 @@
+## [0.34.2](https://github.com/globalbrain/sefirot/compare/v0.34.1...v0.34.2) (2021-02-01)
+
+### Bug Fixes
+
+* **modal:** do not close modal when descendant element is clicked ([0cf5bd8](https://github.com/globalbrain/sefirot/commit/0cf5bd8d7a0b5b1a317af69291f53f706964fe54))
+
 ## [0.34.1](https://github.com/globalbrain/sefirot/compare/v0.34.0...v0.34.1) (2021-01-28)
 
 ### Bug Fixes
