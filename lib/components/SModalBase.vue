@@ -27,8 +27,26 @@ export default defineComponent({
     const mount = computed(() => store.state.modal.history.some((h: any) => h.name === props.name))
     const show = computed(() => props.name === store.state.modal.name)
 
-    function close(): void {
-      props.closable && store.dispatch('modal/close')
+    function close(e: MouseEvent): void {
+      if (props.closable) {
+        if (!isDescendant(e.target)) {
+          store.dispatch('modal/close')
+        }
+      }
+    }
+
+    function isDescendant(el: any): boolean {
+      if (el.classList && el.classList.contains('SModalBase')) {
+        return false
+      }
+
+      const parent = document.getElementsByClassName('modal-content')[0]
+
+      if (parent && parent.contains(el)) {
+        return true
+      }
+
+      return false
     }
 
     return {
