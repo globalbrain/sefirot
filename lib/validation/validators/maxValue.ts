@@ -1,3 +1,3 @@
-export default function maxValue(value: any, max: number): boolean {
-    return false
+export default function maxValue(value: number, max: number): boolean {
+  return value <= max
 }
