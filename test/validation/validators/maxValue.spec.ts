@@ -7,7 +7,7 @@ describe('validation/validators/maxValue', () => {
     const checks: Check[] = [
       [255, 256, true],
       [256, 256, true],
-      [256, 257, false],
+      [256, 255, false],
       [-1, 0, true],
       [0, 0, true],
       [0, -1, false],
