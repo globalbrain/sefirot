@@ -25,6 +25,10 @@ export function computedIfOnly<T, R, E>(
 ): Ref<R | E> {
   const value = ref<R | E>(empty)
 
+  if (refish.value) {
+    value.value = callback(refish.value) as UnwrapRef<R>
+  }
+
   watch(refish, (newValue) => {
     value.value = newValue
       ? callback(newValue) as UnwrapRef<R>
