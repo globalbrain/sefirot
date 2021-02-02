@@ -1,6 +1,7 @@
 import day from './day'
 import email from './email'
 import include from './include'
+import maxValue from './maxValue'
 import month from './month'
 import not from './not'
 import regex from './regex'
@@ -21,6 +22,7 @@ export {
   day,
   email,
   include,
+  maxValue,
   month,
   not,
   regex,
