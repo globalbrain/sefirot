@@ -1,3 +1,14 @@
+# [0.35.0](https://github.com/globalbrain/sefirot/compare/v0.34.2...v0.35.0) (2021-02-03)
+
+### Bug Fixes
+
+* set initial value when refish is not empty in `computedIfOnly` ([aeab953](https://github.com/globalbrain/sefirot/commit/aeab953686d50ccefdef4173ce974914a28f2bcc))
+
+### Features
+
+* **validation:** add max length validation rule ([#34](https://github.com/globalbrain/sefirot/issues/34)) ([#37](https://github.com/globalbrain/sefirot/issues/37)) ([7a3643b](https://github.com/globalbrain/sefirot/commit/7a3643b99d7a0eb3f83bdfcedf9c9e8d01919fe0))
+* **validation:** add max value validation rule ([#35](https://github.com/globalbrain/sefirot/issues/35)) ([#36](https://github.com/globalbrain/sefirot/issues/36)) ([84aef8f](https://github.com/globalbrain/sefirot/commit/84aef8fdeccb6bac4fba3b89bbd7bff42ca393c0))
+
 ## [0.34.2](https://github.com/globalbrain/sefirot/compare/v0.34.1...v0.34.2) (2021-02-01)
 
 ### Bug Fixes
