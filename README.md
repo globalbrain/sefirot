@@ -5,14 +5,14 @@
 <h1 align="center">Sefirot</h1>
 
 <p align="center">
-  <a href="https://travis-ci.org/globalbrain/sefirot">
-      <img src="https://travis-ci.org/globalbrain/sefirot.svg?branch=master" alt="Travis CI">
+  <a href="https://github.com/globalbrain/sefirot/actions">
+    <img src="https://github.com/globalbrain/sefirot/workflows/Test/badge.svg" alt="GitHub Actions">
   </a>
   <a href="https://codecov.io/gh/globalbrain/sefirot">
-      <img src="https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg" alt="codecov">
+    <img src="https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg" alt="codecov">
   </a>
   <a href="https://github.com/globalbrain/sefirot/blob/master/LICENSE.md">
-      <img src="https://img.shields.io/npm/l/@globalbrain/sefirot.svg" alt="License">
+    <img src="https://img.shields.io/npm/l/@globalbrain/sefirot.svg" alt="License">
   </a>
 </p>
 
@@ -34,7 +34,7 @@ We're really excited that you are interested in contributing to Sefirot. Before 
 
 Sefirot follows official [Vue Style Guide](https://vuejs.org/v2/style-guide/). But always remember to follow the "Golden Rule" below.
 
-> Every line of code should appear to be written by a single person, no matter the number of contributors.  
+> Every line of code should appear to be written by a single person, no matter the number of contributors.
 > &mdash; <cite>@mdo</cite>
 
 ### Development
