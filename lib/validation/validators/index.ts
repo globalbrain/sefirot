@@ -1,6 +1,7 @@
 import day from './day'
 import email from './email'
 import include from './include'
+import maxLength from './maxLength'
 import maxValue from './maxValue'
 import month from './month'
 import regex from './regex'
@@ -13,6 +14,7 @@ export {
   day,
   email,
   include,
+  maxLength,
   maxValue,
   month,
   regex,
