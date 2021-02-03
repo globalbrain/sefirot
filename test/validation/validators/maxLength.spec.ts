@@ -1,9 +1,9 @@
 import { maxLength } from 'sefirot/validation/validators'
 
-type Check = [string | Array<any>, number, boolean]
+type Check = [string | string[], number, boolean]
 
 describe('validation/validators/maxLength', () => {
-  test('it validates if the value is max words or less', () => {
+  test('it validates if the value is the same as max length or less', () => {
     const checks: Check[] = [
       ['1234567890', 9, false],
       ['1234567890', 10, true],

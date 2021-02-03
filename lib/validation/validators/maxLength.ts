@@ -1,3 +1,3 @@
-export default function maxLength(value: string | Array<any>, max: number): boolean {
+export default function maxLength(value: string | string[], max: number): boolean {
   return value.length <= max
 }
