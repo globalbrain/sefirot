@@ -17,7 +17,7 @@ export interface Validation {
 export type Rules = NestedRules | Validators
 
 export interface NestedRules {
-  [key: string]: Rules
+  [key: string]: Rules | any
 }
 
 export interface Validators {
@@ -38,11 +38,19 @@ export function useFormValidation<T extends State>(data: T, rules: Rules, rootDa
 
 function setValidations<T extends State>(validation: Validation, data: T, rules: Rules, rootData: T): void {
   for (const name in rules) {
-    const validatorsOrRules = rules[name]
+    const rule = rules[name]
 
-    validation[name] = Array.isArray(validatorsOrRules)
-      ? createValidation(name, data, validatorsOrRules, rootData)
-      : useFormValidation(data[name], validatorsOrRules, rootData)
+    if (isValidation(rule)) {
+      validation[name] = rule
+      continue
+    }
+
+    if (Array.isArray(rule)) {
+      validation[name] = createValidation(name, data, rule, rootData)
+      continue
+    }
+
+    validation[name] = useFormValidation(data[name], rule, rootData)
   }
 }
 
@@ -106,6 +114,7 @@ function setupValidation(validation: Validation): void {
     return isValid.value
   }
 
+  validation.$isValidation = true
   validation.$isDirty = isDirty
   validation.$errors = errors
   validation.$isValid = isValid
@@ -138,5 +147,5 @@ function callAll(validation: Validation, method: 'touch' | 'reset'): void {
 }
 
 function isValidation(obj: any): obj is Validation {
-  return obj !== null && typeof obj === 'object' && !Array.isArray(obj) && obj.$isValidation
+  return obj !== null && typeof obj === 'object' && !Array.isArray(obj) && !!obj.$isValidation
 }
