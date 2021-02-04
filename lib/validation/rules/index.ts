@@ -1,3 +1,4 @@
+import { isString } from '../../support/Util'
 import day from './day'
 import email from './email'
 import include from './include'
@@ -18,6 +19,13 @@ export interface Rule {
   message: string
   optional: boolean
   validate (value: any, data: Record<string, any>): boolean
+}
+
+export type Locator = string | LocatorFunction
+export type LocatorFunction = (data: Record<string, any>) => any
+
+export function locate(data: Record<string, any>, locator: Locator): any {
+  return isString(locator) ? data[locator] : locator(data)
 }
 
 export {

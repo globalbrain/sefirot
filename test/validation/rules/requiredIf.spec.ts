@@ -30,6 +30,14 @@ describe('validation/rules/requiredIf', () => {
     })
   })
 
+  test('it can take callback as a locator', () => {
+    const rule = requiredIf(data => data.other)
+
+    expect(rule.validate('', { other: false })).toBe(true)
+    expect(rule.validate('', { other: true })).toBe(false)
+    expect(rule.validate('Exist', { other: true })).toBe(true)
+  })
+
   test('it can set custom error message', () => {
     const rule = requiredIf('dummy', 'Custom message')
 
