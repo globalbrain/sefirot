@@ -7,6 +7,7 @@ import month from './month'
 import not from './not'
 import regex from './regex'
 import required from './required'
+import requiredIf from './requiredIf'
 import rule from './rule'
 import sameAs from './sameAs'
 import url from './url'
@@ -29,6 +30,7 @@ export {
   not,
   regex,
   required,
+  requiredIf,
   rule,
   sameAs,
   url,
