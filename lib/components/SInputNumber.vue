@@ -18,7 +18,7 @@
     @enter="emitEnter"
   >
     <template #before-help>
-      <p v-if="separatorHelp" class="help-text">
+      <p v-if="helpFormat" class="help-text">
         {{ valueWithSeparator }}
       </p>
     </template>
@@ -50,7 +50,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
-    separatorHelp: { type: Boolean, default: false },
+    helpFormat: { type: Boolean, default: false },
     value: { type: Number, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },

@@ -2,10 +2,10 @@ import { mount } from '@vue/test-utils'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 
 describe('components/SInputNumber', () => {
-  it('compute the number with thousand separator if `separatorHelp` prop is true', () => {
+  it('compute the number with thousand separator if `helpFormat` prop is true', () => {
     const wrapper = mount(SInputNumber, {
       propsData: {
-        separatorHelp: true
+        helpFormat: true
       }
     })
 

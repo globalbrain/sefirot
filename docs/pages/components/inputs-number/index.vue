@@ -7,11 +7,11 @@ Number input let users enter and edit single line number.
 
 ## Examples
 
-### SeparatorHelp
+### HelpFormat
 
-You can show the input number with thousand separator under the input by passing `separator-help` props.
+You can show the input number with thousand separator under the input by passing `help-format` props.
 
-<StoryInputNumberEXSeparatorHelp />
+<StoryInputNumberEXHelpFormat />
 
 ## API
 
@@ -22,14 +22,14 @@ You can show the input number with thousand separator under the input by passing
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputNumberShowcase from '@/components/StoryInputNumberShowcase.vue'
-import StoryInputNumberEXSeparatorHelp from '@/components/StoryInputNumberEXSeparatorHelp.vue'
+import StoryInputNumberEXHelpFormat from '@/components/StoryInputNumberEXHelpFormat.vue'
 import SpecProps, { Prop } from '@/components/SpecProps.vue'
 import SpecEvents, { Event } from '@/components/SpecEvents.vue'
 
 export default defineComponent({
   components: {
     StoryInputNumberShowcase,
-    StoryInputNumberEXSeparatorHelp,
+    StoryInputNumberEXHelpFormat,
     SpecProps,
     SpecEvents
   },
@@ -102,7 +102,7 @@ export default defineComponent({
         description: 'Add the trailing text to the input.'
       },
       {
-        name: 'separator-help',
+        name: 'help-format',
         type: 'boolean',
         required: false,
         default: 'false',

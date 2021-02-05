@@ -3,7 +3,7 @@
   <div class="input">
     <SInputNumber
       placeholder="123456789"
-      separator-help
+      help-format
       v-model="value"
     />
   </div>
@@ -13,11 +13,9 @@
 <template>
   <div class="input">
     <SInputNumber
-      v-model="input"
-      text="$"
-      textAfter="USD"
-      placeholder="Placeholder text"
-      :separator-help="true"
+      placeholder="123456789"
+      help-format
+      v-model="value"
     />
   </div>
 </template>
