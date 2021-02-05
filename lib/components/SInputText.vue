@@ -56,8 +56,9 @@
         </button>
       </div>
     </div>
+
     <template #before-help>
-      <slot name="after-input" />
+      <slot name="before-help" />
     </template>
   </SInputBase>
 </template>
@@ -395,16 +396,6 @@ export default defineComponent({
       border-color: var(--c-danger);
     }
   }
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
 }
 
 .container {

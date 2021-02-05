@@ -6,8 +6,8 @@
       label="Label"
       note="Note text"
       help="This is a help text."
-      placeholder="Placeholder text"
-      v-model="form.input"
+      placeholder="123456789"
+      v-model="value"
     />
   </div>
 </StoryBase>
@@ -20,26 +20,29 @@
       label="Label"
       note="Note text"
       help="This is a help text."
-      placeholder="Placeholder text"
-      v-model="input"
+      placeholder="123456789"
+      v-model="value"
     />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SInputNumber from '@globalbrain/sefirot/lib/components/SInputNumber.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputNumber
   },
 
-  data() {
+  setup() {
+    const value = ref<number | null>(null)
+
     return {
-      input: null
+      value
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -50,24 +53,25 @@ export default {
 ```
 </template>
 
-<script>
-import SInputNumber from '@@/lib/components/SInputNumber'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputNumber from '@@/lib/components/SInputNumber.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputNumber,
     StoryBase
   },
 
-  data() {
+  setup() {
+    const value = ref<number | null>(null)
+
     return {
-      form: {
-        input: null
-      }
+      value
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

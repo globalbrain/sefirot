@@ -17,8 +17,8 @@
     @blur="emitBlur"
     @enter="emitEnter"
   >
-    <template #after-input>
-      <p v-if="separatorHelp" class="separator-help help-text">
+    <template #before-help>
+      <p v-if="separatorHelp" class="help-text">
         {{ valueWithSeparator }}
       </p>
     </template>
@@ -31,6 +31,7 @@ import {
   computed,
   PropType
 } from '@vue/composition-api'
+import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
 import SInputText, { Size, Mode } from './SInputText.vue'
 
@@ -54,22 +55,27 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const valueWithSeparator = computed(() => {
-      return props.value?.toLocaleString() ?? 0
+      if (isNullish(props.value)) {
+        return '0'
+      }
+
+      return props.value >= 100000000000000000000
+        ? 'The number is too big'
+        : props.value.toLocaleString()
     })
 
     function emitInput(value: number): void {
-      context.emit('input', value)
+      emit('input', value)
     }
 
     function emitBlur(value: number): void {
-      props.validation && props.validation.$touch()
-      context.emit('blur', value)
+      emit('blur', value)
     }
 
     function emitEnter(value: number): void {
-      context.emit('enter', value)
+      emit('enter', value)
     }
 
     return {
@@ -81,3 +87,16 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="postcss" scoped>
+@import "@/assets/styles/variables";
+
+.SInputNumber-help-format {
+  margin: 0;
+  padding: 6px 0 0;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--input-help);
+}
+</style>
