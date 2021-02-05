@@ -56,6 +56,9 @@
         </button>
       </div>
     </div>
+    <template #before-help>
+      <slot name="after-input" />
+    </template>
   </SInputBase>
 </template>
 
@@ -75,8 +78,8 @@ import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'medium' | 'mini'
-type Mode = 'filled' | 'outlined'
+export type Size = 'medium' | 'mini'
+export type Mode = 'filled' | 'outlined'
 
 interface Action {
   type?: 'button' | 'select'
@@ -392,6 +395,16 @@ export default defineComponent({
       border-color: var(--c-danger);
     }
   }
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .container {

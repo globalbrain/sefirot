@@ -5,6 +5,7 @@
     </label>
 
     <slot />
+    <slot name="before-help" />
 
     <div class="help">
       <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
