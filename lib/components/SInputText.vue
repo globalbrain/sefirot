@@ -56,6 +56,10 @@
         </button>
       </div>
     </div>
+
+    <template #before-help>
+      <slot name="before-help" />
+    </template>
   </SInputBase>
 </template>
 
@@ -75,8 +79,8 @@ import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'medium' | 'mini'
-type Mode = 'filled' | 'outlined'
+export type Size = 'medium' | 'mini'
+export type Mode = 'filled' | 'outlined'
 
 interface Action {
   type?: 'button' | 'select'
