@@ -2,11 +2,9 @@
 <StoryBase title="Show input number with thousand separator">
   <div class="input">
     <SInputNumber
-      v-model="input"
-      text="$"
-      textAfter="USD"
-      placeholder="Placeholder text"
-      :separator-help="true"
+      placeholder="123456789"
+      separator-help
+      v-model="value"
     />
   </div>
 </StoryBase>
@@ -24,20 +22,23 @@
   </div>
 </template>
 
-<script>
-import SInputNumber from '@globalbrain/sefirot/lib/components/SInputNumber.vue'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputNumber from '@globalbraon/sefirot/lib/components/SInputNumber'
 
-export default {
+export default defineComponent({
   components: {
     SInputNumber
   },
 
-  data() {
+  setup() {
+    const value = ref<number | null>(1000000)
+
     return {
-      input: null
+      value
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>
@@ -48,22 +49,25 @@ export default {
 ```
 </template>
 
-<script>
-import SInputNumber from '@@/lib/components/SInputNumber'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputNumber from '@@/lib/components/SInputNumber.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputNumber,
     StoryBase
   },
 
-  data() {
+  setup() {
+    const value = ref<number | null>(1000000)
+
     return {
-      input: null
+      value
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

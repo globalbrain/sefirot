@@ -5,9 +5,9 @@
     </label>
 
     <slot />
-    <slot name="before-help" />
 
     <div class="help">
+      <slot name="before-help" />
       <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
       <p v-if="help" class="help-text">{{ help }}</p>
     </div>
@@ -118,10 +118,6 @@ export default defineComponent({
   transition: opacity .25s, transform .25s;
 }
 
-.help-error + .help-text {
-  padding: 0;
-}
-
 .help-text {
   margin: 0;
   padding: 6px 0 0;
@@ -129,5 +125,11 @@ export default defineComponent({
   font-size: 12px;
   font-weight: 500;
   color: var(--input-help);
+}
+
+.help-error + .help-text,
+.help-text + .help-error,
+.help-text + .help-text {
+  padding: 0;
 }
 </style>
