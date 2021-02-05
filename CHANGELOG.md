@@ -1,3 +1,12 @@
+# [0.36.0](https://github.com/globalbrain/sefirot/compare/v0.35.0...v0.36.0) (2021-02-05)
+
+### Features
+
+* **input-number:** add input number component ([#40](https://github.com/globalbrain/sefirot/issues/40)) ([8c099bc](https://github.com/globalbrain/sefirot/commit/8c099bcd442c7678153ea577e061553ee1fcf411))
+* **validation:** add `requiredIf` rule ([#39](https://github.com/globalbrain/sefirot/issues/39)) ([763deba](https://github.com/globalbrain/sefirot/commit/763deba4bed8703f0f3322b095a8419327f4eb85))
+* **validation:** enable passing validation object as a rule ([32ed709](https://github.com/globalbrain/sefirot/commit/32ed709afad1cc9740a0e4feba632179aef6fafe))
+* add `computedArray` composable utility function ([45d71cb](https://github.com/globalbrain/sefirot/commit/45d71cb559b510c68ec60b6a3a98b6688a276346))
+
 # [0.35.0](https://github.com/globalbrain/sefirot/compare/v0.34.2...v0.35.0) (2021-02-03)
 
 ### Bug Fixes
