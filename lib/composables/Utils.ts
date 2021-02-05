@@ -38,6 +38,16 @@ export function computedIfOnly<T, R, E>(
   return value as Ref<R | E>
 }
 
+export function computedArray<T>(callback: (carry: T) => void): ComputedRef<T> {
+  return computed(() => {
+    const carry = [] as any
+
+    callback(carry)
+
+    return carry
+  })
+}
+
 export function computedArrayIf<T, D extends any[]>(
   refish: Refish<T | null>,
   callback: (carry: D, value: T) => void
