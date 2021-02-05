@@ -7,7 +7,7 @@ Number input let users enter and edit single line number.
 
 ## Examples
 
-### HelpFormat
+### Help format
 
 You can show the input number with thousand separator under the input by passing `help-format` props.
 
