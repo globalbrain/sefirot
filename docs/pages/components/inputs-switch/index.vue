@@ -43,6 +43,13 @@ export default defineComponent({
         description: 'The mode of the switch.'
       },
       {
+        name: 'textMode',
+        type: "'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'",
+        required: false,
+        default: 'neutral',
+        description: 'The mode of the text of switch.'
+      },
+      {
         name: 'name',
         type: 'string',
         required: false,
