@@ -1,4 +1,5 @@
 import { Values, OmitType } from '../types/Utils'
+import { Refish } from './Utils'
 
 export type Action = Values<Actions>
 
@@ -92,7 +93,7 @@ export interface AvatarActionAvatar {
 
 export interface SwitchAction extends ActionBase {
   type: typeof Types.Switch
-  value: boolean
+  value: Refish<boolean>
   mode?: SwitchActionMode
   text?: string
   textMode?: SwitchActionTextMode
