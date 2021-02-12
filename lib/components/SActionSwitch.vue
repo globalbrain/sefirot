@@ -25,8 +25,8 @@ export default defineComponent({
   },
 
   setup(props) {
-    function emitCallback(value: boolean) {
-      props.action.callback && props.action.callback(value)
+    function emitCallback() {
+      props.action.callback && props.action.callback()
     }
 
     return {
