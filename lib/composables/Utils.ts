@@ -62,3 +62,18 @@ export function computedArrayIf<T, D extends any[]>(
     return carry
   })
 }
+
+export function computedArrayIfNot<T, D extends any[]>(
+  refish: Refish<T | null>,
+  callback: (carry: D) => void
+): ComputedRef<D> {
+  return computed(() => {
+    const carry = [] as any
+
+    const value = get(refish)
+
+    value || callback(carry)
+
+    return carry
+  })
+}

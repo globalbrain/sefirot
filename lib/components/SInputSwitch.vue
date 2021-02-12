@@ -9,7 +9,7 @@
   >
     <div class="SInputSwitch-container">
       <div class="SInputSwitch-input" :class="{ on: value }" role="button" @click="emitChange">
-        <p v-if="text" class="SInputSwitch-text">{{ text }}</p>
+        <p v-if="text" class="SInputSwitch-text" :class="[textMode]">{{ text }}</p>
 
         <div class="SInputSwitch-box">
           <div class="SInputSwitch-check" />
@@ -25,6 +25,7 @@ import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small'
 type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+type TextMode = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export default defineComponent({
   components: {
@@ -43,6 +44,7 @@ export default defineComponent({
     label: { type: String, default: null },
     note: { type: String, default: null },
     text: { type: String, default: null },
+    textMode: { type: String as PropType<TextMode>, default: 'neutral' },
     help: { type: String, default: null },
     value: { type: Boolean, required: true }
   },
@@ -155,6 +157,15 @@ export default defineComponent({
   line-height: 20px;
   font-size: 14px;
 }
+
+.SInputSwitch-text.mute {
+  color: var(--c-text-light-2);
+  font-weight: 500;
+}
+.SInputSwitch-text.info { color: var(--c-info); }
+.SInputSwitch-text.success { color: var(--c-success); }
+.SInputSwitch-text.warning { color: var(--c-warning); }
+.SInputSwitch-text.danger { color: var(--c-danger); }
 
 .SInputSwitch-box {
   position: relative;
