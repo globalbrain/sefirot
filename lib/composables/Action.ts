@@ -1,4 +1,5 @@
 import { Values, OmitType } from '../types/Utils'
+import { Refish } from './Utils'
 
 export type Action = Values<Actions>
 
@@ -6,6 +7,7 @@ export interface Actions {
   ButtonAction: ButtonAction
   PillAction: PillAction
   AvatarAction: AvatarAction
+  SwitchAction: SwitchAction
 }
 
 export interface ActionBase {
@@ -20,7 +22,8 @@ export type Type = Values<typeof Types>
 export const Types = {
   Button: 'button',
   Avatar: 'avatar',
-  Pill: 'pill'
+  Pill: 'pill',
+  Switch: 'switch'
 } as const
 
 export type Size = Values<typeof Sizes>
@@ -88,6 +91,35 @@ export interface AvatarActionAvatar {
   name?: string
 }
 
+export interface SwitchAction extends ActionBase {
+  type: typeof Types.Switch
+  value: Refish<boolean>
+  mode?: SwitchActionMode
+  text?: string
+  textMode?: SwitchActionTextMode
+}
+
+export type SwitchActionMode = Values<typeof SwitchActionModes>
+
+export const SwitchActionModes = {
+  Neutral: 'neutral',
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+  Danger: 'danger'
+} as const
+
+export type SwitchActionTextMode = Values<typeof SwitchActionTextModes>
+
+export const SwitchActionTextModes = {
+  Neutral: 'neutral',
+  Mute: 'mute',
+  Info: 'info',
+  Success: 'success',
+  Warning: 'warning',
+  Danger: 'danger'
+} as const
+
 export function useAction<T extends Action>(action: T): T {
   return action
 }
@@ -102,4 +134,8 @@ export function usePillAction(action: OmitType<PillAction>): PillAction {
 
 export function useAvatarAction(action: OmitType<AvatarAction>): AvatarAction {
   return { type: Types.Avatar, ...action }
+}
+
+export function useSwitchAction(action: OmitType<SwitchAction>): SwitchAction {
+  return { type: Types.Switch, ...action }
 }

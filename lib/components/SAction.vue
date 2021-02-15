@@ -8,6 +8,7 @@ import { Action, Types } from '../composables/Action'
 import SActionButton from './SActionButton.vue'
 import SActionPill from './SActionPill.vue'
 import SActionAvatar from './SActionAvatar.vue'
+import SActionSwitch from './SActionSwitch.vue'
 
 export default defineComponent({
   props: {
@@ -23,6 +24,8 @@ export default defineComponent({
           return SActionPill
         case Types.Avatar:
           return SActionAvatar
+        case Types.Switch:
+          return SActionSwitch
       }
     })
 
