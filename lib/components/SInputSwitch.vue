@@ -162,10 +162,11 @@ export default defineComponent({
   color: var(--c-text-light-2);
   font-weight: 500;
 }
-.SInputSwitch-text.info { color: var(--c-info); }
+
+.SInputSwitch-text.info    { color: var(--c-info); }
 .SInputSwitch-text.success { color: var(--c-success); }
 .SInputSwitch-text.warning { color: var(--c-warning); }
-.SInputSwitch-text.danger { color: var(--c-danger); }
+.SInputSwitch-text.danger  { color: var(--c-danger); }
 
 .SInputSwitch-box {
   position: relative;
