@@ -1,3 +1,9 @@
+# [0.37.0](https://github.com/globalbrain/sefirot/compare/v0.36.0...v0.37.0) (2021-02-15)
+
+### Features
+
+* add SActionSwitch component ([#41](https://github.com/globalbrain/sefirot/issues/41)) ([2484a88](https://github.com/globalbrain/sefirot/commit/2484a884235c783c56e04f3b883be7a6c297ff96))
+
 # [0.36.0](https://github.com/globalbrain/sefirot/compare/v0.35.0...v0.36.0) (2021-02-05)
 
 ### Features
