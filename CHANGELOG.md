@@ -1,3 +1,9 @@
+# [0.38.0](https://github.com/globalbrain/sefirot/compare/v0.37.0...v0.38.0) (2021-02-17)
+
+### Features
+
+* **icon:** add 3 new icons ([422abac](https://github.com/globalbrain/sefirot/commit/422abac07635839ed2c18c271f35b2f0f395ad87))
+
 # [0.37.0](https://github.com/globalbrain/sefirot/compare/v0.36.0...v0.37.0) (2021-02-15)
 
 ### Features
