@@ -1,3 +1,9 @@
+# [0.39.0](https://github.com/globalbrain/sefirot/compare/v0.38.1...v0.39.0) (2021-02-17)
+
+### Features
+
+* **support:** expose `orderBy` and `groupBy` functions ([88019c5](https://github.com/globalbrain/sefirot/commit/88019c5f70c9427fd2d67b2c2671fc212e49129a))
+
 ## [0.38.1](https://github.com/globalbrain/sefirot/compare/v0.38.0...v0.38.1) (2021-02-17)
 
 ### Bug Fixes
