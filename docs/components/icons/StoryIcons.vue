@@ -24,6 +24,7 @@ import SIconArrowRight from '@@/lib/components/icons/SIconArrowRight.vue'
 import SIconArrowUp from '@@/lib/components/icons/SIconArrowUp.vue'
 import SIconBarChart from '@@/lib/components/icons/SIconBarChart.vue'
 import SIconBriefcase from '@@/lib/components/icons/SIconBriefcase.vue'
+import SIconBuilding from '@@/lib/components/icons/SIconBuilding.vue'
 import SIconCalendar from '@@/lib/components/icons/SIconCalendar.vue'
 import SIconCheck from '@@/lib/components/icons/SIconCheck.vue'
 import SIconCheckCircle from '@@/lib/components/icons/SIconCheckCircle.vue'
@@ -57,10 +58,12 @@ import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
 import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
+import SIconProgress from '@@/lib/components/icons/SIconProgress.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconSettings from '@@/lib/components/icons/SIconSettings.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
+import SIconTelescope from '@@/lib/components/icons/SIconTelescope.vue'
 import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
 import SIconTrash2 from '@@/lib/components/icons/SIconTrash2.vue'
 import SIconTrello from '@@/lib/components/icons/SIconTrello.vue'
@@ -85,6 +88,7 @@ export default defineComponent({
       { component: SIconArrowUp, name: 'ArrowUp' },
       { component: SIconBarChart, name: 'BarChart' },
       { component: SIconBriefcase, name: 'Briefcase' },
+      { component: SIconBuilding, name: 'Building' },
       { component: SIconCalendar, name: 'Calendar' },
       { component: SIconCheck, name: 'Check' },
       { component: SIconCheckCircle, name: 'CheckCircle' },
@@ -118,10 +122,12 @@ export default defineComponent({
       { component: SIconPlus, name: 'Plus' },
       { component: SIconPlusCircle, name: 'PlusCircle' },
       { component: SIconPlayCircle, name: 'PlayCircle' },
+      { component: SIconProgress, name: 'Progress' },
       { component: SIconSave, name: 'Save' },
       { component: SIconSettings, name: 'Settings' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
+      { component: SIconTelescope, name: 'Telescope' },
       { component: SIconTrash, name: 'Trash' },
       { component: SIconTrash2, name: 'Trash2' },
       { component: SIconTrello, name: 'Trello' },
