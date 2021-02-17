@@ -1,3 +1,9 @@
+## [0.38.1](https://github.com/globalbrain/sefirot/compare/v0.38.0...v0.38.1) (2021-02-17)
+
+### Bug Fixes
+
+* **header:** take `name` property in account ([63d466d](https://github.com/globalbrain/sefirot/commit/63d466d979f16a4726b4b9ce501a3d7fc1a99269))
+
 # [0.38.0](https://github.com/globalbrain/sefirot/compare/v0.37.0...v0.38.0) (2021-02-17)
 
 ### Features
