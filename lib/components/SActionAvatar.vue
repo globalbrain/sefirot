@@ -2,7 +2,7 @@
   <div class="SActionAvatar">
     <div v-for="(avatar, index) in action.avatars" :key="index" class="avatars">
       <div class="avatar">
-        <SAvatar :avatar="avatar.avatar" />
+        <SAvatar :avatar="avatar.avatar" :name="avatar.name" />
       </div>
     </div>
   </div>
