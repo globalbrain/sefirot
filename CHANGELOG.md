@@ -1,3 +1,9 @@
+# [0.41.0](https://github.com/globalbrain/sefirot/compare/v0.40.0...v0.41.0) (2021-02-25)
+
+### Features
+
+* **input-switch:** add `textAfter` option ([a1134e0](https://github.com/globalbrain/sefirot/commit/a1134e088ab73df4b82f786dca95ffb579cef93e))
+
 # [0.40.0](https://github.com/globalbrain/sefirot/compare/v0.39.0...v0.40.0) (2021-02-25)
 
 ### BREAKING CHANGES
