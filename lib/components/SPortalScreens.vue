@@ -16,15 +16,11 @@ export default defineComponent({
     const store = useStore()
     const route = useRoute()
 
-    const name = computed(() => store.state.screen.name)
+    const screenName = computed(() => store.state.screen.name)
 
-    watch(() => name, (value) => {
-      value === null ? close() : open()
-    })
+    watch(screenName, (value) => { value === null ? close() : open() })
 
-    watch(() => route, () => {
-      store.dispatch('screen/close')
-    })
+    watch(route, () => { store.dispatch('screen/close') })
 
     function close(): void {
       setTimeout(() => {
@@ -56,6 +52,10 @@ export default defineComponent({
 
     function getScrollbarWidth(): number {
       return window.innerWidth - document.documentElement.clientWidth
+    }
+
+    return {
+      screenName
     }
   }
 })

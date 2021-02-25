@@ -1,4 +1,4 @@
-import { getCurrentInstance } from '@vue/composition-api'
+import { computed, ComputedRef, getCurrentInstance } from '@vue/composition-api'
 import VueRouter, { Route } from 'vue-router'
 
 export function useRouter(): VueRouter {
@@ -7,8 +7,8 @@ export function useRouter(): VueRouter {
   return proxy.$router
 }
 
-export function useRoute(): Route {
+export function useRoute(): ComputedRef<Route> {
   const { proxy } = getCurrentInstance()!
 
-  return proxy.$route
+  return computed(() => proxy.$route)
 }
