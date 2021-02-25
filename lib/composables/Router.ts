@@ -12,3 +12,9 @@ export function useRoute(): ComputedRef<Route> {
 
   return computed(() => proxy.$route)
 }
+
+export function useParams(): ComputedRef<Record<string, string>> {
+  const { proxy } = getCurrentInstance()!
+
+  return computed(() => proxy.$route.params)
+}
