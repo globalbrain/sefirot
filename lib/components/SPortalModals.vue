@@ -57,7 +57,7 @@ export default defineComponent({
       setTimeout(() => { el.value && el.value.scrollTo(0, 0) }, 250)
     })
 
-    watch(() => route, () => { store.dispatch('modal/close') })
+    watch(route, () => { store.dispatch('modal/close') })
 
     function open(): void {
       show.value = true
