@@ -1,3 +1,14 @@
+# [0.40.0](https://github.com/globalbrain/sefirot/compare/v0.39.0...v0.40.0) (2021-02-25)
+
+### BREAKING CHANGES
+
+* **build:** composition-api plugin is updated. It contains breaking change
+so that the it must be updated to the latest version.
+
+### Features
+
+* **build:** update npm packages ([b7dc1d0](https://github.com/globalbrain/sefirot/commit/b7dc1d06f605de6dc67c02621673a48adcc7903d))
+
 # [0.39.0](https://github.com/globalbrain/sefirot/compare/v0.38.1...v0.39.0) (2021-02-17)
 
 ### Features
