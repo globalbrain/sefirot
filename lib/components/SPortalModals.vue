@@ -22,6 +22,7 @@
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { defineComponent, ref, computed, watch } from '@vue/composition-api'
 import { useStore } from '../composables/Store'
+import { useRoute } from '../composables/Router'
 import SDialog from './SDialog.vue'
 import SAlert from './SAlert.vue'
 
@@ -33,8 +34,9 @@ export default defineComponent({
 
   setup() {
     const store = useStore()
+    const route = useRoute()
 
-    const el = ref<any>(null)
+    const el = ref<Element | null>(null)
 
     const show = ref(false)
 
@@ -42,22 +44,20 @@ export default defineComponent({
     const current = computed(() => store.state.modal.name)
 
     const dialogs = computed(() => {
-      return store.state.modal.history.filter((h: any) => {
-        return h.name.startsWith('dialog')
-      })
+      return store.state.modal.history.filter(h => h.name.startsWith('dialog'))
     })
 
     const alerts = computed(() => {
-      return store.state.modal.history.filter((h: any) => {
-        return h.name.startsWith('alert')
-      })
+      return store.state.modal.history.filter(h => h.name.startsWith('alert'))
     })
 
     watch(active, (value) => { value ? open() : close() })
 
     watch(current, () => {
-      setTimeout(() => { el.value.scrollTo(0, 0) }, 250)
+      setTimeout(() => { el.value && el.value.scrollTo(0, 0) }, 250)
     })
+
+    watch(() => route, () => { store.dispatch('modal/close') })
 
     function open(): void {
       show.value = true
@@ -74,8 +74,10 @@ export default defineComponent({
     }
 
     function release(): void {
-      el.value.scrollTo(0, 0)
-      el.value && clearAllBodyScrollLocks()
+      if (el.value) {
+        el.value.scrollTo(0, 0)
+        clearAllBodyScrollLocks()
+      }
     }
 
     return {
@@ -83,12 +85,6 @@ export default defineComponent({
       show,
       dialogs,
       alerts
-    }
-  },
-
-  watch: {
-    $route() {
-      this.$store.dispatch('modal/close')
     }
   }
 })

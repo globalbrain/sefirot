@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { PropType, defineComponent } from '@vue/composition-api'
 import { useHeader, useFooter, useButtonAction } from '../composables/Card'
+import { ButtonAction, Mode } from '../composables/Header'
 import SIconInfo from './icons/SIconInfo.vue'
 import SIconCheckCircle from './icons/SIconCheckCircle.vue'
 import SIconWarning from './icons/SIconWarning.vue'
@@ -33,28 +34,23 @@ export default defineComponent({
   },
 
   props: {
-    type: { type: String, required: true },
+    type: { type: String as PropType<Mode>, required: true },
     name: { type: String, required: true },
     title: { type: String, default: null },
     text: { type: String, default: null },
-    actions: { type: Array, default: () => [] }
+    actions: { type: Array as PropType<ButtonAction[]>, default: () => [] }
   },
 
   setup(props) {
     const header = useHeader({
-      mode: props.type as any,
+      mode: props.type,
       icon: getIcon(),
       title: props.title
     })
 
     const footer = useFooter({
-      actions: props.actions.map((action: any) => {
-        return useButtonAction({
-          kind: action.type,
-          mode: action.mode,
-          label: action.label,
-          callback: action.callback
-        })
+      actions: props.actions.map(({ kind, mode, label, callback }) => {
+        return useButtonAction({ kind, mode, label, callback })
       })
     })
 

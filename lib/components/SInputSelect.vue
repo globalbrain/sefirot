@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { SyntheticInputEvent } from '../types/Utils'
 import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SInputBase from './SInputBase.vue'
@@ -81,7 +82,7 @@ export default defineComponent({
     value: { type: [String, Number, Boolean], default: null }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const classes = computed(() => ({
       medium: props.size === 'medium',
       mini: props.size === 'mini',
@@ -97,12 +98,12 @@ export default defineComponent({
       return option.value === props.value
     }
 
-    function emitChange(e: Event): void {
+    function emitChange(e: SyntheticInputEvent): void {
       props.validation && props.validation.$touch()
 
-      const option = JSON.parse((e.target as HTMLInputElement).value)
+      const option = JSON.parse(e.target.value)
 
-      context.emit('change', option.value)
+      emit('change', option.value)
     }
 
     return {

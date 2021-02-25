@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
+import { SyntheticMouseEvent } from '../types/Utils'
 import { useStore } from '../composables/Store'
 
 export default defineComponent({
@@ -24,10 +25,10 @@ export default defineComponent({
     const store = useStore()
 
     const first = computed(() => store.state.modal.first)
-    const mount = computed(() => store.state.modal.history.some((h: any) => h.name === props.name))
+    const mount = computed(() => store.state.modal.history.some(h => h.name === props.name))
     const show = computed(() => props.name === store.state.modal.name)
 
-    function close(e: MouseEvent): void {
+    function close(e: SyntheticMouseEvent): void {
       if (props.closable) {
         if (!isDescendant(e.target)) {
           store.dispatch('modal/close')
@@ -35,7 +36,7 @@ export default defineComponent({
       }
     }
 
-    function isDescendant(el: any): boolean {
+    function isDescendant(el: Element): boolean {
       if (el.classList && el.classList.contains('SModalBase')) {
         return false
       }

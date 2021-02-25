@@ -29,12 +29,15 @@
   </SModalBase>
 </template>
 
-<script>
-import SIconX from './icons/SIconX'
-import SButton from './SButton'
-import SModalBase from './SModalBase'
+<script lang="ts">
+import { PropType, computed, defineComponent } from '@vue/composition-api'
+import { ButtonAction } from '../composables/Action'
+import { useStore } from '../composables/Store'
+import SIconX from './icons/SIconX.vue'
+import SButton from './SButton.vue'
+import SModalBase from './SModalBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SIconX,
     SButton,
@@ -45,22 +48,25 @@ export default {
     name: { type: String, required: true },
     title: { type: String, default: null },
     lead: { type: String, default: null },
-    actions: { type: Array, default: null },
+    actions: { type: Array as PropType<ButtonAction[]>, default: null },
     closable: { type: Boolean, default: false }
   },
 
-  computed: {
-    showHeader() {
-      return !!this.title
-    }
-  },
+  setup(props) {
+    const store = useStore()
 
-  methods: {
-    close() {
-      this.$store.dispatch('window/close')
+    const showHeader = computed(() => !!props.title)
+
+    function close(): void {
+      store.dispatch('window/close')
+    }
+
+    return {
+      showHeader,
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

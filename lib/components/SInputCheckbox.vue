@@ -20,11 +20,12 @@
   </SInputBase>
 </template>
 
-<script>
-import SIconCheck from './icons/SIconCheck'
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SIconCheck from './icons/SIconCheck.vue'
+import SInputBase from './SInputBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SIconCheck,
     SInputBase
@@ -44,12 +45,16 @@ export default {
     value: { type: Boolean, required: true }
   },
 
-  methods: {
-    emitChange() {
-      this.$emit('change', !this.value)
+  setup(props, { emit }) {
+    function emitChange() {
+      emit('change', !props.value)
+    }
+
+    return {
+      emitChange
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

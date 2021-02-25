@@ -24,6 +24,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { SyntheticInputEvent } from '../types/Utils'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -48,19 +49,23 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const classes = computed(() => [props.size, props.mode])
 
-    function emitInput(e: InputEvent): void {
-      context.emit('input', (e.target as HTMLInputElement).value)
+    function emitInput(e: SyntheticInputEvent): void {
+      emit('input', e.target.value)
     }
 
-    function emitBlur(e: InputEvent): void {
+    function emitBlur(e: SyntheticInputEvent): void {
       props.validation && props.validation.$touch()
-      context.emit('blur', (e.target as HTMLInputElement).value)
+      emit('blur', e.target.value)
     }
 
-    return { classes, emitInput, emitBlur }
+    return {
+      classes,
+      emitInput,
+      emitBlur
+    }
   }
 })
 </script>

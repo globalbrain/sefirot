@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
+import { useStore } from '../composables/Store'
 import { Action } from '../store/snackbars'
 import SIconX from './icons/SIconX.vue'
 import SButton from './SButton.vue'
@@ -37,9 +38,11 @@ export default defineComponent({
     actions: { type: Array as PropType<Action[]>, default: null }
   },
 
-  setup(props, context) {
+  setup(props) {
+    const store = useStore()
+
     function close(): void {
-      context.root.$store.dispatch('snackbars/pop', props.id)
+      store.dispatch('snackbars/pop', props.id)
     }
 
     return {

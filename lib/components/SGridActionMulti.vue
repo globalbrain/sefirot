@@ -37,7 +37,7 @@ export default defineComponent({
   },
 
   setup(props) {
-    function actionStyles(index: number): Record<string, string> {
+    function actionStyles(index: number): Partial<CSSStyleDeclaration> {
       const size = props.actions.length
       const sec = (size - (index + 1)) * 0.1
 

@@ -12,35 +12,35 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+
+export default defineComponent({
   props: {
     now: { type: Number, required: true },
     max: { type: Number, required: true }
   },
 
-  computed: {
-    styles() {
-      return {
-        transform: `scaleX(${this.progress})`
-      }
-    },
-
-    progress() {
-      const value = this.now / this.max
-
+  setup(props) {
+    const progress = computed(() => {
+      const value = props.now / props.max
       const pow = 10 ** 4
 
       return Math.round(value * pow) / pow
-    },
+    })
 
-    progressForNumber() {
-      const progress = this.progress * 100
+    const progressForNumber = computed(() => (progress.value * 100).toFixed(2))
 
-      return progress.toFixed(2)
+    const styles = computed<Partial<CSSStyleDeclaration>>(() => ({
+      transform: `scaleX(${progress.value})`
+    }))
+
+    return {
+      styles,
+      progressForNumber
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

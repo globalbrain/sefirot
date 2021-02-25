@@ -4,46 +4,59 @@
   </div>
 </template>
 
-<script>
-export default {
-  computed: {
-    screenName() {
-      return this.$store.state.screen.name
-    }
-  },
+<script lang="ts">
+import { computed, defineComponent, watch } from '@vue/composition-api'
+import { useRoute } from '../composables/Router'
+import { useStore } from '../composables/Store'
 
-  watch: {
-    screenName(value) {
-      value === null ? this.closeScreen() : this.openScreen()
-    },
+type Styles = Record<'paddingRight' | 'top' | 'position', string | null>
 
-    $route() {
-      this.$store.dispatch('screen/close')
-    }
-  },
+export default defineComponent({
+  setup() {
+    const store = useStore()
+    const route = useRoute()
 
-  methods: {
-    openScreen() {
-      document.body.style.paddingRight = `${this.scrollBarWidth()}px`
-      document.body.style.top = `-${window.scrollY}px`
-      document.body.style.position = 'fixed'
-    },
+    const name = computed(() => store.state.screen.name)
 
-    closeScreen() {
+    watch(() => name, (value) => {
+      value === null ? close() : open()
+    })
+
+    watch(() => route, () => {
+      store.dispatch('screen/close')
+    })
+
+    function close(): void {
       setTimeout(() => {
         const scrollY = document.body.style.top
 
-        document.body.style.paddingRight = null
-        document.body.style.position = null
-        document.body.style.top = null
+        setBodyStyles({
+          paddingRight: null,
+          top: null,
+          position: null
+        })
 
         window.scrollTo(0, parseInt(scrollY || '0') * -1)
       }, 300)
-    },
+    }
 
-    scrollBarWidth() {
+    function open(): void {
+      const scrollBarWidth = getScrollbarWidth()
+
+      setBodyStyles({
+        paddingRight: `${scrollBarWidth}px`,
+        top: `-${window.scrollY}px`,
+        position: 'fixed'
+      })
+    }
+
+    function setBodyStyles(styles: Styles): void {
+      Object.assign(document.body.style, styles)
+    }
+
+    function getScrollbarWidth(): number {
       return window.innerWidth - document.documentElement.clientWidth
     }
   }
-}
+})
 </script>

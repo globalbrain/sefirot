@@ -33,7 +33,7 @@ type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 interface Option {
   label: string
-  value: any
+  value: unknown
 }
 
 export default defineComponent({
@@ -55,7 +55,7 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     options: { type: Array as PropType<Option[]>, required: true },
-    value: { type: Array as PropType<any[]>, required: true }
+    value: { type: Array as PropType<unknown[]>, required: true }
   },
 
   setup(props, { emit }) {
@@ -64,11 +64,11 @@ export default defineComponent({
       props.mode
     ])
 
-    function isChecked(value: any): boolean {
+    function isChecked(value: unknown): boolean {
       return props.value.includes(value)
     }
 
-    function handleChange(value: any): void {
+    function handleChange(value: unknown): void {
       const difference = props.value
         .filter(v => v !== value)
         .concat(props.value.includes(value) ? [] : [value])
