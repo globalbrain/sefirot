@@ -14,6 +14,8 @@
         <div class="SInputSwitch-box">
           <div class="SInputSwitch-check" />
         </div>
+
+        <p v-if="textAfter" class="SInputSwitch-text after" :class="[textMode]">{{ textAfter }}</p>
       </div>
     </div>
   </SInputBase>
@@ -44,6 +46,7 @@ export default defineComponent({
     label: { type: String, default: null },
     note: { type: String, default: null },
     text: { type: String, default: null },
+    textAfter: { type: String, default: null },
     textMode: { type: String as PropType<TextMode>, default: 'neutral' },
     help: { type: String, default: null },
     value: { type: Boolean, required: true }
@@ -167,6 +170,10 @@ export default defineComponent({
 .SInputSwitch-text.success { color: var(--c-success); }
 .SInputSwitch-text.warning { color: var(--c-warning); }
 .SInputSwitch-text.danger  { color: var(--c-danger); }
+
+.SInputSwitch-text.after {
+  padding-left: 12px;
+}
 
 .SInputSwitch-box {
   position: relative;
