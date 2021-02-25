@@ -14,6 +14,7 @@ module.exports = {
     'vue/component-tags-order': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/no-v-html': 'off',
+    'vue/return-in-computed-property': 'off',
     'vue/singleline-html-element-content-newline': 'off'
   }
 }

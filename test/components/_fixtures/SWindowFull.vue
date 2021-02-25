@@ -27,7 +27,7 @@ export default defineComponent({
   data() {
     return {
       actions: [
-        { type: 'mute', label: 'DISMISS', callback: this.close }
+        { type: 'mute', label: 'DISMISS', callback: (this as any).close }
       ]
     }
   },
