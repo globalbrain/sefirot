@@ -1,10 +1,10 @@
-import { Configuration } from '@nuxt/types'
+import { NuxtConfig } from '@nuxt/types'
 import { highlight } from './docs/markdown/Highlight'
 import { preWrapper } from './docs/markdown/PreWrapper'
 
 require('dotenv').config()
 
-const config: Configuration = {
+const config: NuxtConfig = {
   target: 'static',
 
   ssr: false,
