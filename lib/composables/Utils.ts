@@ -2,8 +2,16 @@ import { Ref, ComputedRef, UnwrapRef, ref, computed, watch, isRef } from '@vue/c
 
 export type Refish<T = any> = T | Ref<T> | ComputedRef<T>
 
-export function get<T>(refish: Refish<T>): T {
-  return isRef(refish) ? refish.value : refish
+export function get<T>(refish: Refish<T> | (() => T)): T {
+  if (isRef(refish)) {
+    return refish.value
+  }
+
+  if (refish instanceof Function) {
+    return refish()
+  }
+
+  return refish
 }
 
 export function computedIf<T, R, E>(
@@ -19,14 +27,16 @@ export function computedIf<T, R, E>(
 }
 
 export function computedIfOnly<T, R, E>(
-  refish: Ref<T | null> | ComputedRef<T | null>,
+  refish: Ref<T | null> | ComputedRef<T | null> | (() => T | null),
   callback: (value: T) => R,
   empty: E
 ): Ref<R | E> {
   const value = ref<R | E>(empty)
 
-  if (refish.value) {
-    value.value = callback(refish.value) as UnwrapRef<R>
+  const refValue = get(refish)
+
+  if (refValue) {
+    value.value = callback(refValue) as UnwrapRef<R>
   }
 
   watch(refish, (newValue) => {
