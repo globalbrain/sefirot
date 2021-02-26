@@ -14,10 +14,11 @@
   </div>
 </template>
 
-<script>
-import SIconPreloaderDark from './icons/SIconPreloaderDark'
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
+import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 
-export default {
+export default defineComponent({
   components: {
     SIconPreloaderDark
   },
@@ -27,17 +28,19 @@ export default {
     loaderPosition: { type: String, default: 'left' }
   },
 
-  computed: {
-    classes() {
-      return {
-        loaded: this.loaded,
-        left: this.loaderPosition === 'left',
-        center: this.loaderPosition === 'center',
-        right: this.loaderPosition === 'right'
-      }
+  setup(props) {
+    const classes = computed(() => ({
+      loaded: props.loaded,
+      left: props.loaderPosition === 'left',
+      center: props.loaderPosition === 'center',
+      right: props.loaderPosition === 'right'
+    }))
+
+    return {
+      classes
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

@@ -59,6 +59,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted, PropType } from '@vue/composition-api'
 import useTime from '../compositions/useTime'
+import { SyntheticInputEvent } from '../types/Utils'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -81,7 +82,7 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const input = ref<HTMLInputElement | null>(null)
 
     const on = ref(false)
@@ -108,8 +109,8 @@ export default defineComponent({
       on.value = false
     }
 
-    function handleBlur(e: Event): void {
-      let value: string | null = (e.target as HTMLInputElement).value
+    function handleBlur(e: SyntheticInputEvent): void {
+      let value: string | null = e.target.value
 
       if (!value) {
         value = null
@@ -117,7 +118,7 @@ export default defineComponent({
         value = [hValue.value, mValue.value].join(':')
       }
 
-      context.emit('change', value)
+      emit('change', value)
       updateInput(value ?? '')
     }
 
@@ -126,11 +127,11 @@ export default defineComponent({
     }
 
     function setHour(hour: string): void {
-      context.emit('change', [hour, mValue.value].join(':'))
+      emit('change', [hour, mValue.value].join(':'))
     }
 
     function setMin(minute: string): void {
-      context.emit('change', [hValue.value, minute].join(':'))
+      emit('change', [hValue.value, minute].join(':'))
     }
 
     return {

@@ -14,10 +14,12 @@
   </portal>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent } from '@vue/composition-api'
 import VueSimplebar from 'simplebar-vue'
+import { useStore } from '../composables/Store'
 
-export default {
+export default defineComponent({
   components: {
     VueSimplebar
   },
@@ -27,16 +29,18 @@ export default {
     title: { type: String, default: null }
   },
 
-  computed: {
-    screenName() {
-      return this.$store.state.screen.name
-    },
+  setup(props) {
+    const store = useStore()
 
-    show() {
-      return this.name === this.screenName
+    const screenName = computed(() => store.state.screen.name)
+    const show = computed(() => props.name === screenName.value)
+
+    return {
+      screenName,
+      show
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

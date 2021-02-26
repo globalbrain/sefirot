@@ -20,11 +20,12 @@
   </SInputBase>
 </template>
 
-<script>
-import SInputBase from './SInputBase'
-import SInputRadio from './SInputRadio'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SInputBase from './SInputBase.vue'
+import SInputRadio from './SInputRadio.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputBase,
     SInputRadio
@@ -45,24 +46,29 @@ export default {
     value: { type: [String, Number, Boolean], default: null }
   },
 
-  methods: {
-    isChecked(value) {
-      return value === this.value
-    },
+  setup(props, { emit }) {
+    function isChecked(value: unknown): boolean {
+      return value === props.value
+    }
 
-    handleChange(value) {
-      if (value !== this.value) {
-        this.$emit('change', value)
+    function handleChange(value: unknown): void {
+      if (value !== props.value) {
+        emit('change', value)
 
         return
       }
 
-      if (this.nullable) {
-        this.$emit('change', null)
+      if (props.nullable) {
+        emit('change', null)
       }
     }
+
+    return {
+      isChecked,
+      handleChange
+    }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

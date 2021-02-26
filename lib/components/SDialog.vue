@@ -29,11 +29,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent, computed, PropType } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SButton from './SButton.vue'
 import SProgressBar from './SProgressBar.vue'
 import SModalBase from './SModalBase.vue'
+
+type Dialog = 'loading' | 'progress'
+type Action = 'text' | 'mute'
 
 export default defineComponent({
   components: {
@@ -44,7 +47,7 @@ export default defineComponent({
   },
 
   props: {
-    type: { type: String, required: true },
+    type: { type: String as PropType<Dialog>, required: true },
     name: { type: String, required: true },
     title: { type: String, default: null },
     text: { type: String, default: null },
@@ -57,7 +60,7 @@ export default defineComponent({
     const isTypeProgress = computed(() => props.type === 'progress')
     const isLoadOnly = computed(() => isTypeLoading.value && !props.title && !props.text)
 
-    function getActionType(value?: string): string {
+    function getActionType(value?: Action): Action {
       return value !== 'mute' ? 'text' : 'mute'
     }
 

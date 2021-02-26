@@ -18,10 +18,11 @@
   </SInputBase>
 </template>
 
-<script>
-import SInputBase from './SInputBase'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SInputBase from './SInputBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputBase
   },
@@ -40,12 +41,16 @@ export default {
     value: { type: Boolean, required: true }
   },
 
-  methods: {
-    emitChange() {
-      this.$emit('change', !this.value)
+  setup(props, { emit }) {
+    function emitChange(): void {
+      emit('change', !props.value)
+    }
+
+    return {
+      emitChange
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

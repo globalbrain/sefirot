@@ -20,11 +20,12 @@
   </SInputBase>
 </template>
 
-<script>
-import SInputBase from './SInputBase'
-import SInputCheckbox from './SInputCheckbox'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import SInputBase from './SInputBase.vue'
+import SInputCheckbox from './SInputCheckbox.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputBase,
     SInputCheckbox
@@ -44,20 +45,25 @@ export default {
     value: { type: Array, required: true }
   },
 
-  methods: {
-    isChecked(value) {
-      return this.value.includes(value)
-    },
+  setup(props, { emit }) {
+    function isChecked(value: unknown): boolean {
+      return props.value.includes(value)
+    }
 
-    handleChange(value) {
-      const difference = this.value
+    function handleChange(value: unknown): void {
+      const distinct = props.value
         .filter(v => v !== value)
-        .concat(this.value.includes(value) ? [] : [value])
+        .concat(props.value.includes(value) ? [] : [value])
 
-      this.$emit('change', difference)
+      emit('change', distinct)
+    }
+
+    return {
+      isChecked,
+      handleChange
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

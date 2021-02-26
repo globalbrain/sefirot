@@ -1,17 +1,18 @@
 <template>
-  <SPlaceholderBlank class="SPlaceholderImage" :loaded="loaded">
+  <SPlaceholderBlank class="SPlaceholderImage" :loaded="isLoaded">
     <div class="placeholder" :style="styles" />
 
     <div class="img">
-      <img class="img-src" :src="img" :alt="alt" @load="load">
+      <img class="img-src" :src="img" :alt="alt" @load="handleLoad">
     </div>
   </SPlaceholderBlank>
 </template>
 
-<script>
-import SPlaceholderBlank from './SPlaceholderBlank'
+<script lang="ts">
+import { computed, ref, defineComponent } from '@vue/composition-api'
+import SPlaceholderBlank from './SPlaceholderBlank.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPlaceholderBlank
   },
@@ -24,30 +25,28 @@ export default {
     delay: { type: Number, default: 0 }
   },
 
-  data() {
-    return {
-      loaded: false
-    }
-  },
+  setup(props, { emit }) {
+    const isLoaded = ref(false)
 
-  computed: {
-    styles() {
-      return {
-        paddingBottom: `calc((${this.height} / ${this.width}) * 100%)`
-      }
-    }
-  },
+    const styles = computed(() => ({
+      paddingBottom: `calc((${props.height} / ${props.width}) * 100%)`
+    }))
 
-  methods: {
-    load() {
+    function handleLoad(): void {
       setTimeout(() => {
-        this.loaded = true
+        isLoaded.value = true
 
-        this.$emit('load')
-      }, this.delay)
+        emit('load')
+      }, props.delay)
+    }
+
+    return {
+      isLoaded,
+      styles,
+      handleLoad
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

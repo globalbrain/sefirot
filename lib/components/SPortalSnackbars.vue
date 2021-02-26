@@ -16,6 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
+import { useStore } from '../composables/Store'
 import SSnackbar from './SSnackbar.vue'
 
 export default defineComponent({
@@ -23,8 +24,10 @@ export default defineComponent({
     SSnackbar
   },
 
-  setup(_props, context) {
-    const items = computed(() => context.root.$store.state.snackbars.items)
+  setup() {
+    const store = useStore()
+
+    const items = computed(() => store.state.snackbars.items)
     const hasItem = computed(() => items.value.length > 0)
 
     return {

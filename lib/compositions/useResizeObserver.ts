@@ -6,7 +6,7 @@ export interface EL {
   h: number
 }
 
-export default function useResizeObserver(target: Ref<HTMLElement | null>) {
+export default function useResizeObserver(target: Ref<HTMLElement>) {
   const el = reactive({ w: 0, h: 0 })
 
   const ro = new ResizeObserver((entries) => {
@@ -15,7 +15,7 @@ export default function useResizeObserver(target: Ref<HTMLElement | null>) {
     el.h = entry.contentBoxSize[0].blockSize
   })
 
-  onMounted(() => { ro.observe(target.value as HTMLElement) })
+  onMounted(() => { ro.observe(target.value) })
   onUnmounted(() => { ro.disconnect() })
 
   return {

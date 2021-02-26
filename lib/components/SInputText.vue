@@ -74,6 +74,7 @@ import {
   PropType
 } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
+import { SyntheticInputEvent } from '../types/Utils'
 import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SIconX from './icons/SIconX.vue'
@@ -115,7 +116,7 @@ export default defineComponent({
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const inputEl = ref<HTMLElement | null>(null)
     const textEl = ref<HTMLElement | null>(null)
     const textAfterEl = ref<HTMLElement | null>(null)
@@ -143,25 +144,25 @@ export default defineComponent({
     })
 
     function focus() {
-      (inputEl.value as HTMLElement).focus()
+      inputEl.value && inputEl.value.focus()
     }
 
     function blur() {
-      (inputEl.value as HTMLElement).blur()
+      inputEl.value && inputEl.value.blur()
     }
 
-    function emitInput(e: InputEvent) {
-      context.emit('input', getValue((e.target as HTMLInputElement).value))
+    function emitInput(e: SyntheticInputEvent) {
+      emit('input', getValue(e.target.value))
     }
 
-    function emitBlur(e: InputEvent) {
+    function emitBlur(e: SyntheticInputEvent) {
       props.validation && props.validation.$touch()
-      context.emit('blur', getValue((e.target as HTMLInputElement).value))
+      emit('blur', getValue(e.target.value))
     }
 
-    function emitEnter(e: InputEvent) {
+    function emitEnter(e: SyntheticInputEvent) {
       blur()
-      context.emit('enter', getValue((e.target as HTMLInputElement).value))
+      emit('enter', getValue(e.target.value))
     }
 
     function getValue(value: string): string | number | null {
@@ -173,7 +174,7 @@ export default defineComponent({
     }
 
     function emitClear() {
-      context.emit('clear')
+      emit('clear')
     }
 
     function setTextPadding(): void {

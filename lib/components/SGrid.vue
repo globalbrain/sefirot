@@ -52,6 +52,7 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 import VueSimplebar from 'simplebar-vue'
+import { isArray } from '../support/Util'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SGridActionLink from './SGridActionLink.vue'
 import SGridActionSingle from './SGridActionSingle.vue'
@@ -71,13 +72,13 @@ export default defineComponent({
     loading: { type: Boolean, default: false }
   },
 
-  setup(props, context) {
+  setup(props, { emit }) {
     const actionComponent = computed(() => {
       if (typeof props.actions === 'string') {
         return SGridActionLink
       }
 
-      if (Array.isArray(props.actions)) {
+      if (isArray(props.actions)) {
         return SGridActionMulti
       }
 
@@ -85,7 +86,7 @@ export default defineComponent({
     })
 
     function handleClick(record: object): void {
-      props.clickable && context.emit('click', record)
+      props.clickable && emit('click', record)
     }
 
     return {

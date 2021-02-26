@@ -38,6 +38,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { SyntheticInputEvent } from '../types/Utils'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -67,10 +68,10 @@ export default defineComponent({
       emit('input', date)
     }
 
-    function emitBlur(e: InputEvent) {
+    function emitBlur(e: SyntheticInputEvent) {
       setTimeout(() => {
         props.validation && props.validation.$touch()
-        emit('blur', (e.target as HTMLInputElement).value)
+        emit('blur', e.target.value)
       }, 100)
     }
 

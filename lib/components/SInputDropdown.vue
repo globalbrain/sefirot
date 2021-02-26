@@ -69,7 +69,7 @@ export default defineComponent({
     options: { type: Array as PropType<Item[]>, required: true },
     closeOnClick: { type: Boolean, default: false },
     validation: { type: Object, default: null },
-    value: { type: [String, Number, Boolean, Array, Object] as PropType<any>, default: null }
+    value: { type: [String, Number, Boolean, Array, Object] as PropType<string | number | boolean | unknown[]>, default: null }
   },
 
   setup(props, { emit }) {
@@ -87,13 +87,13 @@ export default defineComponent({
 
     const selected = computed(() => {
       return isArray(props.value)
-        ? props.options.filter(o => (props.value as any).includes(o.value))
+        ? props.options.filter(o => (props.value as unknown[]).includes(o.value))
         : props.options.find(o => isEqual(o.value, props.value))
     })
 
     const hasSelected = computed(() => {
       return isArray(selected.value)
-        ? (selected.value as any).length > 0
+        ? selected.value.length > 0
         : !isNullish(selected.value) && selected.value.value !== ''
     })
 
@@ -102,9 +102,9 @@ export default defineComponent({
 
       await nextTick()
 
-      const el = document.querySelector('.SInputDropdown .SDropdown .search .SInputText input')
+      const el = document.querySelector<HTMLInputElement>('.SInputDropdown .SDropdown .search .SInputText input')
 
-      el && (el as any).focus()
+      el && el.focus()
     }
 
     function handleCallback(item: Item): void {
@@ -113,7 +113,7 @@ export default defineComponent({
       isArray(props.value) ? handleArray(item.value) : handlePrimitive(item.value)
     }
 
-    function handlePrimitive(value: any): void {
+    function handlePrimitive(value: unknown): void {
       if (!isEqual(props.value, value)) {
         emit('change', value)
 
@@ -125,8 +125,8 @@ export default defineComponent({
       }
     }
 
-    function handleArray(value: any): void {
-      const difference = getDifference(value)
+    function handleArray(value: unknown[]): void {
+      const difference = getDifference(props.value as unknown[], value)
 
       if (!props.nullable && difference.length === 0) {
         return
@@ -135,10 +135,10 @@ export default defineComponent({
       emit('change', difference)
     }
 
-    function getDifference(value: any): any[] {
-      return (props.value as any)
-        .filter((v: any) => !isEqual(v, value))
-        .concat((props.value as any).includes(value) ? [] : [value])
+    function getDifference(source: unknown[], value: unknown[]): unknown[] {
+      return source
+        .filter(item => !isEqual(item, value))
+        .concat(source.includes(value) ? [] : [value])
     }
 
     return {
