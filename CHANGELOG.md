@@ -1,3 +1,9 @@
+# [0.42.0](https://github.com/globalbrain/sefirot/compare/v0.41.0...v0.42.0) (2021-02-26)
+
+### Features
+
+* typescript remediation, few new features and bug fixes ([#42](https://github.com/globalbrain/sefirot/issues/42)) ([4aa4e4c](https://github.com/globalbrain/sefirot/commit/4aa4e4c9e607d3f800cebc9512e8a1428a08bd69))
+
 # [0.41.0](https://github.com/globalbrain/sefirot/compare/v0.40.0...v0.41.0) (2021-02-25)
 
 ### Features
