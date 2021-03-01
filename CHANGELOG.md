@@ -1,3 +1,9 @@
+# [0.43.0](https://github.com/globalbrain/sefirot/compare/v0.42.0...v0.43.0) (2021-03-01)
+
+### Features
+
+* add ability to take callback in `computedIfOnly` helper function ([82cb14d](https://github.com/globalbrain/sefirot/commit/82cb14df6c2225246345b794b7f22b3724c01300))
+
 # [0.42.0](https://github.com/globalbrain/sefirot/compare/v0.41.0...v0.42.0) (2021-02-26)
 
 ### Features
