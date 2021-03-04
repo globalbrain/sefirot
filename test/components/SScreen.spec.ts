@@ -13,7 +13,7 @@ localVue.use(Vuex)
 
 localVue.use(PortalVue)
 
-describe('Components - Screens - SScreen', () => {
+describe('components/SScreen', () => {
   let store = {} as Store<{}>
 
   beforeAll(() => {

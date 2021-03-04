@@ -20,7 +20,7 @@ localVue.use(VueRouter)
 
 localVue.use(PortalVue)
 
-describe('Components - Portals - SPortalScreens', () => {
+describe('components/SPortalScreens', () => {
   test('it can open and close a screen', async () => {
     const router = new VueRouter()
 

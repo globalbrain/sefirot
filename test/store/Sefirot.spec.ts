@@ -11,6 +11,7 @@ describe('store/Sefirot', () => {
     })
 
     expect(store.state.modal).toBeTruthy()
+    expect(store.state.screen).toBeTruthy()
     expect(store.state.snackbars).toBeTruthy()
   })
 })

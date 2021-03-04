@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 
-describe('Components - Inputs - SInputTextarea', () => {
+describe('components/SInputTextarea', () => {
   test('it emits `input` event when a user inputs the value', () => {
     const wrapper = mount(SInputTextarea)
 

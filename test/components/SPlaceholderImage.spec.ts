@@ -3,7 +3,7 @@ import SPlaceholderImage from 'sefirot/components/SPlaceholderImage.vue'
 
 jest.useFakeTimers()
 
-describe('components/placeholders/SPlaceholderImage', () => {
+describe('components/SPlaceholderImage', () => {
   test('it emits `load` event when image is loaded', () => {
     const wrapper = mount(SPlaceholderImage, {
       propsData: {
