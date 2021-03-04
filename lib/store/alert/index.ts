@@ -1,20 +1,6 @@
 import { ActionTree, ActionContext } from 'vuex'
 import { State as RootState } from '../Sefirot'
 
-export interface PayloadOpen {
-  type?: 'info' | 'success' | 'warning' | 'danger' | 'error'
-  title: string
-  text: string
-  actions: Action[]
-}
-
-export interface Action {
-  type?: 'primary' | 'mute'
-  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-  label: string
-  callback: Function
-}
-
 export const actions: ActionTree<any, RootState> = {
   open(context: ActionContext<any, RootState>, { type = 'info', title, text, actions }): void {
     context.dispatch('modal/open', {
