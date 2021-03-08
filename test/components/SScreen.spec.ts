@@ -1,43 +1,41 @@
-import MutationObserver from 'mutation-observer'
-import { mount, createLocalVue } from '@vue/test-utils'
-import Vuex, { Store } from 'vuex'
+import { mount } from '@vue/test-utils'
+import Vuex from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from 'sefirot/store/Sefirot'
+import { createVue, CreateWrapperFn } from '../utils'
 import SScreenMinimal from './_fixtures/SScreenMinimal.vue'
 
-global.MutationObserver = MutationObserver
+type Instance = InstanceType<typeof SScreenMinimal>
+let createWrapper: CreateWrapperFn<Instance>
 
-const localVue = createLocalVue()
+const { localVue } = createVue()
+  .use(Vuex)
+  .use(PortalVue)
 
-localVue.use(Vuex)
+jest.useFakeTimers()
 
-localVue.use(PortalVue)
+window.scrollTo = jest.fn()
 
 describe('components/SScreen', () => {
-  let store = {} as Store<{}>
+  beforeEach(() => {
+    const store = new Vuex.Store({ plugins: [Sefirot] })
 
-  beforeAll(() => {
-    store = new Vuex.Store({
-      plugins: [Sefirot]
-    })
+    createWrapper = () => mount(SScreenMinimal, { localVue, store })
   })
 
-  test('it can open screen', async () => {
-    const wrapper = mount(SScreenMinimal, { localVue, store })
+  it('should open and close screen', async () => {
+    const wrapper = createWrapper()
 
     expect(wrapper.find('.SScreen').exists()).toBe(false)
 
-    store.dispatch('screen/open', {
-      name: 's-screen-minimal'
-    })
-
-    await localVue.nextTick()
+    wrapper.vm.$store.dispatch('screen/open', { name: 's-screen-minimal' })
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find('.SScreen').exists()).toBe(true)
 
-    store.dispatch('screen/close')
-
-    await localVue.nextTick()
+    wrapper.vm.$store.dispatch('screen/close')
+    jest.runAllTimers()
+    await wrapper.vm.$nextTick()
 
     expect(wrapper.find('.SWindow').exists()).toBe(false)
   })

@@ -1,66 +1,63 @@
 import { mount } from '@vue/test-utils'
 import SIconX from 'sefirot/components/icons/SIconX.vue'
 import SGrid from 'sefirot/components/SGrid.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SGrid>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SGrid', () => {
-  test('if clickable, it emits `click` event when a user clicks the record', () => {
-    const wrapper = mount(SGrid, {
+  beforeEach(() => {
+    createWrapper = (options = {}) => mount(SGrid, {
+      ...options,
       propsData: {
         columns: [{ name: 'name', label: 'NAME' }],
         records: [{ id: 1, name: 'John Doe' }],
-        clickable: true
+        ...options.propsData
       }
+    })
+  })
+
+  it('should emit on click when `clickable` is true', () => {
+    const wrapper = createWrapper({
+      propsData: { clickable: true }
     })
 
     wrapper.find('.SGrid .row').trigger('click')
-
-    expect(wrapper.emitted('click')?.[0][0]).toEqual({ id: 1, name: 'John Doe' })
+    expect(wrapper.emitted('click')).toHaveEmittedWith({ id: 1, name: 'John Doe' })
   })
 
-  test('if not clickable, it will not emits `click` event when a user clicks the record', () => {
-    const wrapper = mount(SGrid, {
-      propsData: {
-        columns: [{ name: 'name', label: 'NAME' }],
-        records: [{ id: 1, name: 'John Doe' }],
-        clickable: false
-      }
+  it('should not emit on click when `clickable` is false', () => {
+    const wrapper = createWrapper({
+      propsData: { clickable: false }
     })
 
     wrapper.find('.SGrid .row').trigger('click')
-
-    expect(wrapper.emitted('click')).toBe(undefined)
+    expect(wrapper.emitted('click')).toBeUndefined()
   })
 
-  test('it can shows link action', () => {
-    const wrapper = mount(SGrid, {
-      propsData: {
-        columns: [{ name: 'name', label: 'NAME' }],
-        records: [{ id: 1, name: 'John Doe' }],
-        actions: 'link'
-      }
+  it('should display link actions', () => {
+    const wrapper = createWrapper({
+      propsData: { actions: 'link' }
     })
 
     expect(wrapper.find('.SGrid .SGridActionLink').exists()).toBe(true)
   })
 
-  test('it can shows single action', () => {
-    const wrapper = mount(SGrid, {
+  it('should display single actions', () => {
+    const wrapper = createWrapper({
       propsData: {
-        columns: [{ name: 'name', label: 'NAME' }],
-        records: [{ id: 1, name: 'John Doe' }],
-        actions: { icon: SIconX, callback: () => {} }
+        actions: { icon: SIconX, callback: jest.fn() }
       }
     })
 
     expect(wrapper.find('.SGrid .SGridActionSingle').exists()).toBe(true)
   })
 
-  test('it can shows multi actions', () => {
-    const wrapper = mount(SGrid, {
+  it('should display multi actions', () => {
+    const wrapper = createWrapper({
       propsData: {
-        columns: [{ name: 'name', label: 'NAME' }],
-        records: [{ id: 1, name: 'John Doe' }],
-        actions: [{ name: 'Edit', icon: SIconX, callback: () => {} }]
+        actions: [{ name: 'Edit', icon: SIconX, callback: jest.fn() }]
       }
     })
 

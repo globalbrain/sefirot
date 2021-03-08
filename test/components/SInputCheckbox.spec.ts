@@ -1,17 +1,24 @@
 import { mount } from '@vue/test-utils'
 import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SInputCheckbox>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SInputCheckbox', () => {
-  test('it emits `input` event when a user inputs the value', () => {
-    const wrapper = mount(SInputCheckbox, {
+  beforeEach(() => {
+    createWrapper = options => mount(SInputCheckbox, options)
+  })
+
+  it('should emit value on click', () => {
+    const wrapper = createWrapper({
       propsData: {
-        text: 'Checkbox text',
+        text: 'Checkbox',
         value: false
       }
     })
 
     wrapper.find('.SInputCheckbox .input').trigger('click')
-
-    expect(wrapper.emitted('change')?.[0][0]).toBe(true)
+    expect(wrapper.emitted('change')).toHaveEmittedWith(true)
   })
 })

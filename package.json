@@ -62,7 +62,6 @@
     "jest-serializer-vue": "^2.0.2",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
-    "mutation-observer": "^1.0.3",
     "normalize.css": "^8.0.1",
     "nuxt": "^2.15.2",
     "portal-vue": "^2.1.7",

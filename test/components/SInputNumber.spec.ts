@@ -1,56 +1,70 @@
 import { mount } from '@vue/test-utils'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SInputNumber>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SInputNumber', () => {
-  it('compute the number with thousand separator if `helpFormat` prop is true', async () => {
-    const wrapper = mount(SInputNumber, {
+  beforeEach(() => {
+    createWrapper = options => mount(SInputNumber, options)
+  })
+
+  it('should format help text with thousand separator', async () => {
+    const wrapper = createWrapper({
       propsData: {
         helpFormat: true
       }
     })
 
-    await wrapper.setProps({
-      value: 1000000
+    await wrapper.setProps({ value: 1000000000 })
+    expect(wrapper.vm.valueWithSeparator).toBe('1,000,000,000')
+  })
+
+  it('should not format help text with excessive value', async () => {
+    const wrapper = createWrapper({
+      propsData: {
+        helpFormat: true
+      }
     })
 
-    expect((wrapper.vm as any).valueWithSeparator).toBe('1,000,000')
+    await wrapper.setProps({ value: 200000000000000000000 })
+    expect(wrapper.vm.valueWithSeparator).toBe('The number is too big')
   })
 
-  it('emits `input` event when a user inputs the value', () => {
-    const wrapper = mount(SInputNumber)
+  it('should emit value on input', () => {
+    const wrapper = createWrapper()
 
     wrapper.find('.SInputNumber .input').setValue(1)
-
-    expect((wrapper.emitted('input') as any)[0][0]).toBe(1)
+    expect(wrapper.emitted('input')).toHaveEmittedWith(1)
   })
 
-  it('emits `input` event when a user inputs nothing', () => {
-    const wrapper = mount(SInputNumber)
+  it('should emit null when value is empty', () => {
+    const wrapper = createWrapper()
 
     wrapper.find('.SInputNumber .input').setValue(null)
-
-    expect((wrapper.emitted('input') as any)[0][0]).toBe(null)
+    expect(wrapper.emitted('input')).toHaveEmittedWith(null)
   })
 
-  it('emits `blur` event when a user blur form the input', () => {
-    const wrapper = mount(SInputNumber)
+  it('should emit value when losing focus', () => {
+    const wrapper = createWrapper()
 
     const input = wrapper.find('.SInputNumber .input')
 
     input.setValue(1)
     input.trigger('blur')
 
-    expect((wrapper.emitted('blur') as any)[0][0]).toBe(1)
+    expect(wrapper.emitted('blur')).toHaveEmittedWith(1)
   })
 
-  it('emits `enter` event when a user key down enter', () => {
-    const wrapper = mount(SInputNumber)
+  it('should emit value on `enter` keypress', () => {
+    const wrapper = createWrapper()
 
     const input = wrapper.find('.SInputNumber .input')
 
     input.setValue(1)
     input.trigger('keypress.enter')
 
-    expect((wrapper.emitted('enter') as any)[0][0]).toBe(1)
+    expect(wrapper.emitted('enter')).toHaveEmittedWith(1)
   })
 })

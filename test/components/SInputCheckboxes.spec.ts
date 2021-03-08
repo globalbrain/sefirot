@@ -1,36 +1,55 @@
 import { mount } from '@vue/test-utils'
 import SInputCheckboxes from 'sefirot/components/SInputCheckboxes.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SInputCheckboxes>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SInputCheckboxes', () => {
-  test('it emits correct value when an user clicks a checkbox', () => {
-    const options = [
-      { label: 'Check box 1', value: 1 },
-      { label: 'Check box 2', value: 2 },
-      { label: 'Check box 3', value: 3 }
-    ]
+  beforeEach(() => {
+    createWrapper = (options = {}) => mount(SInputCheckboxes, {
+      ...options,
+      propsData: {
+        options: [
+          { label: 'Checkbox 1', value: 1 },
+          { label: 'Checkbox 2', value: 2 },
+          { label: 'Checkbox 3', value: 3 }
+        ],
+        ...options.propsData
+      }
+    })
+  })
 
-    const wrapper1 = mount(SInputCheckboxes, {
-      propsData: { value: [], options }
+  it('should emit value on click', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: []
+      }
     })
 
-    wrapper1.find('.SInputCheckboxes .col:nth-child(1) .input').trigger('click')
+    wrapper.find('.SInputCheckboxes .col:nth-child(1) .input').trigger('click')
+    expect(wrapper.emitted('change')).toHaveEmittedWith([1])
+  })
 
-    expect(wrapper1.emitted('change')?.[0][0]).toEqual([1])
-
-    const wrapper2 = mount(SInputCheckboxes, {
-      propsData: { value: [1], options }
+  it('should append value on click', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: [1]
+      }
     })
 
-    wrapper2.find('.SInputCheckboxes .col:nth-child(2) .input').trigger('click')
+    wrapper.find('.SInputCheckboxes .col:nth-child(2) .input').trigger('click')
+    expect(wrapper.emitted('change')).toHaveEmittedWith([1, 2])
+  })
 
-    expect(wrapper2.emitted('change')?.[0][0]).toEqual([1, 2])
-
-    const wrapper3 = mount(SInputCheckboxes, {
-      propsData: { value: [1, 2], options }
+  it('should remove value on click', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: [1, 2]
+      }
     })
 
-    wrapper3.find('.SInputCheckboxes .col:nth-child(1) .input').trigger('click')
-
-    expect(wrapper3.emitted('change')?.[0][0]).toEqual([2])
+    wrapper.find('.SInputCheckboxes .col:nth-child(2) .input').trigger('click')
+    expect(wrapper.emitted('change')).toHaveEmittedWith([1])
   })
 })
