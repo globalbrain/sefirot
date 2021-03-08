@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "ESNEXT",
+    "target": "es2018",
+    "module": "esnext",
     "moduleResolution": "node",
     "lib": [
       "esnext",
@@ -9,7 +9,6 @@
       "dom"
     ],
     "esModuleInterop": true,
-    "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "noEmit": true,

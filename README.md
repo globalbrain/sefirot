@@ -20,7 +20,7 @@ This repository contains Vue Components for Global Brain Design System. Componen
 
 Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.
 
-That's being said, feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.
+That being said, feel free to leverage any component within this project. You may customize them however you want, and maybe, some component might be valuable to you. Any suggestions, requests, and questions are welcome.
 
 ## Documentation
 
@@ -40,28 +40,28 @@ Sefirot follows official [Vue Style Guide](https://vuejs.org/v2/style-guide/). B
 ### Development
 
 ```bash
-$ npm run serve
+$ yarn serve
 ```
 
 Serve documentation website at http://localhost:3000.
 
 ```bash
-$ npm run lint
+$ yarn lint
 ```
 
 Lint files using a rule of Standard JS.
 
 ```bash
-$ npm run jest
+$ yarn test
 ```
 
-Run the test.
+Run the tests.
 
 ```bash
-$ npm run coverage
+$ yarn coverage
 ```
 
-Generate test coverage in `coverage` directory.
+Output test coverage in `coverage` directory.
 
 ## License
 

@@ -1,5 +1,9 @@
 module.exports = {
-  rootDir: '..',
+  globals: {
+    'vue-jest': {
+      babelConfig: false
+    }
+  },
   moduleFileExtensions: [
     'js',
     'ts',
@@ -10,20 +14,19 @@ module.exports = {
     '^sefirot/(.*)$': '<rootDir>/lib/$1',
     '^test/(.*)$': '<rootDir>/test/$1'
   },
-  testRegex: '/test/.*\\.spec\\.(js|ts)$',
+  testRegex: '/test/.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
-    '^.+\\.ts$': '<rootDir>/node_modules/ts-jest',
-    '.*\\.vue$': '<rootDir>/node_modules/vue-jest'
+    '^.+\\.ts$': 'ts-jest',
+    '.*\\.vue$': 'vue-jest'
   },
   snapshotSerializers: [
-    '<rootDir>/node_modules/jest-serializer-vue'
+    'jest-serializer-vue'
   ],
   setupFilesAfterEnv: [
     '<rootDir>/test/setup.ts'
   ],
   collectCoverageFrom: [
-    '<rootDir>/lib/**/*.{js,ts,vue}'
+    '<rootDir>/lib/**/*.{ts,vue}'
   ],
   coverageReporters: [
     'html',
