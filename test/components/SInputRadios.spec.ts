@@ -1,52 +1,58 @@
 import { mount } from '@vue/test-utils'
 import SInputRadios from 'sefirot/components/SInputRadios.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SInputRadios>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SInputRadios', () => {
-  test('it emits correct value when an user clicks a radio button', () => {
-    const options = [
-      { label: 'Radio button 1', value: 1 },
-      { label: 'Radio button 2', value: 2 },
-      { label: 'Radio button 3', value: 3 }
-    ]
-
-    const wrapper1 = mount(SInputRadios, {
-      propsData: { value: 1, nullable: false, options }
+  beforeEach(() => {
+    createWrapper = (options = {}) => mount(SInputRadios, {
+      ...options,
+      propsData: {
+        options: [
+          { label: 'Radio 1', value: 1 },
+          { label: 'Radio 2', value: 2 },
+          { label: 'Radio 3', value: 3 }
+        ],
+        ...options.propsData
+      }
     })
-
-    wrapper1.find('.SInputRadios .col:nth-child(1) .input').trigger('click')
-
-    expect(wrapper1.emitted('change')).toBe(undefined)
-
-    const wrapper2 = mount(SInputRadios, {
-      propsData: { value: 1, nullable: false, options }
-    })
-
-    wrapper2.find('.SInputRadios .col:nth-child(2) .input').trigger('click')
-
-    expect(wrapper2.emitted('change')?.[0][0]).toEqual(2)
   })
 
-  test('it can accept no radio to be checked when the `nullable` option are set', () => {
-    const options = [
-      { label: 'Radio button 1', value: 1 },
-      { label: 'Radio button 2', value: 2 },
-      { label: 'Radio button 3', value: 3 }
-    ]
-
-    const wrapper1 = mount(SInputRadios, {
-      propsData: { value: 1, nullable: true, options }
+  it('should emit changed value', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: 1,
+        nullable: false
+      }
     })
 
-    wrapper1.find('.SInputRadios .col:nth-child(1) .input').trigger('click')
+    wrapper.find('.SInputRadios .col:nth-child(2) .input').trigger('click')
+    expect(wrapper.emitted('change')).toHaveEmittedWith(2)
+  })
 
-    expect(wrapper1.emitted('change')?.[0][0]).toBe(null)
-
-    const wrapper2 = mount(SInputRadios, {
-      propsData: { value: 1, nullable: true, options }
+  it('should not emit checked value', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: 1,
+        nullable: false
+      }
     })
 
-    wrapper2.find('.SInputRadios .col:nth-child(2) .input').trigger('click')
+    wrapper.find('.SInputRadios .col:nth-child(1) .input').trigger('click')
+    expect(wrapper.emitted('change')).toBeUndefined()
+  })
 
-    expect(wrapper2.emitted('change')?.[0][0]).toEqual(2)
+  it('should emit nullable value', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: 1,
+        nullable: true
+      }
+    })
+
+    wrapper.find('.SInputRadios .col:nth-child(1) .input').trigger('click')
+    expect(wrapper.emitted('change')).toHaveEmittedWith(null)
   })
 })

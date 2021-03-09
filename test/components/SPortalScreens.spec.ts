@@ -1,61 +1,60 @@
-import MutationObserver from 'mutation-observer'
-import { mount, createLocalVue } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import PortalVue from 'portal-vue'
 import Sefirot from 'sefirot/store/Sefirot'
 import SPortalScreens from 'sefirot/components/SPortalScreens.vue'
+import { createVue, CreateWrapperFn } from '../utils'
 
-global.MutationObserver = MutationObserver
+type Instance = InstanceType<typeof SPortalScreens>
+let createWrapper: CreateWrapperFn<Instance>
 
-Object.defineProperty(window, 'scrollTo', { value: () => {}, writable: true })
+const { localVue } = createVue()
+  .use(Vuex)
+  .use(VueRouter)
+  .use(PortalVue)
 
 jest.useFakeTimers()
 
-const localVue = createLocalVue()
-
-localVue.use(Vuex)
-
-localVue.use(VueRouter)
-
-localVue.use(PortalVue)
+window.scrollTo = jest.fn()
 
 describe('components/SPortalScreens', () => {
-  test('it can open and close a screen', async () => {
+  beforeEach(() => {
     const router = new VueRouter()
+    const store = new Vuex.Store({ plugins: [Sefirot] })
 
-    const store = new Vuex.Store({
-      plugins: [Sefirot]
-    })
+    createWrapper = () => shallowMount(SPortalScreens, { localVue, router, store })
+  })
 
-    const wrapper = mount(SPortalScreens, {
-      localVue,
-      router,
-      store
-    })
+  it('should open and close screen', async () => {
+    const wrapper = createWrapper()
 
-    store.dispatch('screen/open', {
+    await wrapper.vm.$store.dispatch('screen/open', {
       name: 'screen'
     })
 
-    await localVue.nextTick()
+    expect(wrapper.vm.screenName).toBe('screen')
 
-    expect((wrapper.vm as any).screenName).toBe('screen')
-
-    store.dispatch('screen/close')
-
-    await localVue.nextTick()
-
-    store.dispatch('screen/open', {
-      name: 'screen'
-    })
-
-    wrapper.vm.$router.push('/another-path')
-
-    await localVue.nextTick()
-
-    expect((wrapper.vm as any).screenName).toBe(null)
-
+    wrapper.vm.$store.dispatch('screen/close')
     jest.runAllTimers()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.vm.screenName).toBe(null)
+  })
+
+  it('should close screen on route change', async () => {
+    const wrapper = createWrapper()
+
+    wrapper.vm.$store.dispatch('screen/open', {
+      name: 'screen'
+    })
+
+    expect(wrapper.vm.screenName).toBe('screen')
+
+    wrapper.vm.$router.push('/another-route')
+    jest.runAllTimers()
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.vm.screenName).toBe(null)
   })
 })

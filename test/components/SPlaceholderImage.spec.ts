@@ -1,11 +1,19 @@
 import { mount } from '@vue/test-utils'
 import SPlaceholderImage from 'sefirot/components/SPlaceholderImage.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SPlaceholderImage>
+let createWrapper: CreateWrapperFn<Instance>
 
 jest.useFakeTimers()
 
 describe('components/SPlaceholderImage', () => {
-  test('it emits `load` event when image is loaded', () => {
-    const wrapper = mount(SPlaceholderImage, {
+  beforeEach(() => {
+    createWrapper = options => mount(SPlaceholderImage, options)
+  })
+
+  it('should emit when image has loaded', () => {
+    const wrapper = createWrapper({
       propsData: {
         img: 'example.jpg',
         width: 100,
@@ -14,9 +22,8 @@ describe('components/SPlaceholderImage', () => {
     })
 
     wrapper.find('.SPlaceholderImage .img-src').trigger('load')
-
     jest.runAllTimers()
 
-    expect(wrapper.emitted('load')?.length).toBe(1)
+    expect(wrapper.emitted('load')).toBeTruthy()
   })
 })

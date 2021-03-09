@@ -1,31 +1,61 @@
-import { mount, createLocalVue } from '@vue/test-utils'
-import Vue from 'vue'
+
+import { mount } from '@vue/test-utils'
 import VCalendar from 'v-calendar'
+import useForm from 'sefirot/compositions/useForm'
 import SInputDate from 'sefirot/components/SInputDate.vue'
+import { createVue, CreateWrapperFn } from '../utils'
 
-window.matchMedia = window.matchMedia || function () {
-  return {
-    matches: false,
-    addListener: () => {},
-    removeListener: () => {}
-  }
-}
+type Instance = InstanceType<typeof SInputDate>
+let createWrapper: CreateWrapperFn<Instance>
 
-Vue.use(VCalendar, {
-  firstDayOfWeek: 1
-})
+const { localVue } = createVue()
+  .use(VCalendar, { firstDayOfWeek: 1 })
 
-const localVue = createLocalVue()
+jest.useFakeTimers()
 
 describe('components/SInputDate', () => {
-  it('emits `input` event when a user inputs the value', () => {
-    const wrapper = mount(SInputDate, {
+  beforeEach(() => {
+    createWrapper = options => mount(SInputDate, {
       localVue,
-      propsData: { value: null }
+      ...options
+    })
+  })
+
+  it('should emit value on input', () => {
+    const wrapper = createWrapper()
+
+    wrapper.vm.emitInput('stub')
+    expect(wrapper.emitted('input')).toHaveEmittedWith('stub')
+  })
+
+  it('should emit value when losing focus', () => {
+    const wrapper = createWrapper()
+
+    wrapper.vm.emitBlur({ target: { value: 'stub' } } as any)
+    jest.runAllTimers()
+
+    expect(wrapper.emitted('blur')).toHaveEmittedWith('stub')
+  })
+
+  it('should invoke validation when losing focus', () => {
+    const { data, validation } = useForm({
+      data: { name: '' },
+      rules: { name: [] }
     })
 
-    ;(wrapper.vm as any).emitInput('stub')
+    const wrapper = createWrapper({
+      propsData: {
+        value: data.name,
+        validation
+      }
+    })
 
-    expect(wrapper.emitted('input')?.[0][0]).toBe('stub')
+    const input = wrapper.find('.SInputDate .input')
+
+    input.setValue('2021-01-01')
+    input.trigger('blur')
+    jest.runAllTimers()
+
+    expect(validation.name.$isDirty.value).toBe(true)
   })
 })

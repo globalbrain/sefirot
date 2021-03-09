@@ -1,41 +1,48 @@
-import { mount } from '@vue/test-utils'
+import { shallowMount } from '@vue/test-utils'
 import SIconPreloaderDark from 'sefirot/components/icons/SIconPreloaderDark.vue'
 import SIconPreloaderLight from 'sefirot/components/icons/SIconPreloaderLight.vue'
 import SButton from 'sefirot/components/SButton.vue'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SButton>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SButton', () => {
-  it('emits `click` event when a user clicks the button', () => {
-    const wrapper = mount(SButton, {
+  beforeEach(() => {
+    createWrapper = options => shallowMount(SButton, options)
+  })
+
+  it('should emit on click', () => {
+    const wrapper = createWrapper({
       propsData: {
         label: 'BUTTON'
       }
     })
 
     wrapper.find('.SButton').trigger('click')
-
     expect(wrapper.emitted('click')).toBeTruthy()
   })
 
-  it('shows the correct preloader depending on the button mode', async () => {
-    const wrapper = mount(SButton, {
+  it('should display correct preloader depending on mode', async () => {
+    const wrapper = createWrapper({
       propsData: {
         label: 'BUTTON',
         loading: true
       }
     })
 
-    expect((wrapper as any).vm.preloaderComponent).toBe(SIconPreloaderLight)
+    expect(wrapper.vm.preloaderComponent).toBe(SIconPreloaderLight)
 
     await wrapper.setProps({ type: 'secondary' })
-    expect((wrapper as any).vm.preloaderComponent).toBe(SIconPreloaderDark)
+    expect(wrapper.vm.preloaderComponent).toBe(SIconPreloaderDark)
 
     await wrapper.setProps({ type: 'primary', inverse: true })
-    expect((wrapper as any).vm.preloaderComponent).toBe(SIconPreloaderDark)
+    expect(wrapper.vm.preloaderComponent).toBe(SIconPreloaderDark)
 
     await wrapper.setProps({ type: 'secondary', inverse: true })
-    expect((wrapper as any).vm.preloaderComponent).toBe(SIconPreloaderLight)
+    expect(wrapper.vm.preloaderComponent).toBe(SIconPreloaderLight)
 
     await wrapper.setProps({ mode: 'info' })
-    expect((wrapper as any).vm.preloaderComponent).toBe(SIconPreloaderLight)
+    expect(wrapper.vm.preloaderComponent).toBe(SIconPreloaderLight)
   })
 })

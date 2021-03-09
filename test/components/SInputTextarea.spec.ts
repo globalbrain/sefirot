@@ -1,23 +1,52 @@
 import { mount } from '@vue/test-utils'
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import useForm from 'sefirot/compositions/useForm'
+import { CreateWrapperFn } from '../utils'
+
+type Instance = InstanceType<typeof SInputTextarea>
+let createWrapper: CreateWrapperFn<Instance>
 
 describe('components/SInputTextarea', () => {
-  test('it emits `input` event when a user inputs the value', () => {
-    const wrapper = mount(SInputTextarea)
-
-    wrapper.find('.SInputTextarea .input').setValue('ok')
-
-    expect((wrapper.emitted('input') as any)[0][0]).toBe('ok')
+  beforeEach(() => {
+    createWrapper = options => mount(SInputTextarea, options)
   })
 
-  test('it emits `blur` event when a user blur from the input', () => {
-    const wrapper = mount(SInputTextarea)
+  it('should emit value on input', () => {
+    const wrapper = createWrapper()
 
-    const input = wrapper.find('.SInputTextarea .input') as any
+    wrapper.find('.SInputTextarea .input').setValue('ok')
+    expect(wrapper.emitted('input')).toHaveEmittedWith('ok')
+  })
 
-    input.element.value = 'ok'
+  it('should emit value when losing focus', () => {
+    const wrapper = createWrapper()
+
+    const input = wrapper.find('.SInputTextarea .input')
+
+    input.setValue('ok')
     input.trigger('blur')
 
-    expect((wrapper.emitted('blur') as any)[0][0]).toBe('ok')
+    expect(wrapper.emitted('blur')).toHaveEmittedWith('ok')
+  })
+
+  it('should invoke validation when losing focus', () => {
+    const { data, validation } = useForm({
+      data: { name: '' },
+      rules: { name: [] }
+    })
+
+    const wrapper = createWrapper({
+      propsData: {
+        value: data.name,
+        validation
+      }
+    })
+
+    const input = wrapper.find('.SInputTextarea .input')
+
+    input.setValue('ok')
+    input.trigger('blur')
+
+    expect(validation.name.$isDirty.value).toBe(true)
   })
 })

@@ -74,10 +74,8 @@ export default defineComponent({
     }
 
     function release(): void {
-      if (el.value) {
-        el.value.scrollTo(0, 0)
-        clearAllBodyScrollLocks()
-      }
+      el.value && el.value.scrollTo(0, 0)
+      clearAllBodyScrollLocks()
     }
 
     return {
