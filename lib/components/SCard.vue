@@ -18,10 +18,6 @@
       <div class="SCard-content">
         <slot />
 
-        <template v-for="(module, index) in modules">
-          <component :is="module.component" :key="index" v-bind="module.data" />
-        </template>
-
         <div v-if="footer" class="footer">
           <SCardFooter :size="size" :actions="footer.actions" />
         </div>
@@ -38,7 +34,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
-import { Header, Module, Footer, Size, Mode } from '../composables/Card'
+import { Header, Footer, Size, Mode } from '../composables/Card'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SCardHeader from './SCardHeader.vue'
 import SCardFooter from './SCardFooter.vue'
@@ -54,7 +50,6 @@ export default defineComponent({
     size: { type: String as PropType<Size>, default: 'compact' },
     border: { type: String as PropType<Mode>, default: 'default' },
     header: { type: Object as PropType<Header>, default: null },
-    modules: { type: Array as PropType<Module[]>, default: () => [] },
     footer: { type: Object as PropType<Footer>, default: null },
     round: { type: Number, default: 8 },
     depth: { type: Number, default: 1 },

@@ -10,7 +10,6 @@ export interface Card {
   size?: Size
   border?: Mode
   header?: Header
-  modules?: Module[]
   footer?: Footer
   round?: number
   depth?: number
@@ -34,21 +33,12 @@ export const Modes = {
   Danger: 'danger'
 } as const
 
-export interface Module {
-  component: any
-  data?: Record<string, any>
-}
-
 export interface Footer {
   actions: Action[]
 }
 
 export function useCard(card: Card): Card {
   return card
-}
-
-export function useModule(module: Module): Module {
-  return module
 }
 
 export function useFooter(footer: Footer): Footer {
