@@ -1,3 +1,10 @@
+# [0.44.0](https://github.com/globalbrain/sefirot/compare/v0.43.0...v0.44.0) (2021-03-15)
+
+### Features
+
+* **alert:** add composable ([#43](https://github.com/globalbrain/sefirot/issues/43)) ([4c17e94](https://github.com/globalbrain/sefirot/commit/4c17e940d6045a2ee9e4ba02ad85ad68b1b55c0b))
+* **card:** remove module option from card ([f83de4e](https://github.com/globalbrain/sefirot/commit/f83de4e23e0f1c04824866f4b479ee4804c46a0b))
+
 # [0.43.0](https://github.com/globalbrain/sefirot/compare/v0.42.0...v0.43.0) (2021-03-01)
 
 ### Features
