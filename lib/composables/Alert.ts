@@ -1,6 +1,6 @@
 import { Values } from '../types/Utils'
-import { ButtonAction } from './Action'
 import { useStore } from './Store'
+import { ButtonAction } from './Action'
 
 export interface Alert {
   type?: AlertMode
