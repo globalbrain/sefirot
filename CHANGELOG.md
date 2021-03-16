@@ -1,3 +1,9 @@
+# [0.45.0](https://github.com/globalbrain/sefirot/compare/v0.44.0...v0.45.0) (2021-03-16)
+
+### Features
+
+* **alert:** improve composition ([#47](https://github.com/globalbrain/sefirot/issues/47)) ([#48](https://github.com/globalbrain/sefirot/issues/48)) ([8961c67](https://github.com/globalbrain/sefirot/commit/8961c67c3012ac741d25759d8dd07b826d2ecaea))
+
 # [0.44.0](https://github.com/globalbrain/sefirot/compare/v0.43.0...v0.44.0) (2021-03-15)
 
 ### Features
