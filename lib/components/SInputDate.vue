@@ -24,7 +24,7 @@
             :id="name"
             class="input"
             type="text"
-            placeholder="YYYY-MM-DD"
+            :placeholder="placeholder"
             :value="inputValue"
             autocomplete="off"
             v-on="inputEvents"
@@ -57,6 +57,7 @@ export default defineComponent({
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
+    placeholder: { type: String, default: 'YYYY-MM-DD' },
     value: { type: String, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
