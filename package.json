@@ -12,6 +12,7 @@
     "generate": "nuxt generate",
     "lint": "eslint --fix --ignore-path .gitignore './{lib,docs,test}/**/*.{ts,vue}'",
     "lint:fail": "eslint --ignore-path .gitignore './{lib,docs,test}/**/*.{ts,vue}'",
+    "jest": "jest",
     "test": "yarn lint && yarn coverage",
     "coverage": "jest --collect-coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
