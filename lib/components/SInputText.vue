@@ -32,6 +32,7 @@
           :class="{ 'has-icon': icon, 'is-clearable': clearable }"
           :style="inputStyles"
           :type="type"
+          :step="step"
           :placeholder="placeholder"
           :value="value"
           @input="emitInput"
@@ -111,6 +112,7 @@ export default defineComponent({
     icon: { type: Object, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
+    step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }

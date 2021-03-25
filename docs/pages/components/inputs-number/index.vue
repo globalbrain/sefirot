@@ -102,6 +102,13 @@ export default defineComponent({
         description: 'Add the trailing text to the input.'
       },
       {
+        name: 'step',
+        type: 'number',
+        required: false,
+        default: '1',
+        description: 'A stepping interval to use when using up and down arrows to adjust the value.'
+      },
+      {
         name: 'help-format',
         type: 'boolean',
         required: false,
