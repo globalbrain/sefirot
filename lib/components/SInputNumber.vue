@@ -11,6 +11,7 @@
     :placeholder="placeholder"
     :text="text"
     :text-after="textAfter"
+    :step="step"
     :validation="validation"
     :value="value"
     @input="emitInput"
@@ -46,6 +47,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
+    step: { type: Number, default: 1 },
     helpFormat: { type: Boolean, default: false },
     value: { type: Number, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
