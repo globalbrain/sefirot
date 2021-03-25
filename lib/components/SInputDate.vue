@@ -95,6 +95,10 @@ export default defineComponent({
     line-height: 24px;
     font-size: 14px;
   }
+
+  .container {
+    height: 32px;
+  }
 }
 
 .SInputDate.medium {
@@ -103,6 +107,10 @@ export default defineComponent({
     width: 100%;
     line-height: 24px;
     font-size: 16px;
+  }
+
+  .container {
+    height: 48px;
   }
 }
 
@@ -136,10 +144,6 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
-}
-
-.container {
-  height: 48px;
 }
 
 .input {
