@@ -2,6 +2,7 @@ import { isString } from '../../support/Util'
 import day from './day'
 import email from './email'
 import include from './include'
+import includeSome from './includeSome'
 import maxLength from './maxLength'
 import maxValue from './maxValue'
 import month from './month'
@@ -32,6 +33,7 @@ export {
   day,
   email,
   include,
+  includeSome,
   maxLength,
   maxValue,
   month,
