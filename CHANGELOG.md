@@ -1,3 +1,15 @@
+# [0.46.0](https://github.com/globalbrain/sefirot/compare/v0.45.0...v0.46.0) (2021-03-26)
+
+### Bug Fixes
+
+* **input-date:** add missing placeholer props to SInputDate ([#49](https://github.com/globalbrain/sefirot/issues/49)) ([29a88d4](https://github.com/globalbrain/sefirot/commit/29a88d4db56f2c3b27cf31281483a58fb0f850de))
+* **input-date:** weird bottom space on when size is set to mini ([#50](https://github.com/globalbrain/sefirot/issues/50)) ([ea10130](https://github.com/globalbrain/sefirot/commit/ea1013054b197de51f1b88cb593d0761352c5757))
+
+### Features
+
+* **input-number:** add 'step' props ([#51](https://github.com/globalbrain/sefirot/issues/51)) ([a7ffeca](https://github.com/globalbrain/sefirot/commit/a7ffeca3b48ceb6de27b48afd732a5dad32dafcb))
+* **validation:** implement includeSome ([#53](https://github.com/globalbrain/sefirot/issues/53)) ([0699104](https://github.com/globalbrain/sefirot/commit/06991042f9086f203d4e2cb0ecfc728ffaad73d5))
+
 # [0.45.0](https://github.com/globalbrain/sefirot/compare/v0.44.0...v0.45.0) (2021-03-16)
 
 ### Features
