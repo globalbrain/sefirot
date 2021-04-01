@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { required } from '@globalbrain/sefirot/lib/validation/rules'
-import { useData, useValidation } from '@globalbrain/sefirot/lib/composables/Form'
+import { useForm } from '@globalbrain/sefirot/lib/composables/Form'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import SInputDate from '@globalbrain/sefirot/lib/components/SInputDate.vue'
 
@@ -60,12 +60,13 @@ export default defineComponent({
   },
 
   setup() {
-    const { data } = useData({
-      date: null
-    })
-
-    const validation = useValidation(data, {
-      date: [required()]
+    const { data, validation } = useForm({
+      data: {
+        date: null
+      },
+      rules: {
+        date: [required()]
+      }
     })
 
     return {
@@ -98,7 +99,7 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@@/lib/validation/rules'
-import { useData, useValidation } from '@@/lib/composables/Form'
+import { useForm } from '@@/lib/composables/Form'
 import SButton from '@@/lib/components/SButton.vue'
 import SInputDate from '@@/lib/components/SInputDate.vue'
 import StoryBase from '@/components/StoryBase.vue'
@@ -111,12 +112,13 @@ export default defineComponent({
   },
 
   setup () {
-    const { data } = useData({
-      date: null
-    })
-
-    const validation = useValidation(data, {
-      date: [required()]
+    const { data, validation } = useForm({
+      data: {
+        date: null
+      },
+      rules: {
+        date: [required()]
+      }
     })
 
     return {

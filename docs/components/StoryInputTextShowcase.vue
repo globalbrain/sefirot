@@ -51,7 +51,7 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@globalbrain/sefirot/lib/validation/rules'
-import { useData, useValidation } from '@globalbrain/sefirot/lib/composables/Form'
+import { useForm } from '@globalbrain/sefirot/lib/composables/Form'
 import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import SInputText from '@globalbrain/sefirot/lib/components/SInputText.vue'
 
@@ -62,12 +62,13 @@ export default defineComponent({
   },
 
   setup() {
-    const { data } = useData({
-      name: ''
-    })
-
-    const validation = useValidation(data, {
-      name: [required()]
+    const { data, validation } = useForm({
+      data: {
+        name: ''
+      },
+      rules: {
+        name: [required()]
+      }
     })
 
     return {
@@ -100,7 +101,7 @@ export default defineComponent({
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import { required } from '@@/lib/validation/rules'
-import { useData, useValidation } from '@@/lib/composables/Form'
+import { useForm } from '@@/lib/composables/Form'
 import SButton from '@@/lib/components/SButton.vue'
 import SInputText from '@@/lib/components/SInputText.vue'
 import StoryBase from '@/components/StoryBase.vue'
@@ -113,12 +114,13 @@ export default defineComponent({
   },
 
   setup () {
-    const { data } = useData({
-      name: ''
-    })
-
-    const validation = useValidation(data, {
-      name: [required()]
+    const { data, validation } = useForm({
+      data: {
+        name: ''
+      },
+      rules: {
+        name: [required()]
+      }
     })
 
     return {
