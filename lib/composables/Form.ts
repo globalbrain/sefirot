@@ -1,45 +1,40 @@
-import { reactive, UnwrapRef } from '@vue/composition-api'
-import { Validation, useFormValidation, Rules } from './FormValidation'
+import { UnwrapRef, reactive } from '@vue/composition-api'
+import { Validation, Rules, useFormValidation } from './FormValidation'
 
-export interface Form<T> {
+export * from './FormValidation'
+
+export interface Form<T extends Record<string, any>> {
   data: Data<T>
   validation?: Validation
   init(): void
-  update<K extends keyof T>(model: K, value: any): void
+  update: UpdateFunction<T>
 }
 
 export type Data<T extends Record<string, any>> = UnwrapRef<T>
+
+export type UpdateFunction<
+  T extends Record<string, any>
+> = (model: keyof Data<T>, value: any) => void
 
 export interface UseFormOptions<T extends Record<string, any>> {
   data: T | (() => T)
   rules?: Rules
 }
 
-export type UpdateFunction = (model: string, value: any) => void
-
-export function useData<T extends Record<string, any>>(data: T): UnwrapRef<T> {
-  return reactive(data)
-}
-
-function getData<T extends Record<string, any>>(data: T | (() => T)): T {
-  return data instanceof Function ? data() : data
-}
-
 export function useForm<T extends Record<string, any>>(options: UseFormOptions<T>): Form<T> {
-  const data = reactive(getData(options.data))
-  const validation = options.rules ? useFormValidation(data, options.rules) : undefined // TODO ask better way.
+  const initialData = getData(options.data)
+  const rules = options.rules
+
+  const data = reactive(initialData)
+  const validation = rules ? useFormValidation(data, rules) : undefined
 
   function init(): void {
-    initData(data, getData(options.data) as any)
+    Object.assign(data, initialData)
     validation?.$reset()
   }
 
-  function update<K extends keyof T>(model: K, value: any): void {
-    (options.data as any)[model] = value
-  }
-
-  function initData<T extends Record<string, any>>(data: T, source: T): void {
-    Object.assign(data, source)
+  function update(model: keyof Data<T>, value: any): void {
+    data[model] = value
   }
 
   return {
@@ -50,6 +45,6 @@ export function useForm<T extends Record<string, any>>(options: UseFormOptions<T
   }
 }
 
-export * from './FormValidation'
-
-export { useFormValidation as useValidation } from './FormValidation'
+function getData<T extends Record<string, any>>(data: T | (() => T)): T {
+  return data instanceof Function ? data() : data
+}
