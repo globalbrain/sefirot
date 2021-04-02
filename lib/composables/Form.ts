@@ -4,7 +4,7 @@ import { Validation, Rules, useFormValidation } from './FormValidation'
 export * from './FormValidation'
 
 export interface Form<T extends Record<string, any>> {
-  data: Data<T>
+  data?: Data<T>
   validation?: Validation
   init(): void
   update: UpdateFunction<T>
@@ -17,16 +17,16 @@ export type UpdateFunction<
 > = (model: keyof Data<T>, value: any) => void
 
 export interface UseFormOptions<T extends Record<string, any>> {
-  data: T | (() => T)
+  data?: T | (() => T)
   rules?: Rules
 }
 
 export function useForm<T extends Record<string, any>>(options: UseFormOptions<T>): Form<T> {
-  const initialData = getData(options.data)
+  const initialData = options.data ? getData(options.data) : undefined
   const rules = options.rules
 
-  const data = reactive(initialData)
-  const validation = rules ? useFormValidation(data, rules) : undefined
+  const data = initialData ? reactive(initialData) : undefined
+  const validation = rules && data ? useFormValidation(data, rules) : undefined
 
   function init(): void {
     Object.assign(data, initialData)
@@ -34,6 +34,7 @@ export function useForm<T extends Record<string, any>>(options: UseFormOptions<T
   }
 
   function update(model: keyof Data<T>, value: any): void {
+    if (!data) { return }
     data[model] = value
   }
 
