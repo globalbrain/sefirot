@@ -1,3 +1,9 @@
+# [0.47.0](https://github.com/globalbrain/sefirot/compare/v0.46.0...v0.47.0) (2021-04-05)
+
+### Features
+
+* **form:** update form apis ([#54](https://github.com/globalbrain/sefirot/issues/54)) ([0497a1a](https://github.com/globalbrain/sefirot/commit/0497a1ad0440986bdf2043e9a4f5f4ae9857e920))
+
 # [0.46.0](https://github.com/globalbrain/sefirot/compare/v0.45.0...v0.46.0) (2021-03-26)
 
 ### Bug Fixes
