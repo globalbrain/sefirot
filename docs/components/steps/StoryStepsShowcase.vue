@@ -37,7 +37,7 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import SSteps, { Step } from '@@/lib/components/SSteps.vue'
+import SSteps from '@@/lib/components/SSteps.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
 export default defineComponent({

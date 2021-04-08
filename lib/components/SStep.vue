@@ -4,7 +4,8 @@
       <div class="bar" :class="[barLeft]" />
       <div class="point">
         <div v-if="status === 'active'" class="inner-dot" />
-        <SIconCheck v-else-if="status === 'done'" class="check" />
+        <SIconCheck v-else-if="status === 'done'" class="icon" />
+        <SIconX v-else-if="status === 'failed'" class="icon" />
       </div>
       <div class="bar" :class="[barRight]" />
     </div>
@@ -15,19 +16,14 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from '@vue/composition-api'
+import { StepStatus, BarMode } from '../composables/Step'
 import SIconCheck from './icons/SIconCheck.vue'
-
-export interface Step {
-  status: StepStatus
-  text?: string
-}
-
-export type StepStatus = 'upcoming' | 'active' | 'done'
-export type BarMode = 'mute' | 'active'
+import SIconX from './icons/SIconX.vue'
 
 export default defineComponent({
   components: {
-    SIconCheck
+    SIconCheck,
+    SIconX
   },
 
   props: {
@@ -57,6 +53,11 @@ export default defineComponent({
   .text  { color: var(--c-text-1); }
 }
 
+.SStep.failed {
+  .point { border-color: var(--c-danger); background-color: var(--c-danger); }
+  .text  { color: var(--c-danger); }
+}
+
 .indicator {
   display: flex;
   align-items: center;
@@ -80,7 +81,7 @@ export default defineComponent({
   background-color: var(--c-success);
 }
 
-.check {
+.icon {
   width: 10px;
   height: 10px;
   fill: var(--c-white);
@@ -93,6 +94,7 @@ export default defineComponent({
 
 .bar.mute   { background-color: var(--c-divider-light); }
 .bar.active { background-color: var(--c-success); }
+.bar.failed { background-color: var(--c-danger); }
 
 .text {
   margin: 0;

@@ -16,7 +16,8 @@ describe('components/SSteps', () => {
         steps: [
           { status: 'done' },
           { status: 'active' },
-          { status: 'upcoming' }
+          { status: 'upcoming' },
+          { status: 'failed' }
         ]
       }
     })
@@ -24,5 +25,6 @@ describe('components/SSteps', () => {
     expect(wrapper.find('.SSteps .item:nth-child(1)').classes()).toContain('done')
     expect(wrapper.find('.SSteps .item:nth-child(2)').classes()).toContain('active')
     expect(wrapper.find('.SSteps .item:nth-child(3)').classes()).toContain('upcoming')
+    expect(wrapper.find('.SSteps .item:nth-child(4)').classes()).toContain('failed')
   })
 })

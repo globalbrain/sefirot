@@ -15,7 +15,7 @@ export interface Step {
   text?: string
 }
 
-export type StepStatus = 'upcoming' | 'active' | 'done'
+export type StepStatus = 'upcoming' | 'active' | 'done' | 'failed'
 ```
 
 As you can see, you may omit `text`, which will display only the "points" of the steps.

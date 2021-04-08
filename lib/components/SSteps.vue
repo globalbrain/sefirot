@@ -14,11 +14,8 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import SStep, { StepStatus, BarMode } from './SStep.vue'
-
-export interface Step {
-  status: StepStatus
-}
+import { Step, BarMode } from '../composables/Step'
+import SStep from './SStep.vue'
 
 export default defineComponent({
   components: {
