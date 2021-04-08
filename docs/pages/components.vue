@@ -43,6 +43,7 @@ export default defineComponent({
       { label: 'Responsive', path: '/components/responsive' },
       { label: 'Screens', path: '/components/screens' },
       { label: 'Snackbars', path: '/components/snackbars' },
+      { label: 'Steps', path: '/components/steps' },
       { label: 'Tooltips', path: '/components/tooltips' }
     ]
 
