@@ -1,3 +1,9 @@
+# [0.48.0](https://github.com/globalbrain/sefirot/compare/v0.47.0...v0.48.0) (2021-04-08)
+
+### Features
+
+* **step:** add SSteps component ([#55](https://github.com/globalbrain/sefirot/issues/55)) ([048f229](https://github.com/globalbrain/sefirot/commit/048f229fe839c14243715f1a58df330c5722d463))
+
 # [0.47.0](https://github.com/globalbrain/sefirot/compare/v0.46.0...v0.47.0) (2021-04-05)
 
 ### Features
