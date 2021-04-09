@@ -14,6 +14,8 @@ module.exports = {
         asyncArrow: 'always'
       }
     ],
+    'no-redeclare': 'off',
+    '@typescript-eslint/no-redeclare': ['error'],
     'vue/component-tags-order': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/no-v-html': 'off',
