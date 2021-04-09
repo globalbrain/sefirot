@@ -3,9 +3,11 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
+    '@typescript-eslint/no-redeclare': ['error'],
     'import/named': 'off',
     'no-use-before-define': 'off',
     'no-unreachable-loop': 'off',
+    'no-redeclare': 'off',
     'space-before-function-paren': [
       'error',
       {

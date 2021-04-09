@@ -1,4 +1,5 @@
 import { UnwrapRef, reactive } from '@vue/composition-api'
+import { WithRequired } from '../types/Utils'
 import { Validation, Rules, useFormValidation } from './FormValidation'
 
 export * from './FormValidation'
@@ -10,18 +11,33 @@ export interface Form<T extends Record<string, any>> {
   update: UpdateFunction<T>
 }
 
-export type Data<T extends Record<string, any>> = UnwrapRef<T>
-
-export type UpdateFunction<
-  T extends Record<string, any>
-> = (model: keyof Data<T>, value: any) => void
-
-export interface UseFormOptions<T extends Record<string, any>> {
+export interface UseFormOptions<T> {
   data: T | (() => T)
   rules?: Rules
 }
 
-export function useForm<T extends Record<string, any>>(options: UseFormOptions<T>): Form<T> {
+export type UpdateFunction<T extends Record<string, any> = Record<string, any>> = (
+  model: keyof Data<T>,
+  value: any
+) => void
+
+export type FormWithValidation<T, U extends Form<T> = Form<T>> = WithRequired<U, 'validation'>
+
+export type UseFormOptionsWithRules<T, U extends UseFormOptions<T> = UseFormOptions<T>> = WithRequired<U, 'rules'>
+
+type Data<T> = UnwrapRef<T>
+
+export function useForm<T extends Record<string, any>>(
+  options: UseFormOptionsWithRules<T>
+): FormWithValidation<T>
+
+export function useForm<T extends Record<string, any>>(
+  options: UseFormOptions<T>
+): Form<T>
+
+export function useForm<T extends Record<string, any>>(
+  options: UseFormOptions<T> | UseFormOptionsWithRules<T>
+): Form<T> | FormWithValidation<T> {
   const initialData = getData(options.data)
   const rules = options.rules
 
