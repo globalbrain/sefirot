@@ -3,9 +3,11 @@ module.exports = {
     '@nuxtjs/eslint-config-typescript'
   ],
   rules: {
+    '@typescript-eslint/no-redeclare': ['error'],
     'import/named': 'off',
     'no-use-before-define': 'off',
     'no-unreachable-loop': 'off',
+    'no-redeclare': 'off',
     'space-before-function-paren': [
       'error',
       {
@@ -14,8 +16,6 @@ module.exports = {
         asyncArrow: 'always'
       }
     ],
-    'no-redeclare': 'off',
-    '@typescript-eslint/no-redeclare': ['error'],
     'vue/component-tags-order': 'off',
     'vue/max-attributes-per-line': 'off',
     'vue/no-v-html': 'off',
