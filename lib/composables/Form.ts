@@ -21,7 +21,7 @@ export type UpdateFunction<T extends Record<string, any> = Record<string, any>> 
   value: any
 ) => void
 
-export type FormValidation<T, U extends Form<T> = Form<T>> = WithRequired<U, 'validation'>
+export type FormWithValidation<T, U extends Form<T> = Form<T>> = WithRequired<U, 'validation'>
 
 export type UseFormOptionsWithRules<T, U extends UseFormOptions<T> = UseFormOptions<T>> = WithRequired<U, 'rules'>
 
@@ -29,7 +29,7 @@ type Data<T> = UnwrapRef<T>
 
 export function useForm<T extends Record<string, any>>(
   options: UseFormOptionsWithRules<T>
-): FormValidation<T>
+): FormWithValidation<T>
 
 export function useForm<T extends Record<string, any>>(
   options: UseFormOptions<T>
@@ -37,7 +37,7 @@ export function useForm<T extends Record<string, any>>(
 
 export function useForm<T extends Record<string, any>>(
   options: UseFormOptions<T> | UseFormOptionsWithRules<T>
-): Form<T> | FormValidation<T> {
+): Form<T> | FormWithValidation<T> {
   const initialData = getData(options.data)
   const rules = options.rules
 
