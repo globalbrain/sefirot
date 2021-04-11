@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
+import VueRouter from 'vue-router'
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
-import { CreateWrapperFn } from '../utils'
+import { createVue, CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SMarkdown>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn<InstanceType<typeof SMarkdown>>
 
 describe('components/SMarkdown', () => {
   beforeEach(() => {
@@ -70,5 +70,33 @@ describe('components/SMarkdown', () => {
     const links = wrapper.findAll('.SMarkdown-container .SMarkdown-link')
     expect(links.at(0).attributes('data-callback-id')).toBe('0')
     expect(links.at(1).attributes('data-callback-id')).toBe('1')
+  })
+
+  it('should dispatch event on link click', async () => {
+    const { localVue } = createVue().use(VueRouter)
+    const router = new VueRouter()
+    const callback = jest.fn()
+
+    const wrapper = createWrapper({
+      localVue,
+      router,
+      attachTo: document.body,
+      propsData: {
+        content: '[link]({0}) [link](/route)',
+        callbacks: [callback]
+      }
+    })
+
+    await wrapper.vm.$nextTick() // wait for render & DOM listeners
+
+    const links = wrapper.findAll('.SMarkdown-container .SMarkdown-link')
+
+    await links.at(0).trigger('click')
+    expect(callback).toHaveBeenCalled()
+    expect(wrapper.emitted('clicked')).toHaveLength(1)
+
+    await links.at(1).trigger('click')
+    expect(router.currentRoute.path).toBe('/route')
+    expect(wrapper.emitted('clicked')).toHaveLength(2)
   })
 })
