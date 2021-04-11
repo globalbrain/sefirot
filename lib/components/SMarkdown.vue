@@ -17,9 +17,9 @@ export default defineComponent({
     tag: { type: String, default: 'div' }
   },
 
-  setup(props) {
+  setup(props, { emit }) {
     const markdown = useMarkdown()
-    const { selector, addListeners } = useLink({ callbacks: props.callbacks })
+    const { selector, addListeners, subscribe } = useLink({ callbacks: props.callbacks })
 
     const rendered = computed(() => markdown(props.content, props.inline))
 
@@ -28,6 +28,8 @@ export default defineComponent({
       () => nextTick(() => addListeners()),
       { immediate: true }
     )
+
+    subscribe(payload => emit('clicked', payload))
 
     return {
       selector,

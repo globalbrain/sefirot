@@ -1,5 +1,5 @@
-import { onUnmounted } from '@vue/composition-api'
 import MarkdownIt from 'markdown-it'
+import { onUnmounted } from '@vue/composition-api'
 import { isCallbackUrl, isExternalUrl, LinkAttrs, linkPlugin } from './markdown/LinkPlugin'
 import { useRouter } from './Router'
 
@@ -109,7 +109,7 @@ export function useLink(options: UseLinkOptions): UseLink {
     const elements = document.querySelectorAll(querySelector)
 
     elements.forEach((element) => {
-      element.addEventListener('click', handler, false)
+      element.addEventListener('click', handler)
     })
   }
 
@@ -117,7 +117,7 @@ export function useLink(options: UseLinkOptions): UseLink {
     const elements = document.querySelectorAll(querySelector)
 
     elements.forEach((element) => {
-      element.removeEventListener('click', handler, false)
+      element.removeEventListener('click', handler)
     })
   }
 
