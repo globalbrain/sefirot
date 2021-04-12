@@ -3,28 +3,32 @@
     <div class="title">
       <p v-if="title" class="title-text">{{ title }}</p>
     </div>
-<!--     <SHeader
-      size="small"
-      :mode="mode"
-      :icon="icon"
-      :title="title"
-      :search="search"
-      :actions="actions"
-    >
-      <template #after-actions>
-        <div v-if="collapsable" class="action action-collapse">
-          <button class="collapse" @click="$emit('collapse')">
-            <SIconChevronDown class="collapse-icon" />
-          </button>
-        </div>
+
+    <div class="actions">
+      <template v-if="actions.length > 0">
+        <button
+          v-for="(action, index) in actions"
+          :key="index"
+          class="action"
+          :class="[action.mode]"
+          @click="action.callback ? action.callback() : () => {}"
+        >
+          <component :is="action.icon" class="action-icon" />
+        </button>
       </template>
-    </SHeader> -->
+
+      <div v-if="collapsable" class="action action-collapse">
+        <button class="collapse" @click="$emit('collapse')">
+          <SIconChevronDown class="collapse-icon" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Size, Mode, Action } from '../composables/Card'
+import { Action, Mode } from '../composables/Card'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 
 export default defineComponent({
@@ -59,7 +63,8 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .SCardHeader {
-  padding: 8px 16px 7px;
+  display: flex;
+  padding: 8px 8px 7px 16px;
   border-bottom: 1px solid var(--c-divider-light);
   background-color: var(--card-bg-mute);
 }
@@ -80,14 +85,46 @@ export default defineComponent({
 .SCardHeader.round-4 { border-radius: 4px 4px 0 0; }
 .SCardHeader.round-8 { border-radius: 8px 8px 0 0; }
 
+.title {
+  flex-grow: 1;
+}
+
 .title-text {
   line-height: 32px;
   font-size: 14px;
   font-weight: 500;
 }
 
-.action-collapse {
-  padding-left: 4px;
+.actions {
+  display: flex;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  color: var(--c-text-2);
+  transition: color .25s, background-color .25s;
+
+  &:hover {
+    background-color: var(--c-gray-light-4);
+  }
+}
+
+.action.neutral:hover { color: var(--c-text-1); }
+.action.info:hover    { color: var(--c-info); }
+.action.success:hover { color: var(--c-success); }
+.action.warning:hover { color: var(--c-warning); }
+.action.danger:hover  { color: var(--c-danger); }
+
+.action-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 
 .collapse {
@@ -99,10 +136,11 @@ export default defineComponent({
   height: 32px;
   color: var(--c-text-3);
   transform: rotate(180deg);
+  transition: color .25s, background-color .25s;
 
   &:hover {
     color: var(--c-text-2);
-    background-color: var(--c-bg-mute);
+    background-color: var(--c-gray-light-4);
   }
 }
 

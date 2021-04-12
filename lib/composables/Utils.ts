@@ -2,6 +2,8 @@ import { Ref, ComputedRef, UnwrapRef, ref, computed, watch, isRef } from '@vue/c
 
 export type Refish<T = any> = T | Ref<T> | ComputedRef<T>
 
+export type Source<S> = Ref<S> | ComputedRef<S>
+
 export function get<T>(refish: Refish<T> | (() => T)): T {
   if (isRef(refish)) {
     return refish.value
@@ -12,6 +14,19 @@ export function get<T>(refish: Refish<T> | (() => T)): T {
   }
 
   return refish
+}
+
+export function computedOnly<T, S>(
+  source: Source<S>,
+  callback: () => T
+): Ref<T> {
+  const value = ref() as Ref<T>
+
+  watch(source, () => {
+    value.value = callback()
+  }, { immediate: true })
+
+  return value
 }
 
 export function computedIf<T, R, E>(
@@ -50,6 +65,19 @@ export function computedIfOnly<T, R, E>(
 
 export function computedArray<T>(callback: (carry: T) => void): ComputedRef<T> {
   return computed(() => {
+    const carry = [] as any
+
+    callback(carry)
+
+    return carry
+  })
+}
+
+export function computedArrayOnly<T extends any[], S>(
+  source: Source<S>,
+  callback: (carry: T) => void
+): Ref<T> {
+  return computedOnly(source, () => {
     const carry = [] as any
 
     callback(carry)
