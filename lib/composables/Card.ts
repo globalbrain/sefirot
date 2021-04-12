@@ -20,7 +20,7 @@ export interface Footer {
 
 export interface Action {
   type: 'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'
-  mode: Mode
+  mode?: Mode
   icon?: any
   label?: string
   callback?(): void
