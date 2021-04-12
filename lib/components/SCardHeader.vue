@@ -1,6 +1,9 @@
 <template>
   <div class="SCardHeader" :class="classes">
-    <SHeader
+    <div class="title">
+      <p v-if="title" class="title-text">{{ title }}</p>
+    </div>
+<!--     <SHeader
       size="small"
       :mode="mode"
       :icon="icon"
@@ -15,36 +18,34 @@
           </button>
         </div>
       </template>
-    </SHeader>
+    </SHeader> -->
   </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Size, Mode, Search, Action } from '../composables/Card'
+import { Size, Mode, Action } from '../composables/Card'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
-import SHeader from './SHeader.vue'
 
 export default defineComponent({
   components: {
-    SIconChevronDown,
-    SHeader
+    SIconChevronDown
   },
 
   props: {
     isCollapsed: { type: Boolean, required: true },
-    size: { type: String as PropType<Size>, default: 'compact' },
-    mode: { type: String as PropType<Mode>, default: 'neutral' },
-    icon: { type: Object, default: null },
     title: { type: String, default: null },
-    search: { type: Object as PropType<Search>, default: null },
     actions: { type: Array as PropType<Action[]>, default: () => [] },
+    mode: { type: String as PropType<Mode>, default: 'neutral' },
+    round: { type: Number, default: 8 },
     collapsable: { type: Boolean, required: true }
   },
 
   setup(props) {
     const classes = computed(() => [
-      props.size, { collapsed: props.isCollapsed }
+      { collapsed: props.isCollapsed },
+      props.mode,
+      `round-${props.round}`
     ])
 
     return {
@@ -58,19 +59,9 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .SCardHeader {
-  padding-top: 8px;
-  padding-bottom: 7px;
+  padding: 8px 16px 7px;
   border-bottom: 1px solid var(--c-divider-light);
-}
-
-.SCardHeader.compact {
-  padding-right: 8px;
-  padding-left: 16px;
-}
-
-.SCardHeader.wide {
-  padding-right: 24px;
-  padding-left: 24px;
+  background-color: var(--card-bg-mute);
 }
 
 .SCardHeader.collapsed {
@@ -83,6 +74,16 @@ export default defineComponent({
 
 .SCardHeader.collapsed .collapse-icon {
   transform: translateY(1px);
+}
+
+.SCardHeader.round-0 { border-radius: none; }
+.SCardHeader.round-4 { border-radius: 4px 4px 0 0; }
+.SCardHeader.round-8 { border-radius: 8px 8px 0 0; }
+
+.title-text {
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .action-collapse {
@@ -109,10 +110,5 @@ export default defineComponent({
   width: 20px;
   height: 20px;
   fill: currentColor;
-}
-
-.SCardHeader >>> .SHeader .SButton .icon,
-.SCardHeader >>> .SHeader .SButton .label {
-  transform: translateY(1px);
 }
 </style>

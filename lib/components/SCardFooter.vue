@@ -1,41 +1,35 @@
 <template>
   <div class="SCardFooter" :class="classes">
-    <div v-if="actions.length > 0" class="actions">
+<!--     <div v-if="actions.length > 0" class="actions">
       <div v-for="(action, index) in computedActions" :key="index" class="action">
         <SAction :action="action" />
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from '@vue/composition-api'
-import { Size, Sizes, Action } from '../composables/Card'
-import SAction from './SAction.vue'
+import { Action } from '../composables/Card'
+import SButton from './SButton.vue'
 
 export default defineComponent({
   components: {
-    SAction
+    SButton
   },
 
   props: {
-    size: { type: String as PropType<Size>, default: 'compact' },
-    actions: { type: Array as PropType<Action[]>, required: true }
+    actions: { type: Array as PropType<Action[]>, required: true },
+    round: { type: Number, default: 8 }
   },
 
   setup(props) {
-    const classes = computed(() => [props.size])
-
-    const computedActions = computed(() => {
-      return (props.actions ?? []).map(action => ({
-        size: props.size === Sizes.Wide ? 'medium' : 'small',
-        ...action
-      }))
-    })
+    const classes = computed(() => [
+      `round-${props.round}`
+    ])
 
     return {
-      classes,
-      computedActions
+      classes
     }
   }
 })
