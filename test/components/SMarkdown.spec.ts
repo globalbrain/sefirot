@@ -10,6 +10,10 @@ describe('components/SMarkdown', () => {
     createWrapper = options => shallowMount(SMarkdown, options)
   })
 
+  afterAll(() => {
+    jest.restoreAllMocks()
+  })
+
   it('should render content', () => {
     const wrapper = createWrapper({
       propsData: {
@@ -98,5 +102,25 @@ describe('components/SMarkdown', () => {
     await links.at(1).trigger('click')
     expect(router.currentRoute.path).toBe('/route')
     expect(wrapper.emitted('clicked')).toHaveLength(2)
+  })
+
+  it('should throw on invalid callback index', async () => {
+    const error = jest.fn()
+
+    jest.spyOn(global.console, 'error').mockImplementation(() => {})
+    global.addEventListener('error', error)
+
+    const wrapper = createWrapper({
+      attachTo: document.body,
+      propsData: {
+        content: '[link]({0})',
+        callbacks: []
+      }
+    })
+
+    await wrapper.vm.$nextTick() // wait for render & DOM listeners
+
+    await wrapper.find('.SMarkdown-container .SMarkdown-link').trigger('click')
+    expect(error).toHaveBeenCalled()
   })
 })
