@@ -39,7 +39,7 @@ export interface UseLink {
 }
 
 export interface UseLinkOptions {
-  callbacks?: LinkEvent[]
+  callbacks?: LinkCallback[]
 }
 
 export interface LinkSubscriberPayload {
@@ -51,7 +51,7 @@ export interface LinkSubscriberPayload {
 
 export type LinkSubscriber = (payload: LinkSubscriberPayload) => void
 
-export type LinkEvent = () => void
+export type LinkCallback = () => void
 
 export function useLink(options: UseLinkOptions): UseLink {
   const router = useRouter()

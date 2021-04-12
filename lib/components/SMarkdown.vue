@@ -7,12 +7,12 @@
 
 <script lang="ts">
 import { computed, defineComponent, nextTick, PropType, watch } from '@vue/composition-api'
-import { useMarkdown, useLink, LinkEvent } from '../composables/Markdown'
+import { useMarkdown, useLink, LinkCallback } from '../composables/Markdown'
 
 export default defineComponent({
   props: {
     content: { type: String, required: true },
-    callbacks: { type: Array as PropType<LinkEvent[]>, default: () => [] },
+    callbacks: { type: Array as PropType<LinkCallback[]>, default: () => [] },
     inline: { type: Boolean, default: false },
     tag: { type: String, default: 'div' }
   },
