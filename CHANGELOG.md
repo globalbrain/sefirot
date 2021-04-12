@@ -1,3 +1,10 @@
+# [0.49.0](https://github.com/globalbrain/sefirot/compare/v0.48.0...v0.49.0) (2021-04-12)
+
+### Features
+
+* add markdown component ([#57](https://github.com/globalbrain/sefirot/issues/57)) ([daba5b3](https://github.com/globalbrain/sefirot/commit/daba5b3b564fe4d56aeafd9e280336b9bf6a642e))
+* **form:** narrow form validation type ([#56](https://github.com/globalbrain/sefirot/issues/56)) ([32f918b](https://github.com/globalbrain/sefirot/commit/32f918b185e8d0a071506537264dc610b44391a7))
+
 # [0.48.0](https://github.com/globalbrain/sefirot/compare/v0.47.0...v0.48.0) (2021-04-08)
 
 ### Features
