@@ -6,15 +6,17 @@
 
     <div class="actions">
       <template v-if="actions.length > 0">
-        <button
+        <component
           v-for="(action, index) in actions"
           :key="index"
+          :is="action.link ? 'nuxt-link' : 'button'"
           class="action"
           :class="[action.mode || 'neutral']"
+          :to="action.link"
           @click="action.callback ? action.callback() : () => {}"
         >
           <component :is="action.icon" class="action-icon" />
-        </button>
+        </component>
       </template>
 
       <div v-if="collapsable" class="action action-collapse">
