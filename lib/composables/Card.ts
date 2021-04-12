@@ -23,6 +23,7 @@ export interface Action {
   mode: Mode
   icon?: any
   label?: string
+  callback?(): void
 }
 
 export type Mode = Values<typeof Modes>

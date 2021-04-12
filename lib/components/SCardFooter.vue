@@ -1,10 +1,18 @@
 <template>
   <div class="SCardFooter" :class="classes">
-<!--     <div v-if="actions.length > 0" class="actions">
-      <div v-for="(action, index) in computedActions" :key="index" class="action">
-        <SAction :action="action" />
+    <div v-if="actions.length > 0" class="actions">
+      <div v-for="(action, index) in actions" :key="index" class="action">
+        <SButton
+          size="small"
+          :type="action.type"
+          :mode="action.mode"
+          :icon="action.icon"
+          :label="action.label"
+          block
+          @click="action.callback ? action.callback() : () => {}"
+        />
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -40,20 +48,12 @@ export default defineComponent({
 
 .SCardFooter {
   border-top: 1px solid var(--c-divider-light);
-  padding-top: 12px;
-  padding-bottom: 11px;
-  background-color: var(--card-bg-mute);
+  padding: 16px 16px 15px;
+  background-color: var(--card-bg);
 }
 
-.SCardFooter.compact {
-  padding-right: 16px;
-  padding-left: 16px;
-}
-
-.SCardFooter.wide {
-  padding-right: 24px;
-  padding-left: 24px;
-}
+.SCardFooter.round-4 { border-radius: 0 0 4px 4px; }
+.SCardFooter.round-8 { border-radius: 0 0 8px 8px; }
 
 .actions {
   display: flex;
@@ -65,6 +65,6 @@ export default defineComponent({
 }
 
 .action + .action {
-  margin-left: 16px;
+  margin-left: 8px;
 }
 </style>
