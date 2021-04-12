@@ -10,7 +10,7 @@
           v-for="(action, index) in actions"
           :key="index"
           class="action"
-          :class="[action.mode]"
+          :class="[action.mode || 'neutral']"
           @click="action.callback ? action.callback() : () => {}"
         >
           <component :is="action.icon" class="action-icon" />
