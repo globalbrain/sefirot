@@ -7,9 +7,9 @@
     <div class="actions">
       <template v-if="actions.length > 0">
         <component
+          :is="action.link ? 'nuxt-link' : 'button'"
           v-for="(action, index) in actions"
           :key="index"
-          :is="action.link ? 'nuxt-link' : 'button'"
           class="action"
           :class="[action.mode || 'neutral']"
           :to="action.link"
