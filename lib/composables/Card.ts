@@ -1,4 +1,5 @@
 import { Values } from '../types/Utils'
+import { Refish } from './Utils'
 
 export interface Card {
   header?: Header
@@ -11,7 +12,7 @@ export interface Card {
 
 export interface Header {
   title?: string
-  actions?: Action[]
+  actions?: Refish<Action[]>
 }
 
 export interface Footer {
