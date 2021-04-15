@@ -63,7 +63,7 @@ export default defineComponent({
 .SInputBase.mini,
 .SInputBase.small {
   .label {
-    padding-bottom: 4px;
+    padding-bottom: 6px;
     font-size: 12px;
   }
 
@@ -84,9 +84,9 @@ export default defineComponent({
 
 .label {
   display: block;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
   width: 100%;
-  line-height: 20px;
+  line-height: 16px;
   font-size: 14px;
   font-weight: 500;
   color: var(--input-label);

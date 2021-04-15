@@ -1,12 +1,11 @@
 import { Values } from '../types/Utils'
 import { useStore } from './Store'
-import { ButtonAction } from './Action'
 
 export interface Alert {
   type?: AlertMode
   title: string
   text: string
-  actions: ButtonAction[]
+  actions: Action[]
 }
 
 export type AlertMode = Values<typeof AlertModes>
@@ -17,6 +16,14 @@ export const AlertModes = {
   Warning: 'warning',
   Danger: 'danger'
 } as const
+
+export interface Action {
+  type: 'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'
+  mode: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+  icon?: any
+  label: string
+  callback(): void
+}
 
 export function useAlert(alert: Alert) {
   const store = useStore()

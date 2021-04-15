@@ -1,50 +1,57 @@
 <template>
   <div class="SCardHeader" :class="classes">
-    <SHeader
-      size="small"
-      :mode="mode"
-      :icon="icon"
-      :title="title"
-      :search="search"
-      :actions="actions"
-    >
-      <template #after-actions>
-        <div v-if="collapsable" class="action action-collapse">
-          <button class="collapse" @click="$emit('collapse')">
-            <SIconChevronDown class="collapse-icon" />
-          </button>
-        </div>
+    <div class="title">
+      <p v-if="title" class="title-text">{{ title }}</p>
+    </div>
+
+    <div class="actions">
+      <template v-if="actions.length > 0">
+        <component
+          :is="action.link ? 'nuxt-link' : 'button'"
+          v-for="(action, index) in actions"
+          :key="index"
+          class="action"
+          :class="[action.mode || 'neutral']"
+          :to="action.link"
+          @click="action.callback ? action.callback() : () => {}"
+        >
+          <component :is="action.icon" class="action-icon" />
+        </component>
       </template>
-    </SHeader>
+
+      <div v-if="collapsable" class="action action-collapse">
+        <button class="collapse" @click="$emit('collapse')">
+          <SIconChevronDown class="collapse-icon" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Size, Mode, Search, Action } from '../composables/Card'
+import { Action, Mode } from '../composables/Card'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
-import SHeader from './SHeader.vue'
 
 export default defineComponent({
   components: {
-    SIconChevronDown,
-    SHeader
+    SIconChevronDown
   },
 
   props: {
     isCollapsed: { type: Boolean, required: true },
-    size: { type: String as PropType<Size>, default: 'compact' },
-    mode: { type: String as PropType<Mode>, default: 'neutral' },
-    icon: { type: Object, default: null },
     title: { type: String, default: null },
-    search: { type: Object as PropType<Search>, default: null },
     actions: { type: Array as PropType<Action[]>, default: () => [] },
+    mode: { type: String as PropType<Mode>, default: 'neutral' },
+    round: { type: Number, default: 8 },
     collapsable: { type: Boolean, required: true }
   },
 
   setup(props) {
     const classes = computed(() => [
-      props.size, { collapsed: props.isCollapsed }
+      { collapsed: props.isCollapsed },
+      props.mode,
+      `round-${props.round}`
     ])
 
     return {
@@ -58,19 +65,10 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .SCardHeader {
-  padding-top: 8px;
-  padding-bottom: 7px;
+  display: flex;
+  padding: 8px 8px 7px 16px;
   border-bottom: 1px solid var(--c-divider-light);
-}
-
-.SCardHeader.compact {
-  padding-right: 8px;
-  padding-left: 16px;
-}
-
-.SCardHeader.wide {
-  padding-right: 24px;
-  padding-left: 24px;
+  background-color: var(--card-bg-mute);
 }
 
 .SCardHeader.collapsed {
@@ -85,8 +83,50 @@ export default defineComponent({
   transform: translateY(1px);
 }
 
-.action-collapse {
-  padding-left: 4px;
+.SCardHeader.round-0 { border-radius: none; }
+.SCardHeader.round-4 { border-radius: 4px 4px 0 0; }
+.SCardHeader.round-8 { border-radius: 8px 8px 0 0; }
+
+.title {
+  flex-grow: 1;
+}
+
+.title-text {
+  line-height: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.actions {
+  display: flex;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  color: var(--c-text-2);
+  transition: color .25s, background-color .25s;
+
+  &:hover {
+    background-color: var(--c-gray-light-4);
+  }
+}
+
+.action.neutral:hover { color: var(--c-text-1); }
+.action.info:hover    { color: var(--c-info); }
+.action.success:hover { color: var(--c-success); }
+.action.warning:hover { color: var(--c-warning); }
+.action.danger:hover  { color: var(--c-danger); }
+
+.action-icon {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
 }
 
 .collapse {
@@ -98,10 +138,11 @@ export default defineComponent({
   height: 32px;
   color: var(--c-text-3);
   transform: rotate(180deg);
+  transition: color .25s, background-color .25s;
 
   &:hover {
     color: var(--c-text-2);
-    background-color: var(--c-bg-mute);
+    background-color: var(--c-gray-light-4);
   }
 }
 
@@ -109,10 +150,5 @@ export default defineComponent({
   width: 20px;
   height: 20px;
   fill: currentColor;
-}
-
-.SCardHeader >>> .SHeader .SButton .icon,
-.SCardHeader >>> .SHeader .SButton .label {
-  transform: translateY(1px);
 }
 </style>
