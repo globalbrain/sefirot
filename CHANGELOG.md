@@ -1,3 +1,9 @@
+# [0.50.0](https://github.com/globalbrain/sefirot/compare/v0.49.0...v0.50.0) (2021-04-15)
+
+### Features
+
+* refactor bunch of stuff ([#58](https://github.com/globalbrain/sefirot/issues/58)) ([fc86f9a](https://github.com/globalbrain/sefirot/commit/fc86f9ab6a8c6d2e8a5c997aeaab3bb6000eea9f))
+
 # [0.49.0](https://github.com/globalbrain/sefirot/compare/v0.48.0...v0.49.0) (2021-04-12)
 
 ### Features
