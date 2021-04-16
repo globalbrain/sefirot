@@ -1,12 +1,23 @@
 <template>
-  <component :is="tag" v-if="$scopedSlots.default" class="SMarkdown-container">
-    <slot v-bind="{ rendered, selector }" />
+  <component
+    :is="tag"
+    v-if="$scopedSlots.default"
+    ref="container"
+    class="SMarkdown-container"
+  >
+    <slot v-bind="{ rendered }" />
   </component>
-  <component :is="tag" v-else :class="['SMarkdown-container', selector]" v-html="rendered" />
+  <component
+    :is="tag"
+    v-else
+    ref="container"
+    class="SMarkdown-container"
+    v-html="rendered"
+  />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, nextTick, PropType, watch } from '@vue/composition-api'
+import { computed, defineComponent, nextTick, PropType, ref, watch } from '@vue/composition-api'
 import { useMarkdown, useLink, LinkCallback } from '../composables/Markdown'
 
 export default defineComponent({
@@ -18,9 +29,14 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
-    const markdown = useMarkdown()
-    const { selector, addListeners, subscribe } = useLink({ callbacks: props.callbacks })
+    const container = ref<Element | null>(null)
 
+    const { addListeners, subscribe } = useLink({
+      container,
+      callbacks: props.callbacks
+    })
+
+    const markdown = useMarkdown()
     const rendered = computed(() => markdown(props.content, props.inline))
 
     watch(
@@ -32,7 +48,7 @@ export default defineComponent({
     subscribe(payload => emit('clicked', payload))
 
     return {
-      selector,
+      container,
       rendered
     }
   }
