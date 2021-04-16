@@ -121,6 +121,8 @@ describe('components/SMarkdown', () => {
     await wrapper.vm.$nextTick() // wait for render & DOM listeners
 
     await wrapper.find('.SMarkdown-container .SMarkdown-link').trigger('click')
+    wrapper.destroy()
+
     expect(error).toHaveBeenCalled()
   })
 })
