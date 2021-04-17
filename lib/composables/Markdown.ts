@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-import { onUnmounted } from '@vue/composition-api'
+import { onUnmounted, Ref } from '@vue/composition-api'
 import { isCallbackUrl, isExternalUrl, LinkAttrs, linkPlugin } from './markdown/LinkPlugin'
 import { useRouter } from './Router'
 
@@ -32,13 +32,13 @@ export function useMarkdown(options: UseMarkdownOptions = {}): UseMarkdown {
 }
 
 export interface UseLink {
-  selector: string
   addListeners(): void
   removeListeners(): void
   subscribe(cb: LinkSubscriber): () => void
 }
 
 export interface UseLinkOptions {
+  container: Ref<Element | null>
   callbacks?: LinkCallback[]
 }
 
@@ -53,12 +53,9 @@ export type LinkSubscriber = (payload: LinkSubscriberPayload) => void
 
 export type LinkCallback = () => void
 
-export function useLink(options: UseLinkOptions): UseLink {
+export function useLink({ container, callbacks }: UseLinkOptions): UseLink {
   const router = useRouter()
-
   const subscribers: LinkSubscriber[] = []
-  const selector = buildSelector()
-  const querySelector = `.${selector} a.SMarkdown-link`
 
   onUnmounted(() => removeListeners())
 
@@ -90,8 +87,7 @@ export function useLink(options: UseLinkOptions): UseLink {
 
     if (isCallback) {
       const idx = parseInt(target.dataset.callbackId || '')
-      const callbacks = options.callbacks || (options.callbacks = [])
-      const callback = callbacks[idx]
+      const callback = (callbacks ?? [])[idx]
 
       if (!callback) {
         throw new Error(`Callback not found at index: ${idx}`)
@@ -106,19 +102,19 @@ export function useLink(options: UseLinkOptions): UseLink {
   function addListeners(): void {
     removeListeners()
 
-    const elements = document.querySelectorAll(querySelector)
-
-    elements.forEach((element) => {
-      element.addEventListener('click', handler)
-    })
+    if (container.value) {
+      findLinks(container.value).forEach((element) => {
+        element.addEventListener('click', handler)
+      })
+    }
   }
 
   function removeListeners(): void {
-    const elements = document.querySelectorAll(querySelector)
-
-    elements.forEach((element) => {
-      element.removeEventListener('click', handler)
-    })
+    if (container.value) {
+      findLinks(container.value).forEach((element) => {
+        element.removeEventListener('click', handler)
+      })
+    }
   }
 
   function subscribe(fn: LinkSubscriber): () => void {
@@ -131,17 +127,12 @@ export function useLink(options: UseLinkOptions): UseLink {
   }
 
   return {
-    selector,
     addListeners,
     removeListeners,
     subscribe
   }
 }
 
-function buildSelector(): string {
-  const uuid = [...Array(8)].map(() => {
-    return (Math.random() * 36 | 0).toString(36)
-  }).join('')
-
-  return `SMarkdown-${uuid}`
+function findLinks(target: Element) {
+  return target.querySelectorAll('a.SMarkdown-link')
 }
