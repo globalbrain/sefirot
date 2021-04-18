@@ -161,4 +161,11 @@
   .StoryBase li + li {
     padding-top: 0;
   }
+
+  a.header-anchor {
+    float: left;
+    margin-left: -0.87em;
+    opacity: 0;
+    pointer-events: none;
+  }
 }
