@@ -1,5 +1,5 @@
 <template>
-  <SpecBase class="SpecEvents" title="Emits">
+  <SpecBase class="SpecEvents" title="Events">
     <div v-for="(event, index) in events" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
