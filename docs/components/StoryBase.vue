@@ -3,7 +3,7 @@
     <div class="header">
       <h1 class="title">{{ title }}</h1>
 
-      <div class="action" v-if="canToggle">
+      <div v-if="canToggle" class="action">
         <button class="button" @click="toggle">
           <SIconCode class="icon" />
         </button>
@@ -26,8 +26,7 @@ export default defineComponent({
   },
 
   props: {
-    title: { type: String, default: null },
-    collapsable: {}
+    title: { type: String, default: null }
   },
 
   setup() {

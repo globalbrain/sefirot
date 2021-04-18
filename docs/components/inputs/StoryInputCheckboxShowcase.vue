@@ -23,6 +23,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SInputCheckbox from '@globalbrains/sefirot/lib/components/SInputCheckbox.vue'
 
 export default defineComponent({
