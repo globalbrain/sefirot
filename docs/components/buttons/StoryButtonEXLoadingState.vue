@@ -58,10 +58,10 @@ export default defineComponent({
       load5: false
     })
 
-    function load(target: string): void {
-      (state as any)[target] = true
+    function load(target: keyof typeof state): void {
+      state[target] = true
 
-      setTimeout(() => { (state as any)[target] = false }, 5000)
+      setTimeout(() => { state[target] = false }, 5000)
     }
 
     return {
@@ -97,7 +97,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const state = reactive({
       load1: false,
       load2: false,
@@ -106,10 +106,10 @@ export default defineComponent({
       load5: false
     })
 
-    function load (target: string): void {
-      (state as any)[target] = true
+    function load(target: keyof typeof state): void {
+      state[target] = true
 
-      setTimeout(() => { (state as any)[target] = false }, 5000)
+      setTimeout(() => { state[target] = false }, 5000)
     }
 
     return {
