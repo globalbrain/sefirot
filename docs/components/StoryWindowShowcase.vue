@@ -18,46 +18,58 @@
   <SButton class="button" label="BLANK WINDOW" @click="openWindow03" />
 </template>
 
-<script>
-import SButton from '@globalbrain/sefirot/lib/components/SButton'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+import { useStore } from '@globalbrain/sefirot/lib/composables/Store'
 
-export default {
+export default defineComponent({
   components: {
     SButton
   },
 
-  methods: {
-    openWindow01() {
-      this.$store.dispatch('window/open', {
+  setup() {
+    const store = useStore()
+
+    function openWindow01(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal'
       })
-    },
+    }
 
-    openWindow02() {
-      this.$store.dispatch('window/open', {
+    function openWindow02(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-with-lead'
       })
-    },
+    }
 
-    openWindow03() {
-      this.$store.dispatch('window/open', {
+    function openWindow03(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-blank'
       })
     }
+
+    return {
+      openWindow01,
+      openWindow02,
+      openWindow03
+    }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SButton from '@@/lib/components/SButton'
-import StoryBase from '@/components/StoryBase'
-import WindowMinimalBasic from './WindowMinimalBasic'
-import WindowMinimalWithLead from './WindowMinimalWithLead'
-import WindowMinimalBlank from './WindowMinimalBlank'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SButton from '@@/lib/components/SButton.vue'
+import { useStore } from '@@/lib/composables/Store'
+import StoryBase from '@/components/StoryBase.vue'
+import WindowMinimalBasic from './WindowMinimalBasic.vue'
+import WindowMinimalWithLead from './WindowMinimalWithLead.vue'
+import WindowMinimalBlank from './WindowMinimalBlank.vue'
 
-export default {
+export default defineComponent({
   components: {
     SButton,
     StoryBase,
@@ -66,26 +78,34 @@ export default {
     WindowMinimalBlank
   },
 
-  methods: {
-    openWindow01 () {
-      this.$store.dispatch('window/open', {
+  setup() {
+    const store = useStore()
+
+    function openWindow01(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal'
       })
-    },
+    }
 
-    openWindow02 () {
-      this.$store.dispatch('window/open', {
+    function openWindow02(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-with-lead'
       })
-    },
+    }
 
-    openWindow03 () {
-      this.$store.dispatch('window/open', {
+    function openWindow03(): void {
+      store.dispatch('window/open', {
         name: 'story-modals-s-window-minimal-blank'
       })
     }
+
+    return {
+      openWindow01,
+      openWindow02,
+      openWindow03
+    }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

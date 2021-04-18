@@ -24,68 +24,74 @@
   </SPlaceholderBlank>
 </template>
 
-<script>
-import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
-import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/placeholders/SPlaceholderBlank'
+<script lang="ts">
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/SPlaceholderBlank.vue'
 
-export default {
+export default defineComponent({
   components: {
     SButton,
     SPlaceholderBlank
   },
 
-  data() {
-    return {
-      loaded: false
+  setup() {
+    const loaded = ref(false)
+
+    onMounted(() => startTimer())
+
+    function startLoading(): void {
+      loaded.value = false
+      startTimer()
     }
-  },
 
-  mounted() {
-    setTimeout(() => { this.loaded = true }, 3000)
-  },
+    function startTimer(): void {
+      setTimeout(() => { loaded.value = true }, 3000)
+    }
 
-  methods: {
-    startLoading() {
-      this.loaded = false
-
-      setTimeout(() => { this.loaded = true }, 3000)
+    return {
+      loaded,
+      startLoading
     }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SButton from '@@/lib/components/SButton'
-import SPlaceholderBlank from '@@/lib/components/SPlaceholderBlank'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import SButton from '@@/lib/components/SButton.vue'
+import SPlaceholderBlank from '@@/lib/components/SPlaceholderBlank.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SButton,
     SPlaceholderBlank,
     StoryBase
   },
 
-  data () {
-    return {
-      loaded: false
+  setup() {
+    const loaded = ref(false)
+
+    onMounted(() => startTimer())
+
+    function startLoading(): void {
+      loaded.value = false
+      startTimer()
     }
-  },
 
-  mounted () {
-    setTimeout(() => { this.loaded = true }, 3000)
-  },
+    function startTimer(): void {
+      setTimeout(() => { loaded.value = true }, 3000)
+    }
 
-  methods: {
-    startLoading () {
-      this.loaded = false
-
-      setTimeout(() => { this.loaded = true }, 3000)
+    return {
+      loaded,
+      startLoading
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

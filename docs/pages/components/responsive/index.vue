@@ -13,7 +13,8 @@ A Responsive component handles content size changes, and add as a class name. It
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryResponsiveShowcase from '@/components/StoryResponsiveShowcase.vue'
-import SpecProps, { Prop } from '@/components/SpecProps.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import { useProps } from '@/composables/Props'
 
 export default defineComponent({
   components: {
@@ -24,7 +25,7 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props: Prop[] = [
+    const props = useProps([
       {
         name: 'bp',
         type: 'BP',
@@ -32,7 +33,7 @@ export default defineComponent({
         default: '{}',
         description: 'The breakpoints for the container.'
       }
-    ]
+    ])
 
     return {
       props

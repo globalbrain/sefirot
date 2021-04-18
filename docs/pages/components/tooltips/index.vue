@@ -13,7 +13,8 @@ Tooltips display informative text when users hover over or focus on an element.
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryTooltipShowcase from '@/components/StoryTooltipShowcase.vue'
-import SpecProps, { Prop } from '@/components/SpecProps.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import { useProps } from '@/composables/Props'
 
 export default defineComponent({
   components: {
@@ -24,12 +25,12 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props: Prop[] = [
+    const props = useProps([
       {
         name: 'tag',
         type: 'string',
         required: false,
-        default: '\'span\'',
+        default: "'span'",
         description: 'The tag for the tooltip. It can be any valid html tag.'
       },
       {
@@ -46,7 +47,7 @@ export default defineComponent({
         default: "'top'",
         description: 'The position to display the tooltip.'
       }
-    ]
+    ])
 
     return {
       props

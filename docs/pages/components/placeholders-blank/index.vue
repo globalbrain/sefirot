@@ -11,7 +11,7 @@ Any element wrapped with `SPlaceholderBlank` will be hidden, and preloader will 
 
 Especially useful when you want to wait for an asynchronous operation to be completed before a component can be rendered, for example, waiting for an external API call.
 
-When `loaded` prop is `true`, it adds `loaded` CSS class to the root element. You may use this class to style your child component. The following example shows that the `p` element will do slide up animation when loading is completed.
+When `loaded` prop is `true`, it adds `'loaded'` CSS class to the root element. You may use this class to style your child component. The following example shows that the `p` element will do slide up animation when loading is completed.
 
 ```html
 <template>
@@ -20,27 +20,30 @@ When `loaded` prop is `true`, it adds `loaded` CSS class to the root element. Yo
   </SPlaceholderBlank>
 </template>
 
-<script>
-import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/SPlaceholderBlank'
+<script lang="ts">
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import SPlaceholderBlank from '@globalbrain/sefirot/lib/components/SPlaceholderBlank.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPlaceholderBlank
   },
 
-  data() {
-    return {
-      loaded: false
-    }
-  },
+  setup() {
+    const loaded = ref(false)
 
-  mounted() {
-    setTimeout(() => { this.loaded = true }, 3000)
+    onMounted(() => {
+      setTimeout(() => { loaded.value = true }, 3000)
+    })
+
+    return {
+      loaded
+    }
   }
-}
+})
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
 .my-component.loaded .text {
   transform: translateY(0);
 }
@@ -61,43 +64,47 @@ export default {
 <SpecProps :props="props" />
 </template>
 
-<script>
-import StoryPlaceholderBlankShowcase from '@/components/StoryPlaceholderBlankShowcase'
-import StoryPlaceholderBlankEXPositions from '@/components/StoryPlaceholderBlankEXPositions'
-import SpecProps from '@/components/SpecProps'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryPlaceholderBlankShowcase from '@/components/StoryPlaceholderBlankShowcase.vue'
+import StoryPlaceholderBlankEXPositions from '@/components/StoryPlaceholderBlankEXPositions.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import { useProps } from '@/composables/Props'
 
-export default {
+export default defineComponent({
   components: {
     StoryPlaceholderBlankShowcase,
     StoryPlaceholderBlankEXPositions,
     SpecProps
   },
 
-  head: {
-    title: 'Placeholders: Blank'
-  },
-
   scrollToTop: true,
 
-  data () {
+  setup() {
+    const props = useProps([
+      {
+        name: 'loaded',
+        type: 'Boolean',
+        required: true,
+        default: '—',
+        description: 'Whether the content is loaded or not.'
+      },
+      {
+        name: 'loaderPosition',
+        type: 'String',
+        required: false,
+        default: "'left'",
+        description: "Define where to show preloader against the element. The acceptable values are `'left'`, `'center'`, and `'right'`."
+      }
+    ])
+
     return {
-      props: [
-        {
-          name: 'loaded',
-          type: 'Boolean',
-          required: true,
-          default: '—',
-          description: 'Whether the content is loaded or not.'
-        },
-        {
-          name: 'loaderPosition',
-          type: 'String',
-          required: false,
-          default: 'left',
-          description: 'Define where to show preloader against the element. The acceptable values are `left`, `center`, and `right`.'
-        }
-      ]
+      props
     }
+  },
+
+  head: {
+    title: 'Placeholders: Blank'
   }
-}
+})
 </script>

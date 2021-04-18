@@ -31,7 +31,8 @@ As you can see, you may omit `text`, which will display only the "points" of the
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryStepsShowcase from '@/components/steps/StoryStepsShowcase.vue'
 import StoryStepsEXWithoutText from '@/components/steps/StoryStepsEXWithoutText.vue'
-import SpecProps, { Prop } from '@/components/SpecProps.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import { useProps } from '@/composables/Props'
 
 export default defineComponent({
   components: {
@@ -43,15 +44,15 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props: Prop[] = [
+    const props = useProps([
       {
         name: 'steps',
         type: 'Step[]',
         required: true,
         default: '—',
-        description: 'The steps to display. See "Description" section for more details.'
+        description: 'The steps to display. See [Description](#description) section for more details.'
       }
-    ]
+    ])
 
     return {
       props

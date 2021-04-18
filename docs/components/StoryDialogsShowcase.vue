@@ -20,8 +20,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import { useStore } from '@globalbrain/sefirot/lib/composables/Store'
-import SButton from '@globalbrain/sefirot/lib/components/buttons/SButton'
 
 export default defineComponent({
   components: {
@@ -33,7 +33,7 @@ export default defineComponent({
 
     let interval: any = null
 
-    function openDialog01() {
+    function openDialog01(): void {
       store.dispatch('dialog/open', {
         title: 'The dialog title.',
         text: 'This is the dialog message.',
@@ -44,7 +44,7 @@ export default defineComponent({
       })
     }
 
-    function openDialog02() {
+    function openDialog02(): void {
       store.dispatch('dialog/open', {
         type: 'loading'
       })
@@ -52,17 +52,17 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog03() {
+    function openDialog03(): void {
       store.dispatch('dialog/open', {
         type: 'loading',
         title: 'The dialog title.',
-        text: 'This is the dialog message. The dialog will be closed after 3 sec for this demo.'
+        text: 'This is the dialog message. The dialog will close after 3 sec for this demo.'
       })
 
       setTimeout(close, 3000)
     }
 
-    function openDialog04() {
+    function openDialog04(): void {
       let now = 0
 
       store.dispatch('dialog/open', {
@@ -88,7 +88,7 @@ export default defineComponent({
       }, 250)
     }
 
-    function close() {
+    function close(): void {
       store.dispatch('modal/close')
     }
 
@@ -128,12 +128,12 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const store = useStore()
 
     let interval: any = null
 
-    function openDialog01 () {
+    function openDialog01(): void {
       store.dispatch('dialog/open', {
         title: 'The dialog title.',
         text: 'This is the dialog message.',
@@ -144,7 +144,7 @@ export default defineComponent({
       })
     }
 
-    function openDialog02 () {
+    function openDialog02(): void {
       store.dispatch('dialog/open', {
         type: 'loading'
       })
@@ -152,17 +152,17 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog03 () {
+    function openDialog03(): void {
       store.dispatch('dialog/open', {
         type: 'loading',
         title: 'The dialog title.',
-        text: 'This is the dialog message. The dialog will be closed after 3 sec for this demo.'
+        text: 'This is the dialog message. The dialog will close after 3 sec for this demo.'
       })
 
       setTimeout(close, 3000)
     }
 
-    function openDialog04 () {
+    function openDialog04(): void {
       let now = 0
 
       store.dispatch('dialog/open', {
@@ -188,7 +188,7 @@ export default defineComponent({
       }, 250)
     }
 
-    function close () {
+    function close(): void {
       store.dispatch('modal/close')
     }
 

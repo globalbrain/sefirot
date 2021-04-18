@@ -20,26 +20,28 @@
   />
 </template>
 
-<script>
-import SPlaceholderImage from '@@/lib/components/placeholders/SPlaceholderImage'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SPlaceholderImage from '@globalbrain/sefirot/lib/components/SPlaceholderImage.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPlaceholderImage
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SPlaceholderImage from '@@/lib/components/SPlaceholderImage'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SPlaceholderImage from '@@/lib/components/SPlaceholderImage.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SPlaceholderImage,
     StoryBase
   }
-}
+})
 </script>

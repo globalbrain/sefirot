@@ -11,12 +11,15 @@ Placeholders are for showing temporary state when waiting for a certain componen
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryPlaceholderImageShowcase from '@/components/StoryPlaceholderImageShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryPlaceholderImageShowcase from '@/components/StoryPlaceholderImageShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useEvents } from '@/composables/Events'
+import { useProps } from '@/composables/Props'
 
-export default {
+export default defineComponent({
   components: {
     StoryPlaceholderImageShowcase,
     SpecProps,
@@ -25,50 +28,53 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
-      props: [
-        {
-          name: 'img',
-          type: 'String',
-          required: true,
-          default: '—',
-          description: 'The path (`src`) for the image.'
-        },
-        {
-          name: 'width',
-          type: 'Number',
-          required: true,
-          default: '—',
-          description: 'The width of the image.'
-        },
-        {
-          name: 'height',
-          type: 'Number',
-          required: true,
-          default: '—',
-          description: 'The height of the image.'
-        },
-        {
-          name: 'delay',
-          type: 'Number',
-          required: false,
-          default: '0',
-          description: 'Delay showing the image after it is loaded. The value is in ms.'
-        }
-      ],
+  setup() {
+    const props = useProps([
+      {
+        name: 'img',
+        type: 'String',
+        required: true,
+        default: '—',
+        description: 'The path (`src`) for the image.'
+      },
+      {
+        name: 'width',
+        type: 'Number',
+        required: true,
+        default: '—',
+        description: 'The width of the image.'
+      },
+      {
+        name: 'height',
+        type: 'Number',
+        required: true,
+        default: '—',
+        description: 'The height of the image.'
+      },
+      {
+        name: 'delay',
+        type: 'Number',
+        required: false,
+        default: '0',
+        description: 'Delay showing the image after it is loaded. The value is in ms.'
+      }
+    ])
 
-      events: [
-        {
-          name: 'load',
-          description: 'Fires when the image is loaded. It will be fired after the `delay`.'
-        }
-      ]
+    const events = useEvents([
+      {
+        name: 'load',
+        description: 'Fires when the image is loaded. It will be fired after the `delay`.'
+      }
+    ])
+
+    return {
+      props,
+      events
     }
   },
 
   head: {
     title: 'Placeholders: Image'
   }
-}
+})
 </script>
