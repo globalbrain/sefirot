@@ -21,6 +21,7 @@ import SPortalScreens from '@@/lib/components/SPortalScreens.vue'
 import SPortalSnackbars from '@@/lib/components/SPortalSnackbars.vue'
 import TheFooter from '@/components/TheFooter.vue'
 import TheHeader from '@/components/TheHeader.vue'
+import { useAnchors } from '@/composables/Anchors'
 
 export default defineComponent({
   components: {
@@ -29,6 +30,10 @@ export default defineComponent({
     SPortalSnackbars,
     TheHeader,
     TheFooter
+  },
+
+  setup() {
+    useAnchors()
   }
 })
 </script>
