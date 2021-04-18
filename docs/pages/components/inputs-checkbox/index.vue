@@ -11,12 +11,14 @@ Checkbox allow the user to select one item. Checkbox can be used to turn an opti
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryInputCheckboxShowcase from '@/components/StoryInputCheckboxShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryInputCheckboxShowcase from '@/components/inputs/StoryInputCheckboxShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryInputCheckboxShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'name',
@@ -78,11 +80,11 @@ export default {
           description: 'Fires when a user clicks the checkbox.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Inputs: Checkbox'
   }
-}
+})
 </script>

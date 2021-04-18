@@ -1,11 +1,11 @@
 <template lang="md">
 <StoryBase>
-  <SMarkdown content="Vue ~~Modules~~ _Components_ for [Global Brain](https://globalbrains.com/) **Design** System." class="collapse" />
+  <SMarkdown content="**We** shape our _buildings_. Thereafter, _they_ shape **us**." class="collapse" />
 </StoryBase>
 
 ```html
 <template>
-  <SMarkdown content="Vue ~~Modules~~ _Components_ for [Global Brain](https://globalbrains.com/) **Design** System." />
+  <SMarkdown content="**We** shape our _buildings_. Thereafter, _they_ shape **us**." />
 </template>
 
 <script lang="ts">
@@ -23,8 +23,8 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import StoryBase from '@/components/StoryBase.vue'
 import SMarkdown from '@@/lib/components/SMarkdown.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
 export default defineComponent({
   components: {

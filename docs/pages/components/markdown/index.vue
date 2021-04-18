@@ -16,8 +16,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import StoryMarkdownShowcase from '@/components/markdown/StoryMarkdownShowcase.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
-import { useProps } from '@/composables/Props'
-import { useEvents } from '@/composables/Events'
+import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
@@ -29,46 +28,45 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props = useProps([
-      {
-        name: 'content',
-        type: 'String',
-        required: true,
-        default: '—',
-        description: 'The markdown string to parse and render.'
-      },
-      {
-        name: 'inline',
-        type: 'Boolean',
-        required: false,
-        default: 'false',
-        description: 'Render `content` without wrapping in `<p>` tags.'
-      },
-      {
-        name: 'tag',
-        type: 'String',
-        required: false,
-        default: "'div'",
-        description: 'The root element.'
-      },
-      {
-        name: 'callbacks',
-        type: 'Array<LinkCallback>',
-        required: false,
-        default: '[]',
-        description: 'List of callbacks for indexed links.'
-      }
-    ])
+    return useSpec({
+      props: [
+        {
+          name: 'content',
+          type: 'String',
+          required: true,
+          default: '—',
+          description: 'The markdown string to parse and render.'
+        },
+        {
+          name: 'inline',
+          type: 'Boolean',
+          required: false,
+          default: 'false',
+          description: 'Render `content` without wrapping in `<p>` tags.'
+        },
+        {
+          name: 'tag',
+          type: 'String',
+          required: false,
+          default: "'div'",
+          description: 'The root element.'
+        },
+        {
+          name: 'callbacks',
+          type: 'Array<LinkCallback>',
+          required: false,
+          default: '[]',
+          description: 'List of callbacks for indexed links.'
+        }
+      ],
 
-    const events = useEvents([{
-      name: 'clicked',
-      description: 'Fires when a rendered link is clicked.'
-    }])
-
-    return {
-      props,
-      events
-    }
+      events: [
+        {
+          name: 'clicked',
+          description: 'Fires when a rendered link is clicked.'
+        }
+      ]
+    })
   },
 
   head: {

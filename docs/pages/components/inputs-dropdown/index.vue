@@ -11,12 +11,14 @@ Dropdown input let users choose items from the list of options. The difference b
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryInputDropdownShowcase from '@/components/StoryInputDropdownShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryInputDropdownShowcase from '@/components/inputs/StoryInputDropdownShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryInputDropdownShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'size',
@@ -120,11 +122,11 @@ export default {
           description: 'Fires when a user selects an option. It will pass the `value` of the selected option as the first argument.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Inputs: Dropdown'
   }
-}
+})
 </script>

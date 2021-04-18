@@ -66,10 +66,10 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import StoryPlaceholderBlankShowcase from '@/components/StoryPlaceholderBlankShowcase.vue'
-import StoryPlaceholderBlankEXPositions from '@/components/StoryPlaceholderBlankEXPositions.vue'
+import StoryPlaceholderBlankShowcase from '@/components/placeholders/StoryPlaceholderBlankShowcase.vue'
+import StoryPlaceholderBlankEXPositions from '@/components/placeholders/StoryPlaceholderBlankEXPositions.vue'
 import SpecProps from '@/components/SpecProps.vue'
-import { useProps } from '@/composables/Props'
+import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
@@ -81,26 +81,24 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props = useProps([
-      {
-        name: 'loaded',
-        type: 'Boolean',
-        required: true,
-        default: '—',
-        description: 'Whether the content is loaded or not.'
-      },
-      {
-        name: 'loaderPosition',
-        type: 'String',
-        required: false,
-        default: "'left'",
-        description: "Define where to show preloader against the element. The acceptable values are `'left'`, `'center'`, and `'right'`."
-      }
-    ])
-
-    return {
-      props
-    }
+    return useSpec({
+      props: [
+        {
+          name: 'loaded',
+          type: 'Boolean',
+          required: true,
+          default: '—',
+          description: 'Whether the content is loaded or not.'
+        },
+        {
+          name: 'loaderPosition',
+          type: 'String',
+          required: false,
+          default: "'left'",
+          description: "Define where to show preloader against the element. The acceptable values are `'left'`, `'center'`, and `'right'`."
+        }
+      ]
+    })
   },
 
   head: {

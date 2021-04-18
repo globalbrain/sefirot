@@ -8,22 +8,30 @@
   </SScreen>
 </template>
 
-<script>
-import SButton from '@@/lib/components/SButton'
-import SScreen from '@@/lib/components/SScreen'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SButton from '@@/lib/components/SButton.vue'
+import SScreen from '@@/lib/components/SScreen.vue'
+import { useStore } from '@@/lib/composables/Store'
 
-export default {
+export default defineComponent({
   components: {
     SButton,
     SScreen
   },
 
-  methods: {
-    close() {
-      this.$store.dispatch('screen/close')
+  setup() {
+    const store = useStore()
+
+    function close(): void {
+      store.dispatch('screen/close')
+    }
+
+    return {
+      close
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

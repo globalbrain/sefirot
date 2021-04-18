@@ -14,7 +14,7 @@ Screens is full screen modal like component.
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryScreenShowcase from '@/components/StoryScreenShowcase.vue'
 import SpecProps from '@/components/SpecProps.vue'
-import { useProps } from '@/composables/Props'
+import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
@@ -25,26 +25,24 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props = useProps([
-      {
-        name: 'name',
-        type: 'String',
-        required: true,
-        default: '—',
-        description: 'The name for the screen. The value is used when opening modal through Vuex Action.'
-      },
-      {
-        name: 'title',
-        type: 'String',
-        required: false,
-        default: 'null',
-        description: 'The title text for the screen.'
-      }
-    ])
-
-    return {
-      props
-    }
+    return useSpec({
+      props: [
+        {
+          name: 'name',
+          type: 'String',
+          required: true,
+          default: '—',
+          description: 'The name for the screen. The value is used when opening modal through Vuex Action.'
+        },
+        {
+          name: 'title',
+          type: 'String',
+          required: false,
+          default: 'null',
+          description: 'The title text for the screen.'
+        }
+      ]
+    })
   },
 
   head: {

@@ -32,7 +32,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import StoryStepsShowcase from '@/components/steps/StoryStepsShowcase.vue'
 import StoryStepsEXWithoutText from '@/components/steps/StoryStepsEXWithoutText.vue'
 import SpecProps from '@/components/SpecProps.vue'
-import { useProps } from '@/composables/Props'
+import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
@@ -44,19 +44,17 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props = useProps([
-      {
-        name: 'steps',
-        type: 'Step[]',
-        required: true,
-        default: '—',
-        description: 'The steps to display. See [Description](#description) section for more details.'
-      }
-    ])
-
-    return {
-      props
-    }
+    return useSpec({
+      props: [
+        {
+          name: 'steps',
+          type: 'Step[]',
+          required: true,
+          default: '—',
+          description: 'The steps to display. See [Description](#description) section for more details.'
+        }
+      ]
+    })
   },
 
   head: {

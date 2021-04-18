@@ -11,12 +11,14 @@ Checkboxes allow the user to select one or more items from a set. Checkboxes can
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryInputCheckboxesShowcase from '@/components/StoryInputCheckboxesShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryInputCheckboxesShowcase from '@/components/inputs/StoryInputCheckboxesShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryInputCheckboxesShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'name',
@@ -78,11 +80,11 @@ export default {
           description: 'Fires when a user clicks a checkbox.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Inputs: Checkboxes'
   }
-}
+})
 </script>
