@@ -3,9 +3,9 @@
 
 We're really excited that you are interested in contributing to Sefirot. Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
-## Where Is Code?
+## Where Is The Code?
 
-Sefirot source code is managed under GitHub. Please visit following GitHub repository to checkout the code.
+Sefirot source code is managed in GitHub. Please visit the following GitHub repository to checkout the code.
 
 <SButton
   tag="a"
@@ -18,7 +18,7 @@ Sefirot source code is managed under GitHub. Please visit following GitHub repos
 
 ## Code Style Guide
 
-Sefirot follows official <a href="https://vuejs.org/v2/style-guide/" target="_blank">Vue Style Guide</a>. But always remember to follow the "Golden Rule" below.
+Sefirot follows the official <a href="https://vuejs.org/v2/style-guide/" target="_blank">Vue Style Guide</a>. But always remember to follow the "Golden Rule"&hellip;
 
 > Every line of code should appear to be written by a single person, no matter the number of contributors.<br>
 > &mdash; <cite>@mdo</cite>
@@ -26,31 +26,31 @@ Sefirot follows official <a href="https://vuejs.org/v2/style-guide/" target="_bl
 ## Development
 
 ```bash
-$ npm run serve
+$ yarn serve
 ```
 
 Serve documentation website at http://localhost:3000.
 
 ```bash
-$ npm run lint
+$ yarn lint
 ```
 
 Lint files using a rule of Standard JS.
 
 ```bash
-$ npm run test
+$ yarn test
 ```
 
-Run the test.
+Run the tests.
 
 ```bash
-$ npm run test:watch
+$ yarn test:watch
 ```
 
-Run the test in watch mode.
+Run the tests in watch mode.
 
 ```bash
-$ npm run test:coverage
+$ yarn test:coverage
 ```
 
 Generate test coverage in `coverage` directory.
