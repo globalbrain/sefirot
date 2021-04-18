@@ -7,11 +7,11 @@
     help="This is a help text."
     :nullable="false"
     :options="options"
-    v-model="form.input"
+    v-model="value"
   />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SInputRadios
     name="input"
@@ -20,58 +20,62 @@
     help="This is a help text."
     :nullable="false"
     :options="options"
-    v-model="form.input"
+    v-model="value"
   />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SInputRadios from '@@/lib/components/SInputRadios'
 
-export default {
+export default defineComponent({
   components: {
     SInputRadios
   },
 
-  data() {
-    return {
-      form: {
-        input: 1
-      },
+  setup() {
+    const value = ref(1)
 
-      options: [
-        { label: 'Radio button 1', value: 1 },
-        { label: 'Radio button 2', value: 2 },
-        { label: 'Radio button 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Radio button 1', value: 1 },
+      { label: 'Radio button 2', value: 2 },
+      { label: 'Radio button 3', value: 3 }
+    ]
+
+    return {
+      value,
+      options
     }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SInputRadios from '@@/lib/components/SInputRadios'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputRadios from '@@/lib/components/SInputRadios.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputRadios,
     StoryBase
   },
 
-  data () {
-    return {
-      form: {
-        input: 1
-      },
+  setup() {
+    const value = ref(1)
 
-      options: [
-        { label: 'Radio button 1', value: 1 },
-        { label: 'Radio button 2', value: 2 },
-        { label: 'Radio button 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Radio button 1', value: 1 },
+      { label: 'Radio button 2', value: 2 },
+      { label: 'Radio button 3', value: 3 }
+    ]
+
+    return {
+      value,
+      options
     }
   }
-}
+})
 </script>

@@ -1,60 +1,61 @@
 <template lang="md">
 <StoryBase title="Clear Mode">
   <SInputTextarea
-    v-model="input"
+    v-model="text"
     mode="clear"
     placeholder="Placeholder text"
     :rows="10"
   />
 </StoryBase>
 
-```html
+```vue
 <template>
-  <SButton label="NEUTRAL" mode="neutral" />
-  <SButton label="INFO" mode="info" />
-  <SButton label="SUCCESS" mode="success" />
-  <SButton label="WARNING" mode="warning" />
-  <SButton label="DANGER" mode="danger" />
+  <SInputTextarea
+    v-model="text"
+    mode="clear"
+    placeholder="Placeholder text"
+    :rows="10"
+  />
 </template>
 
-<script>
-import SButton from '@globalbrains/sefirot/lib/components/buttons/SButton'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputTextarea from '@globalbrain/sefirot/lib/components/SInputTextarea.vue'
 
-export default {
+export default defineComponent({
   components: {
-    SButton
+    SInputTextarea
+  },
+
+  setup() {
+    const text = ref('')
+
+    return {
+      text
+    }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SInputTextarea from '@@/lib/components/SInputTextarea'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputTextarea from '@@/lib/components/SInputTextarea.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputTextarea,
     StoryBase
   },
 
-  data () {
+  setup() {
+    const text = ref('')
+
     return {
-      input: ''
+      text
     }
   }
-}
+})
 </script>
-
-<style lang="postcss" scoped>
-.list {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -8px;
-}
-
-.item {
-  padding: 8px;
-}
-</style>

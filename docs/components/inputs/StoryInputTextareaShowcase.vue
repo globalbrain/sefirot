@@ -7,11 +7,11 @@
     help="This is a help text."
     placeholder="Placeholder text."
     :rows="5"
-    v-model="form.input"
+    v-model="text"
   />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SInputTextarea
     name="input"
@@ -20,46 +20,48 @@
     help="This is a help text."
     placeholder="Placeholder text."
     :rows="5"
-    v-model="form.input"
+    v-model="text"
   />
 </template>
 
-<script>
-import SInputTextarea from '@globalbrain/sefirot/lib/components/inputs/SInputTextarea'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputTextarea from '@globalbrain/sefirot/lib/components/SInputTextarea.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputTextarea
   },
 
-  data() {
+  setup() {
+    const text = ref('')
+
     return {
-      form: {
-        input: ''
-      }
+      text
     }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SInputTextarea from '@@/lib/components/SInputTextarea'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputTextarea from '@@/lib/components/SInputTextarea.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputTextarea,
     StoryBase
   },
 
-  data () {
+  setup() {
+    const text = ref('')
+
     return {
-      form: {
-        input: ''
-      }
+      text
     }
   }
-}
+})
 </script>

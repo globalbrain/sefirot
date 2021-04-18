@@ -10,29 +10,33 @@
   </SWindow>
 </template>
 
-<script>
-import SWindow from '@@/lib/components/SWindow'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SWindow from '@@/lib/components/SWindow.vue'
+import { useStore } from '@@/lib/composables/Store'
 
-export default {
+export default defineComponent({
   components: {
     SWindow
   },
 
-  data() {
-    return {
-      actions: [
-        { type: 'mute', label: 'DISMISS', callback: this.close },
-        { type: 'primary', label: 'CLOSE WINDOW', callback: this.close }
-      ]
-    }
-  },
+  setup() {
+    const store = useStore()
 
-  methods: {
-    close() {
-      this.$store.dispatch('window/close')
+    const actions = [
+      { type: 'mute', label: 'DISMISS', callback: close },
+      { type: 'primary', label: 'CLOSE WINDOW', callback: close }
+    ]
+
+    function close(): void {
+      store.dispatch('window/close')
+    }
+
+    return {
+      actions
     }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

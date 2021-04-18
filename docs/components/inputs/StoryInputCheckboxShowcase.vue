@@ -6,11 +6,11 @@
     note="Note text"
     text="Text for the checkbox"
     help="This is a help text."
-    v-model="form.input"
+    v-model="value"
   />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SInputCheckbox
     name="input01"
@@ -18,46 +18,47 @@
     note="Note text"
     text="Text for the checkbox"
     help="This is a help text."
-    v-model="form.input"
+    v-model="value"
   />
 </template>
 
-<script>
-import SInputCheckbox from '@globalbrains/sefirot/lib/components/SInputCheckbox'
+<script lang="ts">
+import SInputCheckbox from '@globalbrains/sefirot/lib/components/SInputCheckbox.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputCheckbox
   },
 
-  data() {
+  setup() {
+    const value = ref(false)
+
     return {
-      form: {
-        input: false
-      }
+      value
     }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SInputCheckbox from '@@/lib/components/SInputCheckbox'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputCheckbox from '@@/lib/components/SInputCheckbox.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputCheckbox,
     StoryBase
   },
 
-  data () {
+  setup() {
+    const value = ref(false)
+
     return {
-      form: {
-        input: false
-      }
+      value
     }
   }
-}
+})
 </script>

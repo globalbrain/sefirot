@@ -6,11 +6,11 @@
     note="Note text"
     help="This is a help text."
     :options="options"
-    v-model="form.input"
+    v-model="input"
   />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SInputCheckboxes
     name="input"
@@ -18,58 +18,62 @@
     note="Note text"
     help="This is a help text."
     :options="options"
-    v-model="form.input"
+    v-model="input"
   />
 </template>
 
-<script>
-import SInputCheckboxes from '@globalbrains/sefirot/lib/components/SInputCheckboxes'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputCheckboxes from '@globalbrains/sefirot/lib/components/SInputCheckboxes.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputCheckboxes
   },
 
-  data() {
-    return {
-      form: {
-        input: []
-      },
+  setup() {
+    const input = ref([])
 
-      options: [
-        { label: 'Check box 1', value: 1 },
-        { label: 'Check box 2', value: 2 },
-        { label: 'Check box 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Check box 1', value: 1 },
+      { label: 'Check box 2', value: 2 },
+      { label: 'Check box 3', value: 3 }
+    ]
+
+    return {
+      input,
+      options
     }
   }
-}
+})
 </script>
 ```
 </template>
 
-<script>
-import SInputCheckboxes from '@@/lib/components/SInputCheckboxes'
-import StoryBase from '@/components/StoryBase'
+<script lang="ts">
+import { defineComponent, ref } from '@nuxtjs/composition-api'
+import SInputCheckboxes from '@@/lib/components/SInputCheckboxes.vue'
+import StoryBase from '@/components/StoryBase.vue'
 
-export default {
+export default defineComponent({
   components: {
     SInputCheckboxes,
     StoryBase
   },
 
-  data () {
-    return {
-      form: {
-        input: []
-      },
+  setup() {
+    const input = ref([])
 
-      options: [
-        { label: 'Check box 1', value: 1 },
-        { label: 'Check box 2', value: 2 },
-        { label: 'Check box 3', value: 3 }
-      ]
+    const options = [
+      { label: 'Check box 1', value: 1 },
+      { label: 'Check box 2', value: 2 },
+      { label: 'Check box 3', value: 3 }
+    ]
+
+    return {
+      input,
+      options
     }
   }
-}
+})
 </script>
