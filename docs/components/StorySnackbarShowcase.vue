@@ -10,7 +10,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="list">
     <div class="item">

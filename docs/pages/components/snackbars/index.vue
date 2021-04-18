@@ -20,7 +20,7 @@ export const plugins: Plugin<State>[] = [Sefirot]
 
 Next, register the portal component to the top-level component. Probably this could be your layout file.
 
-```html
+```vue
 <template>
   <div class="App">
     <Nuxt />

@@ -23,7 +23,7 @@
   </SGrid>
 </StoryBase>
 
-```html
+```vue
 <template>
   <SGrid :records="records" :clickable="false">
     <template #columns>
@@ -90,7 +90,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const records = [
       { id: 1, name: 'John Doe', email: 'john.doe@example.com', company: 'Awesome, Inc.', url: 'https://example.com', status: 'Active', activated_at: 'Jun 2, 2019' },
       { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com', company: 'GGBK Corporation', url: 'https://example.com', status: 'Active', activated_at: 'Sep 21, 2019' },

@@ -7,7 +7,7 @@
   <ScreenMinimal />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SButton class="button" label="OPEN SCREEN" @click="openScreen" />
 </template>

@@ -7,7 +7,7 @@
   </SPlaceholderBlank>
 </StoryBase>
 
-```html
+```vue
 <template>
   <SButton label="START LOADING" @click="startLoading" />
 
@@ -38,7 +38,9 @@ export default defineComponent({
   setup() {
     const loaded = ref(false)
 
-    onMounted(() => startTimer())
+    onMounted(() => {
+      startTimer()
+    })
 
     function startLoading(): void {
       loaded.value = false
@@ -75,7 +77,9 @@ export default defineComponent({
   setup() {
     const loaded = ref(false)
 
-    onMounted(() => startTimer())
+    onMounted(() => {
+      startTimer()
+    })
 
     function startLoading(): void {
       loaded.value = false

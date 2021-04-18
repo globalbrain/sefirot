@@ -12,7 +12,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template lang="md">
   <div class="input">
     <SInputNumber

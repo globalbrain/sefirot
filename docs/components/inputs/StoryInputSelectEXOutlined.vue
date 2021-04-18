@@ -12,7 +12,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="input">
     <SInputSelect
@@ -71,7 +71,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const input = ref<number | null>(null)
 
     const options = [

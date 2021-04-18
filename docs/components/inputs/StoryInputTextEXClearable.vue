@@ -12,7 +12,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="input">
     <SInputText
@@ -66,7 +66,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const text = ref('Initial value')
 
     return {

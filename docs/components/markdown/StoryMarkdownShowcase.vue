@@ -3,7 +3,7 @@
   <SMarkdown content="**We** shape our _buildings_. Thereafter, _they_ shape **us**." class="collapse" />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SMarkdown content="**We** shape our _buildings_. Thereafter, _they_ shape **us**." />
 </template>

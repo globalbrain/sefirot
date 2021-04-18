@@ -8,7 +8,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="list">
     <div class="item"><SButton label="CONFIRM" @click="openDialog01" /></div>

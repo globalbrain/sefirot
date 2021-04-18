@@ -23,7 +23,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="form">
     <div class="input">
@@ -113,7 +113,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const { data, validation } = useForm({
       data: {
         name: ''

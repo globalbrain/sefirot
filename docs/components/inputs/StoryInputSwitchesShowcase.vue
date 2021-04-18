@@ -13,7 +13,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="items">
     <SInputSwitches

@@ -13,7 +13,7 @@ Especially useful when you want to wait for an asynchronous operation to be comp
 
 When `loaded` prop is `true`, it adds `'loaded'` CSS class to the root element. You may use this class to style your child component. The following example shows that the `p` element will do slide up animation when loading is completed.
 
-```html
+```vue
 <template>
   <SPlaceholderBlank class="my-component" :loaded="loaded">
     <p class="text">...</p>

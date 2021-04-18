@@ -11,7 +11,7 @@
   <WindowMinimalBlank />
 </StoryBase>
 
-```html
+```vue
 <template>
   <SButton class="button" label="BASIC WINDOW" @click="openWindow01" />
   <SButton class="button" label="WITH LEAD TEXT" @click="openWindow02" />

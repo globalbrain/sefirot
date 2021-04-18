@@ -19,7 +19,7 @@ Also, Sefirot is written in TypeScript, and uses Composition API. Make sure your
 
 To begin using the components, you should directly import them from `lib` directory under the Sefirot package.
 
-```html
+```vue
 <template>
   <div>
     <SButton label="BUTTON" />
@@ -101,7 +101,7 @@ const config: Configuration = {
 
 With the above setting,  you can import components from `sefirot`.
 
-```html
+```vue
 <template>
   <div>
     <SButton label="BUTTON" />

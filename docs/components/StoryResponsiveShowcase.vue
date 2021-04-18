@@ -7,7 +7,7 @@
   </SResponsive>
 </StoryBase>
 
-```html
+```vue
 <template>
   <SResponsive v-slot="{ el }" :bp="bp">
     <p class="text" :class="{ red: el.is.sm }">Turn red on >= 320px</p>
@@ -64,7 +64,7 @@ export default defineComponent({
     StoryBase
   },
 
-  setup () {
+  setup() {
     const bp: BP = {
       sm: ({ w }) => w >= 320,
       md: ({ w }) => w >= 480,

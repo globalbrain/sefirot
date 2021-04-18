@@ -10,7 +10,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <SPlaceholderImage
     img="/img/fixtures/image-1536x1024-001.jpg"
