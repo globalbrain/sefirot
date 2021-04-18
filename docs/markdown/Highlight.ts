@@ -1,17 +1,7 @@
-import prism from 'prismjs'
-import loadLanguages from 'prismjs/components/index'
+import * as prism from 'prismjs'
+import 'prismjs/components/prism-typescript'
+import 'prismjs/components/prism-bash'
 import escapeHtml from 'escape-html'
-
-// required to make embedded highlighting work...
-loadLanguages(['markup', 'css', 'javascript'])
-
-function wrap(code: string, lang: string): string {
-  if (lang === 'text') {
-    code = escapeHtml(code)
-  }
-
-  return `<pre v-pre><code>${code}</code></pre>`
-}
 
 export const highlight = (str: string, lang: string) => {
   if (!lang) {
@@ -34,17 +24,6 @@ export const highlight = (str: string, lang: string) => {
     lang = 'typescript'
   }
 
-  if (lang === 'py') {
-    lang = 'python'
-  }
-
-  if (!prism.languages[lang]) {
-    try {
-      loadLanguages([lang])
-    } catch (e) {
-    }
-  }
-
   if (prism.languages[lang]) {
     const code = prism.highlight(str, prism.languages[lang], lang)
 
@@ -52,4 +31,12 @@ export const highlight = (str: string, lang: string) => {
   }
 
   return wrap(str, 'text')
+}
+
+function wrap(code: string, lang: string): string {
+  if (lang === 'text') {
+    code = escapeHtml(code)
+  }
+
+  return `<pre v-pre><code>${code}</code></pre>`
 }
