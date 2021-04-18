@@ -39,9 +39,9 @@ export default defineComponent({
     function toggle(): void {
       isOpen.value = !isOpen.value
 
-      const style = isOpen.value ? 'block' : 'none'
-
       if (sibling.value) {
+        const style = isOpen.value ? 'block' : 'none'
+
         sibling.value.setAttribute('style', `display: ${style};`)
       }
     }
