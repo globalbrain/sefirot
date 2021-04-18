@@ -57,10 +57,8 @@ export default defineComponent({
     }
   },
 
-  head() {
-    return {
-      title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
-    }
+  head: {
+    title: 'Sefirot | We Shape Our Buildings. Thereafter, They Shape Us.'
   }
 })
 </script>

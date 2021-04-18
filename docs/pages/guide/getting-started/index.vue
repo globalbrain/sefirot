@@ -125,10 +125,10 @@ export default defineComponent({
 import { defineComponent } from '@nuxtjs/composition-api'
 
 export default defineComponent({
+  scrollToTop: true,
+
   head: {
     title: 'Getting Started'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>
