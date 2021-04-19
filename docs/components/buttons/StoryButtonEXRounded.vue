@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase title="Rounded Button">
+<StoryBase>
   <div class="list">
     <div class="item">
       <SButton label="PRIMARY" rounded />

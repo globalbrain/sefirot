@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase title="Button Modes">
+<StoryBase>
   <div class="list">
     <div class="item">
       <SButton label="NEUTRAL" mode="neutral" />
