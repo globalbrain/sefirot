@@ -5,7 +5,7 @@ We're really excited that you are interested in contributing to Sefirot. Before 
 
 ## Where Is The Code?
 
-Sefirot source code is managed in GitHub. Please visit the following GitHub repository to checkout the code.
+Sefirot source code is publicly available on GitHub.
 
 <SButton
   tag="a"
@@ -44,20 +44,14 @@ $ yarn test
 Run the tests.
 
 ```bash
-$ yarn test:watch
+$ yarn coverage
 ```
 
-Run the tests in watch mode.
-
-```bash
-$ yarn test:coverage
-```
-
-Generate test coverage in `coverage` directory.
+Output test coverage in `coverage` directory.
 
 ## License
 
-Sefirot is open-sourced software licensed under the [MIT license](LICENSE.md).
+Sefirot is open-sourced software licensed under the [MIT License](https://raw.githubusercontent.com/globalbrain/sefirot/master/LICENSE.md).
 </template>
 
 <script lang="ts">

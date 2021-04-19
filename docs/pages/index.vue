@@ -31,11 +31,11 @@
       </div>
 
       <div class="body mx-auto max-w-512">
-        <p>Sefirot is a list of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
+        <p>Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.</p>
 
-        <p class="pt-24">Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
+        <p class="pt-24">Sefirot is focused on being used within Global Brain's ecosystem. Hence, the design—UI/UX—of components is relatively fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.</p>
 
-        <p class="pt-24">Please feel free to leverage any component within this project. You may customize them however you want, and if maybe, some component might be valuable to you. Any suggestion, request, or questions are welcome.</p>
+        <p class="pt-24">Feel free to leverage any component within this project. You may customize components how you see fit, and perhaps some features may be valuable to you. Any suggestions, requests, or questions are welcome.</p>
       </div>
     </div>
   </div>

@@ -16,11 +16,11 @@
   </a>
 </p>
 
-This repository contains Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
+Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
-Note that Sefirot is focused on being used in Global Brain's ecosystem. Hence the design—UI/UX—of components is quite fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.
+Sefirot is focused on being used within Global Brain's ecosystem. Hence, the design—UI/UX—of components is relatively fixed, and customization capability is limited. In exchange for customizability, we can create components that are more robust, dynamic, and clean.
 
-That being said, feel free to leverage any component within this project. You may customize them however you want, and maybe, some component might be valuable to you. Any suggestions, requests, and questions are welcome.
+Feel free to leverage any component within this project. You may customize components how you see fit, and perhaps some features may be valuable to you. Any suggestions, requests, or questions are welcome.
 
 ## Documentation
 
@@ -32,7 +32,7 @@ We're really excited that you are interested in contributing to Sefirot. Before 
 
 ### Code style guide
 
-Sefirot follows official [Vue Style Guide](https://vuejs.org/v2/style-guide/). But always remember to follow the "Golden Rule" below.
+Sefirot follows the official [Vue Style Guide](https://vuejs.org/v2/style-guide/). But always remember to follow the "Golden Rule"&hellip;
 
 > Every line of code should appear to be written by a single person, no matter the number of contributors.
 > &mdash; <cite>@mdo</cite>
