@@ -82,5 +82,9 @@ export default defineComponent({
 
 .specs-cell.description .specs-value {
   line-height: 24px;
+
+  & >>> code {
+    font-size: 13px;
+  }
 }
 </style>
