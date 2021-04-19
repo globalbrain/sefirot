@@ -8,7 +8,7 @@
         </div>
         <div class="specs-cell description">
           <p class="specs-label">DESCRIPTION</p>
-          <p class="specs-value" v-html="event.description" />
+          <p class="specs-value" v-html="$md.renderInline(event.description)" />
         </div>
       </div>
     </div>
@@ -17,12 +17,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { Event } from '../composables/Spec'
 import SpecBase from './SpecBase.vue'
-
-export interface Event {
-  name: string
-  description: string
-}
 
 export default defineComponent({
   components: {

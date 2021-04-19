@@ -10,10 +10,8 @@ export default defineComponent({
     return redirect('/guide/getting-started')
   },
 
-  head() {
-    return {
-      title: 'Guide'
-    }
+  head: {
+    title: 'Guide'
   }
 })
 </script>

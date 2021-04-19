@@ -8,12 +8,14 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
   props: {
     active: { type: Boolean, required: true }
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

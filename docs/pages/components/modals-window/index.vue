@@ -11,12 +11,14 @@ A window is a most customizable modal component which can display almost anythin
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryWindowShowcase from '@/components/StoryWindowShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryWindowShowcase from '@/components/StoryWindowShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryWindowShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'name',
@@ -83,11 +85,11 @@ export default {
           description: 'Fires when window is closed.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Modals: Window'
   }
-}
+})
 </script>

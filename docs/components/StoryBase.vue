@@ -3,7 +3,7 @@
     <div class="header">
       <h1 class="title">{{ title }}</h1>
 
-      <div class="action">
+      <div v-if="canToggle" class="action">
         <button class="button" @click="toggle">
           <SIconCode class="icon" />
         </button>
@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from '@nuxtjs/composition-api'
+import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
 import SIconCode from '@@/lib/components/icons/SIconCode.vue'
 
 export default defineComponent({
@@ -30,21 +30,27 @@ export default defineComponent({
   },
 
   setup() {
-    const el = ref<HTMLElement | null>(null)
+    const el = ref<HTMLElement>()
     const isOpen = ref(false)
+
+    const sibling = computed(() => el.value && el.value.nextElementSibling)
+    const canToggle = computed(() => !!sibling.value)
 
     function toggle(): void {
       isOpen.value = !isOpen.value
 
-      const style = isOpen.value ? 'block' : 'none'
+      if (sibling.value) {
+        const style = isOpen.value ? 'block' : 'none'
 
-      el.value?.nextElementSibling?.setAttribute('style', `display: ${style};`)
+        sibling.value.setAttribute('style', `display: ${style};`)
+      }
     }
 
     return {
       el,
       isOpen,
-      toggle
+      toggle,
+      canToggle
     }
   }
 })
@@ -101,7 +107,7 @@ export default defineComponent({
 .title {
   flex-grow: 1;
   margin: 0;
-  padding-top: 8px;
+  padding: 8px 0;
   line-height: 24px;
   font-family: var(--font-family-base);
   font-size: 14px;

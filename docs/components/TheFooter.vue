@@ -2,7 +2,7 @@
   <div class="TheFooter bg-white-soft">
     <div class="mx-auto max-w-960 text-center">
       <p class="leading-20 text-14 font-500">We shape our buildings. Thereafter, they shape us.</p>
-      <p class="text-12 font-500 text-light-2">&copy; 2020 <a class="link" href="https://globalbrains.com" target="_blank">Global Brain Corporation</a></p>
+      <p class="text-12 font-500 text-light-2">&copy; 2021 <a class="link" href="https://globalbrains.com" target="_blank">Global Brain Corporation</a></p>
     </div>
   </div>
 </template>

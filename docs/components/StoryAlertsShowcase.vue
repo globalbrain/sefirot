@@ -8,7 +8,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="actions">
     <div class="item"><SButton mode="info" label="INFO" @click="openAlertInfo" /></div>
@@ -31,7 +31,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
-    function openAlertInfo() {
+    function openAlertInfo(): void {
       store.dispatch('alert/open', {
         title: 'The alert title',
         text: 'This is the alert message.',
@@ -42,7 +42,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertSuccess() {
+    function openAlertSuccess(): void {
       store.dispatch('alert/open', {
         type: 'success',
         title: 'The alert title',
@@ -54,7 +54,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertWarning() {
+    function openAlertWarning(): void {
       store.dispatch('alert/open', {
         type: 'warning',
         title: 'The alert title',
@@ -66,7 +66,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertDanger() {
+    function openAlertDanger(): void {
       store.dispatch('alert/open', {
         type: 'danger',
         title: 'The alert title',
@@ -78,7 +78,7 @@ export default defineComponent({
       })
     }
 
-    function close() {
+    function close(): void {
       store.dispatch('alert/close')
     }
 
@@ -123,7 +123,7 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
-    function openAlertInfo() {
+    function openAlertInfo(): void {
       store.dispatch('alert/open', {
         title: 'The alert title',
         text: 'This is the alert message.',
@@ -134,7 +134,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertSuccess() {
+    function openAlertSuccess(): void {
       store.dispatch('alert/open', {
         type: 'success',
         title: 'The alert title',
@@ -146,7 +146,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertWarning() {
+    function openAlertWarning(): void {
       store.dispatch('alert/open', {
         type: 'warning',
         title: 'The alert title',
@@ -158,7 +158,7 @@ export default defineComponent({
       })
     }
 
-    function openAlertDanger() {
+    function openAlertDanger(): void {
       store.dispatch('alert/open', {
         type: 'danger',
         title: 'The alert title',
@@ -170,7 +170,7 @@ export default defineComponent({
       })
     }
 
-    function close() {
+    function close(): void {
       store.dispatch('alert/close')
     }
 

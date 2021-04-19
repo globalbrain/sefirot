@@ -19,13 +19,15 @@ You can remove the border and background color by setting the `mode` option to `
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryInputTextareaShowcase from '@/components/StoryInputTextareaShowcase'
-import StoryInputTextareaEXClear from '@/components/StoryInputTextareaEXClear'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryInputTextareaShowcase from '@/components/inputs/StoryInputTextareaShowcase.vue'
+import StoryInputTextareaEXClear from '@/components/inputs/StoryInputTextareaEXClear.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryInputTextareaShowcase,
     StoryInputTextareaEXClear,
@@ -35,8 +37,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'size',
@@ -127,11 +129,11 @@ export default {
           description: 'Fires when a user blur focus from the filed.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Inputs: Textarea'
   }
-}
+})
 </script>

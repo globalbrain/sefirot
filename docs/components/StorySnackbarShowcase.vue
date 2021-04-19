@@ -10,7 +10,7 @@
   </div>
 </StoryBase>
 
-```html
+```vue
 <template>
   <div class="list">
     <div class="item">
@@ -24,22 +24,25 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import SButton from '@@/lib/components/SButton.vue'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+import { useStore } from '@globalbrain/sefirot/lib/composables/Store'
 
 export default defineComponent({
   components: {
     SButton
   },
 
-  setup(_props, context) {
+  setup() {
+    const store = useStore()
+
     function openNormalSnackbar(): void {
-      context.root.$store.dispatch('snackbars/push', {
+      store.dispatch('snackbars/push', {
         text: 'This is the snackbar message.'
       })
     }
 
     function openWithActions(): void {
-      context.root.$store.dispatch('snackbars/push', {
+      store.dispatch('snackbars/push', {
         text: 'This is the snackbar message with actions.',
         actions: [
           { type: 'mute', label: 'MUTE ACTION', callback: () => {} },
@@ -72,8 +75,9 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import SButton from '@@/lib/components/SButton.vue'
 import StoryBase from '@/components/StoryBase.vue'
+import SButton from '@@/lib/components/SButton.vue'
+import { useStore } from '@@/lib/composables/Store'
 
 export default defineComponent({
   components: {
@@ -81,15 +85,17 @@ export default defineComponent({
     StoryBase
   },
 
-  setup (_props, context) {
-    function openNormalSnackbar (): void {
-      context.root.$store.dispatch('snackbars/push', {
+  setup() {
+    const store = useStore()
+
+    function openNormalSnackbar(): void {
+      store.dispatch('snackbars/push', {
         text: 'This is the snackbar message.'
       })
     }
 
-    function openWithActions (): void {
-      context.root.$store.dispatch('snackbars/push', {
+    function openWithActions(): void {
+      store.dispatch('snackbars/push', {
         text: 'This is the snackbar message with actions.',
         actions: [
           { type: 'mute', label: 'MUTE ACTION', callback: () => {} },

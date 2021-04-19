@@ -60,15 +60,16 @@ By setting `clearable` props, the input filed will show the "clear" button when 
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import StoryInputTextShowcase from '@/components/StoryInputTextShowcase.vue'
-import StoryInputTextEXOutlined from '@/components/StoryInputTextEXOutlined.vue'
-import StoryInputTextEXSizes from '@/components/StoryInputTextEXSizes.vue'
-import StoryInputTextEXIcon from '@/components/StoryInputTextEXIcon.vue'
-import StoryInputTextEXText from '@/components/StoryInputTextEXText.vue'
-import StoryInputTextEXAction from '@/components/StoryInputTextEXAction.vue'
-import StoryInputTextEXClearable from '@/components/StoryInputTextEXClearable.vue'
-import SpecProps, { Prop } from '@/components/SpecProps.vue'
-import SpecEvents, { Event } from '@/components/SpecEvents.vue'
+import StoryInputTextShowcase from '@/components/inputs/StoryInputTextShowcase.vue'
+import StoryInputTextEXOutlined from '@/components/inputs/StoryInputTextEXOutlined.vue'
+import StoryInputTextEXSizes from '@/components/inputs/StoryInputTextEXSizes.vue'
+import StoryInputTextEXIcon from '@/components/inputs/StoryInputTextEXIcon.vue'
+import StoryInputTextEXText from '@/components/inputs/StoryInputTextEXText.vue'
+import StoryInputTextEXAction from '@/components/inputs/StoryInputTextEXAction.vue'
+import StoryInputTextEXClearable from '@/components/inputs/StoryInputTextEXClearable.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
@@ -86,141 +87,138 @@ export default defineComponent({
   scrollToTop: true,
 
   setup() {
-    const props: Prop[] = [
-      {
-        name: 'size',
-        type: "'medium' | 'mini'",
-        required: false,
-        default: "'medium'",
-        description: 'The size of the input.'
-      },
-      {
-        name: 'mode',
-        type: "'filled' | 'outlined'",
-        required: false,
-        default: "'filled'",
-        description: 'The style of the input.'
-      },
-      {
-        name: 'name',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'The name for the field. It will be set to `for` attribute at label, and `id` attribute at input so that when user clicks the label, the input will get focus.'
-      },
-      {
-        name: 'type',
-        type: 'string',
-        required: false,
-        default: "'text'",
-        description: 'The type of the input. It can be any valid html input types such as `email` or `password`.'
-      },
-      {
-        name: 'label',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'The label for the input.'
-      },
-      {
-        name: 'note',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'The small note text that will be displayed next to label. The note should be short for example `Optional` or `Max length 160`.'
-      },
-      {
-        name: 'help',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
-      },
-      {
-        name: 'placeholder',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'The placeholder text for the input.'
-      },
-      {
-        name: 'action',
-        type: 'Action',
-        required: false,
-        default: 'null',
-        description: 'The action to be prepened to the input.'
-      },
-      {
-        name: 'icon',
-        type: 'VueComponent',
-        required: false,
-        default: 'null',
-        description: 'You may pass Vue Component (probably svg) to display icon in input field.'
-      },
-      {
-        name: 'text',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'Add the leading text to the input.'
-      },
-      {
-        name: 'text-after',
-        type: 'string',
-        required: false,
-        default: 'null',
-        description: 'Add the trailing text to the input.'
-      },
-      {
-        name: 'clearable',
-        type: 'boolean',
-        required: false,
-        default: 'false',
-        description: 'Show the "clear button" at end of input. If a user clicks the button, it fires `clear` event.'
-      },
-      {
-        name: 'value',
-        type: 'string | number',
-        required: false,
-        default: 'null',
-        description: 'The value of the input. You may also use `v-model` to bind a value to the input.'
-      },
-      {
-        name: 'validation',
-        type: 'Validation',
-        required: false,
-        default: 'null',
-        description: 'You can pass Validation object to let input display any errors.'
-      }
-    ]
+    return useSpec({
+      props: [
+        {
+          name: 'size',
+          type: "'medium' | 'mini'",
+          required: false,
+          default: "'medium'",
+          description: 'The size of the input.'
+        },
+        {
+          name: 'mode',
+          type: "'filled' | 'outlined'",
+          required: false,
+          default: "'filled'",
+          description: 'The style of the input.'
+        },
+        {
+          name: 'name',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The name for the field. It will be set to `for` attribute at label, and `id` attribute at input so that when user clicks the label, the input will get focus.'
+        },
+        {
+          name: 'type',
+          type: 'string',
+          required: false,
+          default: "'text'",
+          description: 'The type of the input. It can be any valid html input types such as `email` or `password`.'
+        },
+        {
+          name: 'label',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The label for the input.'
+        },
+        {
+          name: 'note',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The small note text that will be displayed next to label. The note should be short for example `Optional` or `Max length 160`.'
+        },
+        {
+          name: 'help',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
+        },
+        {
+          name: 'placeholder',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The placeholder text for the input.'
+        },
+        {
+          name: 'action',
+          type: 'Action',
+          required: false,
+          default: 'null',
+          description: 'The action to be prepened to the input.'
+        },
+        {
+          name: 'icon',
+          type: 'VueComponent',
+          required: false,
+          default: 'null',
+          description: 'You may pass Vue Component (probably svg) to display icon in input field.'
+        },
+        {
+          name: 'text',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'Add the leading text to the input.'
+        },
+        {
+          name: 'text-after',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'Add the trailing text to the input.'
+        },
+        {
+          name: 'clearable',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Show the "clear button" at end of input. If a user clicks the button, it fires `clear` event.'
+        },
+        {
+          name: 'value',
+          type: 'string | number',
+          required: false,
+          default: 'null',
+          description: 'The value of the input. You may also use `v-model` to bind a value to the input.'
+        },
+        {
+          name: 'validation',
+          type: 'Validation',
+          required: false,
+          default: 'null',
+          description: 'You can pass Validation object to let input display any errors.'
+        }
+      ],
 
-    const events: Event[] = [
-      {
-        name: 'input',
-        description: 'Fires when the user input any value to the filed.'
-      },
-      {
-        name: 'blur',
-        description: 'Fires when the user blur focus from the filed.'
-      },
-      {
-        name: 'enter',
-        description: 'Fires when the user hit enter key.'
-      },
-      {
-        name: 'action',
-        description: 'Fires when the user clicks prepended action. Only fires when `action.clickable` property is set to true.'
-      },
-      {
-        name: 'clear',
-        description: 'Fires when the user clicks the clear button. Only fires when `clearable` prop is set.'
-      }
-    ]
-
-    return {
-      props,
-      events
-    }
+      events: [
+        {
+          name: 'input',
+          description: 'Fires when the user input any value to the filed.'
+        },
+        {
+          name: 'blur',
+          description: 'Fires when the user blur focus from the filed.'
+        },
+        {
+          name: 'enter',
+          description: 'Fires when the user hit enter key.'
+        },
+        {
+          name: 'action',
+          description: 'Fires when the user clicks prepended action. Only fires when `action.clickable` property is set to true.'
+        },
+        {
+          name: 'clear',
+          description: 'Fires when the user clicks the clear button. Only fires when `clearable` prop is set.'
+        }
+      ]
+    })
   },
 
   head: {

@@ -15,7 +15,7 @@
         <div class="nav-container">
           <ul class="nav-list">
             <li v-for="content in contents" :key="content.path" class="nav-item">
-              <nuxt-link class="nav-link" :to="content.path" @click.native="delayClose">{{ content.label }}</nuxt-link>
+              <NuxtLink class="nav-link" :to="content.path" @click.native="delayClose">{{ content.label }}</NuxtLink>
             </li>
           </ul>
         </div>
@@ -29,11 +29,7 @@ import { defineComponent, ref, PropType } from '@nuxtjs/composition-api'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconX from '@@/lib/components/icons/SIconX.vue'
 import SButton from '@@/lib/components/SButton.vue'
-
-export interface Content {
-  label: string
-  path: string
-}
+import { Content } from '@/composables/Content'
 
 export default defineComponent({
   components: {

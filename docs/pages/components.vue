@@ -4,7 +4,7 @@
 
     <div class="container">
       <div class="main c-medium">
-        <nuxt-child :key="$route.path" />
+        <NuxtChild :key="$route.path" />
       </div>
     </div>
   </div>
@@ -12,7 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import SidebarNavigation, { Content } from '@/components/SidebarNavigation.vue'
+import SidebarNavigation from '@/components/SidebarNavigation.vue'
+import { useContent } from '@/composables/Content'
 
 export default defineComponent({
   components: {
@@ -20,7 +21,7 @@ export default defineComponent({
   },
 
   setup() {
-    const contents: Content[] = [
+    const contents = useContent([
       { label: 'Buttons', path: '/components/buttons' },
       { label: 'Grids', path: '/components/grids' },
       { label: 'Icons', path: '/components/icons' },
@@ -35,6 +36,7 @@ export default defineComponent({
       { label: 'Inputs: Switches', path: '/components/inputs-switches' },
       { label: 'Inputs: Text', path: '/components/inputs-text' },
       { label: 'Inputs: Textarea', path: '/components/inputs-textarea' },
+      { label: 'Markdown', path: '/components/markdown' },
       { label: 'Modals: Alert', path: '/components/modals-alert' },
       { label: 'Modals: Dialog', path: '/components/modals-dialog' },
       { label: 'Modals: Window', path: '/components/modals-window' },
@@ -45,7 +47,7 @@ export default defineComponent({
       { label: 'Snackbars', path: '/components/snackbars' },
       { label: 'Steps', path: '/components/steps' },
       { label: 'Tooltips', path: '/components/tooltips' }
-    ]
+    ])
 
     return {
       contents

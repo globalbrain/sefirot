@@ -9,10 +9,6 @@
     </li>
   </ul>
 </StoryBase>
-
-```html
-All icons by Feather.
-```
 </template>
 
 <script lang="ts">

@@ -11,7 +11,7 @@ The Snakbars are controlled by Vuex. To be able to use Snackbars, you must set u
 
 First, let's register the Sefirot Vuex plugin. Here we have an example of installing the plugin in Nuxt.js.
 
-```js
+```ts
 import { Plugin } from 'vuex'
 import Sefirot from '@globalbrain/sefirot/lib/store/Sefirot'
 
@@ -20,10 +20,10 @@ export const plugins: Plugin<State>[] = [Sefirot]
 
 Next, register the portal component to the top-level component. Probably this could be your layout file.
 
-```html
+```vue
 <template>
   <div class="App">
-    <nuxt />
+    <Nuxt />
 
     <SPortalSnackbars />
   </div>
@@ -43,7 +43,7 @@ export default defineComponent({
 
 Now you're ready to go. You may use Snackbar via `snackbars/push` action.
 
-```js
+```ts
 store.dispatch('snackbars/push', {
   text: 'This is the snackbar message.'
 })
@@ -51,12 +51,12 @@ store.dispatch('snackbars/push', {
 
 ## Controlling the Timeout
 
-By default, a Snackbar will disappear after 10sec. You can control this timing by passing in `timeout` option to the action. The value is in ms.
+By default, a Snackbar will disappear after 10 seconds. You can control this timing by passing in `timeout` option in the payload. The value is in ms.
 
 ```js
 store.dispatch('snackbars/push', {
   text: 'This is the snackbar message.',
-  timeout: 5000 // <- Disappear after 5sec.
+  timeout: 5000 // <- Disappear after 5 seconds.
 })
 ```
 
@@ -76,8 +76,8 @@ store.dispatch('snackbars/push', {
 
 Actions will take 3 arguments.
 
-- `type: string` – The type of the button. You can pass the same types as the SButton component takes.
-- `label: string` – The label for the button. Again, it's the same as SButton options.
+- `type: string` – The type of the button. You can pass the same types as the `SButton` component takes.
+- `label: string` – The label for the button. Again, it's the same as `SButton` options.
 - `callback: Function` – The callback function that should be called when a user clicks the button.
 </template>
 
@@ -90,10 +90,10 @@ export default defineComponent({
     StorySnackbarShowcase
   },
 
+  scrollToTop: true,
+
   head: {
     title: 'Snackbars'
-  },
-
-  scrollToTop: true
+  }
 })
 </script>

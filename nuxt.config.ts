@@ -1,10 +1,10 @@
-import { NuxtConfig } from '@nuxt/types'
+import { defineNuxtConfig } from '@nuxtjs/composition-api'
 import { highlight } from './docs/markdown/Highlight'
 import { preWrapper } from './docs/markdown/PreWrapper'
 
 require('dotenv').config()
 
-const config: NuxtConfig = {
+export default defineNuxtConfig({
   target: 'static',
 
   ssr: false,
@@ -58,6 +58,7 @@ const config: NuxtConfig = {
   ],
 
   plugins: [
+    { src: '@/plugins/markdown-it' },
     { src: '@/plugins/portal-vue' },
     { src: '@/plugins/v-calendar', mode: 'client' }
   ],
@@ -66,7 +67,15 @@ const config: NuxtConfig = {
 
   markdownit: {
     highlight,
-    use: [preWrapper]
+    use: [
+      preWrapper,
+      ['markdown-it-anchor', {
+        permalink: true,
+        permalinkBefore: true,
+        permalinkSymbol: '#',
+        permalinkAttrs: () => ({ 'aria-hidden': true })
+      }]
+    ]
   },
 
   googleAnalytics: {
@@ -75,6 +84,4 @@ const config: NuxtConfig = {
       sendHitTask: process.env.NODE_ENV === 'production'
     }
   }
-}
-
-export default config
+})

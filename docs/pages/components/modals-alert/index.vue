@@ -6,10 +6,11 @@ Alert dialogs interrupt users with urgent information, details, or actions.
 <StoryAlertsShowcase />
 </template>
 
-<script>
-import StoryAlertsShowcase from '@/components/StoryAlertsShowcase'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryAlertsShowcase from '@/components/StoryAlertsShowcase.vue'
 
-export default {
+export default defineComponent({
   components: {
     StoryAlertsShowcase
   },
@@ -19,5 +20,5 @@ export default {
   head: {
     title: 'Modals: Alert'
   }
-}
+})
 </script>

@@ -8,14 +8,15 @@
   </SWindow>
 </template>
 
-<script>
-import SWindow from '@@/lib/components/SWindow'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import SWindow from '@@/lib/components/SWindow.vue'
 
-export default {
+export default defineComponent({
   components: {
     SWindow
   }
-}
+})
 </script>
 
 <style lang="postcss" scoped>

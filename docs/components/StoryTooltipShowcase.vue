@@ -5,7 +5,7 @@
   </p>
 </StoryBase>
 
-```html
+```vue
 <template>
   <p class="text">
     To know about how a tooltip works,

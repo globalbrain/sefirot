@@ -20,7 +20,7 @@
         </div>
         <div class="specs-cell description">
           <p class="specs-label">DESCRIPTION</p>
-          <p class="specs-value" v-html="prop.description" />
+          <p class="specs-value" v-html="$md.renderInline(prop.description)" />
         </div>
       </div>
     </div>
@@ -29,15 +29,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@nuxtjs/composition-api'
+import { Prop } from '../composables/Spec'
 import SpecBase from './SpecBase.vue'
-
-export interface Prop {
-  name: string
-  type: string
-  required: boolean
-  default: string
-  description: string
-}
 
 export default defineComponent({
   components: {
@@ -95,7 +88,7 @@ export default defineComponent({
 
 .specs-cell.name .specs-value,
 .specs-cell.type .specs-value,
-.specs-cell.required .specs-value
+.specs-cell.required .specs-value,
 .specs-cell.default .specs-value {
   font-family: var(--font-family-mono);
   font-size: 13px;

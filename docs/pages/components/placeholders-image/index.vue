@@ -11,12 +11,14 @@ Placeholders are for showing temporary state when waiting for a certain componen
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryPlaceholderImageShowcase from '@/components/StoryPlaceholderImageShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryPlaceholderImageShowcase from '@/components/placeholders/StoryPlaceholderImageShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryPlaceholderImageShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'img',
@@ -64,11 +66,11 @@ export default {
           description: 'Fires when the image is loaded. It will be fired after the `delay`.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Placeholders: Image'
   }
-}
+})
 </script>

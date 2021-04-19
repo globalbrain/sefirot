@@ -11,12 +11,14 @@ Radio buttons allow the user to select one option from a set.
 <SpecEvents :events="events" />
 </template>
 
-<script>
-import StoryInputRadiosShowcase from '@/components/StoryInputRadiosShowcase'
-import SpecProps from '@/components/SpecProps'
-import SpecEvents from '@/components/SpecEvents'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryInputRadiosShowcase from '@/components/inputs/StoryInputRadiosShowcase.vue'
+import SpecProps from '@/components/SpecProps.vue'
+import SpecEvents from '@/components/SpecEvents.vue'
+import { useSpec } from '@/composables/Spec'
 
-export default {
+export default defineComponent({
   components: {
     StoryInputRadiosShowcase,
     SpecProps,
@@ -25,8 +27,8 @@ export default {
 
   scrollToTop: true,
 
-  data() {
-    return {
+  setup() {
+    return useSpec({
       props: [
         {
           name: 'name',
@@ -85,11 +87,11 @@ export default {
           description: 'Fires when a user clicks a radio button.'
         }
       ]
-    }
+    })
   },
 
   head: {
     title: 'Inputs: Radios'
   }
-}
+})
 </script>

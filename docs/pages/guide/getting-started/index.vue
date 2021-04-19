@@ -1,25 +1,31 @@
 <template lang="md">
 # Getting Started
 
-This is the instruction to set up Sefirot and running on your project. Remember that by design, Sefirot doesn't ship with pre-built files, so you must compile the code in your project.
+These are the instructions to get Sefirot set-up and running in your project. Remember that Sefirot doesn't ship with pre-built files by design, so you must compile the code in your project.
 
 ## Installation
 
-At first, install Sefirot via npm or yarn.
+Sefirot can be installed in your project by running the following command:
+
+With npm:
 
 ```bash
-# Via NPM.
 $ npm install @globalbrain/sefirot
+```
 
-# Via Yarn.
+Or with Yarn:
+
+```bash
 $ yarn add @globalbrain/sefirot
 ```
 
-Also, Sefirot is written in TypeScript, and uses Composition API. Make sure your build system supports both of them.
+Sefirot is written in TypeScript and uses the Composition API. Ensure your build system is capable of supporting both.
 
-To begin using the components, you should directly import them from `lib` directory under the Sefirot package.
+## Using Components
 
-```html
+To begin using the components, you should import them directly from `@globalbrain/sefirot/lib/components`.
+
+```vue
 <template>
   <div>
     <SButton label="BUTTON" />
@@ -38,20 +44,25 @@ export default defineComponent({
 </script>
 ```
 
-By design, Sefirot doesn't ship with pre-built files, so you must compile the code in your project. Please follow the following instruction to set up your build system.
+Sefirot doesn't ship with pre-built files by design, so you must compile the code in your project. Please follow the instructions below to configure your build system appropriately.
 
-Sefirot assumes you have your CSS placed at `@/assets/styles` directory. Make sure to copy styles to your project on the same location. To copy CSS files, simply run the following command. The destination directly (`@`) should depend on your project setup.
+## Build Configuration
+
+Sefirot assumes you have your CSS placed in the `@/assets/styles` directory. Make sure to copy Sefirot styles to your project to the exact location.
+
+To copy CSS files, run the following command:
 
 ```bash
 $ cp ./node_modules/@globalbrain/sefirot/lib/assets/styles ./assets/
 ```
 
-To compile Vue Components, you must have appropriate build settings. For example, in [Nuxt.js](https://nuxtjs.org/), you should define the following settings at `nuxt.config.js`. In addition, Sefirot uses postcss plugins, `postcss-nested` and `postcss-custom-properties`. Make sure to define them in your postcss config as well. And the last thing, don't forget to include base bootstrapping global CSS as well.
+Sefirot uses postcss, and requires some plugins to work – namely [postcss-nested](https://github.com/postcss/postcss-nested) and [postcss-custom-properties](https://github.com/postcss/postcss-custom-properties). Ensure these are installed and included in your build config.
+
+For example, using [Nuxt.js](https://nuxtjs.org/), you should have in place the following config options:
 
 ```ts
-const config: Configuration = {
-  // ...
-
+// nuxt.config.ts
+{
   build: {
     transpile: ['@globalbrain/sefirot'],
 
@@ -64,71 +75,36 @@ const config: Configuration = {
   },
 
   css: ['@/assets/styles/bootstrap']
-
-  // ...
 }
 ```
 
-## Easier Component Import
+## Shorten Import Statements
 
-If you think importing components from `@globalbrain/sefirot/lib` is too long to type, you can set up an alias to reduce the boilerplate. Again, this is an example set up on `nuxt.config.js`.
+Writing lengthy import statements can be considered counter-productive. To reduce boilerplate and lengthy import statements, you can set up a Webpack alias.
+
+For example, you can configure an alias to go from this:
 
 ```ts
-const config: Configuration = {
-  // ...
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+```
 
+To this:
+
+```ts
+import SButton from 'sefirot/components/SButton.vue'
+```
+
+For example, using Nuxt.js, you can configure an alias by extending the Webpack config:
+
+```ts
+// nuxt.config.ts
+{
   build: {
-    // Alias the package path.
-    extend (config) {
-      if (config.resolve && config.resolve.alias) {
+    extend(config) {
+      if (config.resolve?.alias) {
         config.resolve.alias.sefirot = '@globalbrain/sefirot/lib'
-      }
-    },
-
-    transpile: ['@globalbrain/sefirot'],
-
-    postcss: {
-      plugins: {
-        'postcss-nested': {},
-        'postcss-custom-properties': {},
       }
     }
   }
-
-  // ...
 }
 ```
-
-With the above setting,  you can import components from `sefirot`.
-
-```html
-<template>
-  <div>
-    <SButton label="BUTTON" />
-  </div>
-</template>
-
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-import SButton from 'sefirot/components/SButton.vue'
-
-export default defineComponent({
-  components: {
-    SButton
-  }
-})
-</script>
-```
-</template>
-
-<script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
-
-export default defineComponent({
-  head: {
-    title: 'Getting Started'
-  },
-
-  scrollToTop: true
-})
-</script>

@@ -6,10 +6,11 @@ Dialogs inform users about a task and can contain critical information, require 
 <StoryDialogsShowcase />
 </template>
 
-<script>
-import StoryDialogsShowcase from '@/components/StoryDialogsShowcase'
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import StoryDialogsShowcase from '@/components/StoryDialogsShowcase.vue'
 
-export default {
+export default defineComponent({
   components: {
     StoryDialogsShowcase
   },
@@ -19,5 +20,5 @@ export default {
   head: {
     title: 'Modals: Dialog'
   }
-}
+})
 </script>
