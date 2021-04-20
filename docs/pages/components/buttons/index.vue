@@ -92,49 +92,49 @@ export default defineComponent({
       props: [
         {
           name: 'label',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The label text for the button.'
         },
         {
           name: 'tag',
-          type: 'String',
+          type: 'string',
           required: false,
           default: "'button'",
           description: 'The tag for the button. It can be any valid HTML tag including `router-link` and `nuxt-link`.'
         },
         {
           name: 'to',
-          type: 'String',
+          type: 'string',
           required: false,
           default: "'/'",
           description: 'The `to` prop for the `nuxt-link` tag. This prop is only useful when `tag` is set to `nuxt-link`.'
         },
         {
           name: 'type',
-          type: 'String',
+          type: "'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'",
           required: false,
           default: "'primary'",
-          description: "The type variant of the button. Available types are: `'primary'`, `'secondary'`, `'tertiary'`, `'text'`, and `'mute'`."
+          description: 'The type variant of the button.'
         },
         {
           name: 'mode',
-          type: 'String',
+          type: "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
           required: false,
           default: "'neutral'",
-          description: "The mode variant of the button. Available modes are: `'neutral'`, `'info'`, `'success'`, `'warning'`, and `'danger'`."
+          description: 'The mode variant of the button.'
         },
         {
           name: 'size',
-          type: 'String',
+          type: "'mini' | 'small' | 'medium' | 'large' | 'jumbo'",
           required: false,
           default: "'medium'",
-          description: "The size variant for the button. Available sizes are: `'mini'`, `'small'`, `'medium'`, `'large'`, and `'jumbo'`"
+          description: 'The size variant for the button.'
         },
         {
           name: 'rounded',
-          type: 'Boolean',
+          type: 'boolean',
           required: false,
           default: 'false',
           description: 'Applies a border radius to the button.'
@@ -148,21 +148,21 @@ export default defineComponent({
         },
         {
           name: 'block',
-          type: 'Boolean',
+          type: 'boolean',
           required: false,
           default: 'false',
           description: 'Applies `display: block` to the button.'
         },
         {
           name: 'inverse',
-          type: 'Boolean',
+          type: 'boolean',
           required: false,
           default: 'false',
           description: 'Inverse the button theme.'
         },
         {
           name: 'loading',
-          type: 'Boolean',
+          type: 'boolean',
           required: false,
           default: 'false',
           description: 'Display the loading indicator.'
