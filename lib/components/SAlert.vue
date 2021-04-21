@@ -1,56 +1,51 @@
 <template>
-  <SModalBase :name="name" :closable="false">
-    <div class="SAlert" :class="[type]">
-      <SCard :collapsable="false" :depth="3">
-        <div class="container">
-          <div class="icon">
-            <component :is="icon" class="icon-svg" />
-          </div>
+  <div class="SAlert" :class="[type]">
+    <SCard :collapsable="false" :depth="3">
+      <div class="container">
+        <div class="icon">
+          <component :is="icon" class="icon-svg" />
+        </div>
 
-          <div class="content">
-            <p class="title">{{ title }}</p>
-            <p class="text">{{ text }}</p>
+        <div class="content">
+          <p class="title">{{ title }}</p>
+          <p class="text">{{ text }}</p>
 
-            <div class="actions">
-              <div v-for="(action, index) in actions" :key="index" class="action">
-                <SButton
-                  size="small"
-                  :type="action.type"
-                  :mode="action.mode"
-                  :icon="action.icon"
-                  :label="action.label"
-                  @click="action.callback"
-                />
-              </div>
+          <div class="actions">
+            <div v-for="(action, index) in actions" :key="index" class="action">
+              <SButton
+                size="small"
+                :type="action.type"
+                :mode="action.mode"
+                :icon="action.icon"
+                :label="action.label"
+                @click="action.callback"
+              />
             </div>
           </div>
         </div>
-      </SCard>
-    </div>
-  </SModalBase>
+      </div>
+    </SCard>
+  </div>
 </template>
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Action, AlertMode } from '../composables/Alert'
+import { Action, AlertMode, AlertModes } from '../composables/Alert'
 import SIconInfo from './icons/SIconInfo.vue'
 import SIconCheckCircle from './icons/SIconCheckCircle.vue'
 import SIconWarning from './icons/SIconWarning.vue'
 import SIconXCircle from './icons/SIconXCircle.vue'
 import SButton from './SButton.vue'
 import SCard from './SCard.vue'
-import SModalBase from './SModalBase.vue'
 
 export default defineComponent({
   components: {
     SButton,
-    SCard,
-    SModalBase
+    SCard
   },
 
   props: {
-    type: { type: String as PropType<AlertMode>, required: true },
-    name: { type: String, required: true },
+    type: { type: String as PropType<AlertMode>, default: AlertModes.Info },
     title: { type: String, default: null },
     text: { type: String, default: null },
     actions: { type: Array as PropType<Action[]>, default: () => [] }
@@ -59,13 +54,13 @@ export default defineComponent({
   setup(props) {
     const icon = computed(() => {
       switch (props.type) {
-        case 'info':
+        case AlertModes.Info:
           return SIconInfo
-        case 'success':
+        case AlertModes.Success:
           return SIconCheckCircle
-        case 'warning':
+        case AlertModes.Warning:
           return SIconWarning
-        case 'danger':
+        case AlertModes.Danger:
           return SIconXCircle
       }
     })
@@ -86,7 +81,7 @@ export default defineComponent({
   max-width: 512px;
 
   @media (min-width: 544px) {
-    margin: 96px auto;
+    margin: 64px auto;
   }
 }
 

@@ -11,39 +11,23 @@
         :closable="item.options && item.options.closable"
         @close="close"
       />
-
-  <!--     <template v-for="dialog in dialogs">
-        <SDialog :key="dialog.name" :name="dialog.name" v-bind="dialog.data" />
-      </template>
-
-      <template v-for="alert in alerts">
-        <SAlert :key="alert.name" :name="alert.name" v-bind="alert.data" />
-      </template>
-
-      <div ref="el" class="modal-content" :class="{ show }">
-        <portal-target name="modal" multiple />
-      </div> -->
     </div>
   </transition>
 </template>
 
 <script lang="ts">
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { defineComponent, ref, computed, watch } from '@vue/composition-api'
+import { useRoute } from '../composables/Router'
 import { useStore } from '../composables/Store'
-// import { useRoute } from '../composables/Router'
 import SModal from './SModal.vue'
-// import SDialog from './SDialog.vue'
-// import SAlert from './SAlert.vue'
 
 export default defineComponent({
   components: {
     SModal
-    // SDialog,
-    // SAlert
   },
 
   setup() {
+    const route = useRoute()
     const store = useStore()
 
     const items = computed(() => store.state.modal.items)
@@ -57,8 +41,14 @@ export default defineComponent({
         : setTimeout(() => { isActive.value = false }, 250)
     })
 
+    watch(route, closeAll)
+
     function close() {
       store.dispatch('modal/close')
+    }
+
+    function closeAll() {
+      store.dispatch('modal/closeAll')
     }
 
     return {
@@ -67,57 +57,6 @@ export default defineComponent({
       isActive,
       close
     }
-
-    // const route = useRoute()
-
-    // const el = ref<Element | null>(null)
-
-    // const show = ref(false)
-
-    // const active = computed(() => store.state.modal.history.length > 0)
-    // const current = computed(() => store.state.modal.name)
-
-    // const dialogs = computed(() => {
-    //   return store.state.modal.history.filter(h => h.name.startsWith('dialog'))
-    // })
-
-    // const alerts = computed(() => {
-    //   return store.state.modal.history.filter(h => h.name.startsWith('alert'))
-    // })
-
-    // watch(active, (value) => { value ? open() : close() })
-
-    // watch(current, () => {
-    //   setTimeout(() => { el.value && el.value.scrollTo(0, 0) }, 250)
-    // })
-
-    // watch(route, () => { store.dispatch('modal/close') })
-
-    // function open(): void {
-    //   show.value = true
-    //   lock()
-    // }
-
-    // function close(): void {
-    //   show.value = false
-    //   release()
-    // }
-
-    // function lock(): void {
-    //   el.value && disableBodyScroll(el.value, { reserveScrollBarGap: true })
-    // }
-
-    // function release(): void {
-    //   el.value && el.value.scrollTo(0, 0)
-    //   clearAllBodyScrollLocks()
-    // }
-
-    // return {
-    //   el,
-    //   show,
-    //   dialogs,
-    //   alerts
-    // }
   }
 })
 </script>

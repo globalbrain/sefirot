@@ -9,10 +9,6 @@
       </div>
     </div>
 
-    <div v-if="isTypeProgress" class="progress">
-      <SProgressBar :now="progress.now" :max="progress.max" />
-    </div>
-
     <div v-if="actions.length > 0" class="actions">
       <div v-for="(action, index) in actions" :key="index" class="action">
         <SButton
@@ -28,22 +24,18 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { DialogType } from '../composables/Dialog'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SButton from './SButton.vue'
-import SProgressBar from './SProgressBar.vue'
-
-type Type = 'confirm' | 'loading' | 'progress'
-type Action = 'text' | 'mute'
 
 export default defineComponent({
   components: {
     SIconPreloaderDark,
-    SButton,
-    SProgressBar
+    SButton
   },
 
   props: {
-    type: { type: String as PropType<Type>, required: true },
+    type: { type: String as PropType<DialogType>, default: 'confirm' },
     title: { type: String, default: null },
     text: { type: String, default: null },
     progress: { type: Object, default: () => ({}) },
@@ -52,16 +44,14 @@ export default defineComponent({
 
   setup(props) {
     const isTypeLoading = computed(() => props.type === 'loading')
-    const isTypeProgress = computed(() => props.type === 'progress')
     const isLoadOnly = computed(() => isTypeLoading.value && !props.title && !props.text)
 
-    function getActionType(value?: Action): Action {
+    function getActionType(value?: 'text' | 'mute'): 'text' | 'mute' {
       return value !== 'mute' ? 'text' : 'mute'
     }
 
     return {
       isTypeLoading,
-      isTypeProgress,
       isLoadOnly,
       getActionType
     }

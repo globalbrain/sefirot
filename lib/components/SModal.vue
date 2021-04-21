@@ -1,11 +1,11 @@
 <template>
   <transition name="fade" :duration="250" appear>
-    <div class="SModal" @click="closeIfClosable">
+    <div ref="el" class="SModal" @click="closeIfClosable">
       <transition name="fade">
-        <div v-show="show" class="SModal-content" :style="contentStyles" >
+        <div v-show="show" class="SModal-content" :style="contentStyles">
           <component
-            :if="resolvedComponent"
             :is="resolvedComponent"
+            :if="resolvedComponent"
             v-bind="data"
             @close="close"
           />
@@ -13,41 +13,36 @@
       </transition>
     </div>
   </transition>
-<!--     <template v-if="mount">
-      <transition name="fade" mode="out-in" appear>
-        <div v-show="show" :key="name" class="SModalBase" :class="{ first }" @click="close">
-          <slot />
-        </div>
-      </transition>
-    </template> -->
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import { defineComponent, ref, computed, onMounted, onUnmounted } from '@vue/composition-api'
 import { SyntheticMouseEvent } from '../types/Utils'
-import { useStore } from '../composables/Store'
 
 export default defineComponent({
   props: {
-    component: null,
+    component: { type: [Object, Function], default: () => ({}) },
     data: { type: Object, default: () => ({}) },
     show: { type: Boolean, required: true },
     width: { type: String, default: 'auto' },
     closable: { type: Boolean, default: true }
-    // name: { type: String, required: true },
-    // closable: { type: Boolean, default: true }
   },
 
   setup(props, { emit }) {
+    const el = ref<Element | null>(null)
+    const resolvedComponent = ref(null)
+
+    props.component instanceof Function
+      ? props.component().then((module: any) => { resolvedComponent.value = module.default })
+      : (resolvedComponent.value = props.component)
+
     const contentStyles = computed(() => ({
       maxWidth: props.width
     }))
 
-    const resolvedComponent = ref(null)
-
-    props.component instanceof Function
-      ? props.component().then(module => { resolvedComponent.value = module.default })
-      : (resolvedComponent.value = props.component)
+    onMounted(lock)
+    onUnmounted(release)
 
     function close() {
       emit('close')
@@ -56,7 +51,7 @@ export default defineComponent({
     function closeIfClosable(e: SyntheticMouseEvent): void {
       if (props.closable) {
         if (!isDescendant(e.target)) {
-          emit('close')
+          close()
         }
       }
     }
@@ -71,47 +66,21 @@ export default defineComponent({
       return parent && parent.contains(el)
     }
 
+    function lock(): void {
+      disableBodyScroll(el.value!, { reserveScrollBarGap: true })
+    }
+
+    function release(): void {
+      enableBodyScroll(el.value!)
+    }
+
     return {
+      el,
       contentStyles,
       resolvedComponent,
       close,
       closeIfClosable
     }
-
-    // const store = useStore()
-
-    // const first = computed(() => store.state.modal.first)
-    // const mount = computed(() => store.state.modal.history.some(h => h.name === props.name))
-    // const show = computed(() => props.name === store.state.modal.name)
-
-    // function close(e: SyntheticMouseEvent): void {
-    //   if (props.closable) {
-    //     if (!isDescendant(e.target)) {
-    //       store.dispatch('modal/close')
-    //     }
-    //   }
-    // }
-
-    // function isDescendant(el: Element): boolean {
-    //   if (el.classList && el.classList.contains('SModalBase')) {
-    //     return false
-    //   }
-
-    //   const parent = document.getElementsByClassName('modal-content')[0]
-
-    //   if (parent && parent.contains(el)) {
-    //     return true
-    //   }
-
-    //   return false
-    // }
-
-    // return {
-    //   first,
-    //   mount,
-    //   show,
-    //   close
-    // }
   }
 })
 </script>
