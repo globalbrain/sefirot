@@ -2,7 +2,7 @@
   <transition name="fade" :duration="250" appear>
     <div class="SModal" @click="closeIfClosable">
       <transition name="fade">
-        <div v-show="show" class="content" :style="contentStyles" @click.stop>
+        <div v-show="show" class="SModal-content" :style="contentStyles" >
           <component
             :if="resolvedComponent"
             :is="resolvedComponent"
@@ -53,8 +53,22 @@ export default defineComponent({
       emit('close')
     }
 
-    function closeIfClosable() {
-      props.closable && close()
+    function closeIfClosable(e: SyntheticMouseEvent): void {
+      if (props.closable) {
+        if (!isDescendant(e.target)) {
+          emit('close')
+        }
+      }
+    }
+
+    function isDescendant(el: Element): boolean {
+      if (el.classList && el.classList.contains('SModal')) {
+        return false
+      }
+
+      const parent = document.getElementsByClassName('SModal-content')[0]
+
+      return parent && parent.contains(el)
     }
 
     return {
@@ -121,26 +135,31 @@ export default defineComponent({
   }
 }
 
-.SModal.fade-enter-active .content,
-.SModal.fade-leave-active .content,
-.content.fade-enter-active,
-.content.fade-leave-active {
+.SModal.fade-enter-active .SModal-content,
+.SModal.fade-leave-active .SModal-content,
+.SModal-content.fade-enter-active,
+.SModal-content.fade-leave-active {
   transition: opacity .25s, transform .25s;
 }
 
-.SModal.fade-enter .content,
-.content.fade-enter {
+.SModal.fade-enter-active .SModal-content,
+.SModal-content.fade-enter-active {
+  transition-delay: .15s;
+}
+
+.SModal.fade-enter .SModal-content,
+.SModal-content.fade-enter {
   opacity: 0;
   transform: translateY(8px);
 }
 
-.SModal.fade-leave-to .content,
-.content.fade-leave-to {
+.SModal.fade-leave-to .SModal-content,
+.SModal-content.fade-leave-to {
   opacity: 0;
   transform: translateY(-8px);
 }
 
-.content {
+.SModal-content {
   margin: 0 auto;
   transition: opacity .25s, transform .25s;
 }

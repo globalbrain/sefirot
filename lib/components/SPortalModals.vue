@@ -144,21 +144,4 @@ export default defineComponent({
 .SPortalModals.fade-leave-active {
   opacity: 0;
 }
-
-.modal-content {
-  display: none;
-}
-
-.modal-content.show {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: var(--z-index-modal);
-  display: block;
-  height: 100%;
-  overflow-y: auto;
-  transition: all .25s;
-}
 </style>
