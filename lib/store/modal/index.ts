@@ -61,7 +61,7 @@ export const mutations: MutationTree<State> = {
   push(state: State, item: Item): void {
     state.items.push({
       ...item,
-      data: shallowReactive(item.data),
+      data: shallowReactive(item.data ?? {}),
       component: markRaw(item.component)
     })
   },
