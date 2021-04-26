@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase title="With Icon">
+<StoryBase>
   <div class="list">
     <div class="item">
       <SButton :icon="SIconImage" />

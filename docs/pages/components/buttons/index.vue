@@ -7,7 +7,7 @@ Buttons allow users to take actions, and make choices, with a single tap.
 
 ## Sizes
 
-Button has many sizes, `mini`, `small`, `medium`, `large`, and `jumbo`. You can control the sizes through `size` prop. The default size is `medium`.
+Buttons can appear in many different sizes. By default, buttons will be medium sized.
 
 <StoryButtonEXMini />
 <StoryButtonEXSmall />
@@ -15,31 +15,33 @@ Button has many sizes, `mini`, `small`, `medium`, `large`, and `jumbo`. You can 
 <StoryButtonEXLarge />
 <StoryButtonEXJumbo />
 
-## Rounded Corner
+## Rounded
 
-By setting `rounded` prop to `true`, you'll get the rounded button.
+Change the appearance of a button with rounded corners.
 
 <StoryButtonEXRounded />
 
 ## Modes
 
-The button comes with various colors, and you can control it through `mode` prop. Available values are `neutral`, `info`, `success`, `warning`, and `danger`.
+Control the color theme of a button.
 
 <StoryButtonEXModes />
 
-## Block Size
+## Block
 
-By default, buttons are displayed as `inline-block`. By passing a `block` prop, the button becomes a block-level element. Useful for controlling button sizes.
+By default, buttons will display as `inline-block`. The `block` prop transforms a button to a block-level element.
 
 <StoryButtonEXBlock />
 
-## With Icon
+## Icon
 
-You can also prepend icon by passing in Vue Component to the `icon` prop. The button can also be an icon-only button.
+Prepend a button with an icon or use the icon as its only content by omitting `label`.
 
 <StoryButtonEXIcon />
 
 ## Loading State
+
+Display a loading indicator. The indicator icon will auto-adjust its contrast depending on the `mode`, `type` and `inverse` props.
 
 <StoryButtonEXLoadingState />
 
@@ -99,71 +101,78 @@ export default defineComponent({
           name: 'tag',
           type: 'string',
           required: false,
-          default: '\'button\'',
-          description: 'The tag for the button. It can be any valid html tag including `nuxt-link`.'
+          default: "'button'",
+          description: 'The tag for the button. It can be any valid HTML tag including `router-link` and `nuxt-link`.'
         },
         {
           name: 'to',
           type: 'string',
           required: false,
-          default: '\'/\'',
+          default: "'/'",
           description: 'The `to` prop for the `nuxt-link` tag. This prop is only useful when `tag` is set to `nuxt-link`.'
         },
         {
           name: 'type',
-          type: 'string',
+          type: "'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'",
           required: false,
-          default: '\'primary\'',
-          description: 'The type of the button. Available types are: `primary`, `secondary`, `tertiary`, `text`, and `mute`.'
+          default: "'primary'",
+          description: 'The type variant of the button.'
         },
         {
           name: 'mode',
-          type: 'string',
+          type: "'neutral' | 'info' | 'success' | 'warning' | 'danger'",
           required: false,
-          default: '\'neutral\'',
-          description: 'The mode of the button. Available modes are: `neutral`, `info`, `success`, `warning`, and `danger`.'
+          default: "'neutral'",
+          description: 'The mode variant of the button.'
         },
         {
           name: 'size',
           type: "'mini' | 'small' | 'medium' | 'large' | 'jumbo'",
           required: false,
-          default: '\'medium\'',
-          description: 'The size of the button.'
+          default: "'medium'",
+          description: 'The size variant for the button.'
+        },
+        {
+          name: 'rounded',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Applies a border radius to the button.'
         },
         {
           name: 'icon',
           type: 'VueComponent',
           required: false,
           default: 'null',
-          description: 'Adds given Vue Component as an icon for the button.'
+          description: 'The icon component to display in the button content.'
         },
         {
           name: 'block',
           type: 'boolean',
           required: false,
           default: 'false',
-          description: 'Apply `display: block` to the button.'
+          description: 'Applies `display: block` to the button.'
         },
         {
           name: 'inverse',
           type: 'boolean',
           required: false,
           default: 'false',
-          description: 'Inverse button theme.'
+          description: 'Inverse the button theme.'
         },
         {
           name: 'loading',
           type: 'boolean',
           required: false,
           default: 'false',
-          description: 'Show loading indicator.'
+          description: 'Display the loading indicator.'
         }
       ],
 
       events: [
         {
           name: 'click',
-          description: 'Fires when an user clicks the button.'
+          description: 'Emitted when the button is clicked.'
         }
       ]
     })

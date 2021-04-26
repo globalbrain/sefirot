@@ -1,5 +1,5 @@
 <template lang="md">
-<StoryBase title="Loading State">
+<StoryBase>
   <div class="list">
     <div class="item">
       <SButton label="START LOAD" :loading="state.load1" @click="load('load1')" />
@@ -61,7 +61,7 @@ export default defineComponent({
     function load(target: keyof typeof state): void {
       state[target] = true
 
-      setTimeout(() => { state[target] = false }, 5000)
+      setTimeout(() => (state[target] = false), 3000)
     }
 
     return {
@@ -109,7 +109,7 @@ export default defineComponent({
     function load(target: keyof typeof state): void {
       state[target] = true
 
-      setTimeout(() => { state[target] = false }, 5000)
+      setTimeout(() => (state[target] = false), 3000)
     }
 
     return {
