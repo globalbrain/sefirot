@@ -1,3 +1,9 @@
+# [0.51.0](https://github.com/globalbrain/sefirot/compare/v0.50.0...v0.51.0) (2021-04-26)
+
+### Features
+
+* **modal:** update how modal works ([#64](https://github.com/globalbrain/sefirot/issues/64)) ([6b23406](https://github.com/globalbrain/sefirot/commit/6b234068c1cfeb8ba1868122cfbb894a4eafc112))
+
 # [0.50.0](https://github.com/globalbrain/sefirot/compare/v0.49.0...v0.50.0) (2021-04-15)
 
 ### Features
