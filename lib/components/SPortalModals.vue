@@ -1,88 +1,61 @@
 <template>
-  <div class="SPortalModals">
-    <transition name="fade">
-      <div v-if="show" class="backdrop" />
-    </transition>
-
-    <template v-for="dialog in dialogs">
-      <SDialog :key="dialog.name" :name="dialog.name" v-bind="dialog.data" />
-    </template>
-
-    <template v-for="alert in alerts">
-      <SAlert :key="alert.name" :name="alert.name" v-bind="alert.data" />
-    </template>
-
-    <div ref="el" class="modal-content" :class="{ show }">
-      <portal-target name="modal" multiple />
+  <transition name="fade">
+    <div v-if="isActive" class="SPortalModals">
+      <SModal
+        v-for="(item, index) in items"
+        :key="index"
+        :show="index === items.length - 1"
+        :component="item.component"
+        :data="item.data"
+        :width="item.options && item.options.width"
+        :closable="item.options && item.options.closable"
+        @close="close"
+      />
     </div>
-  </div>
+  </transition>
 </template>
 
 <script lang="ts">
-import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { defineComponent, ref, computed, watch } from '@vue/composition-api'
-import { useStore } from '../composables/Store'
 import { useRoute } from '../composables/Router'
-import SDialog from './SDialog.vue'
-import SAlert from './SAlert.vue'
+import { useStore } from '../composables/Store'
+import SModal from './SModal.vue'
 
 export default defineComponent({
   components: {
-    SDialog,
-    SAlert
+    SModal
   },
 
   setup() {
-    const store = useStore()
     const route = useRoute()
+    const store = useStore()
 
-    const el = ref<Element | null>(null)
+    const items = computed(() => store.state.modal.items)
+    const hasItem = computed(() => items.value.length > 0)
 
-    const show = ref(false)
+    const isActive = ref(false)
 
-    const active = computed(() => store.state.modal.history.length > 0)
-    const current = computed(() => store.state.modal.name)
-
-    const dialogs = computed(() => {
-      return store.state.modal.history.filter(h => h.name.startsWith('dialog'))
+    watch(hasItem, (value) => {
+      value
+        ? (isActive.value = true)
+        : setTimeout(() => { isActive.value = false }, 250)
     })
 
-    const alerts = computed(() => {
-      return store.state.modal.history.filter(h => h.name.startsWith('alert'))
-    })
+    watch(route, closeAll)
 
-    watch(active, (value) => { value ? open() : close() })
-
-    watch(current, () => {
-      setTimeout(() => { el.value && el.value.scrollTo(0, 0) }, 250)
-    })
-
-    watch(route, () => { store.dispatch('modal/close') })
-
-    function open(): void {
-      show.value = true
-      lock()
+    function close() {
+      store.dispatch('modal/close')
     }
 
-    function close(): void {
-      show.value = false
-      release()
-    }
-
-    function lock(): void {
-      el.value && disableBodyScroll(el.value, { reserveScrollBarGap: true })
-    }
-
-    function release(): void {
-      el.value && el.value.scrollTo(0, 0)
-      clearAllBodyScrollLocks()
+    function closeAll() {
+      store.dispatch('modal/closeAll')
     }
 
     return {
-      el,
-      show,
-      dialogs,
-      alerts
+      items,
+      hasItem,
+      isActive,
+      close
     }
   }
 })
@@ -91,7 +64,7 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.backdrop {
+.SPortalModals {
   position: fixed;
   top: 0;
   right: 0;
@@ -99,33 +72,15 @@ export default defineComponent({
   left: 0;
   z-index: var(--z-index-backdrop);
   background-color: rgba(0, 0, 0, .8);
-  opacity: 1;
 }
 
-.backdrop.fade-enter-active,
-.backdrop.fade-leave-active {
+.SPortalModals.fade-enter-active,
+.SPortalModals.fade-leave-active {
   transition: opacity .25s;
 }
 
-.backdrop.fade-enter,
-.backdrop.fade-leave-active {
+.SPortalModals.fade-enter,
+.SPortalModals.fade-leave-active {
   opacity: 0;
-}
-
-.modal-content {
-  display: none;
-}
-
-.modal-content.show {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: var(--z-index-modal);
-  display: block;
-  height: 100%;
-  overflow-y: auto;
-  transition: all .25s;
 }
 </style>

@@ -1,11 +1,16 @@
 import { ActionTree, ActionContext } from 'vuex'
+import { Alert } from '../../composables/Alert'
+import SAlert from '../../components/SAlert.vue'
 import { State as RootState } from '../Sefirot'
 
 export const actions: ActionTree<any, RootState> = {
-  open(context: ActionContext<any, RootState>, { type = 'info', title, text, actions }): void {
+  open(context: ActionContext<any, RootState>, alert: Alert): void {
     context.dispatch('modal/open', {
-      name: 'alert',
-      data: { type, title, text, actions }
+      component: SAlert,
+      data: alert,
+      options: {
+        closable: false
+      }
     }, { root: true })
   },
 

@@ -1,54 +1,41 @@
 <template>
-  <SModalBase :name="name" :closable="false">
-    <div class="SDialog" :class="{ 'load-only': isLoadOnly }">
-      <p v-if="title" class="title">{{ title }}</p>
-      <p v-if="text" class="text">{{ text }}</p>
+  <div class="SDialog" :class="{ 'load-only': isLoadOnly }">
+    <p v-if="title" class="title">{{ title }}</p>
+    <p v-if="text" class="text">{{ text }}</p>
 
-      <div v-if="isTypeLoading" class="load">
-        <div class="load-icon">
-          <SIconPreloaderDark class="load-svg" />
-        </div>
-      </div>
-
-      <div v-if="isTypeProgress" class="progress">
-        <SProgressBar :now="progress.now" :max="progress.max" />
-      </div>
-
-      <div v-if="actions.length > 0" class="actions">
-        <div v-for="(action, index) in actions" :key="index" class="action">
-          <SButton
-            size="small"
-            :type="getActionType(action.type)"
-            :label="action.label"
-            @click="action.callback"
-          />
-        </div>
+    <div v-if="isTypeLoading" class="load">
+      <div class="load-icon">
+        <SIconPreloaderDark class="load-svg" />
       </div>
     </div>
-  </SModalBase>
+
+    <div v-if="actions.length > 0" class="actions">
+      <div v-for="(action, index) in actions" :key="index" class="action">
+        <SButton
+          size="small"
+          :type="getActionType(action.type)"
+          :label="action.label"
+          @click="action.callback"
+        />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { DialogType } from '../composables/Dialog'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
 import SButton from './SButton.vue'
-import SProgressBar from './SProgressBar.vue'
-import SModalBase from './SModalBase.vue'
-
-type Dialog = 'loading' | 'progress'
-type Action = 'text' | 'mute'
 
 export default defineComponent({
   components: {
     SIconPreloaderDark,
-    SButton,
-    SProgressBar,
-    SModalBase
+    SButton
   },
 
   props: {
-    type: { type: String as PropType<Dialog>, required: true },
-    name: { type: String, required: true },
+    type: { type: String as PropType<DialogType>, default: 'confirm' },
     title: { type: String, default: null },
     text: { type: String, default: null },
     progress: { type: Object, default: () => ({}) },
@@ -57,16 +44,14 @@ export default defineComponent({
 
   setup(props) {
     const isTypeLoading = computed(() => props.type === 'loading')
-    const isTypeProgress = computed(() => props.type === 'progress')
     const isLoadOnly = computed(() => isTypeLoading.value && !props.title && !props.text)
 
-    function getActionType(value?: Action): Action {
+    function getActionType(value?: 'text' | 'mute'): 'text' | 'mute' {
       return value !== 'mute' ? 'text' : 'mute'
     }
 
     return {
       isTypeLoading,
-      isTypeProgress,
       isLoadOnly,
       getActionType
     }
@@ -83,10 +68,10 @@ export default defineComponent({
   padding: 16px 16px 8px;
   max-width: 392px;
   background-color: var(--modal-content-bg);
-  box-shadow: var(--shadow-depth-5);
+  box-shadow: var(--shadow-depth-3);
 
   @media (min-width: 424px) {
-    margin: 128px auto;
+    margin: 64px auto;
     padding: 24px 24px 16px;
   }
 }
@@ -112,7 +97,7 @@ export default defineComponent({
   }
 
   @media (min-width: 424px) {
-    margin: 160px auto;
+    margin: 128px auto;
   }
 }
 

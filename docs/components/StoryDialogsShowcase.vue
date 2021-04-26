@@ -4,7 +4,6 @@
     <div class="item"><SButton label="CONFIRM" @click="openDialog01" /></div>
     <div class="item"><SButton label="LOADING" @click="openDialog02" /></div>
     <div class="item"><SButton label="LOADING MESSAGE" @click="openDialog03" /></div>
-    <div class="item"><SButton label="PROGRESS" @click="openDialog04" /></div>
   </div>
 </StoryBase>
 
@@ -14,14 +13,13 @@
     <div class="item"><SButton label="CONFIRM" @click="openDialog01" /></div>
     <div class="item"><SButton label="LOADING" @click="openDialog02" /></div>
     <div class="item"><SButton label="LOADING MESSAGE" @click="openDialog03" /></div>
-    <div class="item"><SButton label="PROGRESS" @click="openDialog04" /></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 import { useStore } from '@globalbrain/sefirot/lib/composables/Store'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 export default defineComponent({
   components: {
@@ -30,8 +28,6 @@ export default defineComponent({
 
   setup() {
     const store = useStore()
-
-    let interval: any = null
 
     function openDialog01(): void {
       store.dispatch('dialog/open', {
@@ -62,32 +58,6 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog04(): void {
-      let now = 0
-
-      store.dispatch('dialog/open', {
-        type: 'progress',
-        title: 'The dialog title.',
-        text: 'This is the dialog message.',
-        progress: { now, max: 100 }
-      })
-
-      interval = setInterval(() => {
-        now = now + 2.125
-
-        if (now < 100) {
-          store.dispatch('dialog/update', {
-            progress: { now, max: 100 }
-          })
-
-          return
-        }
-
-        clearInterval(interval)
-        close()
-      }, 250)
-    }
-
     function close(): void {
       store.dispatch('modal/close')
     }
@@ -95,8 +65,7 @@ export default defineComponent({
     return {
       openDialog01,
       openDialog02,
-      openDialog03,
-      openDialog04
+      openDialog03
     }
   }
 })
@@ -131,8 +100,6 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
-    let interval: any = null
-
     function openDialog01(): void {
       store.dispatch('dialog/open', {
         title: 'The dialog title.',
@@ -162,32 +129,6 @@ export default defineComponent({
       setTimeout(close, 3000)
     }
 
-    function openDialog04(): void {
-      let now = 0
-
-      store.dispatch('dialog/open', {
-        type: 'progress',
-        title: 'The dialog title.',
-        text: 'This is the dialog message.',
-        progress: { now, max: 100 }
-      })
-
-      interval = setInterval(() => {
-        now = now + 2.125
-
-        if (now < 100) {
-          store.dispatch('dialog/update', {
-            progress: { now, max: 100 }
-          })
-
-          return
-        }
-
-        clearInterval(interval)
-        close()
-      }, 250)
-    }
-
     function close(): void {
       store.dispatch('modal/close')
     }
@@ -195,8 +136,7 @@ export default defineComponent({
     return {
       openDialog01,
       openDialog02,
-      openDialog03,
-      openDialog04
+      openDialog03
     }
   }
 })
