@@ -31,7 +31,7 @@ export default defineComponent({
 
   setup(props, { emit }) {
     const el = ref<Element | null>(null)
-    const resolvedComponent = ref(null)
+    const resolvedComponent = ref<any>(null)
 
     props.component instanceof Function
       ? props.component().then((module: any) => { resolvedComponent.value = module.default })
