@@ -8,11 +8,12 @@
     :help="help"
     :validation="validation"
   >
-    <div class="box">
+    <div class="box" tabindex="0">
       <select
         :id="name"
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
+        tabindex="-1"
         @change="emitChange"
       >
         <option
@@ -160,6 +161,11 @@ export default defineComponent({
     &:hover {
       border-color: var(--input-focus-border);
     }
+
+    &:focus:not(:focus-visible) {
+      border-color: var(--input-focus-border);
+      outline: 0;
+    }
   }
 }
 
@@ -169,6 +175,11 @@ export default defineComponent({
 
     &:hover {
       border-color: var(--input-focus-border);
+    }
+
+    &:focus:not(:focus-visible) {
+      border-color: var(--input-focus-border);
+      outline: 0;
     }
   }
 }
