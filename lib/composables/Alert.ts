@@ -1,5 +1,11 @@
 import { Values } from '../types/Utils'
 import { useStore } from './Store'
+import { useModalUid } from './Modal'
+
+export interface UseAlert {
+  open(alert: Alert): () => void
+  close(): void
+}
 
 export interface Alert {
   type?: AlertMode
@@ -25,15 +31,21 @@ export interface Action {
   callback(): void
 }
 
-export function useAlert(alert: Alert) {
+export function useAlert(): UseAlert {
   const store = useStore()
+  const uid = useModalUid()
 
-  function open(): void {
-    store.dispatch('alert/open', alert)
+  function open(alert: Alert) {
+    store.dispatch('alert/open', {
+      ...alert,
+      uid
+    })
+
+    return close
   }
 
-  function close(): void {
-    store.dispatch('alert/close')
+  function close() {
+    store.dispatch('alert/close', uid)
   }
 
   return {

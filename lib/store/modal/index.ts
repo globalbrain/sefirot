@@ -10,6 +10,7 @@ export interface Item {
   component: any
   data?: Record<string, any>
   options?: Options
+  uid?: number
 }
 
 export interface Options {
@@ -28,7 +29,12 @@ export const actions: ActionTree<State, RootState> = {
     context.commit('push', item)
   },
 
-  close(context: ActionContext<State, RootState>): void {
+  close(context: ActionContext<State, RootState>, uid?: number): void {
+    if (uid) {
+      context.commit('drop', uid)
+      return
+    }
+
     context.commit('pop')
   },
 
@@ -48,6 +54,10 @@ export const mutations: MutationTree<State> = {
 
   pop(state: State): void {
     state.items.pop()
+  },
+
+  drop(state: State, uid: number) {
+    state.items = state.items.filter(item => item.uid !== uid)
   },
 
   flush(state: State): void {

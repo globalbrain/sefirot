@@ -1,11 +1,17 @@
 import { ActionTree, ActionContext } from 'vuex'
-import { Alert } from '../../composables/Alert'
 import SAlert from '../../components/SAlert.vue'
+import { Alert } from '../../composables/Alert'
 import { State as RootState } from '../Sefirot'
 
+export type AlertPayload = Alert & { uid?: number }
+
 export const actions: ActionTree<any, RootState> = {
-  open(context: ActionContext<any, RootState>, alert: Alert): void {
+  open(context: ActionContext<any, RootState>, alert: AlertPayload): void {
+    const { uid } = alert
+    delete alert.uid
+
     context.dispatch('modal/open', {
+      uid,
       component: SAlert,
       data: alert,
       options: {
@@ -14,8 +20,8 @@ export const actions: ActionTree<any, RootState> = {
     }, { root: true })
   },
 
-  close(context: ActionContext<any, RootState>): void {
-    context.dispatch('modal/close', null, { root: true })
+  close(context: ActionContext<any, RootState>, uid?: number): void {
+    context.dispatch('modal/close', uid, { root: true })
   }
 }
 
