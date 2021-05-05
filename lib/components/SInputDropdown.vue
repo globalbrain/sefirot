@@ -9,7 +9,15 @@
     :validation="validation"
   >
     <div ref="container" class="SInputDropdown-container">
-      <div class="SInputDropdown-box" role="button" @click="handleOpen">
+      <div
+        class="SInputDropdown-box"
+        role="button"
+        tabindex="0"
+        @click="handleOpen"
+        @keydown.down.prevent
+        @keyup.enter="handleOpen"
+        @keyup.down="handleOpen"
+      >
         <div class="SInputDropdown-box-content">
           <SInputDropdownItem v-if="hasSelected" :item="selected" @remove="handleCallback" />
           <span v-else class="SInputDropdown-box-placeholder">{{ placeholder }}</span>
@@ -200,6 +208,11 @@ export default defineComponent({
     &:hover {
       border-color: var(--input-focus-border);
     }
+
+    &:focus:not(:focus-visible) {
+      border-color: var(--input-focus-border);
+      outline: 0;
+    }
   }
 }
 
@@ -209,6 +222,11 @@ export default defineComponent({
 
     &:hover {
       border-color: var(--input-focus-border);
+    }
+
+    &:focus:not(:focus-visible) {
+      border-color: var(--input-focus-border);
+      outline: 0;
     }
   }
 }

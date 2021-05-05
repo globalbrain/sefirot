@@ -8,11 +8,13 @@
     :help="help"
     :validation="validation"
   >
-    <div class="box">
+    <div class="box" :class="{ focus: isFocused }">
       <select
         :id="name"
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
+        @focus="focus"
+        @blur="blur"
         @change="emitChange"
       >
         <option
@@ -43,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
 import { SyntheticInputEvent } from '../types/Utils'
 import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
@@ -83,6 +85,8 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    const isFocused = ref(false)
+
     const classes = computed(() => ({
       medium: props.size === 'medium',
       mini: props.size === 'mini',
@@ -98,6 +102,14 @@ export default defineComponent({
       return option.value === props.value
     }
 
+    function focus() {
+      isFocused.value = true
+    }
+
+    function blur() {
+      isFocused.value = false
+    }
+
     function emitChange(e: SyntheticInputEvent): void {
       props.validation && props.validation.$touch()
 
@@ -107,9 +119,12 @@ export default defineComponent({
     }
 
     return {
+      isFocused,
       classes,
       isNotSelected,
       isSelectedOption,
+      focus,
+      blur,
       emitChange
     }
   }
@@ -157,7 +172,8 @@ export default defineComponent({
   .box {
     background-color: var(--input-filled-bg);
 
-    &:hover {
+    &:hover,
+    &.focus {
       border-color: var(--input-focus-border);
     }
   }
@@ -167,8 +183,14 @@ export default defineComponent({
   .box {
     border-color: var(--input-outlined-border);
 
-    &:hover {
+    &:hover,
+    &.focus {
       border-color: var(--input-focus-border);
+    }
+
+    &:focus:not(:focus-visible) {
+      border-color: var(--input-focus-border);
+      outline: 0;
     }
   }
 }
