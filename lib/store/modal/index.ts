@@ -8,9 +8,9 @@ export interface State {
 
 export interface Item {
   component: any
+  uid?: number
   data?: Record<string, any>
   options?: Options
-  uid?: number
 }
 
 export interface Options {
@@ -30,12 +30,7 @@ export const actions: ActionTree<State, RootState> = {
   },
 
   close(context: ActionContext<State, RootState>, uid?: number): void {
-    if (uid) {
-      context.commit('drop', uid)
-      return
-    }
-
-    context.commit('pop')
+    uid ? context.commit('drop', uid) : context.commit('pop')
   },
 
   closeAll(context: ActionContext<State, RootState>): void {

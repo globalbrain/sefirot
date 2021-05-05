@@ -4,8 +4,8 @@
       <SModal
         v-for="(item, index) in items"
         :key="index"
-        :show="index === items.length - 1"
         :uid="item.uid"
+        :show="index === items.length - 1"
         :component="item.component"
         :data="item.data"
         :width="item.options && item.options.width"

@@ -2,12 +2,12 @@ import { Values } from '../types/Utils'
 import { useStore } from './Store'
 import { useModalUid } from './Modal'
 
-export interface UseDialog {
-  open(dialog: Dialog): () => void
+export interface Dialog {
+  open(dialog: DialogOptions): () => void
   close(): void
 }
 
-export interface Dialog {
+export interface DialogOptions {
   type?: DialogType
   title?: string
   text?: string
@@ -27,11 +27,11 @@ export const DialogTypes = {
   Loading: 'loading'
 } as const
 
-export function useDialog(): UseDialog {
+export function useDialog(): Dialog {
   const store = useStore()
   const uid = useModalUid()
 
-  function open(dialog: Dialog) {
+  function open(dialog: DialogOptions) {
     store.dispatch('dialog/open', { ...dialog, uid })
 
     return close
@@ -41,5 +41,8 @@ export function useDialog(): UseDialog {
     store.dispatch('dialog/close', uid)
   }
 
-  return { open, close }
+  return {
+    open,
+    close
+  }
 }

@@ -1,12 +1,14 @@
 import { Item } from '../store/modal'
 import { useStore } from './Store'
 
-interface UseModal {
+interface Modal {
   open(item: Item): () => void
   close(): void
 }
 
-export function useModal(): UseModal {
+let modalUid = 0
+
+export function useModal(): Modal {
   const store = useStore()
   const uid = useModalUid()
 
@@ -22,8 +24,6 @@ export function useModal(): UseModal {
 
   return { open, close }
 }
-
-let modalUid = 0
 
 export function useModalUid(): number {
   return ++modalUid

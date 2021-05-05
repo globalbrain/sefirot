@@ -8,6 +8,7 @@ export type DialogPayload = Dialog & { uid?: number }
 export const actions: ActionTree<any, RootState> = {
   open(context: ActionContext<any, RootState>, dialog: DialogPayload): void {
     const { uid } = dialog
+
     delete dialog.uid
 
     context.dispatch('modal/open', {

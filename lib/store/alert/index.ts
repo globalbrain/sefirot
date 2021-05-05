@@ -8,6 +8,7 @@ export type AlertPayload = Alert & { uid?: number }
 export const actions: ActionTree<any, RootState> = {
   open(context: ActionContext<any, RootState>, alert: AlertPayload): void {
     const { uid } = alert
+
     delete alert.uid
 
     context.dispatch('modal/open', {
