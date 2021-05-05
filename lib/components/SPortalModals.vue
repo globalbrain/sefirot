@@ -4,12 +4,13 @@
       <SModal
         v-for="(item, index) in items"
         :key="index"
+        :uid="item.uid"
         :show="index === items.length - 1"
         :component="item.component"
         :data="item.data"
         :width="item.options && item.options.width"
         :closable="item.options && item.options.closable"
-        @close="close"
+        @close="uid => close(uid)"
       />
     </div>
   </transition>
@@ -43,8 +44,8 @@ export default defineComponent({
 
     watch(route, closeAll)
 
-    function close() {
-      store.dispatch('modal/close')
+    function close(uid: number) {
+      store.dispatch('modal/close', uid)
     }
 
     function closeAll() {

@@ -24,6 +24,7 @@ export default defineComponent({
   props: {
     component: { type: [Object, Function], default: () => ({}) },
     data: { type: Object, default: () => ({}) },
+    uid: { type: Number, default: null },
     show: { type: Boolean, required: true },
     width: { type: String, default: 'auto' },
     closable: { type: Boolean, default: true }
@@ -45,7 +46,7 @@ export default defineComponent({
     onUnmounted(release)
 
     function close() {
-      emit('close')
+      emit('close', props.uid)
     }
 
     function closeIfClosable(e: SyntheticMouseEvent): void {
