@@ -14,13 +14,27 @@
         :placeholder="options.search.placeholder"
         :value="options.search.value.value"
         @input="v => options.search.onInput(v)"
+        @down="focusFirstItem"
+        @escape="$emit('close')"
       />
     </div>
 
     <div class="container">
       <ul v-if="options.items.value.length > 0" class="list">
-        <li v-for="(item, index) in options.items.value" :key="index" class="item">
-          <SDropdownItem :selected="options.selected" :item="item" @click="onClick(item)" />
+        <li
+          v-for="(item, index) in options.items.value"
+          :key="index"
+          class="item"
+          tabindex="0"
+          @keydown.up.prevent
+          @keydown.down.prevent
+          @keyup.up.prevent="focusPrev"
+          @keyup.down.prevent="focusNext"
+          @keyup.enter="onClick(item)"
+          @keyup.escape="$emit('close')"
+          @click="onClick(item)"
+        >
+          <SDropdownItem :selected="options.selected" :item="item" />
         </li>
       </ul>
 
@@ -51,6 +65,19 @@ export default defineComponent({
   },
 
   setup(props, { emit }) {
+    function focusFirstItem(): void {
+      const el = document.querySelector('.SDropdown .item:first-child') as HTMLElement | null
+      el?.focus?.()
+    }
+
+    function focusPrev(event: any): void {
+      event.target.previousSibling?.focus()
+    }
+
+    function focusNext(event: any): void {
+      event.target.nextSibling?.focus()
+    }
+
     function onClick(item: Item): void {
       if (item.callback) {
         item.callback()
@@ -64,6 +91,9 @@ export default defineComponent({
     }
 
     return {
+      focusFirstItem,
+      focusPrev,
+      focusNext,
       onClick
     }
   }
@@ -123,8 +153,10 @@ export default defineComponent({
 }
 
 .item {
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--dropdown-item-hover-bg);
+    outline: none;
   }
 }
 

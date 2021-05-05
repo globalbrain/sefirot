@@ -50,4 +50,18 @@ describe('components/SInputSelect', () => {
     await option.setSelected()
     expect(validation.item.$isDirty.value).toBe(true)
   })
+
+  it('should toggle focus on `focus` and `blur` event', async () => {
+    const wrapper = createWrapper({
+      propsData: { value: 1 }
+    })
+
+    expect(wrapper.vm.isFocused).toBe(false)
+
+    await wrapper.find('.SInputSelect .select').trigger('focus')
+    expect(wrapper.vm.isFocused).toBe(true)
+
+    await wrapper.find('.SInputSelect .select').trigger('blur')
+    expect(wrapper.vm.isFocused).toBe(false)
+  })
 })

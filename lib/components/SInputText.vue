@@ -38,6 +38,8 @@
           @input="emitInput"
           @blur="emitBlur"
           @keypress.enter="emitEnter"
+          @keyup.down="$emit('down')"
+          @keyup.escape="$emit('escape')"
         >
 
         <div v-if="icon" class="icon" role="button" @click="focus">
