@@ -1,3 +1,10 @@
+# [0.52.0](https://github.com/globalbrain/sefirot/compare/v0.51.0...v0.52.0) (2021-05-07)
+
+### Features
+
+* **modal:** explicit modal toggling ([#66](https://github.com/globalbrain/sefirot/issues/66)) ([#67](https://github.com/globalbrain/sefirot/issues/67)) ([5a07160](https://github.com/globalbrain/sefirot/commit/5a07160824a7fcf51cd2dc41063afe0fd88595dd))
+* add tabindex to SInputSelent and SInputDropdown ([#65](https://github.com/globalbrain/sefirot/issues/65)) ([027f71c](https://github.com/globalbrain/sefirot/commit/027f71c89ba15fd488f410c7aec8319a03fc03f1))
+
 # [0.51.0](https://github.com/globalbrain/sefirot/compare/v0.50.0...v0.51.0) (2021-04-26)
 
 ### Features
