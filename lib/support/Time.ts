@@ -4,6 +4,6 @@ export function sleep(ms: number = 500): Promise<void> {
   })
 }
 
-export function delay(iterable: Promise<any>[], ms?: number): Promise<any[]> {
+export function delay<T extends Promise<any>>(iterable: T[], ms?: number): Promise<T[]> {
   return Promise.all([...iterable, sleep(ms)])
 }
