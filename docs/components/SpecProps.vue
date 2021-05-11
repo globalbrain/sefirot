@@ -3,23 +3,23 @@
     <div v-for="(prop, index) in props" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
-          <p class="specs-label">NAME</p>
+          <p class="specs-label">Name</p>
           <p class="specs-value">{{ prop.name }}</code></p>
         </div>
         <div class="specs-cell type">
-          <p class="specs-label">TYPE</p>
+          <p class="specs-label">Type</p>
           <p class="specs-value">{{ prop.type }}</p>
         </div>
         <div class="specs-cell required">
-          <p class="specs-label">REQUIRED</p>
+          <p class="specs-label">Required</p>
           <p class="specs-value">{{ prop.required ? 'true' : 'false' }}</p>
         </div>
         <div class="specs-cell default">
-          <p class="specs-label">DEFAULT</p>
+          <p class="specs-label">Default</p>
           <p class="specs-value">{{ prop.default }}</p>
         </div>
         <div class="specs-cell description">
-          <p class="specs-label">DESCRIPTION</p>
+          <p class="specs-label">Description</p>
           <p class="specs-value" v-html="$md.renderInline(prop.description)" />
         </div>
       </div>
@@ -48,10 +48,10 @@ export default defineComponent({
 
 .specs-row {
   border-bottom: 1px solid var(--c-divider-light);
-  padding-bottom: 24px;
+  padding-bottom: 20px;
 
   & + & {
-    padding-top: 20px;
+    padding-top: 19px;
   }
 }
 
@@ -70,17 +70,17 @@ export default defineComponent({
 .specs-label {
   flex-shrink: 0;
   margin: 0;
+  line-height: 20px;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-text-light-2);
 
   @media (min-width: 512px) {
-    width: 128px;
+    width: 96px;
   }
 }
 
 .specs-value {
-  flex-grow: 1;
   margin: 0;
   line-height: 20px;
   font-size: 14px;
@@ -94,13 +94,24 @@ export default defineComponent({
   font-size: 13px;
 }
 
+.specs-cell.type .specs-value,
+.specs-cell.required .specs-value,
+.specs-cell.default .specs-value {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 0 6px;
+  font-family: var(--font-family-mono);
+  font-weight: 500;
+  color: var(--c-info-light);
+  background-color: var(--c-white-mute);
+  word-break: break-all;
+}
+
 .specs-cell.name .specs-value {
   font-weight: 700;
 }
 
 .specs-cell.description .specs-value {
-  line-height: 24px;
-
   & >>> code {
     font-size: 13px;
   }

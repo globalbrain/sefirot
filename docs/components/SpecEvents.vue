@@ -3,11 +3,11 @@
     <div v-for="(event, index) in events" :key="index" class="specs-row">
       <div class="specs-record">
         <div class="specs-cell name">
-          <p class="specs-label">NAME</p>
+          <p class="specs-label">Name</p>
           <p class="specs-value">{{ event.name }}</p>
         </div>
         <div class="specs-cell description">
-          <p class="specs-label">DESCRIPTION</p>
+          <p class="specs-label">Description</p>
           <p class="specs-value" v-html="$md.renderInline(event.description)" />
         </div>
       </div>
@@ -36,10 +36,10 @@ export default defineComponent({
 
 .specs-row {
   border-bottom: 1px solid var(--c-divider-light);
-  padding-bottom: 24px;
+  padding-bottom: 20px;
 
   & + & {
-    padding-top: 20px;
+    padding-top: 19px;
   }
 }
 
@@ -58,12 +58,13 @@ export default defineComponent({
 .specs-label {
   flex-shrink: 0;
   margin: 0;
+  line-height: 20px;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-text-light-2);
 
   @media (min-width: 512px) {
-    width: 128px;
+    width: 96px;
   }
 }
 
@@ -81,8 +82,6 @@ export default defineComponent({
 }
 
 .specs-cell.description .specs-value {
-  line-height: 24px;
-
   & >>> code {
     font-size: 13px;
   }
