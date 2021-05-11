@@ -11,12 +11,14 @@
     :placeholder="placeholder"
     :text="text"
     :text-after="textAfter"
+    :action="action"
     :step="step"
     :validation="validation"
     :value="value"
     @input="emitInput"
     @blur="emitBlur"
     @enter="emitEnter"
+    @action="$emit('action')"
   >
     <template #before-help>
       <p v-if="helpFormat" class="help-text">
@@ -30,7 +32,7 @@
 import { defineComponent, computed, PropType } from '@vue/composition-api'
 import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
-import SInputText, { Size, Mode } from './SInputText.vue'
+import SInputText, { Size, Mode, Action } from './SInputText.vue'
 
 export default defineComponent({
   components: {
@@ -47,6 +49,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
+    action: { type: Object as PropType<Action>, default: null },
     step: { type: Number, default: 1 },
     helpFormat: { type: Boolean, default: false },
     value: { type: Number, default: null },

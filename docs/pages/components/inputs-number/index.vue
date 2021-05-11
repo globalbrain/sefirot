@@ -41,6 +41,13 @@ export default defineComponent({
     return useSpec({
       props: [
         {
+          name: 'action',
+          type: 'SInputText.Action',
+          required: false,
+          default: 'null',
+          description: 'The action to be prepened to the input. [See "Inputs: Text" for more details](./inputs-text#action).'
+        },
+        {
           name: 'size',
           type: "'medium' | 'mini'",
           required: false,

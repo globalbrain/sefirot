@@ -86,7 +86,7 @@ import SInputBase from './SInputBase.vue'
 export type Size = 'medium' | 'mini'
 export type Mode = 'filled' | 'outlined'
 
-interface Action {
+export interface Action {
   type?: 'button' | 'select'
   icon?: any
   text?: string
