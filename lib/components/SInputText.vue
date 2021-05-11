@@ -141,7 +141,7 @@ export default defineComponent({
     })
 
     const showClearButton = computed(() => {
-      return props.value !== null && props.value !== ''
+      return !props.disabled && props.value !== null && props.value !== ''
     })
 
     onMounted(() => {
@@ -531,6 +531,7 @@ export default defineComponent({
   opacity: 0;
   cursor: pointer;
   transition: opacity .25s;
+  pointer-events: none;
 
   &:hover .clear-svg {
     fill: var(--input-text);
@@ -538,6 +539,7 @@ export default defineComponent({
 
   &.show {
     opacity: 1;
+    pointer-events: initial;
   }
 }
 
