@@ -146,6 +146,10 @@ export default defineComponent({
   }
 }
 
+.SInputDate >>> .vc-popover-content-wrapper {
+  z-index: var(--z-index-popover);
+}
+
 .input {
   display: block;
   border: 1px solid transparent;
