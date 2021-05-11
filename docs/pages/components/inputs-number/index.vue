@@ -48,6 +48,13 @@ export default defineComponent({
           description: 'The action to be prepened to the input. [See "Inputs: Text" for more details](./inputs-text#action).'
         },
         {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the input.'
+        },
+        {
           name: 'size',
           type: "'medium' | 'mini'",
           required: false,

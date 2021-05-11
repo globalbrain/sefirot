@@ -34,6 +34,7 @@
           :type="type"
           :step="step"
           :placeholder="placeholder"
+          :disabled="disabled"
           :value="value"
           @input="emitInput"
           @blur="emitBlur"
@@ -116,6 +117,7 @@ export default defineComponent({
     textAfter: { type: String, default: null },
     step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
@@ -129,7 +131,8 @@ export default defineComponent({
       medium: props.size === 'medium',
       mini: props.size === 'mini',
       filled: props.mode === 'filled',
-      outlined: props.mode === 'outlined'
+      outlined: props.mode === 'outlined',
+      disabled: props.disabled
     }))
 
     const inputStyles = reactive({
@@ -371,6 +374,10 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
+
+  &.disabled .input {
+    background-color: var(--input-filled-bg-disabled);
+  }
 }
 
 .SInputText.outlined {
@@ -389,6 +396,21 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       background-color: var(--input-focus-bg);
     }
+  }
+
+  &.disabled .box:hover .input {
+    border-color: var(--input-outlined-border);
+  }
+
+  &.disabled .input {
+    background-color: var(--input-outlined-bg-disabled);
+  }
+}
+
+.SInputText.disabled {
+  .box:hover .input {
+    cursor: not-allowed;
+    border-color: transparent;
   }
 }
 

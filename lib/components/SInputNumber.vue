@@ -13,6 +13,7 @@
     :text-after="textAfter"
     :action="action"
     :step="step"
+    :disabled="disabled"
     :validation="validation"
     :value="value"
     @input="emitInput"
@@ -52,6 +53,7 @@ export default defineComponent({
     action: { type: Object as PropType<Action>, default: null },
     step: { type: Number, default: 1 },
     helpFormat: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
     value: { type: Number, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
