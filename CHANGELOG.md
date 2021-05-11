@@ -1,3 +1,15 @@
+# [0.53.0](https://github.com/globalbrain/sefirot/compare/v0.52.0...v0.53.0) (2021-05-11)
+
+### Bug Fixes
+
+* **input-date:** add z-index for popover of input-date ([#68](https://github.com/globalbrain/sefirot/issues/68)) ([09fbe6d](https://github.com/globalbrain/sefirot/commit/09fbe6d7bd95992818c36d82e0f8434f221a5914))
+* **support:** improve `Time.delay` typing ([c90a305](https://github.com/globalbrain/sefirot/commit/c90a3056ec86588208f34255b0fbea7aa2d1ab09))
+
+### Features
+
+* **input-number:** add action prop support ([3fe9a70](https://github.com/globalbrain/sefirot/commit/3fe9a70af808cea7e5e0033685474bb47ddd57bd))
+* **input-text:** add `disabled` feature ([#69](https://github.com/globalbrain/sefirot/issues/69)) ([8071b33](https://github.com/globalbrain/sefirot/commit/8071b337cf4584bf54c6306f20b4b4d0cd17b98b))
+
 # [0.52.0](https://github.com/globalbrain/sefirot/compare/v0.51.0...v0.52.0) (2021-05-07)
 
 ### Features
