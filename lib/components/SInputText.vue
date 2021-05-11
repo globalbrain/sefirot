@@ -29,7 +29,7 @@
           :id="name"
           ref="inputEl"
           class="input"
-          :class="{ 'has-icon': icon, 'is-clearable': clearable }"
+          :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
           :style="inputStyles"
           :type="type"
           :step="step"
@@ -55,7 +55,7 @@
           {{ textAfter }}
         </p>
 
-        <button v-if="clearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
+        <button v-if="isClearable" class="clear" :class="{ show: showClearButton }" @click="emitClear">
           <SIconX class="clear-svg" />
         </button>
       </div>
@@ -144,6 +144,8 @@ export default defineComponent({
       return props.value !== null && props.value !== ''
     })
 
+    const isClearable = computed(() => props.clearable && !props.disabled)
+
     onMounted(() => {
       setTextPadding()
       watch(() => props.text, () => setTextPadding())
@@ -203,6 +205,7 @@ export default defineComponent({
       textAfterEl,
       classes,
       inputStyles,
+      isClearable,
       showClearButton,
       focus,
       blur,
