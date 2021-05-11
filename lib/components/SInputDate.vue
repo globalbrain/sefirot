@@ -147,7 +147,7 @@ export default defineComponent({
 }
 
 .SInputDate >>> .vc-popover-content-wrapper {
-  z-index: var(--z-index-popover);
+  z-index: var(--z-index-dropdown);
 }
 
 .input {
