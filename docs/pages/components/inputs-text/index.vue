@@ -46,6 +46,12 @@ interface Action {
 }
 ```
 
+## Disable
+
+Set `disabled` props to disable the input. While the input is disabled, it will not emit any event.
+
+<StoryInputTextEXDisabled />
+
 ## Clearable Input
 
 By setting `clearable` props, the input filed will show the "clear" button when there's any value is set. When the "clear" button is clicked, it will emit the `clear` event. It's up to you to handle the `clear` event. The component will not touch the value passed in.
@@ -66,6 +72,7 @@ import StoryInputTextEXSizes from '@/components/inputs/StoryInputTextEXSizes.vue
 import StoryInputTextEXIcon from '@/components/inputs/StoryInputTextEXIcon.vue'
 import StoryInputTextEXText from '@/components/inputs/StoryInputTextEXText.vue'
 import StoryInputTextEXAction from '@/components/inputs/StoryInputTextEXAction.vue'
+import StoryInputTextEXDisabled from '@/components/inputs/StoryInputTextEXDisabled.vue'
 import StoryInputTextEXClearable from '@/components/inputs/StoryInputTextEXClearable.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
@@ -79,6 +86,7 @@ export default defineComponent({
     StoryInputTextEXIcon,
     StoryInputTextEXText,
     StoryInputTextEXAction,
+    StoryInputTextEXDisabled,
     StoryInputTextEXClearable,
     SpecProps,
     SpecEvents
@@ -89,6 +97,13 @@ export default defineComponent({
   setup() {
     return useSpec({
       props: [
+        {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the input.'
+        },
         {
           name: 'size',
           type: "'medium' | 'mini'",
