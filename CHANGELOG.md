@@ -1,3 +1,10 @@
+## [0.53.1](https://github.com/globalbrain/sefirot/compare/v0.53.0...v0.53.1) (2021-05-13)
+
+### Bug Fixes
+
+* **input-text:** clearable & disabled should not conflict ([#70](https://github.com/globalbrain/sefirot/issues/70)) ([#71](https://github.com/globalbrain/sefirot/issues/71)) ([bf6fd4e](https://github.com/globalbrain/sefirot/commit/bf6fd4e5f074354f942179a1881af18c5c52f9d5))
+* **utils:** return shallow ref from computed utils ([#72](https://github.com/globalbrain/sefirot/issues/72)) ([cbd60c9](https://github.com/globalbrain/sefirot/commit/cbd60c983df823b5a7f0af8ff303e7037f570cb1))
+
 # [0.53.0](https://github.com/globalbrain/sefirot/compare/v0.52.0...v0.53.0) (2021-05-11)
 
 ### Bug Fixes
