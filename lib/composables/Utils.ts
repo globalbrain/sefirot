@@ -1,4 +1,12 @@
-import { Ref, ComputedRef, UnwrapRef, ref, computed, watch, isRef } from '@vue/composition-api'
+import {
+  Ref,
+  ComputedRef,
+  WatchSource,
+  shallowRef,
+  computed,
+  watch,
+  isRef
+} from '@vue/composition-api'
 
 export type Refish<T = any> = T | Ref<T> | ComputedRef<T>
 
@@ -17,13 +25,13 @@ export function get<T>(refish: Refish<T> | (() => T)): T {
 }
 
 export function computedOnly<T, S>(
-  source: Source<S>,
-  callback: () => T
+  source: WatchSource<S>,
+  fn: (value: S, oldValue?: S) => T
 ): Ref<T> {
-  const value = ref() as Ref<T>
+  const value = shallowRef() as Ref<T>
 
-  watch(source, () => {
-    value.value = callback()
+  watch(source, (newValue, oldValue) => {
+    value.value = fn(newValue, oldValue)
   }, { immediate: true })
 
   return value
@@ -41,26 +49,16 @@ export function computedIf<T, R, E>(
   })
 }
 
-export function computedIfOnly<T, R, E>(
-  refish: Ref<T | null> | ComputedRef<T | null> | (() => T | null),
-  callback: (value: T) => R,
+export function computedIfOnly<T, E, S>(
+  source: WatchSource<S>,
+  fn: (value: Exclude<S, undefined | null | false>) => T,
   empty: E
-): Ref<R | E> {
-  const value = ref<R | E>(empty)
-
-  const refValue = get(refish)
-
-  if (refValue) {
-    value.value = callback(refValue) as UnwrapRef<R>
-  }
-
-  watch(refish, (newValue) => {
-    value.value = newValue
-      ? callback(newValue) as UnwrapRef<R>
-      : empty as UnwrapRef<E>
+): Ref<T | E> {
+  return computedOnly(source, (value) => {
+    return value
+      ? fn(value as Exclude<S, undefined | null | false>)
+      : empty
   })
-
-  return value as Ref<R | E>
 }
 
 export function computedArray<T>(callback: (carry: T) => void): ComputedRef<T> {
