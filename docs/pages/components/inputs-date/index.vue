@@ -31,6 +31,13 @@ export default defineComponent({
     return useSpec({
       props: [
         {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the input.'
+        },
+        {
           name: 'name',
           type: 'string',
           required: false,
