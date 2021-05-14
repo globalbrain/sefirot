@@ -69,7 +69,7 @@ export default defineComponent({
       props.size,
       props.mode,
       {
-        disabled: props.disabled 
+        disabled: props.disabled
       }
     ])
 
