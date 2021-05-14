@@ -13,6 +13,7 @@
         :id="name"
         class="input"
         :placeholder="placeholder"
+        :disabled="disabled"
         :value="value"
         :rows="rows"
         @input="emitInput"
@@ -44,13 +45,20 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
+    disabled: { type: Boolean, default: false },
     rows: { type: Number, default: 3 },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
   setup(props, { emit }) {
-    const classes = computed(() => [props.size, props.mode])
+    const classes = computed(() => [
+      props.size,
+      props.mode,
+      {
+        disabled: props.disabled
+      }
+    ])
 
     function emitInput(e: SyntheticInputEvent): void {
       emit('input', e.target.value)
@@ -102,6 +110,10 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
+
+  &.disabled .input {
+    background-color: var(--input-filled-bg-disabled);
+  }
 }
 
 .SInputTextarea.outlined {
@@ -117,11 +129,30 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
+
+  &.disabled .input:hover {
+    border-color: var(--input-outlined-border);
+  }
+
+  &.disabled .input {
+    background-color: var(--input-outlined-bg-disabled);
+  }
 }
 
 .SInputTextarea.clear {
   .input {
     padding: 0;
+  }
+
+  &.disabled .input {
+    background-color: var(--input-clear-bg-disabled);
+  }
+}
+
+.SInputTextarea.disabled {
+  .input:hover {
+    cursor: not-allowed;
+    border-color: transparent;
   }
 }
 
