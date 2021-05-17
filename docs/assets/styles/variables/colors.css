@@ -141,6 +141,7 @@
   --input-filled-bg: var(--c-white-mute);
   --input-filled-bg-disabled: var(--c-gray-light-4);
   --input-outlined-bg-disabled: var(--c-white-mute);
+  --input-clear-bg-disabled: var(--c-white);
   --input-outlined-border: var(--c-divider);
   --input-focus-border: var(--c-black);
   --input-focus-bg: var(--c-white);

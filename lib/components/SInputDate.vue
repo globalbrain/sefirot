@@ -25,6 +25,7 @@
             class="input"
             type="text"
             :placeholder="placeholder"
+            :disabled="disabled"
             :value="inputValue"
             autocomplete="off"
             v-on="inputEvents"
@@ -58,12 +59,19 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: 'YYYY-MM-DD' },
+    disabled: { type: Boolean, default: false },
     value: { type: String, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
   setup(props, { emit }) {
-    const classes = computed(() => [props.size, props.mode])
+    const classes = computed(() => [
+      props.size,
+      props.mode,
+      {
+        disabled: props.disabled
+      }
+    ])
 
     function emitInput(date: string | null) {
       emit('input', date)
@@ -133,6 +141,10 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
+
+  &.disabled .input {
+    background-color: var(--input-filled-bg-disabled);
+  }
 }
 
 .SInputDate.outlined {
@@ -143,6 +155,21 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       background-color: var(--input-focus-bg);
     }
+  }
+
+  &.disabled .input:hover {
+    border-color: var(--input-outlined-border);
+  }
+
+  &.disabled .input {
+    background-color: var(--input-outlined-bg-disabled);
+  }
+}
+
+.SInputDate.disabled {
+  .input:hover {
+    cursor: not-allowed;
+    border-color: transparent;
   }
 }
 

@@ -13,6 +13,7 @@
         :id="name"
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
+        :disabled="disabled"
         @focus="focus"
         @blur="blur"
         @change="emitChange"
@@ -79,6 +80,7 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
+    disabled: { type: Boolean, default: false },
     options: { type: Array as PropType<Option[]>, required: true },
     validation: { type: Object, default: null },
     value: { type: [String, Number, Boolean], default: null }
@@ -91,7 +93,8 @@ export default defineComponent({
       medium: props.size === 'medium',
       mini: props.size === 'mini',
       filled: props.mode === 'filled',
-      outlined: props.mode === 'outlined'
+      outlined: props.mode === 'outlined',
+      disabled: props.disabled
     }))
 
     const isNotSelected = computed(() => {
@@ -177,6 +180,15 @@ export default defineComponent({
       border-color: var(--input-focus-border);
     }
   }
+
+  &.disabled .box:hover {
+    border-color: transparent;
+  }
+
+  &.disabled .select {
+    background-color: var(--input-filled-bg-disabled);
+    opacity: 1;
+  }
 }
 
 .SInputSelect.outlined {
@@ -192,6 +204,21 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       outline: 0;
     }
+  }
+
+  &.disabled .box:hover {
+    border-color: var(--input-outlined-border);
+  }
+
+  &.disabled .select {
+    background-color: var(--input-outlined-bg-disabled);
+    opacity: 1;
+  }
+}
+
+.SInputSelect.disabled {
+  .box:hover .select {
+    cursor: not-allowed;
   }
 }
 
