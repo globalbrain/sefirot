@@ -31,11 +31,11 @@ export function useDialog(): Dialog {
   const store = useStore()
   const uid = useModalUid()
 
-  function open(dialog?: DialogOptions): Promise<any> {
+  function open(dialog?: DialogOptions) {
     return store.dispatch('dialog/open', { ...dialog, uid })
   }
 
-  function close(): Promise<any> {
+  function close() {
     return store.dispatch('dialog/close', uid)
   }
 
