@@ -36,10 +36,14 @@ export default defineComponent({
 
     const isActive = ref(false)
 
+    let timer: any
+
     watch(hasItem, (value) => {
+      clearTimeout(timer)
+
       value
         ? (isActive.value = true)
-        : setTimeout(() => { isActive.value = false }, 250)
+        : (timer = setTimeout(() => { isActive.value = false }, 250))
     })
 
     watch(route, closeAll)
@@ -72,12 +76,12 @@ export default defineComponent({
   bottom: 0;
   left: 0;
   z-index: var(--z-index-backdrop);
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .SPortalModals.fade-enter-active,
 .SPortalModals.fade-leave-active {
-  transition: opacity .25s;
+  transition: opacity 0.25s;
 }
 
 .SPortalModals.fade-enter,
