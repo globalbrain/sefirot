@@ -10,6 +10,7 @@
     :help="help"
     :search="search"
     :nullable="nullable"
+    :disabled="disabled"
     :options="options"
     :close-on-click="closeOnClick"
     :validation="validation"
@@ -46,6 +47,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     nullable: { type: Boolean, default: true },
     closeOnClick: { type: Boolean, default: true },
+    disabled: { type: Boolean, default: false },
     validation: { type: Object, default: null },
     value: { type: [String, Number, Boolean, Array, Object] as PropType<any>, default: null }
   },
