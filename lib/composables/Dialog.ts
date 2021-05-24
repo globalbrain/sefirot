@@ -3,8 +3,8 @@ import { useStore } from './Store'
 import { useModalUid } from './Modal'
 
 export interface Dialog {
-  open(dialog: DialogOptions): () => void
-  close(): void
+  open(dialog?: DialogOptions): Promise<any>
+  close(): Promise<any>
 }
 
 export interface DialogOptions {
@@ -31,14 +31,12 @@ export function useDialog(): Dialog {
   const store = useStore()
   const uid = useModalUid()
 
-  function open(dialog: DialogOptions) {
-    store.dispatch('dialog/open', { ...dialog, uid })
-
-    return close
+  function open(dialog?: DialogOptions) {
+    return store.dispatch('dialog/open', { ...dialog, uid })
   }
 
   function close() {
-    store.dispatch('dialog/close', uid)
+    return store.dispatch('dialog/close', uid)
   }
 
   return {

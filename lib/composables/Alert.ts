@@ -3,8 +3,8 @@ import { useStore } from './Store'
 import { useModalUid } from './Modal'
 
 export interface Alert {
-  open(alert: AlertOptions): () => void
-  close(): void
+  open(alert: AlertOptions): Promise<any>
+  close(): Promise<any>
 }
 
 export interface AlertOptions {
@@ -36,13 +36,11 @@ export function useAlert(): Alert {
   const uid = useModalUid()
 
   function open(alert: AlertOptions) {
-    store.dispatch('alert/open', { ...alert, uid })
-
-    return close
+    return store.dispatch('alert/open', { ...alert, uid })
   }
 
   function close() {
-    store.dispatch('alert/close', uid)
+    return store.dispatch('alert/close', uid)
   }
 
   return {

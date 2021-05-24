@@ -36,10 +36,14 @@ export default defineComponent({
 
     const isActive = ref(false)
 
+    let timer: any
+
     watch(hasItem, (value) => {
+      clearTimeout(timer)
+
       value
         ? (isActive.value = true)
-        : setTimeout(() => { isActive.value = false }, 250)
+        : (timer = setTimeout(() => { isActive.value = false }, 250))
     })
 
     watch(route, closeAll)

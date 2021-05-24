@@ -1,9 +1,9 @@
 import { Item } from '../store/modal'
 import { useStore } from './Store'
 
-interface Modal {
-  open(item: Item): () => void
-  close(): void
+export interface Modal {
+  open(item: Omit<Item, 'uid'>): Promise<any>
+  close(): Promise<any>
 }
 
 let modalUid = 0
@@ -13,16 +13,17 @@ export function useModal(): Modal {
   const uid = useModalUid()
 
   function open(item: Omit<Item, 'uid'>) {
-    store.dispatch('modal/open', { ...item, uid })
-
-    return close
+    return store.dispatch('modal/open', { ...item, uid })
   }
 
   function close() {
-    store.dispatch('modal/close', uid)
+    return store.dispatch('modal/close', uid)
   }
 
-  return { open, close }
+  return {
+    open,
+    close
+  }
 }
 
 export function useModalUid(): number {
