@@ -1,3 +1,13 @@
+# [0.54.0](https://github.com/globalbrain/sefirot/compare/v0.53.1...v0.54.0) (2021-05-24)
+
+### Bug Fixes
+
+* **modal:** handle active state timer ([#74](https://github.com/globalbrain/sefirot/issues/74)) ([#75](https://github.com/globalbrain/sefirot/issues/75)) ([9767b21](https://github.com/globalbrain/sefirot/commit/9767b216fe09dccbdfe2f6f06b6c1defb2248e82))
+
+### Features
+
+* add disable props to more input components ([#73](https://github.com/globalbrain/sefirot/issues/73)) ([438699e](https://github.com/globalbrain/sefirot/commit/438699e0bafff86fd596a3fab1e942a072920a8c))
+
 ## [0.53.1](https://github.com/globalbrain/sefirot/compare/v0.53.0...v0.53.1) (2021-05-13)
 
 ### Bug Fixes
