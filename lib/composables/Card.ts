@@ -16,7 +16,7 @@ export interface Header {
 }
 
 export interface Footer {
-  actions: Action[]
+  actions: Refish<Action[]>
 }
 
 export interface Action {

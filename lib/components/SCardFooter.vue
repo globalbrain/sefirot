@@ -1,7 +1,7 @@
 <template>
   <div class="SCardFooter" :class="classes">
-    <div v-if="actions.length > 0" class="actions">
-      <div v-for="(action, index) in actions" :key="index" class="action">
+    <div v-if="unwrappedActions.length > 0" class="actions">
+      <div v-for="(action, index) in unwrappedActions" :key="index" class="action">
         <SButton
           size="small"
           :type="action.type"
@@ -18,6 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, computed } from '@vue/composition-api'
+import { Refish, get } from '../composables/Utils'
 import { Action } from '../composables/Card'
 import SButton from './SButton.vue'
 
@@ -27,7 +28,7 @@ export default defineComponent({
   },
 
   props: {
-    actions: { type: Array as PropType<Action[]>, required: true },
+    actions: { type: [Object, Array] as PropType<Refish<Action[]>>, required: true },
     round: { type: Number, default: 8 }
   },
 
@@ -36,8 +37,11 @@ export default defineComponent({
       `round-${props.round}`
     ])
 
+    const unwrappedActions = computed(() => get(props.actions))
+
     return {
-      classes
+      classes,
+      unwrappedActions
     }
   }
 })
