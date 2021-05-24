@@ -1,5 +1,5 @@
 <template>
-  <div class="SInputDropdownItemUser">
+  <div class="SInputDropdownItemUser" :class="{ disabled }">
     <div class="avatar">
       <SAvatar size="mini" :avatar="item.avatar" :name="item.name" />
     </div>
@@ -19,7 +19,8 @@ export default defineComponent({
   },
 
   props: {
-    item: { type: Object as PropType<UserItem>, required: true }
+    item: { type: Object as PropType<UserItem>, required: true },
+    disabled: { type: Boolean, default: false }
   }
 })
 </script>

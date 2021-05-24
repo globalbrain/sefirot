@@ -5,6 +5,7 @@
         :is="component(i)"
         :mute="i.value === null"
         :item="i"
+        :disabled="disabled"
         @remove="$emit('remove', i)"
       />
     </div>
@@ -22,7 +23,8 @@ import SInputDropdownItemUserTag from './SInputDropdownItemUserTag.vue'
 
 export default defineComponent({
   props: {
-    item: { type: [Object, Array] as PropType<Item | Item[]>, required: true }
+    item: { type: [Object, Array] as PropType<Item | Item[]>, required: true },
+    disabled: { type: Boolean, default: false }
   },
 
   setup(props) {

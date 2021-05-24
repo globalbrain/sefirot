@@ -1,5 +1,5 @@
 <template>
-  <div class="SInputDropdownItemUserTag">
+  <div class="SInputDropdownItemUserTag" :class="{ disabled }">
     <div class="user">
       <div class="avatar">
         <SAvatar size="nano" :avatar="item.avatar" :name="item.name" />
@@ -8,7 +8,7 @@
       <p class="name">{{ item.name }}</p>
     </div>
 
-    <div class="remove" role="button" @click="$emit('remove')">
+    <div v-if="!disabled" class="remove" role="button" @click="$emit('remove')">
       <div class="remove-box">
         <SIconX class="remove-icon" />
       </div>
@@ -29,7 +29,8 @@ export default defineComponent({
   },
 
   props: {
-    item: { type: Object as PropType<UserItem>, required: true }
+    item: { type: Object as PropType<UserItem>, required: true },
+    disabled: { type: Boolean, default: false }
   }
 })
 </script>
@@ -42,6 +43,11 @@ export default defineComponent({
   border-radius: 12px;
   padding: 0 0 0 0;
   background-color: var(--c-white-mute);
+}
+
+.SInputDropdownItemUserTag.disabled {
+  padding: 0 10px 0 0;
+  background-color: var(--c-gray-light-4);
 }
 
 .user {

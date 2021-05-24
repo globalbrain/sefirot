@@ -1,8 +1,8 @@
 <template>
-  <div class="SInputDropdownItemTextTag">
+  <div class="SInputDropdownItemTextTag" :class="{ disabled }">
     <p class="text">{{ item.text }}</p>
 
-    <div class="remove" role="button" @click="$emit('remove')">
+    <div v-if="!disabled" class="remove" role="button" @click="$emit('remove')">
       <div class="remove-box">
         <SIconX class="remove-icon" />
       </div>
@@ -21,7 +21,8 @@ export default defineComponent({
   },
 
   props: {
-    item: { type: Object as PropType<Item>, required: true }
+    item: { type: Object as PropType<Item>, required: true },
+    disabled: { type: Boolean, default: false }
   }
 })
 </script>
@@ -34,6 +35,11 @@ export default defineComponent({
   border-radius: 12px;
   padding: 0 0 0 10px;
   background-color: var(--c-white-mute);
+}
+
+.SInputDropdownItemTextTag.disabled {
+  padding: 0 10px 0;
+  background-color: var(--c-gray-light-4);
 }
 
 .text {

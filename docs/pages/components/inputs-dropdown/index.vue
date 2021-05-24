@@ -5,6 +5,12 @@ Dropdown input let users choose items from the list of options. The difference b
 
 <StoryInputDropdownShowcase />
 
+## Disable
+
+Set `disabled` props to disable the input. While the input is disabled, it will not emit any event.
+
+<StoryInputDropdownEXDisabled />
+
 ## API
 
 <SpecProps :props="props" />
@@ -14,6 +20,7 @@ Dropdown input let users choose items from the list of options. The difference b
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputDropdownShowcase from '@/components/inputs/StoryInputDropdownShowcase.vue'
+import StoryInputDropdownEXDisabled from '@/components/inputs/StoryInputDropdownEXDisabled.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -21,6 +28,7 @@ import { useSpec } from '@/composables/Spec'
 export default defineComponent({
   components: {
     StoryInputDropdownShowcase,
+    StoryInputDropdownEXDisabled,
     SpecProps,
     SpecEvents
   },
@@ -30,6 +38,13 @@ export default defineComponent({
   setup() {
     return useSpec({
       props: [
+        {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the input.'
+        },
         {
           name: 'size',
           type: "'medium' | 'mini'",

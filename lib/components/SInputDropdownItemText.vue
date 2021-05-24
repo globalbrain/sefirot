@@ -1,5 +1,5 @@
 <template>
-  <div class="SInputDropdownItemText" :class="{ mute }">
+  <div class="SInputDropdownItemText" :class="{ mute, disabled }">
     <p class="text">{{ item.text }}</p>
   </div>
 </template>
@@ -11,7 +11,8 @@ import { Item } from '../composables/Dropdown'
 export default defineComponent({
   props: {
     mute: { type: Boolean, default: false },
-    item: { type: Object as PropType<Item>, required: true }
+    item: { type: Object as PropType<Item>, required: true },
+    disabled: { type: Boolean, default: false }
   }
 })
 </script>

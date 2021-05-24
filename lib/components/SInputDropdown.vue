@@ -19,7 +19,13 @@
         @keyup.down="handleOpen"
       >
         <div class="SInputDropdown-box-content">
-          <SInputDropdownItem v-if="hasSelected" :item="selected" @remove="handleCallback" />
+          <SInputDropdownItem
+            v-if="hasSelected"
+            :item="selected"
+            :disabled="disabled"
+            @remove="handleCallback"
+          />
+
           <span v-else class="SInputDropdown-box-placeholder">{{ placeholder }}</span>
         </div>
 
@@ -74,6 +80,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     search: { type: Object as PropType<Search>, default: null },
     nullable: { type: Boolean, default: true },
+    disabled: { type: Boolean, default: false },
     options: { type: Array as PropType<Item[]>, required: true },
     closeOnClick: { type: Boolean, default: false },
     validation: { type: Object, default: null },
@@ -83,7 +90,11 @@ export default defineComponent({
   setup(props, { emit }) {
     const { container, isOpen, open, close } = useMenu()
 
-    const classes = computed(() => [props.size, props.mode])
+    const classes = computed(() => [
+      props.size,
+      props.mode,
+      { disabled: props.disabled }
+    ])
 
     const dropdownOptions = useDropdown({
       search: props.search,
@@ -106,13 +117,15 @@ export default defineComponent({
     })
 
     async function handleOpen(): Promise<void> {
-      open()
+      if (!props.disabled) {
+        open()
 
-      await nextTick()
+        await nextTick()
 
-      const el = document.querySelector<HTMLInputElement>('.SInputDropdown .SDropdown .search .SInputText input')
+        const el = document.querySelector<HTMLInputElement>('.SInputDropdown .SDropdown .search .SInputText input')
 
-      el && el.focus()
+        el && el.focus()
+      }
     }
 
     function handleCallback(item: Item): void {
@@ -214,6 +227,14 @@ export default defineComponent({
       outline: 0;
     }
   }
+
+  &.disabled .SInputDropdown-box {
+    background-color: var(--input-outlined-bg-disabled);
+    cursor: not-allowed;
+
+    &:hover                     { border-color: var(--input-outlined-border); }
+    &:focus:not(:focus-visible) { border-color: var(--input-outlined-border); }
+  }
 }
 
 .SInputDropdown.outlined {
@@ -228,6 +249,20 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       outline: 0;
     }
+  }
+
+  &.disabled .SInputDropdown-box {
+    background-color: var(--input-outlined-bg-disabled);
+    cursor: not-allowed;
+
+    &:hover                     { border-color: var(--input-outlined-border); }
+    &:focus:not(:focus-visible) { border-color: var(--input-outlined-border); }
+  }
+}
+
+.SInputDropdown.disabled {
+  .SInputDropdown-box-icon {
+    cursor: not-allowed;
   }
 }
 
