@@ -1,3 +1,11 @@
+# [0.55.0](https://github.com/globalbrain/sefirot/compare/v0.54.0...v0.55.0) (2021-05-24)
+
+### Features
+
+* **card:** accept ref value for the footer actions ([9c2df3e](https://github.com/globalbrain/sefirot/commit/9c2df3ea0b970a5734d84838dee5773eb5884d3f))
+* **input-dropdown:** add "disabled" option ([8a041d7](https://github.com/globalbrain/sefirot/commit/8a041d7520007c0070bdfb3ce3d7db5d067516fa))
+* **input-month:** add "disabled" option ([749f14a](https://github.com/globalbrain/sefirot/commit/749f14a7526c5549d8584ebe4abbaa080173c8db))
+
 # [0.54.0](https://github.com/globalbrain/sefirot/compare/v0.53.1...v0.54.0) (2021-05-24)
 
 ### Bug Fixes
