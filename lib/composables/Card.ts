@@ -22,11 +22,14 @@ export interface Footer {
 export interface Action {
   type: 'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'
   mode?: Mode
-  icon?: any
+  icon?: ActionIconType | object
+  disabled?: string | null
   label?: string
   link?: string
   callback?(): void
 }
+
+export type ActionIconType = 'add' | 'edit' | 'delete'
 
 export type Mode = Values<typeof Modes>
 

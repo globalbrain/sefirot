@@ -6,17 +6,33 @@
 
     <div class="actions">
       <template v-if="actions.length > 0">
-        <component
-          :is="action.link ? 'nuxt-link' : 'button'"
-          v-for="(action, index) in actions"
-          :key="index"
-          class="action"
-          :class="[action.mode || 'neutral']"
-          :to="action.link"
-          @click="action.callback ? action.callback() : () => {}"
-        >
-          <component :is="action.icon" class="action-icon" />
-        </component>
+        <template v-for="(action, index) in actions">
+          <template v-if="action.disabled">
+            <SToolTip :key="index" :text="action.disabled">
+              <component
+                :is="action.link ? 'nuxt-link' : 'button'"
+                class="action disabled"
+                :class="[action.mode || 'neutral']"
+                :to="action.link"
+                @click="action.callback && !action.disabled ? action.callback() : () => {}"
+              >
+                <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
+              </component>
+            </SToolTip>
+          </template>
+          <template v-else>
+            <component
+              :is="action.link ? 'nuxt-link' : 'button'"
+              :key="index"
+              class="action"
+              :class="[action.mode || 'neutral']"
+              :to="action.link"
+              @click="action.callback ? action.callback() : () => {}"
+            >
+              <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
+            </component>
+          </template>
+        </template>
       </template>
 
       <div v-if="collapsable" class="action action-collapse">
@@ -31,11 +47,17 @@
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Action, Mode } from '../composables/Card'
+import SToolTip from './STooltip.vue'
+import SIconX from './icons/SIconX.vue'
+import SIconPlus from './icons/SIconPlus.vue'
+import SIconEdit3 from './icons/SIconEdit3.vue'
+import SIconTrash2 from './icons/SIconTrash2.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 
 export default defineComponent({
   components: {
-    SIconChevronDown
+    SIconChevronDown,
+    SToolTip
   },
 
   props: {
@@ -54,8 +76,22 @@ export default defineComponent({
       `round-${props.round}`
     ])
 
+    function getIcon(icon: any, disabled: boolean) {
+      if (typeof icon === 'object') { return icon }
+      if (icon === 'add') {
+        return disabled ? SIconX : SIconPlus
+      }
+      if (icon === 'edit') {
+        return disabled ? SIconX : SIconEdit3
+      }
+      if (icon === 'delete') {
+        return disabled ? SIconX : SIconTrash2
+      }
+    }
+
     return {
-      classes
+      classes,
+      getIcon
     }
   }
 })
@@ -122,6 +158,12 @@ export default defineComponent({
 .action.success:hover { color: var(--c-success); }
 .action.warning:hover { color: var(--c-warning); }
 .action.danger:hover  { color: var(--c-danger); }
+
+.action.disabled:hover {
+  color: var(--c-text-2);
+  background-color: transparent;
+  cursor: not-allowed;
+}
 
 .action-icon {
   width: 16px;
