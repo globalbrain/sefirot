@@ -7,31 +7,17 @@
     <div class="actions">
       <template v-if="actions.length > 0">
         <template v-for="(action, index) in actions">
-          <template v-if="action.disabled">
-            <SToolTip :key="index" :text="action.disabled">
-              <component
-                :is="action.link ? 'nuxt-link' : 'button'"
-                class="action disabled"
-                :class="[action.mode || 'neutral']"
-                :to="action.link"
-                @click="action.callback && !action.disabled ? action.callback() : () => {}"
-              >
-                <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
-              </component>
-            </SToolTip>
-          </template>
-          <template v-else>
+          <SToolTip :key="index" :text="action.disabled">
             <component
-              :is="action.link ? 'nuxt-link' : 'button'"
-              :key="index"
+              :is="action.link ? 'router-link' : 'button'"
               class="action"
-              :class="[action.mode || 'neutral']"
+              :class="[action.mode || 'neutral', { disabled: action.disabled }]"
               :to="action.link"
-              @click="action.callback ? action.callback() : () => {}"
+              @click="action.callback && !action.disabled ? action.callback() : () => {}"
             >
               <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
             </component>
-          </template>
+          </SToolTip>
         </template>
       </template>
 
@@ -46,7 +32,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Action, Mode } from '../composables/Card'
+import { Action, ActionIconType, Mode } from '../composables/Card'
 import SToolTip from './STooltip.vue'
 import SIconX from './icons/SIconX.vue'
 import SIconPlus from './icons/SIconPlus.vue'
@@ -76,7 +62,7 @@ export default defineComponent({
       `round-${props.round}`
     ])
 
-    function getIcon(icon: any, disabled: boolean) {
+    function getIcon(icon: ActionIconType | object, disabled: boolean) {
       if (typeof icon === 'object') { return icon }
       if (icon === 'add') {
         return disabled ? SIconX : SIconPlus
