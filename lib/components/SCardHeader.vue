@@ -64,13 +64,13 @@ export default defineComponent({
 
     function getIcon(icon: ActionIconType | object, disabled: boolean) {
       if (typeof icon === 'object') { return icon }
-      if (icon === 'add') {
+      if (icon === 'plus') {
         return disabled ? SIconX : SIconPlus
       }
-      if (icon === 'edit') {
+      if (icon === 'edit-3') {
         return disabled ? SIconX : SIconEdit3
       }
-      if (icon === 'delete') {
+      if (icon === 'trash-2') {
         return disabled ? SIconX : SIconTrash2
       }
     }

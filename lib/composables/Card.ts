@@ -29,7 +29,7 @@ export interface Action {
   callback?(): void
 }
 
-export type ActionIconType = 'add' | 'edit' | 'delete'
+export type ActionIconType = 'plus' | 'edit-3' | 'trash-2'
 
 export type Mode = Values<typeof Modes>
 
