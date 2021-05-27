@@ -33,7 +33,6 @@
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Action, ActionIconType, Mode } from '../composables/Card'
-import SToolTip from './STooltip.vue'
 import SIconPlus from './icons/SIconPlus.vue'
 import SIconPlusOff from './icons/SIconPlusOff.vue'
 import SIconEdit3 from './icons/SIconEdit3.vue'
@@ -41,6 +40,7 @@ import SIconEdit3Off from './icons/SIconEdit3Off.vue'
 import SIconTrash2 from './icons/SIconTrash2.vue'
 import SIconTrash2Off from './icons/SIconTrash2Off.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SToolTip from './STooltip.vue'
 
 export default defineComponent({
   components: {
@@ -65,16 +65,23 @@ export default defineComponent({
     ])
 
     function getIcon(icon: ActionIconType | object, disabled: boolean) {
-      if (typeof icon === 'object') { return icon }
+      if (typeof icon === 'object') {
+        return icon
+      }
+
       if (icon === 'plus') {
         return disabled ? SIconPlusOff : SIconPlus
       }
+
       if (icon === 'edit-3') {
         return disabled ? SIconEdit3Off : SIconEdit3
       }
+
       if (icon === 'trash-2') {
         return disabled ? SIconTrash2Off : SIconTrash2
       }
+
+      throw new Error(`[sefirot] Invalid icon type: ${icon}.`)
     }
 
     return {

@@ -23,13 +23,13 @@ export interface Action {
   type: 'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'
   mode?: Mode
   icon?: ActionIconType | object
-  disabled?: string | null
   label?: string
   link?: string
+  disabled?: string | null
   callback?(): void
 }
 
-export type ActionIconType = 'plus' | 'edit-3' | 'trash-2'
+export type ActionIconType = 'edit-3' | 'plus' | 'trash-2'
 
 export type Mode = Values<typeof Modes>
 
