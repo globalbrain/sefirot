@@ -37,8 +37,8 @@ export default defineComponent({
         {
           name: 'text',
           type: 'string',
-          required: true,
-          default: '—',
+          required: false,
+          default: 'null',
           description: 'The text of the tooptip.'
         },
         {

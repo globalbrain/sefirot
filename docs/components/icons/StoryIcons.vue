@@ -37,6 +37,7 @@ import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
 import SIconEdit from '@@/lib/components/icons/SIconEdit.vue'
 import SIconEdit2 from '@@/lib/components/icons/SIconEdit2.vue'
 import SIconEdit3 from '@@/lib/components/icons/SIconEdit3.vue'
+import SIconEdit3Off from '@@/lib/components/icons/SIconEdit3Off.vue'
 import SIconEye from '@@/lib/components/icons/SIconEye.vue'
 import SIconExternalLink from '@@/lib/components/icons/SIconExternalLink.vue'
 import SIconFile from '@@/lib/components/icons/SIconFile.vue'
@@ -53,6 +54,7 @@ import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
+import SIconPlusOff from '@@/lib/components/icons/SIconPlusOff.vue'
 import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
 import SIconProgress from '@@/lib/components/icons/SIconProgress.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
@@ -62,6 +64,7 @@ import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
 import SIconTelescope from '@@/lib/components/icons/SIconTelescope.vue'
 import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
 import SIconTrash2 from '@@/lib/components/icons/SIconTrash2.vue'
+import SIconTrash2Off from '@@/lib/components/icons/SIconTrash2Off.vue'
 import SIconTrello from '@@/lib/components/icons/SIconTrello.vue'
 import SIconUser from '@@/lib/components/icons/SIconUser.vue'
 import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
@@ -101,6 +104,7 @@ export default defineComponent({
       { component: SIconEdit, name: 'Edit' },
       { component: SIconEdit2, name: 'Edit2' },
       { component: SIconEdit3, name: 'Edit3' },
+      { component: SIconEdit3Off, name: 'Edit3Off' },
       { component: SIconEye, name: 'Eye' },
       { component: SIconExternalLink, name: 'ExternalLink' },
       { component: SIconFile, name: 'File' },
@@ -117,6 +121,7 @@ export default defineComponent({
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
       { component: SIconPlus, name: 'Plus' },
       { component: SIconPlusCircle, name: 'PlusCircle' },
+      { component: SIconPlusOff, name: 'PlusOff' },
       { component: SIconPlayCircle, name: 'PlayCircle' },
       { component: SIconProgress, name: 'Progress' },
       { component: SIconSave, name: 'Save' },
@@ -126,6 +131,7 @@ export default defineComponent({
       { component: SIconTelescope, name: 'Telescope' },
       { component: SIconTrash, name: 'Trash' },
       { component: SIconTrash2, name: 'Trash2' },
+      { component: SIconTrash2Off, name: 'Trash2Off' },
       { component: SIconTrello, name: 'Trello' },
       { component: SIconUser, name: 'User' },
       { component: SIconUsers, name: 'Users' },

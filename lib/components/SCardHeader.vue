@@ -6,17 +6,19 @@
 
     <div class="actions">
       <template v-if="actions.length > 0">
-        <component
-          :is="action.link ? 'nuxt-link' : 'button'"
-          v-for="(action, index) in actions"
-          :key="index"
-          class="action"
-          :class="[action.mode || 'neutral']"
-          :to="action.link"
-          @click="action.callback ? action.callback() : () => {}"
-        >
-          <component :is="action.icon" class="action-icon" />
-        </component>
+        <template v-for="(action, index) in actions">
+          <SToolTip :key="index" :text="action.disabled">
+            <component
+              :is="action.link ? 'router-link' : 'button'"
+              class="action"
+              :class="[action.mode || 'neutral', { disabled: action.disabled }]"
+              :to="action.link"
+              @click="action.callback && !action.disabled ? action.callback() : () => {}"
+            >
+              <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
+            </component>
+          </SToolTip>
+        </template>
       </template>
 
       <div v-if="collapsable" class="action action-collapse">
@@ -30,12 +32,20 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import { Action, Mode } from '../composables/Card'
+import { Action, ActionIconType, Mode } from '../composables/Card'
+import SIconPlus from './icons/SIconPlus.vue'
+import SIconPlusOff from './icons/SIconPlusOff.vue'
+import SIconEdit3 from './icons/SIconEdit3.vue'
+import SIconEdit3Off from './icons/SIconEdit3Off.vue'
+import SIconTrash2 from './icons/SIconTrash2.vue'
+import SIconTrash2Off from './icons/SIconTrash2Off.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SToolTip from './STooltip.vue'
 
 export default defineComponent({
   components: {
-    SIconChevronDown
+    SIconChevronDown,
+    SToolTip
   },
 
   props: {
@@ -54,8 +64,29 @@ export default defineComponent({
       `round-${props.round}`
     ])
 
+    function getIcon(icon: ActionIconType | object, disabled: boolean) {
+      if (typeof icon === 'object') {
+        return icon
+      }
+
+      if (icon === 'plus') {
+        return disabled ? SIconPlusOff : SIconPlus
+      }
+
+      if (icon === 'edit-3') {
+        return disabled ? SIconEdit3Off : SIconEdit3
+      }
+
+      if (icon === 'trash-2') {
+        return disabled ? SIconTrash2Off : SIconTrash2
+      }
+
+      throw new Error(`[sefirot] Invalid icon type: ${icon}.`)
+    }
+
     return {
-      classes
+      classes,
+      getIcon
     }
   }
 })
@@ -122,6 +153,12 @@ export default defineComponent({
 .action.success:hover { color: var(--c-success); }
 .action.warning:hover { color: var(--c-warning); }
 .action.danger:hover  { color: var(--c-danger); }
+
+.action.disabled:hover {
+  color: var(--c-text-2);
+  background-color: transparent;
+  cursor: not-allowed;
+}
 
 .action-icon {
   width: 16px;

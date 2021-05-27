@@ -1,14 +1,21 @@
 <template>
   <component :is="tag" class="STooltip">
-    <span class="STooltip-content" @mouseenter="on = true" @mouseleave="on = false">
-      <slot />
-    </span>
-
-    <transition name="fade">
-      <span v-show="on" class="STooltip-tip" :class="classes">
-        {{ text }}
+    <template v-if="text">
+      <span class="STooltip-content" @mouseenter="on = true" @mouseleave="on = false">
+        <slot />
       </span>
-    </transition>
+
+      <transition name="fade">
+        <span v-show="on" class="STooltip-tip" :class="classes">
+          {{ text }}
+        </span>
+      </transition>
+    </template>
+    <template v-else>
+      <span class="STooltip-content">
+        <slot />
+      </span>
+    </template>
   </component>
 </template>
 
@@ -20,7 +27,7 @@ type Position = 'top' | 'right' | 'bottom' | 'left'
 export default defineComponent({
   props: {
     tag: { type: String, default: 'span' },
-    text: { type: String, required: true },
+    text: { type: String, default: null },
     position: { type: String as PropType<Position>, default: 'top' }
   },
 
