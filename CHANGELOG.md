@@ -1,3 +1,12 @@
+# [0.56.0](https://github.com/globalbrain/sefirot/compare/v0.55.0...v0.56.0) (2021-06-07)
+
+### Features
+
+* **card-header:** add disabled option for header action ([#77](https://github.com/globalbrain/sefirot/issues/77)) ([be2be24](https://github.com/globalbrain/sefirot/commit/be2be24ff484ed7d8aa75685ce34697cfb1b2e95))
+* **validation:** add integer rule ([57d7463](https://github.com/globalbrain/sefirot/commit/57d7463702a9cda7e5a60dff4756e393dbeaf4c8))
+* **validation:** add validateIf rule ([61d958f](https://github.com/globalbrain/sefirot/commit/61d958fbc3f073f489ba57b89b2a79b2ce58655a))
+
+
 # [0.55.0](https://github.com/globalbrain/sefirot/compare/v0.54.0...v0.55.0) (2021-05-24)
 
 ### Features
