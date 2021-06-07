@@ -3,6 +3,7 @@ import day from './day'
 import email from './email'
 import include from './include'
 import includeSome from './includeSome'
+import integer from './integer'
 import maxLength from './maxLength'
 import maxValue from './maxValue'
 import month from './month'
@@ -34,6 +35,7 @@ export {
   email,
   include,
   includeSome,
+  integer,
   maxLength,
   maxValue,
   month,
