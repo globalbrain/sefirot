@@ -14,6 +14,7 @@ import requiredIf from './requiredIf'
 import rule from './rule'
 import sameAs from './sameAs'
 import url from './url'
+import validateIf from './validateIf'
 import year from './year'
 
 export interface Rule {
@@ -46,5 +47,6 @@ export {
   rule,
   sameAs,
   url,
+  validateIf,
   year
 }
