@@ -1,3 +1,9 @@
+## [0.56.1](https://github.com/globalbrain/sefirot/compare/v0.56.0...v0.56.1) (2021-06-10)
+
+### Bug Fixes
+
+* **input-year:** emit number only ([#79](https://github.com/globalbrain/sefirot/issues/79)) ([#80](https://github.com/globalbrain/sefirot/issues/80)) ([206496d](https://github.com/globalbrain/sefirot/commit/206496d5d7c34e748118e9173a38373547482710))
+
 # [0.56.0](https://github.com/globalbrain/sefirot/compare/v0.55.0...v0.56.0) (2021-06-07)
 
 ### Features
