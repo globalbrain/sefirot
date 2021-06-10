@@ -17,9 +17,9 @@
     :value="value"
     :validation="validation"
     @action="$emit('action')"
-    @input="v => $emit('input', Number(v))"
-    @enter="v => $emit('enter', Number(v))"
-    @blur="v => $emit('blur', Number(v))"
+    @input="v => $emit('input', !isNaN(v) ? Number(v) : null)"
+    @enter="v => $emit('enter', !isNaN(v) ? Number(v) : null)"
+    @blur="v => $emit('blur', !isNaN(v) ? Number(v) : null)"
   />
 </template>
 
