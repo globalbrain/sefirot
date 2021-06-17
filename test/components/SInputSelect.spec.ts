@@ -14,7 +14,8 @@ describe('components/SInputSelect', () => {
         options: [
           { label: 'Option 1', value: 1 },
           { label: 'Option 2', value: 2 },
-          { label: 'Option 3', value: 3 }
+          { label: 'Option 3', value: 3 },
+          { label: 'Option 4', value: 4, disabled: true }
         ],
         ...options.propsData
       }
@@ -30,6 +31,19 @@ describe('components/SInputSelect', () => {
       JSON.stringify({ label: 'Option 2', value: 2 })
     )
     expect(wrapper.emitted('change')).toHaveEmittedWith(2)
+  })
+
+  it('should hide disabled options', () => {
+    const wrapper = createWrapper({
+      propsData: { value: 1 }
+    })
+
+    const options = wrapper
+      .find('.SInputSelect .select')
+      .findAll('option')
+      .filter(option => option.isVisible())
+
+    expect(options.length).toBe(3)
   })
 
   it('should invoke validation on input change', async () => {

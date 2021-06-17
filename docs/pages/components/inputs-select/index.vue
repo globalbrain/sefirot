@@ -17,6 +17,14 @@ The select input comes in several different sizes. You may pass `size` prop to c
 
 <StoryInputSelectEXSizes />
 
+## Disabling certain options
+
+You may define `disabled: true` to hide certain option items from showing up in the select list. Disabled options can still be shown as "selected" item.
+
+For example, this is useful when you want to deprecate some options, but you still have past data using those options.
+
+<StoryInputSelectEXDisabledOptions />
+
 ## API
 
 <SpecProps :props="props" />
@@ -28,6 +36,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputSelectShowcase from '@/components/inputs/StoryInputSelectShowcase.vue'
 import StoryInputSelectEXOutlined from '@/components/inputs/StoryInputSelectEXOutlined.vue'
 import StoryInputSelectEXSizes from '@/components/inputs/StoryInputSelectEXSizes.vue'
+import StoryInputSelectEXDisabledOptions from '@/components/inputs/StoryInputSelectEXDisabledOptions.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -37,6 +46,7 @@ export default defineComponent({
     StoryInputSelectShowcase,
     StoryInputSelectEXOutlined,
     StoryInputSelectEXSizes,
+    StoryInputSelectEXDisabledOptions,
     SpecProps,
     SpecEvents
   },
@@ -114,7 +124,7 @@ export default defineComponent({
           type: 'Array',
           required: true,
           default: '—',
-          description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option.'
+          description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option. There is an optional property `disabled`. You may use this option to hide certain options.'
         },
         {
           name: 'value',

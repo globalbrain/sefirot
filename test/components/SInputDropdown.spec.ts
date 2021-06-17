@@ -15,7 +15,8 @@ describe('components/SInputDropdown', () => {
         options: [
           useTextOption({ text: 'Option 1', value: 1 }),
           useTextOption({ text: 'Option 2', value: 2 }),
-          useTextOption({ text: 'Option 3', value: 3 })
+          useTextOption({ text: 'Option 3', value: 3 }),
+          useTextOption({ text: 'Option 4', value: 4, disabled: true })
         ],
         ...options.propsData
       }
@@ -87,5 +88,22 @@ describe('components/SInputDropdown', () => {
     await wrapper.vm.handleOpen()
     expect(wrapper.find('.SInputDropdown .SDropdown .search .SInputText input').element)
       .toBe(document.activeElement)
+  })
+
+  it('should hide disabled options', async () => {
+    const wrapper = createWrapper({
+      propsData: {
+        value: 1
+      }
+    })
+
+    await wrapper.vm.handleOpen()
+
+    const options = wrapper
+      .find('.SInputDropdown .SDropdown .container .list')
+      .findAll('.item')
+      .filter(item => item.isVisible())
+
+    expect(options.length).toBe(3)
   })
 })

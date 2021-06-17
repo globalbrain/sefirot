@@ -30,6 +30,7 @@
         <option
           v-for="option in options"
           :key="option.value"
+          :style="{ display: option.disabled ? 'none' : null }"
           :value="JSON.stringify(option)"
           :selected="isSelectedOption(option)"
         >
@@ -58,6 +59,7 @@ type Mode = 'filled' | 'outlined'
 interface Option {
   label: string
   value: boolean | number | string
+  disabled?: boolean
 }
 
 export default defineComponent({

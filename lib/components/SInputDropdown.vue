@@ -96,9 +96,13 @@ export default defineComponent({
       { disabled: props.disabled }
     ])
 
+    const enabledItems = computed(() => {
+      return props.options.filter(option => !option.disabled)
+    })
+
     const dropdownOptions = useDropdown({
       search: props.search,
-      items: computed(() => props.options),
+      items: enabledItems,
       closeOnClick: props.closeOnClick,
       selected: computed(() => props.value),
       callback: handleCallback
