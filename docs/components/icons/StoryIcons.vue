@@ -49,6 +49,7 @@ import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
 import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
+import SIconLayout from '@@/lib/components/icons/SIconLayout.vue'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
@@ -71,6 +72,7 @@ import SIconUsers from '@@/lib/components/icons/SIconUsers.vue'
 import SIconX from '@@/lib/components/icons/SIconX.vue'
 import SIconXCircle from '@@/lib/components/icons/SIconXCircle.vue'
 import SIconXSquare from '@@/lib/components/icons/SIconXSquare.vue'
+import SIconZap from '@@/lib/components/icons/SIconZap.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
 export default defineComponent({
@@ -116,6 +118,7 @@ export default defineComponent({
       { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
       { component: SIconInfo, name: 'Info' },
+      { component: SIconLayout, name: 'Layout' },
       { component: SIconList, name: 'List' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
@@ -137,7 +140,8 @@ export default defineComponent({
       { component: SIconUsers, name: 'Users' },
       { component: SIconX, name: 'X' },
       { component: SIconXCircle, name: 'XCircle' },
-      { component: SIconXSquare, name: 'XSquare' }
+      { component: SIconXSquare, name: 'XSquare' },
+      { component: SIconZap, name: 'Zap' }
     ]
 
     return {
