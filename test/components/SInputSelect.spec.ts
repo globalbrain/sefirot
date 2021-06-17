@@ -33,12 +33,16 @@ describe('components/SInputSelect', () => {
     expect(wrapper.emitted('change')).toHaveEmittedWith(2)
   })
 
-  it('should display only options which is not disabled', () => {
+  it('should hide disabled options', () => {
     const wrapper = createWrapper({
       propsData: { value: 1 }
     })
 
-    const options = wrapper.find('.SInputSelect .select').findAll('option')
+    const options = wrapper
+      .find('.SInputSelect .select')
+      .findAll('option')
+      .filter(option => option.isVisible())
+
     expect(options.length).toBe(3)
   })
 

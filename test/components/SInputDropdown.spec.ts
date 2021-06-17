@@ -90,7 +90,7 @@ describe('components/SInputDropdown', () => {
       .toBe(document.activeElement)
   })
 
-  it('should display only options which is not disabled', async () => {
+  it('should hide disabled options', async () => {
     const wrapper = createWrapper({
       propsData: {
         value: 1
@@ -98,7 +98,12 @@ describe('components/SInputDropdown', () => {
     })
 
     await wrapper.vm.handleOpen()
-    const options = wrapper.find('.SInputDropdown .SDropdown .container .list').findAll('.item')
+
+    const options = wrapper
+      .find('.SInputDropdown .SDropdown .container .list')
+      .findAll('.item')
+      .filter(item => item.isVisible())
+
     expect(options.length).toBe(3)
   })
 })

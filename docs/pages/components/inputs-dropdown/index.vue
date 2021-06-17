@@ -11,6 +11,14 @@ Set `disabled` props to disable the input. While the input is disabled, it will 
 
 <StoryInputDropdownEXDisabled />
 
+## Disabling certain options
+
+You may define `disabled: true` to hide certain option items from showing up in the select list. Disabled options can still be shown as "selected" item.
+
+For example, this is useful when you want to deprecate some options, but you still have past data using those options.
+
+<StoryInputDropdownEXDisabledOptions />
+
 ## API
 
 <SpecProps :props="props" />
@@ -21,6 +29,7 @@ Set `disabled` props to disable the input. While the input is disabled, it will 
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputDropdownShowcase from '@/components/inputs/StoryInputDropdownShowcase.vue'
 import StoryInputDropdownEXDisabled from '@/components/inputs/StoryInputDropdownEXDisabled.vue'
+import StoryInputDropdownEXDisabledOptions from '@/components/inputs/StoryInputDropdownEXDisabledOptions.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -29,6 +38,7 @@ export default defineComponent({
   components: {
     StoryInputDropdownShowcase,
     StoryInputDropdownEXDisabled,
+    StoryInputDropdownEXDisabledOptions,
     SpecProps,
     SpecEvents
   },

@@ -28,8 +28,9 @@
         </option>
 
         <option
-          v-for="option in enabledOptions"
+          v-for="option in options"
           :key="option.value"
+          :style="{ display: option.disabled ? 'none' : null }"
           :value="JSON.stringify(option)"
           :selected="isSelectedOption(option)"
         >
@@ -102,10 +103,6 @@ export default defineComponent({
       return props.value === undefined || props.value === null || props.value === ''
     })
 
-    const enabledOptions = computed(() => {
-      return props.options.filter(option => !option.disabled)
-    })
-
     function isSelectedOption(option: Option): boolean {
       return option.value === props.value
     }
@@ -130,7 +127,6 @@ export default defineComponent({
       isFocused,
       classes,
       isNotSelected,
-      enabledOptions,
       isSelectedOption,
       focus,
       blur,
