@@ -114,7 +114,7 @@ export default defineComponent({
           type: 'Array',
           required: true,
           default: '—',
-          description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option.'
+          description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option. There is an optional property `disabled` can be used for the select options which should not be displayed.'
         },
         {
           name: 'value',

@@ -28,7 +28,7 @@
         </option>
 
         <option
-          v-for="option in options"
+          v-for="option in enabledOptions"
           :key="option.value"
           :value="JSON.stringify(option)"
           :selected="isSelectedOption(option)"
@@ -58,6 +58,7 @@ type Mode = 'filled' | 'outlined'
 interface Option {
   label: string
   value: boolean | number | string
+  disabled?: boolean
 }
 
 export default defineComponent({
@@ -101,6 +102,10 @@ export default defineComponent({
       return props.value === undefined || props.value === null || props.value === ''
     })
 
+    const enabledOptions = computed(() => {
+      return props.options.filter(option => !option.disabled)
+    })
+
     function isSelectedOption(option: Option): boolean {
       return option.value === props.value
     }
@@ -125,6 +130,7 @@ export default defineComponent({
       isFocused,
       classes,
       isNotSelected,
+      enabledOptions,
       isSelectedOption,
       focus,
       blur,

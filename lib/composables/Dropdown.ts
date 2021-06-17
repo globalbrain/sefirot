@@ -22,6 +22,7 @@ export type Item = TextItem | UserItem
 export interface ItemBase {
   type: string
   value: any
+  disabled?: boolean
   callback?: Function
 }
 
