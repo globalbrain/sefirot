@@ -1,3 +1,10 @@
+# [0.57.0](https://github.com/globalbrain/sefirot/compare/v0.56.1...v0.57.0) (2021-06-17)
+
+### Features
+
+* **icon:** add layout and zap icon ([d365f72](https://github.com/globalbrain/sefirot/commit/d365f729f15dedc7dec69f3eda7b4a58ffdf8fa2))
+* add disabled option for select and dropdown options ([#82](https://github.com/globalbrain/sefirot/issues/82)) ([d86fb01](https://github.com/globalbrain/sefirot/commit/d86fb01eb94d27caf7d4ba8b1fe874b0342b6d6b))
+
 ## [0.56.1](https://github.com/globalbrain/sefirot/compare/v0.56.0...v0.56.1) (2021-06-10)
 
 ### Bug Fixes
