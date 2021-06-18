@@ -21,7 +21,7 @@
               v-else
               class="action"
               :class="[action.mode || 'neutral', { disabled: action.disabled }]"
-              @click="action.callback()"
+              @click="action.callback && !action.disabled ? action.callback() : () => {}"
             >
               <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
             </button>
