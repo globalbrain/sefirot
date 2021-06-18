@@ -8,15 +8,23 @@
       <template v-if="actions.length > 0">
         <template v-for="(action, index) in actions">
           <SToolTip :key="index" :text="action.disabled">
-            <component
-              :is="action.link ? 'router-link' : 'button'"
+            <RouterLink
+              v-if="action.link"
               class="action"
               :class="[action.mode || 'neutral', { disabled: action.disabled }]"
               :to="action.link"
+              event
+            >
+              <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
+            </RouterLink>
+            <button
+              v-else
+              class="action"
+              :class="[action.mode || 'neutral', { disabled: action.disabled }]"
               @click="action.callback && !action.disabled ? action.callback() : () => {}"
             >
               <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
-            </component>
+            </button>
           </SToolTip>
         </template>
       </template>
@@ -153,6 +161,7 @@ export default defineComponent({
 .action.success:hover { color: var(--c-success); }
 .action.warning:hover { color: var(--c-warning); }
 .action.danger:hover  { color: var(--c-danger); }
+
 
 .action.disabled:hover {
   color: var(--c-text-2);
