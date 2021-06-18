@@ -8,23 +8,15 @@
       <template v-if="actions.length > 0">
         <template v-for="(action, index) in actions">
           <SToolTip :key="index" :text="action.disabled">
-            <RouterLink
-              v-if="action.link"
+            <component
+              :is="action.link ? 'a' : 'button'"
               class="action"
               :class="[action.mode || 'neutral', { disabled: action.disabled }]"
-              :to="action.link"
-              event
+              :href="action.link ? action.link : null"
+              @click.prevent="handleCallback(action)"
             >
               <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
-            </RouterLink>
-            <button
-              v-else
-              class="action"
-              :class="[action.mode || 'neutral', { disabled: action.disabled }]"
-              @click="action.callback && !action.disabled ? action.callback() : () => {}"
-            >
-              <component :is="getIcon(action.icon, !!action.disabled)" class="action-icon" />
-            </button>
+            </component>
           </SToolTip>
         </template>
       </template>
@@ -40,6 +32,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
+import { useRouter } from '../composables/Router'
 import { Action, ActionIconType, Mode } from '../composables/Card'
 import SIconPlus from './icons/SIconPlus.vue'
 import SIconPlusOff from './icons/SIconPlusOff.vue'
@@ -66,6 +59,8 @@ export default defineComponent({
   },
 
   setup(props) {
+    const router = useRouter()
+
     const classes = computed(() => [
       { collapsed: props.isCollapsed },
       props.mode,
@@ -92,9 +87,23 @@ export default defineComponent({
       throw new Error(`[sefirot] Invalid icon type: ${icon}.`)
     }
 
+    function handleCallback(action: Action): void {
+      if (action.disabled) {
+        return
+      }
+
+      if (action.link) {
+        router.push(action.link)
+        return
+      }
+
+      action.callback?.()
+    }
+
     return {
       classes,
-      getIcon
+      getIcon,
+      handleCallback
     }
   }
 })
@@ -149,6 +158,7 @@ export default defineComponent({
   width: 32px;
   height: 32px;
   color: var(--c-text-2);
+  cursor: pointer;
   transition: color .25s, background-color .25s;
 
   &:hover {
