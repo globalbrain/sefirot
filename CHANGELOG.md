@@ -1,3 +1,14 @@
+# [0.58.0](https://github.com/globalbrain/sefirot/compare/v0.57.0...v0.58.0) (2021-06-18)
+
+### Bug Fixes
+
+* **card:** make button un-clickable if disabled ([#84](https://github.com/globalbrain/sefirot/issues/84)) ([e98f643](https://github.com/globalbrain/sefirot/commit/e98f643c2331b8da934791b1f0249f55851d8a19))
+
+### Features
+
+* **icon:** add database icon ([6c378c2](https://github.com/globalbrain/sefirot/commit/6c378c235503771d5f118d4c79bea3eac8ea67ab))
+* **tooltip:** add markdown support ([#85](https://github.com/globalbrain/sefirot/issues/85)) ([d913508](https://github.com/globalbrain/sefirot/commit/d9135083468a224d7424d9c05e0c022f3d3c6a43))
+
 # [0.57.0](https://github.com/globalbrain/sefirot/compare/v0.56.1...v0.57.0) (2021-06-17)
 
 ### Features
