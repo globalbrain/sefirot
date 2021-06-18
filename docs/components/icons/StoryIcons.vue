@@ -31,6 +31,7 @@ import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
 import SIconClock from '@@/lib/components/icons/SIconClock.vue'
 import SIconCode from '@@/lib/components/icons/SIconCode.vue'
+import SIconDatabase from '@@/lib/components/icons/SIconDatabase.vue'
 import SIconDollarSign from '@@/lib/components/icons/SIconDollarSign.vue'
 import SIconDownload from '@@/lib/components/icons/SIconDownload.vue'
 import SIconDownloadCloud from '@@/lib/components/icons/SIconDownloadCloud.vue'
@@ -87,6 +88,7 @@ export default defineComponent({
       { component: SIconArrowLeft, name: 'ArrowLeft' },
       { component: SIconArrowRight, name: 'ArrowRight' },
       { component: SIconArrowUp, name: 'ArrowUp' },
+      { component: SIconDatabase, name: 'Database' },
       { component: SIconBarChart, name: 'BarChart' },
       { component: SIconBriefcase, name: 'Briefcase' },
       { component: SIconBuilding, name: 'Building' },
