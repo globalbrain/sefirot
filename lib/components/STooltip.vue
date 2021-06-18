@@ -1,16 +1,17 @@
 <template>
-  <component :is="tag" class="STooltip">
+  <component :is="tag" class="STooltip" @mouseenter="show" @mouseleave="hide">
     <template v-if="text">
-      <span class="STooltip-content" @mouseenter="on = true" @mouseleave="on = false">
+      <span ref="content" class="STooltip-content">
         <slot />
       </span>
 
       <transition name="fade">
-        <span v-show="on" class="STooltip-tip" :class="classes">
-          {{ text }}
+        <span v-show="on" ref="tip" class="STooltip-container" :class="classes">
+          <SMarkdown class="STooltip-tip" :content="text" inline />
         </span>
       </transition>
     </template>
+
     <template v-else>
       <span class="STooltip-content">
         <slot />
@@ -21,10 +22,14 @@
 
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
-
-type Position = 'top' | 'right' | 'bottom' | 'left'
+import { Position, useTooltip } from '../composables/Tooltip'
+import SMarkdown from './SMarkdown.vue'
 
 export default defineComponent({
+  components: {
+    SMarkdown
+  },
+
   props: {
     tag: { type: String, default: 'span' },
     text: { type: String, default: null },
@@ -32,13 +37,20 @@ export default defineComponent({
   },
 
   setup(props) {
-    const on = ref(false)
+    const tip = ref<HTMLElement | null>(null)
+    const content = ref<HTMLElement | null>(null)
 
     const classes = computed(() => [props.position])
 
+    const { on, show, hide } = useTooltip(content, tip, props.position)
+
     return {
+      tip,
+      content,
+      classes,
       on,
-      classes
+      show,
+      hide
     }
   }
 })
@@ -51,51 +63,71 @@ export default defineComponent({
   position: relative;
 }
 
-.STooltip-tip {
+.STooltip-container {
   position: absolute;
   display: block;
-  border-radius: 4px;
-  padding: 0 12px;
-  line-height: 32px;
-  text-align: center;
-  font-size: 12px;
-  color: var(--c-text-dark-1);
-  background-color: rgba(0, 0, 0, .9);
-  white-space: nowrap;
-  transition: opacity .25s, transform .25s;
+  transition: opacity .25s;
 }
 
-.STooltip-tip.fade-enter,
-.STooltip-tip.fade-leave-to {
+.STooltip-container.fade-enter,
+.STooltip-container.fade-leave-to {
   opacity: 0;
 
-  &.top    { transform: translate(-50%, -100%); }
-  &.right  { transform: translate(0, -50%); }
-  &.bottom { transform: translate(-50%, 100%); }
-  &.left   { transform: translate(0, -50%); }
+  &.top .STooltip-tip    { transform: translateY(8px); }
+  &.right .STooltip-tip  { transform: translateX(-8px); }
+  &.bottom .STooltip-tip { transform: translateY(-8px); }
+  &.left  .STooltip-tip  { transform: translateX(8px); }
 }
 
-.STooltip-tip.top {
+.STooltip-container.top {
   top: 0;
   left: 50%;
-  transform: translate(-50%, calc(-100% - 8px));
+  padding-bottom: 8px;
+  transform: translate(-50%, -100%);
 }
 
-.STooltip-tip.right {
+.STooltip-container.right {
   top: 50%;
   left: 100%;
   transform: translate(8px, -50%);
 }
 
-.STooltip-tip.bottom {
+.STooltip-container.bottom {
   bottom: 0;
   left: 50%;
-  transform: translate(-50%, calc(100% + 8px));
+  padding-top: 8px;
+  transform: translate(-50%, 100%);
 }
 
-.STooltip-tip.left {
+.STooltip-container.left {
   top: 50%;
   right: 100%;
   transform: translate(-8px, -50%);
+}
+
+.STooltip-tip {
+  display: block;
+  border-radius: 4px;
+  padding: 12px;
+  width: max-content;
+  max-width: 288px;
+  line-height: 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-dark-1);
+  background-color: rgba(0, 0, 0, .9);
+  transition: transform .25s;
+}
+
+.STooltip-tip >>> a {
+  color: var(--c-info);
+
+  &:hover {
+    color: var(--c-info-dark);
+  }
+}
+
+.STooltip-content {
+  white-space: nowrap;
 }
 </style>
