@@ -5,6 +5,12 @@ Tooltips display informative text when users hover over or focus on an element.
 
 <StoryTooltipShowcase />
 
+## Long Text
+
+The tooltip may display long text to provide users more information. However, tooltip text should be short as possible. You can use markdown to provide a link to more details.
+
+<StoryTooltipEXLongText />
+
 ## API
 
 <SpecProps :props="props" />
@@ -12,13 +18,15 @@ Tooltips display informative text when users hover over or focus on an element.
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import StoryTooltipShowcase from '@/components/StoryTooltipShowcase.vue'
+import StoryTooltipShowcase from '@/components/tooltips/StoryTooltipShowcase.vue'
+import StoryTooltipEXLongText from '@/components/tooltips/StoryTooltipEXLongText.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import { useSpec } from '@/composables/Spec'
 
 export default defineComponent({
   components: {
     StoryTooltipShowcase,
+    StoryTooltipEXLongText,
     SpecProps
   },
 

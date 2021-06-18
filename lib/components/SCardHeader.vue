@@ -162,7 +162,6 @@ export default defineComponent({
 .action.warning:hover { color: var(--c-warning); }
 .action.danger:hover  { color: var(--c-danger); }
 
-
 .action.disabled:hover {
   color: var(--c-text-2);
   background-color: transparent;

@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import STooltip from '@globalbrain/sefirot/lib/components/STooltip.vue'
 
 export default defineComponent({
