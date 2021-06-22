@@ -45,6 +45,13 @@ export default defineComponent({
           description: 'The mode of the switch.'
         },
         {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the switch.'
+        },
+        {
           name: 'textMode',
           type: "'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'",
           required: false,
