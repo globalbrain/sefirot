@@ -4,6 +4,7 @@
   --c-white-mute: #f2f2f2;
 
   --c-black: #000000;
+  --c-black-deep: #171717;
   --c-black-soft: #1c1c1e;
   --c-black-mute: #2c2c2e;
 
@@ -169,7 +170,7 @@
 }
 
 .dark-mode {
-  --c-bg: var(--c-black);
+  --c-bg: var(--c-black-deep);
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
 
