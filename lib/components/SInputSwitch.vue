@@ -48,18 +48,25 @@ export default defineComponent({
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
     textMode: { type: String as PropType<TextMode>, default: 'neutral' },
+    disabled: { type: Boolean, default: false },
     help: { type: String, default: null },
     value: { type: Boolean, required: true }
   },
 
   setup(props, { emit }) {
-    const classes = computed(() => [
-      props.size,
-      props.mode
-    ])
+    const classes = computed(() => ({
+      mini: props.size === 'mini',
+      small: props.size === 'small',
+      neutral: props.mode === 'neutral',
+      info: props.mode === 'info',
+      success: props.mode === 'success',
+      warning: props.mode === 'warning',
+      danger: props.mode === 'danger',
+      disabled: props.disabled
+    }))
 
     function emitChange(): void {
-      emit('change', !props.value)
+      !props.disabled && emit('change', !props.value)
     }
 
     return {
@@ -130,6 +137,19 @@ export default defineComponent({
 .SInputSwitch.danger .SInputSwitch-input.on .SInputSwitch-box {
   border-color: var(--c-danger);
   background-color: var(--c-danger);
+}
+
+.SInputSwitch.disabled .SInputSwitch-input {
+  .SInputSwitch-box {
+    cursor: not-allowed;
+    opacity: .6;
+  }
+
+  &:hover .SInputSwitch-box { border-color: var(--c-gray); }
+}
+
+.SInputSwitch.disabled .SInputSwitch-input.on {
+  &:hover .SInputSwitch-box { border-color: transparent; }
 }
 
 .SInputSwitch-container {
