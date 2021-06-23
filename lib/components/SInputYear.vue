@@ -11,6 +11,7 @@
     :action="action"
     :text="text"
     :text-after="textAfter"
+    :disabled="disabled"
     :value="value"
     :validation="validation"
     @action="$emit('action')"
@@ -51,6 +52,7 @@ export default defineComponent({
     action: { type: Object as PropType<Action>, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
+    disabled: { type: Boolean, default: false },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   }
