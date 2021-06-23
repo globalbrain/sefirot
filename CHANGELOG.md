@@ -1,3 +1,12 @@
+# [0.59.0](https://github.com/globalbrain/sefirot/compare/v0.58.0...v0.59.0) (2021-06-23)
+
+### Features
+
+* **input-switch:** adds disabled option ([#87](https://github.com/globalbrain/sefirot/issues/87)) ([0aeecaa](https://github.com/globalbrain/sefirot/commit/0aeecaa58e5ff2e1b9f37e148b121db9c2a32718))
+* **input-year:** add disabled option for input-year ([#86](https://github.com/globalbrain/sefirot/issues/86)) ([2f41bd9](https://github.com/globalbrain/sefirot/commit/2f41bd9f800b7692a5d649fee7074b2c33272f75))
+* **icon:** add more icons ([161ee81](https://github.com/globalbrain/sefirot/commit/161ee8194317fdde85a8992b548669966455944c))
+* **style:** add black deep color ([9d28685](https://github.com/globalbrain/sefirot/commit/9d286855d4f6e876b82073dd3f91a1eda69cfed8))
+
 # [0.58.0](https://github.com/globalbrain/sefirot/compare/v0.57.0...v0.58.0) (2021-06-18)
 
 ### Bug Fixes
