@@ -45,24 +45,32 @@ import SIconFile from '@@/lib/components/icons/SIconFile.vue'
 import SIconFilePlus from '@@/lib/components/icons/SIconFilePlus.vue'
 import SIconFileText from '@@/lib/components/icons/SIconFileText.vue'
 import SIconFlag from '@@/lib/components/icons/SIconFlag.vue'
+import SIconGrid from '@@/lib/components/icons/SIconGrid.vue'
 import SIconGitBranch from '@@/lib/components/icons/SIconGitBranch.vue'
 import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
 import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
+import SIconHome from '@@/lib/components/icons/SIconHome.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconLayout from '@@/lib/components/icons/SIconLayout.vue'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
+import SIconMoon from '@@/lib/components/icons/SIconMoon.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
+import SIconPauseFill from '@@/lib/components/icons/SIconPauseFill.vue'
+import SIconPlayFill from '@@/lib/components/icons/SIconPlayFill.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
 import SIconPlusCircle from '@@/lib/components/icons/SIconPlusCircle.vue'
 import SIconPlusOff from '@@/lib/components/icons/SIconPlusOff.vue'
 import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
 import SIconProgress from '@@/lib/components/icons/SIconProgress.vue'
+import SIconRadio from '@@/lib/components/icons/SIconRadio.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
 import SIconSettings from '@@/lib/components/icons/SIconSettings.vue'
+import SIconSkipBackFill from '@@/lib/components/icons/SIconSkipBackFill.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
 import SIconSliders from '@@/lib/components/icons/SIconSliders.vue'
+import SIconSun from '@@/lib/components/icons/SIconSun.vue'
 import SIconTelescope from '@@/lib/components/icons/SIconTelescope.vue'
 import SIconTrash from '@@/lib/components/icons/SIconTrash.vue'
 import SIconTrash2 from '@@/lib/components/icons/SIconTrash2.vue'
@@ -115,24 +123,32 @@ export default defineComponent({
       { component: SIconFilePlus, name: 'FilePlus' },
       { component: SIconFileText, name: 'FileText' },
       { component: SIconFlag, name: 'Flag' },
+      { component: SIconGrid, name: 'Grid' },
       { component: SIconGitBranch, name: 'GitBranch' },
       { component: SIconGitCommit, name: 'GitCommit' },
       { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
+      { component: SIconHome, name: 'Home' },
       { component: SIconInfo, name: 'Info' },
       { component: SIconLayout, name: 'Layout' },
       { component: SIconList, name: 'List' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
+      { component: SIconMoon, name: 'Moon' },
+      { component: SIconPauseFill, name: 'PauseFill' },
+      { component: SIconPlayFill, name: 'PlayFill' },
       { component: SIconPlus, name: 'Plus' },
       { component: SIconPlusCircle, name: 'PlusCircle' },
       { component: SIconPlusOff, name: 'PlusOff' },
       { component: SIconPlayCircle, name: 'PlayCircle' },
       { component: SIconProgress, name: 'Progress' },
+      { component: SIconRadio, name: 'Radio' },
       { component: SIconSave, name: 'Save' },
       { component: SIconSettings, name: 'Settings' },
+      { component: SIconSkipBackFill, name: 'SkipBackFill' },
       { component: SIconShare2, name: 'Share2' },
       { component: SIconSliders, name: 'Sliders' },
+      { component: SIconSun, name: 'Sun' },
       { component: SIconTelescope, name: 'Telescope' },
       { component: SIconTrash, name: 'Trash' },
       { component: SIconTrash2, name: 'Trash2' },
