@@ -5,8 +5,8 @@
     </div>
 
     <div class="actions">
-      <template v-if="unwrapActions.length > 0">
-        <template v-for="(action, index) in unwrapActions">
+      <template v-if="unwrapedActions.length > 0">
+        <template v-for="(action, index) in unwrapedActions">
           <SToolTip :key="index" :text="action.disabled">
             <component
               :is="action.link ? 'a' : 'button'"
@@ -33,7 +33,7 @@
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { useRouter } from '../composables/Router'
-import { get, Refish } from '../composables/Utils'
+import { Refish, get } from '../composables/Utils'
 import { Action, ActionIconType, Mode } from '../composables/Card'
 import SIconPlus from './icons/SIconPlus.vue'
 import SIconPlusOff from './icons/SIconPlusOff.vue'
@@ -68,7 +68,7 @@ export default defineComponent({
       `round-${props.round}`
     ])
 
-    const unwrapActions = computed(() => get(props.actions))
+    const unwrapedActions = computed(() => get(props.actions))
 
     function getIcon(icon: ActionIconType | object, disabled: boolean) {
       if (typeof icon === 'object') {
@@ -105,7 +105,7 @@ export default defineComponent({
 
     return {
       classes,
-      unwrapActions,
+      unwrapedActions,
       getIcon,
       handleCallback
     }
