@@ -1,3 +1,9 @@
+# [0.60.0](https://github.com/globalbrain/sefirot/compare/v0.59.0...v0.60.0) (2021-06-25)
+
+### Features
+
+* **card:** make card header's actions prop refish ([#88](https://github.com/globalbrain/sefirot/issues/88)) ([b06166e](https://github.com/globalbrain/sefirot/commit/b06166e7c165db4ab7e4f77ef815c8fd2c75ef30))
+
 # [0.59.0](https://github.com/globalbrain/sefirot/compare/v0.58.0...v0.59.0) (2021-06-23)
 
 ### Features
