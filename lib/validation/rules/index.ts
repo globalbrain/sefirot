@@ -6,6 +6,7 @@ import includeSome from './includeSome'
 import integer from './integer'
 import maxLength from './maxLength'
 import maxValue from './maxValue'
+import minValue from './minValue'
 import month from './month'
 import not from './not'
 import regex from './regex'
@@ -39,6 +40,7 @@ export {
   integer,
   maxLength,
   maxValue,
+  minValue,
   month,
   not,
   regex,
