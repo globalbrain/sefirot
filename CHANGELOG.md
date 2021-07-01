@@ -1,3 +1,9 @@
+# [0.61.0](https://github.com/globalbrain/sefirot/compare/v0.60.0...v0.61.0) (2021-07-01)
+
+### Features
+
+* **validation:** add minValue validation ([#89](https://github.com/globalbrain/sefirot/issues/89)) ([014d2fc](https://github.com/globalbrain/sefirot/commit/014d2fc3f8da7b5edb3384b293a0a29aad3d8348))
+
 # [0.60.0](https://github.com/globalbrain/sefirot/compare/v0.59.0...v0.60.0) (2021-06-25)
 
 ### Features
