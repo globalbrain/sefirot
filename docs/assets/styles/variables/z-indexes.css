@@ -2,6 +2,7 @@
   --z-index-sidebar: 1000;
   --z-index-header: 1100;
   --z-index-footer: 1100;
+  --z-index-tooltip: 2000;
   --z-index-dropdown: 2000;
   --z-index-screen: 3000;
   --z-index-backdrop: 4000;
