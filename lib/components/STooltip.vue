@@ -67,6 +67,7 @@ export default defineComponent({
   position: absolute;
   display: block;
   transition: opacity .25s;
+  z-index: var(--z-index-tooltip);
 }
 
 .STooltip-container.fade-enter,
