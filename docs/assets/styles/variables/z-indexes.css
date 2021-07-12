@@ -3,9 +3,9 @@
   --z-index-header: 1100;
   --z-index-footer: 1100;
   --z-index-tooltip: 2000;
-  --z-index-dropdown: 2000;
-  --z-index-screen: 3000;
-  --z-index-backdrop: 4000;
-  --z-index-modal: 4010;
-  --z-index-snackbar: 5000;
+  --z-index-dropdown: 3000;
+  --z-index-screen: 4000;
+  --z-index-backdrop: 5000;
+  --z-index-modal: 5100;
+  --z-index-snackbar: 6000;
 }
