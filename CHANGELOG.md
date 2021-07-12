@@ -1,3 +1,9 @@
+# [0.62.0](https://github.com/globalbrain/sefirot/compare/v0.61.0...v0.62.0) (2021-07-12)
+
+### Features
+
+* **tooltip:** add z-index for SToolTip ([#90](https://github.com/globalbrain/sefirot/issues/90)) ([ebb1abf](https://github.com/globalbrain/sefirot/commit/ebb1abf6521c532c08b2b88903884b93a7d2d734))
+
 # [0.61.0](https://github.com/globalbrain/sefirot/compare/v0.60.0...v0.61.0) (2021-07-01)
 
 ### Features
