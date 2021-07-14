@@ -66,7 +66,7 @@ export default defineComponent({
 
       return props.value >= 100000000000000000000
         ? 'The number is too big'
-        : props.value.toLocaleString()
+        : props.value.toLocaleString('en-US', { maximumFractionDigits: 20 })
     })
 
     function emitInput(value: number): void {
