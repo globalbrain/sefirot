@@ -17,8 +17,8 @@ describe('components/SInputNumber', () => {
       }
     })
 
-    await wrapper.setProps({ value: 1000000000 })
-    expect(wrapper.vm.valueWithSeparator).toBe('1,000,000,000')
+    await wrapper.setProps({ value: 1000000000.2222 })
+    expect(wrapper.vm.valueWithSeparator).toBe('1,000,000,000.2222')
   })
 
   it('should not format help text with excessive value', async () => {
