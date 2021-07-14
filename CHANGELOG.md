@@ -1,3 +1,9 @@
+## [0.62.1](https://github.com/globalbrain/sefirot/compare/v0.62.0...v0.62.1) (2021-07-14)
+
+### Bug Fixes
+
+* **input-number:** do not round decimals on help format text ([#92](https://github.com/globalbrain/sefirot/issues/92)) ([1b87f13](https://github.com/globalbrain/sefirot/commit/1b87f135ec755377e60322c5eef7e46b32b2b5dc))
+
 # [0.62.0](https://github.com/globalbrain/sefirot/compare/v0.61.0...v0.62.0) (2021-07-12)
 
 ### Features
