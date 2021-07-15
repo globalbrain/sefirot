@@ -13,6 +13,8 @@ export type Refish<T = any> = T | Ref<T> | ComputedRef<T>
 export type Source<S> = Ref<S> | ComputedRef<S>
 
 export function get<T>(refish: Refish<T> | (() => T)): T {
+  if (!refish) { return refish }
+
   if (isRef(refish)) {
     return refish.value
   }

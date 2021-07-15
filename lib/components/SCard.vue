@@ -45,7 +45,11 @@ export default defineComponent({
 
   setup(props) {
     const isCollapsed = ref(false)
-    const showFooter = computed(() => get(props.footer?.actions ?? []).length > 0)
+    const showFooter = computed(() => {
+      const actions = get(props.footer?.actions) ?? []
+
+      return actions.length > 0
+    })
 
     const classes = computed(() => [
       { collapsed: isCollapsed.value },
