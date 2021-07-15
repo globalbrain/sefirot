@@ -1,6 +1,6 @@
 <template>
-  <div v-if="unwrappedActions.length > 0" class="SCardFooter" :class="classes">
-    <div class="actions">
+  <div class="SCardFooter" :class="classes">
+    <div v-if="unwrappedActions.length > 0" class="actions">
       <div v-for="(action, index) in unwrappedActions" :key="index" class="action">
         <SButton
           size="small"

@@ -15,7 +15,7 @@
       <slot />
     </div>
 
-    <div v-if="footer" class="footer">
+    <div v-if="showFooter" class="footer">
       <SCardFooter :actions="footer.actions" />
     </div>
   </div>
@@ -24,6 +24,7 @@
 <script lang="ts">
 import { PropType, defineComponent, ref, computed } from '@vue/composition-api'
 import { Header, Footer, Mode } from '../composables/Card'
+import { get } from '../composables/Utils'
 import SCardHeader from './SCardHeader.vue'
 import SCardFooter from './SCardFooter.vue'
 
@@ -44,6 +45,7 @@ export default defineComponent({
 
   setup(props) {
     const isCollapsed = ref(false)
+    const showFooter = computed(() => get(props.footer?.actions ?? []).length > 0)
 
     const classes = computed(() => [
       { collapsed: isCollapsed.value },
@@ -58,6 +60,7 @@ export default defineComponent({
 
     return {
       isCollapsed,
+      showFooter,
       classes,
       toggleCollapse
     }
