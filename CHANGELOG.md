@@ -1,3 +1,9 @@
+# [0.63.0](https://github.com/globalbrain/sefirot/compare/v0.62.1...v0.63.0) (2021-07-21)
+
+### Features
+
+* **card:** show footer only when there is at least one action ([#93](https://github.com/globalbrain/sefirot/issues/93)) ([6a418b1](https://github.com/globalbrain/sefirot/commit/6a418b133afd439ee3ca95d50824e88ef6ae13a3))
+
 ## [0.62.1](https://github.com/globalbrain/sefirot/compare/v0.62.0...v0.62.1) (2021-07-14)
 
 ### Bug Fixes
