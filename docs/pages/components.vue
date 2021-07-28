@@ -23,6 +23,7 @@ export default defineComponent({
   setup() {
     const contents = useContent([
       { label: 'Buttons', path: '/components/buttons' },
+      { label: 'Button Groups', path: '/components/button-groups' },
       { label: 'Grids', path: '/components/grids' },
       { label: 'Icons', path: '/components/icons' },
       { label: 'Inputs: Checkbox', path: '/components/inputs-checkbox' },
