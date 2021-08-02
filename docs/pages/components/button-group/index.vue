@@ -1,23 +1,24 @@
 <template lang="md">
-# Button groups
-Button groups allow users to select one of the items.
+# Button Group
+
+Button Group allow users to select one of the buttons. Similar checkboxes, but with look of buttons.
 
 <StoryButtonGroupShowcase />
 
 ## Size
-Button groups can appear in many different sizes. By default, buttons will be medium sized.
+
+Button groups can appear in many different sizes. By default, buttons will be `medium` sized.
+
 <StoryButtonGroupExMini />
-
 <StoryButtonGroupExSmall />
-
 <StoryButtonGroupExMedium />
-
 <StoryButtonGroupExLarge />
-
 <StoryButtonGroupExJumbo />
 
 ## Mode
-Control the color theme of buttons.
+
+Control the color theme of buttons by defining `mode` property. The default is `neutral`.
+
 <StoryButtonGroupExModes />
 
 ## API
@@ -27,29 +28,29 @@ Control the color theme of buttons.
 </template>
 
 <script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+import { useSpec } from '@/composables/Spec'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
-import { useSpec } from '@/composables/Spec'
-import { defineComponent } from '@nuxtjs/composition-api'
-import StoryButtonGroupShowcase from '~/components/button-groups/StoryButtonGroupShowcase.vue'
-import StoryButtonGroupExMini from '~/components/button-groups/StoryButtonGroupEXMini.vue'
-import StoryButtonGroupExSmall from '~/components/button-groups/StoryButtonGroupEXSmall.vue'
-import StoryButtonGroupExMedium from '~/components/button-groups/StoryButtonGroupEXMedium.vue'
-import StoryButtonGroupExLarge from '~/components/button-groups/StoryButtonGroupEXLarge.vue'
-import StoryButtonGroupExJumbo from '~/components/button-groups/StoryButtonGroupEXJumbo.vue'
-import StoryButtonGroupExModes from '~/components/button-groups/StoryButtonGroupEXModes.vue'
+import StoryButtonGroupShowcase from '@/components/button-group/StoryButtonGroupShowcase.vue'
+import StoryButtonGroupExMini from '@/components/button-group/StoryButtonGroupEXMini.vue'
+import StoryButtonGroupExSmall from '@/components/button-group/StoryButtonGroupEXSmall.vue'
+import StoryButtonGroupExMedium from '@/components/button-group/StoryButtonGroupEXMedium.vue'
+import StoryButtonGroupExLarge from '@/components/button-group/StoryButtonGroupEXLarge.vue'
+import StoryButtonGroupExJumbo from '@/components/button-group/StoryButtonGroupEXJumbo.vue'
+import StoryButtonGroupExModes from '@/components/button-group/StoryButtonGroupEXModes.vue'
 
 export default defineComponent({
   components: {
+    SpecProps,
+    SpecEvents,
     StoryButtonGroupShowcase,
     StoryButtonGroupExMini,
     StoryButtonGroupExSmall,
     StoryButtonGroupExMedium,
     StoryButtonGroupExLarge,
     StoryButtonGroupExJumbo,
-    StoryButtonGroupExModes,
-    SpecProps,
-    SpecEvents
+    StoryButtonGroupExModes
   },
 
   scrollToTop: true,
@@ -59,7 +60,7 @@ export default defineComponent({
       props: [
         {
           name: 'buttons',
-          type: 'ButtonGroupsItem[]',
+          type: 'ButtonGroupItem[]',
           required: true,
           default: '-',
           description: 'The available buttons for the button groups.  The array should contain object with properties of `label`, `value`, and `mode`. `label` is used as a text for the button, `value` is the value corresponding to the button, and `mode` is the mode variant of the button.'
@@ -83,14 +84,14 @@ export default defineComponent({
       events: [
         {
           name: 'change',
-          description: 'Fires when the user click any button of the button group.'
+          description: 'Fires when the user clicks on any button.'
         }
       ]
     })
   },
 
   head: {
-    title: 'Button Groups'
+    title: 'Button Group'
   }
 })
 </script>

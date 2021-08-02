@@ -1,25 +1,19 @@
 <template lang="md">
 <StoryBase>
   <div class="group">
-    <SButtonGroup
-      :buttons="buttons"
-      v-model="value"
-    />
+    <SButtonGroup v-model="value" :items="items" />
   </div>
 </StoryBase>
 
 ```vue
 <template>
   <div class="group">
-    <SButtonGroup
-      :buttons="buttons"
-      v-model="value"
-    />
+    <SButtonGroup v-model="value" :items="items" />
   </div>
 </template>
 
 <script lang="ts">
-import { ref, computed, defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@vue/composition-api'
 import SButtonGroup from '@globalbrain/sefirot/lib/components/SButtonGroup.vue'
 
 export default defineComponent({
@@ -28,16 +22,17 @@ export default defineComponent({
   },
 
   setup() {
-    const value = ref(null)
-    const buttons = computed(() => [
-      { label: 'Button A', value: 'buttonA' },
-      { label: 'Button B', value: 'buttonB' },
-      { label: 'Button C', value: 'buttonC' }
-    ])
+    const value = ref('button-a')
+
+    const items = [
+      { label: 'Button A', value: 'button-a' },
+      { label: 'Button B', value: 'button-b' },
+      { label: 'Button C', value: 'button-c' }
+    ]
 
     return {
       value,
-      buttons
+      items
     }
   }
 })
@@ -52,7 +47,7 @@ export default defineComponent({
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from '@nuxtjs/composition-api'
+import { defineComponent, ref } from '@nuxtjs/composition-api'
 import SButtonGroup from '@@/lib/components/SButtonGroup.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
@@ -63,18 +58,19 @@ export default defineComponent({
   },
 
   setup() {
-    const value = ref(null)
-    const buttons = computed(() => [
-      { label: "Button A", value: 'buttonA' },
-      { label: "Button B", value: 'buttonB' },
-      { label: "Button C", value: 'buttonC' }
-    ])
+    const value = ref('button-a')
+
+    const items = [
+      { label: "Button A", value: 'button-a' },
+      { label: "Button B", value: 'button-b' },
+      { label: "Button C", value: 'button-c' }
+    ]
 
     return {
       value,
-      buttons
+      items
     }
-  },
+  }
 })
 </script>
 

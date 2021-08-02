@@ -11,18 +11,18 @@ describe('components/SButtonGroup', () => {
   })
 
   it('should emit on click', () => {
-    const buttons = [
-      { label: 'Button A', value: 'buttonA' },
-      { label: 'Button B', value: 'buttonB' },
-      { label: 'Button C', value: 'buttonC' }
-    ]
-
     const wrapper = createWrapper({
       propsData: {
-        buttons
+        items: [
+          { label: 'Button A', value: 'button-a' },
+          { label: 'Button B', value: 'button-b' },
+          { label: 'Button C', value: 'button-c' }
+        ]
       }
     })
+
     wrapper.find('.SButtonGroup .button').trigger('click')
+
     expect(wrapper.emitted('change')).toBeTruthy()
   })
 })
