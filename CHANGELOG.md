@@ -1,3 +1,10 @@
+# [0.64.0](https://github.com/globalbrain/sefirot/compare/v0.63.0...v0.64.0) (2021-08-18)
+
+### Features
+
+* **button:** add mode support for secondary type button ([69ad6f3](https://github.com/globalbrain/sefirot/commit/69ad6f32324218096006098329c33f8f5849a563))
+* **button-group:** implement button group component ([#94](https://github.com/globalbrain/sefirot/issues/94)) ([218dd1a](https://github.com/globalbrain/sefirot/commit/218dd1a214f568ec4817f1ee93fd9010bf7be7b3))
+
 # [0.63.0](https://github.com/globalbrain/sefirot/compare/v0.62.1...v0.63.0) (2021-07-21)
 
 ### Features
