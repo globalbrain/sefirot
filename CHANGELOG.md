@@ -1,3 +1,9 @@
+# [0.65.0](https://github.com/globalbrain/sefirot/compare/v0.64.0...v0.65.0) (2021-08-18)
+
+### Features
+
+* **button:** add disabled option ([879bc1b](https://github.com/globalbrain/sefirot/commit/879bc1b6f5c7eaf717bd1562b3b13dce5570f590))
+
 # [0.64.0](https://github.com/globalbrain/sefirot/compare/v0.63.0...v0.64.0) (2021-08-18)
 
 ### Features
