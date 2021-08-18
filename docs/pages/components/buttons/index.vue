@@ -27,6 +27,16 @@ Control the color theme of a button.
 
 <StoryButtonEXModes />
 
+## Disable
+
+Set `disabled` props to disable the button. While the button is disabled, it will adjust its appearance and not emit a click event.
+
+<StoryButtonEXDisabledPrimary />
+<StoryButtonEXDisabledSecondary />
+<StoryButtonEXDisabledTertiary />
+<StoryButtonEXDisabledText />
+<StoryButtonEXDisabledMute />
+
 ## Block
 
 By default, buttons will display as `inline-block`. The `block` prop transforms a button to a block-level element.
@@ -61,6 +71,11 @@ import StoryButtonEXLarge from '@/components/buttons/StoryButtonEXLarge.vue'
 import StoryButtonEXJumbo from '@/components/buttons/StoryButtonEXJumbo.vue'
 import StoryButtonEXRounded from '@/components/buttons/StoryButtonEXRounded.vue'
 import StoryButtonEXModes from '@/components/buttons/StoryButtonEXModes.vue'
+import StoryButtonEXDisabledPrimary from '@/components/buttons/StoryButtonEXDisabledPrimary.vue'
+import StoryButtonEXDisabledSecondary from '@/components/buttons/StoryButtonEXDisabledSecondary.vue'
+import StoryButtonEXDisabledTertiary from '@/components/buttons/StoryButtonEXDisabledTertiary.vue'
+import StoryButtonEXDisabledText from '@/components/buttons/StoryButtonEXDisabledText.vue'
+import StoryButtonEXDisabledMute from '@/components/buttons/StoryButtonEXDisabledMute.vue'
 import StoryButtonEXBlock from '@/components/buttons/StoryButtonEXBlock.vue'
 import StoryButtonEXIcon from '@/components/buttons/StoryButtonEXIcon.vue'
 import StoryButtonEXLoadingState from '@/components/buttons/StoryButtonEXLoadingState.vue'
@@ -78,6 +93,11 @@ export default defineComponent({
     StoryButtonEXJumbo,
     StoryButtonEXRounded,
     StoryButtonEXModes,
+    StoryButtonEXDisabledPrimary,
+    StoryButtonEXDisabledSecondary,
+    StoryButtonEXDisabledTertiary,
+    StoryButtonEXDisabledText,
+    StoryButtonEXDisabledMute,
     StoryButtonEXBlock,
     StoryButtonEXIcon,
     StoryButtonEXLoadingState,
@@ -90,6 +110,13 @@ export default defineComponent({
   setup() {
     return useSpec({
       props: [
+        {
+          name: 'disabled',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'Disable the button. While the button is disabled, it will adjust its appearance and not emit a click event.'
+        },
         {
           name: 'label',
           type: 'string',
@@ -172,7 +199,7 @@ export default defineComponent({
       events: [
         {
           name: 'click',
-          description: 'Emitted when the button is clicked.'
+          description: 'Emitted when the button is clicked. It will not be emitted when `disabled` prop is set.'
         }
       ]
     })

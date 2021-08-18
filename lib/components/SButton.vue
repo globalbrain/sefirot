@@ -5,7 +5,7 @@
     :class="classes"
     :to="to"
     role="button"
-    @click="$emit('click')"
+    @click="handleClick"
   >
     <span class="content">
       <span v-if="icon" class="icon"><component :is="icon" class="icon-svg" /></span>
@@ -39,35 +39,23 @@ export default defineComponent({
     icon: { type: Object, default: null },
     block: { type: Boolean, default: false },
     inverse: { type: Boolean, default: false },
-    loading: { type: Boolean, default: false }
+    loading: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false }
   },
 
-  setup(props) {
-    const classes = computed(() => {
-      return {
-        primary: props.type === 'primary',
-        secondary: props.type === 'secondary',
-        tertiary: props.type === 'tertiary',
-        text: props.type === 'text',
-        mute: props.type === 'mute',
-        neutral: props.mode === 'neutral',
-        info: props.mode === 'info',
-        success: props.mode === 'success',
-        warning: props.mode === 'warning',
-        danger: props.mode === 'danger',
-        mini: props.size === 'mini',
-        small: props.size === 'small',
-        medium: props.size === 'medium',
-        large: props.size === 'large',
-        jumbo: props.size === 'jumbo',
-        rounded: props.rounded,
-        block: props.block,
-        inverse: props.inverse,
-        'has-label': props.label,
-        'has-icon': props.icon,
-        loading: props.loading
-      }
-    })
+  setup(props, { emit }) {
+    const classes = computed(() => [
+      props.type,
+      props.mode,
+      props.size,
+      { rounded: props.rounded },
+      { block: props.block },
+      { inverse: props.inverse },
+      { 'has-label': props.label },
+      { 'has-icon': props.icon },
+      { loading: props.loading },
+      { disabled: props.disabled }
+    ])
 
     const preloaderComponent = computed(() => {
       if (props.mode !== 'neutral') {
@@ -89,9 +77,14 @@ export default defineComponent({
       return SIconPreloaderLight
     })
 
+    function handleClick(): void {
+      !props.disabled && emit('click')
+    }
+
     return {
       classes,
-      preloaderComponent
+      preloaderComponent,
+      handleClick
     }
   }
 })
@@ -147,6 +140,34 @@ export default defineComponent({
 
     &:hover  { background-color: var(--c-danger-dark); }
     &:active { background-color: var(--c-danger-darker); }
+  }
+
+  &.disabled {
+    opacity: .75;
+    cursor: not-allowed;
+
+    &:hover  { background-color: var(--button-primary-bg); }
+    &:active { background-color: var(--button-primary-bg); }
+
+    &.info {
+      &:hover  { background-color: var(--c-info); }
+      &:active { background-color: var(--c-info); }
+    }
+
+    &.success {
+      &:hover  { background-color: var(--c-success); }
+      &:active { background-color: var(--c-success); }
+    }
+
+    &.warning {
+      &:hover  { background-color: var(--c-warning); }
+      &:active { background-color: var(--c-warning); }
+    }
+
+    &.danger {
+      &:hover  { background-color: var(--c-danger); }
+      &:active { background-color: var(--c-danger); }
+    }
   }
 
   &.inverse {
@@ -229,6 +250,34 @@ export default defineComponent({
     &:active { border-color: var(--c-danger-darker); }
   }
 
+  &.disabled {
+    opacity: .75;
+    cursor: not-allowed;
+
+    &:hover  { background-color: var(--button-secondary-bg); }
+    &:active { background-color: var(--button-secondary-bg); }
+
+    &.info {
+      &:hover  { border-color: var(--c-info); }
+      &:active { border-color: var(--c-info); }
+    }
+
+    &.success {
+      &:hover  { border-color: var(--c-success); }
+      &:active { border-color: var(--c-success); }
+    }
+
+    &.warning {
+      &:hover  { border-color: var(--c-warning); }
+      &:active { border-color: var(--c-warning); }
+    }
+
+    &.danger {
+      &:hover  { border-color: var(--c-danger); }
+      &:active { border-color: var(--c-danger); }
+    }
+  }
+
   &.inverse {
     border-color: var(--button-secondary-inverse-border);
     color: var(--button-secondary-inverse-text);
@@ -245,6 +294,14 @@ export default defineComponent({
 
   &:hover  { background-color: var(--button-tertiary-bg-hover); }
   &:active { background-color: var(--button-tertiary-bg-focus); }
+
+  &.disabled {
+    opacity: .75;
+    cursor: not-allowed;
+
+    &:hover  { background-color: var(--button-tertiary-bg); }
+    &:active { background-color: var(--button-tertiary-bg); }
+  }
 
   &.inverse {
     border-color: transparent;
@@ -267,6 +324,14 @@ export default defineComponent({
   &.warning { color: var(--c-warning); }
   &.danger  { color: var(--c-danger); }
 
+  &.disabled {
+    opacity: .75;
+    cursor: not-allowed;
+
+    &:hover  { background-color: var(--button-text-bg); }
+    &:active { background-color: var(--button-text-bg); }
+  }
+
   &.inverse {
     color: var(--button-text-inverse-text);
 
@@ -286,6 +351,20 @@ export default defineComponent({
   &:active {
     color: var(--button-mute-text-hover);
     background-color: var(--button-mute-bg-focus);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+
+    &:hover  {
+      color: var(--button-mute-text);
+      background-color: transparent;
+    }
+
+    &:active {
+      color: var(--button-mute-text);
+      background-color: transparent;
+    }
   }
 
   &.inverse {
