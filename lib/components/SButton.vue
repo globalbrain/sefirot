@@ -197,6 +197,38 @@ export default defineComponent({
   &:hover  { background-color: var(--button-secondary-bg-hover); }
   &:active { background-color: var(--button-secondary-bg-focus); }
 
+  &.info {
+    border-color: var(--c-info);
+    color: var(--c-info);
+
+    &:hover  { border-color: var(--c-info-dark); }
+    &:active { border-color: var(--c-info-darker); }
+  }
+
+  &.success {
+    border-color: var(--c-success);
+    color: var(--c-success);
+
+    &:hover  { border-color: var(--c-success-dark); }
+    &:active { border-color: var(--c-success-darker); }
+  }
+
+  &.warning {
+    border-color: var(--c-warning);
+    color: var(--c-warning);
+
+    &:hover  { border-color: var(--c-warning-dark); }
+    &:active { border-color: var(--c-warning-darker); }
+  }
+
+  &.danger {
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+
+    &:hover  { border-color: var(--c-danger-dark); }
+    &:active { border-color: var(--c-danger-darker); }
+  }
+
   &.inverse {
     border-color: var(--button-secondary-inverse-border);
     color: var(--button-secondary-inverse-text);

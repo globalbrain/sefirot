@@ -17,6 +17,21 @@
       <SButton label="DANGER" mode="danger" />
     </div>
     <div class="item">
+      <SButton type="secondary" label="NEUTRAL" mode="neutral" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="INFO" mode="info" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="SUCCESS" mode="success" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="WARNING" mode="warning" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="DANGER" mode="danger" />
+    </div>
+    <div class="item">
       <SButton type="text" label="NEUTRAL" mode="neutral" />
     </div>
     <div class="item">
@@ -51,6 +66,21 @@
     </div>
     <div class="item">
       <SButton label="DANGER" mode="danger" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="NEUTRAL" mode="neutral" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="INFO" mode="info" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="SUCCESS" mode="success" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="WARNING" mode="warning" />
+    </div>
+    <div class="item">
+      <SButton type="secondary" label="DANGER" mode="danger" />
     </div>
     <div class="item">
       <SButton type="text" label="NEUTRAL" mode="neutral" />
