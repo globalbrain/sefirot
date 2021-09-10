@@ -66,48 +66,66 @@ export default defineComponent({
   display: flex;
   border: 1px solid var(--c-divider);
   border-radius: 4px;
-  width: 100%;
   overflow: hidden;
 }
 
-.SButtonGroup.mini .button {
-  padding: 0 8px;
+.SButtonGroup.mini {
   height: 28px;
-  font-size: 12px;
-  font-weight: 500;
+
+  .button {
+    padding: 0 8px;
+    height: 28px;
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
 
-.SButtonGroup.small .button {
-  padding: 0 10px;
+.SButtonGroup.small {
   height: 32px;
-  font-size: 12px;
-  font-weight: 500;
+
+  .button {
+    padding: 0 10px;
+    height: 32px;
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
 
-.SButtonGroup.medium .button {
-  padding: 0 12px;
+.SButtonGroup.medium {
   height: 40px;
-  font-size: 13px;
-  font-weight: 500;
+
+  .button {
+    padding: 0 12px;
+    height: 40px;
+    font-size: 13px;
+    font-weight: 500;
+  }
 }
 
-.SButtonGroup.large .button {
-  padding: 0 14px;
+.SButtonGroup.large {
   height: 48px;
-  font-size: 14px;
-  font-weight: 500;
+
+  .button {
+    padding: 0 14px;
+    height: 48px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
 
-.SButtonGroup.jumbo .button {
-  padding: 0 24px;
+.SButtonGroup.jumbo {
   height: 64px;
-  font-size: 14px;
-  font-weight: 500;
+
+  .button {
+    padding: 0 24px;
+    height: 64px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
 
 .button {
   border-left: 1px solid transparent;
-  width: 100%;
   letter-spacing: .4px;
   color: var(--c-text-2);
   white-space: nowrap;
