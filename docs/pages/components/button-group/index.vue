@@ -59,7 +59,7 @@ export default defineComponent({
     return useSpec({
       props: [
         {
-          name: 'buttons',
+          name: 'items',
           type: 'ButtonGroupItem[]',
           required: true,
           default: '-',
