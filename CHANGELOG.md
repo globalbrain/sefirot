@@ -1,11 +1,14 @@
-## [0.65.1](https://github.com/globalbrain/sefirot/compare/v0.65.0...v0.65.1) (2021-09-13)
+# [0.66.0](https://github.com/globalbrain/sefirot/compare/v0.65.1...v0.66.0) (2021-09-17)
 
+### Features
+
+* **validation:** add `every` rule ([4b3ddec](https://github.com/globalbrain/sefirot/commit/4b3ddec79b8fc570a76ae62f5b0f5eaffe0c499c))
+
+## [0.65.1](https://github.com/globalbrain/sefirot/compare/v0.65.0...v0.65.1) (2021-09-13)
 
 ### Bug Fixes
 
 * **button-group:** the height of each button groups is incorrect ([#96](https://github.com/globalbrain/sefirot/issues/96)) ([1303925](https://github.com/globalbrain/sefirot/commit/1303925d255df6c34d26a129d9ebc3d7145804ac))
-
-
 
 # [0.65.0](https://github.com/globalbrain/sefirot/compare/v0.64.0...v0.65.0) (2021-08-18)
 
