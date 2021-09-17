@@ -32,24 +32,44 @@ describe('components/SInputNumber', () => {
     expect(wrapper.vm.valueWithSeparator).toBe('The number is too big')
   })
 
+  it('should show the value with thousand separator when the foucs is out', async () => {
+    const wrapper = createWrapper({
+      propsData: {
+        separator: true
+      }
+    })
+    const input = wrapper.find('.SInputNumber .input')
+
+    await wrapper.setProps({ value: 1000000 })
+    expect(input.text()).toBe('1,000,000')
+  })
+
+  it('should show the value without thousand separator when separator props does not passed', async () => {
+    const wrapper = createWrapper()
+    const input = wrapper.find('.SInputNumber .input')
+
+    await wrapper.setProps({ value: 1000000 })
+    expect(input.text()).toBe('1000000')
+  })
+
   it('should emit value on input', () => {
     const wrapper = createWrapper()
 
-    wrapper.find('.SInputNumber .input').setValue(1)
+    wrapper.find('.SInputNumber .input-area').setValue(1)
     expect(wrapper.emitted('input')).toHaveEmittedWith(1)
   })
 
   it('should emit null when value is empty', () => {
     const wrapper = createWrapper()
 
-    wrapper.find('.SInputNumber .input').setValue(null)
+    wrapper.find('.SInputNumber .input-area').setValue(null)
     expect(wrapper.emitted('input')).toHaveEmittedWith(null)
   })
 
   it('should emit value when losing focus', () => {
     const wrapper = createWrapper()
 
-    const input = wrapper.find('.SInputNumber .input')
+    const input = wrapper.find('.SInputNumber .input-area')
 
     input.setValue(1)
     input.trigger('blur')
@@ -60,7 +80,7 @@ describe('components/SInputNumber', () => {
   it('should emit value on `enter` keypress', () => {
     const wrapper = createWrapper()
 
-    const input = wrapper.find('.SInputNumber .input')
+    const input = wrapper.find('.SInputNumber .input-area')
 
     input.setValue(1)
     input.trigger('keypress.enter')

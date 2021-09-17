@@ -15,6 +15,7 @@
     :step="step"
     :disabled="disabled"
     :validation="validation"
+    :display-value="displayValue"
     :value="value"
     @input="emitInput"
     @blur="emitBlur"
@@ -52,6 +53,7 @@ export default defineComponent({
     textAfter: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
     step: { type: Number, default: 1 },
+    separator: { type: Boolean, default: false },
     helpFormat: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     value: { type: Number, default: null },
@@ -69,6 +71,11 @@ export default defineComponent({
         : props.value.toLocaleString('en-US', { maximumFractionDigits: 20 })
     })
 
+    const displayValue = computed(() => {
+      if (!props.separator) { return null }
+      return valueWithSeparator.value !== '0' ? valueWithSeparator.value : ''
+    })
+
     function emitInput(value: number): void {
       emit('input', value)
     }
@@ -83,6 +90,7 @@ export default defineComponent({
 
     return {
       valueWithSeparator,
+      displayValue,
       emitInput,
       emitBlur,
       emitEnter
