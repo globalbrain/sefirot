@@ -41,6 +41,7 @@
           @keyup.down="$emit('down')"
           @keyup.escape="$emit('escape')"
         >
+
         <div
           class="input"
           :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
@@ -250,7 +251,8 @@ export default defineComponent({
     font-size: 14px;
   }
 
-  .input, .input-area {
+  .input,
+  .input-area {
     padding: 3px 12px;
     width: 100%;
     line-height: 24px;
@@ -322,7 +324,8 @@ export default defineComponent({
     font-size: 14px;
   }
 
-  .input, .input-area {
+  .input,
+  .input-area {
     padding: 11px 16px;
     width: 100%;
     min-height: 48px;

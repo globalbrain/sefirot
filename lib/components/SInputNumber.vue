@@ -72,7 +72,10 @@ export default defineComponent({
     })
 
     const displayValue = computed(() => {
-      if (!props.separator) { return null }
+      if (!props.separator) {
+        return null
+      }
+
       return valueWithSeparator.value !== '0' ? valueWithSeparator.value : ''
     })
 

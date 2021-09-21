@@ -2,7 +2,7 @@
 <StoryBase title="Show input number with thousand separator when the focus is out">
   <div class="input">
     <SInputNumber
-      placeholder="123456789"
+      placeholder="123,456,789"
       separator
       v-model="value"
     />
