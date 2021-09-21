@@ -60,8 +60,7 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.SInputBase.mini,
-.SInputBase.small {
+.SInputBase.mini {
   .label {
     padding-bottom: 6px;
     font-size: 12px;

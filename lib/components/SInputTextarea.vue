@@ -29,7 +29,7 @@ import { SyntheticInputEvent } from '../types/Utils'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'medium' | 'mini'
+type Size = 'mini' | 'small' | 'medium'
 type Mode = 'filled' | 'outlined' | 'clear'
 
 export default defineComponent({
@@ -91,6 +91,16 @@ export default defineComponent({
   }
 }
 
+.SInputTextarea.small {
+  .input {
+    padding: 7px 12px;
+    width: 100%;
+    min-height: 88px;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
 .SInputTextarea.medium {
   .input {
     padding: 11px 16px;
@@ -119,6 +129,7 @@ export default defineComponent({
 .SInputTextarea.outlined {
   .input {
     border-color: var(--input-outlined-border);
+    background-color: transparent;
 
     &:hover {
       border-color: var(--input-focus-border);
@@ -160,6 +171,7 @@ export default defineComponent({
   .input {
     border-color: var(--c-danger);
 
+    &:hover,
     &:focus {
       border-color: var(--c-danger);
     }
