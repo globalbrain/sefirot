@@ -196,6 +196,13 @@ export default defineComponent({
           description: 'Show the "clear button" at end of input. If a user clicks the button, it fires `clear` event.'
         },
         {
+          name: 'display-value',
+          type: 'string',
+          required: false,
+          default: 'null',
+          description: 'The value displayed when the focus is out.'
+        },
+        {
           name: 'value',
           type: 'string | number',
           required: false,

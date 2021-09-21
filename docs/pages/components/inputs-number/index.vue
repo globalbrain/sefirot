@@ -13,6 +13,12 @@ You can show the input number with thousand separator under the input by passing
 
 <StoryInputNumberEXHelpFormat />
 
+### Separator
+
+You can show the input number with thousand separator when the focus is out by passing `separator` props.
+
+<StoryInputNumberEXSeparator />
+
 ## API
 
 <SpecProps :props="props" />
@@ -23,6 +29,7 @@ You can show the input number with thousand separator under the input by passing
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputNumberShowcase from '@/components/inputs/StoryInputNumberShowcase.vue'
 import StoryInputNumberEXHelpFormat from '@/components/inputs/StoryInputNumberEXHelpFormat.vue'
+import StoryInputNumberEXSeparator from '@/components/inputs/StoryInputNumberEXSeparator.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -31,6 +38,7 @@ export default defineComponent({
   components: {
     StoryInputNumberShowcase,
     StoryInputNumberEXHelpFormat,
+    StoryInputNumberEXSeparator,
     SpecProps,
     SpecEvents
   },
@@ -123,6 +131,13 @@ export default defineComponent({
           required: false,
           default: '1',
           description: 'A stepping interval to use when using up and down arrows to adjust the value.'
+        },
+        {
+          name: 'separator',
+          type: 'boolean',
+          required: false,
+          default: 'false',
+          description: 'The input value with thoudsand separator when the focus is out.'
         },
         {
           name: 'help-format',

@@ -15,14 +15,14 @@ describe('components/SInputText', () => {
   it('should emit value on input', () => {
     const wrapper = createWrapper()
 
-    wrapper.find('.SInputText .input').setValue('ok')
+    wrapper.find('.SInputText .input-area').setValue('ok')
     expect(wrapper.emitted('input')).toHaveEmittedWith('ok')
   })
 
   it('should emit value when losing focus', () => {
     const wrapper = createWrapper()
 
-    const input = wrapper.find('.SInputText .input')
+    const input = wrapper.find('.SInputText .input-area')
 
     input.setValue('ok')
     input.trigger('blur')
@@ -43,7 +43,7 @@ describe('components/SInputText', () => {
       }
     })
 
-    const input = wrapper.find('.SInputText .input')
+    const input = wrapper.find('.SInputText .input-area')
 
     input.setValue('ok')
     input.trigger('blur')
@@ -54,7 +54,7 @@ describe('components/SInputText', () => {
   it('should emit value on `enter` keypress', () => {
     const wrapper = createWrapper()
 
-    const input = wrapper.find('.SInputText .input')
+    const input = wrapper.find('.SInputText .input-area')
 
     input.setValue('ok')
     input.trigger('keypress.enter')
@@ -69,7 +69,7 @@ describe('components/SInputText', () => {
       }
     })
 
-    const input = wrapper.find('.SInputText .input')
+    const input = wrapper.find('.SInputText .input-area')
     const icon = wrapper.find('.SInputText .icon')
 
     await icon.trigger('click')

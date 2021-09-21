@@ -28,12 +28,11 @@
         <input
           :id="name"
           ref="inputEl"
-          class="input"
+          class="input-area"
           :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
           :style="inputStyles"
           :type="type"
           :step="step"
-          :placeholder="placeholder"
           :disabled="disabled"
           :value="value"
           @input="emitInput"
@@ -42,6 +41,15 @@
           @keyup.down="$emit('down')"
           @keyup.escape="$emit('escape')"
         >
+
+        <div
+          class="input"
+          :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
+          :style="inputStyles"
+        >
+          <span v-if="displayValue || value" class="value">{{ displayValue || value }}</span>
+          <span v-else class="placeholder">{{ placeholder }}</span>
+        </div>
 
         <div v-if="icon" class="icon" role="button" @click="focus">
           <component :is="icon" class="icon-svg" />
@@ -118,6 +126,7 @@ export default defineComponent({
     step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    displayValue: { type: String, default: null },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
@@ -242,10 +251,12 @@ export default defineComponent({
     font-size: 14px;
   }
 
-  .input {
+  .input,
+  .input-area {
     padding: 3px 12px;
     width: 100%;
     line-height: 24px;
+    min-height: 32px;
     font-size: 14px;
 
     &.has-icon {
@@ -313,9 +324,11 @@ export default defineComponent({
     font-size: 14px;
   }
 
-  .input {
+  .input,
+  .input-area {
     padding: 11px 16px;
     width: 100%;
+    min-height: 48px;
     line-height: 24px;
     font-size: 16px;
 
@@ -376,6 +389,10 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       background-color: var(--input-focus-bg);
     }
+  }
+  .input-area:focus + .input {
+    border-color: var(--input-focus-border);
+    background-color: var(--input-focus-bg);
   }
 
   &.disabled .input {
@@ -491,10 +508,33 @@ export default defineComponent({
   border-radius: 4px;
   color: var(--input-text);
   transition: border-color .25s, background-color .25s;
+  opacity: 1;
+
+  .value {
+    line-height: 24px;
+  }
+
+  .placeholder {
+    line-height: 24px;
+    color: var(--input-placeholder);
+  }
 
   &::placeholder {
     color: var(--input-placeholder);
   }
+}
+
+.input-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  letter-spacing: .4px;
+  background: transparent;
+  border: 1px solid transparent;
+  opacity: 0;
+
+  &:focus { opacity: 1; }
+  &:focus + .input .value { opacity: 0; }
 }
 
 .icon {
