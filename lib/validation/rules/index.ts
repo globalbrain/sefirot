@@ -13,11 +13,15 @@ import not from './not'
 import regex from './regex'
 import required from './required'
 import requiredIf from './requiredIf'
+import requiredMonthDate from './requiredMonthDate'
+import requiredYearMonth from './requiredYearMonth'
+import requiredYearMonthDate from './requiredYearMonthDate'
 import rule from './rule'
 import sameAs from './sameAs'
 import url from './url'
 import validateIf from './validateIf'
 import year from './year'
+import yearMonthDate from './yearMonthDate'
 
 export interface Rule {
   name: string
@@ -48,9 +52,13 @@ export {
   regex,
   required,
   requiredIf,
+  requiredMonthDate,
+  requiredYearMonth,
+  requiredYearMonthDate,
   rule,
   sameAs,
   url,
   validateIf,
-  year
+  year,
+  yearMonthDate
 }
