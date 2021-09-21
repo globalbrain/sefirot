@@ -103,6 +103,8 @@
   --c-text-inverse-3: var(--c-text-dark-3);
   --c-text-inverse-4: var(--c-text-dark-4);
 
+  --preloader-color: var(--c-black);
+
   --button-primary-text: var(--c-text-inverse-1);
   --button-primary-bg: var(--c-black);
   --button-primary-bg-hover: var(--c-gray-dark-4);
@@ -186,4 +188,8 @@
   --c-text-inverse-2: var(--c-text-light-2);
   --c-text-inverse-3: var(--c-text-light-3);
   --c-text-inverse-4: var(--c-text-light-4);
+
+  --preloader-color: var(--c-white);
+
+  --input-focus-border: var(--c-gray);
 }

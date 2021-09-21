@@ -51,6 +51,7 @@ import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
 import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
 import SIconHome from '@@/lib/components/icons/SIconHome.vue'
+import SIconInbox from '@@/lib/components/icons/SIconInbox.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconLayout from '@@/lib/components/icons/SIconLayout.vue'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
@@ -129,6 +130,7 @@ export default defineComponent({
       { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
       { component: SIconHome, name: 'Home' },
+      { component: SIconInbox, name: 'Inbox' },
       { component: SIconInfo, name: 'Info' },
       { component: SIconLayout, name: 'Layout' },
       { component: SIconList, name: 'List' },
