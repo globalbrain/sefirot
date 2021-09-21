@@ -57,11 +57,16 @@ export default defineComponent({
 
 .SSnackbar {
   position: relative;
+  border: 1px solid transparent;
   border-radius: 4px;
   width: 100%;
   color: var(--c-text-dark-1);
   background-color: rgba(0, 0, 0, .9);
   box-shadow: var(--shadow-depth-5);
+}
+
+.dark-mode .SSnackbar {
+  border-color: var(--c-divider-light);
 }
 
 .close {
@@ -83,8 +88,8 @@ export default defineComponent({
 }
 
 .close-icon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
   fill: var(--c-text-dark-2);
   transition: fill .25s;
 }
