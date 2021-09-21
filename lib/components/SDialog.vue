@@ -5,7 +5,7 @@
 
     <div v-if="isTypeLoading" class="load">
       <div class="load-icon">
-        <SIconPreloaderDark class="load-svg" />
+        <SIconPreloader class="load-svg" />
       </div>
     </div>
 
@@ -25,12 +25,12 @@
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { DialogType } from '../composables/Dialog'
-import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
+import SIconPreloader from './icons/SIconPreloader.vue'
 import SButton from './SButton.vue'
 
 export default defineComponent({
   components: {
-    SIconPreloaderDark,
+    SIconPreloader,
     SButton
   },
 
@@ -64,6 +64,7 @@ export default defineComponent({
 
 .SDialog {
   margin: 96px 16px;
+  border: 1px solid var(--c-divider-light);
   border-radius: 8px;
   padding: 16px 16px 8px;
   max-width: 392px;
