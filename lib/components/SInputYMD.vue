@@ -151,12 +151,12 @@ export default defineComponent({
       }
     }
 
-    function createRequiredTouched(): void {
+    function createRequiredTouched(): boolean[] {
       const requiredTouched = [] as boolean[]
 
       for (const key in touched) {
-        if (props[key]) {
-          requiredTouched.push(touched[key])
+        if ((props as any)[key]) {
+          requiredTouched.push((touched as any)[key])
         }
       }
 
