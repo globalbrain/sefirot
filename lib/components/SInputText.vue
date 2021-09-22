@@ -47,8 +47,13 @@
           :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
           :style="inputStyles"
         >
-          <span v-if="displayValue || value" class="value">{{ displayValue || value }}</span>
-          <span v-else class="placeholder">{{ placeholder }}</span>
+          <span v-if="displayValue !== null || value !== null" class="value">
+            {{ displayValue !== null ? displayValue : value }}
+          </span>
+
+          <span v-else class="placeholder">
+            {{ placeholder }}
+          </span>
         </div>
 
         <div v-if="icon" class="icon" role="button" @click="focus">
