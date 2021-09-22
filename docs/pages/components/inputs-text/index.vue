@@ -17,6 +17,12 @@ The text input comes in several different sizes. You may pass `size` prop to con
 
 <StoryInputTextEXSizes />
 
+## Colors
+
+The text input comes in several color types. You may pass `color` prop to control the color of the input.
+
+<StoryInputTextEXColors />
+
 ## With Icon
 
 You can supply an icon to the input field by passing in the icon component to the `icon` prop.
@@ -77,12 +83,14 @@ import StoryInputTextEXClearable from '@/components/inputs/StoryInputTextEXClear
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
+import StoryInputTextEXColors from '~/components/inputs/StoryInputTextEXColors.vue'
 
 export default defineComponent({
   components: {
     StoryInputTextShowcase,
     StoryInputTextEXOutlined,
     StoryInputTextEXSizes,
+    StoryInputTextEXColors,
     StoryInputTextEXIcon,
     StoryInputTextEXText,
     StoryInputTextEXAction,
@@ -187,6 +195,13 @@ export default defineComponent({
           required: false,
           default: 'null',
           description: 'Add the trailing text to the input.'
+        },
+        {
+          name: 'color',
+          type: '(value: string | number) => `neutral` | `info` | `success` | `warning` | `danger`',
+          required: false,
+          default: 'null',
+          description: 'The color variant of the text. The callback accepts a value as an argument.'
         },
         {
           name: 'clearable',

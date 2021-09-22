@@ -119,4 +119,19 @@ describe('components/SInputText', () => {
     wrapper.find('.SInputText .clear').trigger('click')
     expect(wrapper.emitted('clear')).toBeTruthy()
   })
+
+  it('should apply color according to input value', async () => {
+    const wrapper = createWrapper({
+      propsData: {
+        color: (value: string) => value.length > 3 ? 'success' : 'info'
+      }
+    })
+    const input = wrapper.find('.SInputText .input')
+
+    await wrapper.setProps({ value: 'abcde' })
+    expect(input.classes('success')).toBeTruthy()
+
+    await wrapper.setProps({ value: 'ab' })
+    expect(input.classes('info')).toBeTruthy()
+  })
 })
