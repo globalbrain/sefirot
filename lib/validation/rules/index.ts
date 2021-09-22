@@ -21,6 +21,7 @@ import sameAs from './sameAs'
 import url from './url'
 import validateIf from './validateIf'
 import year from './year'
+import yearMonth from './yearMonth'
 import yearMonthDate from './yearMonthDate'
 
 export interface Rule {
@@ -60,5 +61,6 @@ export {
   url,
   validateIf,
   year,
+  yearMonth,
   yearMonthDate
 }
