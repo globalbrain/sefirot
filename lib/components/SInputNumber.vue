@@ -56,7 +56,7 @@ export default defineComponent({
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
-    color: { type: Function as PropType<(value: string | number) => Color>, default: null },
+    color: { type: Function as PropType<(value: number) => Color>, default: null },
     step: { type: Number, default: 1 },
     separator: { type: Boolean, default: false },
     helpFormat: { type: Boolean, default: false },
