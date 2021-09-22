@@ -17,6 +17,7 @@
     :validation="validation"
     :display-value="displayValue"
     :value="value"
+    :error-message="errorMessage"
     @input="emitInput"
     @blur="emitBlur"
     @enter="emitEnter"
@@ -56,6 +57,7 @@ export default defineComponent({
     separator: { type: Boolean, default: false },
     helpFormat: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    errorMessage: { type: Boolean, default: true },
     value: { type: Number, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
@@ -76,7 +78,7 @@ export default defineComponent({
         return null
       }
 
-      return valueWithSeparator.value !== '0' ? valueWithSeparator.value : ''
+      return valueWithSeparator.value !== '0' ? valueWithSeparator.value : null
     })
 
     function emitInput(value: number): void {

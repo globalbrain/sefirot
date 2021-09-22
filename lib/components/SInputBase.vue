@@ -24,6 +24,7 @@ export default defineComponent({
     note: { type: String, default: null },
     label: { type: String, default: null },
     help: { type: String, default: null },
+    errorMessage: { type: Boolean, default: true },
     validation: { type: Object as PropType<Validation>, default: null }
   },
 
@@ -46,7 +47,9 @@ export default defineComponent({
       return errors.length > 0 ? errors[0][1] : null
     })
 
-    const showError = computed(() => hasError.value && errorMsg.value)
+    const showError = computed(() => {
+      return props.errorMessage && hasError.value && errorMsg.value
+    })
 
     return {
       hasError,

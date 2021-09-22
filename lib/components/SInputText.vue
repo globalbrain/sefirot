@@ -6,6 +6,7 @@
     :label="label"
     :note="note"
     :help="help"
+    :error-message="errorMessage"
     :validation="validation"
   >
     <div class="container">
@@ -35,6 +36,7 @@
           :step="step"
           :disabled="disabled"
           :value="value"
+          :placeholder="placeholder"
           @input="emitInput"
           @blur="emitBlur"
           @keypress.enter="emitEnter"
@@ -49,10 +51,6 @@
         >
           <span v-if="displayValue !== null || value !== null" class="value">
             {{ displayValue !== null ? displayValue : value }}
-          </span>
-
-          <span v-else class="placeholder">
-            {{ placeholder }}
           </span>
         </div>
 
@@ -82,13 +80,13 @@
 
 <script lang="ts">
 import {
+  PropType,
   defineComponent,
   ref,
   reactive,
   computed,
   watch,
-  onMounted,
-  PropType
+  onMounted
 } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 import { SyntheticInputEvent } from '../types/Utils'
@@ -131,6 +129,7 @@ export default defineComponent({
     step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
+    errorMessage: { type: Boolean, default: true },
     displayValue: { type: String, default: null },
     value: { type: [String, Number], default: null },
     validation: { type: Object as PropType<Validation>, default: null }
@@ -395,6 +394,7 @@ export default defineComponent({
       background-color: var(--input-focus-bg);
     }
   }
+
   .input-area:focus + .input {
     border-color: var(--input-focus-border);
     background-color: var(--input-focus-bg);
@@ -536,10 +536,15 @@ export default defineComponent({
   letter-spacing: .4px;
   background: transparent;
   border: 1px solid transparent;
-  opacity: 0;
+  color: transparent;
 
-  &:focus { opacity: 1; }
-  &:focus + .input .value { opacity: 0; }
+  &:focus {
+    color: var(--c-text-1);
+  }
+
+  &:focus + .input .value {
+    opacity: 0;
+  }
 }
 
 .icon {

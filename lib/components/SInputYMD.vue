@@ -6,6 +6,7 @@
     :label="label"
     :note="note"
     :help="help"
+    :error-message="errorMessage"
     :validation="validation"
   >
     <div class="container">
@@ -92,6 +93,7 @@ export default defineComponent({
     month: { type: Boolean, default: true },
     date: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
+    errorMessage: { type: Boolean, default: true },
     value: { type: Object as PropType<Value>, default: null },
     validation: { type: Object as PropType<Validation>, default: null }
   },
