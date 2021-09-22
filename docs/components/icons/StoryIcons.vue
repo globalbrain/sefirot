@@ -54,6 +54,7 @@ import SIconHome from '@@/lib/components/icons/SIconHome.vue'
 import SIconInbox from '@@/lib/components/icons/SIconInbox.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconLayout from '@@/lib/components/icons/SIconLayout.vue'
+import SIconLock from '@@/lib/components/icons/SIconLock.vue'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoon from '@@/lib/components/icons/SIconMoon.vue'
@@ -133,6 +134,7 @@ export default defineComponent({
       { component: SIconInbox, name: 'Inbox' },
       { component: SIconInfo, name: 'Info' },
       { component: SIconLayout, name: 'Layout' },
+      { component: SIconLock, name: 'Lock' },
       { component: SIconList, name: 'List' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
