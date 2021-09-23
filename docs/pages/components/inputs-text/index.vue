@@ -23,6 +23,13 @@ The text input comes in several color types. You may pass `color` prop to contro
 
 <StoryInputTextEXColors />
 
+The `color` prop takes callback function to determine the color. The type of the callback function is shown below.
+
+```ts
+type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+type ColorCallback = (value: string | number) => Color
+```
+
 ## With Icon
 
 You can supply an icon to the input field by passing in the icon component to the `icon` prop.
@@ -198,10 +205,10 @@ export default defineComponent({
         },
         {
           name: 'color',
-          type: '(value: string | number) => `neutral` | `info` | `success` | `warning` | `danger`',
+          type: 'ColorCallback',
           required: false,
           default: 'null',
-          description: 'The color variant of the text. The callback accepts a value as an argument.'
+          description: 'The color variant of the text. See [Colors section](#colors) for more details.'
         },
         {
           name: 'clearable',

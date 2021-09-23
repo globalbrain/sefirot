@@ -126,6 +126,7 @@ describe('components/SInputText', () => {
         color: (value: string) => value.length > 3 ? 'success' : 'info'
       }
     })
+
     const input = wrapper.find('.SInputText .input')
 
     await wrapper.setProps({ value: 'abcde' })

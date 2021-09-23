@@ -36,9 +36,7 @@
 import { defineComponent, computed, PropType } from '@vue/composition-api'
 import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
-import SInputText, { Size, Mode, Action } from './SInputText.vue'
-
-export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+import SInputText, { Size, Mode, Color, Action } from './SInputText.vue'
 
 export default defineComponent({
   components: {

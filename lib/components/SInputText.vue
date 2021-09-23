@@ -98,6 +98,7 @@ import SInputBase from './SInputBase.vue'
 export type Size = 'medium' | 'mini'
 export type Mode = 'filled' | 'outlined'
 export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type ColorCallback = (value: string | number) => Color
 
 export interface Action {
   type?: 'button' | 'select'
@@ -127,7 +128,7 @@ export default defineComponent({
     icon: { type: Object, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
-    color: { type: Function as PropType<(value: string | number) => Color>, default: null },
+    color: { type: Function as PropType<ColorCallback>, default: null },
     step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -158,15 +159,11 @@ export default defineComponent({
 
     const isClearable = computed(() => props.clearable && !props.disabled)
 
-    const inputClasses = computed(() => ({
-      neutral: color.value === 'neutral',
-      info: color.value === 'info',
-      success: color.value === 'success',
-      warning: color.value === 'warning',
-      danger: color.value === 'danger',
-      'has-icon': props.icon,
-      'is-clearable': isClearable.value
-    }))
+    const inputClasses = computed(() => [
+      color.value,
+      { 'has-icon': props.icon },
+      { 'is-clearable': isClearable.value }
+    ])
 
     const inputAreaClasses = computed(() => ({
       'has-icon': props.icon,
