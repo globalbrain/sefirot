@@ -1,3 +1,20 @@
+# [0.67.0](https://github.com/globalbrain/sefirot/compare/v0.66.0...v0.67.0) (2021-09-23)
+
+### Bug Fixes
+
+* **input-number:** fix `0` value not showing correctly ([c90a6ab](https://github.com/globalbrain/sefirot/commit/c90a6abc51060dabedce25b2f4ada6d315668077))
+
+### Features
+
+* **icon:** add more icons ([6463401](https://github.com/globalbrain/sefirot/commit/646340107d8d5bedd3b3ffcbb861d2c1de80a919))
+* **input:** add error message option to inputs ([db7d5d6](https://github.com/globalbrain/sefirot/commit/db7d5d6df1c24f4cd4be5a1e184ebda87326d58c))
+* **input-text:** add `color` prop to input text and number ([#99](https://github.com/globalbrain/sefirot/issues/99)) ([f8ff9a2](https://github.com/globalbrain/sefirot/commit/f8ff9a2e00bcfc2ea2f6c704d337a425b83caa11))
+* **input-number:** add option to show separator when focus is out ([#97](https://github.com/globalbrain/sefirot/issues/97)) ([5db99c8](https://github.com/globalbrain/sefirot/commit/5db99c85bea471256f1eb6884052f8a2741ec4eb))
+* **input-textarea:** add `small` size ([645f446](https://github.com/globalbrain/sefirot/commit/645f4460ea461d4cb03be9da01768051fcb0ae5a))
+* **input-ymd:** add YMD input component ([648c496](https://github.com/globalbrain/sefirot/commit/648c496482a5561497488a6442c902fbb4cffce9))
+* **dialog:** add dark mode support ([9fb8276](https://github.com/globalbrain/sefirot/commit/9fb827684e0dda6743df33635ca54392d43df804))
+* **snackbar:** add dark mode support ([03180c7](https://github.com/globalbrain/sefirot/commit/03180c7ffeb8d8f69f75558ea8415e37a3a93262))
+
 # [0.66.0](https://github.com/globalbrain/sefirot/compare/v0.65.1...v0.66.0) (2021-09-17)
 
 ### Features
