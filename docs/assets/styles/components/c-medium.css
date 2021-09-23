@@ -40,6 +40,10 @@
     font-weight: 400;
   }
 
+  section + p {
+    margin-top: 24px;
+  }
+
   a {
     color: var(--c-info-light);
     transition: color .25s;

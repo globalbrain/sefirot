@@ -12,6 +12,7 @@
     :text="text"
     :text-after="textAfter"
     :action="action"
+    :color="color"
     :step="step"
     :disabled="disabled"
     :validation="validation"
@@ -35,7 +36,7 @@
 import { defineComponent, computed, PropType } from '@vue/composition-api'
 import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
-import SInputText, { Size, Mode, Action } from './SInputText.vue'
+import SInputText, { Size, Mode, Color, Action } from './SInputText.vue'
 
 export default defineComponent({
   components: {
@@ -53,6 +54,7 @@ export default defineComponent({
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
+    color: { type: Function as PropType<(value: number) => Color>, default: null },
     step: { type: Number, default: 1 },
     separator: { type: Boolean, default: false },
     helpFormat: { type: Boolean, default: false },

@@ -30,7 +30,7 @@
           :id="name"
           ref="inputEl"
           class="input-area"
-          :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
+          :class="inputAreaClasses"
           :style="inputStyles"
           :type="type"
           :step="step"
@@ -46,7 +46,7 @@
 
         <div
           class="input"
-          :class="{ 'has-icon': icon, 'is-clearable': isClearable }"
+          :class="inputClasses"
           :style="inputStyles"
         >
           <span v-if="displayValue !== null || value !== null" class="value">
@@ -97,6 +97,8 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'medium' | 'mini'
 export type Mode = 'filled' | 'outlined'
+export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type ColorCallback = (value: string | number) => Color
 
 export interface Action {
   type?: 'button' | 'select'
@@ -126,6 +128,7 @@ export default defineComponent({
     icon: { type: Object, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
+    color: { type: Function as PropType<ColorCallback>, default: null },
     step: { type: Number, default: 1 },
     clearable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
@@ -139,6 +142,7 @@ export default defineComponent({
     const inputEl = ref<HTMLElement | null>(null)
     const textEl = ref<HTMLElement | null>(null)
     const textAfterEl = ref<HTMLElement | null>(null)
+    const color = ref<Color | null>(null)
 
     const classes = computed(() => ({
       medium: props.size === 'medium',
@@ -153,11 +157,30 @@ export default defineComponent({
       paddingLeft: ''
     })
 
+    const isClearable = computed(() => props.clearable && !props.disabled)
+
+    const inputClasses = computed(() => [
+      color.value,
+      { 'has-icon': props.icon },
+      { 'is-clearable': isClearable.value }
+    ])
+
+    const inputAreaClasses = computed(() => ({
+      'has-icon': props.icon,
+      'is-clearable': isClearable.value
+    }))
+
     const showClearButton = computed(() => {
       return props.value !== null && props.value !== ''
     })
 
-    const isClearable = computed(() => props.clearable && !props.disabled)
+    watch(() => props.value, () => {
+      if (!props.color) {
+        return
+      }
+
+      color.value = props.color(props.value)
+    })
 
     onMounted(() => {
       setTextPadding()
@@ -218,6 +241,8 @@ export default defineComponent({
       textAfterEl,
       classes,
       inputStyles,
+      inputClasses,
+      inputAreaClasses,
       isClearable,
       showClearButton,
       focus,
@@ -501,6 +526,7 @@ export default defineComponent({
   position: relative;
   display: flex;
   flex-grow: 1;
+  max-width: 100%;
 
   &:hover .input {
     border-color: var(--input-focus-border);
@@ -516,16 +542,9 @@ export default defineComponent({
   opacity: 1;
 
   .value {
+    display: block;
     line-height: 24px;
-  }
-
-  .placeholder {
-    line-height: 24px;
-    color: var(--input-placeholder);
-  }
-
-  &::placeholder {
-    color: var(--input-placeholder);
+    overflow: hidden;
   }
 }
 
@@ -545,6 +564,15 @@ export default defineComponent({
   &:focus + .input .value {
     opacity: 0;
   }
+}
+
+.input,
+.input-area {
+  &.neutral { color: var(--c-black); }
+  &.info { color: var(--c-info); }
+  &.success { color: var(--c-success); }
+  &.warning { color: var(--c-warning); }
+  &.danger { color: var(--c-danger); }
 }
 
 .icon {
