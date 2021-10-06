@@ -4,6 +4,8 @@ import { preWrapper } from './docs/markdown/PreWrapper'
 
 require('dotenv').config()
 
+const isProd = process.env.NODE_ENV === 'production'
+
 export default defineNuxtConfig({
   target: 'static',
 
@@ -21,7 +23,7 @@ export default defineNuxtConfig({
       }
     },
 
-    extractCSS: process.env.NODE_ENV === 'production'
+    extractCSS: isProd ? { ignoreOrder: true } : false
   },
 
   buildModules: ['@nuxt/typescript-build'],
@@ -81,7 +83,7 @@ export default defineNuxtConfig({
   googleAnalytics: {
     id: 'UA-122636981-4',
     debug: {
-      sendHitTask: process.env.NODE_ENV === 'production'
+      sendHitTask: isProd
     }
   }
 })
