@@ -5,6 +5,7 @@ module.exports = {
   rules: {
     '@typescript-eslint/no-redeclare': ['error'],
     'import/named': 'off',
+    'import/no-named-as-default': 'off',
     'no-use-before-define': 'off',
     'no-unreachable-loop': 'off',
     'no-redeclare': 'off',
