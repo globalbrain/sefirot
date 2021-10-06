@@ -67,6 +67,7 @@ describe('components/SInputSelect', () => {
 
   it('should toggle focus on `focus` and `blur` event', async () => {
     const wrapper = createWrapper({
+      attachTo: document.body,
       propsData: { value: 1 }
     })
 
