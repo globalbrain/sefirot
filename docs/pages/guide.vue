@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { useContent } from '../composables/Content'
 import SidebarNavigation from '@/components/SidebarNavigation.vue'
+import { useContent } from '../composables/Content'
 
 export default defineComponent({
   components: {
