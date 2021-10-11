@@ -1,9 +1,5 @@
 module.exports = {
-  globals: {
-    'vue-jest': {
-      babelConfig: false
-    }
-  },
+  testEnvironment: 'jsdom',
   moduleFileExtensions: [
     'js',
     'ts',
@@ -17,7 +13,7 @@ module.exports = {
   testRegex: '/test/.*\\.spec\\.ts$',
   transform: {
     '^.+\\.ts$': 'ts-jest',
-    '.*\\.vue$': 'vue-jest'
+    '.*\\.vue$': '@vue/vue2-jest'
   },
   snapshotSerializers: [
     'jest-serializer-vue'
