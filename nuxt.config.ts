@@ -1,4 +1,5 @@
-import { defineNuxtConfig } from '@nuxtjs/composition-api'
+import { NuxtConfig } from '@nuxt/types'
+import anchor from 'markdown-it-anchor'
 import { highlight } from './docs/markdown/Highlight'
 import { preWrapper } from './docs/markdown/PreWrapper'
 
@@ -6,7 +7,7 @@ require('dotenv').config()
 
 const isProd = process.env.NODE_ENV === 'production'
 
-export default defineNuxtConfig({
+const config: NuxtConfig = {
   target: 'static',
 
   ssr: false,
@@ -54,7 +55,7 @@ export default defineNuxtConfig({
 
   modules: [
     ['@nuxtjs/dotenv', { path: __dirname }],
-    '@nuxtjs/composition-api',
+    '@nuxtjs/composition-api/module',
     '@nuxtjs/markdownit',
     '@nuxtjs/google-analytics'
   ],
@@ -72,10 +73,9 @@ export default defineNuxtConfig({
     use: [
       preWrapper,
       ['markdown-it-anchor', {
-        permalink: true,
-        permalinkBefore: true,
-        permalinkSymbol: '#',
-        permalinkAttrs: () => ({ 'aria-hidden': true })
+        permalink: anchor.permalink.ariaHidden({
+          placement: 'before'
+        })
       }]
     ]
   },
@@ -86,4 +86,6 @@ export default defineNuxtConfig({
       sendHitTask: isProd
     }
   }
-})
+}
+
+export default config
