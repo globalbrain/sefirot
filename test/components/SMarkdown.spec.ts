@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
 import { createVue, CreateWrapperFn } from '../utils'
 
-let createWrapper: CreateWrapperFn<InstanceType<typeof SMarkdown>>
+let createWrapper: CreateWrapperFn
 
 describe('components/SMarkdown', () => {
   beforeEach(() => {

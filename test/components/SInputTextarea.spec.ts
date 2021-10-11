@@ -3,8 +3,7 @@ import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import useForm from 'sefirot/compositions/useForm'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputTextarea>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputTextarea', () => {
   beforeEach(() => {

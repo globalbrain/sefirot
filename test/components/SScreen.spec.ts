@@ -5,8 +5,7 @@ import Sefirot from 'sefirot/store/Sefirot'
 import { createVue, CreateWrapperFn } from '../utils'
 import SScreenMinimal from './_fixtures/SScreenMinimal.vue'
 
-type Instance = InstanceType<typeof SScreenMinimal>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 const { localVue } = createVue()
   .use(Vuex)

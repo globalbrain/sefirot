@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputCheckbox>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputCheckbox', () => {
   beforeEach(() => {

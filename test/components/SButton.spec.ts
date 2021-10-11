@@ -4,8 +4,7 @@ import SIconPreloaderLight from 'sefirot/components/icons/SIconPreloaderLight.vu
 import SButton from 'sefirot/components/SButton.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SButton>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SButton', () => {
   beforeEach(() => {

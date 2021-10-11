@@ -2,8 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import SProgressBar from 'sefirot/components/SProgressBar.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SProgressBar>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SProgressBar', () => {
   beforeEach(() => {

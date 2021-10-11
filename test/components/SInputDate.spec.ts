@@ -1,12 +1,10 @@
-
 import { mount } from '@vue/test-utils'
 import VCalendar from 'v-calendar'
 import useForm from 'sefirot/compositions/useForm'
 import SInputDate from 'sefirot/components/SInputDate.vue'
 import { createVue, CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputDate>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 const { localVue } = createVue()
   .use(VCalendar, { firstDayOfWeek: 1 })

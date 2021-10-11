@@ -4,8 +4,7 @@ import SInputText from 'sefirot/components/SInputText.vue'
 import useForm from 'sefirot/compositions/useForm'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputText>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputText', () => {
   beforeEach(() => {
