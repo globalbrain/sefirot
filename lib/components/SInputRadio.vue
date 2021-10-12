@@ -68,14 +68,14 @@ export default defineComponent({
 
   &:hover {
     .box {
-      border-color: var(--c-black);
+      border-color: var(--c-text-1);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-black);
+    border-color: var(--c-text-1);
     box-shadow: var(--shadow-depth-3);
   }
 
@@ -87,7 +87,7 @@ export default defineComponent({
 
 .box {
   position: relative;
-  border: 2px solid var(--c-gray-dark-1);
+  border: 2px solid var(--c-text-3);
   border-radius: 50%;
   width: 18px;
   height: 18px;
@@ -105,7 +105,7 @@ export default defineComponent({
   align-items: center;
   border-radius: 50%;
   width: 100%;
-  background-color: var(--c-black);
+  background-color: var(--c-text-1);
   opacity: 0;
   transform: scale(0);
   transition: opacity .25s, transform .1s;
@@ -116,5 +116,6 @@ export default defineComponent({
   padding-left: 12px;
   line-height: 20px;
   font-size: 14px;
+  font-weight: 500;
 }
 </style>
