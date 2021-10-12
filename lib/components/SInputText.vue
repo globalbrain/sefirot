@@ -95,7 +95,7 @@ import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'medium' | 'mini'
+export type Size = 'mini' | 'small' | 'medium'
 export type Mode = 'filled' | 'outlined'
 export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 export type ColorCallback = (value: string | number) => Color
@@ -144,13 +144,11 @@ export default defineComponent({
     const textAfterEl = ref<HTMLElement | null>(null)
     const color = ref<Color | null>(null)
 
-    const classes = computed(() => ({
-      medium: props.size === 'medium',
-      mini: props.size === 'mini',
-      filled: props.mode === 'filled',
-      outlined: props.mode === 'outlined',
-      disabled: props.disabled
-    }))
+    const classes = computed(() => [
+      props.size,
+      props.mode,
+      { disabled: props.disabled }
+    ])
 
     const inputStyles = reactive({
       paddingRight: '',
@@ -332,6 +330,79 @@ export default defineComponent({
   }
 }
 
+.SInputText.small {
+  .action {
+    padding: 3px 10px;
+    line-height: 24px;
+  }
+
+  .action-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .action-icon + .action-text,
+  .action-icon + .action-select,
+  .action-text + .action-select {
+    margin-left: 6px;
+  }
+
+  .action-text {
+    font-size: 14px;
+  }
+
+  .input,
+  .input-area {
+    padding: 7px 12px;
+    width: 100%;
+    line-height: 24px;
+    min-height: 40px;
+    font-size: 16px;
+
+    &.has-icon {
+      padding-left: 30px;
+    }
+
+    &.is-clearable {
+      padding-right: 40px;
+    }
+  }
+
+  .icon {
+    top: 9px;
+    left: 10px;
+  }
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .text {
+    padding: 0 8px 0 12px;
+    line-height: 40px;
+    font-size: 16px;
+  }
+
+  .text-after {
+    padding: 0 12px 0 8px;
+    line-height: 32px;
+    font-size: 14px;
+  }
+
+  .clear {
+    top: 0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+  }
+
+  .clear-svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
 .SInputText.medium {
   .action {
     padding: 11px 12px;
@@ -416,13 +487,13 @@ export default defineComponent({
 
     &:focus {
       border-color: var(--input-focus-border);
-      background-color: var(--input-focus-bg);
+      background-color: var(--input-filled-bg-focus);
     }
   }
 
   .input-area:focus + .input {
     border-color: var(--input-focus-border);
-    background-color: var(--input-focus-bg);
+    background-color: var(--input-filled-bg-focus);
   }
 
   &.disabled .input {
@@ -446,6 +517,11 @@ export default defineComponent({
       border-color: var(--input-focus-border);
       background-color: var(--input-focus-bg);
     }
+  }
+
+  .input-area:focus + .input {
+    border-color: var(--input-focus-border);
+    background-color: var(--input-filled-bg-focus);
   }
 
   &.disabled .box:hover .input {

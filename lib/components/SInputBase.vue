@@ -78,6 +78,16 @@ export default defineComponent({
   }
 }
 
+.SInputBase.small {
+  .label {
+    padding-bottom: 8px;
+  }
+
+  .help-text {
+    padding-top: 4px;
+  }
+}
+
 .SInputBase.has-error {
   .label {
     color: var(--c-danger);

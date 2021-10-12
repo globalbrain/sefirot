@@ -2,18 +2,28 @@
 <StoryBase title="Input in other sizes">
   <div class="input">
     <SInputText
-      v-model="textMedium"
-      name="size-medium-name"
-      label="Medium input"
+      v-model="textMini"
+      size="mini"
+      name="size-mini-name"
+      label="Mini input"
       placeholder="John Doe"
     />
   </div>
   <div class="input">
     <SInputText
-      v-model="textMini"
-      size="mini"
-      name="size-mini-name"
-      label="Mini input"
+      v-model="textSmall"
+      size="small"
+      name="size-small-name"
+      label="Small input"
+      placeholder="John Doe"
+    />
+  </div>
+  <div class="input">
+    <SInputText
+      v-model="textMedium"
+      size="medium"
+      name="size-medium-name"
+      label="Medium input"
       placeholder="John Doe"
     />
   </div>
@@ -23,18 +33,28 @@
 <template>
   <div class="input">
     <SInputText
-      v-model="textMedium"
-      name="size-medium-name"
-      label="Medium input"
+      v-model="textMini"
+      size="mini"
+      name="size-mini-name"
+      label="Mini input"
       placeholder="John Doe"
     />
   </div>
   <div class="input">
     <SInputText
-      v-model="textMini"
-      size="mini"
-      name="size-mini-name"
-      label="Mini input"
+      v-model="textSmall"
+      size="small"
+      name="size-small-name"
+      label="Small input"
+      placeholder="John Doe"
+    />
+  </div>
+  <div class="input">
+    <SInputText
+      v-model="textMedium"
+      size="medium"
+      name="size-medium-name"
+      label="Medium input"
       placeholder="John Doe"
     />
   </div>
@@ -50,12 +70,15 @@ export default defineComponent({
   },
 
   setup() {
-    const textMedium = ref('')
     const textMini = ref('')
+    const textSmall = ref('')
+    const textMedium = ref('')
 
     return {
-      textMedium,
-      textMini
+      icon: SIconSearch,
+      textMini,
+      textSmall,
+      textMedium
     }
   }
 })
@@ -88,13 +111,15 @@ export default defineComponent({
   },
 
   setup() {
-    const textMedium = ref('')
     const textMini = ref('')
+    const textSmall = ref('')
+    const textMedium = ref('')
 
     return {
       icon: SIconSearch,
-      textMedium,
-      textMini
+      textMini,
+      textSmall,
+      textMedium
     }
   }
 })

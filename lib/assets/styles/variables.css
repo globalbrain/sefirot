@@ -247,18 +247,25 @@
   --input-note: var(--c-text-2);
   --input-text: var(--c-text-1);
   --input-placeholder: var(--c-text-2);
-  --input-filled-bg: var(--c-white-mute);
+
+  --input-filled-bg: var(--c-bg-mute);
+  --input-filled-bg-focus: var(--c-bg);
   --input-filled-bg-disabled: var(--c-gray-light-4);
+
   --input-outlined-bg-disabled: var(--c-white-mute);
-  --input-clear-bg-disabled: var(--c-white);
   --input-outlined-border: var(--c-divider);
+
+  --input-clear-bg-disabled: var(--c-white);
+
   --input-focus-border: var(--c-black);
   --input-focus-bg: var(--c-white);
+
   --input-help: var(--c-text-2);
 
   --input-action-filled-bg: var(--c-white-mute);
   --input-action-filled-bg-hover: var(--c-gray-light-4);
   --input-action-filled-bg-focus: var(--c-gray-light-3);
+
   --input-action-outlined-bg: var(--c-white-mute);
   --input-action-outlined-border: var(--c-divider);
   --input-action-outlined-bg-hover: var(--c-gray-light-4);
