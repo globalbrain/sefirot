@@ -173,3 +173,10 @@
     pointer-events: none;
   }
 }
+
+.dark-mode .c-medium {
+  code {
+    color: var(--c-info-light);
+    background-color: var(--c-black-mute);
+  }
+}
