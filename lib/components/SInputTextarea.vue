@@ -137,7 +137,6 @@ export default defineComponent({
 
     &:focus {
       border-color: var(--input-focus-border);
-      background-color: var(--input-focus-bg);
     }
   }
 

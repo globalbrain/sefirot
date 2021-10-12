@@ -67,6 +67,7 @@
   --c-warning-lighter: #ffff17;
   --c-warning-dark: #e0ad15;
   --c-warning-darker: #bc9112;
+  --c-warning-bg: rgba(255, 197, 23, .1);
 
   --c-danger: #ed3c50;
   --c-danger-light: #f43771;
@@ -246,7 +247,7 @@
   --input-label: var(--c-text-1);
   --input-note: var(--c-text-2);
   --input-text: var(--c-text-1);
-  --input-placeholder: var(--c-text-2);
+  --input-placeholder: var(--c-text-3);
 
   --input-filled-bg: var(--c-bg-mute);
   --input-filled-bg-focus: var(--c-bg);
