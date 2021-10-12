@@ -104,6 +104,10 @@ export default defineComponent({
   }
 }
 
+.dark-mode .header {
+  background-color: var(--c-black-soft);
+}
+
 .title {
   flex-grow: 1;
   margin: 0;
@@ -112,7 +116,7 @@ export default defineComponent({
   font-family: var(--font-family-base);
   font-size: 14px;
   font-weight: 500;
-  color: var(--c-text-light-2);
+  color: var(--c-text-2);
 }
 
 .action {
@@ -131,7 +135,7 @@ export default defineComponent({
 
   &:hover {
     color: var(--c-info);
-    background-color: var(--c-white-mute);
+    background-color: var(--c-bg-mute);
   }
 }
 
