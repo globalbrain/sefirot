@@ -4,9 +4,9 @@
 
     <div class="container">
       <div class="logo">
-        <nuxt-link class="logo-link" to="/" @click.native="close">
+        <NuxtLink class="logo-link" to="/" @click.native="close">
           <IconSefirotH class="logo-icon" />
-        </nuxt-link>
+        </NuxtLink>
       </div>
 
       <div class="hamburger">
@@ -90,7 +90,8 @@ export default defineComponent({
   align-items: center;
   width: 90px;
   height: 64px;
-  transition: opacity .25s;
+  color: var(--c-text-1);
+  transition: color .25s, opacity .25s;
 
   &:hover {
     opacity: .5;
@@ -98,11 +99,9 @@ export default defineComponent({
 }
 
 .logo-icon {
-  display: block;
   width: 90px;
   height: 28px;
-  fill: var(--c-text-1);
-  transition: fill .25s;
+  fill: currentColor;
 }
 
 .hamburger {
