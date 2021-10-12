@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputRadios from 'sefirot/components/SInputRadios.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputRadios>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputRadios', () => {
   beforeEach(() => {

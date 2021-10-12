@@ -3,8 +3,7 @@ import SIconX from 'sefirot/components/icons/SIconX.vue'
 import SGrid from 'sefirot/components/SGrid.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SGrid>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SGrid', () => {
   beforeEach(() => {

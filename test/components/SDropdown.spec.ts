@@ -3,8 +3,7 @@ import SDropdown from 'sefirot/components/SDropdown.vue'
 import { UseDropdownOptions, useDropdown, useTextItem, useUserItem } from 'sefirot/composables/Dropdown'
 import { Wrapper } from '../utils'
 
-type Instance = InstanceType<typeof SDropdown>
-let createWrapper: (options: UseDropdownOptions) => Wrapper<Instance>
+let createWrapper: (options: UseDropdownOptions) => Wrapper
 
 describe('components/SDropdown', () => {
   beforeEach(() => {
@@ -21,6 +20,8 @@ describe('components/SDropdown', () => {
         useTextItem({ text: 'Item 1', value: 1 })
       ]
     })
+
+    wrapper.vm.cock = 123
 
     expect(wrapper.find('.SDropdown .SDropdownItem .SDropdownItemText').exists())
   })
@@ -92,6 +93,8 @@ describe('components/SDropdown', () => {
         })
       ]
     })
+
+    wrapper.vm.cock = 123
 
     wrapper.find('.SDropdown .SDropdownItem').trigger('click')
     expect(callback).toHaveBeenCalled()

@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils'
 import SPlaceholderImage from 'sefirot/components/SPlaceholderImage.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SPlaceholderImage>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 jest.useFakeTimers()
 

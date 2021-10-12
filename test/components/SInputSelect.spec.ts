@@ -3,8 +3,7 @@ import useForm from 'sefirot/compositions/useForm'
 import SInputSelect from 'sefirot/components/SInputSelect.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputSelect>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputSelect', () => {
   beforeEach(() => {
@@ -67,6 +66,7 @@ describe('components/SInputSelect', () => {
 
   it('should toggle focus on `focus` and `blur` event', async () => {
     const wrapper = createWrapper({
+      attachTo: document.body,
       propsData: { value: 1 }
     })
 

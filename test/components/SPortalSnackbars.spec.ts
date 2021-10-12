@@ -4,7 +4,7 @@ import Sefirot from 'sefirot/store/Sefirot'
 import SPortalSnackbars from 'sefirot/components/SPortalSnackbars.vue'
 import { createVue, CreateWrapperFn } from '../utils'
 
-let createWrapper: CreateWrapperFn<InstanceType<typeof SPortalSnackbars>>
+let createWrapper: CreateWrapperFn
 
 describe('components/SPortalSnackbars', () => {
   beforeEach(() => {

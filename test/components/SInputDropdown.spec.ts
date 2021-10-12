@@ -4,8 +4,7 @@ import useForm from 'sefirot/compositions/useForm'
 import { useSearch, useTextOption } from 'sefirot/composables/InputDropdown'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputDropdown>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputDropdown', () => {
   beforeEach(() => {

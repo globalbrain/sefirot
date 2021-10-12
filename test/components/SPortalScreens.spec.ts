@@ -6,8 +6,7 @@ import Sefirot from 'sefirot/store/Sefirot'
 import SPortalScreens from 'sefirot/components/SPortalScreens.vue'
 import { createVue, CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SPortalScreens>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 const { localVue } = createVue()
   .use(Vuex)

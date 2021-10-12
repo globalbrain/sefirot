@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils'
 import SSteps from 'sefirot/components/SSteps.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SSteps>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SSteps', () => {
   beforeEach(() => {

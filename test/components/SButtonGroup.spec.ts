@@ -2,8 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SButtonGroup>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SButtonGroup', () => {
   beforeEach(() => {

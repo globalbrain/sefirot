@@ -2,8 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
 import { CreateWrapperFn } from '../utils'
 
-type Instance = InstanceType<typeof SInputSwitch>
-let createWrapper: CreateWrapperFn<Instance>
+let createWrapper: CreateWrapperFn
 
 describe('components/SInputSwitch', () => {
   beforeEach(() => {
