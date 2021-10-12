@@ -90,9 +90,10 @@ export default defineComponent({
   align-items: center;
   width: 90px;
   height: 64px;
+  transition: opacity .25s;
 
-  &:hover .logo-icon {
-    fill: var(--c-gray);
+  &:hover {
+    opacity: .5;
   }
 }
 
@@ -100,7 +101,7 @@ export default defineComponent({
   display: block;
   width: 90px;
   height: 28px;
-  fill: var(--c-black);
+  fill: var(--c-text-1);
   transition: fill .25s;
 }
 

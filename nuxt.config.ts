@@ -27,7 +27,10 @@ const config: NuxtConfig = {
     extractCSS: isProd ? { ignoreOrder: true } : false
   },
 
-  buildModules: ['@nuxt/typescript-build'],
+  buildModules: [
+    '@nuxt/typescript-build',
+    '@nuxtjs/color-mode'
+  ],
 
   head: {
     titleTemplate: '%s | Sefirot',
@@ -67,6 +70,11 @@ const config: NuxtConfig = {
   ],
 
   loading: false,
+
+  colorMode: {
+    preference: 'system',
+    fallback: 'light'
+  },
 
   markdownit: {
     highlight,
