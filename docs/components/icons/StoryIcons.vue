@@ -2,9 +2,9 @@
 <StoryBase title="Icons">
   <ul class="flex flex-wrap -m-4">
     <li v-for="icon in icons" :key="icon.name" class="item relative">
-      <div class="bg-white-mute flex flex-col justify-center items-center rounded-4 pt-32 pb-16">
-        <component :is="icon.component" class="w-20 h-20 text-light-1 fill-current" />
-        <p class="name pt-32 leading-20 text-12 text-light-2">{{ icon.name }}</p>
+      <div class="box">
+        <component :is="icon.component" class="icon" />
+        <p class="name">{{ icon.name }}</p>
       </div>
     </li>
   </ul>
@@ -198,5 +198,32 @@ export default defineComponent({
 
 .item + .item {
   padding-top: 4px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  padding: 32px 0 16px;
+  background-color: var(--c-bg-mute);
+  transition: background-color .25s;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: var(--c-text-1);
+  transition: fill .25s;
+}
+
+.name {
+  padding-top: 32px;
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-2);
+  transition: color .25s;
 }
 </style>
