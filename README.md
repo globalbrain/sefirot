@@ -1,20 +1,8 @@
-<p align="center">
-  <img width="128" src="https://github.com/globalbrain/sefirot/raw/master/logo-sefirot.png" alt="Sefirot">
-</p>
+# Sefirot
 
-<h1 align="center">Sefirot</h1>
-
-<p align="center">
-  <a href="https://github.com/globalbrain/sefirot/actions">
-    <img src="https://github.com/globalbrain/sefirot/workflows/Test/badge.svg" alt="GitHub Actions">
-  </a>
-  <a href="https://codecov.io/gh/globalbrain/sefirot">
-    <img src="https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg" alt="codecov">
-  </a>
-  <a href="https://github.com/globalbrain/sefirot/blob/master/LICENSE.md">
-    <img src="https://img.shields.io/npm/l/@globalbrain/sefirot.svg" alt="License">
-  </a>
-</p>
+[![GitHub Actions](https://github.com/globalbrain/sefirot/workflows/Test/badge.svg)](https://github.com/globalbrain/sefirot/actions)
+[![Codecov](https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg)](https://codecov.io/gh/globalbrain/sefirot)
+[![License](https://img.shields.io/npm/l/@globalbrain/sefirot.svg)](https://github.com/globalbrain/sefirot/blob/master/LICENSE.md)
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
