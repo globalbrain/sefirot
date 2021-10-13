@@ -18,6 +18,7 @@ body {
   direction: ltr;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  transition: background-color .5s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

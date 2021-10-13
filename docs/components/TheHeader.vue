@@ -67,6 +67,7 @@ export default defineComponent({
   padding: 0 0 0 24px;
   width: 100%;
   background-color: var(--c-bg);
+  transition: background-color .5s;
 }
 
 .container {

@@ -1,10 +1,10 @@
 <template>
-  <div class="SideBarNavigation" :class="{ show, on }">
+  <div class="SidebarNavigation" :class="{ show, on }">
     <div class="container">
       <div class="action">
-        <div class="button">
-          <SButton label="MENU" type="text" :icon="icon" @click="toggle" />
-        </div>
+        <button class="button" @click="toggle">
+          <SIconList class="button-icon" /> Menu
+        </button>
 
         <button class="close" @click="close">
           <SIconX class="close-icon" />
@@ -28,13 +28,12 @@
 import { defineComponent, ref, PropType } from '@nuxtjs/composition-api'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconX from '@@/lib/components/icons/SIconX.vue'
-import SButton from '@@/lib/components/SButton.vue'
 import { Content } from '@/composables/Content'
 
 export default defineComponent({
   components: {
     SIconX,
-    SButton
+    SIconList
   },
 
   props: {
@@ -56,7 +55,7 @@ export default defineComponent({
 
     function close(): void {
       on.value = false
-      setTimeout(() => { show.value = false }, 250)
+      setTimeout(() => { show.value = false }, 50)
     }
 
     function delayClose(): void {
@@ -79,20 +78,13 @@ export default defineComponent({
 <style lang="postcss" scoped>
 @import "@/assets/styles/variables";
 
-.SideBarNavigation {
+.SidebarNavigation {
   flex-shrink: 0;
-  border-bottom: 1px solid var(--c-divider);
-  padding: 4px 24px;
+  border-bottom: 1px solid var(--c-divider-light);
+  padding: 5px 24px 2px;
   width: 100%;
   background-color: var(--c-bg);
-
-  @media (min-width: 375px) {
-    padding: 4px 32px;
-  }
-
-  @media (min-width: 768px) {
-    padding: 4px 32px;
-  }
+  transition: background-color .5s;
 
   @media (min-width: 1056px) {
     position: fixed;
@@ -100,21 +92,20 @@ export default defineComponent({
     bottom: 0;
     left: 0;
     z-index: var(--z-index-sidebar);
-    border-right: 1px solid var(--c-divider-light);
     border-bottom: 0;
     margin: 0;
-    padding: 65px 0 0;
+    padding: 57px 0 0;
     width: 240px;
     overflow: hidden;
     overflow-y: auto;
   }
 }
 
-.SideBarNavigation.show {
-  .nav { display: block; }
+.SidebarNavigation.show {
+  .nav { transform: translateX(0); }
 }
 
-.SideBarNavigation.show.on {
+.SidebarNavigation.show.on {
   .close    { opacity: 1; }
   .nav      { opacity: 1; }
   .nav-list { transform: translateY(0); }
@@ -122,6 +113,7 @@ export default defineComponent({
 
 .container {
   margin: 0 auto;
+  height: 100%;
 }
 
 .action {
@@ -130,11 +122,34 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: -12px;
 
   @media (min-width: 1056px) {
     display: none;
   }
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  height: 40px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-1);
+  transition: color .25s;
+
+  &:hover {
+    color: var(--c-text-2);
+  }
+}
+
+.button-icon {
+  margin-top: -2px;
+  margin-right: 8px;
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
 }
 
 .close {
@@ -143,46 +158,43 @@ export default defineComponent({
 }
 
 .close-icon {
-  width: 12px;
-  height: 12px;
-  fill: var(--c-black);
+  margin-top: -4px;
+  width: 16px;
+  height: 16px;
+  fill: var(--c-text-1);
   transform: translateY(1px);
   transition: fill .25s, opacity .25s;
 
   &:hover {
-    fill: var(--c-gray);
+    fill: var(--c-text-2);
   }
 }
 
 .nav {
   position: fixed;
-  top: 114px;
+  top: 56px;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 10;
-  display: none;
-  width: 100%;
-  padding: 24px 24px 48px;
+  z-index: 20;
+  max-width: 288px;
+  border-right: 1px solid var(--c-divider-light);
+  padding: 16px 24px 96px;
   background-color: var(--c-bg);
-  opacity: 0;
-  transition: opacity .25s;
+  opacity: 1;
+  box-shadow: var(--shadow-depth-3);
+  transform: translateX(-100%);
   overflow: hidden;
   overflow-y: auto;
-
-  @media (min-width: 375px) {
-    padding: 24px 32px 96px;
-  }
-
-  @media (min-width: 768px) {
-    padding: 24px 32px 96px;
-  }
+  transition: background-color .5s, opacity .25s, transform .25s;
 
   @media (min-width: 1056px) {
     position: static;
     display: block;
-    padding: 24px 24px 160px 32px;
+    height: 100%;
     opacity: 1;
+    box-shadow: none;
+    transform: translateX(0);
   }
 }
 
@@ -191,40 +203,17 @@ export default defineComponent({
   width: 100%;
 }
 
-.nav-list {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -8px -16px;
-  transform: translateY(4px);
-  transition: transform .25s;
-
-  @media (min-width: 768px) {
-    margin: -4px -16px;
-  }
-}
-
-.nav-item {
-  padding: 8px 16px;
-  width: 192px;
-
-  @media (min-width: 768px) {
-    padding: 4px 16px;
-  }
-}
-
 .nav-link {
-  font-size: 16px;
-  font-weight: 400;
+  display: block;
+  line-height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--c-text-2);
   transition: color .25s;
 
   &:hover,
   &.nuxt-link-active {
-    color: var(--c-text-2);
-  }
-
-  @media (min-width: 768px) {
-    font-size: 14px;
-    font-weight: 400;
+    color: var(--c-text-1);
   }
 }
 </style>
