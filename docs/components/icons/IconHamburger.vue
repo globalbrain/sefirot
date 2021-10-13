@@ -24,7 +24,7 @@ export default defineComponent({
 .Hamburger {
   position: relative;
   width: 64px;
-  height: 64px;
+  height: 56px;
 
   &:hover {
     .top    { top: 4px; left: 0; transform: translateX(10px); }
@@ -34,6 +34,12 @@ export default defineComponent({
 }
 
 .Hamburger.active {
+  .top,
+  .middle,
+  .bottom {
+    background-color: var(--c-text-2);
+  }
+
   .top    { top: 11px; transform: translateX(0) rotate(225deg); }
   .middle { top: 11px; transform: translateX(24px); }
   .bottom { top: 11px; transform: translateX(0) rotate(135deg); }
@@ -41,7 +47,7 @@ export default defineComponent({
 
 .container {
   position: absolute;
-  top: 20px;
+  top: 17px;
   left: 20px;
   width: 20px;
   height: 24px;
@@ -54,8 +60,8 @@ export default defineComponent({
   position: absolute;
   width: 20px;
   height: 2px;
-  background-color: var(--c-black);
-  transition: all .3s;
+  background-color: var(--c-text-1);
+  transition: all .25s;
 }
 
 .top    { top: 4px; left: 0; transform: translateX(0); }

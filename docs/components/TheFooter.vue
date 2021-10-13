@@ -1,8 +1,8 @@
 <template>
   <div class="TheFooter">
-    <div class="mx-auto max-w-960 text-center">
-      <p class="leading-20 text-12 font-500">We shape our buildings. Thereafter, they shape us.</p>
-      <p class="copyright text-12 font-500">&copy; 2021 <a class="link" href="https://globalbrains.com" target="_blank">Global Brain Corporation</a></p>
+    <div class="container">
+      <p class="catch">We shape our buildings. Thereafter, they shape us.</p>
+      <p class="copyright">&copy; 2021 <a class="link" href="https://globalbrains.com" target="_blank">Global Brain Corporation</a></p>
     </div>
   </div>
 </template>
@@ -14,13 +14,21 @@
   position: relative;
   z-index: var(--z-index-footer);
   border-top: 1px solid var(--c-divider-light);
-  padding: 32px;
+  padding: 24px;
   background-color: var(--c-bg);
+}
 
-  @media (min-width: 768px) {
-    padding-right: 48px;
-    padding-left: 48px;
-  }
+.container {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.catch,
+.copyright {
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-2);
 }
 
 .link {
@@ -29,9 +37,5 @@
   &:hover {
     color: var(--c-text-1);
   }
-}
-
-.copyright {
-  color: var(--c-text-2);
 }
 </style>

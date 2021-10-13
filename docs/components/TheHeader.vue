@@ -67,14 +67,6 @@ export default defineComponent({
   padding: 0 0 0 24px;
   width: 100%;
   background-color: var(--c-bg);
-
-  @media (min-width: 375px) {
-    padding: 0 8px 0 32px;
-  }
-
-  @media (min-width: 512px) {
-    padding: 0 32px;
-  }
 }
 
 .container {
@@ -83,13 +75,14 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 56px;
 }
 
 .logo-link {
   display: flex;
   align-items: center;
-  width: 90px;
-  height: 64px;
+  padding-top: 1px;
+  width: 96px;
   color: var(--c-text-1);
   transition: color .25s, opacity .25s;
 

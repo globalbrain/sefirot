@@ -8,9 +8,8 @@ require('dotenv').config()
 const isProd = process.env.NODE_ENV === 'production'
 
 const config: NuxtConfig = {
-  target: 'static',
-
   ssr: false,
+  target: 'static',
 
   srcDir: 'docs/',
 
