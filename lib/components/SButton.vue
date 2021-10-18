@@ -14,7 +14,7 @@
 
     <transition name="fade">
       <span v-if="loading" key="loading" class="loader">
-        <component :is="preloaderComponent" class="loader-icon" />
+        <SIconPreloader class="loader-icon" />
       </span>
     </transition>
   </component>
@@ -22,12 +22,15 @@
 
 <script lang="ts">
 import { PropType, defineComponent, computed } from '@vue/composition-api'
-import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
-import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
+import SIconPreloader from './icons/SIconPreloader.vue'
 
 type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
 export default defineComponent({
+  components: {
+    SIconPreloader
+  },
+
   props: {
     label: { type: String, default: null },
     tag: { type: String, default: 'button' },
@@ -57,33 +60,12 @@ export default defineComponent({
       { disabled: props.disabled }
     ])
 
-    const preloaderComponent = computed(() => {
-      if (props.mode !== 'neutral') {
-        return SIconPreloaderLight
-      }
-
-      if (!props.inverse && props.type === 'primary') {
-        return SIconPreloaderLight
-      }
-
-      if (!props.inverse && props.type !== 'primary') {
-        return SIconPreloaderDark
-      }
-
-      if (props.inverse && props.type === 'primary') {
-        return SIconPreloaderDark
-      }
-
-      return SIconPreloaderLight
-    })
-
     function handleClick(): void {
       !props.disabled && emit('click')
     }
 
     return {
       classes,
-      preloaderComponent,
       handleClick
     }
   }
@@ -115,6 +97,7 @@ export default defineComponent({
   &:active { background-color: var(--button-primary-bg-focus); }
 
   &.info {
+    color: var(--c-text-1);
     background-color: var(--c-info);
 
     &:hover  { background-color: var(--c-info-dark); }
@@ -122,6 +105,7 @@ export default defineComponent({
   }
 
   &.success {
+    color: var(--c-text-1);
     background-color: var(--c-success);
 
     &:hover  { background-color: var(--c-success-dark); }
@@ -129,6 +113,7 @@ export default defineComponent({
   }
 
   &.warning {
+    color: var(--c-text-1);
     background-color: var(--c-warning);
 
     &:hover  { background-color: var(--c-warning-dark); }
@@ -136,6 +121,7 @@ export default defineComponent({
   }
 
   &.danger {
+    color: var(--c-text-1);
     background-color: var(--c-danger);
 
     &:hover  { background-color: var(--c-danger-dark); }
@@ -208,6 +194,10 @@ export default defineComponent({
       &:hover  { background-color: var(--c-danger-dark); }
       &:active { background-color: var(--c-danger-darker); }
     }
+  }
+
+  & .loader-icon >>> .bar {
+    fill: var(--c-text-inverse-1);
   }
 }
 
@@ -548,8 +538,8 @@ export default defineComponent({
 
 .SButton.loading {
   &.primary {
-    &:hover  { background-color: var(--c-black); }
-    &:active { background-color: var(--c-black); }
+    &:hover  { background-color: var(--button-primary-bg); }
+    &:active { background-color: var(--button-primary-bg); }
 
     &.info {
       &:hover  { background-color: var(--c-info-light); }
@@ -609,6 +599,7 @@ export default defineComponent({
   left: 50%;
   width: 32px;
   height: 32px;
+  color: var(--c-text-1);
   transform: translate(-50%, -50%);
   transition: opacity .25s, transform .25s;
 }

@@ -242,6 +242,51 @@
   --button-mute-inverse-bg-focus: var(--c-gray-dark-2);
 }
 
+.dark-mode {
+  --button-primary-text: var(--c-text-inverse-1);
+  --button-primary-bg: var(--c-white);
+  --button-primary-bg-hover: var(--c-gray-light-3);
+  --button-primary-bg-focus: var(--c-gray-light-1);
+  --button-primary-inverse-text: var(--c-text-1);
+  --button-primary-inverse-bg: var(--c-black);
+  --button-primary-inverse-bg-hover: var(--c-gray-dark-4);
+  --button-primary-inverse-bg-focus: var(--c-gray-dark-3);
+
+  --button-secondary-border: var(--c-white);
+  --button-secondary-bg-hover: var(--c-black-mute);
+  --button-secondary-bg-focus: var(--c-gray-dark-3);
+  --button-secondary-inverse-text: var(--c-text-inverse-1);
+  --button-secondary-inverse-border: var(--c-white);
+  --button-secondary-inverse-bg-hover: var(--c-gray-dark-4);
+  --button-secondary-inverse-bg-focus: var(--c-gray-dark-3);
+
+  --button-tertiary-text: var(--c-text-1);
+  --button-tertiary-bg: var(--c-black-mute);
+  --button-tertiary-bg-hover: var(--c-gray-dark-3);
+  --button-tertiary-bg-focus: var(--c-gray-dark-1);
+  --button-tertiary-inverse-text: var(--c-text-inverse-1);
+  --button-tertiary-inverse-bg: var(--c-black-mute);
+  --button-tertiary-inverse-bg-hover: var(--c-gray-dark-3);
+  --button-tertiary-inverse-bg-focus: var(--c-gray-dark-2);
+
+  --button-text-text: var(--c-text-1);
+  --button-text-bg-hover: var(--c-black-mute);
+  --button-text-bg-focus: var(--c-gray-dark-3);
+  --button-text-inverse-text: var(--c-text-inverse-1);
+  --button-text-inverse-bg: var(--c-black-mute);
+  --button-text-inverse-bg-hover: var(--c-gray-dark-3);
+  --button-text-inverse-bg-focus: var(--c-gray-dark-2);
+
+  --button-mute-text: var(--c-text-2);
+  --button-mute-text-hover: var(--c-text-1);
+  --button-mute-bg-hover: var(--c-black-mute);
+  --button-mute-bg-focus: var(--c-gray-dark-3);
+  --button-mute-inverse-text: var(--c-text-inverse-2);
+  --button-mute-inverse-text-hover: var(--c-text-inverse-1);
+  --button-mute-inverse-bg-hover: var(--c-gray-dark-3);
+  --button-mute-inverse-bg-focus: var(--c-gray-dark-2);
+}
+
 /**
  * Component: Inputs
  * -------------------------------------------------------------------------- */
