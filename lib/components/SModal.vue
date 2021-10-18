@@ -2,7 +2,12 @@
   <transition name="fade" :duration="250" appear>
     <div ref="el" class="SModal" @click="closeIfClosable">
       <transition name="fade">
-        <div v-show="show" class="SModal-content" :style="contentStyles">
+        <div
+          v-show="show"
+          class="SModal-content"
+          :style="contentStyles"
+          @click="closeIfClosable"
+        >
           <component
             :is="resolvedComponent"
             :if="resolvedComponent"
@@ -58,7 +63,7 @@ export default defineComponent({
     }
 
     function isDescendant(el: Element): boolean {
-      if (el.classList && el.classList.contains('SModal')) {
+      if (el.classList && el.classList.contains('SModal-content')) {
         return false
       }
 
