@@ -302,3 +302,9 @@
   --dropdown-item-hover-bg: var(--c-white-soft);
 }
 
+/**
+ * Component: Modal
+ * -------------------------------------------------------------------------- */
+:root {
+  --modal-content-bg: var(--c-bg);
+}
