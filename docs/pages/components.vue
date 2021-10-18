@@ -41,6 +41,7 @@ export default defineComponent({
       { label: 'Markdown', path: '/components/markdown' },
       { label: 'Modals: Alert', path: '/components/modals-alert' },
       { label: 'Modals: Dialog', path: '/components/modals-dialog' },
+      { label: 'Modals: Sheet', path: '/components/modals-sheet' },
       { label: 'Placeholders: Blank', path: '/components/placeholders-blank' },
       { label: 'Placeholders: Image', path: '/components/placeholders-image' },
       { label: 'Responsive', path: '/components/responsive' },
