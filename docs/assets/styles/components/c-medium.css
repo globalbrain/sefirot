@@ -11,40 +11,43 @@
   }
 
   h1 + p {
-    padding-top: 16px;
+    padding-top: 8px;
     line-height: 24px;
     font-size: 16px;
+    font-weight: 500;
+    color: var(--c-text-2);
   }
 
   h2 {
-    margin-top: 72px;
-    margin-bottom: 24px;
+    margin-top: 64px;
+    margin-bottom: 14px;
     border-top: 1px solid var(--c-divider-light);
-    padding-top: 32px;
+    padding-top: 16px;
     line-height: 32px;
-    font-family: var(--font-family-primary);
     font-size: 24px;
     font-weight: 500;
   }
 
   h3 {
     margin-top: 48px;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     line-height: 32px;
     font-size: 20px;
     font-weight: 500;
   }
 
   p {
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+    max-width: 640px;
     font-weight: 400;
   }
 
   section + p {
-    margin-top: 24px;
+    margin-top: 16px;
   }
 
   a {
+    font-weight: 500;
     color: var(--c-info-light);
     transition: color .25s;
 
@@ -55,7 +58,11 @@
 
   ul {
     list-style: disc;
-    padding-left: 17px;
+    padding-left: 20px;
+  }
+
+  ul + p {
+    margin-top: 16px;
   }
 
   li + li {
