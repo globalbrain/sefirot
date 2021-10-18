@@ -50,6 +50,7 @@ import SIconGitBranch from '@@/lib/components/icons/SIconGitBranch.vue'
 import SIconGitCommit from '@@/lib/components/icons/SIconGitCommit.vue'
 import SIconGitPullRequest from '@@/lib/components/icons/SIconGitPullRequest.vue'
 import SIconGlobe from '@@/lib/components/icons/SIconGlobe.vue'
+import SIconGrab from '@@/lib/components/icons/SIconGrab.vue'
 import SIconHome from '@@/lib/components/icons/SIconHome.vue'
 import SIconInbox from '@@/lib/components/icons/SIconInbox.vue'
 import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
@@ -59,6 +60,7 @@ import SIconList from '@@/lib/components/icons/SIconList.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoon from '@@/lib/components/icons/SIconMoon.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
+import SIconMoreVertical from '@@/lib/components/icons/SIconMoreVertical.vue'
 import SIconPauseFill from '@@/lib/components/icons/SIconPauseFill.vue'
 import SIconPlayFill from '@@/lib/components/icons/SIconPlayFill.vue'
 import SIconPlus from '@@/lib/components/icons/SIconPlus.vue'
@@ -130,6 +132,7 @@ export default defineComponent({
       { component: SIconGitCommit, name: 'GitCommit' },
       { component: SIconGitPullRequest, name: 'GitPullRequest' },
       { component: SIconGlobe, name: 'Globe' },
+      { component: SIconGrab, name: 'Grab' },
       { component: SIconHome, name: 'Home' },
       { component: SIconInbox, name: 'Inbox' },
       { component: SIconInfo, name: 'Info' },
@@ -138,6 +141,7 @@ export default defineComponent({
       { component: SIconList, name: 'List' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
+      { component: SIconMoreVertical, name: 'MoreVertical' },
       { component: SIconMoon, name: 'Moon' },
       { component: SIconPauseFill, name: 'PauseFill' },
       { component: SIconPlayFill, name: 'PlayFill' },
