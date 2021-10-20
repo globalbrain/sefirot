@@ -2,7 +2,7 @@ import { Item, Options as ModalOptions } from '../store/modal'
 import { useStore } from './Store'
 
 export interface Modal {
-  open(item?: Omit<Item, 'uid'>): Promise<any>
+  open(item?: OpenOptions): Promise<any>
   close(): Promise<any>
 }
 
@@ -20,12 +20,11 @@ export function useModal(component?: any): Modal {
   const uid = useModalUid()
 
   function open(item: OpenOptions = {}) {
-    return store.dispatch(
-      'modal/open', {
-        ...item,
-        component,
-        uid
-      })
+    return store.dispatch('modal/open', {
+      ...item,
+      component,
+      uid
+    })
   }
 
   function close() {
