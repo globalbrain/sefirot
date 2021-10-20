@@ -97,7 +97,7 @@ export default defineComponent({
   &:active { background-color: var(--button-primary-bg-focus); }
 
   &.info {
-    color: var(--c-text-1);
+    color: var(--c-text-dark-1);
     background-color: var(--c-info);
 
     &:hover  { background-color: var(--c-info-dark); }
@@ -105,7 +105,7 @@ export default defineComponent({
   }
 
   &.success {
-    color: var(--c-text-1);
+    color: var(--c-text-dark-1);
     background-color: var(--c-success);
 
     &:hover  { background-color: var(--c-success-dark); }
@@ -113,7 +113,7 @@ export default defineComponent({
   }
 
   &.warning {
-    color: var(--c-text-1);
+    color: var(--c-text-dark-1);
     background-color: var(--c-warning);
 
     &:hover  { background-color: var(--c-warning-dark); }
@@ -121,7 +121,7 @@ export default defineComponent({
   }
 
   &.danger {
-    color: var(--c-text-1);
+    color: var(--c-text-dark-1);
     background-color: var(--c-danger);
 
     &:hover  { background-color: var(--c-danger-dark); }
