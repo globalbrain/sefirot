@@ -224,6 +224,8 @@ With the above code, the `p` tag will have a dedicated styles. See below to see 
 
 - `h1`
 - `p`
+- `a`
+- `ul`
 
 ### SSheetFooter
 
