@@ -61,7 +61,7 @@ interface Action {
 
 ## Align
 
-The text input comes in several horizontal alignments. You may pass `align` prop to control the alignment of the input.
+The text input comes in several horizontal alignments. You may pass `align` prop to control the alignment of the input value.
 
 <StoryInputTextEXAlign />
 
