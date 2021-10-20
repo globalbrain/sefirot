@@ -74,7 +74,7 @@ export default defineComponent({
 
     function hide(): void {
       on.value = false
-      setTimeout(() => { active.value = false }, 50)
+      setTimeout(() => { active.value = false }, 250)
     }
 
     function toggleMode() {

@@ -211,7 +211,7 @@ export default defineComponent({
   align-items: center;
   border-radius: 4px;
   padding: 32px 0 16px;
-  background-color: var(--c-bg-mute);
+  background-color: var(--c-bg-soft);
   transition: background-color .25s;
 }
 

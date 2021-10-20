@@ -439,6 +439,10 @@ export default defineComponent({
   height: 40px;
   font-size: 13px;
 
+  .label {
+    transform: translateY(1px);
+  }
+
   .icon-svg {
     width: 16px;
     height: 16px;
@@ -471,7 +475,7 @@ export default defineComponent({
   font-size: 14px;
 
   .label {
-    transform: translateY(.5px);
+    transform: translateY(1px);
   }
 
   .icon-svg {
