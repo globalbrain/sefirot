@@ -1,4 +1,4 @@
-import { Item, Options as ModalOptions } from '../store/modal'
+import { Options as ModalOptions } from '../store/modal'
 import { useStore } from './Store'
 
 export interface Modal {
