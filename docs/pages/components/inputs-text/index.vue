@@ -59,6 +59,12 @@ interface Action {
 }
 ```
 
+## Align
+
+The text input comes in several horizontal alignments. You may pass `align` prop to control the alignment of the input value.
+
+<StoryInputTextEXAlign />
+
 ## Disable
 
 Set `disabled` props to disable the input. While the input is disabled, it will not emit any event.
@@ -85,6 +91,7 @@ import StoryInputTextEXSizes from '@/components/inputs/StoryInputTextEXSizes.vue
 import StoryInputTextEXIcon from '@/components/inputs/StoryInputTextEXIcon.vue'
 import StoryInputTextEXText from '@/components/inputs/StoryInputTextEXText.vue'
 import StoryInputTextEXAction from '@/components/inputs/StoryInputTextEXAction.vue'
+import StoryInputTextEXAlign from '@/components/inputs/StoryInputTextEXAlign.vue'
 import StoryInputTextEXDisabled from '@/components/inputs/StoryInputTextEXDisabled.vue'
 import StoryInputTextEXClearable from '@/components/inputs/StoryInputTextEXClearable.vue'
 import SpecProps from '@/components/SpecProps.vue'
@@ -101,6 +108,7 @@ export default defineComponent({
     StoryInputTextEXIcon,
     StoryInputTextEXText,
     StoryInputTextEXAction,
+    StoryInputTextEXAlign,
     StoryInputTextEXDisabled,
     StoryInputTextEXClearable,
     SpecProps,
@@ -188,6 +196,13 @@ export default defineComponent({
           required: false,
           default: 'null',
           description: 'You may pass Vue Component (probably svg) to display icon in input field.'
+        },
+        {
+          name: 'align',
+          type: "'left' | 'center' | 'right'",
+          required: false,
+          default: 'null',
+          description: 'The horizontal alignment of the input value.'
         },
         {
           name: 'text',

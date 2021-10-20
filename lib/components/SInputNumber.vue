@@ -9,6 +9,7 @@
     :help="help"
     type="number"
     :placeholder="placeholder"
+    :align="align"
     :text="text"
     :text-after="textAfter"
     :action="action"
@@ -36,7 +37,7 @@
 import { defineComponent, computed, PropType } from '@vue/composition-api'
 import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
-import SInputText, { Size, Mode, Color, Action } from './SInputText.vue'
+import SInputText, { Size, Mode, Align, Color, Action } from './SInputText.vue'
 
 export default defineComponent({
   components: {
@@ -51,6 +52,7 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
+    align: { type: String as PropType<Align>, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
