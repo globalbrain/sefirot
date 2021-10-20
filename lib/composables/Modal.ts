@@ -21,9 +21,9 @@ export function useModal(component?: any): Modal {
 
   function open(item: OpenOptions = {}) {
     return store.dispatch('modal/open', {
-      ...item,
+      uid,
       component,
-      uid
+      ...item
     })
   }
 
