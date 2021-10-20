@@ -22,7 +22,8 @@ module.exports = {
     '<rootDir>/test/setup.ts'
   ],
   collectCoverageFrom: [
-    '<rootDir>/lib/**/*.{ts,vue}'
+    '<rootDir>/lib/**/*.{ts,vue}',
+    '!<rootDir>/lib/components/icons/**/*.{ts,vue}'
   ],
   coverageReporters: [
     'html',
