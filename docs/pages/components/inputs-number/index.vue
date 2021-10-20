@@ -112,6 +112,13 @@ export default defineComponent({
           description: 'The placeholder text for the input.'
         },
         {
+          name: 'align',
+          type: "'left' | 'center' | 'right'",
+          required: false,
+          default: 'null',
+          description: 'The horizontal alignment of the input.'
+        },
+        {
           name: 'text',
           type: 'string',
           required: false,

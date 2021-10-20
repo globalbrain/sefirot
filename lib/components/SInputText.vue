@@ -97,6 +97,7 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Mode = 'filled' | 'outlined'
+export type Align = 'left' | 'center' | 'right'
 export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 export type ColorCallback = (value: string | number) => Color
 
@@ -126,6 +127,7 @@ export default defineComponent({
     placeholder: { type: String, default: null },
     action: { type: Object as PropType<Action>, default: null },
     icon: { type: Object, default: null },
+    align: { type: String as PropType<Align>, default: null },
     text: { type: String, default: null },
     textAfter: { type: String, default: null },
     color: { type: Function as PropType<ColorCallback>, default: null },
@@ -151,6 +153,7 @@ export default defineComponent({
     ])
 
     const inputStyles = reactive({
+      textAlign: props.align,
       paddingRight: '',
       paddingLeft: ''
     })
