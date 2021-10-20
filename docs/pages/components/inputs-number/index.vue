@@ -116,7 +116,7 @@ export default defineComponent({
           type: "'left' | 'center' | 'right'",
           required: false,
           default: 'null',
-          description: 'The horizontal alignment of the input.'
+          description: 'The horizontal alignment of the input value.'
         },
         {
           name: 'text',

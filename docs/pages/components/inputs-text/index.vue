@@ -60,6 +60,7 @@ interface Action {
 ```
 
 ## Align
+
 The text input comes in several horizontal alignments. You may pass `align` prop to control the alignment of the input.
 
 <StoryInputTextEXAlign />
@@ -201,7 +202,7 @@ export default defineComponent({
           type: "'left' | 'center' | 'right'",
           required: false,
           default: 'null',
-          description: 'The horizontal alignment of the input.'
+          description: 'The horizontal alignment of the input value.'
         },
         {
           name: 'text',
