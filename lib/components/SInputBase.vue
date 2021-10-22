@@ -81,6 +81,18 @@ export default defineComponent({
 .SInputBase.small {
   .label {
     padding-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .help-text {
+    padding-top: 4px;
+  }
+}
+
+.SInputBase.medium {
+  .label {
+    padding-bottom: 8px;
+    font-size: 14px;
   }
 
   .help-text {
@@ -96,10 +108,8 @@ export default defineComponent({
 
 .label {
   display: block;
-  padding-bottom: 10px;
   width: 100%;
   line-height: 16px;
-  font-size: 14px;
   font-weight: 500;
   color: var(--input-label);
   cursor: pointer;
