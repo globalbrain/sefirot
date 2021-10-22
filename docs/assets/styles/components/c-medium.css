@@ -10,11 +10,9 @@
   }
 
   h1 + p {
-    padding-top: 8px;
+    padding-top: 12px;
     line-height: 24px;
     font-size: 16px;
-    font-weight: 500;
-    color: var(--c-text-2);
   }
 
   h2 {
