@@ -22,7 +22,7 @@ export function useTooltip(
   }
 
   function hide(): void {
-    on.value = false
+    setTimeout(() => { on.value = false })
   }
 
   function setPosition(): void {
