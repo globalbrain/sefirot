@@ -59,7 +59,7 @@ import { SyntheticInputEvent } from '../types/Utils'
 import { Validation } from '../validation/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini'
+export type Size = 'mini' | 'small' | 'medium'
 export type Mode = 'outlined'
 
 export interface Value {
@@ -82,7 +82,7 @@ export default defineComponent({
   },
 
   props: {
-    size: { type: String as PropType<Size>, default: 'mini' },
+    size: { type: String as PropType<Size>, default: 'medium' },
     mode: { type: String as PropType<Mode>, default: 'outlined' },
     name: { type: String, default: null },
     label: { type: String, default: null },
@@ -196,6 +196,50 @@ export default defineComponent({
     padding: 3px 0;
     line-height: 24px;
     font-size: 14px;
+  }
+}
+
+.SInputYMD.small {
+  .container {
+    padding: 0 4px;
+  }
+
+  .input {
+    padding: 7px 0;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .input.year  { width: 56px; }
+  .input.month { width: 32px; }
+  .input.date  { width: 32px; }
+
+  .separator {
+    padding: 7px 0;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
+.SInputYMD.medium {
+  .container {
+    padding: 0 4px;
+  }
+
+  .input {
+    padding: 11px 0;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .input.year  { width: 56px; }
+  .input.month { width: 32px; }
+  .input.date  { width: 32px; }
+
+  .separator {
+    padding: 11px 0;
+    line-height: 24px;
+    font-size: 16px;
   }
 }
 

@@ -5,6 +5,12 @@ YMD input let users enter and edit year, month, and date value in number format.
 
 <StoryInputYMDShowcase />
 
+## Sizes
+
+The YMD input comes in several different sizes. You may pass `size` prop to control the size of the input. Supported sizes are `mini`, `small` and `medium`. The default size is set to `medium`.
+
+<StoryInputYMDEXSizes />
+
 ## API
 
 <SpecProps :props="props" />
@@ -14,6 +20,7 @@ YMD input let users enter and edit year, month, and date value in number format.
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputYMDShowcase from '@/components/inputs/StoryInputYMDShowcase.vue'
+import StoryInputYMDEXSizes from '@/components/inputs/StoryInputYMDEXSizes.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -21,6 +28,7 @@ import { useSpec } from '@/composables/Spec'
 export default defineComponent({
   components: {
     StoryInputYMDShowcase,
+    StoryInputYMDEXSizes,
     SpecProps,
     SpecEvents
   },
@@ -31,6 +39,13 @@ export default defineComponent({
     return useSpec({
       props: [
         {
+          name: 'date',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "date" input or not.'
+        },
+        {
           name: 'disabled',
           type: 'boolean',
           required: false,
@@ -39,9 +54,9 @@ export default defineComponent({
         },
         {
           name: 'size',
-          type: "'mini'",
+          type: "'mini' | 'small'",
           required: false,
-          default: 'medium',
+          default: 'small',
           description: 'The size of the input.'
         },
         {
@@ -64,6 +79,13 @@ export default defineComponent({
           required: false,
           default: 'null',
           description: 'The label for the input.'
+        },
+        {
+          name: 'month',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "month" input or not.'
         },
         {
           name: 'note',
@@ -92,6 +114,13 @@ export default defineComponent({
           required: false,
           default: 'null',
           description: 'You can pass Validation object to let input display any errors.'
+        },
+        {
+          name: 'yaer',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "year" input or not.'
         }
       ],
 
