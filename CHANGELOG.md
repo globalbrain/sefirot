@@ -1,3 +1,23 @@
+# [0.68.0](https://github.com/globalbrain/sefirot/compare/v0.67.0...v0.68.0) (2021-10-25)
+
+### Bug Fixes
+
+* **modal:** fix open method not working correctly ([23d8321](https://github.com/globalbrain/sefirot/commit/23d832198dbb23df225bcd89c69f6b30e5d2ea47))
+* **modal:** interface type ([289f6f1](https://github.com/globalbrain/sefirot/commit/289f6f1ea912d0c603e0fecde1ee1a1ae495b4bd))
+* **tooltip:** set timeout when it hides tooltip ([#104](https://github.com/globalbrain/sefirot/issues/104)) ([b07df61](https://github.com/globalbrain/sefirot/commit/b07df61a322388634a8584d6186e62e76249a49f))
+
+### Features
+
+* **button:** add dark mode support ([ed5129d](https://github.com/globalbrain/sefirot/commit/ed5129d354099a142b0972ed202eb7944842e716))
+* **icon:** add 'more-vertical' and 'grab' icons ([#102](https://github.com/globalbrain/sefirot/issues/102)) ([facba32](https://github.com/globalbrain/sefirot/commit/facba32ee670620c0da67166901ba2c51b001b93))
+* **input-radio:** add dark mode support ([f2bcea7](https://github.com/globalbrain/sefirot/commit/f2bcea7d9e4f21c96c7701133c70407c866a050c))
+* **input-text:** add alignment option for text input and number input ([#103](https://github.com/globalbrain/sefirot/issues/103)) ([07ccfd1](https://github.com/globalbrain/sefirot/commit/07ccfd11f72c9eeff8db2feee422734ca01864df))
+* **input-text:** add small size and dark mode support ([14a2b10](https://github.com/globalbrain/sefirot/commit/14a2b10e6fdc98f70b80b289a46fcfa1c39d9336))
+* **input-textarea:** add dark mode support ([d124ab4](https://github.com/globalbrain/sefirot/commit/d124ab4f0ba3307cbad3ec407dfaaa0cdbb48ecc))
+* **modal:** accept component in useModal argument ([5be1176](https://github.com/globalbrain/sefirot/commit/5be1176a0618e8bd156f7719ed3dc19b68f022d1))
+* **modal:** close modal when clicking on content area ([afcd5c7](https://github.com/globalbrain/sefirot/commit/afcd5c7d6f34a329147889d205a784c941ad6eff))
+* **sheet:** add SSheet component ([f98c204](https://github.com/globalbrain/sefirot/commit/f98c2046e57a47c05f174a2313ae39300a78823d))
+
 # [0.67.0](https://github.com/globalbrain/sefirot/compare/v0.66.0...v0.67.0) (2021-09-23)
 
 ### Bug Fixes
