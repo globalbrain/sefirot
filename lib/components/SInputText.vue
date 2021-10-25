@@ -99,7 +99,7 @@ export type Size = 'mini' | 'small' | 'medium'
 export type Mode = 'filled' | 'outlined'
 export type Align = 'left' | 'center' | 'right'
 export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-export type ColorCallback = (value: string | number) => Color
+export type ColorCallback = (value: string | number | null) => Color
 
 export interface Action {
   type?: 'button' | 'select'
@@ -144,7 +144,7 @@ export default defineComponent({
     const inputEl = ref<HTMLElement | null>(null)
     const textEl = ref<HTMLElement | null>(null)
     const textAfterEl = ref<HTMLElement | null>(null)
-    const color = ref<Color | null>(null)
+    const color = ref<Color | null>(props.color ? props.color(props.value) : null)
 
     const classes = computed(() => [
       props.size,

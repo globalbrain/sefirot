@@ -122,11 +122,18 @@ describe('components/SInputText', () => {
   it('should apply color according to input value', async () => {
     const wrapper = createWrapper({
       propsData: {
-        color: (value: string) => value.length > 3 ? 'success' : 'info'
+        color: (value: string | null) => {
+          if (!value) {
+            return 'neutral'
+          }
+
+          return value.length > 3 ? 'success' : 'info'
+        }
       }
     })
 
     const input = wrapper.find('.SInputText .input')
+    expect(input.classes('neutral')).toBeTruthy()
 
     await wrapper.setProps({ value: 'abcde' })
     expect(input.classes('success')).toBeTruthy()
