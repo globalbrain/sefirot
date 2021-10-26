@@ -46,15 +46,16 @@
 import { PropType, defineComponent, computed, nextTick } from '@vue/composition-api'
 import { isNullish, isArray, isEqual } from '../support/Util'
 import { useMenu } from '../composables/Menu'
-import { Search, Item, useDropdown } from '../composables/Dropdown'
+import { Search, Item, UseDropdownSearchOptions, useDropdown } from '../composables/Dropdown'
 import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SDropdown from './SDropdown.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-type Size = 'mini' | 'medium'
-type Mode = 'filled' | 'outlined'
+type Size = 'mini' | 'small' | 'medium'
+type Mode = 'outlined' | 'filled'
+type Value = string | number | boolean | unknown[]
 
 export default defineComponent({
   components: {
@@ -71,20 +72,20 @@ export default defineComponent({
   },
 
   props: {
-    size: { type: String as PropType<Size>, default: 'medium' },
-    mode: { type: String as PropType<Mode>, default: 'filled' },
+    size: { type: String as PropType<Size>, default: 'small' },
+    mode: { type: String as PropType<Mode>, default: 'outlined' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
-    search: { type: Object as PropType<Search>, default: null },
-    nullable: { type: Boolean, default: true },
-    disabled: { type: Boolean, default: false },
+    search: { type: [Boolean, Object] as PropType<boolean | Search>, default: false },
     options: { type: Array as PropType<Item[]>, required: true },
+    nullable: { type: Boolean, default: true },
     closeOnClick: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
     validation: { type: Object, default: null },
-    value: { type: [String, Number, Boolean, Array, Object] as PropType<string | number | boolean | unknown[]>, default: null }
+    value: { type: [String, Number, Boolean, Array, Object] as PropType<Value>, default: null }
   },
 
   setup(props, { emit }) {
@@ -101,7 +102,7 @@ export default defineComponent({
     })
 
     const dropdownOptions = useDropdown({
-      search: props.search,
+      search: createDropdownSearchOptions(),
       items: enabledItems,
       closeOnClick: props.closeOnClick,
       selected: computed(() => props.value),
@@ -119,6 +120,21 @@ export default defineComponent({
         ? selected.value.length > 0
         : !isNullish(selected.value) && selected.value.value !== ''
     })
+
+    function createDropdownSearchOptions(): UseDropdownSearchOptions | undefined {
+      if (props.search === false) {
+        return undefined
+      }
+
+      if (props.search === true) {
+        return {
+          placeholder: 'Search items',
+          missing: 'No items found.'
+        }
+      }
+
+      return props.search
+    }
 
     async function handleOpen(): Promise<void> {
       if (!props.disabled) {
@@ -201,6 +217,23 @@ export default defineComponent({
   }
 }
 
+.SInputDropdown.small {
+  .SInputDropdown-box {
+    min-height: 40px;
+  }
+
+  .SInputDropdown-box-content {
+    padding: 7px 30px 7px 12px;
+    line-height: 24px;
+    font-size: 14px;
+  }
+
+  .SInputDropdown-box-icon {
+    top: 7px;
+    right: 8px;
+  }
+}
+
 .SInputDropdown.medium {
   .SInputDropdown-box {
     height: 48px;
@@ -218,9 +251,9 @@ export default defineComponent({
   }
 }
 
-.SInputDropdown.filled {
+.SInputDropdown.outlined {
   .SInputDropdown-box {
-    background-color: var(--input-filled-bg);
+    border-color: var(--input-outlined-border);
 
     &:hover {
       border-color: var(--input-focus-border);
@@ -241,9 +274,9 @@ export default defineComponent({
   }
 }
 
-.SInputDropdown.outlined {
+.SInputDropdown.filled {
   .SInputDropdown-box {
-    border-color: var(--input-outlined-border);
+    background-color: var(--input-filled-bg);
 
     &:hover {
       border-color: var(--input-focus-border);
@@ -291,6 +324,7 @@ export default defineComponent({
 }
 
 .SInputDropdown-box-placeholder {
+  font-weight: 500;
   color: var(--input-placeholder);
 }
 

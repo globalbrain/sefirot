@@ -37,9 +37,21 @@ export default defineComponent({
   background-color: var(--c-white-mute);
 }
 
+.dark-mode .SInputDropdownItemTextTag {
+  background-color: var(--c-black-mute);
+}
+
 .SInputDropdownItemTextTag.disabled {
   padding: 0 10px 0;
   background-color: var(--c-gray-light-4);
+
+  .text {
+    color: var(--c-text-2);
+  }
+}
+
+.dark-mode .SInputDropdownItemTextTag.disabled {
+  background-color: var(--c-gray-dark-2);
 }
 
 .text {
@@ -61,6 +73,12 @@ export default defineComponent({
   &:hover .remove-box {
     color: var(--c-text-1);
     background-color: var(--c-gray-light-4)
+  }
+}
+
+.dark-mode .remove {
+  &:hover .remove-box {
+    background-color: var(--c-gray-dark-2)
   }
 }
 

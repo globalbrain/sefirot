@@ -1,5 +1,5 @@
 <template>
-  <SCard class="SDropdown" :round="round" :depth="3">
+  <div class="SDropdown">
     <div v-if="options.title" class="header">
       <p class="title">{{ options.title }}</p>
       <button class="close" @click="$emit('close')">
@@ -10,7 +10,7 @@
     <div v-if="options.search" class="search">
       <SInputText
         size="mini"
-        mode="filled"
+        mode="outlined"
         :placeholder="options.search.placeholder"
         :value="options.search.value.value"
         @input="v => options.search.onInput(v)"
@@ -40,7 +40,7 @@
 
       <p v-else class="item-missing">{{ options.search.missing }}</p>
     </div>
-  </SCard>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,14 +48,12 @@ import { PropType, defineComponent } from '@vue/composition-api'
 import { Dropdown, Item } from '../composables/Dropdown'
 import SIconX from './icons/SIconX.vue'
 import SInputText from './SInputText.vue'
-import SCard from './SCard.vue'
 import SDropdownItem from './SDropdownItem.vue'
 
 export default defineComponent({
   components: {
     SIconX,
     SInputText,
-    SCard,
     SDropdownItem
   },
 
@@ -106,7 +104,16 @@ export default defineComponent({
 .SDropdown {
   display: inline-block;
   overflow: hidden;
-  box-shadow: var(--shadow-depth-3) !important;
+  min-width: 192px;
+  border: 1px solid var(--c-divider-light);
+  border-radius: 8px;
+  background-color: var(--c-white);
+  box-shadow: var(--shadow-depth-3);
+  transition: background-color .25s;
+}
+
+.dark-mode .SDropdown {
+  background-color: var(--c-black-soft);
 }
 
 .header {

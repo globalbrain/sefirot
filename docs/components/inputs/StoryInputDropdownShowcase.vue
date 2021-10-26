@@ -3,12 +3,10 @@
   <div class="input">
     <SInputDropdown
       v-model="value"
-      size="mini"
-      mode="outlined"
       name="dropdown-input"
       label="Dropdown input"
       placeholder="Please select items"
-      :search="search"
+      search
       :options="options"
     />
   </div>
@@ -19,12 +17,10 @@
   <div class="input">
     <SInputDropdown
       v-model="value"
-      size="mini"
-      mode="outlined"
       name="dropdown-input"
       label="Dropdown input"
       placeholder="Please select items"
-      :search="search"
+      search
       :options="options"
     />
   </div>
@@ -32,7 +28,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { useSearch, useTextOption } from '@globalbrain/sefirot/lib/composables/InputDropdown'
 import SInputDropdown from '@globalbrain/sefirot/lib/components/SInputDropdown.vue'
 
 export default defineComponent({
@@ -43,23 +38,17 @@ export default defineComponent({
   setup() {
     const value = ref([])
 
-    const search = useSearch({
-      placeholder: 'Search items',
-      missing: 'No items found.'
-    })
-
     const options = [
-      useTextOption({ text: 'Vue.js', value: 'vuejs' }),
-      useTextOption({ text: 'Adonis', value: 'adonis' }),
-      useTextOption({ text: 'Rails', value: 'rails' }),
-      useTextOption({ text: 'Sinatra', value: 'sinatra' }),
-      useTextOption({ text: 'Laravel', value: 'laravel' }),
-      useTextOption({ text: 'Phoenix', value: 'phoenix' })
+      { type: 'text', text: 'Vue.js', value: 'vuejs' },
+      { type: 'text', text: 'Adonis', value: 'adonis' },
+      { type: 'text', text: 'Rails', value: 'rails' },
+      { type: 'text', text: 'Sinatra', value: 'sinatra' },
+      { type: 'text', text: 'Laravel', value: 'laravel' },
+      { type: 'text', text: 'Phoenix', value: 'phoenix' }
     ]
 
     return {
       value,
-      search,
       options
     }
   }
@@ -78,7 +67,6 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { useSearch, useTextOption } from '@@/lib/composables/InputDropdown'
 import SInputDropdown from '@@/lib/components/SInputDropdown.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
@@ -91,23 +79,17 @@ export default defineComponent({
   setup() {
     const value = ref([])
 
-    const search = useSearch({
-      placeholder: 'Search items',
-      missing: 'No items found.'
-    })
-
     const options = [
-      useTextOption({ text: 'Vue.js', value: 'vuejs' }),
-      useTextOption({ text: 'Adonis', value: 'adonis' }),
-      useTextOption({ text: 'Rails', value: 'rails' }),
-      useTextOption({ text: 'Sinatra', value: 'sinatra' }),
-      useTextOption({ text: 'Laravel', value: 'laravel' }),
-      useTextOption({ text: 'Phoenix', value: 'phoenix' })
+      { type: 'text', text: 'Vue.js', value: 'vuejs' },
+      { type: 'text', text: 'Adonis', value: 'adonis' },
+      { type: 'text', text: 'Rails', value: 'rails' },
+      { type: 'text', text: 'Sinatra', value: 'sinatra' },
+      { type: 'text', text: 'Laravel', value: 'laravel' },
+      { type: 'text', text: 'Phoenix', value: 'phoenix' }
     ]
 
     return {
       value,
-      search,
       options
     }
   }
@@ -116,8 +98,6 @@ export default defineComponent({
 
 <style lang="postcss" scoped>
 .input {
-  position: relative;
-  z-index: 100;
   max-width: 320px;
 }
 </style>

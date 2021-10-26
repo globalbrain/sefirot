@@ -50,6 +50,10 @@ export default defineComponent({
   background-color: var(--c-gray-light-4);
 }
 
+.dark-mode .SInputDropdownItemUserTag {
+  background-color: var(--c-black-mute);
+}
+
 .user {
   display: flex;
 }
@@ -75,6 +79,12 @@ export default defineComponent({
   &:hover .remove-box {
     color: var(--c-text-1);
     background-color: var(--c-gray-light-4)
+  }
+}
+
+.dark-mode .remove {
+  &:hover .remove-box {
+    background-color: var(--c-gray-dark-2)
   }
 }
 

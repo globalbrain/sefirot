@@ -84,5 +84,7 @@ export default defineComponent({
   width: 16px;
   height: 16px;
   transform: translateY(1px);
+  fill: var(--c-text-1);
+  transition: fill .25s;
 }
 </style>

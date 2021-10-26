@@ -13,9 +13,9 @@ Set `disabled` props to disable the input. While the input is disabled, it will 
 
 ## Disabling certain options
 
-You may define `disabled: true` to hide certain option items from showing up in the select list. Disabled options can still be shown as "selected" item.
+You may define `disabled: true` to hide certain option items from showing up in the select list. Disabled options can still be shown as "selected" item. For example, this is useful when you want to deprecate some options, but you still have past data using those options.
 
-For example, this is useful when you want to deprecate some options, but you still have past data using those options.
+In the below example, you can see that the "Disabled option" is selected, but it doesn't appear in the dropdown options.
 
 <StoryInputDropdownEXDisabledOptions />
 

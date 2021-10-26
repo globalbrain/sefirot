@@ -33,15 +33,15 @@ export default defineComponent({
 
 .avatar {
   position: absolute;
-  top: -4px;
-  left: 0;
+  top: 0;
+  left: -4px;
   width: 24px;
   height: 24px;
 }
 
 .name {
   padding-left: 32px;
-  line-height: 16px;
+  line-height: 24px;
   font-size: 12px;
   font-weight: 500;
 }

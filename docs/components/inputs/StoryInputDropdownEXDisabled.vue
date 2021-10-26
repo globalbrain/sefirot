@@ -3,8 +3,6 @@
   <div class="input">
     <SInputDropdown
       v-model="value"
-      size="mini"
-      mode="outlined"
       name="dropdown-input-disabled"
       label="Disabled input"
       :options="options"
@@ -18,8 +16,6 @@
   <div class="input">
     <SInputDropdown
       v-model="value"
-      size="mini"
-      mode="outlined"
       name="dropdown-input-disabled"
       label="Disabled input"
       :options="options"
@@ -30,7 +26,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { useTextOption } from '@globalbrain/sefirot/lib/composables/InputDropdown'
 import SInputDropdown from '@globalbrain/sefirot/lib/components/SInputDropdown.vue'
 
 export default defineComponent({
@@ -42,12 +37,12 @@ export default defineComponent({
     const value = ref(['vuejs', 'laravel'])
 
     const options = [
-      useTextOption({ text: 'Vue.js', value: 'vuejs' }),
-      useTextOption({ text: 'Adonis', value: 'adonis' }),
-      useTextOption({ text: 'Rails', value: 'rails' }),
-      useTextOption({ text: 'Sinatra', value: 'sinatra' }),
-      useTextOption({ text: 'Laravel', value: 'laravel' }),
-      useTextOption({ text: 'Phoenix', value: 'phoenix' })
+      { type: 'text', text: 'Vue.js', value: 'vuejs' },
+      { type: 'text', text: 'Adonis', value: 'adonis' },
+      { type: 'text', text: 'Rails', value: 'rails' },
+      { type: 'text', text: 'Sinatra', value: 'sinatra' },
+      { type: 'text', text: 'Laravel', value: 'laravel' },
+      { type: 'text', text: 'Phoenix', value: 'phoenix' }
     ]
 
     return {
@@ -62,7 +57,6 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .input {
-  position: relative;
   max-width: 320px;
 }
 </style>
@@ -71,7 +65,6 @@ export default defineComponent({
 
 <script lang="ts">
 import { defineComponent, ref } from '@nuxtjs/composition-api'
-import { useSearch, useTextOption } from '@@/lib/composables/InputDropdown'
 import SInputDropdown from '@@/lib/components/SInputDropdown.vue'
 import StoryBase from '@/components/StoryBase.vue'
 
@@ -85,12 +78,12 @@ export default defineComponent({
     const value = ref(['vuejs', 'laravel'])
 
     const options = [
-      useTextOption({ text: 'Vue.js', value: 'vuejs' }),
-      useTextOption({ text: 'Adonis', value: 'adonis' }),
-      useTextOption({ text: 'Rails', value: 'rails' }),
-      useTextOption({ text: 'Sinatra', value: 'sinatra' }),
-      useTextOption({ text: 'Laravel', value: 'laravel' }),
-      useTextOption({ text: 'Phoenix', value: 'phoenix' })
+      { type: 'text', text: 'Vue.js', value: 'vuejs' },
+      { type: 'text', text: 'Adonis', value: 'adonis' },
+      { type: 'text', text: 'Rails', value: 'rails' },
+      { type: 'text', text: 'Sinatra', value: 'sinatra' },
+      { type: 'text', text: 'Laravel', value: 'laravel' },
+      { type: 'text', text: 'Phoenix', value: 'phoenix' }
     ]
 
     return {
@@ -105,7 +98,6 @@ export default defineComponent({
 @import "@/assets/styles/variables";
 
 .input {
-  position: relative;
   max-width: 320px;
 }
 </style>

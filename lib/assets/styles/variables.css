@@ -319,6 +319,8 @@
 }
 
 .dark-mode {
+  --input-outlined-bg-disabled: var(--c-black-mute);
+
   --input-focus-border: var(--c-gray);
 }
 
@@ -342,4 +344,8 @@
 
 :root {
   --dropdown-item-hover-bg: var(--c-white-soft);
+}
+
+.dark-mode {
+  --dropdown-item-hover-bg: var(--c-black);
 }

@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
 import useForm from 'sefirot/compositions/useForm'
-import { useSearch, useTextOption } from 'sefirot/composables/InputDropdown'
 import { CreateWrapperFn } from '../utils'
 
 let createWrapper: CreateWrapperFn
@@ -12,17 +11,17 @@ describe('components/SInputDropdown', () => {
       ...options,
       propsData: {
         options: [
-          useTextOption({ text: 'Option 1', value: 1 }),
-          useTextOption({ text: 'Option 2', value: 2 }),
-          useTextOption({ text: 'Option 3', value: 3 }),
-          useTextOption({ text: 'Option 4', value: 4, disabled: true })
+          { type: 'text', text: 'Option 1', value: 1 },
+          { type: 'text', text: 'Option 2', value: 2 },
+          { type: 'text', text: 'Option 3', value: 3 },
+          { type: 'text', text: 'Option 4', value: 4, disabled: true }
         ],
         ...options.propsData
       }
     })
   })
 
-  it('should emit correct value', () => {
+  it('should emit correct value for array', () => {
     const wrapper = createWrapper({
       propsData: {
         value: [1, 2]
@@ -44,11 +43,23 @@ describe('components/SInputDropdown', () => {
     expect(wrapper.emitted('change')).toHaveEmittedWith(null)
   })
 
-  it('should not emit when nullable is disabled', () => {
+  it('should not emit for array value when nullable is disabled', () => {
     const wrapper = createWrapper({
       propsData: {
         nullable: false,
         value: [1]
+      }
+    })
+
+    wrapper.vm.handleCallback({ value: 1 } as any)
+    expect(wrapper.emitted('change')).toBeUndefined()
+  })
+
+  it('should not emit for primitive value when nullable is disabled', () => {
+    const wrapper = createWrapper({
+      propsData: {
+        nullable: false,
+        value: 1
       }
     })
 
@@ -73,14 +84,27 @@ describe('components/SInputDropdown', () => {
     expect(validation.item.$isDirty.value).toBe(true)
   })
 
+  it('should display default search when the `search` prop is set to `true`', async () => {
+    const wrapper = createWrapper({
+      propsData: {
+        search: true,
+        value: 1
+      }
+    })
+
+    await wrapper.vm.handleOpen()
+
+    expect(wrapper.find('.SInputDropdown .SDropdown .search').isVisible()).toBe(true)
+  })
+
   it('should focus search input on render', async () => {
     const wrapper = createWrapper({
       attachTo: document.body,
       propsData: {
-        search: useSearch({
+        search: {
           placeholder: 'Search items',
           missing: 'No items found'
-        })
+        }
       }
     })
 
