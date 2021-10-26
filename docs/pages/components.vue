@@ -30,6 +30,7 @@ export default defineComponent({
       { label: 'Inputs: Checkboxes', path: '/components/inputs-checkboxes' },
       { label: 'Inputs: Date', path: '/components/inputs-date' },
       { label: 'Inputs: Dropdown', path: '/components/inputs-dropdown' },
+      { label: 'Inputs: HMS', path: '/components/inputs-hms' },
       { label: 'Inputs: Number', path: '/components/inputs-number' },
       { label: 'Inputs: Radios', path: '/components/inputs-radios' },
       { label: 'Inputs: Select', path: '/components/inputs-select' },
