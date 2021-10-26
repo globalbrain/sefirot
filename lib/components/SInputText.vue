@@ -144,7 +144,9 @@ export default defineComponent({
     const inputEl = ref<HTMLElement | null>(null)
     const textEl = ref<HTMLElement | null>(null)
     const textAfterEl = ref<HTMLElement | null>(null)
-    const color = ref<Color | null>(null)
+    const color = computed(() => {
+      return (props.value !== null && props.color) && props.color(props.value)
+    })
 
     const classes = computed(() => [
       props.size,
@@ -173,14 +175,6 @@ export default defineComponent({
 
     const showClearButton = computed(() => {
       return props.value !== null && props.value !== ''
-    })
-
-    watch(() => props.value, () => {
-      if (!props.color) {
-        return
-      }
-
-      color.value = props.color(props.value)
     })
 
     onMounted(() => {
