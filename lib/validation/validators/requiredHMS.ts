@@ -1,7 +1,7 @@
 export interface HMS {
-  hour?: number
-  minute?: number
-  second?: number
+  hour?: string
+  minute?: string
+  second?: string
 }
 
 export type HMSType = 'h' | 'm' | 's'

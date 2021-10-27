@@ -23,7 +23,8 @@ module.exports = {
   ],
   collectCoverageFrom: [
     '<rootDir>/lib/**/*.{ts,vue}',
-    '!<rootDir>/lib/components/icons/**/*.{ts,vue}'
+    '!<rootDir>/lib/components/icons/**/*.{ts,vue}',
+    '!<rootDir>/lib/types/**/*'
   ],
   coverageReporters: [
     'html',

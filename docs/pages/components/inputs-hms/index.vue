@@ -7,9 +7,9 @@ HMS input let users enter and edit hours, minutes, and seconds value in number f
 
 ## Sizes
 
-The YMD input comes in several different sizes. You may pass `size` prop to control the size of the input. Supported sizes are `mini`, `small` and `medium`. The default size is set to `medium`.
+The HMS input comes in several different sizes. You may pass `size` prop to control the size of the input. Supported sizes are `mini`, `small` and `medium`. The default size is set to `small`.
 
-<StoryInputYMDEXSizes />
+<StoryInputHMSEXSizes />
 
 ## API
 
@@ -20,7 +20,7 @@ The YMD input comes in several different sizes. You may pass `size` prop to cont
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputHMSShowcase from '@/components/inputs/StoryInputHMSShowcase.vue'
-import StoryInputYMDEXSizes from '@/components/inputs/StoryInputYMDEXSizes.vue'
+import StoryInputHMSEXSizes from '@/components/inputs/StoryInputHMSEXSizes.vue'
 import SpecProps from '@/components/SpecProps.vue'
 import SpecEvents from '@/components/SpecEvents.vue'
 import { useSpec } from '@/composables/Spec'
@@ -28,7 +28,7 @@ import { useSpec } from '@/composables/Spec'
 export default defineComponent({
   components: {
     StoryInputHMSShowcase,
-    StoryInputYMDEXSizes,
+    StoryInputHMSEXSizes,
     SpecProps,
     SpecEvents
   },
@@ -39,13 +39,6 @@ export default defineComponent({
     return useSpec({
       props: [
         {
-          name: 'date',
-          type: 'boolean',
-          required: false,
-          default: 'true',
-          description: 'Whether to display "date" input or not.'
-        },
-        {
           name: 'disabled',
           type: 'boolean',
           required: false,
@@ -54,7 +47,7 @@ export default defineComponent({
         },
         {
           name: 'size',
-          type: "'mini' | 'small'",
+          type: "'mini' | 'small' | 'medium'",
           required: false,
           default: 'small',
           description: 'The size of the input.'
@@ -63,7 +56,7 @@ export default defineComponent({
           name: 'mode',
           type: "'outlined'",
           required: false,
-          default: 'filled',
+          default: 'outlined',
           description: 'The style of the input.'
         },
         {
@@ -81,13 +74,6 @@ export default defineComponent({
           description: 'The label for the input.'
         },
         {
-          name: 'month',
-          type: 'boolean',
-          required: false,
-          default: 'true',
-          description: 'Whether to display "month" input or not.'
-        },
-        {
           name: 'note',
           type: 'string',
           required: false,
@@ -102,8 +88,29 @@ export default defineComponent({
           description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
         },
         {
+          name: 'hour',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "hour" input or not.'
+        },
+        {
+          name: 'minute',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "minute" input or not.'
+        },
+        {
+          name: 'second',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Whether to display "second" input or not.'
+        },
+        {
           name: 'value',
-          type: 'YearMonthDate',
+          type: 'HMS | null',
           required: false,
           default: 'null',
           description: 'The value of input. You may also use `v-model` to bind a value to the input.'
@@ -114,13 +121,6 @@ export default defineComponent({
           required: false,
           default: 'null',
           description: 'You can pass Validation object to let input display any errors.'
-        },
-        {
-          name: 'yaer',
-          type: 'boolean',
-          required: false,
-          default: 'true',
-          description: 'Whether to display "year" input or not.'
         }
       ],
 

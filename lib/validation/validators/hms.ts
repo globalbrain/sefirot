@@ -1,7 +1,7 @@
 export interface HMS {
-  hour?: number
-  minute?: number
-  second?: number
+  hour?: string
+  minute?: string
+  second?: string
 }
 
 export type HMSType = 'h' | 'm' | 's'
@@ -20,8 +20,10 @@ export default function hms(hms: HMS, required: HMSType[] = ['h', 'm', 's']): bo
       return true
     }
 
+    const valueAsNumber = Number(value)
+
     return r === 'h'
-      ? value >= 0 && value < 24
-      : value >= 0 && value < 60
+      ? valueAsNumber >= 0 && valueAsNumber < 24
+      : valueAsNumber >= 0 && valueAsNumber < 60
   })
 }

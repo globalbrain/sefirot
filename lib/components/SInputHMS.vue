@@ -54,9 +54,9 @@ type Size = 'mini' | 'small' | 'medium'
 type Mode = 'outlined'
 
 interface Value {
-  hour?: number
-  minute?: number
-  second?: number
+  hour?: string
+  minute?: string
+  second?: string
 }
 
 type ValueType = 'hour' | 'minute' | 'second'
@@ -114,12 +114,12 @@ export default defineComponent({
       update('second', value ? value.padStart(2, '0') : undefined)
     }
 
-    function update(type: ValueType, value?: number): void {
+    function update(type: ValueType, value?: string): void {
       const data = { ...props.value } as Value
 
       setValue(data, type, value)
 
-      data.hour === undefined && data.minute === undefined && data.month === undefined
+      data.hour === undefined && data.minute === undefined && data.second === undefined
         ? emit('input', null)
         : emit('input', data)
 
@@ -127,12 +127,16 @@ export default defineComponent({
     }
 
     function getValue(value: string): string | undefined {
+      if (value === '') {
+        return undefined
+      }
+
       const input = Number(value)
 
       return isNaN(input) ? undefined : String(input)
     }
 
-    function setValue(data: Value, type: ValueType, value?: number): void {
+    function setValue(data: Value, type: ValueType, value?: string): void {
       if (value === undefined) {
         delete data[type]
         return
@@ -179,23 +183,24 @@ export default defineComponent({
 
 .SInputHMS.mini {
   .container {
-    padding: 0 4px;
+    padding: 0 8px;
   }
 
   .input {
     padding: 3px 0;
     text-align: center;
     font-size: 14px;
+    width: 20px;
   }
-
-  .input.hour   { width: 48px; }
-  .input.minute { width: 32px; }
-  .input.second { width: 32px; }
 
   .separator {
     padding: 3px 0;
     line-height: 24px;
     font-size: 14px;
+  }
+
+  .separator::before {
+    padding: 0 4px;
   }
 }
 
@@ -217,27 +222,32 @@ export default defineComponent({
     line-height: 24px;
     font-size: 16px;
   }
+
+  .separator::before {
+    padding: 0 6px;
+  }
 }
 
 .SInputHMS.medium {
   .container {
-    padding: 0 4px;
+    padding: 0 12px;
   }
 
   .input {
-    padding: 11px 0;
+    padding: 12px 0 10px;
     text-align: center;
     font-size: 16px;
+    width: 24px;
   }
-
-  .input.hour   { width: 56px; }
-  .input.minute { width: 32px; }
-  .input.second { width: 32px; }
 
   .separator {
     padding: 11px 0;
     line-height: 24px;
     font-size: 16px;
+  }
+
+  .separator::before {
+    padding: 0 6px;
   }
 }
 
@@ -281,7 +291,6 @@ export default defineComponent({
 }
 
 .separator::before {
-  padding: 0 6px;
   color: var(--c-text-2);
   content: ":";
 }
