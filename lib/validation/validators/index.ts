@@ -1,5 +1,6 @@
 import day from './day'
 import email from './email'
+import hms from './hms'
 import include from './include'
 import includeSome from './includeSome'
 import integer from './integer'
@@ -10,6 +11,7 @@ import month from './month'
 import monthDate from './monthDate'
 import regex from './regex'
 import required from './required'
+import requiredHMS from './requiredHMS'
 import requiredMonthDate from './requiredMonthDate'
 import requiredYearMonth from './requiredYearMonth'
 import requiredYearMonthDate from './requiredYearMonthDate'
@@ -22,6 +24,7 @@ import yearMonth from './yearMonth'
 export {
   day,
   email,
+  hms,
   include,
   includeSome,
   integer,
@@ -32,6 +35,7 @@ export {
   monthDate,
   regex,
   required,
+  requiredHMS,
   requiredMonthDate,
   requiredYearMonth,
   requiredYearMonthDate,

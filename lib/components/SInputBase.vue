@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { Validation } from '../validation/Validation'
 
 export default defineComponent({
@@ -68,14 +68,6 @@ export default defineComponent({
     padding-bottom: 6px;
     font-size: 12px;
   }
-
-  .help-error + .help-text {
-    padding: 0;
-  }
-
-  .help-text {
-    padding-top: 4px;
-  }
 }
 
 .SInputBase.small {
@@ -83,20 +75,12 @@ export default defineComponent({
     padding-bottom: 8px;
     font-size: 14px;
   }
-
-  .help-text {
-    padding-top: 4px;
-  }
 }
 
 .SInputBase.medium {
   .label {
     padding-bottom: 8px;
     font-size: 14px;
-  }
-
-  .help-text {
-    padding-top: 4px;
   }
 }
 
@@ -142,7 +126,7 @@ export default defineComponent({
 
 .help-text {
   margin: 0;
-  padding: 6px 0 0;
+  padding: 4px 0 0;
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;

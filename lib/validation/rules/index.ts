@@ -2,6 +2,7 @@ import { isString } from '../../support/Util'
 import day from './day'
 import every from './every'
 import email from './email'
+import hms from './hms'
 import include from './include'
 import includeSome from './includeSome'
 import integer from './integer'
@@ -12,6 +13,7 @@ import month from './month'
 import not from './not'
 import regex from './regex'
 import required from './required'
+import requiredHMS from './requiredHMS'
 import requiredIf from './requiredIf'
 import requiredMonthDate from './requiredMonthDate'
 import requiredYearMonth from './requiredYearMonth'
@@ -42,6 +44,7 @@ export {
   day,
   every,
   email,
+  hms,
   include,
   includeSome,
   integer,
@@ -52,6 +55,7 @@ export {
   not,
   regex,
   required,
+  requiredHMS,
   requiredIf,
   requiredMonthDate,
   requiredYearMonth,
