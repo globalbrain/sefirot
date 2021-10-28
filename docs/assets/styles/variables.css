@@ -303,6 +303,7 @@
 
   --input-outlined-bg-disabled: var(--c-white-mute);
   --input-outlined-border: var(--c-divider);
+  --input-outlined-border-focus: var(--c-black);
 
   --input-clear-bg-disabled: var(--c-white);
 
@@ -323,6 +324,7 @@
 
 .dark-mode {
   --input-outlined-bg-disabled: var(--c-black-mute);
+  --input-outlined-border-focus: var(--c-white);
 
   --input-focus-border: var(--c-gray);
 }

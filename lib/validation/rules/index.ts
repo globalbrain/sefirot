@@ -2,6 +2,7 @@ import { isString } from '../../support/Util'
 import day from './day'
 import every from './every'
 import email from './email'
+import fileExtension from './fileExtension'
 import hms from './hms'
 import include from './include'
 import includeSome from './includeSome'
@@ -44,6 +45,7 @@ export {
   day,
   every,
   email,
+  fileExtension,
   hms,
   include,
   includeSome,

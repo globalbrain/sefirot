@@ -1,5 +1,6 @@
 import day from './day'
 import email from './email'
+import fileExtension from './fileExtension'
 import hms from './hms'
 import include from './include'
 import includeSome from './includeSome'
@@ -24,6 +25,7 @@ import yearMonth from './yearMonth'
 export {
   day,
   email,
+  fileExtension,
   hms,
   include,
   includeSome,
