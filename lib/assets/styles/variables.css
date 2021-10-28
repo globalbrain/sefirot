@@ -38,7 +38,7 @@
   --c-divider-light-2: rgba(60, 60, 67, .12);
 
   --c-divider-dark-1: rgba(84, 84, 88, .65);
-  --c-divider-dark-2: rgba(84, 84, 88, .65);
+  --c-divider-dark-2: rgba(84, 84, 84, .48);
 
   --c-text-light-1: var(--c-black);
   --c-text-light-2: rgba(60, 60, 67, .6);
@@ -321,7 +321,7 @@
 
 .dark-mode {
   --input-outlined-bg-disabled: var(--c-black-mute);
-  --input-outlined-border-focus: var(--c-white);
+  --input-outlined-border-focus: var(--c-gray);
 
   --input-focus-border: var(--c-gray);
 }
