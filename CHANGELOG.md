@@ -1,3 +1,16 @@
+# [0.69.0](https://github.com/globalbrain/sefirot/compare/v0.68.0...v0.69.0) (2021-10-28)
+
+### Bug Fixes
+
+* **input-text:** run color callback for computing initial color ([#105](https://github.com/globalbrain/sefirot/issues/105)) ([b798a5e](https://github.com/globalbrain/sefirot/commit/b798a5e2298234dc392fcdb0a5e351e518c3fb50))
+* **input-radios:** add missing `size` prop ([4fb87a4](https://github.com/globalbrain/sefirot/commit/4fb87a4c5c7ec8ae43c74b8e2a56d093c56b6019))
+
+### Features
+
+* **input-dropdown:** add dark mode and `small` size support ([4551666](https://github.com/globalbrain/sefirot/commit/455166671f8e0f2c16cf0d43ea98cc5b5c38e674))
+* **input-ymd:** add `small` and `medium` size ([0678293](https://github.com/globalbrain/sefirot/commit/06782932fcdbf812a839ae48e8e8e38ae2dd815c))
+* **input-hms:** add SinputHMS component ([#13](https://github.com/globalbrain/sefirot/issues/13)) ([#106](https://github.com/globalbrain/sefirot/issues/106)) ([b83f7fb](https://github.com/globalbrain/sefirot/commit/b83f7fb9b805c8d2c34a107ffb006865f9a52d24))
+
 # [0.68.0](https://github.com/globalbrain/sefirot/compare/v0.67.0...v0.68.0) (2021-10-25)
 
 ### Bug Fixes
