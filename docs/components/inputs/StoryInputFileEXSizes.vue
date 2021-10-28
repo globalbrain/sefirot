@@ -30,15 +30,63 @@
 
 ```vue
 <template>
-
+  <div>
+    <div class="input">
+      <SInputFile
+        v-model="inputMini"
+        size="mini"
+        label="Mini input"
+        placeholder="No file chosen"
+      />
+    </div>
+    <div class="input">
+      <SInputFile
+        v-model="inputSmall"
+        size="small"
+        label="Small input"
+        placeholder="No file chosen"
+      />
+    </div>
+    <div class="input">
+      <SInputFile
+        v-model="inputMedium"
+        size="medium"
+        label="Medium input"
+        placeholder="No file chosen"
+      />
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from '@vue/composition-api'
+import SInputFile from '@globalbrain/sefirot/lib/components/SInputFile.vue'
 
+export default defineComponent({
+  components: {
+    SInputFile
+  },
+
+  setup() {
+    const inputMini = ref<File | null>(null)
+    const inputSmall = ref<File | null>(null)
+    const inputMedium = ref<File | null>(null)
+
+    return {
+      inputMini,
+      inputSmall,
+      inputMedium
+    }
+  }
+})
 </script>
 
 <style lang="postcss" scoped>
+@import "@/assets/styles/variables";
 
+.input + .input {
+  padding-top: 24px;
+}
 </style>
 ```
 </template>
