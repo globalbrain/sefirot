@@ -5,6 +5,7 @@
     :label="label"
     :note="note"
     :help="help"
+    :validation="validation"
   >
     <div class="container">
       <div class="input" :class="{ on: value }" role="button" @click="emitChange">
@@ -21,7 +22,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { PropType, defineComponent } from '@vue/composition-api'
+import { Validation } from '../validation/Validation'
 import SIconCheck from './icons/SIconCheck.vue'
 import SInputBase from './SInputBase.vue'
 
@@ -42,7 +44,8 @@ export default defineComponent({
     note: { type: String, default: null },
     help: { type: String, default: null },
     text: { type: String, required: true },
-    value: { type: Boolean, required: true }
+    value: { type: Boolean, required: true },
+    validation: { type: Object as PropType<Validation>, default: null }
   },
 
   setup(props, { emit }) {
@@ -92,7 +95,7 @@ export default defineComponent({
 
 .box {
   position: relative;
-  border: 2px solid var(--c-gray-dark-1);
+  border: 2px solid var(--c-text-3);
   border-radius: 2px;
   width: 18px;
   height: 18px;
@@ -122,5 +125,6 @@ export default defineComponent({
   padding-left: 12px;
   line-height: 20px;
   font-size: 14px;
+  font-weight: 500;
 }
 </style>
