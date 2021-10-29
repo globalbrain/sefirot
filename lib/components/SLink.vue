@@ -8,8 +8,7 @@
     :target="target"
     :rel="rel"
   >
-    <slot />
-    <SIconExternalLink v-if="showExternal" class="SLink-icon" />
+    <slot /><SIconExternalLink v-if="showExternal" class="SLink-icon" />
   </component>
 </template>
 
