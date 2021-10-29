@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType } from '@vue/composition-api'
+import { PropType, defineComponent, computed } from '@vue/composition-api'
 import { isNullish } from '../support/Util'
 import { Validation } from '../validation/Validation'
 import SInputText, { Size, Mode, Align, Color, Action } from './SInputText.vue'
