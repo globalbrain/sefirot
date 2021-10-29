@@ -1,4 +1,5 @@
 import { isString } from '../../support/Util'
+import checked from './checked'
 import day from './day'
 import every from './every'
 import email from './email'
@@ -42,6 +43,7 @@ export function locate(data: Record<string, any>, locator: Locator): any {
 }
 
 export {
+  checked,
   day,
   every,
   email,

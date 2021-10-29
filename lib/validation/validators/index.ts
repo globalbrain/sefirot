@@ -1,3 +1,4 @@
+import checked from './checked'
 import day from './day'
 import email from './email'
 import fileExtension from './fileExtension'
@@ -23,6 +24,7 @@ import yearMonthDate from './yearMonthDate'
 import yearMonth from './yearMonth'
 
 export {
+  checked,
   day,
   email,
   fileExtension,
