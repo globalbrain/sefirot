@@ -5,11 +5,11 @@ Text input let users enter and edit single line text.
 
 <StoryInputTextShowcase />
 
-## Outlined Style
+## Filled Style
 
-Input text also has a outlined style. Pass `mode` prop to control the looks of the input.
+Input text also has a filled style. Pass `mode` prop to control the looks of the input. Available options are `outlined` and `filled`. The default is `outlined`.
 
-<StoryInputTextEXOutlined />
+<StoryInputTextEXFilled />
 
 ## Sizes
 
@@ -86,7 +86,7 @@ By setting `clearable` props, the input filed will show the "clear" button when 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputTextShowcase from '@/components/inputs/StoryInputTextShowcase.vue'
-import StoryInputTextEXOutlined from '@/components/inputs/StoryInputTextEXOutlined.vue'
+import StoryInputTextEXFilled from '@/components/inputs/StoryInputTextEXFilled.vue'
 import StoryInputTextEXSizes from '@/components/inputs/StoryInputTextEXSizes.vue'
 import StoryInputTextEXIcon from '@/components/inputs/StoryInputTextEXIcon.vue'
 import StoryInputTextEXText from '@/components/inputs/StoryInputTextEXText.vue'
@@ -102,7 +102,7 @@ import StoryInputTextEXColors from '~/components/inputs/StoryInputTextEXColors.v
 export default defineComponent({
   components: {
     StoryInputTextShowcase,
-    StoryInputTextEXOutlined,
+    StoryInputTextEXFilled,
     StoryInputTextEXSizes,
     StoryInputTextEXColors,
     StoryInputTextEXIcon,

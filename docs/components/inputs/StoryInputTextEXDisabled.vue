@@ -3,16 +3,16 @@
   <div class="form">
     <div class="input">
       <SInputText
-        label="Disabled filled input"
-        mode="filled"
+        label="Disabled outlined input"
+        mode="outlined"
         value="This text is not editable."
         disabled
       />
     </div>
     <div class="input">
       <SInputText
-        label="Disabled outlined input"
-        mode="outlined"
+        label="Disabled filled input"
+        mode="filled"
         value="This text is not editable."
         disabled
       />
@@ -25,16 +25,16 @@
   <div class="form">
     <div class="input">
       <SInputText
-        label="Disabled filled input"
-        mode="filled"
+        label="Disabled outlined input"
+        mode="outlined"
         value="This text is not editable."
         disabled
       />
     </div>
     <div class="input">
       <SInputText
-        label="Disabled outlined input"
-        mode="outlined"
+        label="Disabled filled input"
+        mode="filled"
         value="This text is not editable."
         disabled
       />

@@ -96,7 +96,7 @@ import SIconX from './icons/SIconX.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type Mode = 'filled' | 'outlined'
+export type Mode = 'outlined' | 'filled'
 export type Align = 'left' | 'center' | 'right'
 export type Color = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 export type ColorCallback = (value: string | number) => Color
@@ -117,8 +117,8 @@ export default defineComponent({
   },
 
   props: {
-    size: { type: String as PropType<Size>, default: 'medium' },
-    mode: { type: String as PropType<Mode>, default: 'filled' },
+    size: { type: String as PropType<Size>, default: 'small' },
+    mode: { type: String as PropType<Mode>, default: 'outlined' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
@@ -322,8 +322,8 @@ export default defineComponent({
   }
 
   .clear-svg {
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -357,7 +357,7 @@ export default defineComponent({
     font-size: 16px;
 
     &.has-icon {
-      padding-left: 30px;
+      padding-left: 36px;
     }
 
     &.is-clearable {
@@ -366,13 +366,13 @@ export default defineComponent({
   }
 
   .icon {
-    top: 9px;
-    left: 10px;
+    top: 12px;
+    left: 12px;
   }
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 15px;
+    height: 15px;
   }
 
   .text {
@@ -390,13 +390,13 @@ export default defineComponent({
   .clear {
     top: 0;
     right: 0;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
   }
 
   .clear-svg {
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -466,8 +466,8 @@ export default defineComponent({
   }
 
   .clear-svg {
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
   }
 }
 

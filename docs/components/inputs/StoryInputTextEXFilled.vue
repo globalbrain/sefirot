@@ -1,10 +1,10 @@
 <template lang="md">
-<StoryBase title="Outlined input">
+<StoryBase title="Filled input">
   <div class="input">
     <SInputText
       v-model="text"
-      mode="outlined"
-      name="name-outlined"
+      mode="filled"
+      name="name-filled"
       label="Name"
       placeholder="John Doe"
     />
@@ -16,7 +16,7 @@
   <div class="input">
     <SInputText
       v-model="text"
-      mode="outlined"
+      mode="filled"
       name="name"
       label="Label"
       placeholder="John Doe"
