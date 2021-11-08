@@ -21,8 +21,6 @@ describe('components/SDropdown', () => {
       ]
     })
 
-    wrapper.vm.cock = 123
-
     expect(wrapper.find('.SDropdown .SDropdownItem .SDropdownItemText').exists())
   })
 
@@ -93,8 +91,6 @@ describe('components/SDropdown', () => {
         })
       ]
     })
-
-    wrapper.vm.cock = 123
 
     wrapper.find('.SDropdown .SDropdownItem').trigger('click')
     expect(callback).toHaveBeenCalled()
