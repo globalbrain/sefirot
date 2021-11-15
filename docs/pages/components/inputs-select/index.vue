@@ -127,6 +127,13 @@ export default defineComponent({
           description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option. There is an optional property `disabled`. You may use this option to hide certain options.'
         },
         {
+          name: 'error-message',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Show the error message under the input field.'
+        },
+        {
           name: 'value',
           type: 'String | Number | Boolean',
           required: false,

@@ -154,6 +154,13 @@ export default defineComponent({
           description: 'The input value with thousand separator that will be displayed under the input.'
         },
         {
+          name: 'error-message',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Show the error message under the input field.'
+        },
+        {
           name: 'value',
           type: 'number',
           required: false,

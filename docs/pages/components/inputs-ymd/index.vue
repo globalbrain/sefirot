@@ -102,6 +102,13 @@ export default defineComponent({
           description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
         },
         {
+          name: 'error-message',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Show the error message under the input field.'
+        },
+        {
           name: 'value',
           type: 'YearMonthDate',
           required: false,
