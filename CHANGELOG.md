@@ -1,3 +1,9 @@
+## [0.70.1](https://github.com/globalbrain/sefirot/compare/v0.70.0...v0.70.1) (2021-11-17)
+
+### Bug Fixes
+
+* **input-text:** fix long text getting wrapped inside display value ([19f3ccd](https://github.com/globalbrain/sefirot/commit/19f3ccdf78600a28cd16f970319c46c44100fc26))
+
 # [0.70.0](https://github.com/globalbrain/sefirot/compare/v0.69.0...v0.70.0) (2021-11-17)
 
 ### Bug Fixes
