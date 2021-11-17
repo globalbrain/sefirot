@@ -70,9 +70,9 @@ export default defineComponent({
   },
 
   setup() {
-    const textLeft = ref('John Doe')
-    const textCenter = ref('John Doe')
-    const textRight = ref('John Doe')
+    const textLeft = ref('')
+    const textCenter = ref('')
+    const textRight = ref('')
 
     return {
       textLeft,
@@ -109,9 +109,9 @@ export default defineComponent({
   },
 
   setup() {
-    const textLeft = ref('John Doe')
-    const textCenter = ref('John Doe')
-    const textRight = ref('John Doe')
+    const textLeft = ref('')
+    const textCenter = ref('')
+    const textRight = ref('')
 
     return {
       textLeft,

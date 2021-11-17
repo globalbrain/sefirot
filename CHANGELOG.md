@@ -1,3 +1,17 @@
+# [0.70.0](https://github.com/globalbrain/sefirot/compare/v0.69.0...v0.70.0) (2021-11-17)
+
+### Bug Fixes
+
+* **link:** remove unexpected trailing white space ([9e5592c](https://github.com/globalbrain/sefirot/commit/9e5592c33e111834229fa2e7c95a4f44284088f8))
+
+### Features
+
+* **input-text:** make small and outlined style as default and fix small styling issues ([2ba7691](https://github.com/globalbrain/sefirot/commit/2ba76916e9ab8a2df2002686695e63fea9bcdd35))
+* **input-select:** add error-message option for select input ([#108](https://github.com/globalbrain/sefirot/issues/108)) ([b949136](https://github.com/globalbrain/sefirot/commit/b949136bd0df6cc041ace47a7e16c31e2985ffbe))
+* **input-checkbox:** improve styling and add validation support ([1da8bf1](https://github.com/globalbrain/sefirot/commit/1da8bf163260ecde620e7e485f9b1b2bcda71a2c))
+* **input-file:** add SInputFile component ([#107](https://github.com/globalbrain/sefirot/issues/107)) ([03eb6bb](https://github.com/globalbrain/sefirot/commit/03eb6bbcbba94e6c31693406c41efd402f23c4aa))
+* **validation:** add "checked" rule ([a24c3ba](https://github.com/globalbrain/sefirot/commit/a24c3ba6186fa6ac2c6cf3b361301c5a6a8a62ee))
+
 # [0.69.0](https://github.com/globalbrain/sefirot/compare/v0.68.0...v0.69.0) (2021-10-28)
 
 ### Bug Fixes
