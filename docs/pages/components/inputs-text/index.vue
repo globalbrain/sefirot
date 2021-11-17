@@ -240,6 +240,13 @@ export default defineComponent({
           description: 'The value displayed when the focus is out.'
         },
         {
+          name: 'error-message',
+          type: 'boolean',
+          required: false,
+          default: 'true',
+          description: 'Show the error message under the input field.'
+        },
+        {
           name: 'value',
           type: 'string | number',
           required: false,

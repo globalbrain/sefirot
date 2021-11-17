@@ -7,6 +7,7 @@
     :note="note"
     :help="help"
     :validation="validation"
+    :error-message="errorMessage"
   >
     <div class="box" :class="{ focus: isFocused }">
       <select
@@ -83,6 +84,7 @@ export default defineComponent({
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
     disabled: { type: Boolean, default: false },
+    errorMessage: { type: Boolean, default: true },
     options: { type: Array as PropType<Option[]>, required: true },
     validation: { type: Object, default: null },
     value: { type: [String, Number, Boolean], default: null }
@@ -194,6 +196,12 @@ export default defineComponent({
 }
 
 .SInputSelect.outlined {
+  &.has-error {
+    .box {
+      border-color: var(--c-danger);
+    }
+  }
+
   .box {
     border-color: var(--input-outlined-border);
 
