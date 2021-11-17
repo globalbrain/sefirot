@@ -617,6 +617,7 @@ export default defineComponent({
   .value {
     display: block;
     line-height: 24px;
+    white-space: nowrap;
     overflow: hidden;
   }
 }
