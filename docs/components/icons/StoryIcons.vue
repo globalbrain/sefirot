@@ -70,6 +70,7 @@ import SIconPlayCircle from '@@/lib/components/icons/SIconPlayCircle.vue'
 import SIconProgress from '@@/lib/components/icons/SIconProgress.vue'
 import SIconRadio from '@@/lib/components/icons/SIconRadio.vue'
 import SIconSave from '@@/lib/components/icons/SIconSave.vue'
+import SIconSend from '@@/lib/components/icons/SIconSend.vue'
 import SIconSettings from '@@/lib/components/icons/SIconSettings.vue'
 import SIconSkipBackFill from '@@/lib/components/icons/SIconSkipBackFill.vue'
 import SIconShare2 from '@@/lib/components/icons/SIconShare2.vue'
@@ -151,6 +152,7 @@ export default defineComponent({
       { component: SIconPlayCircle, name: 'PlayCircle' },
       { component: SIconProgress, name: 'Progress' },
       { component: SIconRadio, name: 'Radio' },
+      { component: SIconSend, name: 'Send' },
       { component: SIconSave, name: 'Save' },
       { component: SIconSettings, name: 'Settings' },
       { component: SIconSkipBackFill, name: 'SkipBackFill' },
