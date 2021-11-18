@@ -1,3 +1,9 @@
+# [0.71.0](https://github.com/globalbrain/sefirot/compare/v0.70.1...v0.71.0) (2021-11-18)
+
+### Features
+
+* **icon:** add `send` icon ([683a57a](https://github.com/globalbrain/sefirot/commit/683a57ad712952b1de122c35a8113cf8f1a738ee))
+
 ## [0.70.1](https://github.com/globalbrain/sefirot/compare/v0.70.0...v0.70.1) (2021-11-17)
 
 ### Bug Fixes
