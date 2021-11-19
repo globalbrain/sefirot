@@ -1,6 +1,7 @@
 <template>
   <SInputBase
     class="SInputCheckboxes"
+    :class="[size]"
     :name="name"
     :label="label"
     :note="note"
@@ -21,9 +22,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { PropType, defineComponent } from '@vue/composition-api'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
+
+type Size = 'mini' | 'small' | 'medium'
 
 export default defineComponent({
   components: {
@@ -37,6 +40,7 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'small' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },

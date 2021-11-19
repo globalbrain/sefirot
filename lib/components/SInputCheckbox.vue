@@ -1,6 +1,7 @@
 <template>
   <SInputBase
     class="SInputCheckbox"
+    :class="[size]"
     :name="name"
     :label="label"
     :note="note"
@@ -27,6 +28,8 @@ import { Validation } from '../validation/Validation'
 import SIconCheck from './icons/SIconCheck.vue'
 import SInputBase from './SInputBase.vue'
 
+type Size = 'mini' | 'small' | 'medium'
+
 export default defineComponent({
   components: {
     SIconCheck,
@@ -39,6 +42,7 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'small' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },

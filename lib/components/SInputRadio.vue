@@ -19,8 +19,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { PropType, defineComponent } from '@vue/composition-api'
 import SInputBase from './SInputBase.vue'
+
+type Size = 'mini' | 'small' | 'medium'
 
 export default defineComponent({
   components: {
@@ -33,6 +35,7 @@ export default defineComponent({
   },
 
   props: {
+    size: { type: String as PropType<Size>, default: 'small' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
