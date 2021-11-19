@@ -5,11 +5,11 @@ Select input let users choose an item from the list of options.
 
 <StoryInputSelectShowcase />
 
-## Outlined Style
+## Filled Style
 
-Input select also has a outlined style. Pass `mode` prop to control the looks of the input.
+Input select also has a filled style. Pass `mode` prop to control the looks of the input. Available options are `outlined` and `filled`. The default is `outlined`.
 
-<StoryInputSelectEXOutlined />
+<StoryInputSelectEXFilled />
 
 ## Sizes
 
@@ -34,7 +34,7 @@ For example, this is useful when you want to deprecate some options, but you sti
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
 import StoryInputSelectShowcase from '@/components/inputs/StoryInputSelectShowcase.vue'
-import StoryInputSelectEXOutlined from '@/components/inputs/StoryInputSelectEXOutlined.vue'
+import StoryInputSelectEXFilled from '@/components/inputs/StoryInputSelectEXFilled.vue'
 import StoryInputSelectEXSizes from '@/components/inputs/StoryInputSelectEXSizes.vue'
 import StoryInputSelectEXDisabledOptions from '@/components/inputs/StoryInputSelectEXDisabledOptions.vue'
 import SpecProps from '@/components/SpecProps.vue'
@@ -44,7 +44,7 @@ import { useSpec } from '@/composables/Spec'
 export default defineComponent({
   components: {
     StoryInputSelectShowcase,
-    StoryInputSelectEXOutlined,
+    StoryInputSelectEXFilled,
     StoryInputSelectEXSizes,
     StoryInputSelectEXDisabledOptions,
     SpecProps,
@@ -65,66 +65,73 @@ export default defineComponent({
         },
         {
           name: 'size',
-          type: "'medium' | 'mini'",
+          type: "'mini' | 'small' | 'medium'",
           required: false,
-          default: "'medium'",
+          default: "'small'",
           description: 'The size of the input.'
         },
         {
           name: 'mode',
-          type: "'filled' | 'outlined'",
+          type: "'outlined' | 'filled'",
           required: false,
-          default: "'filled'",
+          default: "'outlined'",
           description: 'The style of the input.'
         },
         {
           name: 'name',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The name for the field. It will be set to `for` attribute at label, and `id` attribute at input.'
         },
         {
           name: 'label',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The label for the input.'
         },
         {
           name: 'note',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The small note text that will be displayed next to label. The note should be short for example `Optional` or `Max length 160`.'
         },
         {
           name: 'help',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The help text that will be displayed under the input. Useful to add a little detailed information about the input.'
         },
         {
           name: 'placeholder',
-          type: 'String',
+          type: 'string',
           required: false,
           default: 'null',
           description: 'The placeholder text for the input. The placeholder will be added as a disabled option for the select input and displayed only when the `value` is not set.'
         },
         {
           name: 'validation',
-          type: 'Vuelidate',
+          type: 'Validation',
           required: false,
           default: 'null',
           description: 'You can pass Vuelidate validation object to let input display any errors.'
         },
         {
           name: 'options',
-          type: 'Array',
+          type: 'array',
           required: true,
           default: '—',
           description: 'The available options for the select options. The array should contain object with properties of `label` and `value`. `label` is used as a text for the radio button, and `value` is the value corresponding to the select option. There is an optional property `disabled`. You may use this option to hide certain options.'
+        },
+        {
+          name: 'nullable',
+          type: 'boolean',
+          required: false,
+          default: 'null',
+          description: 'Whether the value can be `null` or not. If this is set to `true`, users may unselect their choise.'
         },
         {
           name: 'error-message',
@@ -135,7 +142,7 @@ export default defineComponent({
         },
         {
           name: 'value',
-          type: 'String | Number | Boolean',
+          type: 'string | number | boolean',
           required: false,
           default: 'null',
           description: 'The value of the input. You may also use `v-model` to bind a value to the input.'

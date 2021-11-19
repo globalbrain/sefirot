@@ -1,23 +1,36 @@
 <template lang="md">
 <StoryBase>
-  <div class="input">
-    <SInputSelect
-      v-model="inputMedium"
-      name="medium-input"
-      label="Label"
-      placeholder="Please select an item"
-      :options="optionsMedium"
-    />
-  </div>
-  <div class="input">
-    <SInputSelect
-      v-model="inputMini"
-      size="mini"
-      name="mini-input"
-      label="Label"
-      placeholder="Please select an item"
-      :options="optionsMini"
-    />
+  <div>
+    <div class="input">
+      <SInputSelect
+        v-model="inputMini"
+        size="mini"
+        name="mini-input"
+        label="Label"
+        placeholder="Please select an item"
+        :options="options"
+      />
+    </div>
+    <div class="input">
+      <SInputSelect
+        v-model="inputSmall"
+        size="small"
+        name="small-input"
+        label="Label"
+        placeholder="Please select an item"
+        :options="options"
+      />
+    </div>
+    <div class="input">
+      <SInputSelect
+        v-model="inputMedium"
+        size="medium"
+        name="medium-input"
+        label="Label"
+        placeholder="Please select an item"
+        :options="options"
+      />
+    </div>
   </div>
 </StoryBase>
 
@@ -54,26 +67,21 @@ export default defineComponent({
   },
 
   setup() {
-    const inputMedium = ref<number | null>(null)
     const inputMini = ref<number | null>(null)
+    const inputSmall = ref<number | null>(null)
+    const inputMedium = ref<number | null>(null)
 
-    const optionsMedium = [
-      { label: 'First option', value: 1 },
-      { label: 'Second option', value: 2 },
-      { label: 'Third option', value: 3 }
-    ]
-
-    const optionsMini = [
+    const options = [
       { label: 'First option', value: 1 },
       { label: 'Second option', value: 2 },
       { label: 'Third option', value: 3 }
     ]
 
     return {
-      inputMedium,
       inputMini,
-      optionsMedium,
-      optionsMini
+      inputSmall,
+      inputMedium,
+      options
     }
   }
 })
@@ -99,26 +107,21 @@ export default defineComponent({
   },
 
   setup() {
-    const inputMedium = ref<number | null>(null)
     const inputMini = ref<number | null>(null)
+    const inputSmall = ref<number | null>(null)
+    const inputMedium = ref<number | null>(null)
 
-    const optionsMedium = [
-      { label: 'First option', value: 1 },
-      { label: 'Second option', value: 2 },
-      { label: 'Third option', value: 3 }
-    ]
-
-    const optionsMini = [
+    const options = [
       { label: 'First option', value: 1 },
       { label: 'Second option', value: 2 },
       { label: 'Third option', value: 3 }
     ]
 
     return {
-      inputMedium,
       inputMini,
-      optionsMedium,
-      optionsMini
+      inputSmall,
+      inputMedium,
+      options
     }
   }
 })

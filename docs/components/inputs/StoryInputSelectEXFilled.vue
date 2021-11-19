@@ -3,8 +3,8 @@
   <div class="input">
     <SInputSelect
       v-model="input"
-      mode="outlined"
-      name="outlined-input"
+      mode="filled"
+      name="filled-input"
       label="Item"
       placeholder="Please select an item"
       :options="options"
@@ -17,8 +17,8 @@
   <div class="input">
     <SInputSelect
       v-model="input"
-      mode="outlined"
-      name="outlined-input"
+      mode="filled"
+      name="filled-input"
       label="Item"
       placeholder="Please select an item"
       :options="options"

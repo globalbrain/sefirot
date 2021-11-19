@@ -20,12 +20,12 @@
         @change="emitChange"
       >
         <option
-          v-if="placeholder"
-          value=""
+          v-if="placeholder || nullable"
+          :value="JSON.stringify({ value: null })"
           :selected="isNotSelected"
-          disabled
+          :disabled="!nullable"
         >
-          {{ placeholder }}
+          {{ placeholder || 'Please select' }}
         </option>
 
         <option
@@ -54,8 +54,8 @@ import SIconChevronUp from './icons/SIconChevronUp.vue'
 import SIconChevronDown from './icons/SIconChevronDown.vue'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'medium' | 'mini'
-type Mode = 'filled' | 'outlined'
+type Size = 'mini' | 'small' | 'medium'
+type Mode = 'outlined' | 'filled'
 
 interface Option {
   label: string
@@ -76,30 +76,29 @@ export default defineComponent({
   },
 
   props: {
-    size: { type: String as PropType<Size>, default: 'medium' },
-    mode: { type: String as PropType<Mode>, default: 'filled' },
+    size: { type: String as PropType<Size>, default: 'small' },
+    mode: { type: String as PropType<Mode>, default: 'outlined' },
     name: { type: String, default: null },
     label: { type: String, default: null },
     note: { type: String, default: null },
     help: { type: String, default: null },
     placeholder: { type: String, default: null },
+    options: { type: Array as PropType<Option[]>, required: true },
+    nullable: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     errorMessage: { type: Boolean, default: true },
-    options: { type: Array as PropType<Option[]>, required: true },
-    validation: { type: Object, default: null },
-    value: { type: [String, Number, Boolean], default: null }
+    value: { type: [String, Number, Boolean], default: null },
+    validation: { type: Object, default: null }
   },
 
   setup(props, { emit }) {
     const isFocused = ref(false)
 
-    const classes = computed(() => ({
-      medium: props.size === 'medium',
-      mini: props.size === 'mini',
-      filled: props.mode === 'filled',
-      outlined: props.mode === 'outlined',
-      disabled: props.disabled
-    }))
+    const classes = computed(() => [
+      props.size,
+      props.mode,
+      { disabled: props.disabled }
+    ])
 
     const isNotSelected = computed(() => {
       return props.value === undefined || props.value === null || props.value === ''
@@ -118,7 +117,7 @@ export default defineComponent({
     }
 
     function emitChange(e: SyntheticInputEvent): void {
-      props.validation && props.validation.$touch()
+      props.validation?.$touch()
 
       const option = JSON.parse(e.target.value)
 
@@ -155,6 +154,23 @@ export default defineComponent({
   .icon {
     top: 3px;
     right: 8px;
+  }
+}
+
+.SInputSelect.small {
+  .box {
+    height: 40px;
+  }
+
+  .select {
+    padding: 7px 30px 5px 12px;
+    line-height: 24px;
+    font-size: 16px;
+  }
+
+  .icon {
+    top: 7px;
+    right: 10px;
   }
 }
 
