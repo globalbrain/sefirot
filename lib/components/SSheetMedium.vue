@@ -8,17 +8,7 @@
 @import "@/assets/styles/variables";
 
 .SSheetMedium {
-  padding: 24px 16px;
-
-  @media (min-width: 768px) {
-    padding: 24px;
-  }
-}
-
-.SSheet.small .SSheetMedium {
-  @media (min-width: 768px) {
-    padding: 24px 16px;
-  }
+  padding: 16px;
 }
 
 .SSheetMedium >>> h1 {

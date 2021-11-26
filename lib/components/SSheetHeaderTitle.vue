@@ -11,7 +11,7 @@
   margin: 0;
   padding: 14px 16px 10px;
   line-height: 20px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
 }
 </style>
