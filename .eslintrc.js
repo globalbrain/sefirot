@@ -1,27 +1,30 @@
 module.exports = {
+  env: {
+    node: true,
+    'vue/setup-compiler-macros': true,
+    'jest/globals': true
+  },
+
   extends: [
-    '@nuxtjs/eslint-config-typescript'
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended'
   ],
+
+  plugins: ['jest'],
+
+  parser: 'vue-eslint-parser',
+
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module'
+  },
+
   rules: {
-    '@typescript-eslint/no-redeclare': ['error'],
-    'import/named': 'off',
-    'import/no-named-as-default-member': 'off',
-    'import/order': 'off',
-    'no-use-before-define': 'off',
-    'no-unreachable-loop': 'off',
-    'no-redeclare': 'off',
-    'space-before-function-paren': [
-      'error',
-      {
-        anonymous: 'always',
-        named: 'never',
-        asyncArrow: 'always'
-      }
-    ],
-    'vue/component-tags-order': 'off',
+    'no-unused-vars': 'off',
+    'vue/attributes-order': 'off',
+    'vue/html-closing-bracket-newline': 'off',
     'vue/max-attributes-per-line': 'off',
-    'vue/no-v-html': 'off',
-    'vue/return-in-computed-property': 'off',
+    'vue/multi-word-component-names': 'off',
     'vue/singleline-html-element-content-newline': 'off'
   }
 }

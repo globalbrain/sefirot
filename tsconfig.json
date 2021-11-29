@@ -1,41 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es2018",
+    "baseUrl": "./",
+    "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
-    "lib": [
-      "esnext",
-      "esnext.asynciterable",
-      "dom"
-    ],
+    "strict": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": false,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
-    "strict": true,
-    "noEmit": true,
-    "baseUrl": ".",
-    "outDir": "dist",
-    "paths": {
-      "~/*": [
-        "./docs/*"
-      ],
-      "@/*": [
-        "./docs/*"
-      ],
-      "@@/*": [
-        "./*"
-      ],
-      "sefirot/*": [
-        "./lib/*"
-      ]
-    },
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
+
     "types": [
       "@types/node",
-      "@types/jest",
-      "@nuxt/types",
-      "@nuxtjs/color-mode"
+      "@types/jest"
     ]
   },
-  "exclude": [
-    "node_modules"
+
+  "include": [
+    "lib/**/*",
+    "lib/**/*.vue",
+    "test/**/*"
   ]
 }

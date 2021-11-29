@@ -105,7 +105,7 @@
   --c-text-inverse-4: var(--c-text-dark-4);
 }
 
-.dark-mode {
+.dark {
   --c-bg: var(--c-black-deep);
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
@@ -130,8 +130,6 @@
 
 :root {
   --font-family-base: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-primary: "interstate", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-number: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
   --font-family-mono: "source-code-pro", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
 }
 
@@ -151,14 +149,7 @@
  * Z Indexes
  * -------------------------------------------------------------------------- */
 
-:root {
-  --z-index-tooltip: 1000;
-  --z-index-dropdown: 2000;
-  --z-index-screen: 3000;
-  --z-index-backdrop: 4000;
-  --z-index-modal: 4100;
-  --z-index-snackbar: 5000;
-}
+/* */
 
 /**
  * Easings
@@ -185,169 +176,6 @@
   --preloader-color: var(--c-black);
 }
 
-.dark-mode {
+.dark {
   --preloader-color: var(--c-white);
-}
-
-/**
- * Component: Button
- * -------------------------------------------------------------------------- */
-
-:root {
-  --button-primary-text: var(--c-text-inverse-1);
-  --button-primary-bg: var(--c-black);
-  --button-primary-bg-hover: var(--c-gray-dark-4);
-  --button-primary-bg-focus: var(--c-gray-dark-3);
-  --button-primary-inverse-text: var(--c-text-1);
-  --button-primary-inverse-bg: var(--c-white);
-  --button-primary-inverse-bg-hover: var(--c-white-mute);
-  --button-primary-inverse-bg-focus: var(--c-gray-light-4);
-
-  --button-secondary-text: var(--c-text-1);
-  --button-secondary-border: var(--c-black);
-  --button-secondary-bg-hover: var(--c-white-mute);
-  --button-secondary-bg-focus: var(--c-gray-light-4);
-  --button-secondary-inverse-text: var(--c-text-inverse-1);
-  --button-secondary-inverse-border: var(--c-white);
-  --button-secondary-inverse-bg-hover: var(--c-gray-dark-4);
-  --button-secondary-inverse-bg-focus: var(--c-gray-dark-3);
-
-  --button-tertiary-text: var(--c-text-1);
-  --button-tertiary-bg: var(--c-white-mute);
-  --button-tertiary-bg-hover: var(--c-gray-light-4);
-  --button-tertiary-bg-focus: var(--c-gray-light-3);
-  --button-tertiary-inverse-text: var(--c-text-inverse-1);
-  --button-tertiary-inverse-bg: var(--c-black-mute);
-  --button-tertiary-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-tertiary-inverse-bg-focus: var(--c-gray-dark-2);
-
-  --button-text-text: var(--c-text-1);
-  --button-text-bg-hover: var(--c-white-mute);
-  --button-text-bg-focus: var(--c-gray-light-4);
-  --button-text-inverse-text: var(--c-text-inverse-1);
-  --button-text-inverse-bg: var(--c-black-mute);
-  --button-text-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-text-inverse-bg-focus: var(--c-gray-dark-2);
-
-  --button-mute-text: var(--c-text-2);
-  --button-mute-text-hover: var(--c-text-1);
-  --button-mute-bg-hover: var(--c-white-mute);
-  --button-mute-bg-focus: var(--c-gray-light-4);
-  --button-mute-inverse-text: var(--c-text-inverse-2);
-  --button-mute-inverse-text-hover: var(--c-text-inverse-1);
-  --button-mute-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-mute-inverse-bg-focus: var(--c-gray-dark-2);
-}
-
-.dark-mode {
-  --button-primary-text: var(--c-text-inverse-1);
-  --button-primary-bg: var(--c-white);
-  --button-primary-bg-hover: var(--c-gray-light-3);
-  --button-primary-bg-focus: var(--c-gray-light-1);
-  --button-primary-inverse-text: var(--c-text-1);
-  --button-primary-inverse-bg: var(--c-black);
-  --button-primary-inverse-bg-hover: var(--c-gray-dark-4);
-  --button-primary-inverse-bg-focus: var(--c-gray-dark-3);
-
-  --button-secondary-border: var(--c-white);
-  --button-secondary-bg-hover: var(--c-black-mute);
-  --button-secondary-bg-focus: var(--c-gray-dark-3);
-  --button-secondary-inverse-text: var(--c-text-inverse-1);
-  --button-secondary-inverse-border: var(--c-white);
-  --button-secondary-inverse-bg-hover: var(--c-gray-dark-4);
-  --button-secondary-inverse-bg-focus: var(--c-gray-dark-3);
-
-  --button-tertiary-text: var(--c-text-1);
-  --button-tertiary-bg: var(--c-black-mute);
-  --button-tertiary-bg-hover: var(--c-gray-dark-3);
-  --button-tertiary-bg-focus: var(--c-gray-dark-1);
-  --button-tertiary-inverse-text: var(--c-text-inverse-1);
-  --button-tertiary-inverse-bg: var(--c-black-mute);
-  --button-tertiary-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-tertiary-inverse-bg-focus: var(--c-gray-dark-2);
-
-  --button-text-text: var(--c-text-1);
-  --button-text-bg-hover: var(--c-black-mute);
-  --button-text-bg-focus: var(--c-gray-dark-3);
-  --button-text-inverse-text: var(--c-text-inverse-1);
-  --button-text-inverse-bg: var(--c-black-mute);
-  --button-text-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-text-inverse-bg-focus: var(--c-gray-dark-2);
-
-  --button-mute-text: var(--c-text-2);
-  --button-mute-text-hover: var(--c-text-1);
-  --button-mute-bg-hover: var(--c-black-mute);
-  --button-mute-bg-focus: var(--c-gray-dark-3);
-  --button-mute-inverse-text: var(--c-text-inverse-2);
-  --button-mute-inverse-text-hover: var(--c-text-inverse-1);
-  --button-mute-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-mute-inverse-bg-focus: var(--c-gray-dark-2);
-}
-
-/**
- * Component: Inputs
- * -------------------------------------------------------------------------- */
-
-:root {
-  --input-label: var(--c-text-1);
-  --input-note: var(--c-text-2);
-  --input-text: var(--c-text-1);
-  --input-placeholder: var(--c-text-3);
-
-  --input-filled-bg: var(--c-bg-mute);
-  --input-filled-bg-focus: var(--c-bg);
-  --input-filled-bg-disabled: var(--c-gray-light-4);
-
-  --input-outlined-bg-disabled: var(--c-white-mute);
-  --input-outlined-border: var(--c-divider);
-  --input-outlined-border-focus: var(--c-black);
-
-  --input-clear-bg-disabled: var(--c-white);
-
-  --input-focus-border: var(--c-black);
-  --input-focus-bg: var(--c-white);
-
-  --input-help: var(--c-text-2);
-
-  --input-action-filled-bg: var(--c-white-mute);
-  --input-action-filled-bg-hover: var(--c-gray-light-4);
-  --input-action-filled-bg-focus: var(--c-gray-light-3);
-
-  --input-action-outlined-bg: var(--c-white-mute);
-  --input-action-outlined-border: var(--c-divider);
-  --input-action-outlined-bg-hover: var(--c-gray-light-4);
-  --input-action-outlined-bg-focus: var(--c-gray-light-3);
-}
-
-.dark-mode {
-  --input-outlined-bg-disabled: var(--c-black-mute);
-  --input-outlined-border-focus: var(--c-gray);
-
-  --input-focus-border: var(--c-gray);
-}
-
-/**
- * Component: Card
- * -------------------------------------------------------------------------- */
-
-:root {
-  --card-bg: var(--c-white);
-  --card-bg-mute: var(--c-white-soft);
-  --card-shadow-depth-1: var(--shadow-depth-1);
-  --card-shadow-depth-2: var(--shadow-depth-2);
-  --card-shadow-depth-3: var(--shadow-depth-3);
-  --card-shadow-depth-4: var(--shadow-depth-4);
-  --card-shadow-depth-5: var(--shadow-depth-5);
-}
-
-/**
- * Component: Dropdown
- * -------------------------------------------------------------------------- */
-
-:root {
-  --dropdown-item-hover-bg: var(--c-white-soft);
-}
-
-.dark-mode {
-  --dropdown-item-hover-bg: var(--c-black);
 }
