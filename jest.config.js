@@ -8,9 +8,9 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^sefirot/(.*)$': '<rootDir>/lib/$1',
-    '^test/(.*)$': '<rootDir>/test/$1'
+    '^test/(.*)$': '<rootDir>/tests/$1'
   },
-  testRegex: '/test/.*\\.spec\\.ts$',
+  testRegex: '/tests/.*\\.spec\\.ts$',
   transform: {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.vue$': 'vue-jest'

@@ -21,6 +21,10 @@
       "scripthost"
     ],
 
+    "paths": {
+      "sefirot/*": ["lib/*"]
+    },
+
     "types": [
       "@types/node",
       "@types/jest"
@@ -30,6 +34,6 @@
   "include": [
     "lib/**/*",
     "lib/**/*.vue",
-    "test/**/*"
+    "tests**/*"
   ]
 }
