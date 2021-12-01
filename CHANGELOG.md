@@ -1,3 +1,11 @@
+# [0.72.0](https://github.com/globalbrain/sefirot/compare/v0.71.0...v0.72.0) (2021-12-01)
+
+### Features
+
+* **icon:** add `copy` icon ([#109](https://github.com/globalbrain/sefirot/issues/109)) ([a5dfd72](https://github.com/globalbrain/sefirot/commit/a5dfd726691baecc454efb7b14c9b0028305577b))
+* **input-select:** add `small` size and `nullable` option ([b416612](https://github.com/globalbrain/sefirot/commit/b416612e8c2881920499dc36deb7f7c2b74d9bd3))
+* **input-checkbox:** add size option to input checkbox ([cfddd90](https://github.com/globalbrain/sefirot/commit/cfddd9003685a4b4984f69bafaead92bc84219e3))
+
 # [0.71.0](https://github.com/globalbrain/sefirot/compare/v0.70.1...v0.71.0) (2021-11-18)
 
 ### Features
