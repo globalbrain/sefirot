@@ -129,7 +129,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --font-family-base: "Roboto", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
+  --font-family-base: "Roboto", "Noto Sans JP", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
   --font-family-mono: "source-code-pro", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
 }
 
@@ -149,7 +149,9 @@
  * Z Indexes
  * -------------------------------------------------------------------------- */
 
-/* */
+:root {
+  --z-index-backdrop: 1000;
+}
 
 /**
  * Easings
@@ -273,4 +275,33 @@
   --button-mute-inverse-text-hover: var(--c-text-inverse-1);
   --button-mute-inverse-bg-hover: var(--c-gray-dark-3);
   --button-mute-inverse-bg-focus: var(--c-gray-dark-2);
+}
+
+/**
+ * Component: Inputs
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --input-label: var(--c-text-1);
+  --input-note: var(--c-text-2);
+  --input-text: var(--c-text-1);
+  --input-placeholder: var(--c-text-3);
+  --input-help: var(--c-text-2);
+
+  --input-border: var(--c-divider);
+
+  --input-hover-border: var(--c-black);
+
+  --input-focus-border: var(--c-black);
+  --input-focus-bg: var(--c-white);
+
+  --input-disabled-bg: var(--c-white-mute);
+}
+
+.dark {
+  --input-hover-border: var(--c-gray);
+
+  --input-focus-border: var(--c-gray);
+
+  --input-disabled-bg: var(--c-black-mute);
 }
