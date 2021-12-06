@@ -25,7 +25,7 @@ import { PropType, computed } from 'vue'
 import { Validation } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+type Size = 'mini' | 'small' | 'medium'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
