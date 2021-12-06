@@ -8,7 +8,7 @@
 
     <div class="help">
       <slot name="before-help" />
-      <p v-if="showError" :key="errorMsg" class="help-error">{{ errorMsg }}</p>
+      <p v-if="showError" class="help-error">{{ errorMsg }}</p>
       <p v-if="help" class="help-text">{{ help }}</p>
     </div>
   </div>
@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
-import { Validation } from '../composable/Validation'
+import { Validation } from '../composables/Validation'
 
 const props = defineProps({
   name: { type: String, default: null },
@@ -32,7 +32,7 @@ const hasError = computed(() => {
     return false
   }
 
-  return props.validation.$isDirty.value && !props.validation.$isValid.value
+  return props.validation.$dirty && props.validation.$invalid
 })
 
 const errorMsg = computed(() => {

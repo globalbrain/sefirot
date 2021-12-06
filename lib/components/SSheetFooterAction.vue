@@ -22,4 +22,6 @@ defineProps<{
   mode?: Mode
   label?: string
 }>()
+
+defineEmits(['click'])
 </script>

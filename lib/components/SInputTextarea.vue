@@ -23,8 +23,7 @@
 
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
-import { SyntheticInputEvent } from '../types/Utils'
-import { Validation } from '../composable/Validation'
+import { Validation } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'
@@ -48,13 +47,13 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
-function emitInput(e: SyntheticInputEvent): void {
-  emit('update:modelValue', e.target.value)
+function emitInput(e: Event): void {
+  emit('update:modelValue', (e.target as HTMLInputElement).value)
 }
 
-function emitBlur(e: SyntheticInputEvent): void {
+function emitBlur(e: FocusEvent): void {
   props.validation?.$touch()
-  emit('update:modelValue', e.target.value)
+  emit('update:modelValue', (e.target as HTMLInputElement).value)
 }
 </script>
 

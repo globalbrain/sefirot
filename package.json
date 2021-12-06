@@ -30,11 +30,31 @@
   "bugs": {
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
+  "peerDependencies": {
+    "@types/body-scroll-lock": "^3.1.0",
+    "@types/lodash-es": "^4.17.5",
+    "@vuelidate/core": "^2.0.0-alpha.32",
+    "@vuelidate/validators": "^2.0.0-alpha.25",
+    "body-scroll-lock": "^4.0.0-beta.0",
+    "lodash-es": "^4.17.21",
+    "normalize.css": "^8.0.1",
+    "postcss": "^8.4.4",
+    "postcss-nested": "^5.0.6",
+    "typescript": "^4.4.0",
+    "vue": "^3.2.0",
+    "vue-router": "^4.0.12",
+    "vue-tsc": "^0.3.0",
+    "vuex": "^4.0.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.16.0",
+    "@types/body-scroll-lock": "^3.1.0",
     "@types/jest": "^27.0.3",
+    "@types/lodash-es": "^4.17.5",
     "@typescript-eslint/parser": "^5.2.0",
     "@vue/test-utils": "^2.0.0-rc.17",
+    "@vuelidate/core": "^2.0.0-alpha.32",
+    "@vuelidate/validators": "^2.0.0-alpha.25",
     "babel-jest": "^26.0.0",
     "body-scroll-lock": "^4.0.0-beta.0",
     "codecov": "^3.8.3",
@@ -43,18 +63,17 @@
     "eslint-plugin-jest": "^25.3.0",
     "eslint-plugin-vue": "^8.0.1",
     "jest": "^26.0.0",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
     "postcss": "^8.4.4",
     "postcss-nested": "^5.0.6",
     "ts-jest": "^26.0.0",
-    "typescript": "^4.4.4",
-    "vue": "^3.2.14",
+    "typescript": "^4.4.0",
+    "vue": "^3.2.0",
     "vue-jest": "^5.0.0-alpha.10",
+    "vue-router": "^4.0.12",
     "vue-tsc": "^0.3.0",
     "vuex": "^4.0.2"
-  },
-  "dependencies": {
-    "@vuelidate/core": "^2.0.0-alpha.32",
-    "@vuelidate/validators": "^2.0.0-alpha.25"
   }
 }

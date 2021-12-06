@@ -13,7 +13,7 @@ export interface OpenOptions {
   options?: ModalOptions
 }
 
-let modalUid = 0
+let modalId = 0
 
 export function useModal(component: any): Modal {
   const store = useStore()
@@ -38,5 +38,5 @@ export function useModal(component: any): Modal {
 }
 
 export function useModalId(): number {
-  return ++modalUid
+  return ++modalId
 }

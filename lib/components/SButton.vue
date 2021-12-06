@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, defineComponent, computed } from 'vue'
+import { PropType, computed } from 'vue'
 import SIconPreloader from './icons/SIconPreloader.vue'
 
 type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'

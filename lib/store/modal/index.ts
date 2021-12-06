@@ -1,5 +1,5 @@
 import { shallowReactive, markRaw } from 'vue'
-import { ActionTree, ActionContext, MutationTree, Module } from 'vuex'
+import { ActionTree, ActionContext, MutationTree } from 'vuex'
 
 export interface State {
   items: Item[]
@@ -63,4 +63,4 @@ export default {
   state,
   actions,
   mutations
-} as Module<State, any>
+}

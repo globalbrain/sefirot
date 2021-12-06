@@ -12,7 +12,7 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 
 const props = defineProps({
   id: { type: Number, default: null },
-  component: { type: [Object, Function], default: () => ({}) },
+  component: { type: Object, default: () => ({}) },
   data: { type: Object, default: () => ({}) },
   show: { type: Boolean, required: true },
   closable: { type: Boolean, default: true }
