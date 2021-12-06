@@ -118,7 +118,7 @@ function emitBlur(e: FocusEvent): void {
 
   &:focus {
     border-color: var(--input-focus-border);
-    background-color: var(--c-input-focus-bg);
+    background-color: var(--input-focus-bg);
   }
 }
 </style>
