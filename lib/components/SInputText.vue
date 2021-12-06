@@ -1,6 +1,6 @@
 <template>
   <SInputBase
-    class="SInputTextarea"
+    class="SInputText"
     :class="classes"
     :label="label"
     :note="note"
@@ -8,15 +8,15 @@
     :error-message="errorMessage"
     :validation="validation"
   >
-    <textarea
+    <input
       class="input"
+      :type="type"
       :placeholder="placeholder"
-      :rows="rows"
       :disabled="disabled"
       :value="modelValue"
       @input="emitInput"
       @blur="emitBlur"
-    />
+    >
   </SInputBase>
 </template>
 
@@ -25,18 +25,18 @@ import { PropType, computed } from 'vue'
 import { Validation } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
   label: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },
+  type: { type: String, default: 'text' },
   placeholder: { type: String, default: null },
   disabled: { type: Boolean, default: false },
-  rows: { type: Number, default: 3 },
   errorMessage: { type: Boolean, default: true },
-  modelValue: { type: String, default: null },
+  modelValue: { type: [String, Number], default: null },
   validation: { type: Object as PropType<Validation>, default: null }
 })
 
@@ -58,45 +58,35 @@ function emitBlur(e: FocusEvent): void {
 </script>
 
 <style lang="postcss" scoped>
-.SInputTextarea.mini {
+.SInputText.mini {
   .input {
-    padding: 6px 12px;
-    width: 100%;
-    min-height: 80px;
-    line-height: 20px;
+    padding: 3px 12px;
     font-size: 14px;
   }
 }
 
-.SInputTextarea.small {
+.SInputText.small {
   .input {
     padding: 7px 12px;
-    width: 100%;
-    min-height: 88px;
-    line-height: 24px;
     font-size: 16px;
   }
 }
 
-.SInputTextarea.medium {
+.SInputText.medium {
   .input {
     padding: 11px 16px;
-    width: 100%;
-    min-height: 96px;
-    line-height: 24px;
     font-size: 16px;
   }
 }
 
-.SInputTextarea.disabled {
-  .input,
-  .input:hover {
-    background-color: var(--input-disabled-bg);
+.SInputText.disabled {
+  .input {
     cursor: not-allowed;
+    border-color: transparent;
   }
 }
 
-.SInputTextarea.has-error {
+.SInputText.has-error {
   .input {
     border-color: var(--c-danger);
 
