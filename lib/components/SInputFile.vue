@@ -45,7 +45,7 @@ const props = defineProps({
   help: { type: String, default: null },
   placeholder: { type: String, default: null },
   errorMessage: { type: Boolean, default: true },
-  modelValue: { type: File, default: null },
+  modelValue: { type: Object as PropType<File>, default: null },
   validation: { type: Object as PropType<Validation>, default: null }
 })
 

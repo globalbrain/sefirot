@@ -3,35 +3,30 @@ import { cloneDeep } from '../support/Utils'
 import { useSnackbar } from './Snackbar'
 import { Validation, ExtractState, ValidationArgs, useValidation } from './Validation'
 
-export interface Form<D, V extends ValidationArgs> {
+export interface Form<D> {
   data: D
-  validation: Ref<Validation<V>>
+  validation: Ref<Validation>
   init(): void
   reset(): void
   validate(): Promise<boolean>
   validateAndNotify(): Promise<boolean>
 }
 
-export interface UseFormOptions<
-  D extends ExtractState<V>,
-  V extends ValidationArgs
-> {
+export interface UseFormOptions<D> {
   data: D
-  rules?: Ref<V> | V
+  rules?: Ref<any> | any
 }
 
-export function useForm<D extends ExtractState<V>, V extends ValidationArgs>(
-  options: UseFormOptions<D, V>
-): Form<D, V> {
+export function useForm<D>(options: UseFormOptions<D>): Form<D> {
   const snackbar = useSnackbar()
 
   const initialData = cloneDeep(options.data)
 
-  const data = reactive(options.data) as D
+  const data = reactive(options.data as any)
 
-  const rules = options.rules ?? {} as V
+  const rules = options.rules ?? {}
 
-  const validation = useValidation(data, rules)
+  const validation = useValidation(data, rules as any)
 
   function init(): void {
     Object.assign(data, initialData)

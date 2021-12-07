@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { Validation } from '../composables/Validation'
 import SIconCheck from './icons/SIconCheck.vue'
 import SInputBase from './SInputBase.vue'
 
@@ -36,7 +35,7 @@ const props = defineProps({
   help: { type: String, default: null },
   text: { type: String, required: true },
   modelValue: { type: Boolean, required: true },
-  validation: { type: Object as PropType<Validation>, default: null }
+  validation: { type: Object, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
