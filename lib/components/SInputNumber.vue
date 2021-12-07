@@ -1,0 +1,43 @@
+<template>
+  <SInputText
+    class="SInputNumber"
+    :size="size"
+    type="number"
+    :label="label"
+    :note="note"
+    :help="help"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    :error-message="errorMessage"
+    :model-value="modelValue"
+    :validation="validation"
+    @update:model-value="emitUpdate"
+  />
+</template>
+
+<script setup lang="ts">
+import { PropType } from 'vue'
+import { isNullish } from '../support/Utils'
+import { Validation } from '../composables/Validation'
+import SInputText from './SInputText.vue'
+
+type Size = 'mini' | 'small' | 'medium'
+
+defineProps({
+  size: { type: String as PropType<Size>, default: 'small' },
+  label: { type: String, default: null },
+  note: { type: String, default: null },
+  help: { type: String, default: null },
+  placeholder: { type: String, default: null },
+  disabled: { type: Boolean, default: false },
+  errorMessage: { type: Boolean, default: true },
+  modelValue: { type: Number, default: null },
+  validation: { type: Object as PropType<Validation>, default: null }
+})
+
+const emit = defineEmits(['update:modelValue'])
+
+function emitUpdate(value: string): void {
+  emit('update:modelValue', value === '' ? null : Number(value))
+}
+</script>

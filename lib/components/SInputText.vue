@@ -48,12 +48,18 @@ const classes = computed(() => [
 ])
 
 function emitInput(e: Event): void {
-  emit('update:modelValue', (e.target as HTMLInputElement).value)
+  emit('update:modelValue', getValue(e))
 }
 
 function emitBlur(e: FocusEvent): void {
   props.validation?.$touch()
-  emit('update:modelValue', (e.target as HTMLInputElement).value)
+  emit('update:modelValue', getValue(e))
+}
+
+function getValue(e: Event | FocusEvent): string | null {
+  const value = (e.target as HTMLInputElement).value
+
+  return value === '' ? null : value
 }
 </script>
 
