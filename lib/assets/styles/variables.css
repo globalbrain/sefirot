@@ -150,8 +150,8 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --z-index-backdrop: 1000;
-  --z-index-backdrop: 1000;
+  --z-index-dropdown: 1000;
+  --z-index-backdrop: 2000;
 }
 
 /**
@@ -305,4 +305,16 @@
   --input-focus-border: var(--c-gray);
 
   --input-disabled-bg: var(--c-black-mute);
+}
+
+/**
+ * Component: Dropdown
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --dropdown-item-hover-bg: var(--c-white-soft);
+}
+
+.dark {
+  --dropdown-item-hover-bg: var(--c-black);
 }
