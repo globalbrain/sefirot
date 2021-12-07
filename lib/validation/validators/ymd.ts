@@ -8,13 +8,13 @@ export interface Ymd {
 
 export type YmdType = 'y' | 'm' | 'd'
 
-const YmdMap = {
+export const YmdMap = {
   y: 'year',
   m: 'month',
   d: 'date'
 } as const
 
-export default function ymd(ymd: Ymd, required: YmdType[] = ['y', 'm', 'd']): boolean {
+export function ymd(ymd: Ymd, required: YmdType[] = ['y', 'm', 'd']): boolean {
   return required.every((r) => {
     const value = ymd[YmdMap[r]]
 

@@ -128,7 +128,7 @@ function setValue(data: Value, type: ValueType, value?: number): void {
 }
 
 function emitTouch(type: ValueType): void {
-  if (!props.validation || props.validation.$isDirty.value) {
+  if (!props.validation || props.validation.$isDirty) {
     return
   }
 
