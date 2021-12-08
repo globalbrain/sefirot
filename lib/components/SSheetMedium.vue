@@ -9,32 +9,32 @@
   padding: 16px;
 }
 
-.SSheetMedium >>> h1 {
+.SSheetMedium :deep(h1) {
   line-height: 32px;
   font-size: 20px;
   font-weight: 500;
 }
 
-.SSheetMedium >>> h1 + p {
+.SSheetMedium :deep(h1 + p) {
   margin-top: 8px;
 }
 
-.SSheetMedium >>> p {
+.SSheetMedium :deep(p) {
   margin: 16px 0;
   line-height: 24px;
   font-size: 14px;
   font-weight: 400;
 }
 
-.SSheetMedium >>> p:first-child {
+.SSheetMedium :deep(p:first-child) {
   margin-top: 0;
 }
 
-.SSheetMedium >>> p:last-child {
+.SSheetMedium :deep(p:last-child) {
   margin-bottom: 0;
 }
 
-.SSheetMedium >>> a {
+.SSheetMedium :deep(a) {
   font-weight: 500;
   color: var(--c-info);
   transition: color .25s;
@@ -44,22 +44,22 @@
   }
 }
 
-.SSheetMedium >>> ul {
+.SSheetMedium :deep(ul) {
   margin: 16px 0;
 }
 
-.SSheetMedium >>> ul:last-child {
+.SSheetMedium :deep(ul:last-child) {
   margin-bottom: 0;
 }
 
-.SSheetMedium >>> li {
+.SSheetMedium :deep(li) {
   position: relative;
   padding-left: 20px;
   font-size: 14px;
   font-weight: 400;
 }
 
-.SSheetMedium >>> li::before {
+.SSheetMedium :deep(li::before) {
   position: absolute;
   top: 9px;
   left: 4px;
@@ -70,11 +70,11 @@
   content: "";
 }
 
-.SSheetMedium >>> li + li {
+.SSheetMedium :deep(li + li) {
   margin-top: 4px;
 }
 
-.SSheetMedium >>> li > ul {
+.SSheetMedium :deep(li > ul) {
   margin: 4px 0 0;
 }
 </style>

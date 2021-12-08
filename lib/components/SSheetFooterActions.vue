@@ -11,7 +11,7 @@
   padding: 12px 0 11px;
 }
 
-.SSheetFooterActions >>> .SSheetFooterAction + .SSheetFooterAction {
+.SSheetFooterActions :deep(.SSheetFooterAction + .SSheetFooterAction) {
   padding-left: 8px;
 }
 </style>

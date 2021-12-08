@@ -183,7 +183,7 @@ function handleClick(): void {
     }
   }
 
-  & .loader-icon >>> .bar {
+  & .loader-icon :deep(.bar) {
     fill: var(--c-text-inverse-1);
   }
 }
