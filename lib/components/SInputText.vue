@@ -518,7 +518,7 @@ export default defineComponent({
 
   .input-area:focus + .input {
     border-color: var(--input-focus-border);
-    background-color: var(--input-filled-bg-focus);
+    background-color: var(--input-outlined-bg-focus);
   }
 
   &.disabled .box:hover .input {
