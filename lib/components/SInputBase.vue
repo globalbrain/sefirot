@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
-import { Validation } from '../composables/Validation'
+import { Validatable } from '../composables/Validation'
 
 const props = defineProps({
   name: { type: String, default: null },
@@ -24,7 +24,7 @@ const props = defineProps({
   label: { type: String, default: null },
   help: { type: String, default: null },
   errorMessage: { type: Boolean, default: true },
-  validation: { type: Object as PropType<Validation>, default: null }
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const hasError = computed(() => {

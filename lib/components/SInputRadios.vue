@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { Validation } from '../composables/Validation'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
@@ -42,10 +42,10 @@ const props = defineProps({
   note: { type: String, default: null },
   help: { type: String, default: null },
   nullable: { type: Boolean, default: true },
-  options: { type: Array as PropType<Option[]>, required: true },
+  options: { type: Array as PropType<any[]>, required: true },
   errorMessage: { type: Boolean, default: true },
   modelValue: { type: [String, Number, Boolean], default: null },
-  validation: { type: Object as PropType<Validation>, default: null }
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])

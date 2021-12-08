@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { PropType, ref, computed } from 'vue'
-import { Validation } from '../composables/Validation'
+import { Validation, Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'
@@ -45,8 +45,8 @@ const props = defineProps({
   help: { type: String, default: null },
   placeholder: { type: String, default: null },
   errorMessage: { type: Boolean, default: true },
-  modelValue: { type: Object as PropType<File>, default: null },
-  validation: { type: Object as PropType<Validation>, default: null }
+  modelValue: { type: Object as PropType<File | null>, default: null },
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])

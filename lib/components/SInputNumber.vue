@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { isNullish } from '../support/Utils'
-import { Validation } from '../composables/Validation'
+import { Validation, Validatable } from '../composables/Validation'
 import SInputText from './SInputText.vue'
 
 type Size = 'mini' | 'small' | 'medium'
@@ -31,8 +31,8 @@ defineProps({
   placeholder: { type: String, default: null },
   disabled: { type: Boolean, default: false },
   errorMessage: { type: Boolean, default: true },
-  modelValue: { type: Number, default: null },
-  validation: { type: Object as PropType<Validation>, default: null }
+  modelValue: { type: Number as PropType<number | null>, default: null },
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])

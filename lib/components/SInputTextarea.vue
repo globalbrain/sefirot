@@ -13,7 +13,7 @@
       :placeholder="placeholder"
       :rows="rows"
       :disabled="disabled"
-      :value="modelValue"
+      :value="modelValue ?? undefined"
       @input="emitInput"
       @blur="emitBlur"
     />
@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
-import { Validation } from '../composables/Validation'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'
@@ -36,8 +36,8 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   rows: { type: Number, default: 3 },
   errorMessage: { type: Boolean, default: true },
-  modelValue: { type: String, default: null },
-  validation: { type: Object as PropType<Validation>, default: null }
+  modelValue: { type: String as PropType<string | null>, default: null },
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -128,7 +128,7 @@ function emitBlur(e: FocusEvent): void {
 
   &:focus {
     border-color: var(--input-focus-border);
-    background-color: var(--input-focus-bg);
+    background-color: transparent;
   }
 }
 </style>

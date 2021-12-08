@@ -3,10 +3,18 @@ import useVuelidate, {
   Validation,
   ValidationArgs,
   GlobalConfig,
-  ExtractState
+  ExtractState,
+  ErrorObject
 } from '@vuelidate/core'
 
 export type { Validation, ValidationArgs, GlobalConfig, ExtractState }
+
+export interface Validatable {
+  readonly $dirty: boolean
+  readonly $errors: ErrorObject[]
+  readonly $invalid: boolean
+  readonly $touch: () => void
+}
 
 export function useValidation<
   T extends ExtractState<A>,

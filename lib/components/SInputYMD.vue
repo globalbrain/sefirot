@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { Validation } from '../composables/Validation'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'
@@ -80,7 +80,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   errorMessage: { type: Boolean, default: true },
   modelValue: { type: Object as PropType<Value>, default: null },
-  validation: { type: Object as PropType<Validation>, default: null }
+  validation: { type: Object as PropType<Validatable>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -128,7 +128,7 @@ function setValue(data: Value, type: ValueType, value?: number): void {
 }
 
 function emitTouch(type: ValueType): void {
-  if (!props.validation || props.validation.$isDirty) {
+  if (!props.validation || props.validation.$dirty) {
     return
   }
 
