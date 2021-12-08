@@ -93,7 +93,7 @@ function onClick(item: Item): void {
   transition: background-color .25s;
 }
 
-.dark-mode .SDropdown {
+.dark .SDropdown {
   background-color: var(--c-black-soft);
 }
 

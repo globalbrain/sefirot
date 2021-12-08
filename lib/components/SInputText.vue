@@ -124,7 +124,7 @@ function getValue(e: Event | FocusEvent): string | null {
 
   &:focus {
     border-color: var(--input-focus-border);
-    background-color: var(--input-focus-bg);
+    background-color: transparent;
   }
 }
 </style>

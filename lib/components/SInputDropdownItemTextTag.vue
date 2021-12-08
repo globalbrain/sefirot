@@ -30,7 +30,7 @@ defineEmits(['remove'])
   background-color: var(--c-white-mute);
 }
 
-.dark-mode .SInputDropdownItemTextTag {
+.dark .SInputDropdownItemTextTag {
   background-color: var(--c-black-mute);
 }
 
@@ -43,7 +43,7 @@ defineEmits(['remove'])
   }
 }
 
-.dark-mode .SInputDropdownItemTextTag.disabled {
+.dark .SInputDropdownItemTextTag.disabled {
   background-color: var(--c-gray-dark-2);
 }
 
@@ -69,7 +69,7 @@ defineEmits(['remove'])
   }
 }
 
-.dark-mode .remove {
+.dark .remove {
   &:hover .remove-box {
     background-color: var(--c-gray-dark-2)
   }

@@ -254,10 +254,11 @@ function getDifference(source: unknown[], value: unknown[]): unknown[] {
     border-color: var(--input-focus-border);
   }
 
-  &:focus:not(:focus-visible) {
+  &:focus {
     border-color: var(--input-focus-border);
     outline: 0;
   }
+
 }
 
 .SInputDropdown-box-placeholder {

@@ -166,7 +166,7 @@ function handleChange(e: Event): void {
   }
 }
 
-.dark-mode .box {
+.dark .box {
   &:hover {
     .button {
       background-color: var(--c-gray-dark-3);
