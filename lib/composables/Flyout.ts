@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export function useFlyout() {
   const container = ref<any>(null)
@@ -7,12 +7,10 @@ export function useFlyout() {
 
   function open(): void {
     isOpen.value = true
-    document.addEventListener('click', closeOnClickOutside)
   }
 
   function close(): void {
     isOpen.value = false
-    document.removeEventListener('click', closeOnClickOutside)
   }
 
   function toggle(): void {
@@ -28,6 +26,15 @@ export function useFlyout() {
   function isVisible(el: any) {
     return !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
   }
+
+  watch(isOpen, (value) => {
+    if (value) {
+      document.addEventListener('click', closeOnClickOutside)
+      return
+    }
+
+    document.removeEventListener('click', closeOnClickOutside)
+  })
 
   return {
     container,
