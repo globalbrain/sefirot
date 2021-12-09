@@ -3,7 +3,8 @@
     <transition name="fade">
       <div v-if="!loaded" class="loader">
         <div class="icon">
-          <SIconPreloaderDark class="icon-svg" />
+          <SIconPreloaderLight v-if="$colorMode && $colorMode.value === 'dark'" class="icon-svg" />
+          <SIconPreloaderDark v-else class="icon-svg" />
         </div>
       </div>
     </transition>
@@ -17,10 +18,12 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
+import SIconPreloaderLight from './icons/SIconPreloaderLight.vue'
 
 export default defineComponent({
   components: {
-    SIconPreloaderDark
+    SIconPreloaderDark,
+    SIconPreloaderLight
   },
 
   props: {
