@@ -61,7 +61,7 @@ export default defineComponent({
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-light-2);
+  color: var(--c-text-2);
 
   @media (min-width: 512px) {
     width: 96px;

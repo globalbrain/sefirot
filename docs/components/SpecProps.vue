@@ -73,7 +73,7 @@ export default defineComponent({
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-light-2);
+  color: var(--c-text-2);
 
   @media (min-width: 512px) {
     width: 96px;
@@ -103,7 +103,7 @@ export default defineComponent({
   font-family: var(--font-family-mono);
   font-weight: 500;
   color: var(--c-info-light);
-  background-color: var(--c-white-mute);
+  background-color: var(--c-bg-mute);
   word-break: break-all;
 }
 
