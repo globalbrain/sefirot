@@ -120,7 +120,7 @@ export default defineComponent({
     padding: 16px 12px 12px;
     font-size: 12px;
     font-weight: 700;
-    color: var(--c-text-light-2);
+    color: var(--c-text-2);
   }
 }
 
@@ -148,7 +148,7 @@ export default defineComponent({
     }
 
     &:hover {
-      background-color: var(--c-white-soft);
+      background-color: var(--c-bg-soft);
     }
 
     &.clickable {
@@ -162,7 +162,7 @@ export default defineComponent({
     padding: 0 12px;
     line-height: 20px;
     font-size: 14px;
-    color: var(--c-text-light-1);
+    color: var(--c-text-1);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -190,7 +190,7 @@ export default defineComponent({
     width: 100%;
     font-size: 12px;
     font-weight: 500;
-    color: var(--c-text-light-2);
+    color: var(--c-text-2);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
