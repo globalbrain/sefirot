@@ -335,8 +335,8 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --card-bg: var(--c-white);
-  --card-bg-mute: var(--c-white-soft);
+  --card-bg: var(--c-bg);
+  --card-bg-mute: var(--c-bg-soft);
   --card-shadow-depth-1: var(--shadow-depth-1);
   --card-shadow-depth-2: var(--shadow-depth-2);
   --card-shadow-depth-3: var(--shadow-depth-3);
