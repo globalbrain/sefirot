@@ -13,7 +13,7 @@ const versionIncrements = [
 ]
 
 const tags = [
-  'latest'
+  'next'
 ]
 
 const inc = i => semver.inc(currentVersion, i)
