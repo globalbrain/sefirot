@@ -327,6 +327,10 @@
   --input-outlined-bg-disabled: var(--c-black-mute);
   --input-outlined-border-focus: var(--c-gray);
 
+  --input-action-outlined-bg: var(--c-black-mute);
+  --input-action-outlined-bg-hover: var(--c-gray-dark-3);
+  --input-action-outlined-bg-focus: var(--c-gray-dark-2);
+
   --input-focus-border: var(--c-gray);
 }
 
