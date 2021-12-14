@@ -1,3 +1,9 @@
+# [2.0.0-draft.2](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.1...v2.0.0-draft.2) (2021-12-14)
+
+### Bug Fixes
+
+* **input-number:** emit null when empty is input ([#111](https://github.com/globalbrain/sefirot/issues/111)) ([d417960](https://github.com/globalbrain/sefirot/commit/d417960884b5c3b09c793058b80fcbc17351ecd3))
+
 # [2.0.0-draft.1](https://github.com/globalbrain/sefirot/compare/v0.71.0...v2.0.0-draft.1) (2021-12-13)
 
 Initial release.
