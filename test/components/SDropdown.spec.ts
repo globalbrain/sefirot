@@ -10,7 +10,8 @@ describe('components/SDropdown', () => {
     createWrapper = options => mount(SDropdown, {
       propsData: {
         options: useDropdown(options)
-      }
+      },
+      attachTo: document.body
     })
   })
 
@@ -119,5 +120,41 @@ describe('components/SDropdown', () => {
 
     wrapper.find('.SDropdown .header .close').trigger('click')
     expect(wrapper.emitted('close')).toBeTruthy()
+  })
+
+  it('should focus on the first item when `focusFirstItem` is called', () => {
+    const wrapper = createWrapper({
+      items: [
+        useTextItem({ text: 'Item 1', value: 1 }),
+        useTextItem({ text: 'Item 2', value: 2 })
+      ]
+    })
+
+    wrapper.vm.focusFirstItem()
+    expect(wrapper.find('.item:first-child').element).toStrictEqual(document.activeElement)
+  })
+
+  it('should focus on the prev item when `focusPrev` is called', () => {
+    const wrapper = createWrapper({
+      items: [
+        useTextItem({ text: 'Item 1', value: 1 }),
+        useTextItem({ text: 'Item 2', value: 2 })
+      ]
+    })
+
+    wrapper.find('.item:last-child').trigger('keyup.up')
+    expect(wrapper.find('.item:first-child').element).toStrictEqual(document.activeElement)
+  })
+
+  it('should focus on the next item when `focusNext` is called', () => {
+    const wrapper = createWrapper({
+      items: [
+        useTextItem({ text: 'Item 1', value: 1 }),
+        useTextItem({ text: 'Item 2', value: 2 })
+      ]
+    })
+
+    wrapper.find('.item:first-child').trigger('keyup.down')
+    expect(wrapper.find('.item:last-child').element).toStrictEqual(document.activeElement)
   })
 })
