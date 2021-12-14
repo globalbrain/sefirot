@@ -11,7 +11,7 @@
         <SButton
           :type="action.type"
           :label="action.label"
-          inverse
+          :inverse="$colorMode.value === 'light'"
           @click="action.callback"
         />
       </div>

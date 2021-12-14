@@ -115,9 +115,13 @@ export default defineComponent({
   .input {
     background-color: var(--input-filled-bg);
 
+    &:hover {
+      border-color: var(--input-focus-border);
+    }
+
     &:focus {
       border-color: var(--input-focus-border);
-      background-color: var(--input-focus-bg);
+      background-color: var(--input-filled-bg-focus);
     }
   }
 
@@ -152,6 +156,7 @@ export default defineComponent({
 .SInputTextarea.clear {
   .input {
     padding: 0;
+    background-color: transparent;
   }
 
   &.disabled .input {

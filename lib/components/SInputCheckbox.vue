@@ -79,15 +79,15 @@ export default defineComponent({
 
   &:hover {
     .box {
-      border-color: var(--c-black);
+      border-color: var(--input-focus-border);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-black);
-    background-color: var(--c-black);
+    border-color: var(--c-text-1);
+    background-color: var(--c-text-1);
     box-shadow: var(--shadow-depth-3);
   }
 
@@ -121,7 +121,7 @@ export default defineComponent({
 .check-icon {
   width: 10px;
   height: 10px;
-  fill: var(--c-white);
+  fill: var(--c-text-inverse-1);
 }
 
 .text {

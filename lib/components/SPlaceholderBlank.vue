@@ -3,7 +3,7 @@
     <transition name="fade">
       <div v-if="!loaded" class="loader">
         <div class="icon">
-          <SIconPreloaderDark class="icon-svg" />
+          <SIconPreloader class="icon-svg" />
         </div>
       </div>
     </transition>
@@ -16,11 +16,11 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import SIconPreloaderDark from './icons/SIconPreloaderDark.vue'
+import SIconPreloader from './icons/SIconPreloader.vue'
 
 export default defineComponent({
   components: {
-    SIconPreloaderDark
+    SIconPreloader
   },
 
   props: {
