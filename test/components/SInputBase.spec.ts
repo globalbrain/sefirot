@@ -1,8 +1,8 @@
-import { ref, reactive } from '@vue/composition-api'
+import { ref } from '@vue/composition-api'
 import { shallowMount } from '@vue/test-utils'
 import { required } from 'sefirot/validation/rules'
-import { createValidation } from 'sefirot/validation/Validation'
 import SInputBase from 'sefirot/components/SInputBase.vue'
+import useForm from 'sefirot/compositions/useForm'
 import { CreateWrapperFn } from '../utils'
 
 let createWrapper: CreateWrapperFn
@@ -14,14 +14,15 @@ describe('components/SInputBase', () => {
 
   it('should compute error message according to the validation result', async () => {
     const inputValue = ref<number | null>(null)
-    const validation = createValidation(
-      reactive({
+    const { validation } = useForm({
+      data: {
         value: inputValue
-      }),
-      {
+      },
+      rules: {
         value: [required()]
       }
-    )
+    })
+
     const wrapper = createWrapper()
 
     expect(wrapper.vm.errorMsg).toBe(null)
