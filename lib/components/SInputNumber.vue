@@ -37,7 +37,7 @@ defineProps({
 
 const emit = defineEmits(['update:modelValue'])
 
-function emitUpdate(value: string): void {
+function emitUpdate(value: string | null): void {
   emit('update:modelValue', value ? Number(value): null)
 }
 </script>

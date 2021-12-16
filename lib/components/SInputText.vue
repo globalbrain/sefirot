@@ -16,6 +16,7 @@
       :value="modelValue"
       @input="emitInput"
       @blur="emitBlur"
+      @keypress.enter="emitEnter"
     >
   </SInputBase>
 </template>
@@ -40,7 +41,11 @@ const props = defineProps({
   validation: { type: Object as PropType<Validatable>, default: null }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string | null): void
+  (e: 'blur', value: string | null): void
+  (e: 'enter', value: string | null): void
+}>()
 
 const classes = computed(() => [
   props.size,
@@ -52,11 +57,24 @@ function emitInput(e: Event): void {
 }
 
 function emitBlur(e: FocusEvent): void {
+  const value = getValue(e)
+
   props.validation?.$touch()
-  emit('update:modelValue', getValue(e))
+
+  emit('update:modelValue', value)
+  emit('blur', value)
 }
 
-function getValue(e: Event | FocusEvent): string | null {
+function emitEnter(e: KeyboardEvent): void {
+  const value = getValue(e)
+
+  props.validation?.$touch()
+
+  emit('update:modelValue', value)
+  emit('enter', value)
+}
+
+function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   const value = (e.target as HTMLInputElement).value
 
   return value === '' ? null : value

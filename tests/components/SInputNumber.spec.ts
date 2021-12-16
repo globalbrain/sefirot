@@ -1,30 +1,31 @@
 import { mount } from '@vue/test-utils'
+import { assertEmitted } from 'tests/Utils'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 
-describe('components/SNumber', () => {
-  it('should emit value on input', () => {
+describe('components/SInputNumber', () => {
+  it('should emit value on input', async () => {
     const wrapper = mount(SInputNumber)
 
-    wrapper.find('.SInputNumber .input').setValue(0)
-    expect((wrapper.emitted('update:modelValue') as any[][])[0][0]).toBe(0)
+    await wrapper.find('.SInputNumber .input').setValue(0)
+    assertEmitted(wrapper, 'update:modelValue', 0, 0)
 
-    wrapper.find('.SInputNumber .input').setValue(2)
-    expect((wrapper.emitted('update:modelValue') as any[][])[1][0]).toBe(2)
+    await wrapper.find('.SInputNumber .input').setValue(2)
+    assertEmitted(wrapper, 'update:modelValue', 1, 2)
 
-    wrapper.find('.SInputNumber .input').setValue(-2)
-    expect((wrapper.emitted('update:modelValue') as any[][])[2][0]).toBe(-2)
+    await wrapper.find('.SInputNumber .input').setValue(-2)
+    assertEmitted(wrapper, 'update:modelValue', 2, -2)
   })
 
-  it('should emit null when value is null or empty', () => {
+  it('should emit null when value is null or empty', async () => {
     const wrapper = mount(SInputNumber)
 
-    wrapper.find('.SInputNumber .input').setValue(null)
-    expect((wrapper.emitted('update:modelValue') as any[][])[0][0]).toBe(null)
+    await wrapper.find('.SInputNumber .input').setValue(null)
+    assertEmitted(wrapper, 'update:modelValue', 0, null)
 
-    wrapper.find('.SInputNumber .input').setValue(undefined)
-    expect((wrapper.emitted('update:modelValue') as any[][])[1][0]).toBe(null)
+    await wrapper.find('.SInputNumber .input').setValue(undefined)
+    assertEmitted(wrapper, 'update:modelValue', 1, null)
 
-    wrapper.find('.SInputNumber .input').setValue('')
-    expect((wrapper.emitted('update:modelValue') as any[][])[2][0]).toBe(null)
+    await wrapper.find('.SInputNumber .input').setValue('')
+    assertEmitted(wrapper, 'update:modelValue', 2, null)
   })
 })

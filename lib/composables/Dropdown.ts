@@ -14,7 +14,7 @@ export interface Search {
   placeholder: string
   missing: string
   value: Ref<string>
-  onInput (text: string): void
+  onInput (text: string | null): void
 }
 
 export type Item = TextItem | UserItem
