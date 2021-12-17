@@ -1,3 +1,9 @@
+# [2.0.0-draft.3](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.2...v2.0.0-draft.3) (2021-12-17)
+
+### Features
+
+* **input-text:** emit "enter" and "blur" event ([a7b2b38](https://github.com/globalbrain/sefirot/commit/a7b2b38dc5f4880e7b680601be6e607d9b180c68))
+
 # [2.0.0-draft.2](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.1...v2.0.0-draft.2) (2021-12-14)
 
 ### Bug Fixes
