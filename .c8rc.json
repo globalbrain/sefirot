@@ -1,0 +1,11 @@
+{
+  "all": true,
+  "src": ["lib"],
+  "include": ["lib"],
+  "reporter": [
+    "html",
+    "json",
+    "lcov",
+    "text-summary"
+  ]
+}

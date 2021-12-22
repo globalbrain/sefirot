@@ -1,3 +1,4 @@
+/// <reference types="vitest/global.d.ts" />
 import { mount } from '@vue/test-utils'
 import { assertEmitted } from 'tests/Utils'
 import SInputText from 'sefirot/components/SInputText.vue'
@@ -12,7 +13,7 @@ describe('components/SInputText', () => {
     await wrapper.find('.SInputText .input').setValue('text')
     assertEmitted(wrapper, 'update:modelValue', 1, 'text')
 
-    await wrapper.find('.SInputText .input').setValue(0)
+    await wrapper.find('.SInputText .input').setValue('0')
     assertEmitted(wrapper, 'update:modelValue', 2, '0')
   })
 

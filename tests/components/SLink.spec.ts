@@ -1,3 +1,4 @@
+/// <reference types="vitest/global.d.ts" />
 import { mount } from '@vue/test-utils'
 import SLink from 'sefirot/components/SLink.vue'
 

@@ -1,8 +1,7 @@
 module.exports = {
   env: {
     node: true,
-    'vue/setup-compiler-macros': true,
-    'jest/globals': true
+    'vue/setup-compiler-macros': true
   },
 
   extends: [
@@ -10,13 +9,17 @@ module.exports = {
     'plugin:vue/vue3-recommended'
   ],
 
-  plugins: ['jest'],
-
   parser: 'vue-eslint-parser',
 
   parserOptions: {
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
+  },
+
+  globals: {
+    describe: true,
+    expect: true,
+    it: true
   },
 
   rules: {
