@@ -9,11 +9,6 @@ export interface Item {
   id?: number
   component: any
   data?: Record<string, any>
-  options?: Options
-}
-
-export interface Options {
-  closable?: boolean
 }
 
 function state(): State {

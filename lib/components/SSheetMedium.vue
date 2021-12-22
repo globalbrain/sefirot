@@ -6,17 +6,11 @@
 
 <style lang="postcss" scoped>
 .SSheetMedium {
-  padding: 16px;
-}
+  padding: 12px 16px 20px;
 
-.SSheetMedium :deep(h1) {
-  line-height: 32px;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.SSheetMedium :deep(h1 + p) {
-  margin-top: 8px;
+  @media (min-width: 512px) {
+    padding: 16px 24px 26px;
+  }
 }
 
 .SSheetMedium :deep(p) {

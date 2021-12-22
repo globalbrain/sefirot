@@ -4,9 +4,13 @@
   </footer>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SSheetFooter {
   border-top: 1px solid var(--c-divider-light);
   padding: 0 16px;
+
+  @media (min-width: 512px) {
+    padding: 0 24px;
+  }
 }
 </style>

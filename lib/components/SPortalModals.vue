@@ -9,7 +9,6 @@
           :show="index === items.length - 1"
           :component="item.component"
           :data="item.data"
-          :closable="item.options && item.options.closable"
           @close="id => close(id)"
         />
       </transition-group>
@@ -43,7 +42,7 @@ watch(hasItem, (value) => {
 
 watch(route, closeAll)
 
-function close(id: number) {
+function close(id?: number) {
   store.dispatch('modal/close', id)
 }
 
@@ -52,7 +51,7 @@ function closeAll() {
 }
 </script>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SPortalModals {
   position: fixed;
   top: 0;

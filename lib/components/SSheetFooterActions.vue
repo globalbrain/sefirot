@@ -8,7 +8,7 @@
 .SSheetFooterActions {
   display: flex;
   justify-content: flex-end;
-  padding: 12px 0 11px;
+  padding: 16px 0 15px;
 }
 
 .SSheetFooterActions :deep(.SSheetFooterAction + .SSheetFooterAction) {

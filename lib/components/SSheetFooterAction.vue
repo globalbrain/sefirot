@@ -1,7 +1,7 @@
 <template>
   <div class="SSheetFooterAction">
     <SButton
-      size="medium"
+      size="small"
       :type="type ?? 'primary'"
       :mode="mode ?? 'neutral'"
       :label="label"

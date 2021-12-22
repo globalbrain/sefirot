@@ -1,16 +1,8 @@
 import { useStore } from 'vuex'
-import { Options as ModalOptions } from '../store/modal'
 
 export interface Modal {
-  open(item?: OpenOptions): Promise<any>
+  open(data?: Record<string, any>): Promise<any>
   close(): Promise<any>
-}
-
-export interface OpenOptions {
-  id?: number
-  component?: any
-  data?: Record<string, any>
-  options?: ModalOptions
 }
 
 let modalId = 0
@@ -19,11 +11,11 @@ export function useModal(component: any): Modal {
   const store = useStore()
   const id = useModalId()
 
-  function open(item: OpenOptions = {}) {
+  function open(data: Record<string, any> = {}): Promise<any> {
     return store.dispatch('modal/open', {
       id,
       component,
-      ...item
+      data
     })
   }
 
