@@ -1,3 +1,9 @@
+# [2.0.0-draft.4](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.3...v2.0.0-draft.4) (2021-12-22)
+
+### Features
+
+* refactor modals ([36d0d1e](https://github.com/globalbrain/sefirot/commit/36d0d1e7747935aff4d909d4023751002875d6c8))
+
 # [2.0.0-draft.3](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.2...v2.0.0-draft.3) (2021-12-17)
 
 ### Features
