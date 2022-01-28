@@ -26,7 +26,8 @@
     },
 
     "types": [
-      "@types/node"
+      "@types/node",
+      "vitest/global"
     ]
   },
 
