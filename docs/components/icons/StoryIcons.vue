@@ -58,6 +58,7 @@ import SIconInfo from '@@/lib/components/icons/SIconInfo.vue'
 import SIconLayout from '@@/lib/components/icons/SIconLayout.vue'
 import SIconLock from '@@/lib/components/icons/SIconLock.vue'
 import SIconList from '@@/lib/components/icons/SIconList.vue'
+import SIconMail from '@@/lib/components/icons/SIconMail.vue'
 import SIconMapPin from '@@/lib/components/icons/SIconMapPin.vue'
 import SIconMoon from '@@/lib/components/icons/SIconMoon.vue'
 import SIconMoreHorizontal from '@@/lib/components/icons/SIconMoreHorizontal.vue'
@@ -142,6 +143,7 @@ export default defineComponent({
       { component: SIconLayout, name: 'Layout' },
       { component: SIconLock, name: 'Lock' },
       { component: SIconList, name: 'List' },
+      { component: SIconMail, name: 'Mail' },
       { component: SIconMapPin, name: 'MapPin' },
       { component: SIconMoreHorizontal, name: 'MoreHorizontal' },
       { component: SIconMoreVertical, name: 'MoreVertical' },
