@@ -29,6 +29,7 @@ import SIconChevronDown from '@@/lib/components/icons/SIconChevronDown.vue'
 import SIconChevronLeft from '@@/lib/components/icons/SIconChevronLeft.vue'
 import SIconChevronRight from '@@/lib/components/icons/SIconChevronRight.vue'
 import SIconChevronUp from '@@/lib/components/icons/SIconChevronUp.vue'
+import SIconCircle from '@@/lib/components/icons/SIconCircle.vue'
 import SIconClock from '@@/lib/components/icons/SIconClock.vue'
 import SIconCode from '@@/lib/components/icons/SIconCode.vue'
 import SIconCopy from '@@/lib/components/icons/SIconCopy.vue'
@@ -114,6 +115,7 @@ export default defineComponent({
       { component: SIconChevronLeft, name: 'ChevronLeft' },
       { component: SIconChevronRight, name: 'ChevronRight' },
       { component: SIconChevronUp, name: 'ChevronUp' },
+      { component: SIconCircle, name: 'Circle' },
       { component: SIconClock, name: 'Clock' },
       { component: SIconCode, name: 'Code' },
       { component: SIconCopy, name: 'Copy' },
