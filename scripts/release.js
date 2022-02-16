@@ -65,7 +65,7 @@ async function main() {
 
   // Run tests before release.
   step('\nRunning tests...')
-  await run(bin('jest'), ['--clearCache'])
+  await run('yarn', ['test:fail'])
 
   // Update the package version.
   step('\nUpdating the package version...')
