@@ -1,4 +1,3 @@
-/// <reference types="vitest/global.d.ts" />
 import * as Utils from 'sefirot/support/Utils'
 
 describe('support/Utils', () => {

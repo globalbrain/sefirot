@@ -1,4 +1,3 @@
-/// <reference types="vitest/global.d.ts" />
 import { mount } from '@vue/test-utils'
 import SButton from 'sefirot/components/SButton.vue'
 

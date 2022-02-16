@@ -59,7 +59,7 @@ interface Value {
 
 type ValueType = 'hour' | 'minute' | 'second'
 
-export interface Fields {
+interface Fields {
   hour?: boolean
   minute?: boolean
   second?: boolean

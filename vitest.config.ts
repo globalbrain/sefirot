@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -15,6 +16,15 @@ export default defineConfig({
   test: {
     global: true,
     environment: 'happy-dom',
-    testTimeout: 2000
+    testTimeout: 2000,
+
+    coverage: {
+      reporter: [
+        'html',
+        'json',
+        'lcov',
+        'text-summary'
+      ]
+    }
   }
 })

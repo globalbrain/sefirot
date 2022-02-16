@@ -1,4 +1,3 @@
-/// <reference types="vitest/global.d.ts" />
 import { mount } from '@vue/test-utils'
 import { assertEmitted } from 'tests/Utils'
 import SInputText from 'sefirot/components/SInputText.vue'
