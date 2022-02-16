@@ -1,3 +1,9 @@
+# [2.0.0-draft.5](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.4...v2.0.0-draft.5) (2022-02-16)
+
+### Features
+
+* **icon:** add a mail icon ([#115](https://github.com/globalbrain/sefirot/issues/115)) ([b3c24a7](https://github.com/globalbrain/sefirot/commit/b3c24a7602936fcba3fdc5ea51a8600adb15ec2c))
+
 # [2.0.0-draft.4](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.3...v2.0.0-draft.4) (2021-12-22)
 
 ### Features
