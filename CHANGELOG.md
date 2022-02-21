@@ -1,3 +1,11 @@
+# [2.0.0-draft.6](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.5...v2.0.0-draft.6) (2022-02-21)
+
+### Features
+
+* **input-select:** add SInputSelect component ([1d0608e](https://github.com/globalbrain/sefirot/commit/1d0608e8aaa3f7007bb4aff18255ce2b528a7d76))
+* **validation:** add custom error message support ([acb0894](https://github.com/globalbrain/sefirot/commit/acb0894ec5fdcc052100e3623525fbf030854a2f))
+
+
 # [2.0.0-draft.5](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.4...v2.0.0-draft.5) (2022-02-16)
 
 ### Features
