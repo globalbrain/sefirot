@@ -1,3 +1,9 @@
+# [2.0.0-draft.7](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.6...v2.0.0-draft.7) (2022-02-21)
+
+### Bug Fixes
+
+* **validation:** vuelidate import ([1c2e547](https://github.com/globalbrain/sefirot/commit/1c2e547d2ef5fa31ab36ba65882c54085cc4a991))
+
 # [2.0.0-draft.6](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.5...v2.0.0-draft.6) (2022-02-21)
 
 ### Features
