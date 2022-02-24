@@ -1,3 +1,14 @@
+# [0.73.0](https://github.com/globalbrain/sefirot/compare/v0.72.0...v0.73.0) (2022-02-24)
+
+### Bug Fixes
+
+* broken style on dark mode ([#110](https://github.com/globalbrain/sefirot/issues/110)) ([d667227](https://github.com/globalbrain/sefirot/commit/d667227bfce1ebce61cbe6fc0f420565c72a43ea))
+
+### Features
+
+* **icon:** add circle icon ([#118](https://github.com/globalbrain/sefirot/issues/118)) ([489cace](https://github.com/globalbrain/sefirot/commit/489cace7220b3e55c259817e2a17f26bc0dfa27d))
+* **icon:** add mail icon ([#116](https://github.com/globalbrain/sefirot/issues/116)) ([dcce170](https://github.com/globalbrain/sefirot/commit/dcce1703f389d0bcaf864ab846a8be675e16d1a6))
+
 # [0.72.0](https://github.com/globalbrain/sefirot/compare/v0.71.0...v0.72.0) (2021-12-01)
 
 ### Features
