@@ -45,7 +45,6 @@
     "typescript": "^4.5.5",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
-    "vue-tsc": "^0.31.4",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -74,10 +73,10 @@
     "postcss-nested": "^5.0.6",
     "typescript": "^4.5.5",
     "vite": "^2.8.3",
-    "vitest": "^0.3.5",
+    "vitest": "^0.7.10",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
-    "vue-tsc": "^0.31.4",
+    "vue-tsc": "^0.33.7",
     "vuex": "^4.0.2"
   }
 }

@@ -33,6 +33,7 @@
 
   "include": [
     "lib",
-    "tests"
+    "tests",
+    "vitest.config.*"
   ]
 }

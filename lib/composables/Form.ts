@@ -1,7 +1,7 @@
 import { Ref, ToRefs, reactive, computed } from 'vue'
 import { cloneDeep } from '../support/Utils'
 import { useSnackbar } from './Snackbar'
-import { Validation, ExtractState, ValidationArgs, useValidation } from './Validation'
+import { Validation, ValidationArgs, useValidation } from './Validation'
 
 export interface Form<D> {
   data: D

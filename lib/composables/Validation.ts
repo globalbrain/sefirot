@@ -3,12 +3,11 @@ import {
   Validation,
   ValidationArgs,
   GlobalConfig,
-  ExtractState,
   ErrorObject,
   useVuelidate
 } from '@vuelidate/core'
 
-export type { Validation, ValidationArgs, GlobalConfig, ExtractState }
+export type { Validation, ValidationArgs, GlobalConfig }
 
 export interface Validatable {
   readonly $dirty: boolean
@@ -18,12 +17,12 @@ export interface Validatable {
 }
 
 export function useValidation<
-  T extends ExtractState<A>,
-  A extends ValidationArgs
+  T extends Object,
+  A extends ValidationArgs<T> = ValidationArgs<T>,
 >(
   state: T | Ref<T> | ToRefs<T>,
   rules: Ref<A> | A,
   config?: GlobalConfig
-): Ref<Validation<A>> {
+): Ref<Validation<A, T>> {
   return useVuelidate(rules, state, config)
 }
