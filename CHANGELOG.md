@@ -1,3 +1,9 @@
+# [2.0.0-draft.8](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.7...v2.0.0-draft.8) (2022-04-21)
+
+### Features
+
+* **validation:** update types
+
 # [2.0.0-draft.7](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.6...v2.0.0-draft.7) (2022-02-21)
 
 ### Bug Fixes

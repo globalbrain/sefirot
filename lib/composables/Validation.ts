@@ -16,9 +16,13 @@ export interface Validatable {
   readonly $touch: () => void
 }
 
+export interface ValidationNotification {
+  notify(): Promise<boolean>
+}
+
 export function useValidation<
-  T extends Object,
-  A extends ValidationArgs<T> = ValidationArgs<T>,
+  T extends { [key in keyof A]: any },
+  A extends ValidationArgs = ValidationArgs,
 >(
   state: T | Ref<T> | ToRefs<T>,
   rules: Ref<A> | A,
