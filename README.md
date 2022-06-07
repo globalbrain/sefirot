@@ -28,25 +28,25 @@ Sefirot follows the official [Vue Style Guide](https://v3.vuejs.org/style-guide/
 ### Development
 
 ```bash
-$ yarn serve
+$ pnpm run serve
 ```
 
 Serve documentation website at http://localhost:3000.
 
 ```bash
-$ yarn lint
+$ pnpm run lint
 ```
 
 Lint files using a rule of Standard JS.
 
 ```bash
-$ yarn test
+$ pnpm test
 ```
 
 Run the tests.
 
 ```bash
-$ yarn coverage
+$ pnpm run coverage
 ```
 
 Output test coverage in `coverage` directory.
