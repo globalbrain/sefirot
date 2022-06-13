@@ -65,7 +65,7 @@ async function main() {
 
   // Run tests before release.
   step('\nRunning tests...')
-  await run('yarn', ['test:fail'])
+  await run('pnpm', ['test:fail'])
 
   // Update the package version.
   step('\nUpdating the package version...')
@@ -73,7 +73,7 @@ async function main() {
 
   // Generate the changelog.
   step('\nGenerating the changelog...')
-  await run('yarn', ['changelog'])
+  await run('pnpm run', ['changelog'])
 
   const { yes: changelogOk } = await prompt({
     type: 'confirm',
@@ -92,7 +92,7 @@ async function main() {
 
   // Publish the package.
   step('\nPublishing the package...')
-  await run('yarn', [
+  await run('pnpm run', [
     'publish', '--tag', tag, '--new-version', targetVersion, '--no-commit-hooks',
     '--no-git-tag-version'
   ])

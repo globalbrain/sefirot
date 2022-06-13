@@ -11,8 +11,8 @@
     "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore './{lib,tests}/**/*.{ts,vue}'",
     "vitest": "vitest",
     "coverage": "vitest run --coverage",
-    "test": "yarn type && yarn lint && yarn coverage",
-    "test:fail": "yarn type && yarn lint:fail && yarn coverage",
+    "test": "pnpm run type && pnpm run lint && pnpm run coverage",
+    "test:fail": "pnpm run type && pnpm run lint:fail && pnpm run coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "node scripts/release.js"
   },
@@ -51,6 +51,7 @@
     "@babel/core": "^7.17.8",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.6",
+    "@types/node": "^17.0.40",
     "@typescript-eslint/parser": "^5.17.0",
     "@vitejs/plugin-vue": "^2.2.4",
     "@vue/test-utils": "^2.0.0-rc.18",
