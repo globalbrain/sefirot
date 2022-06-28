@@ -8,21 +8,29 @@
     :error-message="errorMessage"
     :validation="validation"
   >
-    <input
-      class="input"
-      :type="type"
-      :placeholder="placeholder"
-      :disabled="disabled"
-      :value="modelValue"
-      @input="emitInput"
-      @blur="emitBlur"
-      @keypress.enter="emitEnter"
-    >
+    <div class="box">
+      <div v-if="icon" class="icon" role="button" @click="focus">
+        <component :is="icon" class="icon-svg" />
+      </div>
+
+      <input
+        ref="inputEl"
+        class="input"
+        :class="inputClasses"
+        :type="type"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :value="modelValue"
+        @input="emitInput"
+        @blur="emitBlur"
+        @keypress.enter="emitEnter"
+      >
+    </div>
   </SInputBase>
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { PropType, ref, computed } from 'vue'
 import { Validation, Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -35,6 +43,7 @@ const props = defineProps({
   help: { type: String, default: null },
   type: { type: String, default: 'text' },
   placeholder: { type: String, default: null },
+  icon: { type: Object, default: null },
   disabled: { type: Boolean, default: false },
   errorMessage: { type: Boolean, default: true },
   modelValue: { type: [String, Number] as PropType<string | number | null>, default: null },
@@ -47,10 +56,20 @@ const emit = defineEmits<{
   (e: 'enter', value: string | null): void
 }>()
 
+const inputEl = ref<HTMLElement | null>(null)
+
 const classes = computed(() => [
   props.size,
   { disabled: props.disabled }
 ])
+
+const inputClasses = computed(() => [
+  { 'has-icon': props.icon }
+])
+
+function focus() {
+  inputEl.value && inputEl.value.focus()
+}
 
 function emitInput(e: Event): void {
   emit('update:modelValue', getValue(e))
@@ -86,6 +105,20 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .input {
     padding: 3px 12px;
     font-size: 14px;
+
+    &.has-icon {
+      padding-left: 30px;
+    }
+  }
+
+  .icon {
+    top: 9px;
+    left: 10px;
+  }
+
+  .icon-svg {
+    width: 14px;
+    height: 14px;
   }
 }
 
@@ -93,6 +126,20 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .input {
     padding: 7px 12px;
     font-size: 16px;
+
+    &.has-icon {
+      padding-left: 36px;
+    }
+  }
+
+  .icon {
+    top: 12px;
+    left: 12px;
+  }
+
+  .icon-svg {
+    width: 15px;
+    height: 15px;
   }
 }
 
@@ -100,6 +147,20 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .input {
     padding: 11px 16px;
     font-size: 16px;
+
+    &.has-icon {
+      padding-left: 36px;
+    }
+  }
+
+  .icon {
+    top: 16px;
+    left: 12px;
+  }
+
+  .icon-svg {
+    width: 16px;
+    height: 16px;
   }
 }
 
@@ -118,6 +179,17 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     &:focus {
       border-color: var(--c-danger);
     }
+  }
+}
+
+.box {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  max-width: 100%;
+
+  &:hover .input {
+    border-color: var(--input-focus-border);
   }
 }
 
@@ -144,5 +216,15 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     border-color: var(--input-focus-border);
     background-color: transparent;
   }
+}
+
+.icon {
+  position: absolute;
+  cursor: text;
+}
+
+.icon-svg {
+  display: block;
+  fill: var(--c-text-light-2);
 }
 </style>
