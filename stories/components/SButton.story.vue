@@ -3,9 +3,7 @@ import SButton from 'sefirot/components/SButton.vue'
 </script>
 
 <template>
-  <Story
-    title="SButton"
-  >
+  <Story title="Components/SButton">
     <SButton
       label="BUTTON"
     />

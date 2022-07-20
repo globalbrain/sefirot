@@ -51,8 +51,6 @@ const isActive = computed(() => {
 </script>
 
 <style lang="postcss" scoped>
-@import "@/assets/styles/variables";
-
 .SDropdownItem {
   display: flex;
   justify-content: space-between;
