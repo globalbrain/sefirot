@@ -18,7 +18,6 @@ const options = [
   <Story title="Components/SInputDropdown">
     <SInputDropdown
       v-model="value"
-      name="dropdown-input"
       label="Dropdown input"
       placeholder="Please select items"
       search

@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 import { ref } from 'vue'
+import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 
-const checkboxValue = ref(false)
+const value = ref(false)
 </script>
 
 <template>
   <Story title="Components/SInputCheckbox">
     <SInputCheckbox
-      name="checkbox"
-      label="Checkbox"
-      v-model="checkboxValue"
+      label="Label"
+      note="Note text"
+      text="Text for the checkbox"
+      help="This is a help text."
+      v-model="value"
     />
   </Story>
 </template>

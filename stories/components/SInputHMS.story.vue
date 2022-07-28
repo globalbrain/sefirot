@@ -21,7 +21,6 @@ const { data, validation } = useForm({
   <Story title="Components/SInputHMS" :layout="{ type: 'single', iframe: false }">
     <SInputHMS
       v-model="data.time"
-      name="input-hms"
       label="HMS input"
       help="Please fill in time."
       :validation="validation.time"
