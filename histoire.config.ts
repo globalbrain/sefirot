@@ -1,5 +1,5 @@
 /// <reference types="histoire/vue" />
-import { defineConfig } from 'histoire'
+import { defaultColors, defineConfig } from 'histoire'
 
 export default defineConfig({
   setupFile: 'histoire.setup.ts',
