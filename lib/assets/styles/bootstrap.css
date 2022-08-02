@@ -1,3 +1,4 @@
 @import "normalize.css";
+@import "v-calendar/dist/style.css";
 @import "./variables";
 @import "./base";

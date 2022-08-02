@@ -289,6 +289,15 @@
   --input-placeholder: var(--c-text-3);
   --input-help: var(--c-text-2);
 
+  --input-filled-bg: var(--c-bg-mute);
+  --input-filled-bg-focus: var(--c-bg);
+  --input-filled-bg-disabled: var(--c-gray-light-4);
+
+  --input-outlined-bg-focus: var(--c-bg);
+  --input-outlined-bg-disabled: var(--c-white-mute);
+  --input-outlined-border: var(--c-divider);
+  --input-outlined-border-focus: var(--c-black);
+
   --input-border: var(--c-divider);
 
   --input-hover-border: var(--c-black);
