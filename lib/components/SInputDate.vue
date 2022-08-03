@@ -11,7 +11,7 @@
     <div class="container">
       <date-picker
         v-slot="{ inputValue, inputEvents }"
-        :value="value"
+        :value="modelValue"
         color="blue"
         is-dark
         :masks="{ input: 'YYYY-MM-DD' }"
@@ -72,11 +72,11 @@ function emitInput(date: string | null) {
   emit('update:modelValue', date)
 }
 
-function emitBlur(e: SyntheticInputEvent) {
+function emitBlur(e: FocusEvent) {
   setTimeout(() => {
     props.validation && props.validation.$touch()
 
-    emit('blur', e.target.value)
+    emit('blur', (e.target as HTMLInputElement).value)
   }, 100)
 }
 </script>
