@@ -8,6 +8,7 @@ const text = ref('')
 <template>
   <Story title="Components/SInputTextarea">
     <SInputTextarea
+      name="name"
       label="Label"
       note="Note text"
       help="This is a help text."

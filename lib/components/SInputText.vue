@@ -2,6 +2,7 @@
   <SInputBase
     class="SInputText"
     :class="classes"
+    :name="name"
     :label="label"
     :note="note"
     :help="help"
@@ -9,6 +10,7 @@
     :validation="validation"
   >
     <input
+      :id="name"
       class="input"
       :type="type"
       :placeholder="placeholder"
@@ -30,6 +32,7 @@ type Size = 'mini' | 'small' | 'medium'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
+  name: { type: String, default: null },
   label: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },

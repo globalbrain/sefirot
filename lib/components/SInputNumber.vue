@@ -1,6 +1,7 @@
 <template>
   <SInputText
     class="SInputNumber"
+    :name="name"
     :size="size"
     type="number"
     :label="label"
@@ -25,6 +26,7 @@ type Size = 'mini' | 'small' | 'medium'
 
 defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
+  name: { type: String, default: null },
   label: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },

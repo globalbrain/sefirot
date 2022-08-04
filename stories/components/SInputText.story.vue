@@ -19,6 +19,7 @@ const { data, validation } = useForm({
   <Story title="Components/SInputText" :layout="{ type: 'single', iframe: false }">
     <SInputText
       v-model="data.name"
+      name="name"
       label="Label"
       note="Required"
       help="Please fill in your name."
