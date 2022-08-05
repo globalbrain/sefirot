@@ -74,9 +74,9 @@ describe('components/SMarkdown', () => {
       useRouter: vi.fn(() => ({
         push: () => {}
       }))
-    }));
+    }))
 
-    (useRouter as MockedFunction<() => any>).mockImplementation(() => ({
+    ;(useRouter as MockedFunction<() => any>).mockImplementation(() => ({
       push
     }))
 
