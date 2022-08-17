@@ -9,7 +9,7 @@
     "type": "vue-tsc --noEmit",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix './{lib,tests}/**/*.{ts,vue}'",
     "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore './{lib,tests}/**/*.{ts,vue}'",
-    "story:dev": "histoire dev",
+    "story": "histoire dev",
     "story:build": "histoire build",
     "story:preview": "histoire preview",
     "vitest": "vitest",
