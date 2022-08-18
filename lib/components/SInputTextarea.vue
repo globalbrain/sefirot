@@ -2,6 +2,7 @@
   <SInputBase
     class="SInputTextarea"
     :class="classes"
+    :name="name"
     :label="label"
     :note="note"
     :help="help"
@@ -9,6 +10,7 @@
     :validation="validation"
   >
     <textarea
+      :id="name"
       class="input"
       :placeholder="placeholder"
       :rows="rows"
@@ -29,6 +31,7 @@ type Size = 'mini' | 'small' | 'medium'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
+  name: { type: String, default: null },
   label: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },

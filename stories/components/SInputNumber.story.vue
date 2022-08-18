@@ -8,6 +8,7 @@ const value = ref<number | null>(null)
 <template>
   <Story title="Components/SInputNumber">
     <SInputNumber
+      name="name"
       label="Label"
       note="Note text"
       help="This is a help text."
