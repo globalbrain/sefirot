@@ -1,0 +1,11 @@
+body {
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.__histoire-sandbox {
+  position: relative;
+  padding: 24px;
+  min-height: 100vh;
+  background-color: var(--c-bg-soft);
+}

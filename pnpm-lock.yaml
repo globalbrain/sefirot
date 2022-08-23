@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@histoire/plugin-vue': ^0.10.4
   '@types/body-scroll-lock': ^3.1.0
   '@types/lodash-es': ^4.17.6
   '@types/markdown-it': ^12.2.3
@@ -38,6 +39,7 @@ specifiers:
   vuex: ^4.0.2
 
 devDependencies:
+  '@histoire/plugin-vue': 0.10.4_maixmy2buciknipraogpn2dzvq
   '@types/body-scroll-lock': 3.1.0
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
@@ -160,6 +162,21 @@ packages:
     resolution: {integrity: sha512-Rh1nuLuiYusL9nnLjtXNWFVcOAcRekW3hCdDqphkX8wOZRsbIgAiNQPbmPEmz4YpSjNAQY8NEsdcRYFyy8YJmw==}
     dependencies:
       '@histoire/vendors': 0.10.4
+    dev: true
+
+  /@histoire/plugin-vue/0.10.4_maixmy2buciknipraogpn2dzvq:
+    resolution: {integrity: sha512-q7UXiUIQDXWuDfeh2i+1UKqKGeDhOkDVrLmccsmDCpNTGuuCvTT93oNblLmlNQnKQZpML8INg6ygIsuxXX1A2A==}
+    peerDependencies:
+      histoire: ^0.10.4
+      vue: ^3.2.31
+    dependencies:
+      '@histoire/controls': 0.10.4
+      '@histoire/shared': 0.10.4_vite@3.0.9
+      '@histoire/vendors': 0.10.4
+      histoire: 0.10.4_vite@3.0.9
+      vue: 3.2.37
+    transitivePeerDependencies:
+      - vite
     dev: true
 
   /@histoire/shared/0.10.4_vite@3.0.9:

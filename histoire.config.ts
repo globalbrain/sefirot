@@ -1,22 +1,23 @@
-import { defineConfig } from 'histoire'
+import { defineConfig, defaultColors } from 'histoire'
+import { HstVue } from '@histoire/plugin-vue'
 
 export default defineConfig({
-  setupFile: 'histoire.setup.ts',
+  plugins: [
+    HstVue(),
+  ],
+
+  setupFile: 'stories/histoire.setup.ts',
+
   theme: {
     title: 'Sefirot',
-  },
-  backgroundPresets: [
-    {
-      label: 'Transparent',
-      color: 'transparent',
-    },
-    {
-      label: 'Light',
-      color: '#fff',
-    },
-    {
-      label: 'Dark',
-      color: '#171717'
+    colors: {
+      primary: defaultColors.neutral
     }
+  },
+
+  backgroundPresets: [
+    { label: 'Transparent', color: 'transparent' },
+    { label: 'Light', color: '#fafafa' },
+    { label: 'Dark', color: '#191919' }
   ]
 })

@@ -6,9 +6,9 @@
     "lib"
   ],
   "scripts": {
-    "story": "histoire dev",
+    "story": "histoire dev --port 3000",
     "story:build": "histoire build",
-    "story:preview": "histoire preview",
+    "story:preview": "histoire preview --port 3000",
     "type": "vue-tsc --noEmit",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix './{lib,tests}/**/*.{ts,vue}'",
     "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore './{lib,tests}/**/*.{ts,vue}'",
@@ -51,6 +51,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@histoire/plugin-vue": "^0.10.4",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.6",
     "@types/markdown-it": "^12.2.3",
