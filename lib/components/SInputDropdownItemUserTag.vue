@@ -19,8 +19,8 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { UserItem } from '../composables/Dropdown'
-import SIconX from './icons/SIconX.vue'
 import SAvatar from './SAvatar.vue'
+import SIconX from './icons/SIconX.vue'
 
 defineProps({
   item: { type: Object as PropType<UserItem>, required: true },

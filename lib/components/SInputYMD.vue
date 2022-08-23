@@ -63,12 +63,6 @@ interface Value {
 
 type ValueType = 'year' | 'month' | 'date'
 
-interface Fields {
-  year?: boolean
-  month?: boolean
-  date?: boolean
-}
-
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
   label: { type: String, default: null },

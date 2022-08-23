@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Validatable } from '../composables/Validation'
-import SIconCheck from './icons/SIconCheck.vue'
 import SInputBase from './SInputBase.vue'
+import SIconCheck from './icons/SIconCheck.vue'
 
 type Size = 'mini' | 'small' | 'medium'
 

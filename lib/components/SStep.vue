@@ -20,7 +20,7 @@ import { StepStatus, BarMode } from '../composables/Step'
 import SIconCheck from './icons/SIconCheck.vue'
 import SIconX from './icons/SIconX.vue'
 
-const props = defineProps({
+defineProps({
   status: { type: String as PropType<StepStatus>, required: true },
   barLeft: { type: String as PropType<BarMode | null>, default: null },
   barRight: { type: String as PropType<BarMode | null>, default: null },

@@ -26,8 +26,8 @@
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue'
+import { Validatable } from '../composables/Validation'
 import { isNullish } from '../support/Utils'
-import { Validation, Validatable } from '../composables/Validation'
 import SInputText, { Size, Align } from './SInputText.vue'
 
 const props = defineProps({

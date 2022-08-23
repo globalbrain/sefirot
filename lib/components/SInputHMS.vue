@@ -45,7 +45,6 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { SyntheticInputEvent } from '../types/Utils'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -58,12 +57,6 @@ interface Value {
 }
 
 type ValueType = 'hour' | 'minute' | 'second'
-
-interface Fields {
-  hour?: boolean
-  minute?: boolean
-  second?: boolean
-}
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },

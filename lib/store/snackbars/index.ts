@@ -1,8 +1,8 @@
 import { ActionTree, ActionContext, MutationTree } from 'vuex'
 
-let nextId: number = 0
+let nextId = 0
 
-const maxItemSize: number = 4
+const maxItemSize = 4
 
 export interface State {
   items: SnackbarWithId[]

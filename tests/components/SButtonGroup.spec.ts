@@ -3,7 +3,7 @@ import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 describe('compoents/SButtonGroup', () => {
   it('should emit on click', () => {
-    const wrapper = mount(SButtonGroup, {
+    const wrapper = mount(SButtonGroup as any, {
       propsData: {
         items: [
           { label: 'Button A', value: 'button-a' },

@@ -30,11 +30,6 @@ import SInputRadio from './SInputRadio.vue'
 
 type Size = 'mini' | 'small' | 'medium'
 
-interface Option {
-  label: string
-  value: string | number | boolean
-}
-
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
   name: { type: String, default: null },

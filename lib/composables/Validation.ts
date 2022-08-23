@@ -1,4 +1,3 @@
-import { Ref, ToRefs } from 'vue'
 import {
   Validation,
   ValidationArgs,
@@ -6,6 +5,7 @@ import {
   ErrorObject,
   useVuelidate
 } from '@vuelidate/core'
+import { Ref, ToRefs } from 'vue'
 
 export type { Validation, ValidationArgs, GlobalConfig }
 

@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { PropType, ref, computed } from 'vue'
-import { Validation, Validatable } from '../composables/Validation'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'

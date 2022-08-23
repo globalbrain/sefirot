@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { assertEmitted } from 'tests/Utils'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
+import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputNumber', () => {
   it('should emit value on input', async () => {
@@ -37,7 +37,7 @@ describe('components/SInputNumber', () => {
     })
 
     await wrapper.setProps({ modelValue: 1000000000.2222 })
-    expect(wrapper.vm.valueWithSeparator).toBe('1,000,000,000.2222')
+    expect((wrapper.vm as any).valueWithSeparator).toBe('1,000,000,000.2222')
   })
 
   it('should show the value with thousand separator when the foucs is out', async () => {

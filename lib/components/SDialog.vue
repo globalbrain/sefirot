@@ -25,8 +25,8 @@
 <script setup lang="ts">
 import { PropType, computed } from 'vue'
 import { Action } from '../store/dialog'
-import SIconPreloader from './icons/SIconPreloader.vue'
 import SButton from './SButton.vue'
+import SIconPreloader from './icons/SIconPreloader.vue'
 
 const props = defineProps({
   type: { type: String as PropType<'confirm' | 'loading'>, default: 'confirm' },

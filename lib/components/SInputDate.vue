@@ -9,7 +9,7 @@
     :validation="validation"
   >
     <div class="container">
-      <date-picker
+      <DatePicker
         v-slot="{ inputValue, inputEvents }"
         :value="modelValue"
         color="blue"
@@ -30,15 +30,14 @@
           v-on="inputEvents"
           @blur="emitBlur"
         >
-      </date-picker>
+      </DatePicker>
     </div>
   </SInputBase>
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
 import { DatePicker } from 'v-calendar'
-import { SyntheticInputEvent } from '../types/Utils'
+import { PropType, computed } from 'vue'
 import { Validation } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 

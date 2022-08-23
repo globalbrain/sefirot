@@ -47,10 +47,10 @@
 
 <script setup lang="ts">
 import { PropType, ref, computed } from 'vue'
-import { Validation, Validatable } from '../composables/Validation'
-import SIconChevronUp from './icons/SIconChevronUp.vue'
-import SIconChevronDown from './icons/SIconChevronDown.vue'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
+import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SIconChevronUp from './icons/SIconChevronUp.vue'
 
 type Size = 'mini' | 'small' | 'medium'
 

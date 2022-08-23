@@ -1,4 +1,3 @@
-/// <reference types="histoire/vue" />
 import { defineConfig } from 'histoire'
 
 export default defineConfig({

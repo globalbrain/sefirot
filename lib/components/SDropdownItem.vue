@@ -13,9 +13,9 @@
 <script setup lang="ts">
 import { ComputedRef, PropType, computed } from 'vue'
 import { isArray, isEqual } from '../support/Utils'
-import SIconCheck from './icons/SIconCheck.vue'
 import SDropdownItemText from './SDropdownItemText.vue'
 import SDropdownItemUser from './SDropdownItemUser.vue'
+import SIconCheck from './icons/SIconCheck.vue'
 
 const props = defineProps({
   selected: { type: Object as PropType<ComputedRef<any>>, default: null },

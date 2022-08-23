@@ -1,6 +1,6 @@
-import { Store, Plugin } from 'vuex'
-import modal, { State as ModalState } from './modal'
+import { Plugin } from 'vuex'
 import dialog from './dialog'
+import modal, { State as ModalState } from './modal'
 import snackbars, { State as SnackbarsState } from './snackbars'
 
 export interface State {

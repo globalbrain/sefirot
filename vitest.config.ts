@@ -1,6 +1,4 @@
-/// <reference types="vitest" />
-
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
@@ -14,7 +12,7 @@ export default defineConfig({
   },
 
   test: {
-    global: true,
+    globals: true,
     environment: 'happy-dom',
     testTimeout: 2000,
 

@@ -43,8 +43,8 @@ export type Align = 'left' | 'center' | 'right'
 </script>
 
 <script setup lang="ts">
-import { PropType, computed, reactive } from 'vue'
-import { Validation, Validatable } from '../composables/Validation'
+import { PropType, computed } from 'vue'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 const props = defineProps({

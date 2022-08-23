@@ -43,14 +43,14 @@
 
 <script setup lang="ts">
 import { PropType, computed, nextTick } from 'vue'
-import { isNullish, isArray, isEqual } from '../support/Utils'
-import { useFlyout } from '../composables/Flyout'
 import { Search, Item, UseDropdownSearchOptions, useDropdown } from '../composables/Dropdown'
-import SIconChevronUp from './icons/SIconChevronUp.vue'
-import SIconChevronDown from './icons/SIconChevronDown.vue'
+import { useFlyout } from '../composables/Flyout'
+import { isNullish, isArray, isEqual } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
+import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SIconChevronUp from './icons/SIconChevronUp.vue'
 
 type Size = 'mini' | 'small' | 'medium'
 type Value = string | number | boolean | unknown[]

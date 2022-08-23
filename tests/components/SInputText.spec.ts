@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { assertEmitted } from 'tests/Utils'
 import SInputText from 'sefirot/components/SInputText.vue'
+import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputText', () => {
   it('should emit input event', async () => {

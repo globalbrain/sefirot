@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const props = defineProps<{
   id?: number

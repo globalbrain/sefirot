@@ -23,8 +23,8 @@
 import { PropType } from 'vue'
 import { useStore } from 'vuex'
 import { Action } from '../store/snackbars'
-import SIconX from './icons/SIconX.vue'
 import SButton from './SButton.vue'
+import SIconX from './icons/SIconX.vue'
 
 const props = defineProps({
   id: { type: Number, required: true },

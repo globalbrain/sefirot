@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
-import { MockedFunction, vi } from 'vitest'
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
-import { Router, useRouter } from 'vue-router'
+import { MockedFunction, vi } from 'vitest'
+import { useRouter } from 'vue-router'
 
 describe('components/SMarkdown', () => {
   it('should render content', () => {

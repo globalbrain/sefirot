@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 
-const props = defineProps({
+defineProps({
   mute: { type: Boolean, default: false },
   item: { type: Object as PropType<any>, required: true },
   disabled: { type: Boolean, default: false }

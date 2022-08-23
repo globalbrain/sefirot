@@ -44,9 +44,9 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Dropdown, Item } from '../composables/Dropdown'
-import SIconX from './icons/SIconX.vue'
-import SInputText from './SInputText.vue'
 import SDropdownItem from './SDropdownItem.vue'
+import SInputText from './SInputText.vue'
+import SIconX from './icons/SIconX.vue'
 
 const props = defineProps({
   round: { type: Number, default: 8 },
@@ -54,11 +54,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
-
-function focusFirstItem(): void {
-  const el = document.querySelector('.SDropdown .item:first-child') as HTMLElement | null
-  el?.focus?.()
-}
 
 function focusPrev(event: any): void {
   event.target.previousSibling?.focus()
