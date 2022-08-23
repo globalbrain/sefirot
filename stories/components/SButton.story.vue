@@ -4,15 +4,6 @@ import SButton from 'sefirot/components/SButton.vue'
 
 <template>
   <Story title="Components/SButton">
-    <SButton
-      label="BUTTON"
-    />
+    <SButton label="Neutral" />
   </Story>
 </template>
-
-<docs lang="md">
-# SButton
-
-Buttons allow users to take actions, and make choices, with a single tap.
-</docs>
-
