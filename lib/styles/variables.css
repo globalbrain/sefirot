@@ -12,9 +12,8 @@
   --c-white-mute: #f2f2f2;
 
   --c-black: #000000;
-  --c-black-deep: #171717;
-  --c-black-soft: #1c1c1e;
-  --c-black-mute: #2c2c2e;
+  --c-black-soft: #171717;
+  --c-black-mute: #1c1c1e;
 
   --c-black-elevated: #1c1c1e;
   --c-black-elevated-soft: #2c2c2e;
@@ -106,7 +105,7 @@
 }
 
 .dark {
-  --c-bg: var(--c-black-deep);
+  --c-bg: var(--c-black);
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
 
@@ -189,6 +188,21 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --button-fill-text: var(--c-text-inverse-1);
+  --button-fill-bg: var(--c-black);
+  --button-fill-bg-hover: var(--c-gray-dark-4);
+  --button-fill-bg-focus: var(--c-gray-dark-3);
+
+  --button-outline-text: var(--c-text-1);
+  --button-outline-border: var(--c-black);
+  --button-outline-bg-hover: var(--c-white-mute);
+  --button-outline-bg-focus: var(--c-gray-light-4);
+
+  --button-text-text: var(--c-text-1);
+  --button-text-bg-hover: var(--c-white-mute);
+  --button-text-bg-focus: var(--c-gray-light-4);
+
+  /* Deprecated */
   --button-primary-text: var(--c-text-inverse-1);
   --button-primary-bg: var(--c-black);
   --button-primary-bg-hover: var(--c-gray-dark-4);
@@ -235,6 +249,20 @@
 }
 
 .dark {
+  --button-fill-text: var(--c-text-inverse-1);
+  --button-fill-bg: var(--c-white);
+  --button-fill-bg-hover: var(--c-gray-light-3);
+  --button-fill-bg-focus: var(--c-gray-light-1);
+
+  --button-outline-border: var(--c-white);
+  --button-outline-bg-hover: var(--c-black-mute);
+  --button-outline-bg-focus: var(--c-gray-dark-3);
+
+  --button-text-text: var(--c-text-1);
+  --button-text-bg-hover: var(--c-black-mute);
+  --button-text-bg-focus: var(--c-gray-dark-3);
+
+  /* Deprecated */
   --button-primary-text: var(--c-text-inverse-1);
   --button-primary-bg: var(--c-white);
   --button-primary-bg-hover: var(--c-gray-light-3);
@@ -260,14 +288,6 @@
   --button-tertiary-inverse-bg: var(--c-black-mute);
   --button-tertiary-inverse-bg-hover: var(--c-gray-dark-3);
   --button-tertiary-inverse-bg-focus: var(--c-gray-dark-2);
-
-  --button-text-text: var(--c-text-1);
-  --button-text-bg-hover: var(--c-black-mute);
-  --button-text-bg-focus: var(--c-gray-dark-3);
-  --button-text-inverse-text: var(--c-text-inverse-1);
-  --button-text-inverse-bg: var(--c-black-mute);
-  --button-text-inverse-bg-hover: var(--c-gray-dark-3);
-  --button-text-inverse-bg-focus: var(--c-gray-dark-2);
 
   --button-mute-text: var(--c-text-2);
   --button-mute-text-hover: var(--c-text-1);
