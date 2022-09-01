@@ -28,6 +28,14 @@ const filteredOptions = computed(() => {
 
   return fuse.value.search(query.value).map((r) => r.item)
 })
+
+function focusPrev(event: any): void {
+  event.target.parentNode.previousElementSibling?.firstElementChild?.focus()
+}
+
+function focusNext(event: any): void {
+  event.target.parentNode.nextElementSibling?.firstElementChild?.focus()
+}
 </script>
 
 <template>
@@ -37,10 +45,17 @@ const filteredOptions = computed(() => {
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
-      <li v-for="option in filteredOptions" :key="option.label" class="item">
+      <li
+        v-for="option in filteredOptions"
+        :key="option.label"
+        class="item"
+      >
         <button
           class="button"
           :class="{ active: selected.some((s) => s === option.value) }"
+          tabindex="0"
+          @keyup.up.prevent="focusPrev"
+          @keyup.down.prevent="focusNext"
           @click="option.onClick(option.value)"
         >
           <span class="checkbox">
@@ -103,11 +118,13 @@ const filteredOptions = computed(() => {
   text-align: left;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover {
+  &:hover,
+  &:focus {
     background-color: var(--c-bg-mute);
   }
 
-  .dark &:hover {
+  .dark &:hover,
+  .dark &:focus {
     background-color: var(--c-bg);
   }
 }

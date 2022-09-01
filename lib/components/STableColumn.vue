@@ -33,7 +33,7 @@ const buttonActive = computed(() => {
   return isOpen.value || active.value
 })
 
-watch(isOpen, (value) => {
+watch(isOpen, async (value) => {
   if (!props.dropdown || !value) {
     return
   }
@@ -41,6 +41,12 @@ watch(isOpen, (value) => {
   const rect = container.value.getBoundingClientRect()
 
   position.value = (window.innerWidth - rect.right) < 304 ? 'left' : 'right'
+
+  await nextTick()
+
+  const el = document.querySelector<HTMLInputElement>('.STableColumnDropdown .STableColumnDropdownFilter .search input')
+
+  el && el.focus()
 })
 </script>
 
