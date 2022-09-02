@@ -1,55 +1,25 @@
-<template>
-  <SInputBase
-    class="SInputFile"
-    :class="classes"
-    :label="label"
-    :note="note"
-    :help="help"
-    :error-message="errorMessage"
-    :validation="validation"
-  >
-    <input
-      ref="input"
-      class="input"
-      type="file"
-      @change="handleChange"
-    >
-
-    <div class="box" role="button" @click="open">
-      <div class="action">
-        <button class="button">
-          {{ text }}
-        </button>
-      </div>
-
-      <div class="text">
-        <p v-if="fileName" class="file-name">{{ fileName }}</p>
-        <p v-else-if="placeholder" class="placeholder">{{ placeholder }}</p>
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
-import { PropType, ref, computed } from 'vue'
+import { ref, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  text: { type: String, default: 'Choose File' },
-  help: { type: String, default: null },
-  placeholder: { type: String, default: null },
-  errorMessage: { type: Boolean, default: true },
-  modelValue: { type: Object as PropType<File | null>, default: null },
-  validation: { type: Object as PropType<Validatable>, default: null }
-})
+const props = defineProps<{
+  size?: Size
+  label?: string
+  text?: string
+  note?: string
+  help?: string
+  placeholder?: string
+  modelValue: File | null
+  hideError?: boolean
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', file: File | null): void
+}>()
 
 const input = ref<HTMLInputElement | null>(null)
 
@@ -71,6 +41,38 @@ function handleChange(e: Event): void {
   file && props.validation?.$touch()
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputFile"
+    :class="classes"
+    :label="label"
+    :note="note"
+    :help="help"
+    :hide-error="hideError"
+    :validation="validation"
+  >
+    <input
+      ref="input"
+      class="input"
+      type="file"
+      @change="handleChange"
+    >
+
+    <div class="box" role="button" @click="open">
+      <div class="action">
+        <button class="button">
+          {{ text ?? 'Choose File' }}
+        </button>
+      </div>
+
+      <div class="text">
+        <p v-if="fileName" class="file-name">{{ fileName }}</p>
+        <p v-else-if="placeholder" class="placeholder">{{ placeholder }}</p>
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputFile.mini {
@@ -152,25 +154,22 @@ function handleChange(e: Event): void {
 
 .box {
   display: flex;
-  border: 1px solid var(--input-border);
+  border: 1px solid var(--c-divider);
   border-radius: 4px;
+  background-color: var(--c-bg);
   cursor: pointer;
   transition: border-color .25s;
 
   &:hover {
-    border-color: var(--input-focus-border);
+    border-color: var(--c-black);
 
     .button {
-      background-color: var(--c-gray-light-4);
+      background-color: var(--c-bg-soft);
     }
   }
-}
 
-.dark .box {
-  &:hover {
-    .button {
-      background-color: var(--c-gray-dark-3);
-    }
+  .dark &:hover {
+    border-color: var(--c-gray);
   }
 }
 
@@ -182,17 +181,13 @@ function handleChange(e: Event): void {
   border: 1px solid var(--c-divider-light);
   border-radius: 4px;
   color: var(--c-text-1);
-  background-color: var(--c-white-mute);
-  transition: background-color .25s;
-}
-
-.dark .button {
-  background-color: var(--c-black-mute);
+  background-color: var(--c-bg-mute);
   transition: background-color .25s;
 }
 
 .text {
   flex-grow: 1;
+  font-weight: 500;
   overflow: hidden;
 }
 
@@ -207,6 +202,6 @@ function handleChange(e: Event): void {
 }
 
 .placeholder {
-  color: var(--input-placeholder);
+  color: var(--c-text-2);
 }
 </style>

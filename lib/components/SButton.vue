@@ -79,7 +79,7 @@ function handleClick(): void {
   display: inline-block;
   text-align: center;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
   overflow: hidden;
@@ -94,6 +94,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--button-fill-bg-hover); }
     &:active { background-color: var(--button-fill-bg-focus); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.white {
@@ -102,6 +104,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-gray-light-3); }
     &:active { background-color: var(--c-gray-light-1); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.black {
@@ -110,6 +114,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-gray-dark-4); }
     &:active { background-color: var(--c-gray-dark-3); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.info {
@@ -118,6 +124,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-info-dark); }
     &:active { background-color: var(--c-info-darker); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.success {
@@ -126,6 +134,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-success-dark); }
     &:active { background-color: var(--c-success-darker); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.warning {
@@ -134,6 +144,8 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-warning-dark); }
     &:active { background-color: var(--c-warning-darker); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
   }
 
   &.danger {
@@ -142,6 +154,29 @@ function handleClick(): void {
 
     &:hover  { background-color: var(--c-danger-dark); }
     &:active { background-color: var(--c-danger-darker); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+  }
+
+  &.mute {
+    border-color: var(--c-divider-light);
+    color: var(--c-text-1);
+    background-color: var(--c-bg-mute);
+
+    &:hover  { border-color: var(--c-divider); background-color: var(--c-gray-light-4); }
+    &:active { background-color: var(--c-bg-soft); }
+
+    & .loader-icon :deep(.bar) { fill: var(--c-black); }
+
+    .dark & {
+      border-color: var(--c-divider-light);
+      background-color: var(--c-gray-dark-4);
+
+      &:hover  { border-color: var(--c-divider); background-color: var(--c-gray-dark-5); }
+      &:active { background-color: var(--c-bg-soft); }
+
+      & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    }
   }
 
   &.disabled {
@@ -185,10 +220,6 @@ function handleClick(): void {
       &:hover  { background-color: var(--c-danger); }
       &:active { background-color: var(--c-danger); }
     }
-  }
-
-  & .loader-icon :deep(.bar) {
-    fill: var(--c-text-inverse-1);
   }
 }
 
@@ -471,6 +502,58 @@ function handleClick(): void {
 }
 
 .SButton.loading {
+  &.fill {
+    &.neutral {
+      color: var(--c-text-1);
+
+      &:hover  { background-color: var(--button-fill-bg); }
+      &:active { background-color: var(--button-fill-bg); }
+    }
+
+    &.white {
+      &:hover  { background-color: var(--c-white); }
+      &:active { background-color: var(--c-white); }
+    }
+
+    &.black {
+      &:hover  { background-color: var(--c-black); }
+      &:active { background-color: var(--c-black); }
+    }
+
+    &.info {
+      &:hover  { background-color: var(--c-info); }
+      &:active { background-color: var(--c-info); }
+    }
+
+    &.success {
+      &:hover  { background-color: var(--c-success); }
+      &:active { background-color: var(--c-success); }
+    }
+
+    &.warning {
+      &:hover  { background-color: var(--c-warning); }
+      &:active { background-color: var(--c-warning); }
+    }
+
+    &.danger {
+      color: var(--c-text-1);
+
+      &:hover  { background-color: var(--c-danger); }
+      &:active { background-color: var(--c-danger); }
+    }
+
+    &.mute {
+      &:hover  { border-color: var(--c-divider-light); background-color: var(--c-bg-mute); }
+      &:active { background-color: var(--c-bg-mute); }
+
+      .dark & {
+        &:hover  { border-color: var(--c-divider-light); background-color: var(--c-gray-dark-4); }
+        &:active { background-color: var(--c-gray-dark-4); }
+      }
+    }
+  }
+
+  /* Deprecated */
   &.primary {
     &:hover  { background-color: var(--button-primary-bg); }
     &:active { background-color: var(--button-primary-bg); }

@@ -4,20 +4,17 @@
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SSheetMedium {
-  padding: 12px 16px 20px;
+  padding: 32px;
 
-  @media (min-width: 512px) {
-    padding: 16px 24px 26px;
+  .SSheetTitle + & {
+    padding-top: 0;
   }
 }
 
 .SSheetMedium :deep(p) {
-  margin: 16px 0;
-  line-height: 24px;
-  font-size: 14px;
-  font-weight: 400;
+  margin-bottom: 16px;
 }
 
 .SSheetMedium :deep(p:first-child) {
@@ -49,7 +46,7 @@
 .SSheetMedium :deep(li) {
   position: relative;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
 }
 
@@ -65,10 +62,11 @@
 }
 
 .SSheetMedium :deep(li + li) {
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .SSheetMedium :deep(li > ul) {
   margin: 4px 0 0;
+  margin-bottom: 16px;
 }
 </style>

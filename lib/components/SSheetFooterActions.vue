@@ -8,10 +8,7 @@
 .SSheetFooterActions {
   display: flex;
   justify-content: flex-end;
+  gap: 12px;
   padding: 16px 0 15px;
-}
-
-.SSheetFooterActions :deep(.SSheetFooterAction + .SSheetFooterAction) {
-  padding-left: 8px;
 }
 </style>

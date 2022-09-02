@@ -10,7 +10,7 @@
   padding: 0 16px;
 
   @media (min-width: 512px) {
-    padding: 0 24px;
+    padding: 0 32px;
   }
 }
 </style>

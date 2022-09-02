@@ -1,20 +1,13 @@
 <template>
-  <header class="SSheetTitle">
-    <h1 class="title">
-      <slot />
-    </h1>
-  </header>
+  <div class="SSheetTitle">
+    <p class="title"><slot /></p>
+  </div>
 </template>
 
-<style lang="postcss" scoped>
-.title {
-  padding: 20px 48px 0 16px;
-  line-height: 28px;
+<style scoped lang="postcss">
+.SSheetTitle {
+  padding: 32px 32px 16px;
   font-size: 20px;
-  font-weight: 500;
-
-  @media (min-width: 512px) {
-    padding: 24px 64px 0 24px;
-  }
+  font-weight: 600;
 }
 </style>

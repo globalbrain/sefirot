@@ -1,27 +1,34 @@
+<script setup lang="ts">
+import SButton, { Type, Mode } from './SButton.vue'
+
+defineProps<{
+  type?: Type
+  mode?: Mode
+  label: string
+  loading?: boolean
+}>()
+
+defineEmits<{
+  (e: 'click'): void
+}>()
+</script>
+
 <template>
   <div class="SSheetFooterAction">
     <SButton
-      size="small"
-      :type="type ?? 'primary'"
-      :mode="mode ?? 'neutral'"
+      size="medium"
+      :type="type"
+      :mode="mode"
       :label="label"
+      :loading="loading"
       block
       @click="$emit('click')"
     />
   </div>
 </template>
 
-<script setup lang="ts">
-import SButton from './SButton.vue'
-
-type Type = 'primary' | 'secondary' | 'tertiary' | 'text' | 'mute'
-type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-
-defineProps<{
-  type?: Type
-  mode?: Mode
-  label?: string
-}>()
-
-defineEmits(['click'])
-</script>
+<style scoped lang="postcss">
+.SSheetFooterAction {
+  min-width: 88px;
+}
+</style>
