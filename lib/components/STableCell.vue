@@ -1,11 +1,13 @@
 <template>
-  <div class="STableCell">
+  <td class="STableCell">
     <slot />
-  </div>
+  </td>
 </template>
 
 <style scoped lang="postcss">
 .STableCell {
+  border-top: 1px solid var(--c-divider-light);
+
   & + & {
     border-left: 1px solid var(--c-divider-light);
   }

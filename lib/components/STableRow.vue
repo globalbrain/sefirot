@@ -10,7 +10,7 @@
 
 <style scoped lang="postcss">
 .STableRow {
-  display: grid;
+  display: flex;
   border-top: 1px solid var(--c-divider-light);
   background-color: var(--c-bg);
   transition: background-color 0.1s;

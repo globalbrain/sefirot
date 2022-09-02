@@ -117,27 +117,28 @@ function updateTypeFilter(value: string) {
 <template>
   <Story title="Components/STable">
     <Variant title="Default">
-      <STable>
-        <STableRow class="row">
-          <STableColumn label="Name" :dropdown="dropdownName" />
-          <STableColumn label="Status" :dropdown="dropdownStatus" />
-          <STableColumn label="Type" :dropdown="dropdownType" />
-          <STableColumn label="Created at" :dropdown="dropdownCreatedAt" />
-        </STableRow>
+      <STable :records="orderedData">
+        <template #header>
+          <STableColumn class="name" label="Name" :dropdown="dropdownName" />
+          <STableColumn class="status" label="Status" :dropdown="dropdownStatus" />
+          <STableColumn class="type" label="Type" :dropdown="dropdownType" />
+          <STableColumn class="created-at" label="Created at" :dropdown="dropdownCreatedAt" />
+        </template>
 
-        <STableRow v-for="item in orderedData" :key="item.name" class="row">
-          <STableCellText :text="item.name" :link="item.link" />
-          <STableCellText :text="item.status" color="soft" />
-          <STableCellText :text="item.type" color="soft" />
-          <STableCellText :text="item.createdAt" color="soft" />
-        </STableRow>
+        <template #body="{ record }">
+          <STableCellText :text="record.name" :link="record.link" />
+          <STableCellText :text="record.status" color="soft" />
+          <STableCellText :text="record.type" color="soft" />
+          <STableCellText :text="record.createdAt" color="soft" />
+        </template>
       </STable>
     </Variant>
   </Story>
 </template>
 
 <style scoped>
-.row {
-  grid-template-columns: 192px 128px 128px 1fr;
-}
+.name       { width: 192px; }
+.status     { width: 128px; }
+.type       { width: 128px; }
+.created-at { width: auto; }
 </style>
