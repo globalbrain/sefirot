@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import STableCell from './STableCell.vue'
 import SLink from './SLink.vue'
+import STableCell from './STableCell.vue'
 
 defineProps<{
   text: string

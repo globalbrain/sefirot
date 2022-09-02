@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
 import Fuse from 'fuse.js'
+import { ref, computed } from 'vue'
 import SIconCheck from './icons/SIconCheck.vue'
 
 export interface TableColumnDropdownItemFilterOption {

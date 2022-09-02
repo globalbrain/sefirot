@@ -1,14 +1,31 @@
 <script setup lang="ts">
-defineProps<{
+import STableCellText from 'sefirot/components/STableCellText.vue'
+import STableColumn from 'sefirot/components/STableColumn.vue'
+import { toRefs } from 'vue'
+
+export interface Data {
+  orders: string[]
+  columns: Record<string, any>
   records: any[]
+}
+
+const props = defineProps<{
+  data: Data
 }>()
+
+const { orders, columns, records } = toRefs(props.data)
 </script>
 
 <template>
   <div class="STable">
     <table class="table" role="grid">
       <thead class="header">
-        <slot name="header" />
+        <STableColumn
+          v-for="key in orders"
+          :key="key"
+          :label="columns[key].label"
+          :dropdown="columns[key].dropdown"
+        />
       </thead>
 
       <tbody>
@@ -17,7 +34,20 @@ defineProps<{
           :key="record"
           class="row"
         >
-          <slot name="body" :record="record" />
+          <template v-for="key in orders" :key="key">
+            <STableCellText
+              v-if="columns[key].component === 'text'"
+              :text="record[key]"
+              :link="columns[key].link && record['link']"
+              :color="columns[key].color"
+            />
+
+            <component
+              v-else
+              v-bind="columns[key].data"
+              :is="columns[key].component"
+            />
+          </template>
         </tr>
       </tbody>
     </table>

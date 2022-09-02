@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, watch, nextTick } from 'vue'
-import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 import { useFlyout } from '../composables/Flyout'
 import STableColumnDropdown, { TableColumnDropdownItem } from './STableColumnDropdown.vue'
+import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 
 const props = defineProps<{
   label: string
@@ -88,7 +88,7 @@ watch(isOpen, async (value) => {
         </transition>
       </div>
 
-      <div class="resizer" @mousedown="grip"/>
+      <div class="resizer" @mousedown="grip" />
     </div>
   </th>
 </template>
