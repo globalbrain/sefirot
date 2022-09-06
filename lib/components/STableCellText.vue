@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import STableCell from './STableCell.vue'
 import SLink from './SLink.vue'
+import STableCell from './STableCell.vue'
 
 defineProps<{
   text: string
@@ -18,10 +18,6 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
-.content {
-  display: block;
-}
-
 .text {
   padding: 9px 16px 7px;
   font-size: 12px;

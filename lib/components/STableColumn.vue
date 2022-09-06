@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useFlyout } from '../composables/Flyout'
 import STableColumnDropdown, { TableColumnDropdownItem } from './STableColumnDropdown.vue'
+import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 
 const props = defineProps<{
   label: string
@@ -11,6 +11,10 @@ const props = defineProps<{
 
 const { container, isOpen, toggle } = useFlyout()
 
+let startWidth = 0
+let startPoint = 0
+
+const columnWidth = ref('auto')
 const position = ref('')
 
 const active = computed(() => {
@@ -33,6 +37,23 @@ const buttonActive = computed(() => {
   return isOpen.value || active.value
 })
 
+function grip(e: any) {
+  startWidth = e.target.parentElement.parentElement.offsetWidth
+  startPoint = e.pageX
+
+  document.addEventListener('mousemove', resize)
+  document.addEventListener('mouseup', done)
+}
+
+function resize(e: MouseEvent) {
+  const movedWidth = e.pageX - startPoint
+  columnWidth.value = `${startWidth + movedWidth}px`
+}
+
+function done() {
+  document.removeEventListener('mousemove', resize)
+}
+
 watch(isOpen, async (value) => {
   if (!props.dropdown || !value) {
     return
@@ -51,28 +72,33 @@ watch(isOpen, async (value) => {
 </script>
 
 <template>
-  <div class="STableColumn" :class="[{ active }, position]">
-    <p class="label">{{ label }}</p>
+  <th class="STableColumn" :class="[{ active }, position]">
+    <div class="content">
+      <p class="label">{{ label }}</p>
 
-    <div v-if="dropdown" class="action" ref="container">
-      <button class="button" :class="{ active: buttonActive }" @click="toggle">
-        <SIconMoreHorizontal class="icon" />
-      </button>
+      <div v-if="dropdown" class="action" ref="container">
+        <button class="button" :class="{ active: buttonActive }" @click="toggle">
+          <SIconMoreHorizontal class="icon" />
+        </button>
 
-      <transition name="fade">
-        <div v-if="isOpen" class="dialog">
-          <STableColumnDropdown :dropdown="dropdown" />
-        </div>
-      </transition>
+        <transition name="fade">
+          <div v-if="isOpen" class="dialog">
+            <STableColumnDropdown :dropdown="dropdown" />
+          </div>
+        </transition>
+      </div>
+
+      <div class="resizer" @mousedown="grip" />
     </div>
-  </div>
+  </th>
 </template>
 
 <style scoped lang="postcss">
 .STableColumn {
+  width: v-bind(columnWidth);
+  min-width: v-bind(columnWidth);
+  max-width: v-bind(columnWidth);
   position: relative;
-  display: flex;
-  justify-content: space-between;
   padding: 0 16px;
   background-color: var(--c-bg-soft);
 
@@ -89,12 +115,18 @@ watch(isOpen, async (value) => {
   }
 }
 
+.content {
+  display: flex;
+  justify-content: space-between;
+}
+
 .label {
   flex-grow: 1;
   line-height: 40px;
   font-size: 12px;
   font-weight: 600;
   color: var(--c-text-2);
+  text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -157,5 +189,17 @@ watch(isOpen, async (value) => {
 .dialog.fade-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+
+.resizer {
+  padding-left: 8px;
+  right: -8px;
+  top: 0px;
+  bottom: 0px;
+  width: 16px;
+  z-index: 1;
+  position: absolute;
+
+  cursor: col-resize;
 }
 </style>

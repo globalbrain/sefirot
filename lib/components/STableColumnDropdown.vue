@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import STableColumnDropdownMenu, { TableColumnDropdownItemMenuOption } from './STableColumnDropdownMenu.vue'
 import STableColumnDropdownFilter, { TableColumnDropdownItemFilterOption } from './STableColumnDropdownFilter.vue'
+import STableColumnDropdownMenu, { TableColumnDropdownItemMenuOption } from './STableColumnDropdownMenu.vue'
 
 export type TableColumnDropdownItem =
   | TableColumnDropdownItemMenu
@@ -24,7 +24,7 @@ export interface TableColumnDropdownItemFilter {
   options: TableColumnDropdownItemFilterOption[]
 }
 
-const props = defineProps<{
+defineProps<{
   dropdown: TableColumnDropdownItem[]
 }>()
 </script>
