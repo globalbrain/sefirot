@@ -25,7 +25,7 @@ export function useGrid(options: Option) {
     observer.observe(container!, { childList: true })
   })
 
-  function run() {
+  function execute() {
     container = document.querySelector(containerClass)
 
     adjustSpacer()
@@ -54,7 +54,7 @@ export function useGrid(options: Option) {
   }
 
   return {
-    run
+    execute
   }
 }
 
