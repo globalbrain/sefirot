@@ -182,9 +182,4 @@ function updateTypeFilter(value: string) {
 .table :deep(.col-status)    { --table-col-width: 144px; }
 .table :deep(.col-type)      { --table-col-width: 144px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }
-
-/* .table :deep(.col-name)      { width: 144px; min-width: 144px; }
-.table :deep(.col-status)    { width: 144px; min-width: 144px; }
-.table :deep(.col-type)      { width: 144px; min-width: 144px; }
-.table :deep(.col-createdAt) { width: auto; min-width: 192px; } */
 </style>
