@@ -1,25 +1,29 @@
 <script setup lang="ts">
 import SLink from './SLink.vue'
-import STableCell from './STableCell.vue'
 
 defineProps<{
-  text: string
-  link?: string
+  value: string
+  record: any
   color?: 'neutral' | 'soft' | 'mute'
+  link?(value: any, record: any): string
 }>()
 </script>
 
 <template>
-  <STableCell class="STableCellText" :class="[{ link }, color ?? 'neutral']">
-    <SLink class="content" :href="link">
-      <div class="text">{{ text }}</div>
+  <div class="STableCellText" :class="[{ link }, color ?? 'neutral']">
+    <SLink class="container" :href="link?.(value, record)">
+      <div class="text">{{ value }}</div>
     </SLink>
-  </STableCell>
+  </div>
 </template>
 
 <style scoped lang="postcss">
-.text {
+.STableCellText {
   padding: 9px 16px 7px;
+}
+
+.text {
+  line-height: 24px;
   font-size: 12px;
   font-weight: 500;
   white-space: nowrap;

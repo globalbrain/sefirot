@@ -25,6 +25,7 @@ import SButton from 'sefirot/components/SButton.vue'
         <p class="title">Fill</p>
         <div class="grid">
           <SButton mode="neutral" label="Neutral" />
+          <SButton mode="mute" label="Mute" />
           <SButton mode="info" label="Info" />
           <SButton mode="success" label="Success" />
           <SButton mode="warning" label="Warning" />
@@ -35,6 +36,7 @@ import SButton from 'sefirot/components/SButton.vue'
         <p class="title">Outline</p>
         <div class="grid">
           <SButton type="outline" mode="neutral" label="Neutral" />
+          <SButton type="outline" mode="mute" label="Mute" />
           <SButton type="outline" mode="info" label="Info" />
           <SButton type="outline" mode="success" label="Success" />
           <SButton type="outline" mode="warning" label="Warning" />
@@ -45,6 +47,7 @@ import SButton from 'sefirot/components/SButton.vue'
         <p class="title">Text</p>
         <div class="grid">
           <SButton type="text" mode="neutral" label="Neutral" />
+          <SButton type="text" mode="mute" label="Mute" />
           <SButton type="text" mode="info" label="Info" />
           <SButton type="text" mode="success" label="Success" />
           <SButton type="text" mode="warning" label="Warning" />

@@ -11,13 +11,17 @@
   --c-white-soft: #fafafa;
   --c-white-mute: #f2f2f2;
 
+  --c-white-elv: #fafafa;
+  --c-white-elv-up: #ffffff;
+  --c-white-elv-down: #f2f2f2;
+
   --c-black: #000000;
   --c-black-soft: #171717;
   --c-black-mute: #1c1c1e;
 
-  --c-black-elevated: #1c1c1e;
-  --c-black-elevated-soft: #2c2c2e;
-  --c-black-elevated-mute: #3a3a3c;
+  --c-black-elv: #171717;
+  --c-black-elv-up: #1c1c1e;
+  --c-black-elv-down: #000000;
 
   --c-gray: #8e8e93;
 
@@ -90,6 +94,10 @@
   --c-bg-soft: var(--c-white-soft);
   --c-bg-mute: var(--c-white-mute);
 
+  --c-bg-elv: var(--c-white-elv);
+  --c-bg-elv-up: var(--c-white-elv-up);
+  --c-bg-elv-down: var(--c-white-elv-down);
+
   --c-divider: var(--c-divider-light-1);
   --c-divider-light: var(--c-divider-light-2);
 
@@ -108,6 +116,10 @@
   --c-bg: var(--c-black);
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
+
+  --c-bg-elv: var(--c-black-elv);
+  --c-bg-elv-up: var(--c-black-elv-up);
+  --c-bg-elv-down: var(--c-black-elv-down);
 
   --c-divider: var(--c-divider-dark-1);
   --c-divider-light: var(--c-divider-dark-2);

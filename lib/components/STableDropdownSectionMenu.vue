@@ -1,16 +1,13 @@
 <script setup lang="ts">
-export interface TableColumnDropdownItemMenuOption {
-  label: string
-  onClick(): void
-}
+import { TableDropdownSectionMenuOption } from '../composables/Table'
 
 defineProps<{
-  options: TableColumnDropdownItemMenuOption[]
+  options: TableDropdownSectionMenuOption[]
 }>()
 </script>
 
 <template>
-  <ul class="STableColumnDropdownMenu">
+  <ul class="STableDropdownSectionMenu">
     <li v-for="option in options" :key="option.label" class="item">
       <button class="button" @click="option.onClick">
         {{ option.label }}
@@ -20,7 +17,7 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
-.STableColumnDropdownMenu {
+.STableDropdownSectionMenu {
   padding: 8px;
 }
 

@@ -3,8 +3,14 @@ import { reactive, ref, computed } from 'vue'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
+import { useTable } from 'sefirot/composables/Table'
 
-const sort = reactive({
+interface Sort {
+  by: string
+  order: 'asc' | 'desc'
+}
+
+const sort = reactive<Sort>({
   by: 'name',
   order: 'asc'
 })
@@ -29,7 +35,7 @@ const dropdownStatus = [
       { label: 'Sort descending (Z...A)', onClick: () => updateSort('status', 'desc') }
     ]
   },
-  reactive({
+  {
     type: 'filter',
     search: true,
     selected: dropdownStatusSelected,
@@ -38,7 +44,7 @@ const dropdownStatus = [
       { label: 'Published', value: 'Published', onClick: updateStatusFilter },
       { label: 'Archived', value: 'Archived', onClick: updateStatusFilter }
     ]
-  })
+  }
 ]
 
 const dropdownTypeSelected = ref<string[]>([])
@@ -51,7 +57,7 @@ const dropdownType = [
       { label: 'Sort descending (Z...A)', onClick: () => updateSort('type', 'desc') }
     ]
   },
-  reactive({
+  {
     type: 'filter',
     search: true,
     selected: dropdownTypeSelected,
@@ -61,7 +67,7 @@ const dropdownType = [
       { label: 'Icon', value: 'Icon', onClick: updateTypeFilter },
       { label: 'Other', value: 'Other', onClick: updateTypeFilter }
     ]
-  })
+  }
 ]
 
 const dropdownCreatedAt = [
@@ -74,7 +80,14 @@ const dropdownCreatedAt = [
   }
 ]
 
-const rowData = [
+const hasFilters = computed(() => {
+  return [
+    dropdownStatusSelected.value.length,
+    dropdownTypeSelected.value.length
+  ].some((length) => length)
+})
+
+const data = [
   { name: 'Artwork 001', link: 'https://example.com', status: 'Published', type: 'Photo', createdAt: '2022-10-10' },
   { name: 'Artwork 002', link: 'https://example.com', status: 'Draft', type: 'Icon', createdAt: '2022-10-09' },
   { name: 'Artwork 003', link: 'https://example.com', status: 'Published', type: 'Photo', createdAt: '2022-10-02' },
@@ -83,7 +96,7 @@ const rowData = [
 ]
 
 const filteredData = computed(() => {
-  return rowData
+  return data
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
 })
@@ -92,49 +105,59 @@ const orderedData = computed(() => {
   return orderBy(filteredData.value, [sort.by], [sort.order])
 })
 
-const data = {
-  orders: ['name', 'status', 'type', 'createdAt'],
+const table = useTable({
+  orders: [
+    'name',
+    'status',
+    'type',
+    'createdAt'
+  ],
 
   columns: {
     name: {
       label: 'Name',
       dropdown: dropdownName,
-      component: 'text',
-      link: true
+      cell: { type: 'text', link: (_value, record) => record.link }
     },
 
     status: {
       label: 'Status',
       dropdown: dropdownStatus,
-      component: 'text',
-      color: 'soft',
+      cell: { type: 'text', color: 'soft' }
     },
 
     type: {
       label: 'Type',
       dropdown: dropdownType,
-      component: 'text',
-      color: 'soft'
+      cell: { type: 'text', color: 'soft' }
     },
 
     createdAt: {
       label: 'Created at',
       dropdown: dropdownCreatedAt,
-      component: 'text',
-      color: 'soft'
+      cell: { type: 'text', color: 'soft' }
     }
   },
 
-  records: orderedData
+  records: orderedData,
+  total: computed(() => orderedData.value.length),
+  page: 1,
+  reset: hasFilters,
+  onReset: resetFilters
+})
+
+function updateSort(by: string, order: 'asc' | 'desc') {
+  sort.by = by
+  sort.order = order
 }
 
 function filterBy(value: string, filters: string[]) {
   return filters.length ? filters.includes(value) : true
 }
 
-function updateSort(by: string, order: 'asc' | 'desc') {
-  sort.by = by
-  sort.order = order
+function resetFilters() {
+  dropdownStatusSelected.value = []
+  dropdownTypeSelected.value = []
 }
 
 function updateStatusFilter(value: string) {
@@ -149,7 +172,19 @@ function updateTypeFilter(value: string) {
 <template>
   <Story title="Components/STable">
     <Variant title="Default">
-      <STable :data="data" />
+      <STable class="table" :options="table" />
     </Variant>
   </Story>
 </template>
+
+<style scoped>
+.table :deep(.col-name)      { --table-col-width: 144px; }
+.table :deep(.col-status)    { --table-col-width: 144px; }
+.table :deep(.col-type)      { --table-col-width: 144px; }
+.table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }
+
+/* .table :deep(.col-name)      { width: 144px; min-width: 144px; }
+.table :deep(.col-status)    { width: 144px; min-width: 144px; }
+.table :deep(.col-type)      { width: 144px; min-width: 144px; }
+.table :deep(.col-createdAt) { width: auto; min-width: 192px; } */
+</style>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { TableDropdownSectionFilterOption } from '../composables/Table'
 import Fuse from 'fuse.js'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import SIconCheck from './icons/SIconCheck.vue'
 
 export interface TableColumnDropdownItemFilterOption {
@@ -12,9 +13,10 @@ export interface TableColumnDropdownItemFilterOption {
 const props = defineProps<{
   search?: boolean
   selected: string[]
-  options: TableColumnDropdownItemFilterOption[]
+  options: TableDropdownSectionFilterOption[]
 }>()
 
+const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
 const fuse = computed(() => {
@@ -22,11 +24,13 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  if (!props.search || !query.value) {
-    return props.options
-  }
+  return !props.search || !query.value
+    ? props.options
+    : fuse.value.search(query.value).map((r) => r.item)
+})
 
-  return fuse.value.search(query.value).map((r) => r.item)
+onMounted(() => {
+  input.value?.focus()
 })
 
 function focusPrev(event: any): void {
@@ -39,17 +43,13 @@ function focusNext(event: any): void {
 </script>
 
 <template>
-  <div class="STableColumnDropdownFilter">
+  <div class="STableDropdownSectionFilter">
     <div v-if="search" class="search">
-      <input class="input" placeholder="Filter options" v-model="query">
+      <input class="input" placeholder="Filter options" ref="input" v-model="query">
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
-      <li
-        v-for="option in filteredOptions"
-        :key="option.label"
-        class="item"
-      >
+      <li v-for="option in filteredOptions" :key="option.label" class="item">
         <button
           class="button"
           :class="{ active: selected.some((s) => s === option.value) }"
