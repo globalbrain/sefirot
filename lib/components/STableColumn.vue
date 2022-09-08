@@ -173,10 +173,9 @@ watch(isOpen, async (value) => {
 
 .dialog {
   position: fixed;
-  top: 128px;
-  right: 128px;
   z-index: var(--z-index-dropdown);
   border-radius: 12px;
+  width: 256px;
   box-shadow: var(--shadow-depth-3);
   transition: opacity 0.25s, transform 0.25s;
 

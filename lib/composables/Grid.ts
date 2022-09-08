@@ -1,50 +1,59 @@
-import { onMounted } from 'vue'
+import { Ref, ref, watchEffect, onMounted, onUnmounted } from 'vue'
+
+export interface Grid {
+  container: Ref<HTMLElement | null>
+}
 
 export interface Option {
-  containerClass: string
-  spacerClass?: string
-  spacerTag?: string
+  tag?: string
+  class?: string
   type?: 'fill' | 'fit'
 }
 
-export type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
+type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
 
-export function useGrid(options: Option) {
-  let container: Element | null
+export function useGrid(options: Option): Grid {
+  const container: Ref<HTMLElement | null> = ref(null)
 
-  const containerClass = toClassSelector(options.containerClass)
-  const spacerClass = options.spacerClass ? toClassName(options.spacerClass) : 'spacer'
-  const spacerTag = options.spacerTag ?? 'div'
+  // const containerClass = toClassSelector(options.container)
+  const spacerClass = options.class ? toClassName(options.class) : 'spacer'
+  const spacerTag = options.tag ?? 'div'
   const type = options.type ?? 'fit'
-
-  window.addEventListener('resize', adjustSpacer)
-
-  onMounted(() => {
-    container = document.querySelector(containerClass)
-
-    adjustSpacer()
-
-    container && observer.observe(container, { childList: true })
-  })
 
   const observer = new MutationObserver((_, observer) => {
     observer.disconnect()
 
     adjustSpacer()
 
-    observer.observe(container!, { childList: true })
+    observer.observe(container.value!, { childList: true })
+  })
+
+  watchEffect(() => {
+    observer.disconnect()
+
+    if (container.value) {
+      adjustSpacer()
+      observer.observe(container.value, { childList: true })
+    }
+  })
+
+  onMounted(() => {
+    window.addEventListener('resize', adjustSpacer)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', adjustSpacer)
   })
 
   function adjustSpacer() {
-    document.querySelectorAll(`${containerClass} ${toClassSelector(spacerClass)}`)
+    container.value?.querySelectorAll(`${toClassSelector(spacerClass)}`)
       .forEach(n => n.remove())
 
-    container = document.querySelector(containerClass)
-    const track = container?.firstElementChild
+    const track = container.value?.firstElementChild
 
-    const containerWidth = container?.clientWidth ?? 0
+    const containerWidth = container.value?.clientWidth ?? 0
     const trackWidth = track?.clientWidth ?? 0
-    const trackCount = container?.childElementCount ?? 0
+    const trackCount = container.value?.childElementCount ?? 0
 
     const perRow = trackWidth !== 0 ? Math.floor(containerWidth / trackWidth) : 0
     const mod = perRow !== 0 ? trackCount % perRow : 0
@@ -52,7 +61,11 @@ export function useGrid(options: Option) {
 
     const fragment = createSpacers(lack, spacerTag, spacerClass, type)
 
-    container?.appendChild(fragment!)
+    container.value?.appendChild(fragment!)
+  }
+
+  return {
+    container
   }
 }
 
@@ -64,7 +77,7 @@ function toClassName(name: string) {
   return name.startsWith('.') ? name.slice(1) : name
 }
 
-function createSpacers(size: number, tag: string, classes: string, type: 'fill' | 'fit') {// TODO dataid => attrs
+function createSpacers(size: number, tag: string, classes: string, type: 'fill' | 'fit') {
   const fragment = document.createDocumentFragment()
 
   if (size === 0) {
