@@ -213,12 +213,12 @@ watch(isOpen, async (value) => {
     background-color: var(--c-info);
   }
 
-  .STableColumn:last-child & {
+  .STableItem:last-child .STableColumn & {
     right: 0;
     width: 8px;
   }
 
-  .STableColumn:last-child &::before {
+  .STableItem:last-child .STableColumn &::before {
     left: 7px;
   }
 }
