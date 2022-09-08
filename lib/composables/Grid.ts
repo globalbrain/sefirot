@@ -15,7 +15,6 @@ type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
 export function useGrid(options: Option): Grid {
   const container: Ref<HTMLElement | null> = ref(null)
 
-  // const containerClass = toClassSelector(options.container)
   const spacerClass = options.class ? toClassName(options.class) : 'spacer'
   const spacerTag = options.tag ?? 'div'
   const type = options.type ?? 'fit'
