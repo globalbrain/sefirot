@@ -1,3 +1,5 @@
+import { onMounted } from 'vue'
+
 export interface Option {
   containerClass: string
   spacerClass?: string
@@ -17,6 +19,14 @@ export function useGrid(options: Option) {
 
   window.addEventListener('resize', adjustSpacer)
 
+  onMounted(() => {
+    container = document.querySelector(containerClass)
+
+    adjustSpacer()
+
+    container && observer.observe(container, { childList: true })
+  })
+
   const observer = new MutationObserver((_, observer) => {
     observer.disconnect()
 
@@ -24,14 +34,6 @@ export function useGrid(options: Option) {
 
     observer.observe(container!, { childList: true })
   })
-
-  function execute() {
-    container = document.querySelector(containerClass)
-
-    adjustSpacer()
-
-    container && observer.observe(container, { childList: true })
-  }
 
   function adjustSpacer() {
     document.querySelectorAll(`${containerClass} ${toClassSelector(spacerClass)}`)
@@ -52,10 +54,6 @@ export function useGrid(options: Option) {
 
     container?.appendChild(fragment!)
   }
-
-  return {
-    execute
-  }
 }
 
 function toClassSelector(name: string) {
@@ -67,7 +65,7 @@ function toClassName(name: string) {
 }
 
 function createSpacers(size: number, tag: string, classes: string, type: 'fill' | 'fit') {// TODO dataid => attrs
-  let fragment = document.createDocumentFragment()
+  const fragment = document.createDocumentFragment()
 
   if (size === 0) {
     return fragment
