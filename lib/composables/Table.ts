@@ -1,9 +1,10 @@
 import { reactive } from 'vue'
+import { MaybeRef } from '@vueuse/core'
 
 export interface Table {
   orders: string[]
   columns: TableColumns
-  records: Record<string, any>[]
+  records?: Record<string, any>[]
   total?: number
   page?: number
   reset?: boolean
@@ -57,9 +58,12 @@ export interface TableDropdownSectionFilterOption {
   onClick(value: string): void
 }
 
-export type TableCell = TableCellText
+export type TableCell =
+  | TableCellText
+  | TableCellDay
+  | TableCellAvatar
 
-export type TableCellType = 'text'
+export type TableCellType = 'text' | 'day' | 'avatar'
 
 export interface TableCellBase {
   type: TableCellType
@@ -67,10 +71,42 @@ export interface TableCellBase {
 
 export interface TableCellText extends TableCellBase {
   type: 'text'
-  color?: 'neutral' | 'soft' | 'mute'
+  value?: string | ((value: any) => string)
   link?(value: any, record: any): string
+  color?: 'neutral' | 'soft' | 'mute'
 }
 
-export function useTable(options: Table): Table {
+export interface TableCellDay extends TableCellBase {
+  type: 'day'
+  format?: string
+  color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellAvatar extends TableCellBase {
+  type: 'avatar'
+  image?(value: any, record: any): string
+  name?(value: any, record: any): string
+  link?(value: any, record: any): string
+  color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface UseTableOptions {
+  orders: string[]
+  columns: TableColumns
+  records?: MaybeRef<Record<string, any>[] | undefined>
+  total?: MaybeRef<number | undefined>
+  page?: MaybeRef<number | undefined>
+  reset?: boolean
+  borderless?: boolean
+  onPrev?(): void
+  onNext?(): void
+  onReset?(): void
+}
+
+export function useTable(options: UseTableOptions): Table {
   return reactive(options)
+}
+
+export function createTableDropdown(options: TableDropdownSection[]): TableDropdownSection[] {
+  return options
 }

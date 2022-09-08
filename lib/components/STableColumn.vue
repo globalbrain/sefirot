@@ -75,7 +75,7 @@ watch(isOpen, async (value) => {
 </script>
 
 <template>
-  <th class="STableColumn STableCell" :class="[{ active }, position, className ?? name]" ref="column">
+  <th class="STableColumn STableCell" :class="[{ active }, position, className ?? `col-${name}`]" ref="column">
     <div class="container">
       <p class="label">{{ label }}</p>
 
@@ -98,7 +98,9 @@ watch(isOpen, async (value) => {
 
 <style scoped lang="postcss">
 .STableColumn {
-  position: relative;
+  position: var(--table-col-position, relative);
+  left: 0;
+  z-index: var(--table-col-z-index, auto);
   border-right: 1px solid var(--c-divider-light);
   max-width: 0;
   background-color: var(--c-bg-soft);

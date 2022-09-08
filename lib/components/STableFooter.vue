@@ -73,7 +73,8 @@ const hasNext = computed(() => {
 
 .info {
   padding-right: 8px;
-  padding-top: 7px;
+  padding-top: 4px;
+  line-height: 24px;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-text-2);

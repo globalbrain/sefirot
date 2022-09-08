@@ -110,6 +110,7 @@ function updateColWidth(key: string, value: string) {
   position: relative;
   border: 1px solid var(--c-divider-light);
   border-radius: 12px;
+  width: 100%;
 
   .STable.borderless & {
     border-right: 0;
@@ -121,7 +122,7 @@ function updateColWidth(key: string, value: string) {
 .wrapper {
   position: relative;
   width: 100%;
-  overflow-x: auto;
+  overflow-x: scroll;
 }
 
 .table {
@@ -130,12 +131,12 @@ function updateColWidth(key: string, value: string) {
   border-top: 1px solid var(--c-divider-light);
   border-collapse: separate;
   border-spacing: 0;
-  min-width: 100%;
   white-space: nowrap;
 }
 
 .head {
-  position: relative;
+  position: var(--table-head-position, relative);
+  top: var(--table-head-top, auto);
   z-index: 20;
 }
 

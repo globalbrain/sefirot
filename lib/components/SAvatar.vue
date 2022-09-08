@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+
+export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large'
+
+const props = defineProps<{
+  size?: Size
+  avatar?: string
+  name?: string
+}>()
+
+const classes = computed(() => [props.size ?? 'medium'])
+
+const initial = computed(() => props.name?.charAt(0).toUpperCase())
+</script>
+
 <template>
   <div class="SAvatar" :class="classes">
     <img v-if="avatar" class="img" :src="avatar">
@@ -5,29 +21,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { PropType, computed } from 'vue'
-
-type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large'
-
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'medium' },
-  avatar: { type: String, required: true },
-  name: { type: String, default: '' }
-})
-
-const classes = computed(() => [props.size])
-
-const initial = computed(() => props.name.charAt(0).toUpperCase())
-</script>
-
 <style lang="postcss" scoped>
 .SAvatar {
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: var(--c-bg-mute);
+  background-color: var(--c-bg-elv-down);
   overflow: hidden;
 }
 
