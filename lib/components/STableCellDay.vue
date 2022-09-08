@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Dayjs } from 'day'
+import type { Day } from '../support/Day'
 
 const props = defineProps<{
-  value?: Dayjs | null
+  value?: Day | null
   record: any
   format?: string
   color?: 'neutral' | 'soft' | 'mute'

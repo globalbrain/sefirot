@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import STableCell from 'sefirot/components/STableCell.vue'
-import STableColumn from 'sefirot/components/STableColumn.vue'
-import STableFooter from 'sefirot/components/STableFooter.vue'
-import STableHeader from 'sefirot/components/STableHeader.vue'
-import STableItem from 'sefirot/components/STableItem.vue'
-import { reactive, ref, computed, watch, toRefs } from 'vue'
+import STableCell from './STableCell.vue'
+import STableColumn from './STableColumn.vue'
+import STableFooter from './STableFooter.vue'
+import STableHeader from './STableHeader.vue'
+import STableItem from './STableItem.vue'
+import { reactive, ref, computed, watch, toRefs, unref } from 'vue'
 import { Table } from '../composables/Table'
 
 const props = defineProps<{
@@ -145,7 +145,7 @@ function updateColWidth(key: string, value: string) {
         v-if="showFooter"
         :total="total"
         :page="page"
-        :per-page="records.length"
+        :per-page="unref(records)?.length"
         :borderless="borderless"
         :on-prev="onPrev"
         :on-next="onNext"
