@@ -23,7 +23,7 @@ const emit = defineEmits<{
 
 const input = ref<HTMLInputElement | null>(null)
 
-const classes = computed(() => [props.size])
+const classes = computed(() => [props.size ?? 'small'])
 
 const fileName = computed(() => {
   return props.modelValue ? props.modelValue.name : null
