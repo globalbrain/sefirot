@@ -47,7 +47,7 @@ const classes = computed(() => [
 ])
 
 function handleClick(): void {
-  !props.disabled && emit('click')
+  !props.disabled && !props.loading && emit('click')
 }
 </script>
 
