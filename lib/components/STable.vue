@@ -3,8 +3,8 @@ import STableCell from 'sefirot/components/STableCell.vue'
 import STableColumn from 'sefirot/components/STableColumn.vue'
 import STableFooter from 'sefirot/components/STableFooter.vue'
 import STableHeader from 'sefirot/components/STableHeader.vue'
-import STableSize from 'sefirot/components/STableSize.vue'
-import { reactive, computed, toRefs } from 'vue'
+import STableItem from 'sefirot/components/STableItem.vue'
+import { reactive, ref, computed, watch, toRefs } from 'vue'
 import { Table } from '../composables/Table'
 
 const props = defineProps<{
@@ -24,6 +24,12 @@ const {
   onReset,
 } = toRefs(props.options)
 
+const head = ref<HTMLElement | null>(null)
+const body = ref<HTMLElement | null>(null)
+
+let headLock = false
+let bodyLock = false
+
 const colWidths = reactive<Record<string, string>>({})
 
 const showHeader = computed(() => {
@@ -34,13 +40,46 @@ const showFooter = computed(() => {
   return page?.value && total?.value
 })
 
+watch(() => records?.value, () => {
+  headLock = true
+  bodyLock = true
+}, { flush: 'pre' })
+
+watch(() => records?.value, () => {
+  syncScroll(head.value, body.value)
+  headLock = false
+  bodyLock = false
+}, { flush: 'post' })
+
+function syncHeadScroll() {
+  bodyLock || syncScroll(head.value, body.value)
+}
+
+function syncBodyScroll() {
+  headLock || syncScroll(body.value, head.value)
+}
+
+function syncScroll(from: HTMLElement | null, to: HTMLElement | null) {
+  if (from && to) {
+    to.scrollLeft = from.scrollLeft
+  }
+}
+
+function lockHead(value: boolean) {
+  headLock = value
+}
+
+function lockBody(value: boolean) {
+  bodyLock = value
+}
+
 function updateColWidth(key: string, value: string) {
   colWidths[key] = value
 }
 </script>
 
 <template>
-  <div class="STable" :class="{ borderless }">
+  <div class="STable" :class="{ borderless }" ref="el">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -50,46 +89,56 @@ function updateColWidth(key: string, value: string) {
         :on-reset="onReset"
       />
 
-      <div class="wrapper">
-        <table class="table" role="grid">
-          <colgroup>
-            <STableSize
-              v-for="key in orders"
-              :key="key"
-              :name="key"
-              :width="colWidths[key]"
-            />
-          </colgroup>
+      <div class="table" role="grid">
+        <div
+          class="container head"
+          ref="head"
+          @mouseenter="lockHead(true)"
+          @mouseleave="lockHead(false)"
+          @scroll="syncHeadScroll"
+        >
+          <div class="block">
+            <div class="row columns">
+              <STableItem v-for="key in orders" :key="key" :name="key" :width="colWidths[key]">
+                <STableColumn
+                  :name="key"
+                  :label="columns[key].label"
+                  :dropdown="columns[key].dropdown"
+                  @resize="(value) => updateColWidth(key, value)"
+                />
+              </STableItem>
+            </div>
+          </div>
+        </div>
 
-          <thead class="head">
-            <tr class="row columns">
-              <STableColumn
-                v-for="(key, index) in orders"
-                :key="key"
-                :class="[index === 0 && 'first-item']"
-                :name="key"
-                :label="columns[key].label"
-                :dropdown="columns[key].dropdown"
-                @resize="(value) => updateColWidth(key, value)"
-              />
-            </tr>
-          </thead>
+        <div
+          v-if="records && records.length"
+          class="container body"
+          ref="body"
+          @mouseenter="lockBody(true)"
+          @mouseleave="lockBody(false)"
+          @scroll="syncBodyScroll"
+        >
+          <div class="block">
+            <div v-for="(record, rIndex) in records" :key="rIndex" class="row">
+              <STableItem v-for="key in orders" :key="key" :name="key" :width="colWidths[key]">
+                <STableCell
+                  :name="key"
+                  :cell="columns[key].cell"
+                  :value="record[key]"
+                  :record="record"
+                  :records="records"
+                />
+              </STableItem>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          <tbody class="body">
-            <tr v-for="(record, rIndex) in records" :key="rIndex" class="row">
-              <STableCell
-                v-for="(key, cIndex) in orders"
-                :key="key"
-                :class="[cIndex === 0 && 'first-item']"
-                :name="key"
-                :cell="columns[key].cell"
-                :value="record[key]"
-                :record="record"
-                :records="records"
-              />
-            </tr>
-          </tbody>
-        </table>
+      <div v-if="records && !records.length" class="missing">
+        <p class="missing-text">
+          No results matched your search.
+        </p>
       </div>
 
       <STableFooter
@@ -109,7 +158,7 @@ function updateColWidth(key: string, value: string) {
 .box {
   position: relative;
   border: 1px solid var(--c-divider-light);
-  border-radius: 12px;
+  border-radius: 6px;
   width: 100%;
 
   .STable.borderless & {
@@ -119,28 +168,48 @@ function updateColWidth(key: string, value: string) {
   }
 }
 
-.wrapper {
-  position: relative;
-  width: 100%;
-  overflow-x: scroll;
-}
-
 .table {
   position: relative;
-  table-layout: fixed;
-  border-top: 1px solid var(--c-divider-light);
-  border-collapse: separate;
-  border-spacing: 0;
+  min-width: 100%;
   white-space: nowrap;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  min-width: 100%;
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.block {
+  display: inline-block;
+  min-width: 100%;
+}
+
+.row {
+  display: flex;
+  border-bottom: 1px solid var(--c-divider-light);
 }
 
 .head {
   position: var(--table-head-position, relative);
   top: var(--table-head-top, auto);
   z-index: 20;
+  background-color: var(--bg-elv);
 }
 
-.row {
-  border-top: 1px solid var(--c-divider-light);
+.missing {
+  border-radius: 0 0 6px 6px;
+  padding: 48px 32px;
+  text-align: center;
+  background-color: var(--c-bg-elv-up);
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--c-text-3);
 }
 </style>

@@ -115,16 +115,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
           {{ displayValue }}
         </div>
       </div>
-
-<!--       <div
-        class="input"
-        :class="inputClasses"
-        :style="inputStyles"
-      >
-        <span v-if="displayValue !== null || modelValue !== null" class="value">
-          {{ displayValue !== null ? displayValue : modelValue }}
-        </span>
-      </div> -->
     </div>
   </SInputBase>
 </template>

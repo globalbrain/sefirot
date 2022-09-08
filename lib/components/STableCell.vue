@@ -14,7 +14,7 @@ defineProps<{
 </script>
 
 <template>
-  <td class="STableCell" :class="[`col-${name}`]">
+  <div class="STableCell" :class="[`col-${name}`]">
     <STableCellText
       v-if="!cell || cell.type === 'text'"
       :value="value"
@@ -39,17 +39,11 @@ defineProps<{
       :link="cell.link"
       :color="cell.color"
     />
-  </td>
+  </div>
 </template>
 
 <style scoped lang="postcss">
 .STableCell {
-  position: var(--table-col-position, relative);
-  left: 0;
-  z-index: var(--table-col-z-index, auto);
-  border-top: 1px solid var(--c-divider-light);
-  border-right: 1px solid var(--c-divider-light);
-  max-width: 0;
   background-color: var(--c-bg-elv-up);
   transition: background-color 0.1s;
   overflow: hidden;

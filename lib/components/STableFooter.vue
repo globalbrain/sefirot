@@ -53,7 +53,6 @@ const hasNext = computed(() => {
 
 <style scoped lang="postcss">
 .STableFooter {
-  border-top: 1px solid var(--c-divider-light);
   border-radius: 0 0 12px 12px;
   padding-top: 8px;
   padding-right: var(--table-padding-right);

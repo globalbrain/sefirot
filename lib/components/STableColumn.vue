@@ -75,7 +75,7 @@ watch(isOpen, async (value) => {
 </script>
 
 <template>
-  <th class="STableColumn STableCell" :class="[{ active }, position, className ?? `col-${name}`]" ref="column">
+  <div class="STableColumn STableCell" :class="[{ active }, position, className ?? `col-${name}`]" ref="column">
     <div class="container">
       <p class="label">{{ label }}</p>
 
@@ -93,16 +93,12 @@ watch(isOpen, async (value) => {
 
       <div class="grip" @mousedown="grip" />
     </div>
-  </th>
+  </div>
 </template>
 
 <style scoped lang="postcss">
 .STableColumn {
-  position: var(--table-col-position, relative);
-  left: 0;
-  z-index: var(--table-col-z-index, auto);
-  border-right: 1px solid var(--c-divider-light);
-  max-width: 0;
+  border-top: 1px solid var(--c-divider-light);
   background-color: var(--c-bg-soft);
 
   &:first-child {
@@ -176,8 +172,9 @@ watch(isOpen, async (value) => {
 }
 
 .dialog {
-  position: absolute;
-  top: 32px;
+  position: fixed;
+  top: 128px;
+  right: 128px;
   z-index: var(--z-index-dropdown);
   border-radius: 12px;
   box-shadow: var(--shadow-depth-3);
