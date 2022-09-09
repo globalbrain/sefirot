@@ -56,8 +56,9 @@ function grip(e: any) {
 
 function resize(e: MouseEvent) {
   const movedWidth = e.pageX - startPoint
+  const resized = startWidth + movedWidth
 
-  emit('resize', `${startWidth + movedWidth}px`)
+  emit('resize', resized > -1 ? `${resized}px` : 'var(--table-col-width)')
 }
 
 function done() {
