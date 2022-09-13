@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Day } from '../support/Day'
 
-const props = defineProps<{
+defineProps<{
   value?: Day | null
   record: any
   format?: string

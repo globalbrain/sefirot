@@ -12,7 +12,7 @@
     :disabled="disabled"
     :error-message="errorMessage"
     :display-value="displayValue"
-    :model-value="modelValue"
+    :model-value="String(modelValue)"
     :validation="validation"
     @update:model-value="emitUpdate"
   >
@@ -67,6 +67,6 @@ const displayValue = computed(() => {
 })
 
 function emitUpdate(value: string | null): void {
-  emit('update:modelValue', value ? Number(value): null)
+  emit('update:modelValue', value ? Number(value) : null)
 }
 </script>

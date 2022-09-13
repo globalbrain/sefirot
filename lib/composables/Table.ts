@@ -1,5 +1,5 @@
-import { reactive } from 'vue'
 import { MaybeRef } from '@vueuse/core'
+import { reactive } from 'vue'
 
 export interface Table {
   orders: string[]

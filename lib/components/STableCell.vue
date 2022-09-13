@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import STableCellText from './STableCellText.vue'
-import STableCellDay from './STableCellDay.vue'
-import STableCellAvatar from './STableCellAvatar.vue'
 import { TableCell } from '../composables/Table'
+import STableCellAvatar from './STableCellAvatar.vue'
+import STableCellDay from './STableCellDay.vue'
+import STableCellText from './STableCellText.vue'
 
 defineProps<{
   name: string

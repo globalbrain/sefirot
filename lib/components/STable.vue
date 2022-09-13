@@ -1,11 +1,11 @@
 <script setup lang="ts">
+import { reactive, ref, computed, watch, toRefs, unref } from 'vue'
+import { Table } from '../composables/Table'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
-import { reactive, ref, computed, watch, toRefs, unref } from 'vue'
-import { Table } from '../composables/Table'
 
 const props = defineProps<{
   options: Table

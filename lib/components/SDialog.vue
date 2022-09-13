@@ -13,7 +13,6 @@
       <div v-for="(action, index) in actions" :key="index" class="action">
         <SButton
           size="small"
-          :type="getActionType(action.type)"
           :label="action.label"
           @click="action.callback"
         />
@@ -37,10 +36,6 @@ const props = defineProps({
 
 const isTypeLoading = computed(() => props.type === 'loading')
 const isLoadOnly = computed(() => isTypeLoading.value && !props.title && !props.text)
-
-function getActionType(value?: 'text' | 'mute'): 'text' | 'mute' {
-  return value !== 'mute' ? 'text' : 'mute'
-}
 </script>
 
 <style lang="postcss" scoped>

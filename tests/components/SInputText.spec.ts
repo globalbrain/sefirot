@@ -4,15 +4,19 @@ import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputText', () => {
   it('should emit input event', async () => {
-    const wrapper = mount(SInputText)
+    const wrapper = mount(SInputText, {
+      propsData: {
+        modelValue: null
+      }
+    })
 
-    await wrapper.find('.SInputText .input-area').setValue('')
+    await wrapper.find('.SInputText .input').setValue('')
     assertEmitted(wrapper, 'update:modelValue', 0, null)
 
-    await wrapper.find('.SInputText .input-area').setValue('text')
+    await wrapper.find('.SInputText .input').setValue('text')
     assertEmitted(wrapper, 'update:modelValue', 1, 'text')
 
-    await wrapper.find('.SInputText .input-area').setValue('0')
+    await wrapper.find('.SInputText .input').setValue('0')
     assertEmitted(wrapper, 'update:modelValue', 2, '0')
   })
 
@@ -23,7 +27,7 @@ describe('components/SInputText', () => {
       }
     })
 
-    await wrapper.find('.SInputText .input-area').trigger('blur')
+    await wrapper.find('.SInputText .input').trigger('blur')
     assertEmitted(wrapper, 'update:modelValue', 0, 'text')
     assertEmitted(wrapper, 'blur', 0, 'text')
   })
@@ -35,7 +39,7 @@ describe('components/SInputText', () => {
       }
     })
 
-    await wrapper.find('.SInputText .input-area').trigger('keypress', { key: 'enter' })
+    await wrapper.find('.SInputText .input').trigger('keypress', { key: 'enter' })
     assertEmitted(wrapper, 'update:modelValue', 0, 'text')
     assertEmitted(wrapper, 'enter', 0, 'text')
   })

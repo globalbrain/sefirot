@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { TableDropdownSectionFilterOption } from '../composables/Table'
 import Fuse from 'fuse.js'
 import { ref, computed, onMounted } from 'vue'
+import { TableDropdownSectionFilterOption } from '../composables/Table'
 import SIconCheck from './icons/SIconCheck.vue'
 
 export interface TableColumnDropdownItemFilterOption {
