@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { TableDropdownSection } from '../composables/Table'
+import { ref, computed, watch, nextTick } from 'vue'
 import { useFlyout } from '../composables/Flyout'
+import { TableDropdownSection } from '../composables/Table'
 import STableDropdownSection from './STableDropdownSection.vue'
 import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 
@@ -22,7 +22,9 @@ let startWidth = 0
 let startPoint = 0
 
 const column = ref<HTMLElement | null>(null)
-const position = ref('')
+const dialog = ref<HTMLElement | null>(null)
+const top = ref('')
+const left = ref('')
 
 const active = computed(() => {
   return props.dropdown?.some((item) => {
@@ -54,8 +56,9 @@ function grip(e: any) {
 
 function resize(e: MouseEvent) {
   const movedWidth = e.pageX - startPoint
+  const resized = startWidth + movedWidth
 
-  emit('resize', `${startWidth + movedWidth}px`)
+  emit('resize', resized > -1 ? `${resized}px` : 'var(--table-col-width)')
 }
 
 function done() {
@@ -63,19 +66,29 @@ function done() {
   document.removeEventListener('mouseup', done)
 }
 
-watch(isOpen, async (value) => {
-  if (!props.dropdown || !value) {
+async function adjustDialogPosition() {
+  if (!props.dropdown || !isOpen.value) {
     return
   }
 
   const rect = container.value.getBoundingClientRect()
 
-  position.value = (window.innerWidth - rect.right) < 304 ? 'left' : 'right'
-})
+  await nextTick()
+
+  const dialogWidth = dialog.value?.offsetWidth ?? 0
+  const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
+
+  top.value = `${rect.top + rect.height - 4}px`
+  left.value = position === 'right' ? `${rect.left}px` : `${rect.right - dialogWidth - 8}px`
+}
+
+window.addEventListener('scroll', adjustDialogPosition)
+window.addEventListener('resize', adjustDialogPosition)
+watch(isOpen, adjustDialogPosition)
 </script>
 
 <template>
-  <div class="STableColumn STableCell" :class="[{ active }, position, className ?? `col-${name}`]" ref="column">
+  <div class="STableColumn STableCell" :class="[{ active }, className ?? `col-${name}`]" ref="column">
     <div class="container">
       <p class="label">{{ label }}</p>
 
@@ -85,7 +98,12 @@ watch(isOpen, async (value) => {
         </button>
 
         <transition name="fade">
-          <div v-if="isOpen" class="dialog">
+          <div
+            v-if="isOpen"
+            class="dialog"
+            :style="{ top, left }"
+            ref="dialog"
+          >
             <STableDropdownSection :sections="dropdown" />
           </div>
         </transition>
@@ -178,9 +196,6 @@ watch(isOpen, async (value) => {
   width: 256px;
   box-shadow: var(--shadow-depth-3);
   transition: opacity 0.25s, transform 0.25s;
-
-  .STableColumn.left &  { right: 4px; }
-  .STableColumn.right & { left: 4px; }
 }
 
 .dialog.fade-enter-from,
