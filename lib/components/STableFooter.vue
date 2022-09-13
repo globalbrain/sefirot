@@ -18,11 +18,13 @@ const _page = computed(() => props.page ?? 0)
 const _perPage = computed(() => props.perPage ?? 0)
 
 const from = computed(() => {
-  return _page.value === 1 ? 1 : _page.value * _perPage.value + 1
+  return _page.value === 1 ? 1 : (_page.value - 1) * _perPage.value + 1
 })
 
 const to = computed(() => {
-  return _page.value * _perPage.value
+  const value = _page.value * _perPage.value
+
+  return value > _total.value ? _total.value : value
 })
 
 const hasPrev = computed(() => {
@@ -53,7 +55,7 @@ const hasNext = computed(() => {
 
 <style scoped lang="postcss">
 .STableFooter {
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 6px 6px;
   padding-top: 8px;
   padding-right: var(--table-padding-right);
   padding-bottom: 8px;

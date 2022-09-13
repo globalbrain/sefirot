@@ -7,8 +7,10 @@ export interface Table {
   records?: Record<string, any>[]
   total?: number
   page?: number
+  perPage?: number
   reset?: boolean
   borderless?: boolean
+  loading?: boolean
   onPrev?(): void
   onNext?(): void
   onReset?(): void
@@ -48,14 +50,15 @@ export interface TableDropdownSectionMenuOption {
 export interface TableDropdownSectionFilter extends TableDropdownSectionBase {
   type: 'filter'
   search?: boolean
-  selected: string[]
+  selected: MaybeRef<string[]>
   options: TableDropdownSectionFilterOption[]
+  onClick?(value: string): void
 }
 
 export interface TableDropdownSectionFilterOption {
   label: string
   value: string
-  onClick(value: string): void
+  onClick?(value: string): void
 }
 
 export type TableCell =
@@ -84,7 +87,7 @@ export interface TableCellDay extends TableCellBase {
 
 export interface TableCellAvatar extends TableCellBase {
   type: 'avatar'
-  image?(value: any, record: any): string
+  image?(value: any, record: any): string | undefined
   name?(value: any, record: any): string
   link?(value: any, record: any): string
   color?: 'neutral' | 'soft' | 'mute'
@@ -96,8 +99,10 @@ export interface UseTableOptions {
   records?: MaybeRef<Record<string, any>[] | undefined>
   total?: MaybeRef<number | undefined>
   page?: MaybeRef<number | undefined>
-  reset?: boolean
+  perPage?: MaybeRef<number | undefined>
+  reset?: MaybeRef<boolean | undefined>
   borderless?: boolean
+  loading?: MaybeRef<boolean | undefined>
   onPrev?(): void
   onNext?(): void
   onReset?(): void

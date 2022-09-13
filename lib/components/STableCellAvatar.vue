@@ -6,7 +6,7 @@ import SLink from './SLink.vue'
 const props = defineProps<{
   value?: any
   record?: any
-  image?(value: any, record: any): string
+  image?(value: any, record: any): string | undefined
   name?(value: any, record: any): string
   link?(value: any, record: any): string
   color?: 'neutral' | 'soft' | 'mute'

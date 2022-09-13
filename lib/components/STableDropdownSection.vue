@@ -20,6 +20,7 @@ defineProps<{
         :search="item.search"
         :selected="item.selected"
         :options="item.options"
+        :on-click="item.onClick"
       />
     </div>
   </div>

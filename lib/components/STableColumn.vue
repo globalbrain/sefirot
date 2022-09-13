@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, unref, watch, nextTick } from 'vue'
 import { useFlyout } from '../composables/Flyout'
 import { TableDropdownSection } from '../composables/Table'
 import STableDropdownSection from './STableDropdownSection.vue'
@@ -32,12 +32,14 @@ const active = computed(() => {
       return false
     }
 
-    if (!item.selected.length) {
+    const selected = unref(item.selected)
+
+    if (!selected.length) {
       return false
     }
 
     return item.options.some((option) => {
-      return item.selected.includes(option.value)
+      return selected.includes(option.value)
     })
   })
 })
@@ -246,7 +248,8 @@ function stopDialogPositionListener() {
   }
 
   .STableItem:last-child .STableColumn &::before {
-    left: 7px;
+    left: 6px;
+    width: 2px;
   }
 }
 </style>

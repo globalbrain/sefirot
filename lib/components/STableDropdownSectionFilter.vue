@@ -1,19 +1,15 @@
 <script setup lang="ts">
+import type { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, unref, onMounted } from 'vue'
 import { TableDropdownSectionFilterOption } from '../composables/Table'
 import SIconCheck from './icons/SIconCheck.vue'
 
-export interface TableColumnDropdownItemFilterOption {
-  label: string
-  value: string
-  onClick(value: string): void
-}
-
 const props = defineProps<{
   search?: boolean
-  selected: string[]
+  selected: MaybeRef<string[]>
   options: TableDropdownSectionFilterOption[]
+  onClick?(value: string): void
 }>()
 
 const input = ref<HTMLElement | null>(null)
@@ -33,12 +29,17 @@ onMounted(() => {
   input.value?.focus()
 })
 
-function focusPrev(event: any): void {
+function focusPrev(event: any) {
   event.target.parentNode.previousElementSibling?.firstElementChild?.focus()
 }
 
-function focusNext(event: any): void {
+function focusNext(event: any) {
   event.target.parentNode.nextElementSibling?.firstElementChild?.focus()
+}
+
+function handleClick(option: TableDropdownSectionFilterOption, value: string) {
+  option.onClick && option.onClick(value)
+  props.onClick && props.onClick(value)
 }
 </script>
 
@@ -52,11 +53,11 @@ function focusNext(event: any): void {
       <li v-for="option in filteredOptions" :key="option.label" class="item">
         <button
           class="button"
-          :class="{ active: selected.some((s) => s === option.value) }"
+          :class="{ active: unref(selected).some((s) => s === option.value) }"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
-          @click="option.onClick(option.value)"
+          @click="handleClick(option, option.value)"
         >
           <span class="checkbox">
             <span class="checkbox-box">

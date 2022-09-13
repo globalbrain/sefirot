@@ -6,6 +6,7 @@ import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
+import SIconPreloader from './icons/SIconPreloader.vue'
 
 const props = defineProps<{
   options: Table
@@ -17,8 +18,10 @@ const {
   records,
   total,
   page,
+  perPage,
   reset,
   borderless,
+  loading,
   onPrev,
   onNext,
   onReset,
@@ -37,7 +40,7 @@ const showHeader = computed(() => {
 })
 
 const showFooter = computed(() => {
-  return page?.value && total?.value
+  return !loading?.value && page?.value && total?.value
 })
 
 watch(() => records?.value, () => {
@@ -98,7 +101,7 @@ function updateColWidth(key: string, value: string) {
           @scroll="syncHeadScroll"
         >
           <div class="block">
-            <div class="row columns">
+            <div class="row">
               <STableItem v-for="key in orders" :key="key" :name="key" :width="colWidths[key]">
                 <STableColumn
                   :name="key"
@@ -112,7 +115,7 @@ function updateColWidth(key: string, value: string) {
         </div>
 
         <div
-          v-if="records && records.length"
+          v-if="!loading && records && records.length"
           class="container body"
           ref="body"
           @mouseenter="lockBody(true)"
@@ -135,17 +138,23 @@ function updateColWidth(key: string, value: string) {
         </div>
       </div>
 
-      <div v-if="records && !records.length" class="missing">
+      <div v-if="!loading && records && !records.length" class="missing">
         <p class="missing-text">
           No results matched your search.
         </p>
+      </div>
+
+      <div v-if="loading" class="loading">
+        <div class="loading-icon">
+          <SIconPreloader class="loading-svg" />
+        </div>
       </div>
 
       <STableFooter
         v-if="showFooter"
         :total="total"
         :page="page"
-        :per-page="unref(records)?.length"
+        :per-page="perPage"
         :borderless="borderless"
         :on-prev="onPrev"
         :on-next="onNext"
@@ -175,13 +184,20 @@ function updateColWidth(key: string, value: string) {
 }
 
 .container {
-  position: relative;
+  position: static;
   width: 100%;
   min-width: 100%;
   overflow-x: scroll;
 
-  &::-webkit-scrollbar {
-    display: none;
+  &.head {
+    position: var(--table-head-position, static);
+    top: var(--table-head-top, auto);
+    z-index: 20;
+    background-color: var(--bg-elv);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -195,13 +211,6 @@ function updateColWidth(key: string, value: string) {
   border-bottom: 1px solid var(--c-divider-light);
 }
 
-.head {
-  position: var(--table-head-position, static);
-  top: var(--table-head-top, auto);
-  z-index: 20;
-  background-color: var(--bg-elv);
-}
-
 .missing {
   border-radius: 0 0 6px 6px;
   padding: 48px 32px;
@@ -211,5 +220,22 @@ function updateColWidth(key: string, value: string) {
   font-size: 14px;
   font-weight: 500;
   color: var(--c-text-3);
+}
+
+.loading {
+  border-radius: 0 0 6px 6px;
+  padding: 64px 32px;
+  background-color: var(--c-bg-elv-up);
+}
+
+.loading-icon {
+  margin: 0 auto;
+  width: 48px;
+  height: 48px;
+}
+
+.loading-svg {
+  width: 48px;
+  height: 48px;
 }
 </style>
