@@ -196,7 +196,7 @@ function updateColWidth(key: string, value: string) {
 }
 
 .head {
-  position: var(--table-head-position, relative);
+  position: var(--table-head-position, static);
   top: var(--table-head-top, auto);
   z-index: 20;
   background-color: var(--bg-elv);
