@@ -46,12 +46,16 @@ const buttonActive = computed(() => {
   return isOpen.value || active.value
 })
 
+watch(isOpen, (value) => {
+  value ? adjustDialogPosition() : stopDialogPositionListener()
+})
+
 function grip(e: any) {
   startWidth = column.value?.offsetWidth ?? 0
   startPoint = e.pageX
 
   document.addEventListener('mousemove', resize)
-  document.addEventListener('mouseup', done)
+  document.addEventListener('mouseup', stopResizeListener)
 }
 
 function resize(e: MouseEvent) {
@@ -61,15 +65,17 @@ function resize(e: MouseEvent) {
   emit('resize', resized > -1 ? `${resized}px` : 'var(--table-col-width)')
 }
 
-function done() {
+function stopResizeListener() {
   document.removeEventListener('mousemove', resize)
-  document.removeEventListener('mouseup', done)
+  document.removeEventListener('mouseup', stopResizeListener)
 }
 
 async function adjustDialogPosition() {
   if (!props.dropdown || !isOpen.value) {
     return
   }
+
+  startDialogPositionListener()
 
   const rect = container.value.getBoundingClientRect()
 
@@ -78,13 +84,19 @@ async function adjustDialogPosition() {
   const dialogWidth = dialog.value?.offsetWidth ?? 0
   const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
 
-  top.value = `${rect.top + rect.height - 4}px`
-  left.value = position === 'right' ? `${rect.left}px` : `${rect.right - dialogWidth - 8}px`
+  top.value = `${rect.top + rect.height - 8}px`
+  left.value = position === 'right' ? `${rect.left - 4}px` : `${rect.right - dialogWidth - 4}px`
 }
 
-window.addEventListener('scroll', adjustDialogPosition)
-window.addEventListener('resize', adjustDialogPosition)
-watch(isOpen, adjustDialogPosition)
+function startDialogPositionListener() {
+  window.addEventListener('scroll', adjustDialogPosition)
+  window.addEventListener('resize', adjustDialogPosition)
+}
+
+function stopDialogPositionListener() {
+  window.removeEventListener('scroll', adjustDialogPosition)
+  window.removeEventListener('resize', adjustDialogPosition)
+}
 </script>
 
 <template>
@@ -218,8 +230,8 @@ watch(isOpen, adjustDialogPosition)
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 8px;
-    width: 1px;
+    left: 7px;
+    width: 3px;
     content: "";
     transition: background-color 0.25s;
   }
