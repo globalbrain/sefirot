@@ -142,6 +142,7 @@ const table = useTable({
   records: orderedData,
   total: computed(() => orderedData.value.length),
   page: 1,
+  perPage: 5,
   reset: hasFilters,
   onReset: resetFilters
 })
