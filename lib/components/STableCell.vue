@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
+import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellDay from './STableCellDay.vue'
 import STableCellText from './STableCellText.vue'
 
@@ -37,6 +38,13 @@ defineProps<{
       :image="cell.image"
       :name="cell.name"
       :link="cell.link"
+      :color="cell.color"
+    />
+    <STableCellAvatars
+      v-else-if="cell.type === 'avatars'"
+      :value="value"
+      :record="record"
+      :avatars="cell.avatars"
       :color="cell.color"
     />
   </div>

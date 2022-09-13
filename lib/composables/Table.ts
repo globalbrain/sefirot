@@ -65,8 +65,9 @@ export type TableCell =
   | TableCellText
   | TableCellDay
   | TableCellAvatar
+  | TableCellAvatars
 
-export type TableCellType = 'text' | 'day' | 'avatar'
+export type TableCellType = 'text' | 'day' | 'avatar' | 'avatars'
 
 export interface TableCellBase {
   type: TableCellType
@@ -91,6 +92,17 @@ export interface TableCellAvatar extends TableCellBase {
   name?(value: any, record: any): string
   link?(value: any, record: any): string
   color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellAvatars extends TableCellBase {
+  type: 'avatars'
+  avatars(value: any, record: any): TableCellAvatarsOption[]
+  color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellAvatarsOption {
+  image?: string
+  name?: string
 }
 
 export interface UseTableOptions {

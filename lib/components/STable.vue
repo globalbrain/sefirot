@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, computed, watch, toRefs, unref } from 'vue'
+import { reactive, ref, computed, watch, toRefs } from 'vue'
 import { Table } from '../composables/Table'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
