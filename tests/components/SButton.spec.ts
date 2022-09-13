@@ -5,7 +5,7 @@ describe('components/SButton', () => {
   it('should emit on click', () => {
     const wrapper = mount(SButton as any, {
       propsData: {
-        label: 'BUTTON'
+        label: 'Button'
       }
     })
 

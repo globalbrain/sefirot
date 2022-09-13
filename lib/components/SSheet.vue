@@ -1,92 +1,80 @@
-<template>
-  <div class="SSheet" :class="[size ?? 'medium']" @click="closeIfClosable">
-    <article class="box" @click.stop>
-      <div v-if="closable !== false" class="close">
-        <button class="close-button" @click="$emit('close')">
-          <SIconX class="close-icon" />
-        </button>
-      </div>
-
-      <slot :close="() => emit('close')" />
-    </article>
-  </div>
-</template>
-
 <script setup lang="ts">
-import SIconX from './icons/SIconX.vue'
+import SIconX from 'sefirot/components/icons/SIconX.vue'
 
-const props = defineProps<{
-  size?: 'small' | 'medium' | 'large'
-  closable?: boolean
+defineProps<{
+  size: 'small' | 'medium' | 'large'
 }>()
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'close'): void
 }>()
-
-function closeIfClosable() {
-  if (props.closable !== false) {
-    emit('close')
-  }
-}
 </script>
+
+<template>
+  <FMount class="SSheet" :class="[size ?? 'medium']" @click.stop>
+    <button class="close" @click="$emit('close')">
+      <SIconX class="icon" />
+    </button>
+
+    <slot />
+  </FMount>
+</template>
 
 <style scoped lang="postcss">
 .SSheet {
-  padding: 16px 16px 96px;
-  min-height: 100vh;
+  position: relative;
+  border: 1px solid var(--c-divider-light);
+  border-radius: 16px;
+  background-color: var(--c-bg);
+  transition: opacity 0.25s, transform 0.25s;
 
-  @media (min-width: 512px) {
-    padding: 32px 24px 96px;
+  .dark & {
+    background-color: var(--c-bg-mute);
   }
 
-  @media (min-width: 768px) {
-    padding: 48px 32px 128px;
+  .SModal & {
+    margin: 96px auto;
+    box-shadow: var(--shadow-depth-5);
+
+    .dark & {
+      background-color: var(--c-bg-soft);
+    }
   }
 }
 
-.SSheet.small .box  { max-width: 392px; }
-.SSheet.medium .box { max-width: 512px; }
-.SSheet.large .box  { max-width: 768px; }
+.SSheet.small  { max-width: 512px; }
+.SSheet.medium { max-width: 768px; }
+.SSheet.large  { max-width: 1024px; }
 
-.box {
-  position: relative;
-  margin: 0 auto;
-  border: 1px solid var(--c-divider-light);
-  border-radius: 8px;
-  background-color: var(--c-bg);
-  box-shadow: var(--shadow-depth-3);
+.SSheet.mount {
+  opacity: 0;
+  transform: translateY(8px);
 }
 
 .close {
   position: absolute;
-  top: 10px;
+  top: 4px;
   right: 4px;
-  z-index: 10;
-
-  @media (min-width: 512px) {
-    top: 14px;
-    right: 12px;
-  }
-}
-
-.close-button {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 48px;
   color: var(--c-text-3);
-  transition: color .25s;
+  transition: color 0.25s;
 
   &:hover {
     color: var(--c-text-1);
   }
+
+  .SModal & {
+    display: flex;
+  }
 }
 
-.close-icon {
-  width: 20px;
-  height: 20px;
+.icon {
+  width: 24px;
+  height: 24px;
   fill: currentColor;
 }
 </style>

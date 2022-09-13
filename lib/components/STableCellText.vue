@@ -1,0 +1,59 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import SLink from './SLink.vue'
+
+const props = defineProps<{
+  value?: any
+  record: any
+  getter?: string | ((value: any) => string)
+  color?: 'neutral' | 'soft' | 'mute'
+  link?(value: any, record: any): string
+}>()
+
+const _value = computed(() => {
+  if (props.getter === undefined) {
+    return props.value
+  }
+
+  return typeof props.getter === 'string'
+    ? props.getter
+    : props.getter(props.value)
+})
+</script>
+
+<template>
+  <div class="STableCellText" :class="[{ link }, color ?? 'neutral']">
+    <SLink v-if="_value" class="container" :href="link?.(value, record)">
+      <div class="text">{{ _value }}</div>
+    </SLink>
+  </div>
+</template>
+
+<style scoped lang="postcss">
+.STableCellText {
+  padding: 8px 16px;
+  min-height: 40px;
+}
+
+.text {
+  line-height: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.25s;
+
+  .STableCellText.neutral & { color: var(--c-text-1); }
+  .STableCellText.soft &    { color: var(--c-text-2); }
+  .STableCellText.mute &    { color: var(--c-text-3); }
+
+  .STableCellText.link & {
+    color: var(--c-info);
+  }
+
+  .STableCellText.link:hover & {
+    color: var(--c-info-dark);
+  }
+}
+</style>

@@ -9,7 +9,6 @@
     <div v-if="actions" class="actions">
       <div v-for="(action, index) in actions" :key="index" class="action">
         <SButton
-          :type="action.type"
           :label="action.label"
           inverse
           @click="handleCallback(action)"

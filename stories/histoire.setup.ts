@@ -1,4 +1,4 @@
-import '../lib/assets/styles/bootstrap.css'
+import '../lib/styles/bootstrap.css'
 import './styles.css'
 
 import { defineSetupVue3 } from '@histoire/plugin-vue'

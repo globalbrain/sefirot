@@ -1,31 +1,15 @@
-<template>
-  <div class="SInputBase" :class="{ 'has-error': hasError }">
-    <label v-if="label" class="label" :for="name">
-      {{ label }} <span class="note">{{ note }}</span>
-    </label>
-
-    <slot />
-
-    <div class="help">
-      <slot name="before-help" />
-      <p v-if="showError" class="help-error">{{ errorMsg }}</p>
-      <p v-if="help" class="help-text">{{ help }}</p>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed, unref } from 'vue'
 import { Validatable } from '../composables/Validation'
 
-const props = defineProps({
-  name: { type: String, default: null },
-  note: { type: String, default: null },
-  label: { type: String, default: null },
-  help: { type: String, default: null },
-  errorMessage: { type: Boolean, default: true },
-  validation: { type: Object as PropType<Validatable>, default: null }
-})
+const props = defineProps<{
+  name?: string,
+  note?: string,
+  label?: string,
+  help?: string,
+  hideError?: boolean
+  validation?: Validatable
+}>()
 
 const hasError = computed(() => {
   if (!props.validation) {
@@ -42,13 +26,29 @@ const errorMsg = computed(() => {
 
   const errors = props.validation.$errors
 
-  return errors.length > 0 ? errors[0].$message : null
+  return errors.length > 0 ? unref(errors[0].$message) : null
 })
 
 const showError = computed(() => {
-  return props.errorMessage && hasError.value && errorMsg.value
+  return !props.hideError && hasError.value && errorMsg.value
 })
 </script>
+
+<template>
+  <div class="SInputBase" :class="{ 'has-error': hasError }">
+    <label v-if="label" class="label" :for="name">
+      {{ label }} <span class="note">{{ note }}</span>
+    </label>
+
+    <slot />
+
+    <div class="help">
+      <slot name="before-help" />
+      <p v-if="showError" class="help-error">{{ errorMsg }}</p>
+      <p v-if="help" class="help-text">{{ help }}</p>
+    </div>
+  </div>
+</template>
 
 <style lang="postcss" scoped>
 .SInputBase.mini {
