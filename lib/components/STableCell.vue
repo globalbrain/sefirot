@@ -3,6 +3,7 @@ import { TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellDay from './STableCellDay.vue'
+import STableCellPill from './STableCellPill.vue'
 import STableCellText from './STableCellText.vue'
 
 defineProps<{
@@ -30,6 +31,13 @@ defineProps<{
       :record="record"
       :format="cell.format"
       :color="cell.color"
+    />
+    <STableCellPill
+      v-if="!cell || cell.type === 'pill'"
+      :value="value"
+      :record="record"
+      :getter="cell?.value"
+      :color="cell?.color"
     />
     <STableCellAvatar
       v-else-if="cell.type === 'avatar'"

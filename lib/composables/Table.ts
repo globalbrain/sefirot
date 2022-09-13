@@ -64,10 +64,11 @@ export interface TableDropdownSectionFilterOption {
 export type TableCell =
   | TableCellText
   | TableCellDay
+  | TableCellPill
   | TableCellAvatar
   | TableCellAvatars
 
-export type TableCellType = 'text' | 'day' | 'avatar' | 'avatars'
+export type TableCellType = 'text' | 'day' | 'pill' | 'avatar' | 'avatars'
 
 export interface TableCellBase {
   type: TableCellType
@@ -85,6 +86,14 @@ export interface TableCellDay extends TableCellBase {
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
 }
+
+export interface TableCellPill extends TableCellBase {
+  type: 'pill'
+  value?: string | ((value: any) => string)
+  color?: TableCellPillColor | ((value: any) => TableCellPillColor)
+}
+
+export type TableCellPillColor = 'info' | 'success' | 'warning' | 'danger' | 'mute'
 
 export interface TableCellAvatar extends TableCellBase {
   type: 'avatar'

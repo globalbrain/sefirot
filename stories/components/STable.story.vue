@@ -123,7 +123,18 @@ const table = useTable({
     status: {
       label: 'Status',
       dropdown: dropdownStatus,
-      cell: { type: 'text', color: 'soft' }
+      cell: {
+        type: 'pill',
+        color(value) {
+          if (value === 'Published') {
+            return 'success'
+          } else if (value === 'Draft') {
+            return 'info'
+          } else {
+            return 'mute'
+          }
+        }
+      }
     },
 
     type: {
