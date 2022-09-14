@@ -2,7 +2,7 @@
 import SIconX from 'sefirot/components/icons/SIconX.vue'
 
 defineProps<{
-  size: 'small' | 'medium' | 'large'
+  size?: 'small' | 'medium' | 'large'
 }>()
 
 defineEmits<{
