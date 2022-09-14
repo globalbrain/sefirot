@@ -83,9 +83,9 @@ const showError = computed(() => {
   width: 100%;
   line-height: 16px;
   font-weight: 500;
-  color: var(--input-label);
+  color: var(--c-text-1);
   cursor: pointer;
-  transition: color .25s;
+  transition: color 0.25s;
 }
 
 .note {
@@ -93,7 +93,7 @@ const showError = computed(() => {
   margin-left: 8px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--input-note);
+  color: var(--c-text-2);
 }
 
 .help {
@@ -118,7 +118,7 @@ const showError = computed(() => {
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--input-help);
+  color: var(--c-text-2);
 }
 
 .help-error + .help-text,

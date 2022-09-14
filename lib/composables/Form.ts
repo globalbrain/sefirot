@@ -1,32 +1,41 @@
-import { Ref, reactive } from 'vue'
 import cloneDeep from 'lodash-es/cloneDeep'
-import { useSnackbar } from './Snackbar'
-import { Validation, useValidation } from './Validation'
+import { Ref, reactive } from 'vue'
+import { useSnackbars } from '../stores/Snackbars'
+import { Validation, ValidationArgs, useValidation } from './Validation'
 
-export interface Form<D> {
+export interface Form<
+  D extends { [key in keyof A]: any },
+  A extends ValidationArgs = ValidationArgs
+> {
   data: D
-  validation: Ref<Validation>
+  validation: Ref<Validation<A, D>>
   init(): void
   reset(): void
   validate(): Promise<boolean>
   validateAndNotify(): Promise<boolean>
 }
 
-export interface UseFormOptions<D> {
+export interface UseFormOptions<
+  D extends { [key in keyof R]: any },
+  R extends ValidationArgs
+> {
   data: D
-  rules?: Ref<any> | any
+  rules?: Ref<R> | R
 }
 
-export function useForm<D>(options: UseFormOptions<D>): Form<D> {
-  const snackbar = useSnackbar()
+export function useForm<
+  D extends { [key in keyof R]: any },
+  R extends ValidationArgs = ValidationArgs
+>(options: UseFormOptions<D, R>): Form<D, R> {
+  const snackbars = useSnackbars()
 
   const initialData = cloneDeep(options.data)
 
-  const data = reactive(options.data as any)
+  const data = reactive(options.data) as D
 
-  const rules = options.rules ?? {}
+  const rules = options.rules ?? {} as R
 
-  const validation = useValidation(data, rules as any)
+  const validation = useValidation<D, R>(data, rules)
 
   function init(): void {
     Object.assign(data, initialData)
@@ -42,15 +51,16 @@ export function useForm<D>(options: UseFormOptions<D>): Form<D> {
   }
 
   async function validateAndNotify(): Promise<boolean> {
-    const result = await validate()
+    const valid = await validate()
 
-    if (!result) {
-      snackbar.push({
+    if (!valid) {
+      snackbars.push({
+        mode: 'danger',
         text: 'Form contains errors. Please correct them and try again.'
       })
     }
 
-    return result
+    return valid
   }
 
   return {

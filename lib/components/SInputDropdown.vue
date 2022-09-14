@@ -42,8 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed, nextTick } from 'vue'
 import isEqual from 'lodash-es/isEqual'
+import { PropType, computed, nextTick } from 'vue'
 import { Search, Item, UseDropdownSearchOptions, useDropdown } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { isNullish, isArray } from '../support/Utils'

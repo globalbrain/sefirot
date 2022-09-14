@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import { ComputedRef, PropType, computed } from 'vue'
 import isEqual from 'lodash-es/isEqual'
+import { ComputedRef, PropType, computed } from 'vue'
 import { isArray } from '../support/Utils'
 import SDropdownItemText from './SDropdownItemText.vue'
 import SDropdownItemUser from './SDropdownItemUser.vue'

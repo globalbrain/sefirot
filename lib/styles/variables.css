@@ -274,8 +274,8 @@
   --button-outline-bg-focus: var(--c-gray-dark-3);
 
   --button-text-text: var(--c-text-1);
-  --button-text-bg-hover: var(--c-black-mute);
-  --button-text-bg-focus: var(--c-gray-dark-3);
+  --button-text-bg-hover: var(--c-gray-dark-4);
+  --button-text-bg-focus: var(--c-bg-soft);
 
   /* Deprecated */
   --button-primary-text: var(--c-text-inverse-1);

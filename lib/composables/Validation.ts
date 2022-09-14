@@ -16,17 +16,13 @@ export interface Validatable {
   readonly $touch: () => void
 }
 
-export interface ValidationNotification {
-  notify(): Promise<boolean>
-}
-
 export function useValidation<
-  T extends { [key in keyof A]: any },
-  A extends ValidationArgs = ValidationArgs,
+  T extends { [key in keyof R]: any },
+  R extends ValidationArgs = ValidationArgs
 >(
   state: T | Ref<T> | ToRefs<T>,
-  rules: Ref<A> | A,
+  rules: Ref<R> | R,
   config?: GlobalConfig
-): Ref<Validation<A, T>> {
+): Ref<Validation<R, T>> {
   return useVuelidate(rules, state, config)
 }
