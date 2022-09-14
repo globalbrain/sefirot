@@ -21,9 +21,11 @@ defineProps<{
       v-if="!cell || cell.type === 'text'"
       :value="value"
       :record="record"
+      :icon="cell?.icon"
       :getter="cell?.value"
       :link="cell?.link"
       :color="cell?.color"
+      :icon-color="cell?.iconColor"
     />
     <STableCellDay
       v-else-if="cell.type === 'day'"
@@ -33,11 +35,11 @@ defineProps<{
       :color="cell.color"
     />
     <STableCellPill
-      v-if="!cell || cell.type === 'pill'"
+      v-else-if="cell.type === 'pill'"
       :value="value"
       :record="record"
-      :getter="cell?.value"
-      :color="cell?.color"
+      :getter="cell.value"
+      :color="cell.color"
     />
     <STableCellAvatar
       v-else-if="cell.type === 'avatar'"

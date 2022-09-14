@@ -2,6 +2,7 @@
 import { reactive, ref, computed } from 'vue'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
+import SIconImage from 'sefirot/components/icons/SIconImage.vue'
 import STable from 'sefirot/components/STable.vue'
 import { useTable } from 'sefirot/composables/Table'
 
@@ -117,7 +118,11 @@ const table = useTable({
     name: {
       label: 'Name',
       dropdown: dropdownName,
-      cell: { type: 'text', link: (_value, record) => record.link }
+      cell: {
+        type: 'text',
+        icon: SIconImage,
+        link: (_value, record) => record.link,
+      }
     },
 
     status: {
@@ -190,7 +195,7 @@ function updateTypeFilter(value: string) {
 </template>
 
 <style scoped>
-.table :deep(.col-name)      { --table-col-width: 144px; }
+.table :deep(.col-name)      { --table-col-width: 160px; }
 .table :deep(.col-status)    { --table-col-width: 144px; }
 .table :deep(.col-type)      { --table-col-width: 144px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }

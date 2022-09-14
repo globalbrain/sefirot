@@ -76,9 +76,11 @@ export interface TableCellBase {
 
 export interface TableCellText extends TableCellBase {
   type: 'text'
+  icon?: any
   value?: string | ((value: any) => string)
   link?(value: any, record: any): string
   color?: 'neutral' | 'soft' | 'mute'
+  iconColor?: 'neutral' | 'soft' | 'mute'
 }
 
 export interface TableCellDay extends TableCellBase {
