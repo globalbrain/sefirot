@@ -1,5 +1,5 @@
 import { Ref, reactive } from 'vue'
-import { cloneDeep } from '../support/Utils'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { useSnackbar } from './Snackbar'
 import { Validation, useValidation } from './Validation'
 

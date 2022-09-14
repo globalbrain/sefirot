@@ -17,6 +17,10 @@ export default defineConfig({
     testTimeout: 2000,
 
     coverage: {
+      provider: 'c8',
+      all: true,
+      src: ['lib'],
+      include: ['lib'],
       reporter: [
         'html',
         'json',
