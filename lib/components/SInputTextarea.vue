@@ -6,16 +6,16 @@
     :label="label"
     :note="note"
     :help="help"
-    :error-message="errorMessage"
+    :hide-error="hideError"
     :validation="validation"
   >
     <textarea
       :id="name"
       class="input"
       :placeholder="placeholder"
-      :rows="rows"
+      :rows="rows ?? 3"
       :disabled="disabled"
-      :value="modelValue ?? undefined"
+      :value="modelValue ?? ''"
       @input="emitInput"
       @blur="emitBlur"
     />
@@ -23,30 +23,32 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  name: { type: String, default: null },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  placeholder: { type: String, default: null },
-  disabled: { type: Boolean, default: false },
-  rows: { type: Number, default: 3 },
-  errorMessage: { type: Boolean, default: true },
-  modelValue: { type: String as PropType<string | null>, default: null },
-  validation: { type: Object as PropType<Validatable>, default: null }
-})
+const props = defineProps<{
+  size?: Size
+  name?: string
+  label?: string
+  note?: string
+  help?: string
+  placeholder?: string
+  disabled?: boolean
+  rows?: number
+  modelValue: string | null
+  hideError?: boolean
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: string): void
+}>()
 
 const classes = computed(() => [
-  props.size,
+  props.size ?? 'small',
   { disabled: props.disabled }
 ])
 
@@ -73,9 +75,9 @@ function emitBlur(e: FocusEvent): void {
 
 .SInputTextarea.small {
   .input {
-    padding: 7px 12px;
+    padding: 12px;
     width: 100%;
-    min-height: 88px;
+    min-height: 96px;
     line-height: 24px;
     font-size: 16px;
   }
@@ -113,25 +115,34 @@ function emitBlur(e: FocusEvent): void {
 .input {
   display: block;
   flex-grow: 1;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
   width: 100%;
   font-weight: 400;
   background-color: transparent;
-  transition: border-color .25s, background-color .25s;
+  transition: border-color 0.25s, background-color 0.25s;
 
   &::placeholder {
     font-weight: 500;
-    color: var(--input-placeholder);
+    color: var(--c-text-3);
   }
 
   &:hover {
-    border-color: var(--input-hover-border);
+    border-color: var(--c-black);
   }
 
-  &:focus {
-    border-color: var(--input-focus-border);
-    background-color: transparent;
+  &:focus,
+  &:hover:focus {
+    border-color: var(--c-info);
+  }
+
+  .dark &:hover {
+    border-color: var(--c-gray);
+  }
+
+  .dark &:focus,
+  .dark &:hover:focus {
+    border-color: var(--c-info);
   }
 }
 </style>
