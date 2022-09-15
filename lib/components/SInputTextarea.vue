@@ -119,7 +119,7 @@ function emitBlur(e: FocusEvent): void {
   border-radius: 6px;
   width: 100%;
   font-weight: 400;
-  background-color: transparent;
+  background-color: var(--c-bg);
   transition: border-color 0.25s, background-color 0.25s;
 
   &::placeholder {
