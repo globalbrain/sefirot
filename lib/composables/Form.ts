@@ -1,41 +1,34 @@
 import cloneDeep from 'lodash-es/cloneDeep'
 import { Ref, reactive } from 'vue'
 import { useSnackbars } from '../stores/Snackbars'
-import { Validation, ValidationArgs, useValidation } from './Validation'
+import { Validation, useValidation } from './Validation'
 
-export interface Form<
-  D extends { [key in keyof A]: any },
-  A extends ValidationArgs = ValidationArgs
-> {
-  data: D
-  validation: Ref<Validation<A, D>>
+export interface Form<T extends Record<string, any>> {
+  data: T
+  validation: Ref<Validation<any, T>>
   init(): void
   reset(): void
   validate(): Promise<boolean>
   validateAndNotify(): Promise<boolean>
 }
 
-export interface UseFormOptions<
-  D extends { [key in keyof R]: any },
-  R extends ValidationArgs
-> {
-  data: D
-  rules?: Ref<R> | R
+export interface UseFormOptions<T extends Record<string, any>> {
+  data: T,
+  rules?: Record<string, any>
 }
 
 export function useForm<
-  D extends { [key in keyof R]: any },
-  R extends ValidationArgs = ValidationArgs
->(options: UseFormOptions<D, R>): Form<D, R> {
+  T extends Record<string, any>
+>(options: UseFormOptions<T>): Form<T> {
   const snackbars = useSnackbars()
 
   const initialData = cloneDeep(options.data)
 
-  const data = reactive(options.data) as D
+  const data = reactive(options.data)
 
-  const rules = options.rules ?? {} as R
+  const rules = options.rules
 
-  const validation = useValidation<D, R>(data, rules)
+  const validation = useValidation(data, rules)
 
   function init(): void {
     Object.assign(data, initialData)
