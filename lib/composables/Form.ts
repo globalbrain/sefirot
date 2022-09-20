@@ -26,7 +26,7 @@ export function useForm<
 
   const data = reactive(options.data)
 
-  const rules = options.rules
+  const rules = options.rules ?? {}
 
   const validation = useValidation(data, rules)
 
