@@ -79,6 +79,7 @@ export interface TableCellText extends TableCellBase {
   icon?: any
   value?: string | ((value: any) => string)
   link?(value: any, record: any): string
+  callback?(value: any, record: any): void
   color?: 'neutral' | 'soft' | 'mute'
   iconColor?: 'neutral' | 'soft' | 'mute'
 }

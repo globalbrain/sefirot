@@ -10,6 +10,7 @@ const props = defineProps<{
   color?: 'neutral' | 'soft' | 'mute'
   iconColor?: 'neutral' | 'soft' | 'mute'
   link?(value: any, record: any): string
+  callback?(value: any, record: any): void
 }>()
 
 const _value = computed(() => {
@@ -21,15 +22,19 @@ const _value = computed(() => {
     ? props.getter
     : props.getter(props.value)
 })
+
+function handleClick() {
+  props.callback && props.callback(props.value, props.record)
+}
 </script>
 
 <template>
-  <div class="STableCellText" :class="[{ link }, color ?? 'neutral']">
+  <div class="STableCellText" :class="[{ link: link || callback }, color ?? 'neutral']">
     <SLink v-if="_value" class="container" :href="link?.(value, record)">
       <div v-if="icon" class="icon" :class="[iconColor ?? color ?? 'neutral']">
         <component class="svg" :is="icon" />
       </div>
-      <div class="text" :class="[color ?? 'neutral']">
+      <div class="text" :class="[color ?? 'neutral']" :role="callback && 'button'" @click="handleClick">
         {{ _value }}
       </div>
     </SLink>

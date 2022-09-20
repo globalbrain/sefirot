@@ -24,6 +24,7 @@ defineProps<{
       :icon="cell?.icon"
       :getter="cell?.value"
       :link="cell?.link"
+      :callback="cell?.callback"
       :color="cell?.color"
       :icon-color="cell?.iconColor"
     />

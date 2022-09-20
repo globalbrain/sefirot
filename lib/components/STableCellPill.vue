@@ -32,7 +32,7 @@ const _color = computed(() => {
 
 <template>
   <div class="STableCellPill" :class="[_color ?? 'mute']">
-    <div class="value">{{ _value }}</div>
+    <div v-if="_value" class="value">{{ _value }}</div>
   </div>
 </template>
 
