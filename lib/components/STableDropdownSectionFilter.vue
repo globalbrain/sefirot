@@ -77,7 +77,11 @@ function handleClick(option: TableDropdownSectionFilterOption, value: string) {
 
 <style scoped lang="postcss">
 .search {
+  position: sticky;
+  top: 0;
+  border-bottom: 1px solid var(--c-divider-light);
   padding: 8px;
+  background-color: var(--c-bg-elv-up);
 }
 
 .input {
@@ -104,10 +108,6 @@ function handleClick(option: TableDropdownSectionFilterOption, value: string) {
 
 .list {
   padding: 8px;
-
-  .search + & {
-    border-top: 1px solid var(--c-divider-light);
-  }
 }
 
 .button {

@@ -10,18 +10,20 @@ defineProps<{
 
 <template>
   <div class="STableColumnDropdown">
-    <div v-for="(item, index) in sections" :key="index" class="section">
-      <STableDropdownSectionMenu
-        v-if="item.type === 'menu'"
-        :options="item.options"
-      />
-      <STableDropdownSectionFilter
-        v-else-if="item.type === 'filter'"
-        :search="item.search"
-        :selected="item.selected"
-        :options="item.options"
-        :on-click="item.onClick"
-      />
+    <div class="container">
+      <div v-for="(item, index) in sections" :key="index" class="section">
+        <STableDropdownSectionMenu
+          v-if="item.type === 'menu'"
+          :options="item.options"
+        />
+        <STableDropdownSectionFilter
+          v-else-if="item.type === 'filter'"
+          :search="item.search"
+          :selected="item.selected"
+          :options="item.options"
+          :on-click="item.onClick"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -31,7 +33,13 @@ defineProps<{
   border: 1px solid var(--c-divider-light);
   border-radius: 12px;
   min-width: 256px;
+  max-height: 384px;
   background-color: var(--c-bg);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .dark & {
     background-color: var(--c-bg-mute);
