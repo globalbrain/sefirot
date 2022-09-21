@@ -1,79 +1,37 @@
-<template>
-  <SInputBase
-    class="SInputHMS"
-    :class="[size, { disabled }]"
-    :label="label"
-    :note="note"
-    :help="help"
-    :error-message="errorMessage"
-    :validation="validation"
-  >
-    <div class="container">
-      <input
-        v-if="hour"
-        class="input hour"
-        :value="modelValue?.hour ?? null"
-        placeholder="00"
-        :disabled="disabled"
-        @blur="updateHour"
-      >
-      <div v-if="hour && minute" class="separator" />
-      <input
-        v-if="minute"
-        class="input minute"
-        :value="modelValue?.minute ?? null"
-        placeholder="00"
-        :disabled="disabled"
-        @blur="updateMinute"
-      >
-      <div v-if="minute && second" class="separator" />
-      <input
-        v-if="second"
-        class="input second"
-        :value="modelValue?.second ?? null"
-        placeholder="00"
-        :disabled="disabled"
-        @blur="updateSecond"
-      >
-    </div>
-
-    <template #before-help>
-      <slot name="before-help" />
-    </template>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
 
-interface Value {
-  hour?: string
-  minute?: string
-  second?: string
+export interface Value {
+  hour: string | null
+  minute: string | null
+  second: string | null
 }
 
-type ValueType = 'hour' | 'minute' | 'second'
+export type ValueType = 'hour' | 'minute' | 'second'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  placeholder: { type: String, default: null },
-  hour: { type: Boolean, default: true },
-  minute: { type: Boolean, default: true },
-  second: { type: Boolean, default: true },
-  disabled: { type: Boolean, default: false },
-  errorMessage: { type: Boolean, default: true },
-  modelValue: { type: Object as PropType<Value>, default: null },
-  validation: { type: Object as PropType<Validatable>, default: null }
-})
+const props = defineProps<{
+  size?: Size
+  label?: string
+  note?: string
+  help?: string
+  noHour?: boolean
+  noMinute?: boolean
+  noSecond?: boolean
+  disabled?: boolean
+  hideError?: boolean
+  modelValue: Value
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: Value): void
+}>()
+
+const isFocused = ref(false)
 
 const touched = {
   hour: false,
@@ -81,53 +39,45 @@ const touched = {
   second: false
 }
 
-function updateHour(e: FocusEvent): void {
-  const value = getValue((e.target as HTMLInputElement).value)
+function onFocus() {
+  isFocused.value = true
+}
 
-  update('hour', value)
+function blur() {
+  isFocused.value = false
+}
+
+function updateHour(e: FocusEvent): void {
+  update('hour', getValue((e.target as HTMLInputElement).value))
 }
 
 function updateMinute(e: FocusEvent): void {
-  const value = getValue((e.target as HTMLInputElement).value)
-
-  update('minute', value ? value.padStart(2, '0') : undefined)
+  update('minute', getValue((e.target as HTMLInputElement).value))
 }
 
 function updateSecond(e: FocusEvent): void {
-  const value = getValue((e.target as HTMLInputElement).value)
-
-  update('second', value ? value.padStart(2, '0') : undefined)
+  update('second', getValue((e.target as HTMLInputElement).value))
 }
 
-function update(type: ValueType, value?: string): void {
-  const data = { ...props.modelValue } as Value
-
-  setValue(data, type, value)
-
-  data.hour === undefined && data.minute === undefined && data.second === undefined
-    ? emit('update:modelValue', null)
-    : emit('update:modelValue', data)
+function update(type: ValueType, value: string | null) {
+  emit('update:modelValue', {
+    ...props.modelValue,
+    [type]: value !== null ? value.padStart(2, '0') : null
+  })
 
   emitTouch(type)
+
+  blur()
 }
 
-function getValue(value: string): string | undefined {
+function getValue(value: string): string | null {
   if (value === '') {
-    return undefined
+    return null
   }
 
   const input = Number(value)
 
-  return isNaN(input) ? undefined : String(input)
-}
-
-function setValue(data: Value, type: ValueType, value?: string): void {
-  if (value === undefined) {
-    delete data[type]
-    return
-  }
-
-  data[type] = value
+  return isNaN(input) ? null : String(input)
 }
 
 function emitTouch(type: ValueType): void {
@@ -146,7 +96,7 @@ function createRequiredTouched(): boolean[] {
   const requiredTouched = [] as boolean[]
 
   for (const key in touched) {
-    if ((props as any)[key]) {
+    if (!(props as any)[`no${key.charAt(0).toUpperCase() + key.slice(1)}`]) {
       requiredTouched.push((touched as any)[key])
     }
   }
@@ -154,6 +104,54 @@ function createRequiredTouched(): boolean[] {
   return requiredTouched
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputHMS"
+    :class="[size, { disabled }]"
+    :label="label"
+    :note="note"
+    :help="help"
+    :hide-error="hideError"
+    :validation="validation"
+  >
+    <div class="container" :class="{ focus: isFocused }">
+      <input
+        v-if="!noHour"
+        class="input hour"
+        :value="modelValue.hour"
+        placeholder="00"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateHour"
+      >
+      <div v-if="!noHour && !noMinute" class="separator" />
+      <input
+        v-if="!noMinute"
+        class="input minute"
+        :value="modelValue.minute"
+        placeholder="00"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateMinute"
+      >
+      <div v-if="!noMinute && !noSecond" class="separator" />
+      <input
+        v-if="!noSecond"
+        class="input second"
+        :value="modelValue.second"
+        placeholder="00"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateSecond"
+      >
+    </div>
+
+    <template #before-help>
+      <slot name="before-help" />
+    </template>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputHMS.mini {
@@ -246,22 +244,41 @@ function createRequiredTouched(): boolean[] {
 
 .container {
   display: inline-flex;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  transition: border-color .25s;
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
+  background-color: var(--c-bg);
+  transition: border-color 0.25s;
 
   &:hover {
-    border-color: var(--input-focus-border);
+    border-color: var(--c-black);
+  }
+
+  &.focus,
+  &:hover.focus {
+    border-color: var(--c-info);
+  }
+
+  .dark &:hover {
+    border-color: var(--c-gray);
+  }
+
+  .dark &.focus,
+  .dark &:hover.focus {
+    border-color: var(--c-info);
   }
 }
 
 .input {
-  margin: 0;
   background-color: transparent;
+
+  &::placeholder {
+    font-weight: 500;
+    color: var(--c-text-3);
+  }
 }
 
 .separator::before {
-  color: var(--c-text-2);
+  color: var(--c-text-3);
   content: ":";
 }
 </style>
