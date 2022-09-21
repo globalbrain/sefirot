@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import SIcon from './SIcon.vue'
 import SIconPreloader from './icons/SIconPreloader.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
@@ -21,7 +22,7 @@ const props = defineProps<{
   size?: Size
   type?: Type
   mode?: Mode
-  icon?: object
+  icon?: any
   label?: string
   href?: string
   loading?: boolean
@@ -61,7 +62,8 @@ function handleClick(): void {
     @click="handleClick"
   >
     <span class="content">
-      <span v-if="icon" class="icon"><component :is="icon" class="icon-svg" /></span>
+      <span v-if="icon && 'body' in icon" class="icon"><SIcon :icon="icon" class="icon-svg" /></span>
+      <span v-else-if="icon" class="icon"><component :is="icon" class="icon-svg" /></span>
       <span v-if="label" class="label">{{ label }}</span>
     </span>
 
