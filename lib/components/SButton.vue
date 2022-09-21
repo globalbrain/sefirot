@@ -62,8 +62,7 @@ function handleClick(): void {
     @click="handleClick"
   >
     <span class="content">
-      <span v-if="icon && 'body' in icon" class="icon"><SIcon :icon="icon" class="icon-svg" /></span>
-      <span v-else-if="icon" class="icon"><component :is="icon" class="icon-svg" /></span>
+      <span v-if="icon" class="icon"><SIcon :icon="icon" class="icon-svg" /></span>
       <span v-if="label" class="label">{{ label }}</span>
     </span>
 
