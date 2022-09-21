@@ -4,7 +4,7 @@ export interface Grid {
   container: Ref<HTMLElement | null>
 }
 
-export interface Option {
+export interface UseGridOptions {
   tag?: string
   class?: string
   type?: 'fill' | 'fit'
@@ -12,7 +12,7 @@ export interface Option {
 
 type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
 
-export function useGrid(options: Option): Grid {
+export function useGrid(options: UseGridOptions): Grid {
   const container: Ref<HTMLElement | null> = ref(null)
 
   const spacerClass = options.class ? toClassName(options.class) : 'spacer'
