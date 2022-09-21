@@ -1,3 +1,118 @@
+<script setup lang="ts">
+import xor from 'lodash-es/xor'
+import { computed } from 'vue'
+import type { DropdownSectionFilter } from '../composables/Dropdown'
+import { useFlyout } from '../composables/Flyout'
+import { Validatable } from '../composables/Validation'
+import { isArray } from '../support/Utils'
+import SDropdown from './SDropdown.vue'
+import SInputBase from './SInputBase.vue'
+import SInputDropdownItem from './SInputDropdownItem.vue'
+import SIconChevronDown from './icons/SIconChevronDown.vue'
+import SIconChevronUp from './icons/SIconChevronUp.vue'
+
+export type Size = 'mini' | 'small' | 'medium'
+export type PrimitiveValue = string | number | boolean | null
+export type ArrayValue = (string | number | boolean)[]
+export type OptionValue = string | number | boolean
+
+export type Option = OptionText | OptionAvatar
+
+export interface OptionBase {
+  type?: 'text' | 'avatar'
+  value: OptionValue
+}
+
+export interface OptionText extends OptionBase {
+  type?: 'text'
+  label: string
+}
+
+export interface OptionAvatar extends OptionBase {
+  type: 'avatar'
+  label: string
+  image?: string | null
+}
+
+const props = defineProps<{
+  size?: Size
+  label?: string
+  note?: string
+  help?: string
+  placeholder?: string
+  noSearch?: boolean
+  nullable?: boolean
+  closeOnClick?: boolean
+  options: Option[]
+  disabled?: boolean
+  modelValue: PrimitiveValue | ArrayValue
+  validation?: Validatable
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
+}>()
+
+const { container, isOpen, open } = useFlyout()
+
+const classes = computed(() => [
+  props.size ?? 'small',
+  { disabled: props.disabled }
+])
+
+const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
+  type: 'filter',
+  search: props.noSearch === undefined ? true : !props.noSearch,
+  selected: props.modelValue,
+  options: props.options,
+  onClick: handleSelect
+}])
+
+const selected = computed(() => {
+  if (isArray(props.modelValue)) {
+    return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
+  }
+
+  const item = props.options.find((o) => o.value === props.modelValue)
+
+  return item ? [item] : []
+})
+
+const hasSelected = computed(() => {
+  return selected.value.length > 0
+})
+
+async function handleOpen() {
+  !props.disabled && open()
+}
+
+function handleSelect(value: OptionValue) {
+  props.validation?.$touch()
+
+  isArray(props.modelValue) ? handleArray(value) : handlePrimitive(value)
+}
+
+function handlePrimitive(value: OptionValue) {
+  if (value !== props.modelValue) {
+    return emit('update:modelValue', value)
+  }
+
+  if (props.nullable) {
+    emit('update:modelValue', null)
+  }
+}
+
+function handleArray(value: OptionValue) {
+  const difference = xor(props.modelValue as ArrayValue, [value])
+
+  if (!props.nullable && difference.length === 0) {
+    return
+  }
+
+  emit('update:modelValue', difference)
+}
+</script>
+
 <template>
   <SInputBase
     class="SInputDropdown"
@@ -7,9 +122,9 @@
     :help="help"
     :validation="validation"
   >
-    <div ref="container" class="SInputDropdown-container">
+    <div class="container" ref="container">
       <div
-        class="SInputDropdown-box"
+        class="box"
         role="button"
         tabindex="0"
         @click="handleOpen"
@@ -17,217 +132,92 @@
         @keyup.enter="handleOpen"
         @keyup.down="handleOpen"
       >
-        <div class="SInputDropdown-box-content">
+        <div class="box-content">
           <SInputDropdownItem
             v-if="hasSelected"
-            :item="selected"
-            :disabled="disabled"
-            @remove="handleCallback"
+            :items="selected"
+            :disabled="disabled ?? false"
+            @remove="handleSelect"
           />
 
-          <span v-else class="SInputDropdown-box-placeholder">{{ placeholder }}</span>
+          <div v-else class="box-placeholder">{{ placeholder }}</div>
         </div>
 
-        <div class="SInputDropdown-box-icon">
-          <SIconChevronUp class="SInputDropdown-box-icon-svg up" />
-          <SIconChevronDown class="SInputDropdown-box-icon-svg down" />
+        <div class="box-icon">
+          <SIconChevronUp class="box-icon-svg up" />
+          <SIconChevronDown class="box-icon-svg down" />
         </div>
       </div>
 
-      <div v-if="isOpen" class="SInputDropdown-dropdown">
-        <SDropdown :options="dropdownOptions" @close="close" />
+      <div v-if="isOpen" class="dropdown">
+        <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
   </SInputBase>
 </template>
 
-<script setup lang="ts">
-import isEqual from 'lodash-es/isEqual'
-import { PropType, computed, nextTick } from 'vue'
-import { Search, Item, UseDropdownSearchOptions, useDropdown } from '../composables/Dropdown'
-import { useFlyout } from '../composables/Flyout'
-import { isNullish, isArray } from '../support/Utils'
-import SDropdown from './SDropdown.vue'
-import SInputBase from './SInputBase.vue'
-import SInputDropdownItem from './SInputDropdownItem.vue'
-import SIconChevronDown from './icons/SIconChevronDown.vue'
-import SIconChevronUp from './icons/SIconChevronUp.vue'
-
-type Size = 'mini' | 'small' | 'medium'
-type Value = string | number | boolean | unknown[]
-
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  placeholder: { type: String, default: null },
-  search: { type: [Boolean, Object] as PropType<boolean | Search>, default: false },
-  options: { type: Array as PropType<Item[]>, required: true },
-  nullable: { type: Boolean, default: true },
-  closeOnClick: { type: Boolean, default: false },
-  disabled: { type: Boolean, default: false },
-  modelValue: { type: [String, Number, Boolean, Array, Object] as PropType<Value>, default: null },
-  validation: { type: Object as PropType<any>, default: null }
-})
-
-const emit = defineEmits(['update:modelValue'])
-
-const { container, isOpen, open, close } = useFlyout()
-
-const classes = computed(() => [
-  props.size,
-  { disabled: props.disabled }
-])
-
-const enabledItems = computed(() => {
-  return props.options.filter(option => !option.disabled)
-})
-
-const dropdownOptions = useDropdown({
-  search: createDropdownSearchOptions(),
-  items: enabledItems,
-  closeOnClick: props.closeOnClick,
-  selected: computed(() => props.modelValue),
-  callback: handleCallback
-})
-
-const selected = computed(() => {
-  return isArray(props.modelValue)
-    ? props.options.filter(o => (props.modelValue as unknown[]).includes(o.value))
-    : props.options.find(o => isEqual(o.value, props.modelValue))
-})
-
-const hasSelected = computed(() => {
-  return isArray(selected.value)
-    ? selected.value.length > 0
-    : !isNullish(selected.value) && selected.value.value !== ''
-})
-
-function createDropdownSearchOptions(): UseDropdownSearchOptions | undefined {
-  if (props.search === false) {
-    return undefined
-  }
-
-  if (props.search === true) {
-    return {
-      placeholder: 'Search items',
-      missing: 'No items found.'
-    }
-  }
-
-  return props.search
-}
-
-async function handleOpen(): Promise<void> {
-  if (!props.disabled) {
-    open()
-
-    await nextTick()
-
-    const el = document.querySelector<HTMLInputElement>('.SInputDropdown .SDropdown .search .SInputText input')
-
-    el && el.focus()
-  }
-}
-
-function handleCallback(item: Item): void {
-  props.validation && props.validation.$touch()
-
-  isArray(props.modelValue) ? handleArray(item.value) : handlePrimitive(item.value)
-}
-
-function handlePrimitive(value: unknown): void {
-  if (!isEqual(props.modelValue, value)) {
-    emit('update:modelValue', value)
-
-    return
-  }
-
-  if (props.nullable) {
-    emit('update:modelValue', null)
-  }
-}
-
-function handleArray(value: unknown[]): void {
-  const difference = getDifference(props.modelValue as unknown[], value)
-
-  if (!props.nullable && difference.length === 0) {
-    return
-  }
-
-  emit('update:modelValue', difference)
-}
-
-function getDifference(source: unknown[], value: unknown[]): unknown[] {
-  return source
-    .filter(item => !isEqual(item, value))
-    .concat(source.includes(value) ? [] : [value])
-}
-</script>
-
 <style lang="postcss" scoped>
 .SInputDropdown.mini {
-  .SInputDropdown-box {
+  .box {
     min-height: 32px;
   }
 
-  .SInputDropdown-box-content {
+  .box-content {
     padding: 3px 30px 3px 12px;
     line-height: 24px;
     font-size: 14px;
   }
 
-  .SInputDropdown-box-icon {
+  .box-icon {
     top: 3px;
     right: 8px;
   }
 }
 
 .SInputDropdown.small {
-  .SInputDropdown-box {
+  .box {
     min-height: 40px;
   }
 
-  .SInputDropdown-box-content {
-    padding: 7px 30px 7px 12px;
+  .box-content {
+    padding: 5px 30px 5px 8px;
     line-height: 24px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
-  .SInputDropdown-box-icon {
+  .box-icon {
     top: 7px;
     right: 8px;
   }
 }
 
 .SInputDropdown.medium {
-  .SInputDropdown-box {
+  .box {
     height: 48px;
   }
 
-  .SInputDropdown-box-content {
+  .box-content {
     padding: 11px 44px 11px 16px;
     line-height: 24px;
     font-size: 16px;
   }
 
-  .SInputDropdown-box-icon {
+  .box-icon {
     top: 11px;
     right: 12px;
   }
 }
 
 .SInputDropdown.disabled {
-  .SInputDropdown-box {
-    background-color: var(--input-disabled-bg);
+  .box {
+    background-color: var(--c-bg);
     cursor: not-allowed;
 
-    &:hover                     { border-color: var(--input-outlined-border); }
-    &:focus:not(:focus-visible) { border-color: var(--input-outlined-border); }
+    &:hover                     { border-color: var(--c-divider); }
+    &:focus:not(:focus-visible) { border-color: var(--c-divider); }
   }
 
-  .SInputDropdown-box-icon {
+  .box-icon {
     cursor: not-allowed;
   }
 }
@@ -238,53 +228,63 @@ function getDifference(source: unknown[], value: unknown[]): unknown[] {
   }
 }
 
-.SInputDropdown-container {
+.container {
   position: relative;
 }
 
-.SInputDropdown-box {
+.box {
   position: relative;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
   width: 100%;
   color: var(--input-text);
+  background-color: var(--c-bg);
   cursor: pointer;
   transition: border-color .25s, background-color .25s;
 
   &:hover {
-    border-color: var(--input-focus-border);
+    border-color: var(--c-black);
   }
 
-  &:focus {
-    border-color: var(--input-focus-border);
-    outline: 0;
+  &:focus,
+  &:hover.focus {
+    border-color: var(--c-info);
   }
 
+  .dark &:hover {
+    border-color: var(--c-gray);
+  }
+
+  .dark &:focus,
+  .dark &:hover:focus {
+    border-color: var(--c-info);
+  }
 }
 
-.SInputDropdown-box-placeholder {
+.box-placeholder {
+  padding: 2px 4px;
   font-weight: 500;
-  color: var(--input-placeholder);
+  color: var(--c-text-3);
 }
 
-.SInputDropdown-box-icon {
+.box-icon {
   position: absolute;
   z-index: 10;
   cursor: pointer;
 }
 
-.SInputDropdown-box-icon-svg {
+.box-icon-svg {
   display: block;
   width: 14px;
   height: 14px;
-  fill: var(--input-placeholder);
+  fill: var(--c-text-2);
 }
 
-.SInputDropdown-box-icon-svg.up {
+.box-icon-svg.up {
   margin-bottom: -4px;
 }
 
-.SInputDropdown-dropdown {
+.dropdown {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;

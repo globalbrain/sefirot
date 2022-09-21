@@ -1,5 +1,6 @@
 import { MaybeRef } from '@vueuse/core'
 import { reactive } from 'vue'
+import { DropdownSection } from './Dropdown'
 
 export interface Table {
   orders: string[]
@@ -23,42 +24,8 @@ export interface TableColumns {
 export interface TableColumn {
   label: string
   className?: string
-  dropdown?: TableDropdownSection[]
+  dropdown?: DropdownSection[]
   cell?: TableCell
-}
-
-export type TableDropdownSection =
-  | TableDropdownSectionMenu
-  | TableDropdownSectionFilter
-
-export type TableDropdownSectionType = 'menu' | 'filter'
-
-export interface TableDropdownSectionBase {
-  type: TableDropdownSectionType
-}
-
-export interface TableDropdownSectionMenu extends TableDropdownSectionBase {
-  type: 'menu'
-  options: TableDropdownSectionMenuOption[]
-}
-
-export interface TableDropdownSectionMenuOption {
-  label: string
-  onClick(): void
-}
-
-export interface TableDropdownSectionFilter extends TableDropdownSectionBase {
-  type: 'filter'
-  search?: boolean
-  selected: MaybeRef<string[]>
-  options: TableDropdownSectionFilterOption[]
-  onClick?(value: string): void
-}
-
-export interface TableDropdownSectionFilterOption {
-  label: string
-  value: string
-  onClick?(value: string): void
 }
 
 export type TableCell =
@@ -133,8 +100,4 @@ export interface UseTableOptions {
 
 export function useTable(options: UseTableOptions): Table {
   return reactive(options)
-}
-
-export function createTableDropdown(options: TableDropdownSection[]): TableDropdownSection[] {
-  return options
 }

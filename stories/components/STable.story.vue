@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, computed } from 'vue'
+import { reactive, ref, computed, markRaw } from 'vue'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import SIconImage from 'sefirot/components/icons/SIconImage.vue'
@@ -61,7 +61,7 @@ const dropdownType = [
   {
     type: 'filter',
     search: true,
-    selected: dropdownTypeSelected,
+    selected: markRaw(dropdownTypeSelected),
     options: [
       { label: 'Photo', value: 'Photo', onClick: updateTypeFilter },
       { label: 'Illustration', value: 'Illustration', onClick: updateTypeFilter },
@@ -120,7 +120,7 @@ const table = useTable({
       dropdown: dropdownName,
       cell: {
         type: 'text',
-        icon: SIconImage,
+        icon: markRaw(SIconImage),
         link: (_value, record) => record.link,
       }
     },

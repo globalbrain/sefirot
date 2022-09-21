@@ -1,20 +1,25 @@
 <script setup lang="ts">
 import { DropdownSection } from '../composables/Dropdown'
-import SDropdownSection from './SDropdownSection.vue'
+import SDropdownSectionFilter from './SDropdownSectionFilter.vue'
+import SDropdownSectionMenu from './SDropdownSectionMenu.vue'
 
 defineProps<{
-  sections: DropdownSection[]
+  section: DropdownSection
 }>()
 </script>
 
 <template>
-  <div class="SDropdown">
-    <div class="container">
-      <div v-for="(section, index) in sections" :key="index" class="section">
-        <SDropdownSection :section="section" />
-      </div>
-    </div>
-  </div>
+  <SDropdownSectionMenu
+    v-if="section.type === 'menu'"
+    :options="section.options"
+  />
+  <SDropdownSectionFilter
+    v-else-if="section.type === 'filter'"
+    :search="section.search"
+    :selected="section.selected"
+    :options="section.options"
+    :on-click="section.onClick"
+  />
 </template>
 
 <style scoped lang="postcss">

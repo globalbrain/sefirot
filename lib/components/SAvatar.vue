@@ -5,8 +5,8 @@ export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large'
 
 const props = defineProps<{
   size?: Size
-  avatar?: string
-  name?: string
+  avatar?: string | null
+  name?: string | null
 }>()
 
 const classes = computed(() => [props.size ?? 'medium'])

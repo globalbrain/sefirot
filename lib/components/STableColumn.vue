@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { ref, computed, unref, watch, nextTick } from 'vue'
+import { DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
-import { TableDropdownSection } from '../composables/Table'
-import STableDropdownSection from './STableDropdownSection.vue'
+import { isArray } from '../support/Utils'
+import SDropdown from './SDropdown.vue'
 import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
 
 const props = defineProps<{
   name: string
   label: string
   className?: string
-  dropdown?: TableDropdownSection[]
+  dropdown?: DropdownSection[]
 }>()
 
 const emit = defineEmits<{
@@ -33,6 +34,10 @@ const active = computed(() => {
     }
 
     const selected = unref(item.selected)
+
+    if (!isArray(selected)) {
+      return selected !== null
+    }
 
     if (!selected.length) {
       return false
@@ -112,13 +117,8 @@ function stopDialogPositionListener() {
         </button>
 
         <transition name="fade">
-          <div
-            v-if="isOpen"
-            class="dialog"
-            :style="{ top, left }"
-            ref="dialog"
-          >
-            <STableDropdownSection :sections="dropdown" />
+          <div v-if="isOpen" class="dialog" :style="{ top, left }" ref="dialog">
+            <SDropdown :sections="dropdown" />
           </div>
         </transition>
       </div>

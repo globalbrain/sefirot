@@ -1,83 +1,37 @@
-<template>
-  <SInputBase
-    class="SInputYMD"
-    :class="[size, { disabled }]"
-    :label="label"
-    :note="note"
-    :help="help"
-    :error-message="errorMessage"
-    :validation="validation"
-  >
-    <div class="container">
-      <input
-        v-if="year"
-        class="input year"
-        type="number"
-        :value="modelValue?.year"
-        placeholder="YYYY"
-        :disabled="disabled"
-        @blur="updateYear"
-      >
-      <div
-        v-if="year && month"
-        class="separator"
-      />
-      <input
-        v-if="month"
-        class="input month"
-        type="number"
-        :value="modelValue?.month"
-        placeholder="M"
-        :disabled="disabled"
-        @blur="updateMonth"
-      >
-      <div
-        v-if="month && date"
-        class="separator"
-      />
-      <input
-        v-if="date"
-        class="input date"
-        type="number"
-        :value="modelValue?.date"
-        placeholder="D"
-        :disabled="disabled"
-        @blur="updateDate"
-      >
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
 
-interface Value {
-  year?: number
-  month?: number
-  date?: number
+export interface Value {
+  year: number | null
+  month: number | null
+  date: number | null
 }
 
-type ValueType = 'year' | 'month' | 'date'
+export type ValueType = 'year' | 'month' | 'date'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  year: { type: Boolean, default: true },
-  month: { type: Boolean, default: true },
-  date: { type: Boolean, default: true },
-  disabled: { type: Boolean, default: false },
-  errorMessage: { type: Boolean, default: true },
-  modelValue: { type: Object as PropType<Value>, default: null },
-  validation: { type: Object as PropType<Validatable>, default: null }
-})
+const props = defineProps<{
+  size?: Size
+  label?: string
+  note?: string
+  help?: string
+  noYear?: boolean
+  noMonth?: boolean
+  noDate?: boolean
+  disabled?: boolean
+  hideError?: boolean
+  modelValue: Value
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: Value): void
+}>()
+
+const isFocused = ref(false)
 
 const touched = {
   year: false,
@@ -85,40 +39,35 @@ const touched = {
   date: false
 }
 
-function updateYear(e: FocusEvent): void {
-  const value = Number((e.target as HTMLInputElement).value)
-  update('year', value === 0 ? undefined : value)
+function onFocus() {
+  isFocused.value = true
 }
 
-function updateMonth(e: FocusEvent): void {
-  const value = Number((e.target as HTMLInputElement).value)
-  update('month', value === 0 ? undefined : value)
+function blur() {
+  isFocused.value = false
 }
 
-function updateDate(e: FocusEvent): void {
-  const value = Number((e.target as HTMLInputElement).value)
-  update('date', value === 0 ? undefined : value)
+function updateYear(e: FocusEvent) {
+  update('year', Number((e.target as HTMLInputElement).value))
 }
 
-function update(type: ValueType, value?: number): void {
-  const data = { ...props.modelValue } as Value
+function updateMonth(e: FocusEvent) {
+  update('month', Number((e.target as HTMLInputElement).value))
+}
 
-  setValue(data, type, value)
+function updateDate(e: FocusEvent) {
+  update('date', Number((e.target as HTMLInputElement).value))
+}
 
-  data.year === undefined && data.month === undefined && data.date === undefined
-    ? emit('update:modelValue', null)
-    : emit('update:modelValue', data)
+function update(type: ValueType, value: number) {
+  emit('update:modelValue', {
+    ...props.modelValue,
+    [type]: value === 0 ? null : value
+  })
 
   emitTouch(type)
-}
 
-function setValue(data: Value, type: ValueType, value?: number): void {
-  if (value === undefined) {
-    delete data[type]
-    return
-  }
-
-  data[type] = value
+  blur()
 }
 
 function emitTouch(type: ValueType): void {
@@ -137,7 +86,7 @@ function createRequiredTouched(): boolean[] {
   const requiredTouched = [] as boolean[]
 
   for (const key in touched) {
-    if ((props as any)[key]) {
+    if (!(props as any)[`no${key.charAt(0).toUpperCase() + key.slice(1)}`]) {
       requiredTouched.push((touched as any)[key])
     }
   }
@@ -145,6 +94,59 @@ function createRequiredTouched(): boolean[] {
   return requiredTouched
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputYMD"
+    :class="[size, { disabled }]"
+    :label="label"
+    :note="note"
+    :help="help"
+    :hide-error="hideError"
+    :validation="validation"
+  >
+    <div class="container" :class="{ focus: isFocused }">
+      <input
+        v-if="!noYear"
+        class="input year"
+        type="number"
+        :value="modelValue.year"
+        placeholder="YYYY"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateYear"
+      >
+      <div
+        v-if="!noYear && !noMonth"
+        class="separator"
+      />
+      <input
+        v-if="!noMonth"
+        class="input month"
+        type="number"
+        :value="modelValue.month"
+        placeholder="M"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateMonth"
+      >
+      <div
+        v-if="!noMonth && !noDate"
+        class="separator"
+      />
+      <input
+        v-if="!noDate"
+        class="input date"
+        type="number"
+        :value="modelValue.date"
+        placeholder="D"
+        :disabled="disabled"
+        @focus="onFocus"
+        @blur="updateDate"
+      >
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputYMD.mini {
@@ -171,7 +173,7 @@ function createRequiredTouched(): boolean[] {
 
 .SInputYMD.small {
   .container {
-    padding: 0 4px;
+    padding: 0 6px;
   }
 
   .input {
@@ -181,7 +183,7 @@ function createRequiredTouched(): boolean[] {
   }
 
   .input.year  { width: 56px; }
-  .input.month { width: 40px; }
+  .input.month { width: 32px; }
   .input.date  { width: 40px; }
 
   .separator {
@@ -213,25 +215,6 @@ function createRequiredTouched(): boolean[] {
   }
 }
 
-.SInputYMD.outlined {
-  .container {
-    border: 1px solid var(--input-outlined-border);
-    border-radius: 4px;
-    transition: border-color .25s;
-
-    &:hover {
-      border-color: var(--input-focus-border);
-    }
-  }
-}
-
-.SInputYMD.outlined.disabled {
-  .container {
-    border-color: var(--input-outlined-border);
-    background-color: var(--input-outlined-bg-disabled);
-  }
-}
-
 .SInputYMD.disabled {
   .container,
   .input {
@@ -251,17 +234,37 @@ function createRequiredTouched(): boolean[] {
 
 .container {
   display: inline-flex;
-  border: 1px solid var(--input-border);
-  border-radius: 4px;
-  transition: border-color .25s;
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
+  background-color: var(--c-bg);
+  transition: border-color 0.25s;
 
   &:hover {
-    border-color: var(--input-focus-border);
+    border-color: var(--c-black);
+  }
+
+  &.focus,
+  &:hover.focus {
+    border-color: var(--c-info);
+  }
+
+  .dark &:hover {
+    border-color: var(--c-gray);
+  }
+
+  .dark &.focus,
+  .dark &:hover.focus {
+    border-color: var(--c-info);
   }
 }
 
 .input {
   background-color: transparent;
+
+  &::placeholder {
+    font-weight: 500;
+    color: var(--c-text-3);
+  }
 }
 
 .separator::before {

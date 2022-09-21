@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import SAvatar from './SAvatar.vue'
 import SIconX from './icons/SIconX.vue'
 
 defineProps<{
   label: string
+  image?: string | null
   value: string | number | boolean
   disabled: boolean
 }>()
@@ -13,10 +15,15 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="SInputDropdownItemText" :class="{ disabled }">
-    <p class="text">{{ label }}</p>
+  <div class="SInputDropdownItemAvatar" :class="{ disabled }">
+    <div class="user">
+      <div class="avatar">
+        <SAvatar size="nano" :avatar="image" :name="label" />
+      </div>
+      <p class="name">{{ label }}</p>
+    </div>
 
-    <div v-if="!disabled" class="remove" role="button" @click.stop="$emit('remove', value)">
+    <div v-if="!disabled" class="remove" role="button" @click="$emit('remove', value)">
       <div class="remove-box">
         <SIconX class="remove-icon" />
       </div>
@@ -25,29 +32,29 @@ defineEmits<{
 </template>
 
 <style lang="postcss" scoped>
-.SInputDropdownItemText {
+.SInputDropdownItemAvatar {
   display: flex;
   border: 1px solid var(--c-divider-light);
   border-radius: 14px;
-  padding: 0 0 0 12px;
+  padding: 0;
   background-color: var(--c-bg-mute);
 }
 
-.SInputDropdownItemText.disabled {
-  padding: 0 10px 0;
+.SInputDropdownItemUserAvatar.disabled {
+  padding: 0 10px 0 0;
   background-color: var(--c-gray-light-4);
-
-  .text {
-    color: var(--c-text-2);
-  }
 }
 
-.dark .SInputDropdownItemText.disabled {
-  background-color: var(--c-gray-dark-2);
+.user {
+  display: flex;
 }
 
-.text {
-  margin: 0;
+.avatar {
+  padding: 3px 0 0 3px;
+}
+
+.name {
+  margin: 0 0 0 8px;
   line-height: 26px;
   font-size: 12px;
   font-weight: 500;
@@ -58,6 +65,7 @@ defineEmits<{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 2px;
   width: 26px;
   height: 26px;
 }

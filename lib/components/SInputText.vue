@@ -144,11 +144,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.small {
-  .box,
+  .box {
+    min-height: 40px;
+  }
+
   .value,
   .input,
   .display {
-    min-height: 40px;
+    min-height: 38px;
   }
 
   .box {
@@ -157,7 +160,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
   .input,
   .display {
-    padding: 7px 0;
+    padding: 5px 0;
     letter-spacing: 0;
     line-height: 24px;
     font-size: 16px;
@@ -165,7 +168,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
   .icon {
     width: 26px;
-    height: 40px;
+    height: 38px;
   }
 
   .icon-svg {

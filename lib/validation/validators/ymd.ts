@@ -1,9 +1,9 @@
 import day from 'dayjs'
 
 export interface Ymd {
-  year?: number
-  month?: number
-  date?: number
+  year: number | null
+  month: number | null
+  date: number | null
 }
 
 export type YmdType = 'y' | 'm' | 'd'
@@ -18,7 +18,7 @@ export function ymd(ymd: Ymd, required: YmdType[] = ['y', 'm', 'd']): boolean {
   return required.every((r) => {
     const value = ymd[YmdMap[r]]
 
-    if (value === undefined) {
+    if (value === null) {
       return true
     }
 

@@ -4,12 +4,20 @@ import SMarkdown from 'sefirot/components/SMarkdown.vue'
 
 <template>
   <Story title="Components/SMarkdown">
-    <SMarkdown content="**We** shape our _buildings_. Thereafter, _they_ shape **us**." />
+    <SMarkdown
+      class="markdown"
+      content="**We** shape our **buildings**. Thereafter, **they** shape **us**."
+    />
   </Story>
 </template>
 
-<docs lang="md">
-# SMarkdown
+<style scoped>
+.markdown {
+  line-height: 24px;
+  font-size: 16px;
+}
 
-
-</docs>
+.markdown :deep(strong) {
+  font-weight: 600;
+}
+</style>

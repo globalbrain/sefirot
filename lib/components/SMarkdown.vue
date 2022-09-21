@@ -1,33 +1,17 @@
-<template>
-  <component
-    :is="tag"
-    v-if="$slots.default"
-    ref="container"
-    class="SMarkdown-container"
-  >
-    <slot v-bind="{ rendered }" />
-  </component>
-  <component
-    :is="tag"
-    v-else
-    ref="container"
-    class="SMarkdown-container"
-    v-html="rendered"
-  />
-</template>
-
 <script setup lang="ts">
-import { computed, nextTick, PropType, ref, watch } from 'vue'
-import { useMarkdown, useLink, LinkCallback } from '../composables/Markdown'
+import { ref, computed, watch, nextTick } from 'vue'
+import { LinkCallback, LinkSubscriberPayload, useMarkdown, useLink } from '../composables/Markdown'
 
-const props = defineProps({
-  content: { type: String, required: true },
-  callbacks: { type: Array as PropType<LinkCallback[]>, default: () => [] },
-  inline: { type: Boolean, default: false },
-  tag: { type: String, default: 'div' }
-})
+const props = defineProps<{
+  tag?: string
+  content: string
+  callbacks?: LinkCallback[]
+  inline?: boolean
+}>()
 
-const emit = defineEmits(['clicked'])
+const emit = defineEmits<{
+  (e: 'clicked', payload: LinkSubscriberPayload): void
+}>()
 
 const container = ref<Element | null>(null)
 
@@ -37,7 +21,7 @@ const { addListeners, subscribe } = useLink({
 })
 
 const markdown = useMarkdown()
-const rendered = computed(() => markdown(props.content, props.inline))
+const rendered = computed(() => markdown(props.content, props.inline ?? false))
 
 watch(
   rendered,
@@ -45,5 +29,24 @@ watch(
   { immediate: true }
 )
 
-subscribe(payload => emit('clicked', payload))
+subscribe((payload) => emit('clicked', payload))
 </script>
+
+<template>
+  <component
+    v-if="$slots.default"
+    :is="tag ?? 'div'"
+    class="SMarkdown-container"
+    ref="container"
+  >
+    <slot v-bind="{ rendered }" />
+  </component>
+
+  <component
+    v-else
+    :is="tag ?? 'div'"
+    class="SMarkdown-container"
+    ref="container"
+    v-html="rendered"
+  />
+</template>

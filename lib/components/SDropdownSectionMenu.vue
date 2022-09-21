@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { TableDropdownSectionMenuOption } from '../composables/Table'
+import { DropdownSectionMenuOption } from '../composables/Dropdown'
 
 defineProps<{
-  options: TableDropdownSectionMenuOption[]
+  options: DropdownSectionMenuOption[]
 }>()
 </script>
 
 <template>
-  <ul class="STableDropdownSectionMenu">
+  <ul class="SDropdownSectionMenu">
     <li v-for="option in options" :key="option.label" class="item">
       <button class="button" @click="option.onClick">
         {{ option.label }}
@@ -17,7 +17,7 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
-.STableDropdownSectionMenu {
+.SDropdownSectionMenu {
   padding: 8px;
 }
 
@@ -33,11 +33,7 @@ defineProps<{
   transition: color 0.25s, background-color 0.25s;
 
   &:hover {
-    background-color: var(--c-bg-mute);
-  }
-
-  .dark &:hover {
-    background-color: var(--c-bg);
+    background-color: var(--c-bg-elv-down);
   }
 }
 </style>

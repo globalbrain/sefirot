@@ -2,14 +2,16 @@
 import type { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { ref, computed, unref, onMounted } from 'vue'
-import { TableDropdownSectionFilterOption } from '../composables/Table'
+import { DropdownSectionFilterSelectedValue, DropdownSectionFilterOption } from '../composables/Dropdown'
+import { isArray } from '../support/Utils'
+import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SIconCheck from './icons/SIconCheck.vue'
 
 const props = defineProps<{
   search?: boolean
-  selected: MaybeRef<string[]>
-  options: TableDropdownSectionFilterOption[]
-  onClick?(value: string): void
+  selected: MaybeRef<DropdownSectionFilterSelectedValue>
+  options: DropdownSectionFilterOption[]
+  onClick?(value: string | number | boolean): void
 }>()
 
 const input = ref<HTMLElement | null>(null)
@@ -29,6 +31,14 @@ onMounted(() => {
   input.value?.focus()
 })
 
+function isActive(value: string | number | boolean) {
+  const selected = unref(props.selected)
+
+  return isArray(selected)
+    ? selected.some((sv) => sv === value)
+    : selected === value
+}
+
 function focusPrev(event: any) {
   event.target.parentNode.previousElementSibling?.firstElementChild?.focus()
 }
@@ -37,14 +47,14 @@ function focusNext(event: any) {
   event.target.parentNode.nextElementSibling?.firstElementChild?.focus()
 }
 
-function handleClick(option: TableDropdownSectionFilterOption, value: string) {
+function handleClick(option: DropdownSectionFilterOption, value: string | number | boolean) {
   option.onClick && option.onClick(value)
   props.onClick && props.onClick(value)
 }
 </script>
 
 <template>
-  <div class="STableDropdownSectionFilter">
+  <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
       <input class="input" placeholder="Filter options" ref="input" v-model="query">
     </div>
@@ -53,7 +63,7 @@ function handleClick(option: TableDropdownSectionFilterOption, value: string) {
       <li v-for="option in filteredOptions" :key="option.label" class="item">
         <button
           class="button"
-          :class="{ active: unref(selected).some((s) => s === option.value) }"
+          :class="{ active: isActive(option.value) }"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
@@ -64,7 +74,9 @@ function handleClick(option: TableDropdownSectionFilterOption, value: string) {
               <SIconCheck class="checkbox-icon" />
             </span>
           </span>
-          <span class="label">{{ option.label }}</span>
+          <span class="option-item">
+            <SDropdownSectionFilterItem :option="option" />
+          </span>
         </button>
       </li>
     </ul>
@@ -162,13 +174,6 @@ function handleClick(option: TableDropdownSectionFilterOption, value: string) {
   .button.active & {
     opacity: 1;
   }
-}
-
-.label {
-  padding-left: 8px;
-  line-height: 32px;
-  font-size: 12px;
-  font-weight: 500;
 }
 
 .empty {
