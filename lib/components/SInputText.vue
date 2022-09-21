@@ -212,7 +212,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.has-error {
-  .input {
+  .box {
     border-color: var(--c-danger);
 
     &:hover,
