@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import SIconX from 'sefirot/components/icons/SIconX.vue'
 
-defineProps<{
+export interface Props {
   size?: 'small' | 'medium' | 'large'
-}>()
+  closable?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 'medium',
+  closable: true
+})
 
 defineEmits<{
   (e: 'close'): void
@@ -11,8 +17,8 @@ defineEmits<{
 </script>
 
 <template>
-  <FMount class="SSheet" :class="[size ?? 'medium']" @click.stop>
-    <button class="close" @click="$emit('close')">
+  <FMount class="SSheet" :class="[size]" @click.stop>
+    <button v-if="closable ?? true" class="close" @click="$emit('close')">
       <SIconX class="icon" />
     </button>
 

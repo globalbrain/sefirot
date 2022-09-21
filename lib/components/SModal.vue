@@ -1,7 +1,12 @@
 <script setup lang="ts">
-defineProps<{
+export interface Props {
   open: boolean
-}>()
+  closable?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  closable: true
+})
 
 defineEmits<{
   (e: 'close'): void
@@ -11,7 +16,7 @@ defineEmits<{
 <template>
   <Teleport to="#sefirot-modals">
     <transition name="fade">
-      <div v-if="open" class="SModal" @click="$emit('close')">
+      <div v-if="open" class="SModal" @click="closable && $emit('close')">
         <slot />
       </div>
     </transition>
