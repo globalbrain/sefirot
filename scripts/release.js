@@ -13,6 +13,7 @@ const versionIncrements = [
 ]
 
 const tags = [
+  'latest',
   'next'
 ]
 
