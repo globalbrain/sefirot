@@ -1,4 +1,5 @@
 /.histoire
 /coverage
+/docs/.vitepress/dist
 /dist
 /node_modules

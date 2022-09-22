@@ -33,6 +33,7 @@
 
   "include": [
     "docs",
+    "docs/.vitepress",
     "lib",
     "tests",
     "env.d.ts",
