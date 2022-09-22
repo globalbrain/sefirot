@@ -41,7 +41,6 @@ specifiers:
   vue: ^3.2.39
   vue-router: ^4.1.5
   vue-tsc: ^0.40.13
-  vuex: ^4.0.2
 
 devDependencies:
   '@histoire/plugin-vue': 0.10.7_gr7xrgksnqnbing6b46ua5jkoi
@@ -84,7 +83,6 @@ devDependencies:
   vue: 3.2.39
   vue-router: 4.1.5_vue@3.2.39
   vue-tsc: 0.40.13_typescript@4.8.3
-  vuex: 4.0.2_vue@3.2.39
 
 packages:
 
@@ -628,10 +626,6 @@ packages:
     dependencies:
       '@vue/compiler-dom': 3.2.39
       '@vue/shared': 3.2.39
-    dev: true
-
-  /@vue/devtools-api/6.1.4:
-    resolution: {integrity: sha512-IiA0SvDrJEgXvVxjNkHPFfDx6SXw0b/TUkqMcDZWNg9fnCAHbTpoo59YfJ9QLFkwa3raau5vSlRVzMSLDnfdtQ==}
     dev: true
 
   /@vue/devtools-api/6.2.1:
@@ -4182,15 +4176,6 @@ packages:
       '@vue/runtime-dom': 3.2.39
       '@vue/server-renderer': 3.2.39_vue@3.2.39
       '@vue/shared': 3.2.39
-    dev: true
-
-  /vuex/4.0.2_vue@3.2.39:
-    resolution: {integrity: sha512-M6r8uxELjZIK8kTKDGgZTYX/ahzblnzC4isU1tpmEuOIIKmV+TRdc+H4s8ds2NuZ7wpUTdGRzJRtoj+lI+pc0Q==}
-    peerDependencies:
-      vue: ^3.0.2
-    dependencies:
-      '@vue/devtools-api': 6.1.4
-      vue: 3.2.39
     dev: true
 
   /webidl-conversions/3.0.1:
