@@ -1,8 +1,8 @@
 # Sefirot
 
 [![GitHub Actions](https://github.com/globalbrain/sefirot/workflows/Test/badge.svg)](https://github.com/globalbrain/sefirot/actions)
-[![Codecov](https://codecov.io/gh/globalbrain/sefirot/branch/master/graph/badge.svg)](https://codecov.io/gh/globalbrain/sefirot)
-[![License](https://img.shields.io/npm/l/@globalbrain/sefirot.svg)](https://github.com/globalbrain/sefirot/blob/master/LICENSE.md)
+[![Codecov](https://codecov.io/gh/globalbrain/sefirot/branch/main/graph/badge.svg)](https://codecov.io/gh/globalbrain/sefirot)
+[![License](https://img.shields.io/npm/l/@globalbrain/sefirot.svg)](https://github.com/globalbrain/sefirot/blob/main/LICENSE.md)
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
