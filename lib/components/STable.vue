@@ -187,7 +187,7 @@ function updateColWidth(key: string, value: string) {
   position: static;
   width: 100%;
   min-width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
 
   &.head {
     position: var(--table-head-position, static);

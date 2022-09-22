@@ -133,11 +133,11 @@ function stopDialogPositionListener() {
   border-top: 1px solid var(--c-divider-light);
   background-color: var(--c-bg-soft);
 
-  &:first-child {
+  .STableItem:first-child & {
     padding-left: var(--table-padding-left);
   }
 
-  &:last-child {
+  .STableItem:last-child & {
     border-right: 0;
     padding-right: var(--table-padding-right);
   }
