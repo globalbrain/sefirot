@@ -1,3 +1,7 @@
+# [2.0.0](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.8...v2.0.0) (2022-09-22)
+
+New Sefirot for Vue 3.
+
 # [2.0.0-draft.8](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.7...v2.0.0-draft.8) (2022-04-21)
 
 ### Features
