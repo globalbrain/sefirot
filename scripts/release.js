@@ -94,8 +94,7 @@ async function main() {
   // Publish the package.
   step('\nPublishing the package...')
   await run('pnpm', [
-    'publish', '--tag', tag, '--new-version', targetVersion, '--no-commit-hooks',
-    '--no-git-tag-version'
+    'publish', '--tag', tag, '--ignore-scripts', '--no-git-checks'
   ])
 
   // Push to GitHub.
