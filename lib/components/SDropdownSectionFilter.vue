@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import checkIcon from '@iconify-icons/feather/check'
 import type { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { ref, computed, unref, onMounted } from 'vue'
 import { DropdownSectionFilterSelectedValue, DropdownSectionFilterOption } from '../composables/Dropdown'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
-import SIconCheck from './icons/SIconCheck.vue'
+import SIcon from './SIcon.vue'
 
 const props = defineProps<{
   search?: boolean
@@ -71,7 +72,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
         >
           <span class="checkbox">
             <span class="checkbox-box">
-              <SIconCheck class="checkbox-icon" />
+              <SIcon :icon="checkIcon" class="checkbox-icon" />
             </span>
           </span>
           <span class="option-item">
@@ -167,7 +168,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   display: block;
   width: 10px;
   height: 10px;
-  fill: var(--c-white);
+  color: var(--c-white);
   opacity: 0;
   transition: opacity 0.25s;
 

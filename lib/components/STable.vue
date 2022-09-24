@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import loadingTwotoneLoop from '@iconify-icons/line-md/loading-twotone-loop'
 import { reactive, ref, computed, watch, toRefs } from 'vue'
 import { Table } from '../composables/Table'
+import SIcon from './SIcon.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
-import SIconPreloader from './icons/SIconPreloader.vue'
 
 const props = defineProps<{
   options: Table
@@ -146,7 +147,7 @@ function updateColWidth(key: string, value: string) {
 
       <div v-if="loading" class="loading">
         <div class="loading-icon">
-          <SIconPreloader class="loading-svg" />
+          <SIcon :icon="loadingTwotoneLoop" class="loading-svg" />
         </div>
       </div>
 

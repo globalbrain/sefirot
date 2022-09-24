@@ -4,8 +4,8 @@
       <div class="bar" :class="[barLeft]" />
       <div class="point">
         <div v-if="status === 'active'" class="inner-dot" />
-        <SIconCheck v-else-if="status === 'done'" class="icon" />
-        <SIconX v-else-if="status === 'failed'" class="icon" />
+        <SIcon v-else-if="status === 'done'" :icon="checkIcon" class="icon" />
+        <SIcon v-else-if="status === 'failed'" :icon="xIcon" class="icon" />
       </div>
       <div class="bar" :class="[barRight]" />
     </div>
@@ -15,10 +15,11 @@
 </template>
 
 <script setup lang="ts">
+import checkIcon from '@iconify-icons/feather/check'
+import xIcon from '@iconify-icons/feather/x'
 import { PropType } from 'vue'
 import { StepStatus, BarMode } from '../composables/Step'
-import SIconCheck from './icons/SIconCheck.vue'
-import SIconX from './icons/SIconX.vue'
+import SIcon from './SIcon.vue'
 
 defineProps({
   status: { type: String as PropType<StepStatus>, required: true },
@@ -83,7 +84,7 @@ defineProps({
 .icon {
   width: 10px;
   height: 10px;
-  fill: var(--c-white);
+  color: var(--c-white);
 }
 
 .bar {

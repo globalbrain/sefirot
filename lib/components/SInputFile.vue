@@ -201,6 +201,7 @@ function handleChange(e: Event): void {
   text-overflow: ellipsis;
 }
 
+.file-name,
 .placeholder {
   color: var(--c-text-2);
 }

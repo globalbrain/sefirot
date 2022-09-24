@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import xIcon from '@iconify-icons/feather/x'
 import { SnackbarAction, useSnackbars } from '../stores/Snackbars'
 import SButton from './SButton.vue'
-import SIconX from './icons/SIconX.vue'
+import SIcon from './SIcon.vue'
 
 const props = defineProps<{
   id: number
@@ -20,7 +21,7 @@ function close() {
 <template>
   <div class="SSnackbar" :class="[mode ?? 'neutral']">
     <button class="close" @click="close">
-      <SIconX class="close-icon" />
+      <SIcon :icon="xIcon" class="close-icon" />
     </button>
 
     <p class="content">
@@ -78,7 +79,7 @@ function close() {
 
   &:hover {
     .close-icon {
-      fill: var(--c-text-1);
+      color: var(--c-text-1);
     }
   }
 }
@@ -86,8 +87,8 @@ function close() {
 .close-icon {
   width: 16px;
   height: 16px;
-  fill: var(--c-text-3);
-  transition: fill .25s;
+  color: var(--c-text-3);
+  transition: color .25s;
 }
 
 .content {

@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import chevronLeft from '@iconify-icons/feather/chevron-left'
+import chevronRight from '@iconify-icons/feather/chevron-right'
 import { computed } from 'vue'
 import { format } from '../support/Num'
-import SIconChevronLeft from './icons/SIconChevronLeft.vue'
-import SIconChevronRight from './icons/SIconChevronRight.vue'
+import SIcon from './SIcon.vue'
 
 const props = defineProps<{
   total?: number
@@ -43,10 +44,10 @@ const hasNext = computed(() => {
 
       <div class="actions">
         <button class="button prev" :class="{ active: hasPrev }" @click="onPrev">
-          <SIconChevronLeft class="icon" />
+          <SIcon :icon="chevronLeft" class="icon" />
         </button>
         <button class="button next" :class="{ active: hasNext }" @click="onNext">
-          <SIconChevronRight class="icon" />
+          <SIcon :icon="chevronRight" class="icon" />
         </button>
       </div>
     </div>
@@ -110,6 +111,5 @@ const hasNext = computed(() => {
 .icon {
   width: 16px;
   height: 16px;
-  fill: currentColor;
 }
 </style>

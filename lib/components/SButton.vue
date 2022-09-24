@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import loadingTwotoneLoop from '@iconify-icons/line-md/loading-twotone-loop'
 import { computed } from 'vue'
 import SIcon from './SIcon.vue'
-import SIconPreloader from './icons/SIconPreloader.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
@@ -68,7 +68,7 @@ function handleClick(): void {
 
     <transition name="fade">
       <span v-if="loading" key="loading" class="loader">
-        <SIconPreloader class="loader-icon" />
+        <SIcon :icon="loadingTwotoneLoop" class="loader-icon" />
       </span>
     </transition>
   </component>
@@ -96,7 +96,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--button-fill-bg-hover); }
     &:active { background-color: var(--button-fill-bg-focus); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-text-inverse-1); }
   }
 
   &.white {
@@ -106,7 +106,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-gray-light-3); }
     &:active { background-color: var(--c-gray-light-1); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.black {
@@ -116,7 +116,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-gray-dark-4); }
     &:active { background-color: var(--c-gray-dark-3); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.info {
@@ -126,7 +126,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-info-dark); }
     &:active { background-color: var(--c-info-darker); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.success {
@@ -136,7 +136,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-success-dark); }
     &:active { background-color: var(--c-success-darker); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.warning {
@@ -146,7 +146,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-warning-dark); }
     &:active { background-color: var(--c-warning-darker); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.danger {
@@ -156,7 +156,7 @@ function handleClick(): void {
     &:hover  { background-color: var(--c-danger-dark); }
     &:active { background-color: var(--c-danger-darker); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-white); }
+    & .loader-icon { color: var(--c-white); }
   }
 
   &.mute {
@@ -167,7 +167,7 @@ function handleClick(): void {
     &:hover  { border-color: var(--c-divider); background-color: var(--c-gray-light-4); }
     &:active { background-color: var(--c-bg-soft); }
 
-    & .loader-icon :deep(.bar) { fill: var(--c-black); }
+    & .loader-icon { color: var(--c-black); }
 
     .dark & {
       border-color: var(--c-divider-light);
@@ -176,7 +176,7 @@ function handleClick(): void {
       &:hover  { border-color: var(--c-divider); background-color: var(--c-gray-dark-5); }
       &:active { background-color: var(--c-bg-soft); }
 
-      & .loader-icon :deep(.bar) { fill: var(--c-white); }
+      & .loader-icon { color: var(--c-white); }
     }
   }
 
@@ -608,15 +608,16 @@ function handleClick(): void {
 
 .icon-svg {
   fill: currentColor;
-  transition: fill 0.25s;
+  transition-property: color, fill;
+  transition-duration: 0.25s;
 }
 
 .loader {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   color: var(--c-text-1);
   transform: translate(-50%, -50%);
   transition: opacity 0.25s, transform 0.25s;
@@ -629,8 +630,8 @@ function handleClick(): void {
 }
 
 .loader-icon {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
 }
 
 /* Deprecated */
@@ -701,9 +702,7 @@ function handleClick(): void {
     }
   }
 
-  & .loader-icon :deep(.bar) {
-    fill: var(--c-text-inverse-1);
-  }
+  & .loader-icon { color: var(--c-text-inverse-1); }
 }
 
 .SButton.secondary {

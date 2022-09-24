@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import moreHorizontal from '@iconify-icons/feather/more-horizontal'
 import { ref, computed, unref, watch, nextTick } from 'vue'
 import { DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
-import SIconMoreHorizontal from './icons/SIconMoreHorizontal.vue'
+import SIcon from './SIcon.vue'
 
 const props = defineProps<{
   name: string
@@ -113,7 +114,7 @@ function stopDialogPositionListener() {
 
       <div v-if="dropdown" class="action" ref="container">
         <button class="button" :class="{ active: buttonActive }" @click="toggle">
-          <SIconMoreHorizontal class="icon" />
+          <SIcon :icon="moreHorizontal" class="icon" />
         </button>
 
         <transition name="fade">
@@ -200,7 +201,6 @@ function stopDialogPositionListener() {
 .icon {
   width: 16px;
   height: 16px;
-  fill: currentColor;
 }
 
 .dialog {

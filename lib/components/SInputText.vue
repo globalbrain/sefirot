@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
+import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -93,7 +94,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="icon" class="icon">
-        <component :is="icon" class="icon-svg" />
+        <SIcon :icon="icon" class="icon-svg" />
       </div>
 
       <div class="value">

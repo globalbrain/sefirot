@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import xIcon from '@iconify-icons/feather/x'
 import SAvatar from './SAvatar.vue'
-import SIconX from './icons/SIconX.vue'
+import SIcon from './SIcon.vue'
 
 defineProps<{
   label: string
@@ -25,7 +26,7 @@ defineEmits<{
 
     <div v-if="!disabled" class="remove" role="button" @click="$emit('remove', value)">
       <div class="remove-box">
-        <SIconX class="remove-icon" />
+        <SIcon :icon="xIcon" class="remove-icon" />
       </div>
     </div>
   </div>
@@ -94,6 +95,5 @@ defineEmits<{
 .remove-icon {
   width: 12px;
   height: 12px;
-  fill: currentColor;
 }
 </style>
