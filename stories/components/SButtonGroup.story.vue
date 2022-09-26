@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
+import SButtonGroup, { ButtonGroupItem } from 'sefirot/components/SButtonGroup.vue'
 
 const value = ref('button-a')
 
-const items = [
+const items: ButtonGroupItem[] = [
   { label: 'Button A', value: 'button-a' },
   { label: 'Button B', value: 'button-b' },
   { label: 'Button C', value: 'button-c' }

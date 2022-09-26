@@ -3,7 +3,7 @@ import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
-// @ts-expect-error TODO: add tsconfig alias
+import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { reactive, ref, computed, markRaw } from 'vue'
 
@@ -17,7 +17,7 @@ const sort = reactive<Sort>({
   order: 'asc'
 })
 
-const dropdownName = [
+const dropdownName = createDropdown([
   {
     type: 'menu',
     options: [
@@ -25,11 +25,11 @@ const dropdownName = [
       { label: 'Sort descending (Z...A)', onClick: () => updateSort('name', 'desc') }
     ]
   }
-]
+])
 
 const dropdownStatusSelected = ref<string[]>([])
 
-const dropdownStatus = [
+const dropdownStatus = createDropdown([
   {
     type: 'menu',
     options: [
@@ -47,11 +47,11 @@ const dropdownStatus = [
       { label: 'Archived', value: 'Archived', onClick: updateStatusFilter }
     ]
   }
-]
+])
 
 const dropdownTypeSelected = ref<string[]>([])
 
-const dropdownType = [
+const dropdownType = createDropdown([
   {
     type: 'menu',
     options: [
@@ -70,9 +70,9 @@ const dropdownType = [
       { label: 'Other', value: 'Other', onClick: updateTypeFilter }
     ]
   }
-]
+])
 
-const dropdownCreatedAt = [
+const dropdownCreatedAt = createDropdown([
   {
     type: 'menu',
     options: [
@@ -80,7 +80,7 @@ const dropdownCreatedAt = [
       { label: 'Sort descending (Z...A)', onClick: () => updateSort('createdAt', 'desc') }
     ]
   }
-]
+])
 
 const hasFilters = computed(() => {
   return [
