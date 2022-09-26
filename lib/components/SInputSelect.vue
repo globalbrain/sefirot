@@ -38,16 +38,16 @@
       </select>
 
       <div class="icon" role="button">
-        <SIcon :icon="chevronUp" class="icon-svg up" />
-        <SIcon :icon="chevronDown" class="icon-svg down" />
+        <SIcon :icon="IconCaretUp" class="icon-svg up" />
+        <SIcon :icon="IconCaretDown" class="icon-svg down" />
       </div>
     </div>
   </SInputBase>
 </template>
 
 <script setup lang="ts">
-import chevronDown from '@iconify-icons/feather/chevron-down'
-import chevronUp from '@iconify-icons/feather/chevron-up'
+import IconCaretDown from '@iconify-icons/ph/caret-down'
+import IconCaretUp from '@iconify-icons/ph/caret-up'
 import { PropType, ref, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'

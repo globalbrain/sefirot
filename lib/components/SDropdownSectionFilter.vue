@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import checkIcon from '@iconify-icons/feather/check'
+import IconCheck from '@iconify-icons/ph/check'
 import type { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { ref, computed, unref, onMounted } from 'vue'
@@ -72,7 +72,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
         >
           <span class="checkbox">
             <span class="checkbox-box">
-              <SIcon :icon="checkIcon" class="checkbox-icon" />
+              <SIcon :icon="IconCheck" class="checkbox-icon" />
             </span>
           </span>
           <span class="option-item">

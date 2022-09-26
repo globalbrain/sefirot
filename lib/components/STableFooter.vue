@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import chevronLeft from '@iconify-icons/feather/chevron-left'
-import chevronRight from '@iconify-icons/feather/chevron-right'
+import IconCaretLeft from '@iconify-icons/ph/caret-left-bold'
+import IconCaretRight from '@iconify-icons/ph/caret-right-bold'
 import { computed } from 'vue'
 import { format } from '../support/Num'
 import SIcon from './SIcon.vue'
@@ -44,10 +44,10 @@ const hasNext = computed(() => {
 
       <div class="actions">
         <button class="button prev" :class="{ active: hasPrev }" @click="onPrev">
-          <SIcon :icon="chevronLeft" class="icon" />
+          <SIcon :icon="IconCaretLeft" class="icon" />
         </button>
         <button class="button next" :class="{ active: hasNext }" @click="onNext">
-          <SIcon :icon="chevronRight" class="icon" />
+          <SIcon :icon="IconCaretRight" class="icon" />
         </button>
       </div>
     </div>

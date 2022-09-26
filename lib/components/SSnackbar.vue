@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import xIcon from '@iconify-icons/feather/x'
+import IconX from '@iconify-icons/ph/x'
 import { SnackbarAction, useSnackbars } from '../stores/Snackbars'
 import SButton from './SButton.vue'
 import SIcon from './SIcon.vue'
@@ -21,7 +21,7 @@ function close() {
 <template>
   <div class="SSnackbar" :class="[mode ?? 'neutral']">
     <button class="close" @click="close">
-      <SIcon :icon="xIcon" class="close-icon" />
+      <SIcon :icon="IconX" class="close-icon" />
     </button>
 
     <p class="content">

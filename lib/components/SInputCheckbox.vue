@@ -11,7 +11,7 @@
       <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
         <div class="box">
           <div class="check">
-            <SIcon :icon="checkIcon" class="check-icon" />
+            <SIcon :icon="IconCheck" class="check-icon" />
           </div>
         </div>
 
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import checkIcon from '@iconify-icons/feather/check'
+import IconCheck from '@iconify-icons/ph/check'
 import { PropType } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'

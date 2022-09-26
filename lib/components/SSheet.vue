@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import xIcon from '@iconify-icons/feather/x'
+import IconX from '@iconify-icons/ph/x'
 import SIcon from './SIcon.vue'
+import SMount from './SMount.vue'
 
 export interface Props {
   size?: 'small' | 'medium' | 'large'
@@ -18,13 +19,13 @@ defineEmits<{
 </script>
 
 <template>
-  <FMount class="SSheet" :class="[size]" @click.stop>
+  <SMount class="SSheet" :class="[size]" @click.stop="() => {}">
     <button v-if="closable ?? true" class="close" @click="$emit('close')">
-      <SIcon :icon="xIcon" class="icon" />
+      <SIcon :icon="IconX" class="icon" />
     </button>
 
     <slot />
-  </FMount>
+  </SMount>
 </template>
 
 <style scoped lang="postcss">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import moreHorizontal from '@iconify-icons/feather/more-horizontal'
+import IconDotsThree from '@iconify-icons/ph/dots-three'
 import { ref, computed, unref, watch, nextTick } from 'vue'
 import { DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
@@ -114,7 +114,7 @@ function stopDialogPositionListener() {
 
       <div v-if="dropdown" class="action" ref="container">
         <button class="button" :class="{ active: buttonActive }" @click="toggle">
-          <SIcon :icon="moreHorizontal" class="icon" />
+          <SIcon :icon="IconDotsThree" class="icon" />
         </button>
 
         <transition name="fade">
@@ -199,8 +199,8 @@ function stopDialogPositionListener() {
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
 }
 
 .dialog {

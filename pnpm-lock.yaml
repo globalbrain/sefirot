@@ -2,8 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@histoire/plugin-vue': ^0.10.7
-  '@iconify-icons/feather': ^1.2.2
-  '@iconify-icons/line-md': ^1.2.14
+  '@iconify-icons/ph': ^1.2.2
   '@iconify/vue': ^4.0.0
   '@types/body-scroll-lock': ^3.1.0
   '@types/lodash-es': ^4.17.6
@@ -47,8 +46,7 @@ specifiers:
 
 devDependencies:
   '@histoire/plugin-vue': 0.10.7_gr7xrgksnqnbing6b46ua5jkoi
-  '@iconify-icons/feather': 1.2.2
-  '@iconify-icons/line-md': 1.2.14
+  '@iconify-icons/ph': 1.2.2
   '@iconify/vue': 4.0.0_vue@3.2.39
   '@types/body-scroll-lock': 3.1.0
   '@types/lodash-es': 4.17.6
@@ -387,14 +385,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@iconify-icons/feather/1.2.2:
-    resolution: {integrity: sha512-7Oiz+jke3LGR6DE97/+LyJlNLNvw800+KpRw5o+YgaJTbEBpqK3w4k0HO0VSaEDSRC9pDiLvM8hopTZk1HddIg==}
-    dependencies:
-      '@iconify/types': 2.0.0
-    dev: true
-
-  /@iconify-icons/line-md/1.2.14:
-    resolution: {integrity: sha512-MRPYDa4kccuH7OGQ8j5qqCWUmhEDuc+LWihV23aeOAL8lK2FKQCABo1u5i2QVYQhDFgj4DsTlmPT+J4I4t5EhA==}
+  /@iconify-icons/ph/1.2.2:
+    resolution: {integrity: sha512-8YgmD1nDJXa6KPGvpFNPp8zvrV38ZHuBmuyBjAgLGT/GI1ZFVLnnQ8xwU8OMFoJN/rYJQZ9r9yW7ppuAh9Q1uQ==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import imageIcon from '@iconify-icons/feather/image'
+import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
@@ -121,7 +121,7 @@ const table = useTable({
       dropdown: dropdownName,
       cell: {
         type: 'text',
-        icon: markRaw(imageIcon),
+        icon: markRaw(IconImageSquare),
         link: (_value, record) => record.link,
       }
     },

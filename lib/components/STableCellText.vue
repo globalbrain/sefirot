@@ -96,8 +96,8 @@ const _value = computed(() => {
 }
 
 .svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   fill: currentColor;
 }
 </style>

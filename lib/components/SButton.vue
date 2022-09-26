@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import loadingTwotoneLoop from '@iconify-icons/line-md/loading-twotone-loop'
 import { computed } from 'vue'
 import SIcon from './SIcon.vue'
+import SSpinner from './SSpinner.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
@@ -68,7 +68,7 @@ function handleClick(): void {
 
     <transition name="fade">
       <span v-if="loading" key="loading" class="loader">
-        <SIcon :icon="loadingTwotoneLoop" class="loader-icon" />
+        <SSpinner class="loader-icon" />
       </span>
     </transition>
   </component>
@@ -348,8 +348,8 @@ function handleClick(): void {
   font-size: 12px;
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   &.mini.rounded {
@@ -379,8 +379,8 @@ function handleClick(): void {
   font-size: 12px;
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 18px;
+    height: 18px;
   }
 
   &.small.rounded {
@@ -410,8 +410,8 @@ function handleClick(): void {
   font-size: 14px;
 
   .icon-svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
   }
 
   &.medium.rounded {
@@ -441,8 +441,8 @@ function handleClick(): void {
   font-size: 14px;
 
   .icon-svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
 
   &.large.rounded {
@@ -616,8 +616,8 @@ function handleClick(): void {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   color: var(--c-text-1);
   transform: translate(-50%, -50%);
   transition: opacity 0.25s, transform 0.25s;
@@ -630,8 +630,8 @@ function handleClick(): void {
 }
 
 .loader-icon {
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
 }
 
 /* Deprecated */

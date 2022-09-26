@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import chevronDown from '@iconify-icons/feather/chevron-down'
-import chevronUp from '@iconify-icons/feather/chevron-up'
+import IconCaretDown from '@iconify-icons/ph/caret-down'
+import IconCaretUp from '@iconify-icons/ph/caret-up'
 import xor from 'lodash-es/xor'
 import { computed } from 'vue'
 import type { DropdownSectionFilter } from '../composables/Dropdown'
@@ -145,8 +145,8 @@ function handleArray(value: OptionValue) {
         </div>
 
         <div class="box-icon">
-          <SIcon :icon="chevronUp" class="box-icon-svg up" />
-          <SIcon :icon="chevronDown" class="box-icon-svg down" />
+          <SIcon :icon="IconCaretUp" class="box-icon-svg up" />
+          <SIcon :icon="IconCaretDown" class="box-icon-svg down" />
         </div>
       </div>
 
