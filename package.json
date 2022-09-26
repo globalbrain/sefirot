@@ -37,6 +37,7 @@
     "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "peerDependencies": {
+    "@iconify-icons/ph": "^1.2.2",
     "@iconify/vue": "^4.0.0",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.6",
@@ -58,6 +59,7 @@
   },
   "devDependencies": {
     "@histoire/plugin-vue": "^0.10.7",
+    "@iconify-icons/ph": "^1.2.2",
     "@iconify/vue": "^4.0.0",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.6",

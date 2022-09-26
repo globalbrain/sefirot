@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import SIconX from 'sefirot/components/icons/SIconX.vue'
+import IconX from '@iconify-icons/ph/x'
+import SIcon from './SIcon.vue'
+import SMount from './SMount.vue'
 
 export interface Props {
   size?: 'small' | 'medium' | 'large'
@@ -17,13 +19,13 @@ defineEmits<{
 </script>
 
 <template>
-  <FMount class="SSheet" :class="[size]" @click.stop>
+  <SMount class="SSheet" :class="[size]" @click.stop="() => {}">
     <button v-if="closable ?? true" class="close" @click="$emit('close')">
-      <SIconX class="icon" />
+      <SIcon :icon="IconX" class="icon" />
     </button>
 
     <slot />
-  </FMount>
+  </SMount>
 </template>
 
 <style scoped lang="postcss">
@@ -81,6 +83,5 @@ defineEmits<{
 .icon {
   width: 24px;
   height: 24px;
-  fill: currentColor;
 }
 </style>

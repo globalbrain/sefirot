@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { reactive, ref, computed, watch, toRefs } from 'vue'
 import { Table } from '../composables/Table'
+import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
-import SIconPreloader from './icons/SIconPreloader.vue'
 
 const props = defineProps<{
   options: Table
@@ -146,7 +146,7 @@ function updateColWidth(key: string, value: string) {
 
       <div v-if="loading" class="loading">
         <div class="loading-icon">
-          <SIconPreloader class="loading-svg" />
+          <SSpinner class="loading-svg" />
         </div>
       </div>
 
@@ -237,5 +237,6 @@ function updateColWidth(key: string, value: string) {
 .loading-svg {
   width: 48px;
   height: 48px;
+  color: var(--c-text-1);
 }
 </style>

@@ -22,16 +22,10 @@ import SSheetFooterAction from 'sefirot/components/SSheetFooterAction.vue'
 
       <SSheetFooter>
         <SSheetFooterActions>
-          <SSheetFooterAction type="mute" label="CANCEL" @click="close" />
-          <SSheetFooterAction type="primary" mode="info" label="CLOSE SHEET" @click="close" />
+          <SSheetFooterAction mode="mute" label="Cancel" />
+          <SSheetFooterAction mode="info" label="Submit" />
         </SSheetFooterActions>
       </SSheetFooter>
     </SSheet>
   </Story>
 </template>
-
-<docs lang="md">
-# SSheet
-
-
-</docs>

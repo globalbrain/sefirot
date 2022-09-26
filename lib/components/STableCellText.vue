@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
 const props = defineProps<{
@@ -27,7 +28,7 @@ const _value = computed(() => {
   <div class="STableCellText" :class="[{ link }, color ?? 'neutral']">
     <SLink v-if="_value" class="container" :href="link?.(value, record)">
       <div v-if="icon" class="icon" :class="[iconColor ?? color ?? 'neutral']">
-        <component class="svg" :is="icon" />
+        <SIcon :icon="icon" class="svg" />
       </div>
       <div class="text" :class="[color ?? 'neutral']">
         {{ _value }}
@@ -95,8 +96,8 @@ const _value = computed(() => {
 }
 
 .svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   fill: currentColor;
 }
 </style>

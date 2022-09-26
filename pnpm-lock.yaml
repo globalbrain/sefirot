@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@histoire/plugin-vue': ^0.10.7
+  '@iconify-icons/ph': ^1.2.2
   '@iconify/vue': ^4.0.0
   '@types/body-scroll-lock': ^3.1.0
   '@types/lodash-es': ^4.17.6
@@ -45,6 +46,7 @@ specifiers:
 
 devDependencies:
   '@histoire/plugin-vue': 0.10.7_gr7xrgksnqnbing6b46ua5jkoi
+  '@iconify-icons/ph': 1.2.2
   '@iconify/vue': 4.0.0_vue@3.2.39
   '@types/body-scroll-lock': 3.1.0
   '@types/lodash-es': 4.17.6
@@ -381,6 +383,12 @@ packages:
   /@hutson/parse-repository-url/3.0.2:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
+    dev: true
+
+  /@iconify-icons/ph/1.2.2:
+    resolution: {integrity: sha512-8YgmD1nDJXa6KPGvpFNPp8zvrV38ZHuBmuyBjAgLGT/GI1ZFVLnnQ8xwU8OMFoJN/rYJQZ9r9yW7ppuAh9Q1uQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
     dev: true
 
   /@iconify/types/2.0.0:

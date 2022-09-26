@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconCaretDown from '@iconify-icons/ph/caret-down'
+import IconCaretUp from '@iconify-icons/ph/caret-up'
 import xor from 'lodash-es/xor'
 import { computed } from 'vue'
 import type { DropdownSectionFilter } from '../composables/Dropdown'
@@ -6,10 +8,9 @@ import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
 import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
+import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
-import SIconChevronDown from './icons/SIconChevronDown.vue'
-import SIconChevronUp from './icons/SIconChevronUp.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type PrimitiveValue = string | number | boolean | null
@@ -144,8 +145,8 @@ function handleArray(value: OptionValue) {
         </div>
 
         <div class="box-icon">
-          <SIconChevronUp class="box-icon-svg up" />
-          <SIconChevronDown class="box-icon-svg down" />
+          <SIcon :icon="IconCaretUp" class="box-icon-svg up" />
+          <SIcon :icon="IconCaretDown" class="box-icon-svg down" />
         </div>
       </div>
 
@@ -277,7 +278,7 @@ function handleArray(value: OptionValue) {
   display: block;
   width: 14px;
   height: 14px;
-  fill: var(--c-text-2);
+  color: var(--c-text-2);
 }
 
 .box-icon-svg.up {

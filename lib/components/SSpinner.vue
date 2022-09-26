@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <svg class="SSpinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
     <g transform="rotate(0 50 50)">
       <rect
         class="bar"
@@ -228,12 +228,13 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g></svg>
+    </g>
+  </svg>
 </template>
 
 <style lang="postcss" scoped>
 .bar {
-  fill: var(--preloader-color);
-  transition: fill .5s;
+  fill: currentColor;
+  transition: fill 0.5s;
 }
 </style>

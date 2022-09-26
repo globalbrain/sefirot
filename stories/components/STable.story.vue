@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { reactive, ref, computed, markRaw } from 'vue'
+import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
-import SIconImage from 'sefirot/components/icons/SIconImage.vue'
 import STable from 'sefirot/components/STable.vue'
+// @ts-expect-error TODO: add tsconfig alias
 import { useTable } from 'sefirot/composables/Table'
+import { reactive, ref, computed, markRaw } from 'vue'
 
 interface Sort {
   by: string
@@ -120,7 +121,7 @@ const table = useTable({
       dropdown: dropdownName,
       cell: {
         type: 'text',
-        icon: markRaw(SIconImage),
+        icon: markRaw(IconImageSquare),
         link: (_value, record) => record.link,
       }
     },

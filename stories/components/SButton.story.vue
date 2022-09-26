@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SIconImage from 'sefirot/components/icons/SIconImage.vue'
-import SIconSearch from 'sefirot/components/icons/SIconSearch.vue'
-import SIconCheckCircle from 'sefirot/components/icons/SIconCheckCircle.vue'
-import SIconEdit from 'sefirot/components/icons/SIconEdit.vue'
+import IconCheckCircle from '@iconify-icons/ph/check-circle'
+import IconNotePencil from '@iconify-icons/ph/note-pencil'
+import IconImageSquare from '@iconify-icons/ph/image-square'
+import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass'
 import SButton from 'sefirot/components/SButton.vue'
 </script>
 
@@ -101,10 +101,10 @@ import SButton from 'sefirot/components/SButton.vue'
 
     <Variant title="Icon">
       <div class="grid">
-        <SButton :icon="SIconImage" />
-        <SButton label="Search" :icon="SIconSearch" />
-        <SButton label="Check" type="outline" :icon="SIconCheckCircle" />
-        <SButton label="Edit" type="text" :icon="SIconEdit" />
+        <SButton :icon="IconImageSquare" />
+        <SButton label="Search" :icon="IconMagnifyingGlass" />
+        <SButton label="Check" type="outline" :icon="IconCheckCircle" />
+        <SButton label="Edit" type="text" :icon="IconNotePencil" />
       </div>
     </Variant>
   </Story>

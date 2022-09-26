@@ -38,19 +38,20 @@
       </select>
 
       <div class="icon" role="button">
-        <SIconChevronUp class="icon-svg up" />
-        <SIconChevronDown class="icon-svg down" />
+        <SIcon :icon="IconCaretUp" class="icon-svg up" />
+        <SIcon :icon="IconCaretDown" class="icon-svg down" />
       </div>
     </div>
   </SInputBase>
 </template>
 
 <script setup lang="ts">
+import IconCaretDown from '@iconify-icons/ph/caret-down'
+import IconCaretUp from '@iconify-icons/ph/caret-up'
 import { PropType, ref, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
+import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
-import SIconChevronDown from './icons/SIconChevronDown.vue'
-import SIconChevronUp from './icons/SIconChevronUp.vue'
 
 type Size = 'mini' | 'small' | 'medium'
 
@@ -226,7 +227,7 @@ function emitChange(e: any): void {
   display: block;
   width: 14px;
   height: 14px;
-  fill: var(--input-placeholder);
+  color: var(--input-placeholder);
 }
 
 .icon-svg.up {
