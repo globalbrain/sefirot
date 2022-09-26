@@ -13,7 +13,7 @@ withDefaults(defineProps<Props>(), {
   closable: true
 })
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'close'): void
 }>()
 </script>
