@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/globalbrain/sefirot/compare/v2.1.0...v2.1.1) (2022-09-26)
+
+### Bug Fixes
+
+* add missing markdown-it peer dependency ([6eecf82](https://github.com/globalbrain/sefirot/commit/6eecf82bb35ef7783d13bde28a915e76790a59d7))
+
 # [2.1.0](https://github.com/globalbrain/sefirot/compare/v2.0.0...v2.1.0) (2022-09-26)
 
 ### Bug Fixes
