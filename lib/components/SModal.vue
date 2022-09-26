@@ -16,12 +16,12 @@ const emit = defineEmits<{
 
 const el = ref<any>(null)
 
-function onClick(e: any) {
+function onClick(e: MouseEvent) {
   if (!props.closable) {
     return
   }
 
-  if (e.target === el.value) {
+  if (e.button === 0 && e.target === el.value) {
     emit('close')
   }
 }
@@ -30,7 +30,7 @@ function onClick(e: any) {
 <template>
   <Teleport to="#sefirot-modals">
     <transition name="fade">
-      <div v-if="open" class="SModal" ref="el" @click="onClick">
+      <div v-if="open" class="SModal" ref="el" @mousedown="onClick">
         <slot />
       </div>
     </transition>
