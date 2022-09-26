@@ -6,13 +6,12 @@
     "moduleResolution": "node",
     "strict": true,
     "isolatedModules": true,
-    "useDefineForClassFields": false,
     "jsx": "preserve",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true,
+    "noUnusedLocals": true,
 
     "lib": [
       "esnext",
@@ -26,18 +25,22 @@
     },
 
     "types": [
-      "@types/node",
+      "node",
       "vitest/globals"
     ]
   },
 
   "include": [
     "docs",
-    "docs/.vitepress",
+    "docs/.vitepress/**/*",
     "lib",
+    "stories",
     "tests",
-    "env.d.ts",
-    "histoire.config.*",
-    "vitest.config.*"
+    "*.config.ts"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "**/dist/**"
   ]
 }
