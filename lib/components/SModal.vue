@@ -1,22 +1,36 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 export interface Props {
   open: boolean
   closable?: boolean
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   closable: true
 })
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
+const el = ref<any>(null)
+
+function onClick(e: any) {
+  if (!props.closable) {
+    return
+  }
+
+  if (e.target === el.value) {
+    emit('close')
+  }
+}
 </script>
 
 <template>
   <Teleport to="#sefirot-modals">
     <transition name="fade">
-      <div v-if="open" class="SModal" @click="closable && $emit('close')">
+      <div v-if="open" class="SModal" ref="el" @click="onClick">
         <slot />
       </div>
     </transition>

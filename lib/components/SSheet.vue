@@ -13,13 +13,13 @@ withDefaults(defineProps<Props>(), {
   closable: true
 })
 
-defineEmits<{
+const emit = defineEmits<{
   (e: 'close'): void
 }>()
 </script>
 
 <template>
-  <SMount class="SSheet" :class="[size]" @click.stop="() => {}">
+  <SMount class="SSheet" :class="[size]">
     <button v-if="closable ?? true" class="close" @click="$emit('close')">
       <SIcon :icon="IconX" class="icon" />
     </button>
