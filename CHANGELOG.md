@@ -1,3 +1,13 @@
+# [2.1.0](https://github.com/globalbrain/sefirot/compare/v2.0.0...v2.1.0) (2022-09-26)
+
+### Bug Fixes
+
+* **modal:** emit close event fires when modal content is clicked ([42cf87f](https://github.com/globalbrain/sefirot/commit/42cf87fdbb8b2f59e2dc8dca43d16144b6dee2fb))
+
+### Features
+
+* **icon:** replace all icons with iconify ones ([#140](https://github.com/globalbrain/sefirot/issues/140)) ([#144](https://github.com/globalbrain/sefirot/issues/144)) ([e9bd2bb](https://github.com/globalbrain/sefirot/commit/e9bd2bb18a7972cb725fe68bed8ac5d690173d69))
+
 # [2.0.0](https://github.com/globalbrain/sefirot/compare/v2.0.0-draft.8...v2.0.0) (2022-09-22)
 
 New Sefirot for Vue 3.
