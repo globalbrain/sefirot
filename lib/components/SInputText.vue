@@ -122,30 +122,39 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 <style lang="postcss" scoped>
 .SInputText.mini {
-  .input,
-  .input-area {
+  .box {
+    padding: 0 8px;
     min-height: 32px;
-    padding: 3px 12px;
-    font-size: 14px;
+  }
 
-    &.has-icon {
-      padding-left: 30px;
-    }
+  .value,
+  .input,
+  .display {
+    min-height: 30px;
+  }
+
+  .input,
+  .display {
+    padding: 3px 0;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-size: 14px;
   }
 
   .icon {
-    top: 9px;
-    left: 10px;
+    width: 22px;
+    height: 30px;
   }
 
   .icon-svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 }
 
 .SInputText.small {
   .box {
+    padding: 0 12px;
     min-height: 40px;
   }
 
@@ -153,10 +162,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .input,
   .display {
     min-height: 38px;
-  }
-
-  .box {
-    padding: 0 12px;
   }
 
   .input,
@@ -179,25 +184,33 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.medium {
-  .input,
-  .input-area {
+  .box {
+    padding: 0 12px;
     min-height: 48px;
-    padding: 11px 16px;
-    font-size: 16px;
+  }
 
-    &.has-icon {
-      padding-left: 36px;
-    }
+  .value,
+  .input,
+  .display {
+    min-height: 46px;
+  }
+
+  .input,
+  .display {
+    padding: 11px 0;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-size: 16px;
   }
 
   .icon {
-    top: 16px;
-    left: 12px;
+    width: 28px;
+    height: 46px;
   }
 
   .icon-svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 }
 
