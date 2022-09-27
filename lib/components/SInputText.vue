@@ -155,10 +155,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     min-height: 38px;
   }
 
-  .box {
-    padding: 0 12px;
-  }
-
   .input,
   .display {
     padding: 5px 0;
@@ -228,6 +224,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   display: flex;
   flex-grow: 1;
   max-width: 100%;
+  padding: 0 12px;
   border: 1px solid var(--c-divider);
   border-radius: 6px;
   background-color: var(--c-bg);
