@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/globalbrain/sefirot/compare/v2.1.1...v2.1.2) (2022-09-27)
+
+### Bug Fixes
+
+* **input-text:** padding is missing ([#148](https://github.com/globalbrain/sefirot/issues/148)) ([336afb3](https://github.com/globalbrain/sefirot/commit/336afb3784d498bb912589d1021b9c7684613216))
+* **modal:** modal closes when mousedowned on content instead of modal backdrop ([#145](https://github.com/globalbrain/sefirot/issues/145)) ([#146](https://github.com/globalbrain/sefirot/issues/146)) ([8e0a82c](https://github.com/globalbrain/sefirot/commit/8e0a82ce9c27e6016b17f308fa7df8a600a9ff53))
+
 ## [2.1.1](https://github.com/globalbrain/sefirot/compare/v2.1.0...v2.1.1) (2022-09-26)
 
 ### Bug Fixes
