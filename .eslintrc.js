@@ -56,7 +56,6 @@ module.exports = {
         'caseInsensitive': false
       }
     }],
-    'no-unused-vars': 'off',
     'vue/attributes-order': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'vue/max-attributes-per-line': 'off',
