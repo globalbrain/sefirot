@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import SInputFile from 'sefirot/components/SInputFile.vue'
 import { useForm } from 'sefirot/composables/Form'
-import { Sefirot } from 'sefirot/store/Sefirot'
 import { fileExtension, required } from 'sefirot/validation/rules'
-import { createStore } from 'vuex'
 
 const { data, validation } = useForm({
   data: {

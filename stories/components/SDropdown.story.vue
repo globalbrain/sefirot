@@ -2,10 +2,11 @@
 import { ref } from 'vue'
 import xor from 'lodash-es/xor'
 import SDropdown from 'sefirot/components/SDropdown.vue'
+import { createDropdown } from 'sefirot/composables/Dropdown';
 
 const selected = ref<string[]>([])
 
-const sections = [
+const sections = createDropdown([
   {
     type: 'menu',
     options: [
@@ -24,7 +25,7 @@ const sections = [
     ],
     onClick: updateFilter
   }
-]
+])
 
 function updateFilter(value: string) {
   selected.value = xor(selected.value, [value])

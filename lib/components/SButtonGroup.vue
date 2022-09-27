@@ -17,15 +17,14 @@
 <script setup lang="ts">
 import { computed, PropType } from 'vue'
 
-interface ButtonGroupItem {
+export interface ButtonGroupItem {
   label: string
   value: string
-  mode: Mode
+  mode?: Mode
 }
 
-type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
-
+export type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
 const props = defineProps({
   items: { type: Array as PropType<ButtonGroupItem[]>, required: true },
