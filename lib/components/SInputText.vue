@@ -122,11 +122,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 <style lang="postcss" scoped>
 .SInputText.mini {
+  .box { padding: 0 12px; }
+
   .input,
-  .input-area {
+  .display {
     min-height: 32px;
-    padding: 3px 12px;
+    padding: 3px 0;
     font-size: 14px;
+    line-height: 26px;
 
     &.has-icon {
       padding-left: 30px;
@@ -136,6 +139,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .icon {
     top: 9px;
     left: 10px;
+    width: 24px;
   }
 
   .icon-svg {
@@ -147,6 +151,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.small {
   .box {
     min-height: 40px;
+    padding: 0 12px;
   }
 
   .value,
@@ -157,7 +162,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
   .input,
   .display {
-    padding: 5px 0;
+    padding: 7px 0;
     letter-spacing: 0;
     line-height: 24px;
     font-size: 16px;
@@ -175,11 +180,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.medium {
+  .box { padding: 0 16px; }
+
   .input,
-  .input-area {
+  .display {
     min-height: 48px;
-    padding: 11px 16px;
-    font-size: 16px;
+    padding: 11px 0;
+    font-size: 20px;
+    line-height: 26px;
 
     &.has-icon {
       padding-left: 36px;
@@ -189,6 +197,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .icon {
     top: 16px;
     left: 12px;
+    width: 28px;
   }
 
   .icon-svg {
@@ -224,7 +233,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   display: flex;
   flex-grow: 1;
   max-width: 100%;
-  padding: 0 12px;
   border: 1px solid var(--c-divider);
   border-radius: 6px;
   background-color: var(--c-bg);
