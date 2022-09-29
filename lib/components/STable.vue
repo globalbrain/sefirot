@@ -192,7 +192,7 @@ function updateColWidth(key: string, value: string) {
   &.head {
     position: var(--table-head-position, static);
     top: var(--table-head-top, auto);
-    z-index: 20;
+    z-index: 100;
     background-color: var(--bg-elv);
 
     &::-webkit-scrollbar {

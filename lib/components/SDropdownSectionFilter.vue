@@ -11,7 +11,7 @@ import SIcon from './SIcon.vue'
 const props = defineProps<{
   search?: boolean
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
-  options: DropdownSectionFilterOption[]
+  options: MaybeRef<DropdownSectionFilterOption[]>
   onClick?(value: string | number | boolean): void
 }>()
 
@@ -19,12 +19,12 @@ const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
 const fuse = computed(() => {
-  return new Fuse(props.options, { keys: ['label'] })
+  return new Fuse(unref(props.options), { keys: ['label'] })
 })
 
 const filteredOptions = computed(() => {
   return !props.search || !query.value
-    ? props.options
+    ? unref(props.options)
     : fuse.value.search(query.value).map((r) => r.item)
 })
 

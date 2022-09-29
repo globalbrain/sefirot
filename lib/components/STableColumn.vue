@@ -44,7 +44,7 @@ const active = computed(() => {
       return false
     }
 
-    return item.options.some((option) => {
+    return unref(item.options).some((option) => {
       return selected.includes(option.value)
     })
   })
