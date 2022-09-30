@@ -95,10 +95,6 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   border-bottom: 1px solid var(--c-divider-light);
   padding: 8px;
   background-color: var(--c-bg-elv-up);
-
-  .dark & {
-    background-color: var(--c-bg-mute);
-  }
 }
 
 .input {
