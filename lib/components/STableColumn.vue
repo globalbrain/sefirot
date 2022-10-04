@@ -93,7 +93,11 @@ async function adjustDialogPosition() {
   const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
 
   top.value = `${rect.top + rect.height - 8}px`
-  left.value = position === 'right' ? `${rect.left - 4}px` : `${rect.right - dialogWidth - 4}px`
+  left.value =
+    Math.max(
+      16,
+      position === 'right' ? rect.left - 4 : rect.right - dialogWidth - 4
+    ) + 'px'
 }
 
 function startDialogPositionListener() {
