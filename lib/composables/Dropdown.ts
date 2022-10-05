@@ -24,7 +24,7 @@ export interface DropdownSectionFilter extends DropdownSectionBase {
   type: 'filter'
   search?: boolean
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
-  options: DropdownSectionFilterOption[]
+  options: MaybeRef<DropdownSectionFilterOption[]>
   onClick?(value: string | number | boolean): void
 }
 

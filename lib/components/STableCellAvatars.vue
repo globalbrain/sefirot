@@ -80,6 +80,10 @@ const names = computed(() => {
   border: 2px solid var(--c-bg-elv-up);
   border-radius: 50%;
   width: 28px;
+
+  .row:hover & {
+    border: 2px solid var(--c-bg-elv);
+  }
 }
 
 .names {

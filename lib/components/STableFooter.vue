@@ -43,10 +43,10 @@ const hasNext = computed(() => {
       <p class="info">{{ format(from) }}–{{ format(to) }} of {{ format(_total) }}</p>
 
       <div class="actions">
-        <button class="button prev" :class="{ active: hasPrev }" @click="onPrev">
+        <button class="button prev" :class="{ active: hasPrev }" @click="() => hasPrev && onPrev?.()">
           <SIcon :icon="IconCaretLeft" class="icon" />
         </button>
-        <button class="button next" :class="{ active: hasNext }" @click="onNext">
+        <button class="button next" :class="{ active: hasNext }" @click="() => hasNext && onNext?.()">
           <SIcon :icon="IconCaretRight" class="icon" />
         </button>
       </div>
