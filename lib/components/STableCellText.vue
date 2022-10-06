@@ -76,6 +76,8 @@ const _value = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
+  margin-left: -3px;
   width: 24px;
   height: 24px;
   transition: color 0.25s;
