@@ -38,7 +38,7 @@ const _color = computed(() => {
 
 <style scoped lang="postcss">
 .STableCellPill {
-  padding: 9px 16px 10px;
+  padding: 7px 16px 9px;
   min-height: 40px;
 }
 
