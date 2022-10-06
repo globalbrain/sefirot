@@ -1,3 +1,10 @@
+## [2.1.4](https://github.com/globalbrain/sefirot/compare/v2.1.3...v2.1.4) (2022-10-06)
+
+### Bug Fixes
+
+* **table:** pill cell has too much padding ([9ac1f16](https://github.com/globalbrain/sefirot/commit/9ac1f16387a016341dbfe8087875c763b52f955f))
+* **table:** text cell with icon gets crashed when text is long ([36748b0](https://github.com/globalbrain/sefirot/commit/36748b0a6c0ecbfad7ee55c41157354ed7af7e6c))
+
 ## [2.1.3](https://github.com/globalbrain/sefirot/compare/v2.1.2...v2.1.3) (2022-10-06)
 
 ### Bug Fixes
