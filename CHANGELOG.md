@@ -1,3 +1,10 @@
+## [2.1.3](https://github.com/globalbrain/sefirot/compare/v2.1.2...v2.1.3) (2022-10-06)
+
+### Bug Fixes
+
+* **table:** prevent column dialog from going out of screen ([#150](https://github.com/globalbrain/sefirot/issues/150)) ([944b2df](https://github.com/globalbrain/sefirot/commit/944b2df65e206c1c566b77e2acc76174a0111268))
+* **table:** various issues such as z-index and function callback handling ([#149](https://github.com/globalbrain/sefirot/issues/149)) ([981c038](https://github.com/globalbrain/sefirot/commit/981c038084ccb81dd45d3a08b82ed9916e1b7264))
+
 ## [2.1.2](https://github.com/globalbrain/sefirot/compare/v2.1.1...v2.1.2) (2022-09-27)
 
 ### Bug Fixes
