@@ -5,6 +5,7 @@ import SIcon from './SIcon.vue'
 defineProps<{
   label: string
   value: string | number | boolean
+  removable: boolean
   disabled: boolean
 }>()
 
@@ -14,10 +15,10 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="SInputDropdownItemText" :class="{ disabled }">
+  <div class="SInputDropdownItemText" :class="{ disabled, removable }">
     <p class="text">{{ label }}</p>
 
-    <div v-if="!disabled" class="remove" role="button" @click.stop="$emit('remove', value)">
+    <div v-if="!disabled && removable" class="remove" role="button" @click.stop="$emit('remove', value)">
       <div class="remove-box">
         <SIcon :icon="IconX" class="remove-icon" />
       </div>
@@ -30,12 +31,16 @@ defineEmits<{
   display: flex;
   border: 1px solid var(--c-divider-light);
   border-radius: 14px;
-  padding: 0 0 0 12px;
+  padding: 0 12px;
   background-color: var(--c-bg-mute);
 }
 
+.SInputDropdownItemText.removable {
+  padding: 0 0 0 12px;
+}
+
 .SInputDropdownItemText.disabled {
-  padding: 0 10px 0;
+  padding: 0 10px;
   background-color: var(--c-gray-light-4);
 
   .text {

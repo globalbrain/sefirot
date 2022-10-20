@@ -83,6 +83,14 @@ const hasSelected = computed(() => {
   return selected.value.length > 0
 })
 
+const removable = computed(() => {
+  if (isArray(props.modelValue)) {
+    return props.nullable || selected.value.length > 1
+  }
+
+  return !!props.nullable
+})
+
 async function handleOpen() {
   !props.disabled && open()
 }
@@ -137,6 +145,7 @@ function handleArray(value: OptionValue) {
           <SInputDropdownItem
             v-if="hasSelected"
             :items="selected"
+            :removable="removable"
             :disabled="disabled ?? false"
             @remove="handleSelect"
           />
