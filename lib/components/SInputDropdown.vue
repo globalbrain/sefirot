@@ -223,8 +223,8 @@ function handleArray(value: OptionValue) {
   }
 }
 
-.SInputSelect.has-error {
-  .select {
+.SInputDropdown.has-error {
+  .box {
     border-color: var(--c-danger);
   }
 }
