@@ -58,8 +58,7 @@ const { container, isOpen, open } = useFlyout()
 
 const classes = computed(() => [
   props.size ?? 'small',
-  { disabled: props.disabled },
-  { 'no-remove': props.nullable || selected.value.length === 1 }
+  { disabled: props.disabled }
 ])
 
 const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
