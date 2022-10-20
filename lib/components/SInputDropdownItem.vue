@@ -22,6 +22,7 @@ export interface ItemAvatar extends ItemBase {
 
 defineProps<{
   items: Item[]
+  removable: boolean
   disabled: boolean
 }>()
 
@@ -37,6 +38,7 @@ defineEmits<{
         v-if="item.type === 'text' || item.type === undefined"
         :label="item.label"
         :value="item.value"
+        :removable="removable"
         :disabled="disabled"
         @remove="(v) => $emit('remove', v)"
       />
@@ -45,6 +47,7 @@ defineEmits<{
         :label="item.label"
         :image="item.image"
         :value="item.value"
+        :removable="removable"
         :disabled="disabled"
         @remove="(v) => $emit('remove', v)"
       />

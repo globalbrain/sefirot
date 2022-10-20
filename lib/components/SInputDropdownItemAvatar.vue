@@ -7,6 +7,7 @@ defineProps<{
   label: string
   image?: string | null
   value: string | number | boolean
+  removable: boolean
   disabled: boolean
 }>()
 
@@ -16,7 +17,7 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="SInputDropdownItemAvatar" :class="{ disabled }">
+  <div class="SInputDropdownItemAvatar" :class="{ disabled, removable }">
     <div class="user">
       <div class="avatar">
         <SAvatar size="nano" :avatar="image" :name="label" />
@@ -24,7 +25,7 @@ defineEmits<{
       <p class="name">{{ label }}</p>
     </div>
 
-    <div v-if="!disabled" class="remove" role="button" @click="$emit('remove', value)">
+    <div v-if="!disabled && removable" class="remove" role="button" @click="$emit('remove', value)">
       <div class="remove-box">
         <SIcon :icon="IconX" class="remove-icon" />
       </div>
@@ -37,8 +38,12 @@ defineEmits<{
   display: flex;
   border: 1px solid var(--c-divider-light);
   border-radius: 14px;
-  padding: 0;
+  padding: 0 12px 0 0;
   background-color: var(--c-bg-mute);
+}
+
+.SInputDropdownItemAvatar.removable {
+  padding: 0;
 }
 
 .SInputDropdownItemUserAvatar.disabled {

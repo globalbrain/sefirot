@@ -21,7 +21,7 @@ const options = [
       label="Dropdown input"
       placeholder="Please select items"
       :options="options"
-      :nullable="true"
+      nullable
       v-model="value"
     />
   </Story>
