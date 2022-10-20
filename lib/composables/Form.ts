@@ -14,7 +14,7 @@ export interface Form<T extends Record<string, any>> {
 
 export interface UseFormOptions<T extends Record<string, any>> {
   data: T,
-  rules?: Record<string, any>
+  rules?: Record<string, any> | ((state: T) => Record<string, any>)
 }
 
 export function useForm<
@@ -26,7 +26,9 @@ export function useForm<
 
   const data = reactive(options.data)
 
-  const rules = options.rules ?? {}
+  const rules = options.rules
+    ? typeof options.rules === 'function' ? options.rules(data) : options.rules
+    : {}
 
   const validation = useValidation(data, rules)
 
