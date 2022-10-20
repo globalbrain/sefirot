@@ -13,7 +13,7 @@ export interface Value {
 
 export type ValueType = 'year' | 'month' | 'date'
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   size?: Size
   label?: string
   note?: string
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   hideError?: boolean
   modelValue: Value
   validation?: Validatable
-}>(), { size: 'small' })
+}>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Value): void
@@ -98,7 +98,7 @@ function createRequiredTouched(): boolean[] {
 <template>
   <SInputBase
     class="SInputYMD"
-    :class="[size, { disabled }]"
+    :class="[size ?? 'small', { disabled }]"
     :label="label"
     :note="note"
     :help="help"
