@@ -13,7 +13,7 @@ export interface Value {
 
 export type ValueType = 'year' | 'month' | 'date'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   note?: string
@@ -25,7 +25,7 @@ const props = defineProps<{
   hideError?: boolean
   modelValue: Value
   validation?: Validatable
-}>()
+}>(), { size: 'small' })
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Value): void
