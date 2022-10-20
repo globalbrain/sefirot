@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TableCellPillColor } from '../composables/Table'
+
+export type Color = 'info' | 'success' | 'warning' | 'danger' | 'mute'
 
 const props = defineProps<{
   value?: any
   record: any
   getter?: string | ((value: any) => string)
-  color?: TableCellPillColor | ((value: any) => TableCellPillColor)
+  color?: Color | ((value: any) => Color)
 }>()
 
 const _value = computed(() => {
