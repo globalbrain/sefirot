@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/globalbrain/sefirot/compare/v2.1.4...v2.2.0) (2022-10-20)
+
+### Features
+
+* **form:** allow rules to be passed as function ([36578a6](https://github.com/globalbrain/sefirot/commit/36578a64291464a768bf8b1260bf738247a5da77))
+* **validation:** add maxValue, minValue, month, and rule validator ([9e77710](https://github.com/globalbrain/sefirot/commit/9e77710d9746b0d9090c1535f7dc74c340202352))
+
 ## [2.1.4](https://github.com/globalbrain/sefirot/compare/v2.1.3...v2.1.4) (2022-10-06)
 
 ### Bug Fixes
