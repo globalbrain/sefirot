@@ -141,6 +141,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: 14px;
   }
 
+  .display {
+    top: 0;
+  }
+
   .icon {
     width: 22px;
     height: 30px;
@@ -172,6 +176,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: 16px;
   }
 
+  .display {
+    top: 2px;
+  }
+
   .icon {
     width: 26px;
     height: 38px;
@@ -201,6 +209,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     letter-spacing: 0;
     line-height: 24px;
     font-size: 16px;
+  }
+
+  .display {
+    top: 0;
   }
 
   .icon {
@@ -288,7 +300,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 .display {
   position: absolute;
-  top: 0;
   left: 0;
   width: 100%;
 }

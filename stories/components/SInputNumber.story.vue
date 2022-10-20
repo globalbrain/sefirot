@@ -12,14 +12,9 @@ const value = ref<number | null>(null)
       label="Label"
       note="Note text"
       help="This is a help text."
-      placeholder="123456789"
+      placeholder="123,456,789"
+      separator
       v-model="value"
     />
   </Story>
 </template>
-
-<docs lang="md">
-# SInputNumber
-
-
-</docs>
