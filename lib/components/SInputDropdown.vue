@@ -58,7 +58,8 @@ const { container, isOpen, open } = useFlyout()
 
 const classes = computed(() => [
   props.size ?? 'small',
-  { disabled: props.disabled }
+  { disabled: props.disabled },
+  { 'no-remove': props.nullable || selected.value.length === 1 }
 ])
 
 const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
@@ -290,5 +291,15 @@ function handleArray(value: OptionValue) {
   top: calc(100% + 8px);
   left: 0;
   z-index: var(--z-index-dropdown);
+}
+
+.no-remove {
+  :deep(.remove) {
+    display: none;
+  }
+
+  :deep(.SInputDropdownItemText) {
+    padding: 0 10px 0;
+  }
 }
 </style>
