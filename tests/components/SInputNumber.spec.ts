@@ -4,7 +4,9 @@ import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputNumber', () => {
   it('should emit value on input', async () => {
-    const wrapper = mount(SInputNumber)
+    const wrapper = mount(SInputNumber, {
+      props: { modelValue: 1 }
+    })
 
     await wrapper.find('.SInputNumber .input').setValue('0')
     assertEmitted(wrapper, 'update:modelValue', 0, 0)
@@ -17,7 +19,9 @@ describe('components/SInputNumber', () => {
   })
 
   it('should emit null when value is null or empty', async () => {
-    const wrapper = mount(SInputNumber)
+    const wrapper = mount(SInputNumber, {
+      props: { modelValue: 1 }
+    })
 
     await wrapper.find('.SInputNumber .input').setValue(null)
     assertEmitted(wrapper, 'update:modelValue', 0, null)
@@ -29,20 +33,10 @@ describe('components/SInputNumber', () => {
     assertEmitted(wrapper, 'update:modelValue', 2, null)
   })
 
-  it('should format help text with thousand separator', async () => {
-    const wrapper = mount(SInputNumber, {
-      propsData: {
-        helpFormat: true
-      }
-    })
-
-    await wrapper.setProps({ modelValue: 1000000000.2222 })
-    expect((wrapper.vm as any).valueWithSeparator).toBe('1,000,000,000.2222')
-  })
-
   it('should show the value with thousand separator when the foucs is out', async () => {
     const wrapper = mount(SInputNumber, {
-      propsData: {
+      props: {
+        modelValue: null,
         separator: true
       }
     })
@@ -53,10 +47,34 @@ describe('components/SInputNumber', () => {
   })
 
   it('should show the value without thousand separator when separator props is not passed', async () => {
-    const wrapper = mount(SInputNumber)
+    const wrapper = mount(SInputNumber, {
+      props: { modelValue: 1 }
+    })
 
     await wrapper.setProps({ modelValue: 1000000 })
 
     expect((wrapper.find('.SInputNumber .input').element as any).value).toBe('1000000')
+  })
+
+  it('should not display too large number', async () => {
+    const wrapper = mount(SInputNumber, {
+      props: {
+        separator: true,
+        modelValue: 100000000000000000000
+      }
+    })
+
+    expect((wrapper.find('.SInputNumber .display').text())).toBe('The number is too big')
+  })
+
+  it('should display `displayValue` if passed', async () => {
+    const wrapper = mount(SInputNumber, {
+      props: {
+        modelValue: 1,
+        displayValue: '100'
+      }
+    })
+
+    expect((wrapper.find('.SInputNumber .display').text())).toBe('100')
   })
 })
