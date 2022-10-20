@@ -266,6 +266,8 @@ function handleArray(value: OptionValue) {
   padding: 2px 4px;
   font-weight: 500;
   color: var(--c-text-3);
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .box-icon {
