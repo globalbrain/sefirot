@@ -1,3 +1,14 @@
+## [2.2.1](https://github.com/globalbrain/sefirot/compare/v2.2.0...v2.2.1) (2022-10-21)
+
+### Bug Fixes
+
+* **input-dropdown:** change border color on error ([#160](https://github.com/globalbrain/sefirot/issues/160)) ([#163](https://github.com/globalbrain/sefirot/issues/163)) ([c656801](https://github.com/globalbrain/sefirot/commit/c6568019f7d553b426a94d964663627a683478f9))
+* **input-dropdown:** placeholder text gets wrapped when it's too long ([#159](https://github.com/globalbrain/sefirot/issues/159)) ([#164](https://github.com/globalbrain/sefirot/issues/164)) ([45b3ae3](https://github.com/globalbrain/sefirot/commit/45b3ae3efb7b497407c2533686cfb07c67b9aa4a))
+* **input-dropdown:** remove button is displayed even when item is not removable ([#155](https://github.com/globalbrain/sefirot/issues/155)) ([#165](https://github.com/globalbrain/sefirot/issues/165)) ([49ff573](https://github.com/globalbrain/sefirot/commit/49ff573123a472b32c8db49f48bdded282db9913))
+* **input-number:** display value style is broken ([#158](https://github.com/globalbrain/sefirot/issues/158)) ([#162](https://github.com/globalbrain/sefirot/issues/162)) ([23f3acb](https://github.com/globalbrain/sefirot/commit/23f3acb9267b9ec6f9595f21cbdab8b3ccd1e579))
+* **input-ymd:** default value is missing on `size` prop ([#156](https://github.com/globalbrain/sefirot/issues/156)) ([#166](https://github.com/globalbrain/sefirot/issues/166)) ([97ba580](https://github.com/globalbrain/sefirot/commit/97ba580d4d4a13000326686309cf745e7ef1db1d))
+* **table:** invalid prop type error thrown on `color` prop ([#157](https://github.com/globalbrain/sefirot/issues/157)) ([#161](https://github.com/globalbrain/sefirot/issues/161)) ([48c465d](https://github.com/globalbrain/sefirot/commit/48c465d129c138ae03f5c10c3ce859d096ece854))
+
 # [2.2.0](https://github.com/globalbrain/sefirot/compare/v2.1.4...v2.2.0) (2022-10-20)
 
 ### Features
