@@ -98,7 +98,7 @@ function createRequiredTouched(): boolean[] {
 <template>
   <SInputBase
     class="SInputYMD"
-    :class="[size, { disabled }]"
+    :class="[size ?? 'small', { disabled }]"
     :label="label"
     :note="note"
     :help="help"
