@@ -1,5 +1,10 @@
 <template>
-  <svg class="SSpinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+  <svg
+    class="SSpinner"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 100 100"
+    preserveAspectRatio="xMidYMid"
+  >
     <g transform="rotate(0 50 50)">
       <rect
         class="bar"
@@ -19,7 +24,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(30 50 50)">
+    </g>
+    <g transform="rotate(30 50 50)">
       <rect
         class="bar"
         x="48"
@@ -38,7 +44,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(60 50 50)">
+    </g>
+    <g transform="rotate(60 50 50)">
       <rect
         class="bar"
         x="48"
@@ -57,7 +64,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(90 50 50)">
+    </g>
+    <g transform="rotate(90 50 50)">
       <rect
         class="bar"
         x="48"
@@ -76,7 +84,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(120 50 50)">
+    </g>
+    <g transform="rotate(120 50 50)">
       <rect
         class="bar"
         x="48"
@@ -95,7 +104,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(150 50 50)">
+    </g>
+    <g transform="rotate(150 50 50)">
       <rect
         class="bar"
         x="48"
@@ -114,7 +124,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(180 50 50)">
+    </g>
+    <g transform="rotate(180 50 50)">
       <rect
         class="bar"
         x="48"
@@ -133,7 +144,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(210 50 50)">
+    </g>
+    <g transform="rotate(210 50 50)">
       <rect
         class="bar"
         x="48"
@@ -152,7 +164,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(240 50 50)">
+    </g>
+    <g transform="rotate(240 50 50)">
       <rect
         class="bar"
         x="48"
@@ -171,7 +184,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(270 50 50)">
+    </g>
+    <g transform="rotate(270 50 50)">
       <rect
         class="bar"
         x="48"
@@ -190,7 +204,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(300 50 50)">
+    </g>
+    <g transform="rotate(300 50 50)">
       <rect
         class="bar"
         x="48"
@@ -209,7 +224,8 @@
           repeatCount="indefinite"
         />
       </rect>
-    </g><g transform="rotate(330 50 50)">
+    </g>
+    <g transform="rotate(330 50 50)">
       <rect
         class="bar"
         x="48"
