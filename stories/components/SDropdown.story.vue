@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import xor from 'lodash-es/xor'
 import SDropdown from 'sefirot/components/SDropdown.vue'
-import { createDropdown } from 'sefirot/composables/Dropdown';
+import { createDropdown } from 'sefirot/composables/Dropdown'
+import { ref } from 'vue'
 
 const selected = ref<string[]>([])
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SButtonGroup, { ButtonGroupItem } from 'sefirot/components/SButtonGroup.vue'
+import { ref } from 'vue'
 
 const value = ref('button-a')
 

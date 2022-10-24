@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
+import { ref } from 'vue'
 
 const value = ref(false)
 </script>
@@ -19,6 +19,4 @@ const value = ref(false)
 
 <docs lang="md">
 # SInputCheckbox
-
-
 </docs>

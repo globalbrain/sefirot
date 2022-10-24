@@ -1,20 +1,6 @@
-<template>
-  <div class="SSteps">
-    <SStep
-      v-for="(step, index) in steps"
-      :key="index"
-      class="item"
-      :style="{ width }"
-      :bar-left="getBarLeftMode(index)"
-      :bar-right="getBarRightMode(index)"
-      v-bind="step"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
-import { Step, BarMode } from '../composables/Step'
+import { PropType, computed } from 'vue'
+import { BarMode, Step } from '../composables/Step'
 import SStep from './SStep.vue'
 
 const props = defineProps({
@@ -51,6 +37,20 @@ function isActive(step: Step): boolean {
   return step.status === 'active' || step.status === 'done'
 }
 </script>
+
+<template>
+  <div class="SSteps">
+    <SStep
+      v-for="(step, index) in steps"
+      :key="index"
+      class="item"
+      :style="{ width }"
+      :bar-left="getBarLeftMode(index)"
+      :bar-right="getBarRightMode(index)"
+      v-bind="step"
+    />
+  </div>
+</template>
 
 <style lang="postcss" scoped>
 .SSteps {

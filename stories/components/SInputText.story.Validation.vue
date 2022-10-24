@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SInputText from 'sefirot/components/SInputText.vue'
 import SButton from 'sefirot/components/SButton.vue'
+import SInputText from 'sefirot/components/SInputText.vue'
 import SSnackbars from 'sefirot/components/SSnackbars.vue'
 import { useForm } from 'sefirot/composables/Form'
 import { required } from 'sefirot/validation/rules'

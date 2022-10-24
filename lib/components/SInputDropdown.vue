@@ -3,7 +3,7 @@ import IconCaretDown from '@iconify-icons/ph/caret-down'
 import IconCaretUp from '@iconify-icons/ph/caret-up'
 import xor from 'lodash-es/xor'
 import { computed } from 'vue'
-import type { DropdownSectionFilter } from '../composables/Dropdown'
+import { DropdownSectionFilter } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
 import { isArray } from '../support/Utils'
@@ -71,10 +71,10 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
 
 const selected = computed(() => {
   if (isArray(props.modelValue)) {
-    return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
+    return props.options.filter(o => (props.modelValue as ArrayValue).includes(o.value))
   }
 
-  const item = props.options.find((o) => o.value === props.modelValue)
+  const item = props.options.find(o => o.value === props.modelValue)
 
   return item ? [item] : []
 })

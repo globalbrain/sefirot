@@ -1,54 +1,7 @@
-<template>
-  <SInputBase
-    class="SInputSelect"
-    :class="classes"
-    :label="label"
-    :note="note"
-    :help="help"
-    :error-message="errorMessage ?? true"
-    :validation="validation"
-  >
-    <div class="box" :class="{ focus: isFocused }">
-      <select
-        class="select"
-        :class="{ 'is-not-selected': isNotSelected }"
-        :disabled="disabled"
-        @focus="focus"
-        @blur="blur"
-        @change="emitChange"
-      >
-        <option
-          v-if="placeholder || nullable"
-          :value="JSON.stringify({ value: null })"
-          :selected="isNotSelected"
-          :disabled="!nullable"
-        >
-          {{ placeholder || 'Please select' }}
-        </option>
-
-        <option
-          v-for="(option, index) in options"
-          :key="index"
-          :style="{ display: option.disabled ? 'none' : undefined }"
-          :value="JSON.stringify(option)"
-          :selected="isSelectedOption(option)"
-        >
-          {{ option.label }}
-        </option>
-      </select>
-
-      <div class="icon" role="button">
-        <SIcon :icon="IconCaretUp" class="icon-svg up" />
-        <SIcon :icon="IconCaretDown" class="icon-svg down" />
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down'
 import IconCaretUp from '@iconify-icons/ph/caret-up'
-import { PropType, ref, computed } from 'vue'
+import { PropType, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
@@ -108,6 +61,53 @@ function emitChange(e: any): void {
   emit('update:modelValue', option.value)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputSelect"
+    :class="classes"
+    :label="label"
+    :note="note"
+    :help="help"
+    :error-message="errorMessage ?? true"
+    :validation="validation"
+  >
+    <div class="box" :class="{ focus: isFocused }">
+      <select
+        class="select"
+        :class="{ 'is-not-selected': isNotSelected }"
+        :disabled="disabled"
+        @focus="focus"
+        @blur="blur"
+        @change="emitChange"
+      >
+        <Option
+          v-if="placeholder || nullable"
+          :value="JSON.stringify({ value: null })"
+          :selected="isNotSelected"
+          :disabled="!nullable"
+        >
+          {{ placeholder || 'Please select' }}
+        </Option>
+
+        <Option
+          v-for="(option, index) in options"
+          :key="index"
+          :style="{ display: option.disabled ? 'none' : undefined }"
+          :value="JSON.stringify(option)"
+          :selected="isSelectedOption(option)"
+        >
+          {{ option.label }}
+        </Option>
+      </select>
+
+      <div class="icon" role="button">
+        <SIcon :icon="IconCaretUp" class="icon-svg up" />
+        <SIcon :icon="IconCaretDown" class="icon-svg down" />
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style scoped lang="postcss">
 .SInputSelect.mini {

@@ -19,6 +19,4 @@ const steps: Step[] = [
 
 <docs lang="md">
 # SSteps
-
-
 </docs>

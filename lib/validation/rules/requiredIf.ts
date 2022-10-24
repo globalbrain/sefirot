@@ -1,4 +1,4 @@
-import { helpers, requiredIf as baseRequiredIf } from '@vuelidate/validators'
+import { requiredIf as baseRequiredIf, helpers } from '@vuelidate/validators'
 
 export function requiredIf(
   prop: boolean | string | (() => boolean | Promise<boolean>),

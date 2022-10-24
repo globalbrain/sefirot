@@ -1,40 +1,3 @@
-<template>
-  <SInputBase
-    class="SInputDate"
-    :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :help="help"
-    :validation="validation"
-  >
-    <div class="container">
-      <DatePicker
-        v-slot="{ inputValue, inputEvents }"
-        :value="modelValue"
-        color="blue"
-        is-dark
-        :masks="{ input: 'YYYY-MM-DD' }"
-        :model-config="{ type: 'string', mask: 'YYYY-MM-DD' }"
-        :popover="{ placement: 'bottom', visibility: 'click' }"
-        @input="emitInput"
-      >
-        <input
-          :id="name"
-          class="input"
-          type="text"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          :value="inputValue"
-          autocomplete="off"
-          v-on="inputEvents"
-          @blur="emitBlur"
-        >
-      </DatePicker>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
 import { DatePicker } from 'v-calendar'
 import { PropType, computed } from 'vue'
@@ -79,6 +42,43 @@ function emitBlur(e: FocusEvent) {
   }, 100)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputDate"
+    :class="classes"
+    :name="name"
+    :label="label"
+    :note="note"
+    :help="help"
+    :validation="validation"
+  >
+    <div class="container">
+      <DatePicker
+        v-slot="{ inputValue, inputEvents }"
+        :value="modelValue"
+        color="blue"
+        is-dark
+        :masks="{ input: 'YYYY-MM-DD' }"
+        :model-config="{ type: 'string', mask: 'YYYY-MM-DD' }"
+        :popover="{ placement: 'bottom', visibility: 'click' }"
+        @input="emitInput"
+      >
+        <input
+          :id="name"
+          class="input"
+          type="text"
+          :placeholder="placeholder"
+          :disabled="disabled"
+          :value="inputValue"
+          autocomplete="off"
+          v-on="inputEvents"
+          @blur="emitBlur"
+        >
+      </DatePicker>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputDate.mini {
@@ -165,7 +165,6 @@ function emitBlur(e: FocusEvent) {
     border-color: transparent;
   }
 }
-
 
 .input {
   display: block;

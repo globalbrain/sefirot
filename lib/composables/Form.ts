@@ -13,7 +13,7 @@ export interface Form<T extends Record<string, any>> {
 }
 
 export interface UseFormOptions<T extends Record<string, any>> {
-  data: T,
+  data: T
   rules?: Record<string, any> | ((state: T) => Record<string, any>)
 }
 

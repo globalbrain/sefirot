@@ -3,10 +3,10 @@ import { computed, unref } from 'vue'
 import { Validatable } from '../composables/Validation'
 
 const props = defineProps<{
-  name?: string,
-  note?: string,
-  label?: string,
-  help?: string,
+  name?: string
+  note?: string
+  label?: string
+  help?: string
   hideError?: boolean
   validation?: Validatable
 }>()

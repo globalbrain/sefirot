@@ -15,5 +15,4 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
 Show the image as an avatar.
 
 When avatar props isn't passed, show the initial of the name.
-
 </docs>

@@ -1,21 +1,5 @@
-<template>
-  <div class="SButtonGroup" :class="classes">
-    <button
-      v-for="item in items"
-      :key="item.value"
-      class="button"
-      :class="getButtonClasses(item)"
-      @click="handleClick(item.value)"
-    >
-      <span class="content">
-        {{ item.label }}
-      </span>
-    </button>
-  </div>
-</template>
-
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+import { PropType, computed } from 'vue'
 
 export interface ButtonGroupItem {
   label: string
@@ -47,6 +31,22 @@ function handleClick(value: string) {
   emit('update:modelValue', value)
 }
 </script>
+
+<template>
+  <div class="SButtonGroup" :class="classes">
+    <button
+      v-for="item in items"
+      :key="item.value"
+      class="button"
+      :class="getButtonClasses(item)"
+      @click="handleClick(item.value)"
+    >
+      <span class="content">
+        {{ item.label }}
+      </span>
+    </button>
+  </div>
+</template>
 
 <style lang="postcss" scoped>
 .SButtonGroup {

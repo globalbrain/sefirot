@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
-import type { MaybeRef } from '@vueuse/core'
+import { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
-import { ref, computed, unref, onMounted } from 'vue'
-import { DropdownSectionFilterSelectedValue, DropdownSectionFilterOption } from '../composables/Dropdown'
+import { computed, onMounted, ref, unref } from 'vue'
+import { DropdownSectionFilterOption, DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SIcon from './SIcon.vue'
@@ -25,7 +25,7 @@ const fuse = computed(() => {
 const filteredOptions = computed(() => {
   return !props.search || !query.value
     ? unref(props.options)
-    : fuse.value.search(query.value).map((r) => r.item)
+    : fuse.value.search(query.value).map(r => r.item)
 })
 
 onMounted(() => {
@@ -36,7 +36,7 @@ function isActive(value: string | number | boolean) {
   const selected = unref(props.selected)
 
   return isArray(selected)
-    ? selected.some((sv) => sv === value)
+    ? selected.includes(value)
     : selected === value
 }
 

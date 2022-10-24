@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue'
-import { LinkCallback, LinkSubscriberPayload, useMarkdown, useLink } from '../composables/Markdown'
+import { computed, nextTick, ref, watch } from 'vue'
+import { LinkCallback, LinkSubscriberPayload, useLink, useMarkdown } from '../composables/Markdown'
 
 const props = defineProps<{
   tag?: string
@@ -29,7 +29,7 @@ watch(
   { immediate: true }
 )
 
-subscribe((payload) => emit('clicked', payload))
+subscribe(payload => emit('clicked', payload))
 </script>
 
 <template>

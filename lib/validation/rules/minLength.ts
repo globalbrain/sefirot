@@ -1,4 +1,4 @@
-import { helpers, minLength as baseMinLength } from '@vuelidate/validators'
+import { minLength as baseMinLength, helpers } from '@vuelidate/validators'
 
 export function minLength(length: number, msg?: string) {
   return helpers.withMessage(

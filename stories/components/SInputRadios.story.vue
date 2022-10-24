@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputRadios from 'sefirot/components/SInputRadios.vue'
+import { ref } from 'vue'
 
 const value = ref(1)
 
@@ -27,6 +27,4 @@ const options = [
 
 <docs lang="md">
 # SInputRadios
-
-
 </docs>

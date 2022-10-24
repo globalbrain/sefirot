@@ -1,26 +1,3 @@
-<template>
-  <SInputBase
-    class="SInputCheckboxes"
-    :class="[size]"
-    :name="name"
-    :label="label"
-    :note="note"
-    :help="help"
-  >
-    <div class="container">
-      <div class="row">
-        <div v-for="option in options" :key="option.value" class="col">
-          <SInputCheckbox
-            :text="option.label"
-            :model-value="isChecked(option.value)"
-            @update:model-value="handleChange(option.value)"
-          />
-        </div>
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
 import { PropType } from 'vue'
 import SInputBase from './SInputBase.vue'
@@ -57,6 +34,29 @@ function handleChange(value: unknown): void {
   emit('update:modelValue', distinct)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputCheckboxes"
+    :class="[size]"
+    :name="name"
+    :label="label"
+    :note="note"
+    :help="help"
+  >
+    <div class="container">
+      <div class="row">
+        <div v-for="option in options" :key="option.value" class="col">
+          <SInputCheckbox
+            :text="option.label"
+            :model-value="isChecked(option.value)"
+            @update:model-value="handleChange(option.value)"
+          />
+        </div>
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .container {

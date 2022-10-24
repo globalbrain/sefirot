@@ -1,4 +1,4 @@
-import { helpers, maxLength as baseMaxLength } from '@vuelidate/validators'
+import { maxLength as baseMaxLength, helpers } from '@vuelidate/validators'
 
 export function maxLength(length: number, msg?: string) {
   return helpers.withMessage(

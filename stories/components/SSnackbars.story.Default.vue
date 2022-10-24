@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useSnackbars } from 'sefirot/stores/Snackbars'
 import SButton from 'sefirot/components/SButton.vue'
 import SSnackbars from 'sefirot/components/SSnackbars.vue'
+import { useSnackbars } from 'sefirot/stores/Snackbars'
 
 const snackbars = useSnackbars()
 

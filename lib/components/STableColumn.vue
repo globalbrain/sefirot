@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconDotsThree from '@iconify-icons/ph/dots-three'
-import { ref, computed, unref, watch, nextTick } from 'vue'
+import { computed, nextTick, ref, unref, watch } from 'vue'
 import { DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { isArray } from '../support/Utils'
@@ -93,11 +93,11 @@ async function adjustDialogPosition() {
   const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
 
   top.value = `${rect.top + rect.height - 8}px`
-  left.value =
-    Math.max(
+  left.value
+    = `${Math.max(
       16,
       position === 'right' ? rect.left - 4 : rect.right - dialogWidth - 4
-    ) + 'px'
+    )}px`
 }
 
 function startDialogPositionListener() {

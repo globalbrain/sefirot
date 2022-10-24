@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputSelect from 'sefirot/components/SInputSelect.vue'
+import { ref } from 'vue'
 
 const input = ref<number | null>(null)
 
@@ -26,6 +26,4 @@ const options = [
 
 <docs lang="md">
 # SInputSelect
-
-
 </docs>

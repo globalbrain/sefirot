@@ -1,9 +1,9 @@
-import { defineConfig, defaultColors } from 'histoire'
 import { HstVue } from '@histoire/plugin-vue'
+import { defaultColors, defineConfig } from 'histoire'
 
 export default defineConfig({
   plugins: [
-    HstVue(),
+    HstVue()
   ],
 
   setupFile: 'stories/histoire.setup.ts',

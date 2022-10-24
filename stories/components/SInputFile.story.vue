@@ -31,6 +31,4 @@ const { data, validation } = useForm({
 
 <docs lang="md">
 # SInputFile
-
-
 </docs>

@@ -1,4 +1,4 @@
-import { helpers, email as baseEmail } from '@vuelidate/validators'
+import { email as baseEmail, helpers } from '@vuelidate/validators'
 
 export function email(msg?: string) {
   return helpers.withMessage(

@@ -1,8 +1,8 @@
 import {
+  ErrorObject,
+  GlobalConfig,
   Validation,
   ValidationArgs,
-  GlobalConfig,
-  ErrorObject,
   useVuelidate
 } from '@vuelidate/core'
 import { Ref, ToRefs } from 'vue'

@@ -1,7 +1,7 @@
 import MarkdownIt from 'markdown-it'
-import { onUnmounted, Ref } from 'vue'
+import { Ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { isCallbackUrl, isExternalUrl, LinkAttrs, linkPlugin } from './markdown/LinkPlugin'
+import { LinkAttrs, isCallbackUrl, isExternalUrl, linkPlugin } from './markdown/LinkPlugin'
 
 export type UseMarkdown = (source: string, inline: boolean) => string
 

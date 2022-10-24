@@ -2,6 +2,20 @@
   "name": "@globalbrain/sefirot",
   "version": "2.2.1",
   "description": "Vue Components for Global Brain Design System.",
+  "author": "Kia Ishii <ka.ishii@globalbrains.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:globalbrain/sefirot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/globalbrain/sefirot/issues"
+  },
+  "keywords": [
+    "sefirot",
+    "vue",
+    "vue component"
+  ],
   "files": [
     "lib"
   ],
@@ -13,28 +27,14 @@
     "story:build": "histoire build",
     "story:preview": "histoire preview --port 3000",
     "type": "vue-tsc --noEmit",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix './{lib,tests}/**/*.{ts,vue}'",
-    "lint:fail": "eslint --ext .js,.vue --ignore-path .gitignore './{lib,tests}/**/*.{ts,vue}'",
+    "lint": "eslint --fix .",
+    "lint:fail": "eslint .",
     "vitest": "vitest",
     "coverage": "vitest run --coverage",
     "test": "pnpm run type && pnpm run lint && pnpm run coverage",
     "test:fail": "pnpm run type && pnpm run lint:fail && pnpm run coverage",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "release": "node scripts/release.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:globalbrain/sefirot.git"
-  },
-  "keywords": [
-    "sefirot",
-    "vue",
-    "vue component"
-  ],
-  "author": "Kia Ishii <ka.ishii@globalbrains.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/globalbrain/sefirot/issues"
   },
   "peerDependencies": {
     "@iconify-icons/ph": "^1.2.2",
@@ -60,6 +60,7 @@
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
+    "@globalbrain/eslint-config": "^0.1.0",
     "@histoire/plugin-vue": "^0.10.7",
     "@iconify-icons/ph": "^1.2.2",
     "@iconify/vue": "^4.0.0",
@@ -102,5 +103,15 @@
     "vue": "^3.2.40",
     "vue-router": "^4.1.5",
     "vue-tsc": "^1.0.8"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search",
+        "@types/react",
+        "react",
+        "react-dom"
+      ]
+    }
   }
 }

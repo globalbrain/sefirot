@@ -1,3 +1,20 @@
+<script setup lang="ts">
+import { PropType, computed, ref } from 'vue'
+import { Position, useTooltip } from '../composables/Tooltip'
+import SMarkdown from './SMarkdown.vue'
+
+const props = defineProps({
+  tag: { type: String, default: 'span' },
+  text: { type: String, default: null },
+  position: { type: String as PropType<Position>, default: 'top' }
+})
+
+const tip = ref<HTMLElement | null>(null)
+const content = ref<HTMLElement | null>(null)
+const classes = computed(() => [props.position])
+const { on, show, hide } = useTooltip(content, tip, props.position)
+</script>
+
 <template>
   <component :is="tag" class="STooltip" @mouseenter="show" @mouseleave="hide">
     <template v-if="text">
@@ -19,23 +36,6 @@
     </template>
   </component>
 </template>
-
-<script setup lang="ts">
-import { computed, PropType, ref } from 'vue'
-import { Position, useTooltip } from '../composables/Tooltip'
-import SMarkdown from './SMarkdown.vue'
-
-const props = defineProps({
-  tag: { type: String, default: 'span' },
-  text: { type: String, default: null },
-  position: { type: String as PropType<Position>, default: 'top' }
-})
-
-const tip = ref<HTMLElement | null>(null)
-const content = ref<HTMLElement | null>(null)
-const classes = computed(() => [props.position])
-const { on, show, hide } = useTooltip(content, tip, props.position)
-</script>
 
 <style lang="postcss" scoped>
 .STooltip {

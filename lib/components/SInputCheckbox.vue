@@ -1,26 +1,3 @@
-<template>
-  <SInputBase
-    class="SInputCheckbox"
-    :class="[size]"
-    :label="label"
-    :note="note"
-    :help="help"
-    :validation="validation"
-  >
-    <div class="container">
-      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
-        <div class="box">
-          <div class="check">
-            <SIcon :icon="IconCheck" class="check-icon" />
-          </div>
-        </div>
-
-        <p class="text">{{ text }}</p>
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
 import { PropType } from 'vue'
@@ -46,6 +23,29 @@ function emitChange() {
   emit('update:modelValue', !props.modelValue)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputCheckbox"
+    :class="[size]"
+    :label="label"
+    :note="note"
+    :help="help"
+    :validation="validation"
+  >
+    <div class="container">
+      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
+        <div class="box">
+          <div class="check">
+            <SIcon :icon="IconCheck" class="check-icon" />
+          </div>
+        </div>
+
+        <p class="text">{{ text }}</p>
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .container {

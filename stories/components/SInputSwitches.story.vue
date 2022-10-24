@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputSwitches from 'sefirot/components/SInputSwitches.vue'
+import { ref } from 'vue'
 
 const data = ref([2])
 
@@ -33,6 +33,4 @@ const options = [
 
 <docs lang="md">
 # SInputSwitches
-
-
 </docs>

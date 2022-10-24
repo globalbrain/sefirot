@@ -1,4 +1,4 @@
-import { helpers, maxValue as baseMaxValue } from '@vuelidate/validators'
+import { maxValue as baseMaxValue, helpers } from '@vuelidate/validators'
 
 export function maxValue(value: number, msg?: string) {
   return helpers.withMessage(

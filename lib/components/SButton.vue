@@ -807,7 +807,6 @@ function handleClick(): void {
   }
 }
 
-
 .SButton.mute {
   color: var(--button-mute-text);
 

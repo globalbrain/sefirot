@@ -1,4 +1,4 @@
-import { Ref, ref, watchEffect, onMounted, onUnmounted } from 'vue'
+import { Ref, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 
 export interface Grid {
   container: Ref<HTMLElement | null>
@@ -69,7 +69,7 @@ export function useGrid(options: UseGridOptions): Grid {
 }
 
 function toClassSelector(name: string) {
-  return name.startsWith('.') ? name : '.' + name
+  return name.startsWith('.') ? name : `.${name}`
 }
 
 function toClassName(name: string) {
@@ -84,7 +84,7 @@ function createSpacers(size: number, tag: string, classes: string, type: 'fill' 
   }
 
   if (type === 'fill') {
-    const spacer = createSpacer(tag, classes, { gridColumn: `span ${size}`})
+    const spacer = createSpacer(tag, classes, { gridColumn: `span ${size}` })
 
     fragment.appendChild(spacer)
 

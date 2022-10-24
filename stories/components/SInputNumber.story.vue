@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
+import { ref } from 'vue'
 
 const value = ref<number | null>(null)
 </script>

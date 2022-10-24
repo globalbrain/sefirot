@@ -10,6 +10,4 @@ import STooltip from 'sefirot/components/STooltip.vue'
 
 <docs lang="md">
 # STooltip
-
-
 </docs>

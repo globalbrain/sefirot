@@ -1,4 +1,4 @@
-import { helpers, required as baseRequired } from '@vuelidate/validators'
+import { required as baseRequired, helpers } from '@vuelidate/validators'
 
 export function required(msg?: string) {
   return helpers.withMessage(

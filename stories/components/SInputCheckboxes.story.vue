@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputCheckboxes from 'sefirot/components/SInputCheckboxes.vue'
+import { ref } from 'vue'
 
 const input = ref([])
 

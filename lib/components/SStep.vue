@@ -1,3 +1,18 @@
+<script setup lang="ts">
+import IconCheck from '@iconify-icons/ph/check'
+import IconX from '@iconify-icons/ph/x'
+import { PropType } from 'vue'
+import { BarMode, StepStatus } from '../composables/Step'
+import SIcon from './SIcon.vue'
+
+defineProps({
+  status: { type: String as PropType<StepStatus>, required: true },
+  barLeft: { type: String as PropType<BarMode | null>, default: null },
+  barRight: { type: String as PropType<BarMode | null>, default: null },
+  text: { type: String, default: null }
+})
+</script>
+
 <template>
   <div class="SStep" :class="[status]">
     <div class="indicator">
@@ -13,21 +28,6 @@
     <p v-if="text" class="text">{{ text }}</p>
   </div>
 </template>
-
-<script setup lang="ts">
-import IconCheck from '@iconify-icons/ph/check'
-import IconX from '@iconify-icons/ph/x'
-import { PropType } from 'vue'
-import { StepStatus, BarMode } from '../composables/Step'
-import SIcon from './SIcon.vue'
-
-defineProps({
-  status: { type: String as PropType<StepStatus>, required: true },
-  barLeft: { type: String as PropType<BarMode | null>, default: null },
-  barRight: { type: String as PropType<BarMode | null>, default: null },
-  text: { type: String, default: null }
-})
-</script>
 
 <style lang="postcss" scoped>
 .SStep.upcoming {

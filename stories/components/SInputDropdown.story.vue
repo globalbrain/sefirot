@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
+import { ref } from 'vue'
 
 const value = ref<string[]>([])
 

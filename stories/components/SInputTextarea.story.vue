@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import { ref } from 'vue'
 
 const text = ref('')
 </script>
@@ -21,6 +21,4 @@ const text = ref('')
 
 <docs lang="md">
 # SInputTextarea
-
-
 </docs>

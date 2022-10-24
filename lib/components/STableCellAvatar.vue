@@ -17,7 +17,7 @@ const _name = computed(() => props.name?.(props.value, props.record))
 </script>
 
 <template>
-  <div class="STableCellAvatar" :class="[{ link}, color]">
+  <div class="STableCellAvatar" :class="[{ link }, color]">
     <SLink class="container" :href="link?.(value, record)">
       <div v-if="_image" class="avatar">
         <SAvatar size="mini" :avatar="_image" :name="_name" />

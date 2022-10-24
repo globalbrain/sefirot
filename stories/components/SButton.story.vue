@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import IconCheckCircle from '@iconify-icons/ph/check-circle'
-import IconNotePencil from '@iconify-icons/ph/note-pencil'
 import IconImageSquare from '@iconify-icons/ph/image-square'
 import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass'
+import IconNotePencil from '@iconify-icons/ph/note-pencil'
 import SButton from 'sefirot/components/SButton.vue'
 </script>
 

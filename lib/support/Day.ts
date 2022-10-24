@@ -1,4 +1,4 @@
-import dayjs, { Dayjs, ConfigType } from 'dayjs'
+import dayjs, { ConfigType, Dayjs } from 'dayjs'
 
 export type Day = Dayjs
 export type Input = ConfigType

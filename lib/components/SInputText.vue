@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'

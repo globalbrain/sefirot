@@ -1,28 +1,5 @@
-<template>
-  <SInputBase
-    class="SInputSwitch"
-    :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :help="help"
-  >
-    <div class="SInputSwitch-container">
-      <div class="SInputSwitch-input" :class="{ on: modelValue }" role="button" @click="emitChange">
-        <p v-if="text" class="SInputSwitch-text" :class="[textMode]">{{ text }}</p>
-
-        <div class="SInputSwitch-box">
-          <div class="SInputSwitch-check" />
-        </div>
-
-        <p v-if="textAfter" class="SInputSwitch-text after" :class="[textMode]">{{ textAfter }}</p>
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small'
@@ -60,6 +37,29 @@ function emitChange(): void {
   !props.disabled && emit('update:modelValue', !props.modelValue)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputSwitch"
+    :class="classes"
+    :name="name"
+    :label="label"
+    :note="note"
+    :help="help"
+  >
+    <div class="SInputSwitch-container">
+      <div class="SInputSwitch-input" :class="{ on: modelValue }" role="button" @click="emitChange">
+        <p v-if="text" class="SInputSwitch-text" :class="[textMode]">{{ text }}</p>
+
+        <div class="SInputSwitch-box">
+          <div class="SInputSwitch-check" />
+        </div>
+
+        <p v-if="textAfter" class="SInputSwitch-text after" :class="[textMode]">{{ textAfter }}</p>
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputSwitch.mini {

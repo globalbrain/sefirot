@@ -5,7 +5,7 @@ import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
-import { reactive, ref, computed, markRaw } from 'vue'
+import { computed, markRaw, reactive, ref } from 'vue'
 
 interface Sort {
   by: string
@@ -86,7 +86,7 @@ const hasFilters = computed(() => {
   return [
     dropdownStatusSelected.value.length,
     dropdownTypeSelected.value.length
-  ].some((length) => length)
+  ].some(length => length)
 })
 
 const data = [
@@ -99,8 +99,8 @@ const data = [
 
 const filteredData = computed(() => {
   return data
-    .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
-    .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
+    .filter(i => filterBy(i.status, dropdownStatusSelected.value))
+    .filter(i => filterBy(i.type, dropdownTypeSelected.value))
 })
 
 const orderedData = computed(() => {
@@ -122,7 +122,7 @@ const table = useTable({
       cell: {
         type: 'text',
         icon: markRaw(IconImageSquare),
-        link: (_value, record) => record.link,
+        link: (_value, record) => record.link
       }
     },
 
@@ -134,9 +134,11 @@ const table = useTable({
         color(value) {
           if (value === 'Published') {
             return 'success'
-          } else if (value === 'Draft') {
+          }
+          else if (value === 'Draft') {
             return 'info'
-          } else {
+          }
+          else {
             return 'mute'
           }
         }

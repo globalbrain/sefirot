@@ -1,4 +1,4 @@
-import { Ymd, YmdType, YmdMap } from './ymd'
+import { Ymd, YmdMap, YmdType } from './ymd'
 
 export type { Ymd, YmdType, YmdMap }
 

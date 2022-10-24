@@ -1,4 +1,4 @@
-import { helpers, url as baseUrl } from '@vuelidate/validators'
+import { url as baseUrl, helpers } from '@vuelidate/validators'
 
 export function url(msg?: string) {
   return helpers.withMessage(

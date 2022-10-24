@@ -1,36 +1,10 @@
-<template>
-  <SInputBase
-    class="SInputSwitches"
-    :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :help="help"
-  >
-    <div class="SInputSwitches-container">
-      <div class="SInputSwitches-row">
-        <div v-for="option in options" :key="option.value" class="SInputSwitches-col">
-          <SInputSwitch
-            :size="size"
-            :mode="mode"
-            :text="option.label"
-            :model-value="isChecked(option.value)"
-            @update:model-value="handleChange(option.value)"
-          />
-        </div>
-      </div>
-    </div>
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
-import { computed, PropType } from 'vue'
+import { PropType, computed } from 'vue'
 import SInputBase from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
 type Size = 'mini' | 'small'
 type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-
 
 interface Option {
   label: string
@@ -66,6 +40,31 @@ function handleChange(value: unknown): void {
   emit('update:modelValue', difference)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputSwitches"
+    :class="classes"
+    :name="name"
+    :label="label"
+    :note="note"
+    :help="help"
+  >
+    <div class="SInputSwitches-container">
+      <div class="SInputSwitches-row">
+        <div v-for="option in options" :key="option.value" class="SInputSwitches-col">
+          <SInputSwitch
+            :size="size"
+            :mode="mode"
+            :text="option.label"
+            :model-value="isChecked(option.value)"
+            @update:model-value="handleChange(option.value)"
+          />
+        </div>
+      </div>
+    </div>
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputSwitches.mini {

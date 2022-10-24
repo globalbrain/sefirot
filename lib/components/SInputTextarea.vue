@@ -1,27 +1,3 @@
-<template>
-  <SInputBase
-    class="SInputTextarea"
-    :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :help="help"
-    :hide-error="hideError"
-    :validation="validation"
-  >
-    <textarea
-      :id="name"
-      class="input"
-      :placeholder="placeholder"
-      :rows="rows ?? 3"
-      :disabled="disabled"
-      :value="modelValue ?? ''"
-      @input="emitInput"
-      @blur="emitBlur"
-    />
-  </SInputBase>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 import { Validatable } from '../composables/Validation'
@@ -61,6 +37,30 @@ function emitBlur(e: FocusEvent): void {
   emit('update:modelValue', (e.target as HTMLInputElement).value)
 }
 </script>
+
+<template>
+  <SInputBase
+    class="SInputTextarea"
+    :class="classes"
+    :name="name"
+    :label="label"
+    :note="note"
+    :help="help"
+    :hide-error="hideError"
+    :validation="validation"
+  >
+    <textarea
+      :id="name"
+      class="input"
+      :placeholder="placeholder"
+      :rows="rows ?? 3"
+      :disabled="disabled"
+      :value="modelValue ?? ''"
+      @input="emitInput"
+      @blur="emitBlur"
+    />
+  </SInputBase>
+</template>
 
 <style lang="postcss" scoped>
 .SInputTextarea.mini {

@@ -1,9 +1,9 @@
 const fs = require('fs')
 const path = require('path')
 const chalk = require('chalk')
-const semver = require('semver')
 const { prompt } = require('enquirer')
 const execa = require('execa')
+const semver = require('semver')
 const currentVersion = require('../package.json').version
 
 const versionIncrements = [
@@ -18,7 +18,6 @@ const tags = [
 ]
 
 const inc = i => semver.inc(currentVersion, i)
-const bin = name => path.resolve(__dirname, `../node_modules/.bin/${name}`)
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
 const step = msg => console.log(chalk.cyan(msg))
 
@@ -39,7 +38,8 @@ async function main() {
       message: 'Input custom version',
       initial: currentVersion
     })).version
-  } else {
+  }
+  else {
     targetVersion = release.match(/\((.*)\)/)[1]
   }
 
@@ -79,7 +79,7 @@ async function main() {
   const { yes: changelogOk } = await prompt({
     type: 'confirm',
     name: 'yes',
-    message: `Changelog generated. Does it look good?`
+    message: 'Changelog generated. Does it look good?'
   })
 
   if (!changelogOk) {
@@ -110,7 +110,7 @@ function updatePackage(version) {
 
   pkg.version = version
 
-  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+  fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`)
 }
 
 main().catch(err => console.error(err))

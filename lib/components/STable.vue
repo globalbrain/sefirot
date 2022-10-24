@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref, computed, watch, toRefs } from 'vue'
+import { computed, reactive, ref, toRefs, watch } from 'vue'
 import { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -24,7 +24,7 @@ const {
   loading,
   onPrev,
   onNext,
-  onReset,
+  onReset
 } = toRefs(props.options)
 
 const head = ref<HTMLElement | null>(null)

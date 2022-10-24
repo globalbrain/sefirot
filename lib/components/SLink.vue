@@ -1,17 +1,3 @@
-<template>
-  <component
-    :is="component"
-    class="SLink"
-    :class="{ link: href }"
-    :href="href"
-    :to="href"
-    :target="target"
-    :rel="rel"
-  >
-    <slot />
-  </component>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
 
@@ -34,3 +20,17 @@ const component = computed(() => {
 const target = computed(() => isExternal.value ? '_blank' : null)
 const rel = computed(() => isExternal.value ? 'noopener noreferrer' : null)
 </script>
+
+<template>
+  <component
+    :is="component"
+    class="SLink"
+    :class="{ link: href }"
+    :href="href"
+    :to="href"
+    :target="target"
+    :rel="rel"
+  >
+    <slot />
+  </component>
+</template>
