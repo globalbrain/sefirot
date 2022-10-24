@@ -9,8 +9,6 @@ specifiers:
   '@types/lodash-es': ^4.17.6
   '@types/markdown-it': ^12.2.3
   '@types/node': ^18.8.0
-  '@typescript-eslint/eslint-plugin': ^5.38.0
-  '@typescript-eslint/parser': ^5.38.0
   '@vitejs/plugin-vue': ^3.1.2
   '@vitest/coverage-c8': ^0.23.4
   '@vue/test-utils': ^2.1.0
@@ -23,8 +21,6 @@ specifiers:
   dayjs: ^1.11.5
   enquirer: ^2.3.6
   eslint: ^8.23.1
-  eslint-plugin-import: ^2.26.0
-  eslint-plugin-vue: ^9.5.1
   execa: ^5.1.1
   fuse.js: ^6.6.2
   happy-dom: ^6.0.4
@@ -54,8 +50,6 @@ devDependencies:
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
   '@types/node': 18.8.0
-  '@typescript-eslint/eslint-plugin': 5.38.1_c7qepppml3d4ahu5cnfwqe6ltq
-  '@typescript-eslint/parser': 5.38.1_ypn2ylkkyfa5i233caldtndbqa
   '@vitejs/plugin-vue': 3.1.2_vite@3.1.4+vue@3.2.40
   '@vitest/coverage-c8': 0.23.4_happy-dom@6.0.4
   '@vue/test-utils': 2.1.0_vue@3.2.40
@@ -68,8 +62,6 @@ devDependencies:
   dayjs: 1.11.5
   enquirer: 2.3.6
   eslint: 8.24.0
-  eslint-plugin-import: 2.26.0_gofx6msuqd4luqedfouzks2s4u
-  eslint-plugin-vue: 9.5.1_eslint@8.24.0
   execa: 5.1.1
   fuse.js: 6.6.2
   happy-dom: 6.0.4
@@ -103,6 +95,9 @@ packages:
     peerDependencies:
       '@algolia/client-search': ^4.9.1
       algoliasearch: ^4.9.1
+    peerDependenciesMeta:
+      '@algolia/client-search':
+        optional: true
     dependencies:
       '@algolia/autocomplete-shared': 1.7.1
       algoliasearch: 4.14.2
