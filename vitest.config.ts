@@ -21,6 +21,7 @@ export default defineConfig({
       all: true,
       src: ['lib'],
       include: ['lib'],
+      exclude: ['lib/mixins', 'lib/types'],
       reporter: [
         'html',
         'json',
