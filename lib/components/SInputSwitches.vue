@@ -1,42 +1,46 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
-type Size = 'mini' | 'small'
-type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type Size = 'mini' | 'small' | 'medium'
 
-interface Option {
+export interface Option {
   label: string
-  value: any
+  value: string | number | boolean
 }
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  mode: { type: String as PropType<Mode>, default: 'neutral' },
-  name: { type: String, default: null },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  options: { type: Array as PropType<Option[]>, required: true },
-  modelValue: { type: Array as PropType<unknown[]>, required: true }
-})
+const props = defineProps<{
+  size?: Size
+  name?: string
+  label?: string
+  note?: string
+  help?: string
+  options: Option[]
+  disabled?: boolean
+  modelValue: (string | number | boolean)[]
+  hideError?: boolean
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: (string | number | boolean)[]): void
+}>()
 
 const classes = computed(() => [
-  props.size,
-  props.mode
+  props.size ?? 'small'
 ])
 
-function isChecked(value: unknown): boolean {
+function isChecked(value: string | number | boolean): boolean {
   return props.modelValue.includes(value)
 }
 
-function handleChange(value: unknown): void {
+function handleChange(value: string | number | boolean): void {
   const difference = props.modelValue
     .filter(v => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
+
   emit('update:modelValue', difference)
 }
 </script>
@@ -49,13 +53,13 @@ function handleChange(value: unknown): void {
     :label="label"
     :note="note"
     :help="help"
+    :hide-error="hideError"
   >
-    <div class="SInputSwitches-container">
-      <div class="SInputSwitches-row">
-        <div v-for="option in options" :key="option.value" class="SInputSwitches-col">
+    <div class="container">
+      <div class="row">
+        <div v-for="(option, index) in options" :key="index" class="col">
           <SInputSwitch
             :size="size"
-            :mode="mode"
             :text="option.label"
             :model-value="isChecked(option.value)"
             @update:model-value="handleChange(option.value)"
@@ -67,21 +71,11 @@ function handleChange(value: unknown): void {
 </template>
 
 <style lang="postcss" scoped>
-.SInputSwitches.mini {
-  .SInputSwitches-row { margin: -2px -8px; }
-  .SInputSwitches-col { padding: 2px 8px; }
-}
-
-.SInputSwitches.small {
-  .SInputSwitches-row { margin: -4px -8px; }
-  .SInputSwitches-col { padding: 4px 8px; }
-}
-
-.SInputSwitches-container {
+.container {
   display: flex;
 }
 
-.SInputSwitches-row {
+.row {
   width: 100%;
 }
 </style>

@@ -9,7 +9,7 @@ describe('components/SInputSwitch', () => {
       }
     })
 
-    wrapper.find('.SInputSwitch .SInputSwitch-input').trigger('click')
+    wrapper.find('.SInputSwitch .input').trigger('click')
 
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
@@ -22,7 +22,7 @@ describe('components/SInputSwitch', () => {
       }
     })
 
-    wrapper.find('.SInputSwitch .SInputSwitch-input').trigger('click')
+    wrapper.find('.SInputSwitch .input').trigger('click')
 
     expect(wrapper.emitted('update:modelValue')).toBeUndefined()
   })

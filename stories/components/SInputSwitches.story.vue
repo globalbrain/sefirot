@@ -30,7 +30,3 @@ const options = [
   width: 192px;
 }
 </style>
-
-<docs lang="md">
-# SInputSwitches
-</docs>

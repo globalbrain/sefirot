@@ -24,7 +24,3 @@ const on = ref(false)
   width: 192px;
 }
 </style>
-
-<docs lang="md">
-# SInputSwitch
-</docs>

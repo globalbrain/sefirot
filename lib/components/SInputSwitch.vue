@@ -1,37 +1,31 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
+import { computed } from 'vue'
+import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small'
-type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-type TextMode = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type Size = 'mini' | 'small' | 'medium'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  mode: { type: String as PropType<Mode>, default: 'neutral' },
-  name: { type: String, default: null },
-  label: { type: String, default: null },
-  note: { type: String, default: null },
-  text: { type: String, default: null },
-  textAfter: { type: String, default: null },
-  textMode: { type: String as PropType<TextMode>, default: 'neutral' },
-  disabled: { type: Boolean, default: false },
-  help: { type: String, default: null },
-  modelValue: { type: Boolean, required: true }
-})
+const props = defineProps<{
+  size?: Size
+  name?: string
+  label?: string
+  note?: string
+  text?: string
+  help?: string
+  disabled?: boolean
+  modelValue: boolean
+  hideError?: boolean
+  validation?: Validatable
+}>()
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', value: boolean): void
+}>()
 
-const classes = computed(() => ({
-  mini: props.size === 'mini',
-  small: props.size === 'small',
-  neutral: props.mode === 'neutral',
-  info: props.mode === 'info',
-  success: props.mode === 'success',
-  warning: props.mode === 'warning',
-  danger: props.mode === 'danger',
-  disabled: props.disabled
-}))
+const classes = computed(() => [
+  [props.size ?? 'small'],
+  { disabled: props.disabled }
+])
 
 function emitChange(): void {
   !props.disabled && emit('update:modelValue', !props.modelValue)
@@ -46,148 +40,80 @@ function emitChange(): void {
     :label="label"
     :note="note"
     :help="help"
+    :hide-error="hideError"
   >
-    <div class="SInputSwitch-container">
-      <div class="SInputSwitch-input" :class="{ on: modelValue }" role="button" @click="emitChange">
-        <p v-if="text" class="SInputSwitch-text" :class="[textMode]">{{ text }}</p>
+    <div class="container">
+      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
+        <p v-if="text" class="text">{{ text }}</p>
 
-        <div class="SInputSwitch-box">
-          <div class="SInputSwitch-check" />
+        <div class="box">
+          <div class="check" />
         </div>
-
-        <p v-if="textAfter" class="SInputSwitch-text after" :class="[textMode]">{{ textAfter }}</p>
       </div>
     </div>
   </SInputBase>
 </template>
 
 <style lang="postcss" scoped>
-.SInputSwitch.mini {
-  .SInputSwitch-box {
-    margin: 1px 0 0;
-    border-radius: 9px;
-    width: 36px;
-    height: 18px;
-  }
-
-  .SInputSwitch-check {
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
-    transition: background-color .25s, transform .25s;
-  }
-}
-
-.SInputSwitch.small {
-  .SInputSwitch-box {
-    margin: -1px 0 -1px;
-    border-radius: 11px;
-    width: 40px;
-    height: 22px;
-  }
-
-  .SInputSwitch-check {
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    transition: background-color .25s, transform .25s;
-  }
-}
-
-.SInputSwitch.neutral .SInputSwitch-input.on .SInputSwitch-box {
-  border-color: var(--c-black);
-  background-color: var(--c-black);
-}
-
-.SInputSwitch.info .SInputSwitch-input.on .SInputSwitch-box {
-  border-color: var(--c-info);
-  background-color: var(--c-info);
-}
-
-.SInputSwitch.success .SInputSwitch-input.on .SInputSwitch-box {
-  border-color: var(--c-success);
-  background-color: var(--c-success);
-}
-
-.SInputSwitch.warning .SInputSwitch-input.on .SInputSwitch-box {
-  border-color: var(--c-warning);
-  background-color: var(--c-warning);
-}
-
-.SInputSwitch.danger .SInputSwitch-input.on .SInputSwitch-box {
-  border-color: var(--c-danger);
-  background-color: var(--c-danger);
-}
-
-.SInputSwitch.disabled .SInputSwitch-input {
-  .SInputSwitch-box {
-    cursor: not-allowed;
-    opacity: .6;
-  }
-
-  &:hover .SInputSwitch-box { border-color: var(--c-gray); }
-}
-
-.SInputSwitch.disabled .SInputSwitch-input.on {
-  &:hover .SInputSwitch-box { border-color: transparent; }
-}
-
-.SInputSwitch-container {
+.container {
   display: flex;
 }
 
-.SInputSwitch-input {
+.input {
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  height: 32px;
 
   &:hover {
-    .SInputSwitch-box   { border-color: var(--c-black); }
-    .SInputSwitch-check { background-color: var(--c-black); }
+    .box { border-color: var(--c-info); }
   }
 }
 
-.SInputSwitch-input.on .SInputSwitch-check {
+.input.on .box {
+  border-color: var(--c-info-lighter);
+  background-color: var(--c-info);
+}
+
+.input.on .check {
   background-color: var(--c-white);
   transform: translateX(18px);
 }
 
-.SInputSwitch-text {
+.text {
   flex-grow: 1;
   margin: 0;
   padding-right: 16px;
   line-height: 20px;
   font-size: 14px;
-}
-
-.SInputSwitch-text.mute {
-  color: var(--c-text-light-2);
   font-weight: 500;
 }
 
-.SInputSwitch-text.info    { color: var(--c-info); }
-.SInputSwitch-text.success { color: var(--c-success); }
-.SInputSwitch-text.warning { color: var(--c-warning); }
-.SInputSwitch-text.danger  { color: var(--c-danger); }
-.SInputSwitch-text.after {
-  padding-left: 12px;
-}
-
-.SInputSwitch-box {
+.box {
   position: relative;
   flex-shrink: 0;
-  border: 1px solid var(--c-gray);
-  background-color: var(--c-white-mute);
-  transition: border-color .25s, background-color .25s, box-shadow .25s;
+  border: 1px solid var(--c-divider);
+  border-radius: 11px;
+  width: 40px;
+  height: 22px;
+  background-color: var(--c-bg-elv-down);
+  transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
 }
 
-.SInputSwitch-check {
+.check {
   position: absolute;
   border-radius: 50%;
   background-color: var(--c-black);
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
   transition: background-color .25s, transform .25s;
+
+  .dark & {
+    background-color: var(--c-white);
+  }
 }
 </style>
