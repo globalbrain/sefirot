@@ -1,3 +1,15 @@
+# [2.3.0](https://github.com/globalbrain/sefirot/compare/v2.2.1...v2.3.0) (2022-10-26)
+
+### Bug Fixes
+
+* **input:** words get wrapped as `break-all` in help text ([50c11e1](https://github.com/globalbrain/sefirot/commit/50c11e110e4c8a03f4a7e33ac372a4a4b88b283d))
+
+### Features
+
+* **input-date:** refine overall design ([4f97216](https://github.com/globalbrain/sefirot/commit/4f972167a487b3bae5ebcc4501096df7b3127a3b))
+* **input-switch:** refine overall design ([de9cacc](https://github.com/globalbrain/sefirot/commit/de9caccc5eaaa769a853e5dbdb098935bb6f967b))
+* **validation:** support dynamic validation schema ([892d7e0](https://github.com/globalbrain/sefirot/commit/892d7e02f0aabec1d8b9ec347e37e20f68ce4a32))
+
 ## [2.2.1](https://github.com/globalbrain/sefirot/compare/v2.2.0...v2.2.1) (2022-10-21)
 
 ### Bug Fixes
