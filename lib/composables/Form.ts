@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash-es/cloneDeep'
-import { Ref, reactive } from 'vue'
+import { Ref, computed, reactive } from 'vue'
 import { useSnackbars } from '../stores/Snackbars'
 import { Validation, useValidation } from './Validation'
 
@@ -26,9 +26,11 @@ export function useForm<
 
   const data = reactive(options.data)
 
-  const rules = options.rules
-    ? typeof options.rules === 'function' ? options.rules(data) : options.rules
-    : {}
+  const rules = computed(() => {
+    return options.rules
+      ? typeof options.rules === 'function' ? options.rules(data) : options.rules
+      : {}
+  })
 
   const validation = useValidation(data, rules)
 
