@@ -98,7 +98,6 @@ const showError = computed(() => {
 
 .help {
   position: relative;
-  word-break: break-all;
 }
 
 .help-error {
