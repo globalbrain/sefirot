@@ -1,3 +1,9 @@
+# [2.4.0](https://github.com/globalbrain/sefirot/compare/v2.3.0...v2.4.0) (2022-10-27)
+
+### Features
+
+* **form:** add lazy value definition feature to data ([77a09e6](https://github.com/globalbrain/sefirot/commit/77a09e6ef9756e1d51ef7e35956e99069dcc13d6))
+
 # [2.3.0](https://github.com/globalbrain/sefirot/compare/v2.2.1...v2.3.0) (2022-10-26)
 
 ### Bug Fixes
