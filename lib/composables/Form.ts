@@ -1,6 +1,6 @@
-import cloneDeep from 'lodash-es/cloneDeep'
-import { Ref, computed, reactive } from 'vue'
+import { Ref, computed } from 'vue'
 import { useSnackbars } from '../stores/Snackbars'
+import { UseDataInput, useData } from './Data'
 import { Validation, useValidation } from './Validation'
 
 export interface Form<T extends Record<string, any>> {
@@ -13,7 +13,7 @@ export interface Form<T extends Record<string, any>> {
 }
 
 export interface UseFormOptions<T extends Record<string, any>> {
-  data: T
+  data: UseDataInput<T>
   rules?: Record<string, any> | ((state: T) => Record<string, any>)
 }
 
@@ -22,20 +22,18 @@ export function useForm<
 >(options: UseFormOptions<T>): Form<T> {
   const snackbars = useSnackbars()
 
-  const initialData = cloneDeep(options.data)
-
-  const data = reactive(options.data)
+  const data = useData(options.data)
 
   const rules = computed(() => {
     return options.rules
-      ? typeof options.rules === 'function' ? options.rules(data) : options.rules
+      ? typeof options.rules === 'function' ? options.rules(data.state) : options.rules
       : {}
   })
 
-  const validation = useValidation(data, rules)
+  const validation = useValidation(data.state, rules)
 
   function init(): void {
-    Object.assign(data, initialData)
+    data.init()
     reset()
   }
 
@@ -61,7 +59,7 @@ export function useForm<
   }
 
   return {
-    data,
+    data: data.state,
     init,
     reset,
     validation,

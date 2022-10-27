@@ -41,4 +41,16 @@ describe('support/Utils', () => {
       expect(Utils.isArray([])).toEqual(true)
     })
   })
+
+  describe('isObject', () => {
+    test('check if the given value is object', () => {
+      expect(Utils.isObject(undefined)).toEqual(false)
+      expect(Utils.isObject(null)).toEqual(false)
+      expect(Utils.isObject(1)).toEqual(false)
+      expect(Utils.isObject('a')).toEqual(false)
+      expect(Utils.isObject(true)).toEqual(false)
+      expect(Utils.isObject([])).toEqual(false)
+      expect(Utils.isObject({})).toEqual(true)
+    })
+  })
 })

@@ -13,3 +13,7 @@ export function isNumber(value: unknown): value is number {
 export function isArray(value: unknown): value is unknown[] {
   return Array.isArray(value)
 }
+
+export function isObject(value: unknown): value is Record<string, any> {
+  return typeof value === 'object' && value !== null && !isArray(value)
+}
