@@ -125,7 +125,6 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
 .button {
   display: flex;
-  align-items: center;
   border-radius: 6px;
   padding: 0 8px;
   width: 100%;
@@ -145,6 +144,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
 .checkbox {
   display: block;
+  padding-top: 9px;
 }
 
 .checkbox-box {
@@ -175,6 +175,11 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   .button.active & {
     opacity: 1;
   }
+}
+
+.option-item {
+  padding-left: 8px;
+  width: 100%;
 }
 
 .empty {

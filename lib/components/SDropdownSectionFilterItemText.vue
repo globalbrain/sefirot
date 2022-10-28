@@ -6,14 +6,18 @@ defineProps<{
 
 <template>
   <span class="SDropdownSectionFilterItemText">
-    {{ label }}
+    <span class="text">{{ label }}</span>
   </span>
 </template>
 
 <style scoped lang="postcss">
 .SDropdownSectionFilterItemText {
-  padding-left: 8px;
-  line-height: 32px;
+  display: inline-block;
+  padding: 6px 0;
+}
+
+.text {
+  line-height: 20px;
   font-size: 12px;
   font-weight: 500;
 }
