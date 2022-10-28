@@ -9,17 +9,23 @@ defineProps<{
 
 <template>
   <span class="SDropdownSectionFilterItemAvatar">
-    <SAvatar size="nano" :avatar="image" :name="label" />
+    <div class="avatar">
+      <SAvatar size="nano" :avatar="image" :name="label" />
+    </div>
     <span class="name">{{ label }}</span>
   </span>
 </template>
 
 <style scoped lang="postcss">
 .SDropdownSectionFilterItemAvatar {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  padding-left: 8px;
+  padding-right: 16px;
   min-height: 32px;
+}
+
+.avatar {
+  flex-shrink: 0;
 }
 
 .name {
@@ -27,5 +33,8 @@ defineProps<{
   padding-left: 8px;
   font-size: 12px;
   font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -125,7 +125,6 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
 .button {
   display: flex;
-  align-items: center;
   border-radius: 6px;
   padding: 0 8px;
   width: 100%;
@@ -145,6 +144,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
 .checkbox {
   display: block;
+  padding-top: 9px;
 }
 
 .checkbox-box {
@@ -177,6 +177,11 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   }
 }
 
+.option-item {
+  padding-left: 8px;
+  width: 100%;
+}
+
 .empty {
   padding: 16px;
   font-size: 12px;
@@ -186,9 +191,5 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   .search + & {
     border-top: 1px solid var(--c-divider-light);
   }
-}
-
-.option-item {
-  margin-left: 8px;
 }
 </style>
