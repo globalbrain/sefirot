@@ -12,7 +12,6 @@ defineProps<{
 
 <style scoped lang="postcss">
 .SDropdownSectionFilterItemText {
-  padding-left: 8px;
   line-height: 32px;
   font-size: 12px;
   font-weight: 500;

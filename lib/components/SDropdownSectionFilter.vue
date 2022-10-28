@@ -187,4 +187,8 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
     border-top: 1px solid var(--c-divider-light);
   }
 }
+
+.option-item {
+  margin-left: 8px;
+}
 </style>
