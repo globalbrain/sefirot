@@ -57,6 +57,13 @@ defineProps<{
       :avatars="cell.avatars"
       :color="cell.color"
     />
+    <component
+      v-else-if="cell.type === 'component'"
+      :is="cell.component"
+      :value="value"
+      :record="record"
+      v-bind="cell.props"
+    />
   </div>
 </template>
 
