@@ -82,7 +82,7 @@ export interface TableCellAvatars extends TableCellBase {
 export interface TableCellComponent extends TableCellBase {
   type: 'component'
   component: Component
-  props: Record<string, any>
+  props?: Record<string, any>
 }
 
 export interface TableCellAvatarsOption {
