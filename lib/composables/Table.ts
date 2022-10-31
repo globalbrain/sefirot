@@ -1,5 +1,5 @@
 import { MaybeRef } from '@vueuse/core'
-import { reactive } from 'vue'
+import { Component, reactive } from 'vue'
 import { DropdownSection } from './Dropdown'
 
 export interface Table {
@@ -34,8 +34,9 @@ export type TableCell =
   | TableCellPill
   | TableCellAvatar
   | TableCellAvatars
+  | TableCellComponent
 
-export type TableCellType = 'text' | 'day' | 'pill' | 'avatar' | 'avatars'
+export type TableCellType = 'text' | 'day' | 'pill' | 'avatar' | 'avatars' | 'component'
 
 export interface TableCellBase {
   type: TableCellType
@@ -76,6 +77,12 @@ export interface TableCellAvatars extends TableCellBase {
   type: 'avatars'
   avatars(value: any, record: any): TableCellAvatarsOption[]
   color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellComponent extends TableCellBase {
+  type: 'component'
+  component: Component
+  props?: Record<string, any>
 }
 
 export interface TableCellAvatarsOption {
