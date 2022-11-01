@@ -1,3 +1,13 @@
+# [2.5.0](https://github.com/globalbrain/sefirot/compare/v2.4.0...v2.5.0) (2022-11-01)
+
+### Bug Fixes
+
+* **dropdown:** adjust spacing for text wrap ([#169](https://github.com/globalbrain/sefirot/issues/169)) ([ee74598](https://github.com/globalbrain/sefirot/commit/ee74598da2c6ba83fc9e6f362dee6056f809d461))
+
+### Features
+
+* **table:** add custom component cell type ([#170](https://github.com/globalbrain/sefirot/issues/170)) ([928ff45](https://github.com/globalbrain/sefirot/commit/928ff457f5b4dc057710f97c8cf92f36dcd056dc))
+
 # [2.4.0](https://github.com/globalbrain/sefirot/compare/v2.3.0...v2.4.0) (2022-10-27)
 
 ### Features
