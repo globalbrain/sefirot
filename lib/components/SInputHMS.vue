@@ -87,7 +87,7 @@ function emitTouch(type: ValueType): void {
 
   touched[type] = true
 
-  if (createRequiredTouched().every(v => v)) {
+  if (createRequiredTouched().every((v) => v)) {
     props.validation.$touch()
   }
 }

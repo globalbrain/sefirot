@@ -71,10 +71,10 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
 
 const selected = computed(() => {
   if (isArray(props.modelValue)) {
-    return props.options.filter(o => (props.modelValue as ArrayValue).includes(o.value))
+    return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
   }
 
-  const item = props.options.find(o => o.value === props.modelValue)
+  const item = props.options.find((o) => o.value === props.modelValue)
 
   return item ? [item] : []
 })

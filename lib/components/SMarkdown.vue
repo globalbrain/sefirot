@@ -29,7 +29,7 @@ watch(
   { immediate: true }
 )
 
-subscribe(payload => emit('clicked', payload))
+subscribe((payload) => emit('clicked', payload))
 </script>
 
 <template>

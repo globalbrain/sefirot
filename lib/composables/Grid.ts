@@ -46,7 +46,7 @@ export function useGrid(options: UseGridOptions): Grid {
 
   function adjustSpacer() {
     container.value?.querySelectorAll(`${toClassSelector(spacerClass)}`)
-      .forEach(n => n.remove())
+      .forEach((n) => n.remove())
 
     const track = container.value?.firstElementChild
 

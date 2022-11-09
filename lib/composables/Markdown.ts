@@ -70,7 +70,7 @@ export function useLink({ container, callbacks }: UseLinkOptions): UseLink {
     const isExternal = isExternalUrl(href)
     const isCallback = isCallbackUrl(href)
 
-    subscribers.forEach(sub => sub({
+    subscribers.forEach((sub) => sub({
       event,
       target,
       isExternal,

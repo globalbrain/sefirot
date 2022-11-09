@@ -28,7 +28,7 @@ function isChecked(value: unknown): boolean {
 
 function handleChange(value: unknown): void {
   const distinct = props.modelValue
-    .filter(v => v !== value)
+    .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
 
   emit('update:modelValue', distinct)

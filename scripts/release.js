@@ -17,9 +17,9 @@ const tags = [
   'next'
 ]
 
-const inc = i => semver.inc(currentVersion, i)
+const inc = (i) => semver.inc(currentVersion, i)
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
-const step = msg => console.log(chalk.cyan(msg))
+const step = (msg) => console.log(chalk.cyan(msg))
 
 async function main() {
   let targetVersion
@@ -28,7 +28,7 @@ async function main() {
     type: 'select',
     name: 'release',
     message: 'Select release type',
-    choices: versionIncrements.map(i => `${i} (${inc(i)})`).concat(['custom'])
+    choices: versionIncrements.map((i) => `${i} (${inc(i)})`).concat(['custom'])
   })
 
   if (release === 'custom') {
@@ -113,4 +113,4 @@ function updatePackage(version) {
   fs.writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`)
 }
 
-main().catch(err => console.error(err))
+main().catch((err) => console.error(err))

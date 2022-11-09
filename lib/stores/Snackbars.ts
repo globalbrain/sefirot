@@ -37,7 +37,7 @@ export const useSnackbars = defineStore('snackbars', () => {
   }
 
   function pop(id: number): void {
-    items.value = items.value.filter(item => item.id !== id)
+    items.value = items.value.filter((item) => item.id !== id)
   }
 
   return {

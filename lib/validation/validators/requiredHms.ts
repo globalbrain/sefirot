@@ -13,5 +13,5 @@ export const HmsMap = {
 } as const
 
 export function requiredHms(hms: Hms, required: HmsType[] = ['h', 'm', 's']): boolean {
-  return required.every(r => hms[HmsMap[r]] !== undefined)
+  return required.every((r) => hms[HmsMap[r]] !== undefined)
 }

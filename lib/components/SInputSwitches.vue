@@ -38,7 +38,7 @@ function isChecked(value: string | number | boolean): boolean {
 
 function handleChange(value: string | number | boolean): void {
   const difference = props.modelValue
-    .filter(v => v !== value)
+    .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
 
   emit('update:modelValue', difference)

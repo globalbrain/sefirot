@@ -86,7 +86,7 @@ const hasFilters = computed(() => {
   return [
     dropdownStatusSelected.value.length,
     dropdownTypeSelected.value.length
-  ].some(length => length)
+  ].some((length) => length)
 })
 
 const data = [
@@ -99,8 +99,8 @@ const data = [
 
 const filteredData = computed(() => {
   return data
-    .filter(i => filterBy(i.status, dropdownStatusSelected.value))
-    .filter(i => filterBy(i.type, dropdownTypeSelected.value))
+    .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
+    .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
 })
 
 const orderedData = computed(() => {
