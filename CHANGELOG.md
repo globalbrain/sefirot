@@ -1,3 +1,9 @@
+## [2.5.1](https://github.com/globalbrain/sefirot/compare/v2.5.0...v2.5.1) (2022-11-09)
+
+### Bug Fixes
+
+* **dropdown:** text item style breaks depending on user defined css ([f15ad54](https://github.com/globalbrain/sefirot/commit/f15ad542706de64f3c67e2134686ad95957a0426))
+
 # [2.5.0](https://github.com/globalbrain/sefirot/compare/v2.4.0...v2.5.0) (2022-11-01)
 
 ### Bug Fixes
