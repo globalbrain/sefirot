@@ -144,7 +144,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
 .checkbox {
   display: block;
-  padding-top: 9px;
+  padding-top: 8px;
 }
 
 .checkbox-box {

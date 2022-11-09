@@ -14,9 +14,12 @@ defineProps<{
 .SDropdownSectionFilterItemText {
   display: inline-block;
   padding: 6px 0;
+  line-height: 20px;
+  font-size: 12px;
 }
 
 .text {
+  display: inline-block;
   line-height: 20px;
   font-size: 12px;
   font-weight: 500;
