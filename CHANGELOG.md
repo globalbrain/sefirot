@@ -1,3 +1,9 @@
+# [2.6.0](https://github.com/globalbrain/sefirot/compare/v2.5.1...v2.6.0) (2022-11-10)
+
+### Features
+
+* **table:** accept `null` in several fields for easier usage ([946ef44](https://github.com/globalbrain/sefirot/commit/946ef44692b5ab15c6881517649b02302db20d92))
+
 ## [2.5.1](https://github.com/globalbrain/sefirot/compare/v2.5.0...v2.5.1) (2022-11-09)
 
 ### Bug Fixes
