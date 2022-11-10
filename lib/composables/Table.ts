@@ -5,10 +5,10 @@ import { DropdownSection } from './Dropdown'
 export interface Table {
   orders: string[]
   columns: TableColumns
-  records?: Record<string, any>[]
-  total?: number
-  page?: number
-  perPage?: number
+  records?: Record<string, any>[] | null
+  total?: number | null
+  page?: number | null
+  perPage?: number | null
   reset?: boolean
   borderless?: boolean
   loading?: boolean
@@ -93,10 +93,10 @@ export interface TableCellAvatarsOption {
 export interface UseTableOptions {
   orders: string[]
   columns: TableColumns
-  records?: MaybeRef<Record<string, any>[] | undefined>
-  total?: MaybeRef<number | undefined>
-  page?: MaybeRef<number | undefined>
-  perPage?: MaybeRef<number | undefined>
+  records?: MaybeRef<Record<string, any>[] | null | undefined>
+  total?: MaybeRef<number | null | undefined>
+  page?: MaybeRef<number | null | undefined>
+  perPage?: MaybeRef<number | null | undefined>
   reset?: MaybeRef<boolean | undefined>
   borderless?: boolean
   loading?: MaybeRef<boolean | undefined>

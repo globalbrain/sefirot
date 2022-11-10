@@ -6,9 +6,9 @@ import { format } from '../support/Num'
 import SIcon from './SIcon.vue'
 
 const props = defineProps<{
-  total?: number
-  page?: number
-  perPage?: number
+  total?: number | null
+  page?: number | null
+  perPage?: number | null
   borderless?: boolean
   onPrev?(): void
   onNext?(): void

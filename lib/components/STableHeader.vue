@@ -2,7 +2,7 @@
 import { format } from '../support/Num'
 
 defineProps<{
-  total?: number
+  total?: number | null
   reset?: boolean
   borderless?: boolean
   onReset?(): void

@@ -1,7 +1,7 @@
 import { watchOnce } from '@vueuse/core'
 import cloneDeep from 'lodash-es/cloneDeep'
 import { WatchSource, reactive } from 'vue'
-import { isObject } from '../support/Utils'
+import { isNullish, isObject } from '../support/Utils'
 
 export interface Data<T extends Record<string, any>> {
   state: T
@@ -25,7 +25,7 @@ export interface UseDataInputUtils {
   def<T>(
     value: any,
     source: WatchSource<T>,
-    cb: (value: Exclude<T, undefined>) => void
+    cb: (value: Exclude<T, null | undefined>) => void
   ): Def<T>
 }
 
@@ -81,11 +81,14 @@ function createState<T extends Record<string, any>>(
 }
 
 function handleDefs<T extends Record<string, any>>(
-  defs: [string, Def][], state: T
+  defs: [string, Def][],
+  state: T
 ): void {
   defs.forEach(([key, def]) => {
     watchOnce(def.source, (value: any) => {
-      (state as any)[key] = def.cb(value)
+      if (!isNullish(value)) {
+        (state as any)[key] = def.cb(value)
+      }
     })
   })
 }
@@ -93,7 +96,7 @@ function handleDefs<T extends Record<string, any>>(
 function def<T>(
   value: any,
   source: WatchSource<T>,
-  cb: (value: Exclude<T, undefined>) => void
+  cb: (value: Exclude<T, null | undefined>) => void
 ): Def {
   return {
     __isDef: true,
