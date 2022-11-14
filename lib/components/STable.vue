@@ -102,10 +102,17 @@ function updateColWidth(key: string, value: string) {
         >
           <div class="block">
             <div class="row">
-              <STableItem v-for="key in orders" :key="key" :name="key" :width="colWidths[key]">
+              <STableItem
+                v-for="key in orders"
+                :key="key"
+                :name="key"
+                :class-name="columns[key].className"
+                :width="colWidths[key]"
+              >
                 <STableColumn
                   :name="key"
                   :label="columns[key].label"
+                  :class-name="columns[key].className"
                   :dropdown="columns[key].dropdown"
                   @resize="(value) => updateColWidth(key, value)"
                 />
@@ -124,9 +131,16 @@ function updateColWidth(key: string, value: string) {
         >
           <div class="block">
             <div v-for="(record, rIndex) in records" :key="rIndex" class="row">
-              <STableItem v-for="key in orders" :key="key" :name="key" :width="colWidths[key]">
+              <STableItem
+                v-for="key in orders"
+                :key="key"
+                :name="key"
+                :class-name="columns[key].className"
+                :width="colWidths[key]"
+              >
                 <STableCell
                   :name="key"
+                  :class-name="columns[key].className"
                   :cell="columns[key].cell"
                   :value="record[key]"
                   :record="record"

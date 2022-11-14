@@ -8,6 +8,7 @@ import STableCellText from './STableCellText.vue'
 
 defineProps<{
   name: string
+  className?: string
   cell?: TableCell
   value: any
   record: any
@@ -16,7 +17,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="STableCell" :class="[`col-${name}`]">
+  <div class="STableCell" :class="[className, `col-${name}`]">
     <STableCellText
       v-if="!cell || cell.type === 'text'"
       :value="value"

@@ -112,7 +112,7 @@ function stopDialogPositionListener() {
 </script>
 
 <template>
-  <div class="STableColumn STableCell" :class="[{ active }, className ?? `col-${name}`]" ref="column">
+  <div class="STableColumn STableCell" :class="[{ active }, className, `col-${name}`]" ref="column">
     <div class="container">
       <p class="label">{{ label }}</p>
 

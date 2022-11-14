@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps<{
   name: string
+  className?: string
   width?: string
 }>()
 </script>
@@ -8,7 +9,7 @@ defineProps<{
 <template>
   <div
     class="STableItem"
-    :class="[`col-${name}`, { adjusted: width }]"
+    :class="[className, `col-${name}`, { adjusted: width }]"
   >
     <slot />
   </div>
