@@ -1,5 +1,5 @@
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
-import RelativeTime from 'dayjs/plugin/relativeTime.js'
+import RelativeTime from 'dayjs/plugin/relativeTime'
 
 export type Day = Dayjs
 export type Input = ConfigType

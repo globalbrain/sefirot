@@ -46,7 +46,6 @@
     "@vuelidate/validators": "^2.0.0",
     "@vueuse/core": "^9.3.0",
     "body-scroll-lock": "^4.0.0-beta.0",
-    "dayjs": "^1.11.5",
     "fuse.js": "^6.6.2",
     "lodash-es": "^4.17.21",
     "markdown-it": "^13.0.1",
@@ -58,6 +57,9 @@
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.40",
     "vue-router": "^4.1.5"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.5"
   },
   "devDependencies": {
     "@globalbrain/eslint-config": "^1.0.0",
