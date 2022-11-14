@@ -20,6 +20,7 @@ const props = defineProps<{
   color?: Color | ((value: any, record: any) => Color)
   iconColor?: Color | ((value: any, record: any) => Color)
   link?(value: any, record: any): string
+  onClick?(value: any, record: any): void
 }>()
 
 const _value = computed(() => {
@@ -46,8 +47,14 @@ const _iconColor = computed(() => {
 </script>
 
 <template>
-  <div class="STableCellText" :class="[{ link }, _color]">
-    <SLink v-if="_value" class="container" :href="link?.(value, record)">
+  <div class="STableCellText" :class="[{ link: link || onClick }, _color]">
+    <SLink
+      v-if="_value"
+      class="container"
+      :href="link?.(value, record)"
+      :role="onClick ? 'button' : null"
+      @click="() => onClick?.(value, record)"
+    >
       <div v-if="icon" class="icon" :class="[_iconColor ?? _color]">
         <SIcon :icon="icon" class="svg" />
       </div>

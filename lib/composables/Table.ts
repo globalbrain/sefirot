@@ -101,8 +101,8 @@ export interface TableCellAvatarsOption {
 }
 
 export interface UseTableOptions {
-  orders: string[]
-  columns: TableColumns
+  orders: MaybeRef<string[]>
+  columns: MaybeRef<TableColumns>
   records?: MaybeRef<Record<string, any>[] | null | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>

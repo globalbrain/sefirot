@@ -27,6 +27,7 @@ defineProps<{
       :link="cell?.link"
       :color="cell?.color"
       :icon-color="cell?.iconColor"
+      :on-click="cell?.onClick"
     />
     <STableCellDay
       v-else-if="cell.type === 'day'"
