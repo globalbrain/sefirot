@@ -1,3 +1,9 @@
+## [2.7.3](https://github.com/globalbrain/sefirot/compare/v2.7.2...v2.7.3) (2022-11-14)
+
+### Bug Fixes
+
+* **day:** module resolution not working ([bb56f2f](https://github.com/globalbrain/sefirot/commit/bb56f2ff59f91845ce73d053d444d997c07af311))
+
 ## [2.7.2](https://github.com/globalbrain/sefirot/compare/v2.7.1...v2.7.2) (2022-11-14)
 
 ### Bug Fixes
