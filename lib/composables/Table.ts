@@ -56,6 +56,7 @@ export type TableCellTextColor =
   | 'soft'
   | 'mute'
   | 'info'
+  | 'success'
   | 'warning'
   | 'danger'
 

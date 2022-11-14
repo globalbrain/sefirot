@@ -8,6 +8,7 @@ export type Color =
   | 'soft'
   | 'mute'
   | 'info'
+  | 'success'
   | 'warning'
   | 'danger'
 
@@ -81,6 +82,7 @@ const _iconColor = computed(() => {
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
   &.info    { color: var(--c-info); }
+  &.success { color: var(--c-success); }
   &.warning { color: var(--c-warning); }
   &.danger  { color: var(--c-danger); }
 
@@ -92,9 +94,11 @@ const _iconColor = computed(() => {
   .STableCellText.link &.soft          { color: var(--c-text-2); }
   .STableCellText.link:hover &.soft    { color: var(--c-info); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
-  .STableCellText.link:hover &.mute    { color: var(--c-info); }
+  .STableCellText.link:hover &.mute    { color: var(--c-text-3); }
   .STableCellText.link &.info          { color: var(--c-info); }
   .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
+  .STableCellText.link &.success       { color: var(--c-success); }
+  .STableCellText.link:hover &.success { color: var(--c-success-dark); }
   .STableCellText.link &.warning       { color: var(--c-warning); }
   .STableCellText.link:hover &.warning { color: var(--c-warning-darker); }
   .STableCellText.link &.danger        { color: var(--c-danger); }
@@ -126,6 +130,8 @@ const _iconColor = computed(() => {
   .STableCellText.link:hover &.mute    { color: var(--c-info); }
   .STableCellText.link &.info          { color: var(--c-info); }
   .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
+  .STableCellText.link &.success       { color: var(--c-success); }
+  .STableCellText.link:hover &.success { color: var(--c-success-dark); }
   .STableCellText.link &.warning       { color: var(--c-warning); }
   .STableCellText.link:hover &.warning { color: var(--c-warning-dark); }
   .STableCellText.link &.danger        { color: var(--c-danger); }
