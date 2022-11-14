@@ -16,7 +16,7 @@ const props = defineProps<{
   value?: any
   record: any
   icon?: any
-  getter?: string | ((value: any) => string)
+  getter?: string | ((value: any, record: any) => string)
   color?: Color | ((value: any, record: any) => Color)
   iconColor?: Color | ((value: any, record: any) => Color)
   link?(value: any, record: any): string
@@ -29,7 +29,7 @@ const _value = computed(() => {
 
   return typeof props.getter === 'string'
     ? props.getter
-    : props.getter(props.value)
+    : props.getter(props.value, props.record)
 })
 
 const _color = computed(() => {
