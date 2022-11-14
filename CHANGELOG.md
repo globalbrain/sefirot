@@ -1,3 +1,9 @@
+## [2.7.1](https://github.com/globalbrain/sefirot/compare/v2.7.0...v2.7.1) (2022-11-14)
+
+### Bug Fixes
+
+* **day:** include day.js as dependencies to avoid plugin resolution problem ([224233b](https://github.com/globalbrain/sefirot/commit/224233bb8c132dd505b70c361e602ff2cc60145c))
+
 # [2.7.0](https://github.com/globalbrain/sefirot/compare/v2.6.0...v2.7.0) (2022-11-14)
 
 ### Features
