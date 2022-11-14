@@ -21,7 +21,11 @@ export default defineConfig({
       all: true,
       src: ['lib'],
       include: ['lib'],
-      exclude: ['lib/mixins', 'lib/types'],
+      exclude: [
+        'lib/mixins',
+        'lib/support/Day/plugins',
+        'lib/types'
+      ],
       reporter: [
         'html',
         'json',
