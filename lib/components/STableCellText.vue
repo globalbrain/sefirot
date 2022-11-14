@@ -3,13 +3,21 @@ import { computed } from 'vue'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
+export type Color =
+  | 'neutral'
+  | 'soft'
+  | 'mute'
+  | 'info'
+  | 'warning'
+  | 'danger'
+
 const props = defineProps<{
   value?: any
   record: any
   icon?: any
   getter?: string | ((value: any) => string)
-  color?: 'neutral' | 'soft' | 'mute'
-  iconColor?: 'neutral' | 'soft' | 'mute'
+  color?: Color | ((value: any, record: any) => Color)
+  iconColor?: Color | ((value: any, record: any) => Color)
   link?(value: any, record: any): string
 }>()
 
@@ -22,15 +30,27 @@ const _value = computed(() => {
     ? props.getter
     : props.getter(props.value)
 })
+
+const _color = computed(() => {
+  return typeof props.color === 'function'
+    ? props.color(props.value, props.record)
+    : props.color ?? 'neutral'
+})
+
+const _iconColor = computed(() => {
+  return typeof props.iconColor === 'function'
+    ? props.iconColor(props.value, props.record)
+    : props.iconColor ?? 'neutral'
+})
 </script>
 
 <template>
-  <div class="STableCellText" :class="[{ link }, color ?? 'neutral']">
+  <div class="STableCellText" :class="[{ link }, _color]">
     <SLink v-if="_value" class="container" :href="link?.(value, record)">
-      <div v-if="icon" class="icon" :class="[iconColor ?? color ?? 'neutral']">
+      <div v-if="icon" class="icon" :class="[_iconColor ?? _color]">
         <SIcon :icon="icon" class="svg" />
       </div>
-      <div class="text" :class="[color ?? 'neutral']">
+      <div class="text" :class="[_color]">
         {{ _value }}
       </div>
     </SLink>
@@ -39,13 +59,13 @@ const _value = computed(() => {
 
 <style scoped lang="postcss">
 .STableCellText {
-  padding: 8px 16px;
   min-height: 40px;
 }
 
 .container {
   display: flex;
   gap: 4px;
+  padding: 8px 16px;
 }
 
 .text {
@@ -60,6 +80,9 @@ const _value = computed(() => {
   &.neutral { color: var(--c-text-1); }
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
+  &.info    { color: var(--c-info); }
+  &.warning { color: var(--c-warning); }
+  &.danger  { color: var(--c-danger); }
 
   .STableCellText.link &       { color: var(--c-info); }
   .STableCellText.link:hover & { color: var(--c-info-dark); }
@@ -70,6 +93,12 @@ const _value = computed(() => {
   .STableCellText.link:hover &.soft    { color: var(--c-info); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
   .STableCellText.link:hover &.mute    { color: var(--c-info); }
+  .STableCellText.link &.info          { color: var(--c-info); }
+  .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
+  .STableCellText.link &.warning       { color: var(--c-warning); }
+  .STableCellText.link:hover &.warning { color: var(--c-warning-darker); }
+  .STableCellText.link &.danger        { color: var(--c-danger); }
+  .STableCellText.link:hover &.danger  { color: var(--c-danger-dark); }
 }
 
 .icon {
@@ -95,6 +124,12 @@ const _value = computed(() => {
   .STableCellText.link:hover &.soft    { color: var(--c-info); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
   .STableCellText.link:hover &.mute    { color: var(--c-info); }
+  .STableCellText.link &.info          { color: var(--c-info); }
+  .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
+  .STableCellText.link &.warning       { color: var(--c-warning); }
+  .STableCellText.link:hover &.warning { color: var(--c-warning-dark); }
+  .STableCellText.link &.danger        { color: var(--c-danger); }
+  .STableCellText.link:hover &.danger  { color: var(--c-danger-dark); }
 }
 
 .svg {

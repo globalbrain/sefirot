@@ -47,9 +47,17 @@ export interface TableCellText extends TableCellBase {
   icon?: any
   value?: string | ((value: any) => string)
   link?(value: any, record: any): string
-  color?: 'neutral' | 'soft' | 'mute'
-  iconColor?: 'neutral' | 'soft' | 'mute'
+  color?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
+  iconColor?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
 }
+
+export type TableCellTextColor =
+  | 'neutral'
+  | 'soft'
+  | 'mute'
+  | 'info'
+  | 'warning'
+  | 'danger'
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
