@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/globalbrain/sefirot/compare/v2.6.0...v2.7.0) (2022-11-14)
+
+### Features
+
+* **day:** add relative time plugin ([a82500c](https://github.com/globalbrain/sefirot/commit/a82500c48adfe4845d750a2a8cff31350be6104b))
+* **table:** enable callback definition on text and color props for text cell ([b062be7](https://github.com/globalbrain/sefirot/commit/b062be7aaa9711eb27e4d155d3d77192a4482554))
+
 # [2.6.0](https://github.com/globalbrain/sefirot/compare/v2.5.1...v2.6.0) (2022-11-10)
 
 ### Features
