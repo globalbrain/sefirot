@@ -1,8 +1,11 @@
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import RelativeTime from 'dayjs/plugin/relativeTime.js'
 
 export type Day = Dayjs
 export type Input = ConfigType
 
-export function day(input: Input): Dayjs {
+dayjs.extend(RelativeTime)
+
+export function day(input?: Input): Dayjs {
   return dayjs(input)
 }
