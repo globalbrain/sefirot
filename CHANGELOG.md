@@ -1,3 +1,9 @@
+## [2.7.2](https://github.com/globalbrain/sefirot/compare/v2.7.1...v2.7.2) (2022-11-14)
+
+### Bug Fixes
+
+* **day:** use esm build for dayjs ([49f2fae](https://github.com/globalbrain/sefirot/commit/49f2fae79d213254825bda4d8b5747e12257b45f))
+
 ## [2.7.1](https://github.com/globalbrain/sefirot/compare/v2.7.0...v2.7.1) (2022-11-14)
 
 ### Bug Fixes
