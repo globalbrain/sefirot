@@ -1,3 +1,13 @@
+# [2.8.0](https://github.com/globalbrain/sefirot/compare/v2.7.3...v2.8.0) (2022-11-14)
+
+### Features
+
+* **table:** add `onClick` option to text cell ([#167](https://github.com/globalbrain/sefirot/issues/167)) ([02c9c89](https://github.com/globalbrain/sefirot/commit/02c9c89f3fe8aaba6cbea41e7c4b20eccdf3ed1c))
+* **table:** accept ref on `orders` and `columns` option ([c79ec70](https://github.com/globalbrain/sefirot/commit/c79ec708f9e685a740caa9b02c8787f21c56501e))
+* **table:** add option to specify custom class name for column ([a7bca60](https://github.com/globalbrain/sefirot/commit/a7bca6008794d27a04102eea56f143a1ed292a0e))
+* **table:** add success color option to text cell ([9c611d5](https://github.com/globalbrain/sefirot/commit/9c611d5c8a3fd85911c01a4bddd4b51c0c5ce219))
+* **table:** pass record along with value on text cell `value` option ([4d2cece](https://github.com/globalbrain/sefirot/commit/4d2cecea426036e524204a375734d99a4143963b))
+
 ## [2.7.3](https://github.com/globalbrain/sefirot/compare/v2.7.2...v2.7.3) (2022-11-14)
 
 ### Bug Fixes
