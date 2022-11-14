@@ -45,7 +45,7 @@ export interface TableCellBase {
 export interface TableCellText extends TableCellBase {
   type: 'text'
   icon?: any
-  value?: string | ((value: any) => string)
+  value?: string | ((value: any, record: any) => string)
   link?(value: any, record: any): string
   color?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
   iconColor?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
