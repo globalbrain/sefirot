@@ -103,8 +103,8 @@ const showError = computed(() => {
 .help-error {
   width: 100%;
   margin: 0;
-  padding: 4px 0 0 0;
-  line-height: 20px;
+  padding: 6px 0 0 0;
+  line-height: 18px;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-danger);
