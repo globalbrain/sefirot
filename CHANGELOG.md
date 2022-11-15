@@ -1,3 +1,13 @@
+# [2.9.0](https://github.com/globalbrain/sefirot/compare/v2.8.0...v2.9.0) (2022-11-15)
+
+### Bug Fixes
+
+* **input:** error message line height is too high ([0692568](https://github.com/globalbrain/sefirot/commit/06925685c80a5371d4365f4a2de75c4d72baec80))
+
+### Features
+
+* **validation:** add decimal rule ([443ab6a](https://github.com/globalbrain/sefirot/commit/443ab6ae1fc819726e64017f807e809752dacdc5))
+
 # [2.8.0](https://github.com/globalbrain/sefirot/compare/v2.7.3...v2.8.0) (2022-11-14)
 
 ### Features
