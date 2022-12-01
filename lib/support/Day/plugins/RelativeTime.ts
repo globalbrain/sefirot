@@ -86,8 +86,7 @@ export const relativeTime: PluginFunc<RelativeTimeOptions> = (o, c, d) => {
         }
         if (typeof format === 'string') {
           out = (format as any).replace('%d', abs)
-        }
-        else {
+        } else {
           out = format(abs, withoutSuffix, t.l, isFuture)
         }
         break

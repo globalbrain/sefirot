@@ -38,8 +38,7 @@ async function main() {
       message: 'Input custom version',
       initial: currentVersion
     })).version
-  }
-  else {
+  } else {
     targetVersion = release.match(/\((.*)\)/)[1]
   }
 

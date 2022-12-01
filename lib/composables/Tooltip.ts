@@ -46,8 +46,7 @@ export function useTooltip(
 
     if (tipRect.x < 0) {
       adjustLeftPosition(contentRect.x)
-    }
-    else if (tipRightX > window.outerWidth) {
+    } else if (tipRightX > window.outerWidth) {
       adjustRightPosition(contentRightX)
     }
 

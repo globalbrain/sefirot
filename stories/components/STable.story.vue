@@ -134,11 +134,9 @@ const table = useTable({
         color(value) {
           if (value === 'Published') {
             return 'success'
-          }
-          else if (value === 'Draft') {
+          } else if (value === 'Draft') {
             return 'info'
-          }
-          else {
+          } else {
             return 'mute'
           }
         }
