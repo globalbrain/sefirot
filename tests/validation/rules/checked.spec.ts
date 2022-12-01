@@ -12,4 +12,9 @@ describe('validation/rules/checked', () => {
     const rule = checked('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })
+
+  test('fallback to default error message', () => {
+    const rule = checked()
+    expect(rule.$message({ $params: {} })).toBe('You must check the field.')
+  })
 })
