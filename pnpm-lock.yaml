@@ -28,7 +28,7 @@ specifiers:
   lodash-es: ^4.17.21
   markdown-it: ^13.0.1
   normalize.css: ^8.0.1
-  pinia: ^2.0.22
+  pinia: ^2.0.27
   postcss: ^8.4.17
   postcss-nested: ^5.0.6
   semver: ^7.3.7
@@ -71,7 +71,7 @@ devDependencies:
   lodash-es: 4.17.21
   markdown-it: 13.0.1
   normalize.css: 8.0.1
-  pinia: 2.0.22_prq2uz4lho2pwp6irk4cfkrxwu
+  pinia: 2.0.27_prq2uz4lho2pwp6irk4cfkrxwu
   postcss: 8.4.17
   postcss-nested: 5.0.6_postcss@8.4.17
   semver: 7.3.7
@@ -3909,8 +3909,8 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /pinia/2.0.22_prq2uz4lho2pwp6irk4cfkrxwu:
-    resolution: {integrity: sha512-u+b8/BC+tmvo3ACbYO2w5NfxHWFOjvvw9DQnyT0dW8aUMCPRQT5QnfZ5R5W2MzZBMTeZRMQI7V/QFbafmM9QHw==}
+  /pinia/2.0.27_prq2uz4lho2pwp6irk4cfkrxwu:
+    resolution: {integrity: sha512-nOnXP0OFeL8R4WjAHsterU+11vptda643gH02xKNtSCDPiRzVfRYodOLihLDoa0gL1KKuQKV+KOzEgdt3YvqEw==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'
@@ -3921,7 +3921,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@vue/devtools-api': 6.4.3
+      '@vue/devtools-api': 6.4.5
       typescript: 4.9.4
       vue: 3.2.45
       vue-demi: 0.13.11_vue@3.2.45
