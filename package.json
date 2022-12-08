@@ -64,8 +64,8 @@
   "devDependencies": {
     "@globalbrain/eslint-config": "^1.1.0",
     "@histoire/plugin-vue": "^0.10.7",
-    "@iconify-icons/ph": "^1.2.2",
-    "@iconify/vue": "^4.0.0",
+    "@iconify-icons/ph": "^1.2.3",
+    "@iconify/vue": "^4.0.1",
     "@types/body-scroll-lock": "^3.1.0",
     "@types/lodash-es": "^4.17.6",
     "@types/markdown-it": "^12.2.3",

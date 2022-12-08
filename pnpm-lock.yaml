@@ -3,8 +3,8 @@ lockfileVersion: 5.4
 specifiers:
   '@globalbrain/eslint-config': ^1.1.0
   '@histoire/plugin-vue': ^0.10.7
-  '@iconify-icons/ph': ^1.2.2
-  '@iconify/vue': ^4.0.0
+  '@iconify-icons/ph': ^1.2.3
+  '@iconify/vue': ^4.0.1
   '@types/body-scroll-lock': ^3.1.0
   '@types/lodash-es': ^4.17.6
   '@types/markdown-it': ^12.2.3
@@ -47,8 +47,8 @@ dependencies:
 devDependencies:
   '@globalbrain/eslint-config': 1.1.0_ha6vam6werchizxrnqvarmz2zu
   '@histoire/plugin-vue': 0.10.7_gym4wxtrhdtso3d4nqsoh4uhdu
-  '@iconify-icons/ph': 1.2.2
-  '@iconify/vue': 4.0.0_vue@3.2.45
+  '@iconify-icons/ph': 1.2.3
+  '@iconify/vue': 4.0.1_vue@3.2.45
   '@types/body-scroll-lock': 3.1.0
   '@types/lodash-es': 4.17.6
   '@types/markdown-it': 12.2.3
@@ -495,8 +495,8 @@ packages:
     engines: {node: '>=6.9.0'}
     dev: true
 
-  /@iconify-icons/ph/1.2.2:
-    resolution: {integrity: sha512-8YgmD1nDJXa6KPGvpFNPp8zvrV38ZHuBmuyBjAgLGT/GI1ZFVLnnQ8xwU8OMFoJN/rYJQZ9r9yW7ppuAh9Q1uQ==}
+  /@iconify-icons/ph/1.2.3:
+    resolution: {integrity: sha512-6+HomDiD5OBZDEZNkwh14kJf3dFRf+Lomb85PYctzlam5HPBKoU2kbByc8sCXPPSDE8stjruJBhf4LrFMBpugA==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -505,8 +505,8 @@ packages:
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
     dev: true
 
-  /@iconify/vue/4.0.0_vue@3.2.45:
-    resolution: {integrity: sha512-73z81Yf2HISfehu3qvN9GqL1OnUO7wEMKkiFwVGJ2pqAdGCR8FrVylhRhka+6U+gFLlng0ynnT20svk3jJYwow==}
+  /@iconify/vue/4.0.1_vue@3.2.45:
+    resolution: {integrity: sha512-k4VwcSQpGqJpoyqENRRviFuXlVcquLvQ6BKLNJ6o2amZo7u+3HyALSO79Xyz7Sg68szQGstOk6weaKUF0DJbog==}
     peerDependencies:
       vue: '>=3'
     dependencies:
