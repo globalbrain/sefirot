@@ -23,7 +23,7 @@ specifiers:
   eslint: ^8.29.0
   execa: ^5.1.1
   fuse.js: ^6.6.2
-  happy-dom: ^6.0.4
+  happy-dom: ^8.1.0
   histoire: ^0.10.7
   lodash-es: ^4.17.21
   markdown-it: ^13.0.1
@@ -54,7 +54,7 @@ devDependencies:
   '@types/markdown-it': 12.2.3
   '@types/node': 18.11.11
   '@vitejs/plugin-vue': 3.2.0_vite@3.2.5+vue@3.2.45
-  '@vitest/coverage-c8': 0.25.6_happy-dom@6.0.4
+  '@vitest/coverage-c8': 0.25.6_happy-dom@8.1.0
   '@vue/test-utils': 2.2.6_vue@3.2.45
   '@vuelidate/core': 2.0.0_vue@3.2.45
   '@vuelidate/validators': 2.0.0_vue@3.2.45
@@ -66,7 +66,7 @@ devDependencies:
   eslint: 8.29.0
   execa: 5.1.1
   fuse.js: 6.6.2
-  happy-dom: 6.0.4
+  happy-dom: 8.1.0
   histoire: 0.10.7_6ahqlb3l4j3rjacjdkdlvssefi
   lodash-es: 4.17.21
   markdown-it: 13.0.1
@@ -79,7 +79,7 @@ devDependencies:
   v-calendar: 3.0.0-alpha.8_vue@3.2.45
   vite: 3.2.5_@types+node@18.11.11
   vitepress: 1.0.0-alpha.19_@types+node@18.11.11
-  vitest: 0.25.6_happy-dom@6.0.4
+  vitest: 0.25.6_happy-dom@8.1.0
   vue: 3.2.45
   vue-router: 4.1.6_vue@3.2.45
   vue-tsc: 1.0.11_typescript@4.9.4
@@ -812,11 +812,11 @@ packages:
       vue: 3.2.45
     dev: true
 
-  /@vitest/coverage-c8/0.25.6_happy-dom@6.0.4:
+  /@vitest/coverage-c8/0.25.6_happy-dom@8.1.0:
     resolution: {integrity: sha512-+Bcs1XZ8CuEe52QSOgzqmqiV82CXZRRj3yclPQqtLkUV4S6+kdOdfRTtMHOilwhZH70giDjBQx3jgiZoYgFVMA==}
     dependencies:
       c8: 7.12.0
-      vitest: 0.25.6_happy-dom@6.0.4
+      vitest: 0.25.6_happy-dom@8.1.0
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -2818,13 +2818,12 @@ packages:
       - encoding
     dev: true
 
-  /happy-dom/6.0.4:
-    resolution: {integrity: sha512-b+ID23Ms0BY08UNLymsOMG7EI2jSlwEt4cbJs938GZfeNAg+fqgkSO3TokQMgSOFoHznpjWmpVjBUL5boJ9PWw==}
+  /happy-dom/8.1.0:
+    resolution: {integrity: sha512-R9NVb5815gpMFsldZF0wVSHw2uSobx6yitSkCdQPda1kwfAmVw4Ut8ZspxGHXkK6OA93SznldkcvrbhKFr6JcA==}
     dependencies:
       css.escape: 1.5.1
       he: 1.2.0
       node-fetch: 2.6.7
-      sync-request: 6.1.0
       webidl-conversions: 7.0.0
       whatwg-encoding: 2.0.0
       whatwg-mimetype: 3.0.0
@@ -4781,7 +4780,7 @@ packages:
       - terser
     dev: true
 
-  /vitest/0.25.6_happy-dom@6.0.4:
+  /vitest/0.25.6_happy-dom@8.1.0:
     resolution: {integrity: sha512-jdPgmZ7BcDnm1+hmMPIl9BZjSy+b8Y8V0tQMsv7ECO90Qic7EZ5/+traILXLpsXgqK5KgVrUJmchevAUuKL/1w==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
@@ -4810,7 +4809,7 @@ packages:
       acorn-walk: 8.2.0
       chai: 4.3.6
       debug: 4.3.4
-      happy-dom: 6.0.4
+      happy-dom: 8.1.0
       local-pkg: 0.4.2
       source-map: 0.6.1
       strip-literal: 1.0.0
