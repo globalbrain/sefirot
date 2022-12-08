@@ -18,7 +18,7 @@ specifiers:
   body-scroll-lock: ^4.0.0-beta.0
   chalk: ^4.1.2
   conventional-changelog-cli: ^2.2.2
-  dayjs: ^1.11.5
+  dayjs: ^1.11.7
   enquirer: ^2.3.6
   eslint: ^8.29.0
   execa: ^5.1.1
@@ -42,7 +42,7 @@ specifiers:
   vue-tsc: ^1.0.11
 
 dependencies:
-  dayjs: 1.11.5
+  dayjs: 1.11.7
 
 devDependencies:
   '@globalbrain/eslint-config': 1.1.0_ha6vam6werchizxrnqvarmz2zu
@@ -1639,8 +1639,8 @@ packages:
     resolution: {integrity: sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==}
     dev: true
 
-  /dayjs/1.11.5:
-    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
     dev: false
 
   /de-indent/1.0.2:

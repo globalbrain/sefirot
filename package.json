@@ -59,7 +59,7 @@
     "vue-router": "^4.1.5"
   },
   "dependencies": {
-    "dayjs": "^1.11.5"
+    "dayjs": "^1.11.7"
   },
   "devDependencies": {
     "@globalbrain/eslint-config": "^1.1.0",
@@ -79,7 +79,6 @@
     "body-scroll-lock": "^4.0.0-beta.0",
     "chalk": "^4.1.2",
     "conventional-changelog-cli": "^2.2.2",
-    "dayjs": "^1.11.5",
     "enquirer": "^2.3.6",
     "eslint": "^8.29.0",
     "execa": "^5.1.1",
