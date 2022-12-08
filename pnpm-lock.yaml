@@ -29,7 +29,7 @@ specifiers:
   markdown-it: ^13.0.1
   normalize.css: ^8.0.1
   pinia: ^2.0.27
-  postcss: ^8.4.17
+  postcss: ^8.4.19
   postcss-nested: ^5.0.6
   semver: ^7.3.7
   typescript: ^4.9.4
@@ -72,8 +72,8 @@ devDependencies:
   markdown-it: 13.0.1
   normalize.css: 8.0.1
   pinia: 2.0.27_prq2uz4lho2pwp6irk4cfkrxwu
-  postcss: 8.4.17
-  postcss-nested: 5.0.6_postcss@8.4.17
+  postcss: 8.4.19
+  postcss-nested: 5.0.6_postcss@8.4.19
   semver: 7.3.7
   typescript: 4.9.4
   v-calendar: 3.0.0-alpha.8_vue@3.2.45
@@ -3940,13 +3940,13 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /postcss-nested/5.0.6_postcss@8.4.17:
+  /postcss-nested/5.0.6_postcss@8.4.19:
     resolution: {integrity: sha512-rKqm2Fk0KbA8Vt3AdGN0FB9OBOMDVajMG6ZCf/GoHgdxUJ4sBFp0A/uMIRm+MJUdo33YXEtjqIz8u7DAp8B7DA==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.17
+      postcss: 8.4.19
       postcss-selector-parser: 6.0.10
     dev: true
 
@@ -3956,15 +3956,6 @@ packages:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
-    dev: true
-
-  /postcss/8.4.17:
-    resolution: {integrity: sha512-UNxNOLQydcOFi41yHNMcKRZ39NeXlr8AxGuZJsdub8vIb12fHzcq37DTU/QtbI6WLxNg2gF9Z+8qtRwTj1UI1Q==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.4
-      picocolors: 1.0.0
-      source-map-js: 1.0.2
     dev: true
 
   /postcss/8.4.19:
