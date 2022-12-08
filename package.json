@@ -81,7 +81,7 @@
     "conventional-changelog-cli": "^2.2.2",
     "dayjs": "^1.11.5",
     "enquirer": "^2.3.6",
-    "eslint": "^8.28.0",
+    "eslint": "^8.29.0",
     "execa": "^5.1.1",
     "fuse.js": "^6.6.2",
     "happy-dom": "^6.0.4",
