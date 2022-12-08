@@ -11,7 +11,7 @@ specifiers:
   '@types/node': ^18.11.11
   '@vitejs/plugin-vue': ^3.2.0
   '@vitest/coverage-c8': ^0.25.6
-  '@vue/test-utils': ^2.2.4
+  '@vue/test-utils': ^2.2.6
   '@vuelidate/core': ^2.0.0
   '@vuelidate/validators': ^2.0.0
   '@vueuse/core': ^9.6.0
@@ -55,7 +55,7 @@ devDependencies:
   '@types/node': 18.11.11
   '@vitejs/plugin-vue': 3.2.0_vite@3.2.5+vue@3.2.45
   '@vitest/coverage-c8': 0.25.6_happy-dom@6.0.4
-  '@vue/test-utils': 2.2.4_vue@3.2.45
+  '@vue/test-utils': 2.2.6_vue@3.2.45
   '@vuelidate/core': 2.0.0_vue@3.2.45
   '@vuelidate/validators': 2.0.0_vue@3.2.45
   '@vueuse/core': 9.6.0_vue@3.2.45
@@ -962,8 +962,8 @@ packages:
     resolution: {integrity: sha512-Ewzq5Yhimg7pSztDV+RH1UDKBzmtqieXQlpTVm2AwraoRL/Rks96mvd8Vgi7Lj+h+TH8dv7mXD3FRZR3TUvbSg==}
     dev: true
 
-  /@vue/test-utils/2.2.4_vue@3.2.45:
-    resolution: {integrity: sha512-1JjLduJ84bFcuCt/1YLTNyktYeUHS/zA0u8iTmF6w6ul1K/nSvyKu/MC47YjdpZ4lI/hn7FH31B22kfz62e9wA==}
+  /@vue/test-utils/2.2.6_vue@3.2.45:
+    resolution: {integrity: sha512-64zHtJZdG7V/U2L0j/z3Pt5bSygccI3xs+Kl7LB73AZK4MQ8WONJhqDQPK8leUFFA9CmmoJygeky7zcl2hX10A==}
     peerDependencies:
       vue: ^3.0.1
     dependencies:
