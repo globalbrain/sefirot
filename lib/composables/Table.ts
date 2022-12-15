@@ -25,7 +25,7 @@ export interface TableColumn {
   label: string
   className?: string
   dropdown?: DropdownSection[]
-  cell?: TableCell
+  cell?: TableCell | ((value: any, record: any) => TableCell)
 }
 
 export type TableCell =
