@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
@@ -6,14 +7,20 @@ import STableCellDay from './STableCellDay.vue'
 import STableCellPill from './STableCellPill.vue'
 import STableCellText from './STableCellText.vue'
 
-defineProps<{
+const props = defineProps<{
   name: string
   className?: string
-  cell?: TableCell
+  cell?: TableCell | ((value: any, record: any) => TableCell)
   value: any
   record: any
   records: Record<string, any>
 }>()
+
+const cell = computed(() =>
+  typeof props.cell === 'function'
+    ? props.cell(props.value, props.record)
+    : props.cell
+)
 </script>
 
 <template>
