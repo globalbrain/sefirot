@@ -152,7 +152,12 @@ const table = useTable({
     createdAt: {
       label: 'Created at',
       dropdown: dropdownCreatedAt,
-      cell: { type: 'text', color: 'soft' }
+      cell: (value, record) => {
+        return {
+          type: 'text',
+          color: value === '2022-10-10' ? 'info' : 'soft'
+        }
+      }
     }
   },
 
