@@ -3,9 +3,13 @@ body {
   font-size: 14px;
 }
 
-.__histoire-sandbox {
+#app {
+  min-height: 100vh;
+}
+
+.__histoire-render-story {
   position: relative;
-  padding: 24px;
+  padding: 32px;
   min-height: 100vh;
   background-color: var(--c-bg-soft);
 }
