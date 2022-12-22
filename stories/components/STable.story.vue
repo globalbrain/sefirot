@@ -152,7 +152,7 @@ const filteredData = computed(() => {
   return data
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
-    .filter((i) => i.tags.some((tag) => filterBy(tag, dropdownTagsSelected.value)))
+    .filter((i) => dropdownTagsSelected.value.every((tag) => i.tags.includes(tag)))
 })
 
 const orderedData = computed(() => {
