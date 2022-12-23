@@ -1,3 +1,10 @@
+# [2.10.0](https://github.com/globalbrain/sefirot/compare/v2.9.0...v2.10.0) (2022-12-23)
+
+### Features
+
+* **table:** add pills cell option ([#177](https://github.com/globalbrain/sefirot/issues/177)) ([#178](https://github.com/globalbrain/sefirot/issues/178)) ([#179](https://github.com/globalbrain/sefirot/issues/179)) ([08ce426](https://github.com/globalbrain/sefirot/commit/08ce426e19595ff85e66e41e4b28e5c3f12ed65e))
+* **table:** allow callback on cell property ([#174](https://github.com/globalbrain/sefirot/issues/174)) ([#176](https://github.com/globalbrain/sefirot/issues/176)) ([c3c631d](https://github.com/globalbrain/sefirot/commit/c3c631dc24c8ee93fdb7af241562f6ef0175ac06))
+
 # [2.9.0](https://github.com/globalbrain/sefirot/compare/v2.8.0...v2.9.0) (2022-11-15)
 
 ### Bug Fixes
