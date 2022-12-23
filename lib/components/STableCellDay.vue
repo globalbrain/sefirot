@@ -26,8 +26,8 @@ defineProps<{
 .value {
   line-height: 24px;
   font-family: var(--font-family-number);
-  font-size: 12px;
-  font-weight: 500;
+  font-size: var(--table-cell-font-size);
+  font-weight: var(--table-cell-font-weight);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

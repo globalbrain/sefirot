@@ -39,7 +39,9 @@ const _color = computed(() => {
 
 <style scoped lang="postcss">
 .STableCellPill {
-  padding: 7px 16px 9px;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
   min-height: 40px;
 }
 
@@ -79,7 +81,7 @@ const _color = computed(() => {
   .STableCellPill.mute & {
     border-color: var(--c-divider);
     color: var(--c-text-2);
-    background-color: var(--c-bg-elv);
+    background-color: var(--c-bg-lift-2);
   }
 }
 </style>
