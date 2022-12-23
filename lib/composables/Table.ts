@@ -32,11 +32,12 @@ export type TableCell =
   | TableCellText
   | TableCellDay
   | TableCellPill
+  | TableCellPills
   | TableCellAvatar
   | TableCellAvatars
   | TableCellComponent
 
-export type TableCellType = 'text' | 'day' | 'pill' | 'avatar' | 'avatars' | 'component'
+export type TableCellType = 'text' | 'day' | 'pill' | 'pills' | 'avatar' | 'avatars' | 'component'
 
 export interface TableCellBase {
   type: TableCellType
@@ -74,6 +75,16 @@ export interface TableCellPill extends TableCellBase {
 }
 
 export type TableCellPillColor = 'info' | 'success' | 'warning' | 'danger' | 'mute'
+
+export interface TableCellPills extends TableCellBase {
+  type: 'pills'
+  pills(value: any, record: any): TableCellPillItem[]
+}
+
+export interface TableCellPillItem {
+  label: string
+  color: TableCellPillColor
+}
 
 export interface TableCellAvatar extends TableCellBase {
   type: 'avatar'

@@ -72,6 +72,21 @@ const dropdownType = createDropdown([
   }
 ])
 
+const dropdownTagsSelected = ref<string[]>([])
+
+const dropdownTags = createDropdown([
+  {
+    type: 'filter',
+    search: true,
+    selected: markRaw(dropdownTagsSelected),
+    options: [
+      { label: 'Info', value: 'Info', onClick: updateTagsFilter },
+      { label: 'News', value: 'News', onClick: updateTagsFilter },
+      { label: 'Latest', value: 'Latest', onClick: updateTagsFilter }
+    ]
+  }
+])
+
 const dropdownCreatedAt = createDropdown([
   {
     type: 'menu',
@@ -85,22 +100,59 @@ const dropdownCreatedAt = createDropdown([
 const hasFilters = computed(() => {
   return [
     dropdownStatusSelected.value.length,
-    dropdownTypeSelected.value.length
+    dropdownTypeSelected.value.length,
+    dropdownTagsSelected.value.length
   ].some((length) => length)
 })
 
 const data = [
-  { name: 'Artwork 001', link: 'https://example.com', status: 'Published', type: 'Photo', createdAt: '2022-10-10' },
-  { name: 'Artwork 002', link: 'https://example.com', status: 'Draft', type: 'Icon', createdAt: '2022-10-09' },
-  { name: 'Artwork 003', link: 'https://example.com', status: 'Published', type: 'Photo', createdAt: '2022-10-02' },
-  { name: 'Artwork 004', link: 'https://example.com', status: 'Published', type: 'Illustration', createdAt: '2022-09-12' },
-  { name: 'Artwork 005', link: 'https://example.com', status: 'Archived', type: 'Other', createdAt: '2022-09-08' }
+  {
+    name: 'Artwork 001',
+    link: 'https://example.com',
+    status: 'Published',
+    type: 'Photo',
+    createdAt: '2022-10-10',
+    tags: ['Info', 'News', 'Latest']
+  },
+  {
+    name: 'Artwork 002',
+    link: 'https://example.com',
+    status: 'Draft',
+    type: 'Icon',
+    createdAt: '2022-10-09',
+    tags: ['Info']
+  },
+  {
+    name: 'Artwork 003',
+    link: 'https://example.com',
+    status: 'Published',
+    type: 'Photo',
+    createdAt: '2022-10-02',
+    tags: ['Info', 'News']
+  },
+  {
+    name: 'Artwork 004',
+    link: 'https://example.com',
+    status: 'Published',
+    type: 'Illustration',
+    createdAt: '2022-09-12',
+    tags: ['Info', 'News']
+  },
+  {
+    name: 'Artwork 005',
+    link: 'https://example.com',
+    status: 'Archived',
+    type: 'Other',
+    createdAt: '2022-09-08',
+    tags: ['Info']
+  }
 ]
 
 const filteredData = computed(() => {
   return data
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
+    .filter((i) => dropdownTagsSelected.value.every((tag) => i.tags.includes(tag)))
 })
 
 const orderedData = computed(() => {
@@ -108,12 +160,7 @@ const orderedData = computed(() => {
 })
 
 const table = useTable({
-  orders: [
-    'name',
-    'status',
-    'type',
-    'createdAt'
-  ],
+  orders: ['name', 'status', 'type', 'tags', 'createdAt'],
 
   columns: {
     name: {
@@ -153,6 +200,22 @@ const table = useTable({
       label: 'Created at',
       dropdown: dropdownCreatedAt,
       cell: { type: 'text', color: 'soft' }
+    },
+
+    tags: {
+      label: 'Tags',
+      dropdown: dropdownTags,
+      cell: {
+        type: 'pills',
+        pills(items: string[]) {
+          return items.map((item) => ({
+            label: item,
+            color: item === 'Info'
+              ? 'info'
+              : item === 'Latest' ? 'success' : 'mute'
+          }))
+        }
+      }
     }
   },
 
@@ -176,6 +239,7 @@ function filterBy(value: string, filters: string[]) {
 function resetFilters() {
   dropdownStatusSelected.value = []
   dropdownTypeSelected.value = []
+  dropdownTagsSelected.value = []
 }
 
 function updateStatusFilter(value: string) {
@@ -184,6 +248,10 @@ function updateStatusFilter(value: string) {
 
 function updateTypeFilter(value: string) {
   dropdownTypeSelected.value = xor(dropdownTypeSelected.value, [value])
+}
+
+function updateTagsFilter(value: string) {
+  dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
 </script>
 
@@ -199,5 +267,6 @@ function updateTypeFilter(value: string) {
 .table :deep(.col-name)      { --table-col-width: 160px; }
 .table :deep(.col-status)    { --table-col-width: 144px; }
 .table :deep(.col-type)      { --table-col-width: 144px; }
+.table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }
 </style>
