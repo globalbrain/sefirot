@@ -74,12 +74,17 @@ export interface TableCellPill extends TableCellBase {
   color?: TableCellPillColor | ((value: any) => TableCellPillColor)
 }
 
+export type TableCellPillColor = 'info' | 'success' | 'warning' | 'danger' | 'mute'
+
 export interface TableCellPills extends TableCellBase {
   type: 'pills'
-  pills(value: string[], record: any): { label: string; color: TableCellPillColor }[]
+  pills(value: any, record: any): TableCellPillItem[]
 }
 
-export type TableCellPillColor = 'info' | 'success' | 'warning' | 'danger' | 'mute'
+export interface TableCellPillItem {
+  label: string
+  color: TableCellPillColor
+}
 
 export interface TableCellAvatar extends TableCellBase {
   type: 'avatar'

@@ -207,11 +207,12 @@ const table = useTable({
       dropdown: dropdownTags,
       cell: {
         type: 'pills',
-        pills(items, record) {
+        pills(items: string[]) {
           return items.map((item) => ({
             label: item,
-            color:
-              item === 'Info' ? 'info' : item === 'Latest' ? 'success' : 'mute'
+            color: item === 'Info'
+              ? 'info'
+              : item === 'Latest' ? 'success' : 'mute'
           }))
         }
       }

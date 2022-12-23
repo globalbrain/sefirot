@@ -3,10 +3,15 @@ import { computed } from 'vue'
 import { TableCellPillColor } from '../composables/Table'
 import STableCellPill from './STableCellPill.vue'
 
+export interface Pill {
+  label: string
+  color: TableCellPillColor
+}
+
 const props = defineProps<{
   value: string[]
   record: any
-  pills(value: string[], record: any): { label: string; color: TableCellPillColor }[]
+  pills(value: string[], record: any): Pill[]
 }>()
 
 const items = computed(() => props.pills(props.value, props.record))
@@ -27,11 +32,11 @@ const items = computed(() => props.pills(props.value, props.record))
 <style scoped lang="postcss">
 .STableCellPills {
   display: flex;
-  padding: 0 12px;
+  padding: 0 14px;
 
   :deep(.STableCellPill) {
-    padding-right: 4px;
-    padding-left: 4px;
+    padding-right: 2px;
+    padding-left: 2px;
   }
 }
 </style>
