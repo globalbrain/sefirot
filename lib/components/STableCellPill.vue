@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-export type Color = 'info' | 'success' | 'warning' | 'danger' | 'mute'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   value?: any
@@ -32,7 +32,7 @@ const _color = computed(() => {
 </script>
 
 <template>
-  <div class="STableCellPill" :class="[_color ?? 'mute']">
+  <div class="STableCellPill" :class="[_color ?? 'neutral']">
     <div v-if="_value" class="value">{{ _value }}</div>
   </div>
 </template>
@@ -54,34 +54,40 @@ const _color = computed(() => {
   font-size: 12px;
   font-weight: 500;
 
-  .STableCellPill.info & {
-    border-color: var(--c-info);
-    color: var(--c-info);
-    background-color: var(--c-info-bg);
-  }
-
-  .STableCellPill.success & {
-    border-color: var(--c-success);
-    color: var(--c-success);
-    background-color: var(--c-success-bg);
-  }
-
-  .STableCellPill.warning & {
-    border-color: var(--c-warning);
-    color: var(--c-warning);
-    background-color: var(--c-warning-bg);
-  }
-
-  .STableCellPill.danger & {
-    border-color: var(--c-danger);
-    color: var(--c-danger);
-    background-color: var(--c-danger-bg);
+  .STableCellPill.neutral & {
+    border-color: var(--pill-neutral-border-color);
+    color: var(--pill-neutral-color);
+    background-color: var(--pill-neutral-bg-color);
   }
 
   .STableCellPill.mute & {
-    border-color: var(--c-divider);
-    color: var(--c-text-2);
-    background-color: var(--c-bg-lift-2);
+    border-color: var(--pill-mute-border-color);
+    color: var(--pill-mute-color);
+    background-color: var(--pill-mute-bg-color);
+  }
+
+  .STableCellPill.info & {
+    border-color: var(--pill-info-border-color);
+    color: var(--pill-info-color);
+    background-color: var(--pill-info-bg-color);
+  }
+
+  .STableCellPill.success & {
+    border-color: var(--pill-success-border-color);
+    color: var(--pill-success-color);
+    background-color: var(--pill-success-bg-color);
+  }
+
+  .STableCellPill.warning & {
+    border-color: var(--pill-warning-border-color);
+    color: var(--pill-warning-color);
+    background-color: var(--pill-warning-bg-color);
+  }
+
+  .STableCellPill.danger & {
+    border-color: var(--pill-danger-border-color);
+    color: var(--pill-danger-color);
+    background-color: var(--pill-danger-bg-color);
   }
 }
 </style>

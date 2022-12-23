@@ -350,3 +350,33 @@
   --table-cell-font-size: 14px;
   --table-cell-font-weight: 400;
 }
+
+/**
+ * Component: Pill
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --pill-neutral-border-color: var(--c-divider);
+  --pill-neutral-color: var(--c-text-1);
+  --pill-neutral-bg-color: var(--c-bg-lift-2);
+
+  --pill-mute-border-color: var(--c-divider);
+  --pill-mute-color: var(--c-text-2);
+  --pill-mute-bg-color: var(--c-bg-lift-2);
+
+  --pill-info-border-color: var(--c-info);
+  --pill-info-color: var(--c-info);
+  --pill-info-bg-color: var(--c-info-bg);
+
+  --pill-success-border-color: var(--c-success);
+  --pill-success-color: var(--c-success);
+  --pill-success-bg-color: var(--c-success-bg);
+
+  --pill-warning-border-color: var(--c-warning);
+  --pill-warning-color: var(--c-warning);
+  --pill-warning-bg-color: var(--c-warning-bg);
+
+  --pill-danger-border-color: var(--c-danger);
+  --pill-danger-color: var(--c-danger);
+  --pill-danger-bg-color: var(--c-danger-bg);
+}
