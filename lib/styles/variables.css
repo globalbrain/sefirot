@@ -101,6 +101,9 @@
   --c-bg-elv-up: var(--c-white-elv-up);
   --c-bg-elv-down: var(--c-white-elv-down);
 
+  --c-bg-lift-1: var(--c-white-soft);
+  --c-bg-lift-2: var(--c-white-mute);
+
   --c-divider: var(--c-divider-light-1);
   --c-divider-light: var(--c-divider-light-2);
 
@@ -123,6 +126,9 @@
   --c-bg-elv: var(--c-black-elv);
   --c-bg-elv-up: var(--c-black-elv-up);
   --c-bg-elv-down: var(--c-black-elv-down);
+
+  --c-bg-lift-1: #222226;
+  --c-bg-lift-2: #2c2c2e;
 
   --c-divider: var(--c-divider-dark-1);
   --c-divider-light: var(--c-divider-dark-2);
@@ -324,4 +330,23 @@
 
 .dark {
   --dropdown-item-hover-bg: var(--c-black);
+}
+
+/**
+ * Component: Table
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --table-border: 1px solid var(--c-divider-light);
+  --table-border-top: var(--table-border);
+  --table-border-right: var(--table-border);
+  --table-border-bottom: var(--table-border);
+  --table-border-left: var(--table-border);
+  --table-border-radius: 6px;
+
+  --table-padding-right: 0;
+  --table-padding-left: 0;
+
+  --table-cell-font-size: 14px;
+  --table-cell-font-weight: 400;
 }

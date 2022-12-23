@@ -180,8 +180,11 @@ function updateColWidth(key: string, value: string) {
 <style scoped lang="postcss">
 .box {
   position: relative;
-  border: 1px solid var(--c-divider-light);
-  border-radius: 6px;
+  border-top: var(--table-border);
+  border-right: var(--table-border);
+  border-bottom: var(--table-border);
+  border-left: var(--table-border);
+  border-radius: var(--table-border-radius);
   width: 100%;
 
   .STable.borderless & {
