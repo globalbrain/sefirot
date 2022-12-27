@@ -1,5 +1,5 @@
-import { ref } from 'vue'
 import * as Utils from 'sefirot/composables/Utils'
+import { ref } from 'vue'
 
 describe('composables/Utils', () => {
   describe('computedArray', () => {
