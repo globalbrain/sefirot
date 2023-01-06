@@ -256,7 +256,7 @@ function updateTagsFilter(value: string) {
 </script>
 
 <template>
-  <Story title="Components/STable">
+  <Story title="Components / STable">
     <Variant title="Default">
       <STable class="table" :options="table" />
     </Variant>

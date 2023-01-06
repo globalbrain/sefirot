@@ -6,7 +6,7 @@ const text = ref('')
 </script>
 
 <template>
-  <Story title="Components/SInputTextarea">
+  <Story title="Components / SInputTextarea">
     <SInputTextarea
       name="name"
       label="Label"

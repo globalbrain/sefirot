@@ -17,7 +17,7 @@ const { data, validation } = useForm({
 </script>
 
 <template>
-  <Story title="Components/SInputFile" :layout="{ type: 'single', iframe: false }">
+  <Story title="Components / SInputFile" :layout="{ type: 'single', iframe: false }">
     <SInputFile
       v-model="data.file"
       label="Upload file"

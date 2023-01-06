@@ -3,7 +3,7 @@ import SMarkdown from 'sefirot/components/SMarkdown.vue'
 </script>
 
 <template>
-  <Story title="Components/SMarkdown">
+  <Story title="Components / SMarkdown">
     <SMarkdown
       class="markdown"
       content="**We** shape our **buildings**. Thereafter, **they** shape **us**."

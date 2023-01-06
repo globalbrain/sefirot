@@ -7,7 +7,7 @@ import SSheetMedium from 'sefirot/components/SSheetMedium.vue'
 </script>
 
 <template>
-  <Story title="Components/SSheet">
+  <Story title="Components / SSheet">
     <SSheet>
       <SSheetMedium>
         <p>

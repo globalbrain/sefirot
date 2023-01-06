@@ -12,7 +12,7 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputSwitches">
+  <Story title="Components / SInputSwitches">
     <SInputSwitches
       class="switches"
       name="input"

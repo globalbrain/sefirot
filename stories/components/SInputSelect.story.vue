@@ -12,7 +12,7 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputSelect">
+  <Story title="Components / SInputSelect">
     <SInputSelect
       v-model="input"
       label="Label"

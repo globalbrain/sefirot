@@ -3,7 +3,7 @@ import HDefault from './SSnackbars.story.Default.vue'
 </script>
 
 <template>
-  <Story title="Components/SSnackbars">
+  <Story title="Components / SSnackbars">
     <HDefault />
   </Story>
 </template>

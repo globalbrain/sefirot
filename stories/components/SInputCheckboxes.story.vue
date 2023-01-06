@@ -12,7 +12,7 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputCheckboxes">
+  <Story title="Components / SInputCheckboxes">
     <SInputCheckboxes
       name="input"
       label="Label"

@@ -12,7 +12,7 @@ const items: ButtonGroupItem[] = [
 </script>
 
 <template>
-  <Story title="Components/SButtonGroup">
+  <Story title="Components / SButtonGroup">
     <SButtonGroup
       v-model="value"
       :items="items"

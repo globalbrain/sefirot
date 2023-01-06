@@ -37,21 +37,21 @@
   --c-gray-light-4: #e5e5ea;
   --c-gray-light-5: #f2f2f7;
 
-  --c-divider-light-1: rgba(60, 60, 67, .29);
-  --c-divider-light-2: rgba(60, 60, 67, .12);
+  --c-divider-light-1: rgba(60, 60, 67, 0.29);
+  --c-divider-light-2: rgba(60, 60, 67, 0.12);
 
-  --c-divider-dark-1: rgba(84, 84, 88, .65);
-  --c-divider-dark-2: rgba(84, 84, 84, .48);
+  --c-divider-dark-1: rgba(84, 84, 88, 0.65);
+  --c-divider-dark-2: rgba(84, 84, 84, 0.48);
 
-  --c-text-light-1: var(--c-black);
-  --c-text-light-2: rgba(60, 60, 67, .6);
-  --c-text-light-3: rgba(60, 60, 67, .3);
-  --c-text-light-4: rgba(60, 60, 67, .18);
+  --c-text-light-1: #1f1f1f;
+  --c-text-light-2: rgba(60, 60, 67, 0.6);
+  --c-text-light-3: rgba(60, 60, 67, 0.3);
+  --c-text-light-4: rgba(60, 60, 67, 0.18);
 
-  --c-text-dark-1: var(--c-white);
-  --c-text-dark-2: rgba(235, 235, 245, .6);
-  --c-text-dark-3: rgba(235, 235, 245, .3);
-  --c-text-dark-4: rgba(235, 235, 245, .18);
+  --c-text-dark-1: rgba(235, 235, 245, 0.98);
+  --c-text-dark-2: rgba(235, 235, 245, 0.6);
+  --c-text-dark-3: rgba(235, 235, 245, 0.3);
+  --c-text-dark-4: rgba(235, 235, 245, 0.18);
 
   --c-info: #3b8eed;
   --c-info-light: #549ced;
@@ -97,6 +97,11 @@
   --c-bg-soft: var(--c-white-soft);
   --c-bg-mute: var(--c-white-mute);
 
+  --c-bg-elv-1: #ffffff;
+  --c-bg-elv-2: #f9f9f9;
+  --c-bg-elv-3: #ffffff;
+
+  /* DEPRECATED: Use `--c-bg-elv-x`. */
   --c-bg-elv: var(--c-white-elv);
   --c-bg-elv-up: var(--c-white-elv-up);
   --c-bg-elv-down: var(--c-white-elv-down);
@@ -104,6 +109,10 @@
   --c-bg-lift-1: var(--c-white-soft);
   --c-bg-lift-2: var(--c-white-mute);
 
+  --c-divider-1: var(--c-divider-light-1);
+  --c-divider-2: var(--c-divider-light-2);
+
+  /* DEPRECATED: Use `--c-divider-x`. */
   --c-divider: var(--c-divider-light-1);
   --c-divider-light: var(--c-divider-light-2);
 
@@ -123,6 +132,11 @@
   --c-bg-soft: var(--c-black-soft);
   --c-bg-mute: var(--c-black-mute);
 
+  --c-bg-elv-1: #000000;
+  --c-bg-elv-2: #171717;
+  --c-bg-elv-3: #1c1c1e;
+
+  /* DEPRECATED: Use `--c-bg-elv-x`. */
   --c-bg-elv: var(--c-black-elv);
   --c-bg-elv-up: var(--c-black-elv-up);
   --c-bg-elv-down: var(--c-black-elv-down);
@@ -130,6 +144,10 @@
   --c-bg-lift-1: #222226;
   --c-bg-lift-2: #2c2c2e;
 
+  --c-divider-1: var(--c-divider-dark-1);
+  --c-divider-2: var(--c-divider-dark-2);
+
+  /* DEPRECATED: Use `--c-divider-1` and `--c-divider-2` instead. */
   --c-divider: var(--c-divider-dark-1);
   --c-divider-light: var(--c-divider-dark-2);
 

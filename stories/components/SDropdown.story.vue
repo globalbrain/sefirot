@@ -33,7 +33,7 @@ function updateFilter(value: string) {
 </script>
 
 <template>
-  <Story title="Components/SDropdown">
+  <Story title="Components / SDropdown">
     <div class="container">
       <SDropdown :sections="sections" />
     </div>

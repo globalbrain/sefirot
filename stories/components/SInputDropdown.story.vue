@@ -16,7 +16,7 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputDropdown">
+  <Story title="Components / SInputDropdown">
     <SInputDropdown
       label="Dropdown input"
       placeholder="Please select items"

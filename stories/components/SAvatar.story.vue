@@ -3,7 +3,7 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
 </script>
 
 <template>
-  <Story title="Components/SAvatar">
+  <Story title="Components / SAvatar">
     <SAvatar
       name="John Doe"
     />

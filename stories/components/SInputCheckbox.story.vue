@@ -6,7 +6,7 @@ const value = ref(false)
 </script>
 
 <template>
-  <Story title="Components/SInputCheckbox">
+  <Story title="Components / SInputCheckbox">
     <SInputCheckbox
       label="Label"
       note="Note text"

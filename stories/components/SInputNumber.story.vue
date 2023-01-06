@@ -6,7 +6,7 @@ const value = ref<number | null>(null)
 </script>
 
 <template>
-  <Story title="Components/SInputNumber">
+  <Story title="Components / SInputNumber">
     <SInputNumber
       name="name"
       label="Label"

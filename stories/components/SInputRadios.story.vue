@@ -12,7 +12,7 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputRadios">
+  <Story title="Components / SInputRadios">
     <SInputRadios
       name="input"
       label="Label"

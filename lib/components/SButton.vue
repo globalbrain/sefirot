@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import SIcon from './SIcon.vue'
+import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
@@ -47,6 +48,12 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
+const computedTag = computed(() => {
+  return props.tag
+    ? props.tag
+    : props.href ? SLink : 'button'
+})
+
 function handleClick(): void {
   !props.disabled && !props.loading && emit('click')
 }
@@ -54,7 +61,7 @@ function handleClick(): void {
 
 <template>
   <component
-    :is="tag ?? 'button'"
+    :is="computedTag"
     class="SButton"
     :class="classes"
     :href="href"

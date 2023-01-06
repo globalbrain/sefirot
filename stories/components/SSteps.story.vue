@@ -12,7 +12,7 @@ const steps: Step[] = [
 </script>
 
 <template>
-  <Story title="Components/SSteps">
+  <Story title="Components / SSteps">
     <SSteps :steps="steps" />
   </Story>
 </template>

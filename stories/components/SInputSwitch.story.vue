@@ -6,7 +6,7 @@ const on = ref(false)
 </script>
 
 <template>
-  <Story title="Components/SInputSwitch">
+  <Story title="Components / SInputSwitch">
     <SInputSwitch
       class="switch"
       name="input"
