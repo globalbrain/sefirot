@@ -17,7 +17,9 @@ const { data, validation } = useForm({
 </script>
 
 <template>
-  <Story title="Components / SInputFile" :layout="{ type: 'single', iframe: false }">
+  <Board
+    title="Components / SInputFile / 01. Playground"
+  >
     <SInputFile
       v-model="data.file"
       label="Upload file"
@@ -26,9 +28,5 @@ const { data, validation } = useForm({
       placeholder="No file chosen"
       :validation="validation.file"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputFile
-</docs>

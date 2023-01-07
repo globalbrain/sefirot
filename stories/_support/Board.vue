@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import SButton from 'sefirot/components/SButton.vue'
+import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
@@ -25,21 +25,23 @@ const href = computed(() => {
   <Story
     class="Board"
     :title="title"
-    :init-state="state ?? {}"
+    :init-state="state ?? (() => ({}))"
+    source="Not available"
     auto-props-disabled
   >
-    <template #controls="{ state }">
+    <template v-if="$slots.controls" #controls="{ state }">
       <slot name="controls" :state="state" />
     </template>
 
-    <template #default="{ state }">
+    <template v-if="$slots.default" #default="{ state }">
       <div class="b-root">
         <div class="b-menu">
           <div class="b-title">{{ title }}</div>
 
           <SButton
             v-if="href"
-            size="small"
+            class="b-button"
+            size="mini"
             mode="mute"
             label="View Documentation"
             :href="href"

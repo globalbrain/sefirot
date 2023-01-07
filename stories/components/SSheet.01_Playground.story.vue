@@ -7,7 +7,9 @@ import SSheetMedium from 'sefirot/components/SSheetMedium.vue'
 </script>
 
 <template>
-  <Story title="Components / SSheet">
+  <Board
+    title="Components / SSheet / 01. Playground"
+  >
     <SSheet>
       <SSheetMedium>
         <p>
@@ -31,5 +33,5 @@ import SSheetMedium from 'sefirot/components/SSheetMedium.vue'
         </SSheetFooterActions>
       </SSheetFooter>
     </SSheet>
-  </Story>
+  </Board>
 </template>

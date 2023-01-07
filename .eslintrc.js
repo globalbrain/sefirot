@@ -1,3 +1,6 @@
 module.exports = {
-  extends: '@globalbrain'
+  extends: '@globalbrain',
+  rules: {
+    'vue/no-template-shadow': 'off'
+  }
 }

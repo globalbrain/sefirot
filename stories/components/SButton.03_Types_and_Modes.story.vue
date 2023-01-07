@@ -5,7 +5,7 @@ const variants = [
   { title: 'Fill', type: 'fill' },
   { title: 'Outline', type: 'outline' },
   { title: 'Text', type: 'text' }
-]
+] as const
 
 const modes = [
   'neutral',
@@ -13,13 +13,18 @@ const modes = [
   'info',
   'success',
   'warning',
-  'danger'
-]
+  'danger',
+  'white',
+  'black'
+] as const
 
 function state() {
   return {
-    label: 'Button'
-  }
+    label: 'Button',
+    rounded: false,
+    loading: false,
+    disabled: false
+  } as const
 }
 </script>
 
@@ -30,10 +35,10 @@ function state() {
     docs="/components/button"
   >
     <template #controls="{ state }">
-      <HstText
-        title="label"
-        v-model="state.label"
-      />
+      <HstText title="label" v-model="state.label" />
+      <HstCheckbox title="rounded" v-model="state.rounded" />
+      <HstCheckbox title="loading" v-model="state.loading" />
+      <HstCheckbox title="disabled" v-model="state.disabled" />
     </template>
 
     <template #default="{ state }">
@@ -49,6 +54,9 @@ function state() {
               :type="v.type"
               :mode="m"
               :label="state.label"
+              :rounded="state.rounded"
+              :loading="state.loading"
+              :disabled="state.disabled"
             />
           </div>
         </div>

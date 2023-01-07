@@ -1,282 +1,278 @@
-/**
- * Colors Base
- *
- * These are the pure base color presets. Most of the time, you should not be
- * using these colors directly in the theme but rather use "Colors Theme"
- * instead because those are "Theme (light or dark)" dependant.
- * -------------------------------------------------------------------------- */
+<script setup lang="ts">
+import SButton from 'sefirot/components/SButton.vue'
 
+const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+</script>
+
+# SButton
+
+`<SButton>` is a common button component.
+
+<Showcase
+  path="/components/SButton.vue"
+  story="/stories-components-sbutton-01-playground-story-vue"
+>
+  <div class="flex flex-wrap gap-12">
+    <SButton v-for="m in modes" :key="m" :mode="m" label="Button" />
+  </div>
+</Showcase>
+
+## Usage
+
+Import `<SButton>` component and it's good to go. All props are optional.
+
+```vue
+<script setup lang="ts">
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+</script>
+
+<template>
+  <SButton label="Button" />
+</template>
+```
+
+## Props
+
+Here are the list of props you may pass to the component.
+
+### `tag`
+
+Defines how the HTML tag for the button. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `button`. The `tag` prop will take precedence even when the `href` prop is set.
+
+```ts
+interface Props {
+  tag?: string
+}
+```
+
+```vue
+<SButton tag="div" label="Button" />
+```
+
+### `size`
+
+Defines the size of the button. The default is `medium`.
+
+```ts
+interface Props {
+  size?: Size
+}
+
+type Size =
+  | 'mini'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'jumbo'
+```
+
+```vue
+<SButton size="small" label="Button" />
+```
+
+### `type`
+
+Defines how the button look. The default is `fill`.
+
+```ts
+interface Props {
+  type?: Type
+}
+
+type Size = 'fill' | 'outline' | 'text'
+```
+
+```vue
+<SButton type="fill" label="Button" />
+```
+
+### `mode`
+
+Defines the color of the button. The default is `neutral`.
+
+```ts
+interface Props {
+  mode?: Mode
+}
+
+type Mode =
+  | 'neutral'
+  | 'mute'
+  | 'white'
+  | 'black'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
+```
+
+```vue
+<SButton mode="neutral" label="Button" />
+```
+
+### `label`
+
+Defines the label text of the button.
+
+```ts
+interface Props {
+  label?: string
+}
+```
+
+```vue
+<SButton label="Button" />
+```
+
+### `icon`
+
+Prepend the given icon to the button. You may pass any `@iconify-icons` icons.
+
+```ts
+interface Props {
+  label?: string
+}
+```
+
+```vue
+<script setup lang="ts">
+import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
+</script>
+
+<template>
+  <SButton :icon="IconCheckCircle" label="Button" />
+</template>
+```
+
+### `href`
+
+The href attribute to be used in for link. When this prop is set, the button element will use `SLink` component under the hood. However, when `tag` prop is set it will take the precedence.
+
+```ts
+interface Props {
+  label?: string
+}
+```
+
+```vue
+<SButton label="Button" href="https://example.com" />
+```
+
+### `rounded`
+
+Make the button to have rounded corners.
+
+```ts
+interface Props {
+  rounded?: boolean
+}
+```
+
+```vue
+<SButton label="Button" rounded />
+```
+
+### `block`
+
+Set the button's display value to `display: block`. The default button display value is `display: inline-block`.
+
+```ts
+interface Props {
+  block?: boolean
+}
+```
+
+```vue
+<SButton label="Button" block />
+```
+
+### `loading`
+
+Display a loading spinner. While this prop is set to true, the `click` event will not be emitted.
+
+```ts
+interface Props {
+  loading?: boolean
+}
+```
+
+```vue
+<SButton label="Button" loading />
+```
+
+### `disabled`
+
+Mark button as disabled. It will dimm the color of the button, and prevent `hover` or `click` styles. While this prop is set to true, the `click` event will not be emitted.
+
+```ts
+interface Props {
+  disabled?: boolean
+}
+```
+
+```vue
+<SButton label="Button" disabled />
+```
+
+## Events
+
+Here are the list of events the component may emit.
+
+### `click`
+
+Emits when an user clicks the button. This event will not be emitted when the `loading` or the `disabled` prop is set to `true`.
+
+```ts
+interface Emits {
+  (e: 'click'): void
+}
+```
+
+## Styles
+
+You may customize the styles by overriding `--button` prefixed CSS variables.
+
+### Font size
+
+Customize the font size of the button's label. The font size is different depending on the button's size defined by the `size` prop. You may override the font size for all button sizes, or customize them individually.
+
+```css
 :root {
-  --c-white: #ffffff;
-  --c-white-soft: #fafafa;
-  --c-white-mute: #f2f2f2;
+  /**
+   * Set the font size for all size of buttons. By default it's
+   * undefined and size specific values defined below is used.
+   */
+  --button-font-size: undefined;
 
-  --c-white-elv: #fafafa;
-  --c-white-elv-up: #ffffff;
-  --c-white-elv-down: #f2f2f2;
-
-  --c-black: #000000;
-  --c-black-soft: #171717;
-  --c-black-mute: #1c1c1e;
-
-  --c-black-elv: #171717;
-  --c-black-elv-up: #1c1c1e;
-  --c-black-elv-down: #000000;
-
-  --c-gray: #8e8e93;
-
-  --c-gray-dark-1: #636366;
-  --c-gray-dark-2: #48484a;
-  --c-gray-dark-3: #3a3a3c;
-  --c-gray-dark-4: #2c2c2e;
-  --c-gray-dark-5: #1c1c1e;
-
-  --c-gray-light-1: #aeaeb2;
-  --c-gray-light-2: #c7c7cc;
-  --c-gray-light-3: #d1d1d6;
-  --c-gray-light-4: #e5e5ea;
-  --c-gray-light-5: #f2f2f7;
-
-  --c-divider-light-1: rgba(60, 60, 67, 0.29);
-  --c-divider-light-2: rgba(60, 60, 67, 0.12);
-
-  --c-divider-dark-1: rgba(84, 84, 88, 0.65);
-  --c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --c-neutral-light-1: #000000;
-  --c-neutral-light-2: #333333;
-  --c-neutral-light-3: #525252;
-  --c-neutral-light-dimm-1: rgba(0, 0, 0, 0.06);
-  --c-neutral-light-dimm-2: rgba(0, 0, 0, 0.12);
-
-  --c-neutral-dark-1: #ffffff;
-  --c-neutral-dark-2: #cccccc;
-  --c-neutral-dark-3: #adadad;
-  --c-neutral-dark-dimm-1: rgba(255, 255, 255, 0.08);
-  --c-neutral-dark-dimm-2: rgba(255, 255, 255, 0.16);
-
-  --c-text-light-1: #1f1f1f;
-  --c-text-light-2: rgba(60, 60, 67, 0.6);
-  --c-text-light-3: rgba(60, 60, 67, 0.3);
-
-  --c-text-dark-1: rgba(235, 235, 245, 0.98);
-  --c-text-dark-2: rgba(235, 235, 245, 0.6);
-  --c-text-dark-3: rgba(235, 235, 245, 0.3);
-
-  --c-info: #0284c7;
-  --c-info-light: #0ea5e9;
-  --c-info-lighter: #38bdf8;
-  --c-info-dark: #0369a1;
-  --c-info-darker: #075985;
-  --c-info-dimm-1: rgba(2, 132, 199, 0.12);
-  --c-info-dimm-2: rgba(2, 132, 199, 0.2);
-
-  --c-success: #059669;
-  --c-success-light: #10b981;
-  --c-success-lighter: #34d399;
-  --c-success-dark: #047857;
-  --c-success-darker: #065f46;
-  --c-success-dimm-1: rgba(5, 150, 105, 0.12);
-  --c-success-dimm-2: rgba(5, 150, 105, 0.2);
-
-  --c-warning: #ca8a04;
-  --c-warning-light: #eab308;
-  --c-warning-lighter: #facc15;
-  --c-warning-dark: #a16207;
-  --c-warning-darker: #854d0e;
-  --c-warning-dimm-1: rgba(202, 138, 4, 0.12);
-  --c-warning-dimm-2: rgba(202, 138, 4, 0.2);
-
-  --c-danger: #e11d48;
-  --c-danger-light: #f43f5e;
-  --c-danger-lighter: #fb7185;
-  --c-danger-dark: #be123c;
-  --c-danger-darker: #9f1239;
-  --c-danger-dimm-1: rgba(225, 29, 72, 0.12);
-  --c-danger-dimm-2: rgba(225, 29, 72, 0.2);
-}
-
-/**
- * Colors Theme
- * -------------------------------------------------------------------------- */
-
-:root {
-  --c-bg: var(--c-white);
-  --c-bg-soft: var(--c-white-soft);
-  --c-bg-mute: var(--c-white-mute);
-
-  --c-bg-elv-1: #ffffff;
-  --c-bg-elv-2: #f9f9f9;
-  --c-bg-elv-3: #ffffff;
-
-  /* DEPRECATED: Use `--c-bg-elv-x`. */
-  --c-bg-elv: var(--c-white-elv);
-  --c-bg-elv-up: var(--c-white-elv-up);
-  --c-bg-elv-down: var(--c-white-elv-down);
-
-  --c-bg-lift-1: var(--c-white-soft);
-  --c-bg-lift-2: var(--c-white-mute);
-
-  --c-divider-1: var(--c-divider-light-1);
-  --c-divider-2: var(--c-divider-light-2);
-
-  /* DEPRECATED: Use `--c-divider-x`. */
-  --c-divider: var(--c-divider-light-1);
-  --c-divider-light: var(--c-divider-light-2);
-
-  --c-neutral-1: var(--c-neutral-light-1);
-  --c-neutral-2: var(--c-neutral-light-2);
-  --c-neutral-3: var(--c-neutral-light-3);
-  --c-neutral-dimm-1: var(--c-neutral-light-dimm-1);
-  --c-neutral-dimm-2: var(--c-neutral-light-dimm-2);
-
-  --c-neutral-inverse-1: var(--c-neutral-dark-1);
-  --c-neutral-inverse-2: var(--c-neutral-dark-2);
-  --c-neutral-inverse-3: var(--c-neutral-dark-3);
-  --c-neutral-inverse-dimm-1: var(--c-neutral-dark-dimm-1);
-  --c-neutral-inverse-dimm-2: var(--c-neutral-dark-dimm-2);
-
-  --c-text-1: var(--c-text-light-1);
-  --c-text-2: var(--c-text-light-2);
-  --c-text-3: var(--c-text-light-3);
-
-  --c-text-inverse-1: var(--c-text-dark-1);
-  --c-text-inverse-2: var(--c-text-dark-2);
-  --c-text-inverse-3: var(--c-text-dark-3);
-
-  --c-mute: #f1f1f1;
-  --c-mute-light: #f9f9f9;
-  --c-mute-lighter: #ffffff;
-  --c-mute-dark: #e3e3e3;
-  --c-mute-darker: #d1d1d1;
-  --c-mute-dimm-1: #f1f1f1;
-  --c-mute-dimm-2: #e3e3e3;
-}
-
-.dark {
-  --c-bg: var(--c-black);
-  --c-bg-soft: var(--c-black-soft);
-  --c-bg-mute: var(--c-black-mute);
-
-  --c-bg-elv-1: #000000;
-  --c-bg-elv-2: #171717;
-  --c-bg-elv-3: #1c1c1e;
-
-  /* DEPRECATED: Use `--c-bg-elv-x`. */
-  --c-bg-elv: var(--c-black-elv);
-  --c-bg-elv-up: var(--c-black-elv-up);
-  --c-bg-elv-down: var(--c-black-elv-down);
-
-  --c-bg-lift-1: #222226;
-  --c-bg-lift-2: #2c2c2e;
-
-  --c-divider-1: var(--c-divider-dark-1);
-  --c-divider-2: var(--c-divider-dark-2);
-
-  /* DEPRECATED: Use `--c-divider-1` and `--c-divider-2` instead. */
-  --c-divider: var(--c-divider-dark-1);
-  --c-divider-light: var(--c-divider-dark-2);
-
-  --c-neutral-1: var(--c-neutral-dark-1);
-  --c-neutral-2: var(--c-neutral-dark-2);
-  --c-neutral-3: var(--c-neutral-dark-3);
-  --c-neutral-dimm-1: var(--c-neutral-dark-dimm-1);
-  --c-neutral-dimm-2: var(--c-neutral-dark-dimm-2);
-
-  --c-neutral-inverse-1: var(--c-neutral-light-1);
-  --c-neutral-inverse-2: var(--c-neutral-light-2);
-  --c-neutral-inverse-3: var(--c-neutral-light-3);
-  --c-neutral-inverse-dimm-1: var(--c-neutral-light-dimm-1);
-  --c-neutral-inverse-dimm-2: var(--c-neutral-light-dimm-2);
-
-  --c-text-1: var(--c-text-dark-1);
-  --c-text-2: var(--c-text-dark-2);
-  --c-text-3: var(--c-text-dark-3);
-
-  --c-text-inverse-1: var(--c-text-light-1);
-  --c-text-inverse-2: var(--c-text-light-2);
-  --c-text-inverse-3: var(--c-text-light-3);
-
-  --c-mute: #2c2c2e;
-  --c-mute-light: #3a3a3c;
-  --c-mute-lighter: #505053;
-  --c-mute-dark: #222226;
-  --c-mute-darker: #1c1c1e;
-  --c-mute-dimm-1: #222226;
-  --c-mute-dimm-2: #2c2c2e;
-}
-
-/**
- * Typography
- * -------------------------------------------------------------------------- */
-
-:root {
-  --font-family-base: "Inter", "Noto Sans JP", "-apple-system", "BlinkMacSystemFont", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-number: "Roboto", "Noto Sans JP", "-apple-system", "BlinkMacSystemFont", "Roboto", "Segoe UI", "Helvetica Neue", "Arial", "sans-serif";
-  --font-family-mono: "source-code-pro", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
-}
-
-/**
- * Shadows
- * -------------------------------------------------------------------------- */
-
-:root {
-  --shadow-depth-1: 0 1px 2px rgba(0, 0, 0, .04), 0 1px 2px rgba(0, 0, 0, .06);
-  --shadow-depth-2: 0 3px 12px rgba(0, 0, 0, .07), 0 1px 4px rgba(0, 0, 0, .07);
-  --shadow-depth-3: 0 12px 32px rgba(0, 0, 0, .1), 0 2px 6px rgba(0, 0, 0, .08);
-  --shadow-depth-4: 0 14px 44px rgba(0, 0, 0, .12), 0 3px 9px rgba(0, 0, 0, .12);
-  --shadow-depth-5: 0 18px 56px rgba(0, 0, 0, .16), 0 4px 12px rgba(0, 0, 0, .16);
-}
-
-/**
- * Z Indexes
- * -------------------------------------------------------------------------- */
-
-:root {
-  --z-index-dropdown: 1000;
-  --z-index-backdrop: 2000;
-}
-
-/**
- * Easings
- * -------------------------------------------------------------------------- */
-
-:root {
-  --ease-in-quint: cubic-bezier(.755, .05, .855, .06);
-  --ease-in-back: cubic-bezier(1, -.75, 1, 1);
-
-  --ease-out-quint: cubic-bezier(.23, 1, .32, 1);
-  --ease-out-expo: cubic-bezier(.19, 1, .22, 1);
-  --ease-out-back: cubic-bezier(.175, .885, .320, 1.275);
-  --ease-out-back-quint: cubic-bezier(.175, .885, .280, 1.5);
-
-  --ease-in-out-quint: cubic-bezier(.86, 0, .07, 1);
-  --ease-in-out-expo: cubic-bezier(1, 0, 0, 1);
-}
-
-/**
- * Component: Preloader
- * -------------------------------------------------------------------------- */
-
-:root {
-  --preloader-color: var(--c-black);
-}
-
-.dark {
-  --preloader-color: var(--c-white);
-}
-
-/**
- * Component: Button
- * -------------------------------------------------------------------------- */
-
-:root {
+  /**
+   * Set the font size of different `size` of buttons. When
+   * `--button-font-size` is set, these values gets ignored.
+   */
   --button-mini-font-size: 12px;
   --button-small-font-size: 14px;
   --button-medium-font-size: 14px;
   --button-large-font-size: 14px;
   --button-jumbo-font-size: 16px;
+}
+```
 
+### Padding
+
+You may control the padding the button has. Useful when you want to have wider `padding-left` and `padding-right` than the default.
+
+```css
+:root {
+  /* e.g. --button-padding: 0 32px; */
+  --button-padding: undefined;
+}
+```
+
+### Variant styles
+
+The component has several different styles based on its type and color combination defined via the `type` and the `mode` prop. You may override the styles for each variation of buttons using the following CSS variables.
+
+```css
+:root {
   --button-fill-neutral-border-color: transparent;
   --button-fill-neutral-text-color: var(--c-text-inverse-1);
   --button-fill-neutral-bg-color: var(--c-neutral-1);
@@ -461,64 +457,4 @@
   --button-text-danger-active-bg-color: var(--c-danger-dimm-2);
   --button-text-danger-disabled-text-color: var(--c-danger-dark);
 }
-
-/**
- * Component: Dropdown
- * -------------------------------------------------------------------------- */
-
-:root {
-  --dropdown-item-hover-bg: var(--c-white-soft);
-}
-
-.dark {
-  --dropdown-item-hover-bg: var(--c-black);
-}
-
-/**
- * Component: Table
- * -------------------------------------------------------------------------- */
-
-:root {
-  --table-border: 1px solid var(--c-divider-light);
-  --table-border-top: var(--table-border);
-  --table-border-right: var(--table-border);
-  --table-border-bottom: var(--table-border);
-  --table-border-left: var(--table-border);
-  --table-border-radius: 6px;
-
-  --table-padding-right: 0;
-  --table-padding-left: 0;
-
-  --table-cell-font-size: 14px;
-  --table-cell-font-weight: 400;
-}
-
-/**
- * Component: Pill
- * -------------------------------------------------------------------------- */
-
-:root {
-  --pill-neutral-border-color: var(--c-divider);
-  --pill-neutral-color: var(--c-text-1);
-  --pill-neutral-bg-color: var(--c-bg-lift-2);
-
-  --pill-mute-border-color: var(--c-divider);
-  --pill-mute-color: var(--c-text-2);
-  --pill-mute-bg-color: var(--c-bg-lift-2);
-
-  --pill-info-border-color: var(--c-info);
-  --pill-info-color: var(--c-info);
-  --pill-info-bg-color: var(--c-info-bg);
-
-  --pill-success-border-color: var(--c-success);
-  --pill-success-color: var(--c-success);
-  --pill-success-bg-color: var(--c-success-bg);
-
-  --pill-warning-border-color: var(--c-warning);
-  --pill-warning-color: var(--c-warning);
-  --pill-warning-bg-color: var(--c-warning-bg);
-
-  --pill-danger-border-color: var(--c-danger);
-  --pill-danger-color: var(--c-danger);
-  --pill-danger-bg-color: var(--c-danger-bg);
-}
+```

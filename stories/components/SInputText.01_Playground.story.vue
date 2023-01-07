@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
-import SSnackbars from 'sefirot/components/SSnackbars.vue'
 import { useForm } from 'sefirot/composables/Form'
 import { required } from 'sefirot/validation/rules'
 
@@ -22,7 +21,9 @@ const { data, validation, init, validateAndNotify } = useForm<Data>({
 </script>
 
 <template>
-  <div>
+  <Board
+    title="Components / SInputText / 01. Playground"
+  >
     <SInputText
       name="name"
       label="Label"
@@ -37,9 +38,7 @@ const { data, validation, init, validateAndNotify } = useForm<Data>({
       <SButton mode="info" label="Submit" @click="validateAndNotify" />
       <SButton mode="mute" label="Reset" @click="init" />
     </div>
-
-    <SSnackbars />
-  </div>
+  </Board>
 </template>
 
 <style scoped>

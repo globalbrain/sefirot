@@ -1,22 +1,20 @@
 <script setup lang="ts">
-import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
+import SInputDate from 'sefirot/components/SInputDate.vue'
 import { ref } from 'vue'
 
-const value = ref(false)
+const value = ref(null)
 </script>
 
 <template>
-  <Story title="Components / SInputCheckbox">
-    <SInputCheckbox
+  <Board
+    title="Components / SInputDate / 01. Playground"
+  >
+    <SInputDate
       label="Label"
       note="Note text"
       text="Text for the checkbox"
       help="This is a help text."
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputCheckbox
-</docs>

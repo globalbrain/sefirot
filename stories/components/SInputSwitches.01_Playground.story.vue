@@ -12,7 +12,9 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components / SInputSwitches">
+  <Board
+    title="Components / SInputSwitches / 01. Playground"
+  >
     <SInputSwitches
       class="switches"
       name="input"
@@ -22,7 +24,7 @@ const options = [
       :options="options"
       v-model="data"
     />
-  </Story>
+  </Board>
 </template>
 
 <style scoped>

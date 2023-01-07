@@ -33,11 +33,13 @@ function updateFilter(value: string) {
 </script>
 
 <template>
-  <Story title="Components / SDropdown">
+  <Board
+    title="Components / SDropdown / 01. Playground"
+  >
     <div class="container">
       <SDropdown :sections="sections" />
     </div>
-  </Story>
+  </Board>
 </template>
 
 <style scoped>

@@ -7,13 +7,14 @@ const variants = [
   { title: 'Medium', size: 'medium' },
   { title: 'Large', size: 'large' },
   { title: 'Jumbo', size: 'jumbo' }
-]
+] as const
 
 function state() {
   return {
     mode: 'neutral',
-    label: 'Button'
-  }
+    label: 'Button',
+    rounded: false
+  } as const
 }
 </script>
 
@@ -36,6 +37,10 @@ function state() {
         title="label"
         v-model="state.label"
       />
+      <HstCheckbox
+        title="rounded"
+        v-model="state.rounded"
+      />
     </template>
 
     <template #default="{ state }">
@@ -45,12 +50,13 @@ function state() {
 
           <div class="grid">
             <SButton
-              v-for="t in ['fill', 'outline', 'text']"
+              v-for="t in ['fill', 'outline', 'text'] as const"
               :key="t"
               :size="v.size"
               :type="t"
               :mode="state.mode"
               :label="state.label"
+              :rounded="state.rounded"
             />
           </div>
         </div>

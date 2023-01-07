@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import IconCheckCircle from '@iconify-icons/ph/check-circle'
-import IconImageSquare from '@iconify-icons/ph/image-square'
-import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass'
+import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
+import IconImageSquare from '@iconify-icons/ph/image-square-bold'
+import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass-bold'
 import SButton from 'sefirot/components/SButton.vue'
 
 const variants = [
   { title: 'Fill', type: 'fill' },
   { title: 'Outline', type: 'outline' },
   { title: 'Text', type: 'text' }
-]
+] as const
 
 const icons = [
   IconCheckCircle,
@@ -18,9 +18,10 @@ const icons = [
 
 function state() {
   return {
+    size: 'medium',
     mode: 'neutral',
     label: 'Button'
-  }
+  } as const
 }
 </script>
 
@@ -31,6 +32,17 @@ function state() {
     docs="/components/button"
   >
     <template #controls="{ state }">
+      <HstSelect
+        title="size"
+        :options="{
+          mini: 'mini',
+          small: 'small',
+          medium: 'medium',
+          large: 'large',
+          jumbo: 'jumbo'
+        }"
+        v-model="state.size"
+      />
       <HstSelect
         title="mode"
         :options="{
@@ -52,9 +64,9 @@ function state() {
 
           <div class="grid">
             <SButton
-              v-for="i in icons"
-              :key="i"
-              size="medium"
+              v-for="(i, index) in icons"
+              :key="index"
+              :size="state.size"
               :type="v.type"
               :mode="state.mode"
               :icon="i"

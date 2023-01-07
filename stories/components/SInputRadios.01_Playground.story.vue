@@ -12,7 +12,9 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components / SInputRadios">
+  <Board
+    title="Components / SInputRadios / 01. Playground"
+  >
     <SInputRadios
       name="input"
       label="Label"
@@ -22,9 +24,5 @@ const options = [
       :options="options"
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputRadios
-</docs>

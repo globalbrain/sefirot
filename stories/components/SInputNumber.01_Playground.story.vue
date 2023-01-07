@@ -6,7 +6,9 @@ const value = ref<number | null>(null)
 </script>
 
 <template>
-  <Story title="Components / SInputNumber">
+  <Board
+    title="Components / SInputNumber / 01. Playground"
+  >
     <SInputNumber
       name="name"
       label="Label"
@@ -16,5 +18,5 @@ const value = ref<number | null>(null)
       separator
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>

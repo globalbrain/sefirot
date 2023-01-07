@@ -3,12 +3,14 @@ import SMarkdown from 'sefirot/components/SMarkdown.vue'
 </script>
 
 <template>
-  <Story title="Components / SMarkdown">
+  <Board
+    title="Components / SMarkdown / 01. Playground"
+  >
     <SMarkdown
       class="markdown"
       content="**We** shape our **buildings**. Thereafter, **they** shape **us**."
     />
-  </Story>
+  </Board>
 </template>
 
 <style scoped>
