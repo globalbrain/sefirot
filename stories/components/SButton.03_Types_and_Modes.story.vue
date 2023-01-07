@@ -13,9 +13,7 @@ const modes = [
   'info',
   'success',
   'warning',
-  'danger',
-  'white',
-  'black'
+  'danger'
 ] as const
 
 function state() {
