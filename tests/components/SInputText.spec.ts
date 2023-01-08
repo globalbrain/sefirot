@@ -11,13 +11,13 @@ describe('components/SInputText', () => {
     })
 
     await wrapper.find('.SInputText .input').setValue('')
-    assertEmitted(wrapper, 'update:modelValue', 0, null)
+    assertEmitted(wrapper, 'update:modelValue', 1, null)
 
     await wrapper.find('.SInputText .input').setValue('text')
-    assertEmitted(wrapper, 'update:modelValue', 1, 'text')
+    assertEmitted(wrapper, 'update:modelValue', 2, 'text')
 
     await wrapper.find('.SInputText .input').setValue('0')
-    assertEmitted(wrapper, 'update:modelValue', 2, '0')
+    assertEmitted(wrapper, 'update:modelValue', 3, '0')
   })
 
   it('should emit blur event', async () => {
@@ -28,8 +28,8 @@ describe('components/SInputText', () => {
     })
 
     await wrapper.find('.SInputText .input').trigger('blur')
-    assertEmitted(wrapper, 'update:modelValue', 0, 'text')
-    assertEmitted(wrapper, 'blur', 0, 'text')
+    assertEmitted(wrapper, 'update:modelValue', 1, 'text')
+    assertEmitted(wrapper, 'blur', 1, 'text')
   })
 
   it('should emit enter event', async () => {
@@ -40,7 +40,7 @@ describe('components/SInputText', () => {
     })
 
     await wrapper.find('.SInputText .input').trigger('keypress', { key: 'enter' })
-    assertEmitted(wrapper, 'update:modelValue', 0, 'text')
-    assertEmitted(wrapper, 'enter', 0, 'text')
+    assertEmitted(wrapper, 'update:modelValue', 1, 'text')
+    assertEmitted(wrapper, 'enter', 1, 'text')
   })
 })
