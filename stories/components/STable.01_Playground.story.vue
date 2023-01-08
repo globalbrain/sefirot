@@ -256,11 +256,11 @@ function updateTagsFilter(value: string) {
 </script>
 
 <template>
-  <Story title="Components/STable">
-    <Variant title="Default">
-      <STable class="table" :options="table" />
-    </Variant>
-  </Story>
+  <Board
+    title="Components / STable / 01. Playground"
+  >
+    <STable class="table" :options="table" />
+  </Board>
 </template>
 
 <style scoped>

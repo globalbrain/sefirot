@@ -16,7 +16,9 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputDropdown">
+  <Board
+    title="Components / SInputDropdown / 01. Playground"
+  >
     <SInputDropdown
       label="Dropdown input"
       placeholder="Please select items"
@@ -24,5 +26,5 @@ const options = [
       nullable
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>

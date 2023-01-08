@@ -6,7 +6,9 @@ const value = ref(null)
 </script>
 
 <template>
-  <Story title="Components/SInputDate">
+  <Board
+    title="Components / SInputDate / 01. Playground"
+  >
     <SInputDate
       label="Label"
       note="Note text"
@@ -14,5 +16,5 @@ const value = ref(null)
       help="This is a help text."
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>

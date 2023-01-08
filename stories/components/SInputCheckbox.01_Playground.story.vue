@@ -6,7 +6,9 @@ const value = ref(false)
 </script>
 
 <template>
-  <Story title="Components/SInputCheckbox">
+  <Board
+    title="Components / SInputCheckbox / 01. Playground"
+  >
     <SInputCheckbox
       label="Label"
       note="Note text"
@@ -14,9 +16,5 @@ const value = ref(false)
       help="This is a help text."
       v-model="value"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputCheckbox
-</docs>

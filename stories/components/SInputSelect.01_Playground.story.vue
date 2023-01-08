@@ -12,7 +12,9 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputSelect">
+  <Board
+    title="Components / SInputSelect / 01. Playground"
+  >
     <SInputSelect
       v-model="input"
       label="Label"
@@ -21,9 +23,5 @@ const options = [
       placeholder="Please select an item"
       :options="options"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputSelect
-</docs>

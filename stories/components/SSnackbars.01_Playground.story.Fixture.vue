@@ -36,10 +36,10 @@ function pushDangerSnackbar() {
 <template>
   <div>
     <div class="list">
-      <SButton mode="neutral" label="Neutral snackbar" @click="pushNeutralSnackbar" />
-      <SButton mode="info" label="Info snackbar" @click="pushInfoSnackbar" />
-      <SButton mode="warning" label="Warning snackbar" @click="pushWarningSnackbar" />
-      <SButton mode="danger" label="Danger snackbar" @click="pushDangerSnackbar" />
+      <SButton size="small" mode="mute" label="Neutral snackbar" @click="pushNeutralSnackbar" />
+      <SButton size="small" mode="info" label="Info snackbar" @click="pushInfoSnackbar" />
+      <SButton size="small" mode="warning" label="Warning snackbar" @click="pushWarningSnackbar" />
+      <SButton size="small" mode="danger" label="Danger snackbar" @click="pushDangerSnackbar" />
     </div>
 
     <SSnackbars />

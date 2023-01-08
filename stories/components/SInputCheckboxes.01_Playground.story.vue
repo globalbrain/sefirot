@@ -12,7 +12,9 @@ const options = [
 </script>
 
 <template>
-  <Story title="Components/SInputCheckboxes">
+  <Board
+    title="Components / SInputCheckboxes / 01. Playground"
+  >
     <SInputCheckboxes
       name="input"
       label="Label"
@@ -21,11 +23,5 @@ const options = [
       :options="options"
       v-model="input"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SButtonGroup
-
-Button Group allow users to select one of the buttons. Similar checkboxes, but with look of buttons.
-</docs>

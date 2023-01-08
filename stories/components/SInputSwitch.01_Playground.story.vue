@@ -6,7 +6,9 @@ const on = ref(false)
 </script>
 
 <template>
-  <Story title="Components/SInputSwitch">
+  <Board
+    title="Components / SInputSwitch / 01. Playground"
+  >
     <SInputSwitch
       class="switch"
       name="input"
@@ -16,7 +18,7 @@ const on = ref(false)
       help="This is a help text."
       v-model="on"
     />
-  </Story>
+  </Board>
 </template>
 
 <style scoped>

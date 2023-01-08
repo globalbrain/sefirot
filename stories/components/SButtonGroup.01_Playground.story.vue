@@ -12,16 +12,9 @@ const items: ButtonGroupItem[] = [
 </script>
 
 <template>
-  <Story title="Components/SButtonGroup">
-    <SButtonGroup
-      v-model="value"
-      :items="items"
-    />
-  </Story>
+  <Board
+    title="Components / SButtonGroup / 01. Playground"
+  >
+    <SButtonGroup :items="items" v-model="value" />
+  </Board>
 </template>
-
-<docs lang="md">
-# SButtonGroup
-
-Button Group allow users to select one of the buttons. Similar checkboxes, but with look of buttons.
-</docs>

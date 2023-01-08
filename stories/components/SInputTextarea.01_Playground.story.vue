@@ -6,7 +6,9 @@ const text = ref('')
 </script>
 
 <template>
-  <Story title="Components/SInputTextarea">
+  <Board
+    title="Components / SInputTextarea / 01. Playground"
+  >
     <SInputTextarea
       name="name"
       label="Label"
@@ -16,9 +18,5 @@ const text = ref('')
       :rows="5"
       v-model="text"
     />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SInputTextarea
-</docs>

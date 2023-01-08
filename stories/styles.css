@@ -9,7 +9,12 @@ body {
 
 .__histoire-render-story {
   position: relative;
-  padding: 32px;
+  height: 100vh;
   min-height: 100vh;
-  background-color: var(--c-bg-soft);
+  background-color: var(--c-bg-elv-1);
+}
+
+.__histoire-render-story.__histoire-render-custom-controls {
+  min-height: 0;
+  background-color: transparent;
 }

@@ -12,11 +12,9 @@ const steps: Step[] = [
 </script>
 
 <template>
-  <Story title="Components/SSteps">
+  <Board
+    title="Components / SSteps / 01. Playground"
+  >
     <SSteps :steps="steps" />
-  </Story>
+  </Board>
 </template>
-
-<docs lang="md">
-# SSteps
-</docs>
