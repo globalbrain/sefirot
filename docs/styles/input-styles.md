@@ -1,4 +1,4 @@
-# Input Styles
+# Shared Input Styles
 
 Input related component such as `SInputText` or `SInputSelect` shares many common stylings. You may customize the shared style by overriding `--input` prefixed CSS variables.
 

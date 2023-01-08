@@ -9,6 +9,14 @@ Shorthand function for creating `computed` object that returns an array. Useful 
 The closure you pass to the function will get empty array as an argument, and you would push items to the array instead of returning it.
 
 ```ts
+import { ComputedRef } from 'vue'
+
+function computedArray<T = any>(
+  fn: (arr: T[]) => void
+): ComputedRef<T[]>
+```
+
+```ts
 import { computedArray } from '@globalbrain/sefirot/lib/composables/Utils'
 
 const menu = computedArray((arr) => {
@@ -19,12 +27,4 @@ const menu = computedArray((arr) => {
     arr.push({ label: 'Administration' })
   }
 })
-```
-
-```ts
-import { ComputedRef } from 'vue'
-
-function computedArray<T = any>(
-  fn: (arr: T[]) => void
-): ComputedRef<T[]>
 ```

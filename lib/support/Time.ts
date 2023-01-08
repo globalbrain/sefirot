@@ -1,4 +1,6 @@
-type Awaited<T> = T extends undefined ? T : T extends PromiseLike<infer U> ? U : T
+type Awaited<T> = T extends undefined
+  ? T
+  : T extends PromiseLike<infer U> ? U : T
 
 export function sleep(ms = 500): Promise<undefined> {
   return new Promise<undefined>((resolve) => setTimeout(resolve, ms))

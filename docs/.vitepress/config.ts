@@ -37,6 +37,12 @@ export default defineConfig({
 function sidebar() {
   return [
     {
+      text: 'Styles',
+      items: [
+        { text: 'Shared Input Styles', link: '/styles/input-styles' }
+      ]
+    },
+    {
       text: 'Components',
       items: [
         { text: 'SAvatar', link: '/components/avatar' },
@@ -52,9 +58,12 @@ function sidebar() {
       ]
     },
     {
-      text: 'Styles',
+      text: 'Helpers',
       items: [
-        { text: 'Input Styles', link: '/styles/input-styles' }
+        { text: 'File', link: '/helpers/file' },
+        { text: 'Num', link: '/helpers/num' },
+        { text: 'Time', link: '/helpers/time' },
+        { text: 'Utils', link: '/helpers/utils' }
       ]
     }
   ]
