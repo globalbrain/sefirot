@@ -9,7 +9,10 @@ const props = defineProps<{
   name?: string | null
 }>()
 
-const classes = computed(() => [props.size ?? 'medium'])
+const classes = computed(() => [
+  props.size ?? 'medium',
+  { 'no-image': !props.avatar }
+])
 
 const initial = computed(() => props.name?.charAt(0).toUpperCase())
 </script>
@@ -17,7 +20,7 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
 <template>
   <div class="SAvatar" :class="classes">
     <img v-if="avatar" class="img" :src="avatar">
-    <p v-else class="initial">{{ initial }}</p>
+    <p v-else-if="initial" class="initial">{{ initial }}</p>
   </div>
 </template>
 
@@ -27,12 +30,8 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  background-color: var(--c-bg-elv-down);
+  background-color: var(--c-bg-elv-1);
   overflow: hidden;
-}
-
-.img {
-  object-fit: cover;
 }
 
 .SAvatar.nano {
@@ -62,7 +61,15 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
 .SAvatar.large {
   width: 40px;
   height: 40px;
-  .initial { font-size: 14px; }
+  .initial { font-size: 16px; }
+}
+
+.SAvatar.no-image {
+  border: 1px solid var(--c-divider-2);
+}
+
+.img {
+  object-fit: cover;
 }
 
 .initial {

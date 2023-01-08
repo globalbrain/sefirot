@@ -39,6 +39,7 @@ function sidebar() {
     {
       text: 'Components',
       items: [
+        { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' }
       ]
     },

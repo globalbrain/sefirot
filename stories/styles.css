@@ -18,3 +18,41 @@ body {
   min-height: 0;
   background-color: transparent;
 }
+
+.leading-20 { line-height: 20px; }
+.leading-24 { line-height: 24px; }
+
+.text-12 { font-size: 12px; }
+.text-14 { font-size: 14px; }
+.text-16 { font-size: 16px; }
+
+.text-c-1 { color: var(--c-text-1); }
+.text-c-2 { color: var(--c-text-2); }
+.text-c-3 { color: var(--c-text-3); }
+
+.font-400 { font-weight: 400; }
+.font-500 { font-weight: 500; }
+.font-600 { font-weight: 600; }
+.font-700 { font-weight: 700; }
+
+.flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-8  { gap: 8px; }
+.gap-12 { gap: 12px; }
+.gap-16 { gap: 16px; }
+
+.gap-y-8  { row-gap: 8px; }
+.gap-y-12 { row-gap: 12px; }
+.gap-y-16 { row-gap: 16px; }
+.gap-y-24 { row-gap: 24px; }
+.gap-y-32 { row-gap: 32px; }
