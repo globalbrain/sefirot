@@ -191,6 +191,7 @@ function emitChange(e: any): void {
   position: relative;
   z-index: 20;
   display: block;
+  margin: 0;
   border: 0;
   border-radius: 4px;
   width: 100%;
