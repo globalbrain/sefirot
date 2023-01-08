@@ -576,3 +576,25 @@
   --table-cell-font-size: 14px;
   --table-cell-font-weight: 400;
 }
+
+/**
+ * Component: Input
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --input-label-color: var(--c-text-1);
+  --input-border-color: var(--c-divider-1);
+  --input-value-color: var(--c-text-1);
+  --input-placeholder-color: var(--c-text-3);
+  --input-bg-color: var(--c-bg-elv-1);
+  --input-hover-border-color: var(--c-gray);
+  --input-focus-border-color: var(--c-info-light);
+  --input-error-text-color: var(--c-danger-light);
+  --input-error-border-color: var(--c-danger-light);
+  --input-disabled-value-color: var(--c-text-1);
+  --input-disabled-bg-color: var(--c-mute);
+
+  --input-mini-font-size: 14px;
+  --input-small-font-size: 16px;
+  --input-medium-font-size: 16px;
+}
