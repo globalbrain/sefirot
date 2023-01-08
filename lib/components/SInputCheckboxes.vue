@@ -71,4 +71,3 @@ function handleChange(value: unknown): void {
   padding: 2px 8px;
 }
 </style>
-

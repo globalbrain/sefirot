@@ -29,7 +29,7 @@ function emitInput(date?: string) {
   emit('update:modelValue', date ? day(date) : null)
 }
 
-function emitBlur(e: FocusEvent) {
+function emitBlur() {
   setTimeout(() => {
     props.validation && props.validation.$touch()
   }, 100)

@@ -62,7 +62,7 @@
     "dayjs": "^1.11.7"
   },
   "devDependencies": {
-    "@globalbrain/eslint-config": "^1.1.0",
+    "@globalbrain/eslint-config": "^1.2.1",
     "@histoire/plugin-vue": "^0.12.4",
     "@iconify-icons/ph": "^1.2.3",
     "@iconify/vue": "^4.0.1",
@@ -80,7 +80,7 @@
     "chalk": "^4.1.2",
     "conventional-changelog-cli": "^2.2.2",
     "enquirer": "^2.3.6",
-    "eslint": "^8.29.0",
+    "eslint": "^8.31.0",
     "execa": "^5.1.1",
     "fuse.js": "^6.6.2",
     "happy-dom": "^8.1.0",

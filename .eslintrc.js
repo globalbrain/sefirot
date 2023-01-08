@@ -2,7 +2,9 @@ module.exports = {
   extends: '@globalbrain',
 
   ignorePatterns: [
-    'docs/.vitepress/cache/**/*'
+    'docs/**/*',
+    '!docs/.vitepress/theme/**/*',
+    '!docs/.vitepress/config.ts'
   ],
 
   rules: {
