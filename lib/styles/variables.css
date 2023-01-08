@@ -508,17 +508,17 @@
 
   --pill-info-border-color: var(--c-info);
   --pill-info-color: var(--c-info);
-  --pill-info-bg-color: var(--c-info-bg);
+  --pill-info-bg-color: var(--c-info-dimm-1);
 
   --pill-success-border-color: var(--c-success);
   --pill-success-color: var(--c-success);
-  --pill-success-bg-color: var(--c-success-bg);
+  --pill-success-bg-color: var(--c-success-dimm-1);
 
   --pill-warning-border-color: var(--c-warning);
   --pill-warning-color: var(--c-warning);
-  --pill-warning-bg-color: var(--c-warning-bg);
+  --pill-warning-bg-color: var(--c-warning-dimm-1);
 
   --pill-danger-border-color: var(--c-danger);
   --pill-danger-color: var(--c-danger);
-  --pill-danger-bg-color: var(--c-danger-bg);
+  --pill-danger-bg-color: var(--c-danger-dimm-1);
 }
