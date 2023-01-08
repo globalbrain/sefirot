@@ -6,5 +6,9 @@ export function assertEmitted(
   count: number,
   value: any
 ): void {
-  expect((wrapper.emitted(event) as any[][])[count][0]).toBe(value)
+  expect((wrapper.emitted(event) as any[][])[count - 1][0]).toBe(value)
+}
+
+export function assertNotEmitted(wrapper: VueWrapper<any>, event: string): void {
+  expect(wrapper.emitted(event)).toBe(undefined)
 }

@@ -40,7 +40,8 @@ function sidebar() {
       text: 'Components',
       items: [
         { text: 'SAvatar', link: '/components/avatar' },
-        { text: 'SButton', link: '/components/button' }
+        { text: 'SButton', link: '/components/button' },
+        { text: 'SPill', link: '/components/pill' }
       ]
     },
     {
