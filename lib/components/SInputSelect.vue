@@ -126,28 +126,31 @@ function emitChange(e: any): void {
 
 <style scoped lang="postcss">
 .SInputSelect.mini {
+  line-height: 30px;
   font-size: var(--input-font-size, var(--input-mini-font-size));
 
   .box      { height: 32px; }
-  .select   { padding: 3px 30px 3px 10px; }
+  .select   { padding: 0 30px 0 10px; }
   .icon     { top: 5px; right: 8px; }
   .icon-svg { width: 12px; height: 12px; }
 }
 
 .SInputSelect.small {
+  line-height: 38px;
   font-size: var(--input-font-size, var(--input-small-font-size));
 
   .box      { height: 40px; }
-  .select   { padding: 7px 30px 5px 12px; }
+  .select   { padding: 0 30px 0 12px; }
   .icon     { top: 7px; right: 10px; }
   .icon-svg { width: 14px; height: 14px; }
 }
 
 .SInputSelect.medium {
+  line-height: 46px;
   font-size: var(--input-font-size, var(--input-medium-font-size));
 
   .box      { height: 48px; }
-  .select   { padding: 11px 44px 11px 16px; }
+  .select   { padding: 0 44px 0 16px; }
   .icon     { top: 11px; right: 12px; }
   .icon-svg { width: 14px; height: 14px; }
 }
@@ -189,7 +192,7 @@ function emitChange(e: any): void {
   border: 0;
   border-radius: 4px;
   width: 100%;
-  line-height: 24px;
+  line-height: inherit;
   font-size: inherit;
   background-color: transparent;
   cursor: pointer;
