@@ -41,6 +41,7 @@ function sidebar() {
       items: [
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
+        { text: 'SInputSelect', link: '/components/input-select' },
         { text: 'SPill', link: '/components/pill' }
       ]
     },
@@ -48,6 +49,12 @@ function sidebar() {
       text: 'Composables',
       items: [
         { text: 'Utils', link: '/composables/utils' }
+      ]
+    },
+    {
+      text: 'Styles',
+      items: [
+        { text: 'Input Styles', link: '/styles/input-styles' }
       ]
     }
   ]

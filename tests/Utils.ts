@@ -1,5 +1,17 @@
 import { VueWrapper } from '@vue/test-utils'
 
+export interface EventTargetMock<T = any> {
+  target: T
+}
+
+export type EventTargetValueMock<T = any> = EventTargetMock<{ value: T }>
+
+export function eventTargetValue<T>(value: T): EventTargetValueMock<T> {
+  return {
+    target: { value }
+  }
+}
+
 export function assertEmitted(
   wrapper: VueWrapper<any>,
   event: string,

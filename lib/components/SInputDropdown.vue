@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconCaretDown from '@iconify-icons/ph/caret-down'
-import IconCaretUp from '@iconify-icons/ph/caret-up'
+import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
+import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
 import xor from 'lodash-es/xor'
 import { computed } from 'vue'
 import { DropdownSectionFilter } from '../composables/Dropdown'

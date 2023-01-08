@@ -74,7 +74,7 @@ const showError = computed(() => {
 
 .SInputBase.has-error {
   .label {
-    color: var(--c-danger);
+    color: var(--input-error-text-color);
   }
 }
 
@@ -83,7 +83,7 @@ const showError = computed(() => {
   width: 100%;
   line-height: 16px;
   font-weight: 500;
-  color: var(--c-text-1);
+  color: var(--input-label-color);
   cursor: pointer;
   transition: color 0.25s;
 }
@@ -107,8 +107,8 @@ const showError = computed(() => {
   line-height: 18px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-danger);
-  transition: opacity .25s, transform .25s;
+  color: var(--input-error-text-color);
+  transition: opacity 0.25s, transform 0.25s;
 }
 
 .help-text {
