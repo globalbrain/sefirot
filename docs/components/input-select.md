@@ -302,23 +302,3 @@ You may customize the styles by overriding `--input` prefixed CSS variables.
 ### Global input styles
 
 You may customize the various styles of the component via global input related CSS variables. Please refer to [Styles: Input Styles](../styles/input-styles) page.
-
-```css
-:root {
-  /**
-   * Set the font size for all size of buttons. By default it's
-   * undefined and size specific values defined below is used.
-   */
-  --button-font-size: undefined;
-
-  /**
-   * Set the font size of different `size` of buttons. When
-   * `--button-font-size` is set, these values gets ignored.
-   */
-  --button-mini-font-size: 12px;
-  --button-small-font-size: 14px;
-  --button-medium-font-size: 14px;
-  --button-large-font-size: 14px;
-  --button-jumbo-font-size: 16px;
-}
-```
