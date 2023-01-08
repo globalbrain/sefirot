@@ -98,6 +98,7 @@ function emitChange(e: any): void {
       >
         <option
           v-if="placeholder || nullable"
+          class="option"
           value="__null__"
           :selected="isNotSelected"
           :disabled="!nullable"
@@ -109,6 +110,7 @@ function emitChange(e: any): void {
           v-for="option in options"
           :key="JSON.stringify(option)"
           :style="{ display: option.disabled ? 'none' : undefined }"
+          class="option"
           :value="JSON.stringify(option)"
           :selected="isSelectedOption(option)"
         >
@@ -200,6 +202,10 @@ function emitChange(e: any): void {
   &.select.is-not-selected {
     color: var(--input-placeholder-color);
   }
+}
+
+.option {
+  color: initial;
 }
 
 .icon {
