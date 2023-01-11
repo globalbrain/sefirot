@@ -6,6 +6,6 @@ export type Input = ConfigType
 
 dayjs.extend(relativeTime)
 
-export function day(input?: Input): Dayjs {
+export function day(input?: Input): Day {
   return dayjs(input)
 }

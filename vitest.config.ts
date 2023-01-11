@@ -24,6 +24,7 @@ export default defineConfig({
       exclude: [
         'lib/mixins',
         'lib/support/Day/plugins',
+        'lib/support/Day/Constant.ts',
         'lib/types'
       ],
       reporter: [

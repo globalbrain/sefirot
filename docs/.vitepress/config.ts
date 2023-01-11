@@ -61,6 +61,7 @@ function sidebar() {
     {
       text: 'Helpers',
       items: [
+        { text: 'Day', link: '/helpers/day' },
         { text: 'File', link: '/helpers/file' },
         { text: 'Num', link: '/helpers/num' },
         { text: 'Time', link: '/helpers/time' },
