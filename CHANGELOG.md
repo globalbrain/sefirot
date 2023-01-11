@@ -1,3 +1,18 @@
+# [2.11.0](https://github.com/globalbrain/sefirot/compare/v2.10.0...v2.11.0) (2023-01-11)
+
+### Bug Fixes
+
+* **input-select:** stylings not applied correctly ([#182](https://github.com/globalbrain/sefirot/issues/182)) ([51b75b3](https://github.com/globalbrain/sefirot/commit/51b75b3d17d48122fb1202903a76d41b8e20e15d))
+
+### Features
+
+* **avatar:** add border when no image is defined ([9230535](https://github.com/globalbrain/sefirot/commit/9230535bb3cb72566812624c45a9e529730f84fa))
+* **pill:** add SPill component ([#181](https://github.com/globalbrain/sefirot/issues/181)) ([a7fa50b](https://github.com/globalbrain/sefirot/commit/a7fa50bac50f38541cd492909aa79443043906b5))
+* **table:** add neutral mode to pill cell ([3bd4228](https://github.com/globalbrain/sefirot/commit/3bd422871ca55feded94d327f28d59c240b41a6c))
+* **table:** adjust basic table stylings ([8d2070d](https://github.com/globalbrain/sefirot/commit/8d2070d9d2e9de61cbf4790fce587d3ec484d2ad))
+* **table:** make border style customizable via css variables ([8606bb6](https://github.com/globalbrain/sefirot/commit/8606bb6e1fbee797de44829d68b7a69e49636a98))
+* **utils:** add `computedArray` utility composable ([04a1bf1](https://github.com/globalbrain/sefirot/commit/04a1bf1fe8cb4680f65e635105bd7d6a88b90055))
+
 # [2.10.0](https://github.com/globalbrain/sefirot/compare/v2.9.0...v2.10.0) (2022-12-23)
 
 ### Features
