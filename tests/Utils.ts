@@ -1,4 +1,4 @@
-import { VueWrapper, DOMWrapper } from '@vue/test-utils'
+import { DOMWrapper, VueWrapper } from '@vue/test-utils'
 
 export interface EventTargetMock<T = any> {
   target: T

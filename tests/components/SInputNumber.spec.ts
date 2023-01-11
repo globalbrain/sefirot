@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
-import { getInputValue, assertEmitted } from 'tests/Utils'
+import { assertEmitted, getInputValue } from 'tests/Utils'
 
 describe('components/SInputNumber', () => {
   test('it accepts `value` prop', async () => {
