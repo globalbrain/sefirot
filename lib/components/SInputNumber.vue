@@ -25,7 +25,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: number | null): void
+  (e: 'update:model-value', value: number | null): void
   (e: 'input', value: number | null): void
 }>()
 
@@ -57,7 +57,7 @@ const displayValue = computed(() => {
 
 function emitUpdate(value: string | null) {
   const v = isNullish(value) ? null : Number(value)
-  emit('update:modelValue', v)
+  emit('update:model-value', v)
   emit('input', v)
 }
 </script>

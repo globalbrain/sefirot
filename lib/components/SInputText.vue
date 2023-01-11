@@ -36,6 +36,7 @@ const isFocused = ref(false)
 
 const classes = computed(() => [
   props.size ?? 'small',
+  props.align ?? 'left',
   { disabled: props.disabled }
 ])
 
@@ -237,6 +238,27 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .box:hover .input {
     cursor: not-allowed;
     border-color: var(--input-outlined-border);
+  }
+}
+
+.SInputText.left {
+  .input,
+  .display {
+    text-align: left;
+  }
+}
+
+.SInputText.center {
+  .input,
+  .display {
+    text-align: center;
+  }
+}
+
+.SInputText.right {
+  .input,
+  .display {
+    text-align: right;
   }
 }
 
