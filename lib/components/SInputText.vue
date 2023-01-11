@@ -26,6 +26,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | null): void
+  (e: 'input', value: string | null): void
   (e: 'blur', value: string | null): void
   (e: 'enter', value: string | null): void
 }>()
@@ -62,7 +63,9 @@ function emitBlur(e: FocusEvent): void {
 }
 
 function emitInput(e: Event): void {
-  emit('update:modelValue', getValue(e))
+  const v = getValue(e)
+  emit('update:modelValue', v)
+  emit('input', v)
 }
 
 function emitEnter(e: KeyboardEvent): void {

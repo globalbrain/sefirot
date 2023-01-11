@@ -17,7 +17,8 @@ const props = defineProps<{
   align?: Align
   separator?: boolean
   disabled?: boolean
-  modelValue: number | null
+  value?: number | null
+  modelValue?: number | null
   displayValue?: string | null
   hideError?: boolean
   validation?: Validatable
@@ -25,16 +26,23 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: number | null): void
+  (e: 'input', value: number | null): void
 }>()
 
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : null
+})
+
 const valueWithSeparator = computed(() => {
-  if (isNullish(props.modelValue)) {
+  if (isNullish(_value.value)) {
     return null
   }
 
-  return props.modelValue >= 100000000000000000000
+  return _value.value >= 100000000000000000000
     ? 'The number is too big'
-    : props.modelValue.toLocaleString('en-US', { maximumSignificantDigits: 20 })
+    : _value.value.toLocaleString('en-US', { maximumSignificantDigits: 20 })
 })
 
 const displayValue = computed(() => {
@@ -48,7 +56,9 @@ const displayValue = computed(() => {
 })
 
 function emitUpdate(value: string | null) {
-  emit('update:modelValue', isNullish(value) ? null : Number(value))
+  const v = isNullish(value) ? null : Number(value)
+  emit('update:modelValue', v)
+  emit('input', v)
 }
 </script>
 
@@ -66,8 +76,9 @@ function emitUpdate(value: string | null) {
     :disabled="disabled"
     :hide-error="hideError"
     :display-value="displayValue"
-    :model-value="String(modelValue)"
+    :model-value="_value === null ? null : String(_value)"
     :validation="validation"
     @update:model-value="emitUpdate"
+    @input="emitUpdate"
   />
 </template>
