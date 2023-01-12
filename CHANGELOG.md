@@ -1,3 +1,13 @@
+# [2.12.0](https://github.com/globalbrain/sefirot/compare/v2.11.0...v2.12.0) (2023-01-12)
+
+### Bug Fixes
+
+* **input-number:** null becoming `string` and causing warning ([6b05217](https://github.com/globalbrain/sefirot/commit/6b05217fa0bf7fdde0e294821b3453d865144305))
+
+### Features
+
+* **style:** add `text` and `bg` type for accent colors ([c4cb09d](https://github.com/globalbrain/sefirot/commit/c4cb09d48b753dba556fbbfea8007d22cdce104e))
+
 # [2.11.0](https://github.com/globalbrain/sefirot/compare/v2.10.0...v2.11.0) (2023-01-11)
 
 ### Bug Fixes
