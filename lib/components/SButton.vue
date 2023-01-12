@@ -84,7 +84,9 @@ function handleClick(): void {
 <style lang="postcss" scoped>
 .SButton {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0;
   text-align: center;
   border: 1px solid transparent;
   border-radius: 6px;
@@ -590,7 +592,7 @@ function handleClick(): void {
 }
 
 .SButton.block {
-  display: block;
+  display: flex;
   width: 100%;
 }
 
