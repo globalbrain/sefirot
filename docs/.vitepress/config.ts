@@ -39,6 +39,7 @@ function sidebar() {
     {
       text: 'Styles',
       items: [
+        { text: 'Colors', link: '/styles/colors' },
         { text: 'Shared Input Styles', link: '/styles/input-styles' }
       ]
     },
