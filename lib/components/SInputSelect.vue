@@ -49,7 +49,7 @@ const classes = computed(() => [
 ])
 
 const isNotSelected = computed(() => {
-  return _value.value === undefined || _value.value === null || _value.value === ''
+  return _value.value == null || _value.value === ''
 })
 
 function isSelectedOption(option: Option): boolean {
@@ -69,7 +69,7 @@ function emitChange(e: any): void {
     props.validation?.$touch()
 
     const input = e.target.value
-    const value = input === '__null__' ? null : JSON.parse(input).value
+    const value = props.options[input]?.value ?? null
 
     emit('update:model-value', value)
     emit('change', value)
@@ -99,7 +99,7 @@ function emitChange(e: any): void {
         <option
           v-if="placeholder || nullable"
           class="option"
-          value="__null__"
+          value="-1"
           :selected="isNotSelected"
           :disabled="!nullable"
         >
@@ -107,11 +107,11 @@ function emitChange(e: any): void {
         </option>
 
         <option
-          v-for="option in options"
+          v-for="option, index in options"
           :key="JSON.stringify(option)"
           :style="{ display: option.disabled ? 'none' : undefined }"
           class="option"
-          :value="JSON.stringify(option)"
+          :value="index"
           :selected="isSelectedOption(option)"
         >
           {{ option.label }}

@@ -13,7 +13,7 @@ export default defineConfig({
 
   test: {
     globals: true,
-    environment: 'happy-dom',
+    environment: 'jsdom',
     testTimeout: 2000,
 
     coverage: {
