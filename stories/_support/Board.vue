@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 import { computed } from 'vue'
+import { setupRouter } from './Utils'
 
 const props = defineProps<{
   title: string
@@ -26,6 +27,7 @@ const href = computed(() => {
     class="Board"
     :title="title"
     :init-state="state ?? (() => ({}))"
+    :setup-app="setupRouter"
     source="Not available"
     auto-props-disabled
   >
