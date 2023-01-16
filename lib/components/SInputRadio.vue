@@ -11,17 +11,19 @@ const props = defineProps<{
   note?: string
   help?: string
   text: string
-  hideError?: boolean
   modelValue: boolean
   validation?: Validatable
+  hideError?: boolean
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void
+  (e: 'update:model-value', value: boolean): void
+  (e: 'change', value: boolean): void
 }>()
 
-function emitChange() {
-  emit('update:modelValue', !props.modelValue)
+function onClick() {
+  emit('update:model-value', !props.modelValue)
+  emit('change', !props.modelValue)
 }
 </script>
 
@@ -32,11 +34,11 @@ function emitChange() {
     :label="label"
     :note="note"
     :help="help"
-    :hide-error="hideError"
     :validation="validation"
+    :hide-error="hideError"
   >
     <div class="container">
-      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
+      <div class="input" :class="{ on: props.modelValue }" role="button" @click="onClick">
         <div class="box">
           <div class="check" />
         </div>
@@ -57,34 +59,34 @@ function emitChange() {
   display: flex;
   align-items: center;
   height: 32px;
+  cursor: pointer;
 
   &:hover {
     .box {
-      border-color: var(--c-info);
+      border-color: var(--c-info-light);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-info);
-    box-shadow: var(--shadow-depth-3);
+    border-color: var(--c-info-light);
   }
 
   .check {
     opacity: 1;
-    transform: scale(.6);
+    transform: scale(0.6);
   }
 }
 
 .box {
   position: relative;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--c-divider-1);
   border-radius: 50%;
   width: 16px;
   height: 16px;
-  background-color: var(--c-bg);
-  transition: border-color 0.25s, box-shadow 0.25s;
+  background-color: var(--input-bg-color);
+  transition: border-color 0.25s;
 }
 
 .check {
@@ -98,7 +100,7 @@ function emitChange() {
   align-items: center;
   border-radius: 50%;
   width: 100%;
-  background-color: var(--c-info);
+  background-color: var(--c-info-bg);
   opacity: 0;
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;

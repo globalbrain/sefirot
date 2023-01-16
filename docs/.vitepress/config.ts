@@ -49,6 +49,7 @@ function sidebar() {
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
         { text: 'SInputNumber', link: '/components/input-number' },
+        { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
         { text: 'SPill', link: '/components/pill' }
       ]

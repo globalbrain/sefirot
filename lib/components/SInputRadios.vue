@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -10,36 +11,57 @@ export interface Option {
   value: string | number | boolean
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   name?: string
   label?: string
   note?: string
   help?: string
-  nullable?: boolean
   options: Option[]
-  hideError?: boolean
-  modelValue: string | number | boolean | null
+  nullable?: boolean
+  value?: string | number | boolean | null
+  modelValue?: string | number | boolean | null
   validation?: Validatable
-}>()
+  hideError?: boolean
+}>(), {
+  value: undefined,
+  modelValue: undefined
+})
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number | boolean | null): void
+  (e: 'update:model-value', value: string | number | boolean | null): void
+  (e: 'change', value: string | number | boolean | null): void
 }>()
 
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : null
+})
+
 function isChecked(value: string | number | boolean) {
-  return value === props.modelValue
+  return value === _value.value
 }
 
-function handleChange(value: string | number | boolean) {
-  if (value !== props.modelValue) {
-    emit('update:modelValue', value)
-
+function onUpdate(value: string | number | boolean) {
+  if (value !== _value.value) {
+    emit('update:model-value', value)
     return
   }
 
   if (props.nullable) {
-    emit('update:modelValue', null)
+    emit('update:model-value', null)
+  }
+}
+
+function onChange(value: string | number | boolean) {
+  if (value !== _value.value) {
+    emit('change', value)
+    return
+  }
+
+  if (props.nullable) {
+    emit('change', null)
   }
 }
 </script>
@@ -60,7 +82,8 @@ function handleChange(value: string | number | boolean) {
           <SInputRadio
             :text="option.label"
             :model-value="isChecked(option.value)"
-            @update:model-value="handleChange(option.value)"
+            @update:model-value="onUpdate(option.value)"
+            @change="onChange(option.value)"
           />
         </div>
       </div>
