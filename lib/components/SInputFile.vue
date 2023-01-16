@@ -8,35 +8,43 @@ export type Size = 'mini' | 'small' | 'medium'
 const props = defineProps<{
   size?: Size
   label?: string
-  text?: string
   note?: string
   help?: string
+  text?: string
   placeholder?: string
-  modelValue: File | null
+  value?: File | null
+  modelValue?: File | null
   hideError?: boolean
   validation?: Validatable
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', file: File | null): void
+  (e: 'update:model-value', file: File | null): void
+  (e: 'change', file: File | null): void
 }>()
+
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : null
+})
 
 const input = ref<HTMLInputElement | null>(null)
 
 const classes = computed(() => [props.size ?? 'small'])
 
-const fileName = computed(() => {
-  return props.modelValue ? props.modelValue.name : null
-})
+const fileName = computed(() => _value.value?.name ?? null)
 
-function open(): void {
+/* c8 ignore next 4 */
+function open() {
   input.value!.click()
 }
 
-function handleChange(e: Event): void {
+function onChange(e: Event) {
   const file = (e.target as any).files[0]
 
-  emit('update:modelValue', file ?? null)
+  emit('update:model-value', file ?? null)
+  emit('change', file ?? null)
 
   file && props.validation?.$touch()
 }
@@ -49,14 +57,14 @@ function handleChange(e: Event): void {
     :label="label"
     :note="note"
     :help="help"
-    :hide-error="hideError"
     :validation="validation"
+    :hide-error="hideError"
   >
     <input
       ref="input"
       class="input"
       type="file"
-      @change="handleChange"
+      @change="onChange"
     >
 
     <div class="box" role="button" @click="open">
@@ -77,7 +85,7 @@ function handleChange(e: Event): void {
 <style lang="postcss" scoped>
 .SInputFile.mini {
   .action {
-    padding: 2px 8px 2px 2px;
+    padding: 3px 8px 3px 3px;
   }
 
   .button {
@@ -90,7 +98,7 @@ function handleChange(e: Event): void {
   .file-name,
   .placeholder {
     line-height: 30px;
-    font-size: 12px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
     font-weight: 500;
   }
 }
@@ -110,7 +118,8 @@ function handleChange(e: Event): void {
   .file-name,
   .placeholder {
     line-height: 38px;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
+    font-weight: 400;
   }
 
   .placeholder {
@@ -133,7 +142,8 @@ function handleChange(e: Event): void {
   .file-name,
   .placeholder {
     line-height: 46px;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
+    font-weight: 400;
   }
 
   .placeholder {
@@ -144,7 +154,7 @@ function handleChange(e: Event): void {
 .SInputFile.has-error {
   .box,
   .box:hover {
-    border-color: var(--c-danger);
+    border-color: var(--input-error-border-color);
   }
 }
 
@@ -154,22 +164,14 @@ function handleChange(e: Event): void {
 
 .box {
   display: flex;
-  border: 1px solid var(--c-divider);
-  border-radius: 4px;
-  background-color: var(--c-bg);
+  border: 1px solid var(--input-border-color);
+  border-radius: 6px;
+  background-color: var(--input-bg-color);
   cursor: pointer;
-  transition: border-color .25s;
+  transition: border-color 0.25s;
 
   &:hover {
-    border-color: var(--c-black);
-
-    .button {
-      background-color: var(--c-bg-soft);
-    }
-  }
-
-  .dark &:hover {
-    border-color: var(--c-gray);
+    border-color: var(--input-hover-border-color);
   }
 }
 
@@ -178,11 +180,11 @@ function handleChange(e: Event): void {
 }
 
 .button {
-  border: 1px solid var(--c-divider-light);
+  border: 1px solid var(--c-divider);
   border-radius: 4px;
   color: var(--c-text-1);
-  background-color: var(--c-bg-mute);
-  transition: background-color .25s;
+  background-color: var(--c-mute);
+  transition: background-color 0.25s;
 }
 
 .text {
@@ -201,8 +203,8 @@ function handleChange(e: Event): void {
   text-overflow: ellipsis;
 }
 
-.file-name,
 .placeholder {
-  color: var(--c-text-2);
+  font-weight: 500;
+  color: var(--input-placeholder-color)
 }
 </style>

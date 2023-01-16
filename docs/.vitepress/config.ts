@@ -48,6 +48,7 @@ function sidebar() {
       items: [
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
+        { text: 'SInputFile', link: '/components/input-file' },
         { text: 'SInputNumber', link: '/components/input-number' },
         { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
