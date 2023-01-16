@@ -1,3 +1,13 @@
+# [2.13.0](https://github.com/globalbrain/sefirot/compare/v2.12.0...v2.13.0) (2023-01-16)
+
+### Bug Fixes
+
+* **button:** style breaks in some edge cases when `tag` is set to `<a>` ([24a33dc](https://github.com/globalbrain/sefirot/commit/24a33dc28804a04b83cfd50ea874041e642ac0e4))
+
+### Features
+
+* **support:** add utc and timezone support in `Day` module ([1d64e82](https://github.com/globalbrain/sefirot/commit/1d64e828d6653b3cd4ce9f4fb1ed65e815f1c139))
+
 # [2.12.0](https://github.com/globalbrain/sefirot/compare/v2.11.0...v2.12.0) (2023-01-12)
 
 ### Bug Fixes
