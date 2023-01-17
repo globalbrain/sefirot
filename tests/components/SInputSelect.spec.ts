@@ -37,7 +37,6 @@ describe('components/SInputSelect', async () => {
           { label: 'Item 001', value: 1 },
           { label: 'Item 002', value: 2 }
         ],
-        modelValue: undefined,
         value: 2
       }
     })
@@ -52,8 +51,7 @@ describe('components/SInputSelect', async () => {
           { label: 'Item 001', value: 1 },
           { label: 'Item 002', value: 2 }
         ],
-        modelValue: 2,
-        value: undefined
+        modelValue: 2
       }
     })
 
@@ -67,8 +65,6 @@ describe('components/SInputSelect', async () => {
           { label: 'Item 001', value: 1 },
           { label: 'Item 002', value: 2 }
         ],
-        modelValue: undefined,
-        value: undefined,
         placeholder: 'Placeholder'
       }
     })

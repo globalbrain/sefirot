@@ -15,7 +15,7 @@ export interface Option {
   disabled?: boolean
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   note?: string
@@ -28,7 +28,10 @@ const props = defineProps<{
   modelValue?: Value
   validation?: Validatable
   hideError?: boolean
-}>()
+}>(), {
+  value: undefined,
+  modelValue: undefined
+})
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: Value): void
