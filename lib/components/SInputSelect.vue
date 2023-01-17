@@ -56,14 +56,6 @@ function isSelectedOption(option: Option): boolean {
   return option.value === _value.value
 }
 
-function focus() {
-  isFocused.value = true
-}
-
-function blur() {
-  isFocused.value = false
-}
-
 function emitChange(e: any): void {
   if (!props.disabled) {
     props.validation?.$touch()
@@ -92,8 +84,8 @@ function emitChange(e: any): void {
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
         :disabled="disabled"
-        @focus="focus"
-        @blur="blur"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
         @change="emitChange"
       >
         <option
