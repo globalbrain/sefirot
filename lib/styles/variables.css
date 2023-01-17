@@ -287,6 +287,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --z-index-tooltip: 10;
   --z-index-dropdown: 1000;
   --z-index-backdrop: 2000;
 }
@@ -592,6 +593,17 @@
   --pill-fill-danger-bg-color: var(--c-danger-bg);
   --pill-fill-danger-hover-bg-color: var(--c-danger-bg-dark);
   --pill-fill-danger-active-bg-color: var(--c-danger-bg-darker);
+}
+
+/**
+ * Component: Tooltip
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --tooltip-max-width: 288px;
+  --tooltip-border-color: var(--c-divider-2);
+  --tooltip-text-color: var(--c-text-1);
+  --tooltip-bg-color: var(--c-bg-elv-3);
 }
 
 /**

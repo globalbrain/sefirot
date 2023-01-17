@@ -1,112 +1,111 @@
 <script setup lang="ts">
-import { PropType, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { Position, useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
 
-const props = defineProps({
-  tag: { type: String, default: 'span' },
-  text: { type: String, default: null },
-  position: { type: String as PropType<Position>, default: 'top' }
-})
+const props = defineProps<{
+  tag?: string
+  text?: string
+  position?: Position
+}>()
 
 const tip = ref<HTMLElement | null>(null)
 const content = ref<HTMLElement | null>(null)
-const classes = computed(() => [props.position])
-const { on, show, hide } = useTooltip(content, tip, props.position)
+const classes = computed(() => [props.position ?? 'top'])
+
+const { on, show, hide } = useTooltip(
+  content,
+  tip,
+  computed(() => props.position ?? 'top')
+)
 </script>
 
 <template>
-  <component :is="tag" class="STooltip" @mouseenter="show" @mouseleave="hide">
-    <template v-if="text">
-      <span ref="content" class="STooltip-content">
-        <slot />
-      </span>
+  <component :is="tag ?? 'span'" class="STooltip" @mouseenter="show" @mouseleave="hide">
+    <span class="content" ref="content">
+      <slot />
+    </span>
 
-      <transition name="fade">
-        <span v-show="on" ref="tip" class="STooltip-container" :class="classes">
-          <SMarkdown class="STooltip-tip" :content="text" inline />
-        </span>
-      </transition>
-    </template>
-
-    <template v-else>
-      <span class="STooltip-content">
-        <slot />
+    <transition name="fade">
+      <span v-show="on" class="container" :class="classes" ref="tip">
+        <span v-if="$slots.text" class="tip"><slot name="text" /></span>
+        <SMarkdown v-else-if="text" tag="span" class="tip" :content="text" inline />
       </span>
-    </template>
+    </transition>
   </component>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .STooltip {
   position: relative;
 }
 
-.STooltip-container {
+.content {
+  white-space: nowrap;
+}
+
+.container {
   position: absolute;
-  display: block;
-  transition: opacity .25s;
   z-index: var(--z-index-tooltip);
+  display: block;
+  transition: opacity 0.25s;
 }
 
-.STooltip-container.fade-enter,
-.STooltip-container.fade-leave-to {
+.container.fade-enter-from,
+.container.fade-leave-to {
   opacity: 0;
-  &.top .STooltip-tip    { transform: translateY(8px); }
-  &.right .STooltip-tip  { transform: translateX(-8px); }
-  &.bottom .STooltip-tip { transform: translateY(-8px); }
-  &.left  .STooltip-tip  { transform: translateX(8px); }
+  &.top .tip    { transform: translateY(8px); }
+  &.right .tip  { transform: translateX(-8px); }
+  &.bottom .tip { transform: translateY(-8px); }
+  &.left  .tip  { transform: translateX(8px); }
 }
 
-.STooltip-container.top {
+.container.top {
   top: 0;
   left: 50%;
   padding-bottom: 8px;
   transform: translate(-50%, -100%);
 }
 
-.STooltip-container.right {
+.container.right {
   top: 50%;
   left: 100%;
   transform: translate(8px, -50%);
 }
 
-.STooltip-container.bottom {
+.container.bottom {
   bottom: 0;
   left: 50%;
   padding-top: 8px;
   transform: translate(-50%, 100%);
 }
 
-.STooltip-container.left {
+.container.left {
   top: 50%;
   right: 100%;
   transform: translate(-8px, -50%);
 }
 
-.STooltip-tip {
+.tip {
   display: block;
-  border-radius: 4px;
+  border: 1px solid var(--tooltip-border-color);
+  border-radius: 6px;
   padding: 12px;
   width: max-content;
-  max-width: 288px;
+  max-width: var(--tooltip-max-width);
   line-height: 18px;
   font-size: 12px;
   font-weight: 500;
-  color: var(--c-text-dark-1);
-  background-color: rgba(0, 0, 0, .9);
-  transition: transform .25s;
+  color: var(--tooltip-text-color);
+  background-color: var(--tooltip-bg-color);
+  transition: transform 0.25s;
 }
 
-.STooltip-tip :deep(a) {
-  color: var(--c-info);
+.tip :deep(a) {
+  color: var(--c-info-text);
 
   &:hover {
-    color: var(--c-info-dark);
+    color: var(--c-info-text-dark);
   }
-}
-
-.STooltip-content {
-  white-space: nowrap;
 }
 </style>

@@ -12,7 +12,7 @@ const SCREEN_PADDING = 16
 export function useTooltip(
   content: Ref<HTMLElement | null>,
   tip: Ref<HTMLElement | null>,
-  position: Position
+  position: Ref<Position>
 ) {
   const on = ref(false)
 
@@ -72,7 +72,7 @@ export function useTooltip(
   }
 
   function setTransform(x: number): void {
-    tip.value!.style.transform = `translate(${x}px, ${position === 'top' ? -100 : 100}%)`
+    tip.value!.style.transform = `translate(${x}px, ${position.value === 'top' ? -100 : 100}%)`
   }
 
   function shouldPosition(): boolean {
@@ -80,7 +80,7 @@ export function useTooltip(
       return false
     }
 
-    return position === 'top' || position === 'bottom'
+    return position.value === 'top' || position.value === 'bottom'
   }
 
   return {

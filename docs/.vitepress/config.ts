@@ -52,7 +52,8 @@ function sidebar() {
         { text: 'SInputNumber', link: '/components/input-number' },
         { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
-        { text: 'SPill', link: '/components/pill' }
+        { text: 'SPill', link: '/components/pill' },
+        { text: 'STooltip', link: '/components/tooltip' }
       ]
     },
     {
