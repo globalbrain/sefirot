@@ -11,31 +11,35 @@ const props = defineProps<{
   validation?: Validatable
 }>()
 
-const hasError = computed(() => {
-  if (!props.validation) {
-    return false
-  }
-
-  return props.validation.$dirty && props.validation.$invalid
-})
-
-const errorMsg = computed(() => {
+const error = computed(() => {
   if (!props.validation) {
     return null
   }
 
-  const errors = props.validation.$errors
+  const errorMsg = getErrorMsg(props.validation)
+  const hasError = isDirtyAndInvalid(props.validation)
+  const showError = !props.hideError && hasError && errorMsg
+
+  return {
+    has: hasError,
+    show: showError,
+    msg: errorMsg
+  }
+})
+
+function isDirtyAndInvalid(validation: Validatable) {
+  return validation.$dirty && validation.$invalid
+}
+
+function getErrorMsg(validation: Validatable) {
+  const errors = validation.$errors
 
   return errors.length > 0 ? unref(errors[0].$message) : null
-})
-
-const showError = computed(() => {
-  return !props.hideError && hasError.value && errorMsg.value
-})
+}
 </script>
 
 <template>
-  <div class="SInputBase" :class="{ 'has-error': hasError }">
+  <div class="SInputBase" :class="{ 'has-error': error?.has }">
     <label v-if="label" class="label" :for="name">
       {{ label }} <span class="note">{{ note }}</span>
     </label>
@@ -44,7 +48,7 @@ const showError = computed(() => {
 
     <div class="help">
       <slot name="before-help" />
-      <p v-if="showError" class="help-error">{{ errorMsg }}</p>
+      <p v-if="error?.show" class="help-error">{{ error.msg }}</p>
       <p v-if="help" class="help-text">{{ help }}</p>
     </div>
   </div>

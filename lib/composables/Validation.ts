@@ -1,5 +1,4 @@
 import {
-  ErrorObject,
   GlobalConfig,
   Validation,
   ValidationArgs,
@@ -11,9 +10,13 @@ export type { Validation, ValidationArgs, GlobalConfig }
 
 export interface Validatable {
   readonly $dirty: boolean
-  readonly $errors: ErrorObject[]
   readonly $invalid: boolean
+  readonly $errors: ValidatableError[]
   readonly $touch: () => void
+}
+
+export interface ValidatableError {
+  readonly $message: string | Ref<string>
 }
 
 export function useValidation<
