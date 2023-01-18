@@ -2,12 +2,6 @@ import { DOMWrapper, VueWrapper, config } from '@vue/test-utils'
 import { Validatable } from 'sefirot/composables/Validation'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
-export interface EventTargetMock<T = any> {
-  target: T
-}
-
-export type EventTargetValueMock<T = any> = EventTargetMock<{ value: T }>
-
 export function setupRouter(): void {
   const router = createRouter({
     history: createMemoryHistory(),
@@ -22,12 +16,6 @@ export function setupRouter(): void {
 
 export function getInputValue(wrapper: DOMWrapper<any>): string {
   return (wrapper.element as any).value
-}
-
-export function eventTargetValue<T>(value: T): EventTargetValueMock<T> {
-  return {
-    target: { value }
-  }
 }
 
 export function createValidatable(params: Partial<Validatable> = {}): Validatable {
