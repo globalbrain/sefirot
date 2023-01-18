@@ -29,4 +29,47 @@ describe('components/SInputSelect', async () => {
     assertNotEmitted(wrapper, 'update:model-value')
     assertNotEmitted(wrapper, 'change')
   })
+
+  test('it accepts `value` prop', async () => {
+    const wrapper = mount(SInputSelect, {
+      props: {
+        options: [
+          { label: 'Item 001', value: 1 },
+          { label: 'Item 002', value: 2 }
+        ],
+        value: 2
+      }
+    })
+
+    expect(wrapper.find('select').element.value).toBe('1')
+  })
+
+  test('it accepts `modelValue` prop', () => {
+    const wrapper = mount(SInputSelect, {
+      props: {
+        options: [
+          { label: 'Item 001', value: 1 },
+          { label: 'Item 002', value: 2 }
+        ],
+        modelValue: 2
+      }
+    })
+
+    expect(wrapper.find('select').element.value).toBe('1')
+  })
+
+  test('it shows placeholder unless selected', async () => {
+    const wrapper = mount(SInputSelect, {
+      props: {
+        options: [
+          { label: 'Item 001', value: 1 },
+          { label: 'Item 002', value: 2 }
+        ],
+        placeholder: 'Placeholder'
+      }
+    })
+
+    const selectElement = wrapper.find('select').element
+    expect(selectElement.options[selectElement.selectedIndex].text).toBe('Placeholder')
+  })
 })

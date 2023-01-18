@@ -15,7 +15,7 @@ export interface Option {
   disabled?: boolean
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   note?: string
@@ -28,7 +28,10 @@ const props = defineProps<{
   modelValue?: Value
   validation?: Validatable
   hideError?: boolean
-}>()
+}>(), {
+  value: undefined,
+  modelValue: undefined
+})
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: Value): void
@@ -54,14 +57,6 @@ const isNotSelected = computed(() => {
 
 function isSelectedOption(option: Option): boolean {
   return option.value === _value.value
-}
-
-function focus() {
-  isFocused.value = true
-}
-
-function blur() {
-  isFocused.value = false
 }
 
 function emitChange(e: any): void {
@@ -92,8 +87,8 @@ function emitChange(e: any): void {
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
         :disabled="disabled"
-        @focus="focus"
-        @blur="blur"
+        @focus="isFocused = true"
+        @blur="isFocused = false"
         @change="emitChange"
       >
         <option
