@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   note?: string
+  info?: string
   help?: string
   placeholder?: string
   options: Option[]
@@ -78,6 +79,7 @@ function emitChange(e: any): void {
     :class="classes"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -118,6 +120,7 @@ function emitChange(e: any): void {
         <SIcon :icon="IconCaretDown" class="icon-svg down" />
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

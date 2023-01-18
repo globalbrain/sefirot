@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import IconQuestion from '@iconify-icons/ph/question'
 import { computed, unref } from 'vue'
 import { Validatable } from '../composables/Validation'
+import SIcon from './SIcon.vue'
+import STooltip from './STooltip.vue'
 
 const props = defineProps<{
   name?: string
-  note?: string
   label?: string
+  note?: string
+  info?: string
   help?: string
   hideError?: boolean
   validation?: Validatable
@@ -41,7 +45,12 @@ function getErrorMsg(validation: Validatable) {
 <template>
   <div class="SInputBase" :class="{ 'has-error': error?.has }">
     <label v-if="label" class="label" :for="name">
-      {{ label }} <span class="note">{{ note }}</span>
+      <STooltip v-if="info" :text="info">
+        {{ label }} <SIcon class="info-icon" :icon="IconQuestion" />
+        <template v-if="$slots.info" #text><slot name="info" /></template>
+      </STooltip>
+      <template v-else>{{ label }}</template>
+      <span class="note">{{ note }}</span>
     </label>
 
     <slot />
@@ -90,6 +99,13 @@ function getErrorMsg(validation: Validatable) {
   color: var(--input-label-color);
   cursor: pointer;
   transition: color 0.25s;
+}
+
+.info-icon {
+  display: inline-block;
+  vertical-align: baseline;
+  margin-bottom: -0.1em;
+  color: var(--c-text-2);
 }
 
 .note {

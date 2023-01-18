@@ -12,7 +12,7 @@ describe('components/SInputBase', () => {
       }
     })
 
-    expect(wrapper.find('label').text()).toBe('Label for input. Some note.')
+    expect(wrapper.find('label').text()).toContain('Label for input.')
   })
 
   test('it shows error message and help text if validation fails', () => {

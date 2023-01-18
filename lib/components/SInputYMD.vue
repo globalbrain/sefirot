@@ -17,6 +17,7 @@ const props = defineProps<{
   size?: Size
   label?: string
   note?: string
+  info?: string
   help?: string
   noYear?: boolean
   noMonth?: boolean
@@ -101,6 +102,7 @@ function createRequiredTouched(): boolean[] {
     :class="[size ?? 'small', { disabled }]"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -145,6 +147,7 @@ function createRequiredTouched(): boolean[] {
         @blur="updateDate"
       >
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

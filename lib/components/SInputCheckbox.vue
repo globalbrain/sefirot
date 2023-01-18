@@ -11,6 +11,7 @@ const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
   label: { type: String, default: null },
   note: { type: String, default: null },
+  info: { type: String, default: null },
   help: { type: String, default: null },
   text: { type: String, required: true },
   modelValue: { type: Boolean, required: true },
@@ -30,6 +31,7 @@ function emitChange() {
     :class="[size]"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :validation="validation"
   >
@@ -44,6 +46,7 @@ function emitChange() {
         <p class="text">{{ text }}</p>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

@@ -15,6 +15,7 @@ const props = defineProps({
   name: { type: String, default: null },
   label: { type: String, default: null },
   note: { type: String, default: null },
+  info: { type: String, default: null },
   help: { type: String, default: null },
   options: { type: Array as PropType<CheckboxOption[]>, required: true },
   modelValue: { type: Array, required: true }
@@ -42,6 +43,7 @@ function handleChange(value: unknown): void {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
   >
     <div class="container">
@@ -55,6 +57,7 @@ function handleChange(value: unknown): void {
         </div>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

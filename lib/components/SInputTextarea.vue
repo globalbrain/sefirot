@@ -10,6 +10,7 @@ const props = defineProps<{
   name?: string
   label?: string
   note?: string
+  info?: string
   help?: string
   placeholder?: string
   disabled?: boolean
@@ -45,6 +46,7 @@ function emitBlur(e: FocusEvent): void {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -59,6 +61,7 @@ function emitBlur(e: FocusEvent): void {
       @input="emitInput"
       @blur="emitBlur"
     />
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

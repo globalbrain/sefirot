@@ -10,6 +10,7 @@ const props = defineProps<{
   name?: string
   label?: string
   note?: string
+  info?: string
   text?: string
   help?: string
   disabled?: boolean
@@ -39,6 +40,7 @@ function emitChange(): void {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
   >
@@ -51,6 +53,7 @@ function emitChange(): void {
         </div>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

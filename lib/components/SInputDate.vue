@@ -9,6 +9,7 @@ const props = defineProps<{
   name?: string
   label?: string
   note?: string
+  info?: string
   help?: string
   hideError?: boolean
   modelValue: Day | null
@@ -42,6 +43,7 @@ function emitBlur() {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -69,6 +71,7 @@ function emitBlur() {
         >
       </DatePicker>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

@@ -39,6 +39,7 @@ const props = defineProps<{
   size?: Size
   label?: string
   note?: string
+  info?: string
   help?: string
   placeholder?: string
   noSearch?: boolean
@@ -128,6 +129,7 @@ function handleArray(value: OptionValue) {
     :class="classes"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :validation="validation"
   >
@@ -163,6 +165,7 @@ function handleArray(value: OptionValue) {
         <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 
