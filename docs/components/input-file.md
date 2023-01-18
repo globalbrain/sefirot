@@ -159,20 +159,24 @@ interface Props {
 
 ### `validation`
 
-The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation opject and displays error if there're any.
+The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
 
 ```ts
-import { ErrorObject } from '@vuelidate/core'
+import { Ref } from 'vue'
 
 interface Props {
   validation?: Validatable
 }
 
-interface Validatable {
+export interface Validatable {
   readonly $dirty: boolean
-  readonly $errors: ErrorObject[]
   readonly $invalid: boolean
+  readonly $errors: ValidatableError[]
   readonly $touch: () => void
+}
+
+export interface ValidatableError {
+  readonly $message: string | Ref<string>
 }
 ```
 

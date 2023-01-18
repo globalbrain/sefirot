@@ -1,4 +1,5 @@
 import { DOMWrapper, VueWrapper, config } from '@vue/test-utils'
+import { Validatable } from 'sefirot/composables/Validation'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 export interface EventTargetMock<T = any> {
@@ -26,6 +27,15 @@ export function getInputValue(wrapper: DOMWrapper<any>): string {
 export function eventTargetValue<T>(value: T): EventTargetValueMock<T> {
   return {
     target: { value }
+  }
+}
+
+export function createValidatable(params: Partial<Validatable> = {}): Validatable {
+  return {
+    $dirty: params.$dirty ?? false,
+    $invalid: params.$invalid ?? false,
+    $errors: params.$errors ?? [],
+    $touch: params.$touch ?? (() => {})
   }
 }
 
