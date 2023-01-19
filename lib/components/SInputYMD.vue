@@ -16,8 +16,8 @@ export type ValueType = 'year' | 'month' | 'date'
 const props = defineProps<{
   size?: Size
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   noYear?: boolean
   noMonth?: boolean

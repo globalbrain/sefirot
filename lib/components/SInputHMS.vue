@@ -16,8 +16,8 @@ export type ValueType = 'hour' | 'minute' | 'second'
 const props = defineProps<{
   size?: Size
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   noHour?: boolean
   noMinute?: boolean

@@ -38,8 +38,8 @@ export interface OptionAvatar extends OptionBase {
 const props = defineProps<{
   size?: Size
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   placeholder?: string
   noSearch?: boolean

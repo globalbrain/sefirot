@@ -8,8 +8,8 @@ import STooltip from './STooltip.vue'
 const props = defineProps<{
   name?: string
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   hideError?: boolean
   validation?: Validatable

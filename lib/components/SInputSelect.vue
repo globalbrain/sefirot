@@ -18,8 +18,8 @@ export interface Option {
 const props = withDefaults(defineProps<{
   size?: Size
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   placeholder?: string
   options: Option[]

@@ -15,8 +15,8 @@ const props = withDefaults(defineProps<{
   size?: Size
   name?: string
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   options: Option[]
   nullable?: boolean

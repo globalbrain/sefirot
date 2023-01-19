@@ -8,8 +8,8 @@ export type Size = 'mini' | 'small' | 'medium'
 const props = defineProps<{
   size?: Size
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   text?: string
   placeholder?: string

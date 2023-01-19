@@ -11,8 +11,8 @@ const props = defineProps<{
   size?: Size
   name?: string
   label?: string
-  note?: string
   info?: string
+  note?: string
   help?: string
   type?: string
   placeholder?: string
