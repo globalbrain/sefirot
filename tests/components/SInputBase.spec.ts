@@ -13,6 +13,7 @@ describe('components/SInputBase', () => {
     })
 
     expect(wrapper.find('label').text()).toContain('Label for input.')
+    expect(wrapper.find('.note').text()).toBe('Some note.')
   })
 
   test('it shows error message and help text if validation fails', () => {
@@ -48,5 +49,30 @@ describe('components/SInputBase', () => {
     })
 
     expect(wrapper.find('.help-error').exists()).toBe(false)
+  })
+
+  test('it shows info', () => {
+    const wrapper = mount(SInputBase, {
+      props: {
+        label: 'Label for input.',
+        info: 'Helpful message.'
+      }
+    })
+
+    expect(wrapper.find('.tip').text()).toBe('Helpful message.')
+  })
+
+  test('it prefers info slot over prop', () => {
+    const wrapper = mount(SInputBase, {
+      props: {
+        label: 'Label for input.',
+        info: 'Helpful message.'
+      },
+      slots: {
+        info: 'Info in slot.'
+      }
+    })
+
+    expect(wrapper.find('.tip').text()).toBe('Info in slot.')
   })
 })
