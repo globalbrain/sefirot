@@ -59,7 +59,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   size="small"
   :options="[...]"
@@ -77,10 +77,28 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   label="Name"
   :options="[...]"
+  v-model="..."
+/>
+```
+
+### `info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputSelect
+  label="Country"
+  info="Some helpful information."
   v-model="..."
 />
 ```
@@ -95,7 +113,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   label="Company URL"
   note="Optional"
@@ -114,7 +132,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   placeholder="Please select"
   :options="[...]"
@@ -140,7 +158,7 @@ export interface Option {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[
     { label: 'Item 001', value: 1 },
@@ -161,7 +179,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   nullable
@@ -179,7 +197,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   disabled
@@ -197,7 +215,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   :value="1"
@@ -214,7 +232,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
@@ -244,7 +262,7 @@ export interface ValidatableError {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
@@ -262,13 +280,29 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
   :validation="validation"
   hide-error
 />
+```
+
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputSelect label="Country" v-model="...">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputSelect>
 ```
 
 ## Events

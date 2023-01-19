@@ -47,7 +47,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber size="small" v-model="..." />
 ```
 
@@ -61,7 +61,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber name="age" v-model="..." />
 ```
 
@@ -75,8 +75,26 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber label="Age" v-model="..." />
+```
+
+### `info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputNumber
+  label="Age"
+  info="Some helpful information."
+  v-model="..."
+/>
 ```
 
 ### `note`
@@ -89,7 +107,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber label="Age" note="Optional" v-model="..." />
 ```
 
@@ -103,7 +121,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber placeholder="123456789" v-model="..." />
 ```
 
@@ -117,7 +135,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber align="right" v-model="..." />
 ```
 
@@ -131,7 +149,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber separator v-model="..." />
 ```
 
@@ -145,7 +163,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber disabled v-model="..." />
 ```
 
@@ -159,7 +177,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber :value="1" />
 ```
 
@@ -173,7 +191,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber v-model="1" />
 ```
 
@@ -200,7 +218,7 @@ export interface ValidatableError {
 }
 ```
 
-```vue
+```vue-html
 <SInputNumber v-model="1" :validation="validation" />
 ```
 
@@ -214,12 +232,28 @@ interface Props {
 }
 ```
 
-```vue
-<SInputSelect
+```vue-html
+<SInputNumber
   v-model="1"
   :validation="validation"
   hide-error
 />
+```
+
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputNumber label="Age" v-model="...">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputNumber>
 ```
 
 ## Events

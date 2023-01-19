@@ -232,7 +232,7 @@ Here are the list of slots you may define within the component.
 Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
-<SInputFile label="Upload image" v-model="name">
+<SInputFile label="Upload image" v-model="...">
   <template #info>
     Learn more about this field <SLink href="...">here</SLink>.
   </template>

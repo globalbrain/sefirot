@@ -59,7 +59,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   size="small"
   :options="[...]"
@@ -77,10 +77,28 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   label="Name"
   :options="[...]"
+  v-model="..."
+/>
+```
+
+### `info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputRadios
+  label="Domain"
+  info="Some helpful information."
   v-model="..."
 />
 ```
@@ -95,7 +113,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   label="Company URL"
   note="Optional"
@@ -119,7 +137,7 @@ export interface Option {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[
     { label: 'Item 001', value: 1 },
@@ -140,7 +158,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   nullable
@@ -158,7 +176,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   :value="1"
@@ -175,7 +193,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
@@ -205,7 +223,7 @@ export interface ValidatableError {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
@@ -223,13 +241,29 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
   :validation="validation"
   hide-error
 />
+```
+
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputRadios label="Domain" v-model="...">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputRadios>
 ```
 
 ## Events
