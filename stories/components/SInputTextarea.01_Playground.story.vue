@@ -12,6 +12,7 @@ const text = ref('')
     <SInputTextarea
       name="name"
       label="Label"
+      info="Some helpful information."
       note="Note text"
       help="This is a help text."
       placeholder="Placeholder text."

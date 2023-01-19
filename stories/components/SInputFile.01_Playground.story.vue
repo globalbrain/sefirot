@@ -8,6 +8,7 @@ function state() {
   return {
     size: 'small',
     label: 'Label',
+    info: 'Some helpful information.',
     note: 'Note text',
     text: 'Choose File',
     placeholder: 'No file chosen',
@@ -38,6 +39,10 @@ function state() {
         v-model="state.label"
       />
       <HstText
+        title="info"
+        v-model="state.info"
+      />
+      <HstText
         title="note"
         v-model="state.note"
       />
@@ -64,6 +69,7 @@ function state() {
         :class="{ 'has-error': state.error }"
         :size="state.size"
         :label="state.label"
+        :info="state.info"
         :note="state.note"
         :help="state.help"
         :text="state.text"

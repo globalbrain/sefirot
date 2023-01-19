@@ -15,6 +15,7 @@ function state() {
   return {
     size: 'small',
     label: 'Label',
+    info: 'Some helpful information.',
     note: 'Note text',
     placeholder: 'Please select',
     help: 'This is a help text.',
@@ -44,6 +45,10 @@ function state() {
       <HstText
         title="label"
         v-model="state.label"
+      />
+      <HstText
+        title="info"
+        v-model="state.info"
       />
       <HstText
         title="note"
@@ -76,6 +81,7 @@ function state() {
         :class="{ 'has-error': state.error }"
         :size="state.size"
         :label="state.label"
+        :info="state.info"
         :note="state.note"
         :help="state.help"
         :placeholder="state.placeholder"

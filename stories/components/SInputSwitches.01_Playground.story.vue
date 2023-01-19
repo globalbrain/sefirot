@@ -19,6 +19,7 @@ const options = [
       class="switches"
       name="input"
       label="Label"
+      info="Some helpful information."
       note="Note text"
       help="This is a help text."
       :options="options"

@@ -9,6 +9,7 @@ function state() {
   return {
     size: 'small',
     label: 'Label',
+    info: 'Some helpful information.',
     note: 'Note text',
     placeholder: '123,456,789',
     help: 'This is a help text.',
@@ -44,6 +45,10 @@ function onInput(value: number | null) {
       <HstText
         title="label"
         v-model="state.label"
+      />
+      <HstText
+        title="info"
+        v-model="state.info"
       />
       <HstText
         title="note"
@@ -85,6 +90,7 @@ function onInput(value: number | null) {
         :class="{ 'has-error': state.error }"
         :size="state.size"
         :label="state.label"
+        :info="state.info"
         :note="state.note"
         :help="state.help"
         :placeholder="state.placeholder"
