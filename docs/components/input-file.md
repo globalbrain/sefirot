@@ -11,7 +11,7 @@ const input = ref(null)
 
 <Showcase
   path="/components/SInputFile.vue"
-  story="/stories-components-sinputradios-01-playground-story-vue"
+  story="/stories-components-sinputfile-01-playground-story-vue"
 >
   <SInputFile placeholder="No file choosen" v-model="input" />
 </Showcase>
@@ -47,7 +47,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile size="small" v-model="..." />
 ```
 
@@ -61,8 +61,26 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile label="Upload file" v-model="..." />
+```
+
+### `info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputFile
+  label="Upload image"
+  info="This will be used as your avatar."
+  v-model="..."
+/>
 ```
 
 ### `note`
@@ -75,7 +93,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile
   label="Upload file"
   note="Optional"
@@ -93,7 +111,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile
   label="Upload file"
   help="Accepts only JPG and PNG."
@@ -111,7 +129,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile text="Select File" v-model="..." />
 ```
 
@@ -125,7 +143,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputFile placeholder="No file choosen" v-model="..." />
 ```
 
@@ -139,8 +157,8 @@ interface Props {
 }
 ```
 
-```vue
-<SInputRadios :value="file" />
+```vue-html
+<SInputFile :value="file" />
 ```
 
 ### `model-value`
@@ -153,8 +171,8 @@ interface Props {
 }
 ```
 
-```vue
-<SInputRadios v-model="file" />
+```vue-html
+<SInputFile v-model="file" />
 ```
 
 ### `validation`
@@ -180,8 +198,8 @@ export interface ValidatableError {
 }
 ```
 
-```vue
-<SInputRadios
+```vue-html
+<SInputFile
   v-model="file"
   :validation="validation"
 />
@@ -197,12 +215,28 @@ interface Props {
 }
 ```
 
-```vue
-<SInputRadios
+```vue-html
+<SInputFile
   v-model="file"
   :validation="validation"
   hide-error
 />
+```
+
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputFile label="Upload image" v-model="name">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputFile>
 ```
 
 ## Events

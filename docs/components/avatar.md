@@ -49,7 +49,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar size="medium" image="/image.jpg" />
 ```
 
@@ -63,7 +63,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar image="/image.jpg" />
 ```
 
@@ -77,6 +77,6 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar name="John Doe" />
 ```

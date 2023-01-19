@@ -45,7 +45,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SPill tag="div" label="Pill" />
 ```
 
@@ -59,7 +59,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SPill size="small" label="Pill" />
 ```
 
@@ -73,7 +73,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SPill type="fill" label="Pill" />
 ```
 
@@ -95,7 +95,7 @@ type Mode =
   | 'danger'
 ```
 
-```vue
+```vue-html
 <SPill mode="neutral" label="Pill" />
 ```
 
@@ -109,7 +109,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SPill label="Pill" />
 ```
 
@@ -123,7 +123,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SPill label="Button" clickable />
 ```
 

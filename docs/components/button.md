@@ -45,7 +45,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton tag="div" label="Button" />
 ```
 
@@ -66,7 +66,7 @@ type Size =
   | 'jumbo'
 ```
 
-```vue
+```vue-html
 <SButton size="small" label="Button" />
 ```
 
@@ -82,7 +82,7 @@ interface Props {
 type Size = 'fill' | 'outline' | 'text'
 ```
 
-```vue
+```vue-html
 <SButton type="fill" label="Button" />
 ```
 
@@ -106,7 +106,7 @@ type Mode =
   | 'danger'
 ```
 
-```vue
+```vue-html
 <SButton mode="neutral" label="Button" />
 ```
 
@@ -120,7 +120,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" />
 ```
 
@@ -154,7 +154,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" href="https://example.com" />
 ```
 
@@ -168,7 +168,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" rounded />
 ```
 
@@ -182,7 +182,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" block />
 ```
 
@@ -196,7 +196,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" loading />
 ```
 
@@ -210,7 +210,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" disabled />
 ```
 

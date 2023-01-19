@@ -64,7 +64,7 @@ interface Props {
 }
 ```
 
-```html
+```vue-html
 <STooltip tag="div" text="...">
   ...
 </STooltip>
@@ -80,7 +80,7 @@ interface Props {
 }
 ```
 
-```html
+```vue-html
 <STooltip text="Tooltip text.">
   ...
 </STooltip>
@@ -96,7 +96,7 @@ interface Props {
 }
 ```
 
-```html
+```vue-html
 <STooltip text="..." position="bottom">
   ...
 </STooltip>
@@ -110,17 +110,17 @@ Here are the list of slots you may define within the component.
 
 The content that a user would hover over to display tooltip.
 
-```html
+```vue-html
 <STooltip text="Tooltip text.">
   Hover this text
 </STooltip>
 ```
 
-### `text`
+### `text` {#text-slot}
 
-The content of tooltip. Same as `text` prop. When `text` prop and this slot is defined at same time, this slot will take precedence.
+The content of tooltip. Same as `text` prop. When `text` prop and this slot are defined at the same time, this slot will take precedence.
 
-```html
+```vue-html
 <STooltip>
   <template #default>
     Hover this text

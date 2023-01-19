@@ -20,7 +20,7 @@ export default defineConfig({
     outline: [2, 3],
 
     editLink: {
-      pattern: 'https://github.com/globalbrain/sefirot/edit/master/docs/:path'
+      pattern: 'https://github.com/globalbrain/sefirot/edit/main/docs/:path'
     },
 
     socialLinks: [
