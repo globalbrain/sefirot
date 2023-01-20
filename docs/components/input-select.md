@@ -49,7 +49,7 @@ const options = [
 
 Here are the list of props you may pass to the component.
 
-### `size`
+### `:size`
 
 Defines the size of the input. The default is `small`.
 
@@ -67,7 +67,7 @@ interface Props {
 />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the input.
 
@@ -85,7 +85,7 @@ interface Props {
 />
 ```
 
-### `info`
+### `:info`
 
 Shows help icon after the label and shows info in a tooltip when the user hovers the label.
 
@@ -103,7 +103,7 @@ interface Props {
 />
 ```
 
-### `note`
+### `:note`
 
 Adds small help text after the label. Best used along with `label` prop.
 
@@ -122,7 +122,7 @@ interface Props {
 />
 ```
 
-### `placeholder`
+### `:placeholder`
 
 Defines the placeholder text to show when the value is empty. When `nullable` is set, and `placeholder` is not defined, it will defaults to `'Please select'`.
 
@@ -140,7 +140,7 @@ interface Props {
 />
 ```
 
-### `options`
+### `:options`
 
 The list of selectable options for the input.
 
@@ -169,7 +169,7 @@ export interface Option {
 />
 ```
 
-### `nullable`
+### `:nullable`
 
 Enables an user to select `null` value option. The default is `false`. When this prop is set, the placeholder will be shown even if `placeholder` prop is not set in order to add `null` value option for users to select.
 
@@ -187,7 +187,7 @@ interface Props {
 />
 ```
 
-### `disabled`
+### `:disabled`
 
 Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
 
@@ -205,7 +205,7 @@ interface Props {
 />
 ```
 
-### `value`
+### `:value`
 
 Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
@@ -222,7 +222,7 @@ interface Props {
 />
 ```
 
-### `model-value`
+### `:model-value`
 
 The `v-model` binding for the input.
 
@@ -239,7 +239,7 @@ interface Props {
 />
 ```
 
-### `validation`
+### `:validation`
 
 The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
 
@@ -270,7 +270,7 @@ export interface ValidatableError {
 />
 ```
 
-### `hide-error`
+### `:hide-error`
 
 Stop showing validation error message even when there are errors. This prop will not prevent the error color from appearing.
 
@@ -293,7 +293,7 @@ interface Props {
 
 Here are the list of slots you may define within the component.
 
-### `info` {#info-slot}
+### `#info` {#info-slot}
 
 Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
 
@@ -309,7 +309,7 @@ Same as `info` prop. When `info` prop and this slot are defined at the same time
 
 Here are the list of events the component may emit.
 
-### `update:model-value`
+### `@update:model-value`
 
 Emits when the user selects the item. This event is always emitted together with `change` event.
 
@@ -321,7 +321,7 @@ interface Emits {
 type Value = string | number | boolean | null
 ```
 
-### `change`
+### `@change`
 
 Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
 

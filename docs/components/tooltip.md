@@ -54,7 +54,7 @@ import STooltip from '@globalbrain/sefirot/lib/components/STooltip.vue'
 
 Here are the list of props you may pass to the component.
 
-### `tag`
+### `:tag`
 
 Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `span`.
 
@@ -70,7 +70,7 @@ interface Props {
 </STooltip>
 ```
 
-### `text`
+### `:text`
 
 Defines the content of tooltip.
 
@@ -86,7 +86,7 @@ interface Props {
 </STooltip>
 ```
 
-### `position`
+### `:position`
 
 Defines the position of the tooltip. Defaults to `'top'`.
 
@@ -106,7 +106,7 @@ interface Props {
 
 Here are the list of slots you may define within the component.
 
-### `default`
+### `#default`
 
 The content that a user would hover over to display tooltip.
 
@@ -116,7 +116,7 @@ The content that a user would hover over to display tooltip.
 </STooltip>
 ```
 
-### `text` {#text-slot}
+### `#text` {#text-slot}
 
 The content of tooltip. Same as `text` prop. When `text` prop and this slot are defined at the same time, this slot will take precedence.
 

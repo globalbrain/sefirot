@@ -37,7 +37,7 @@ const input = ref<number | null>(null)
 
 Here are the list of props you may pass to the component.
 
-### `size`
+### `:size`
 
 Defines the size of the input. The default is `small`.
 
@@ -51,7 +51,7 @@ interface Props {
 <SInputNumber size="small" v-model="..." />
 ```
 
-### `name`
+### `:name`
 
 Defines the `name` attribute of the underlining `<input>` element.
 
@@ -65,7 +65,7 @@ interface Props {
 <SInputNumber name="age" v-model="..." />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the input.
 
@@ -79,7 +79,7 @@ interface Props {
 <SInputNumber label="Age" v-model="..." />
 ```
 
-### `info`
+### `:info`
 
 Shows help icon after the label and shows info in a tooltip when the user hovers the label.
 
@@ -97,7 +97,7 @@ interface Props {
 />
 ```
 
-### `note`
+### `:note`
 
 Adds small help text after the label. Best used along with `label` prop.
 
@@ -111,7 +111,7 @@ interface Props {
 <SInputNumber label="Age" note="Optional" v-model="..." />
 ```
 
-### `placeholder`
+### `:placeholder`
 
 Defines the placeholder text to show when the value is empty.
 
@@ -125,7 +125,7 @@ interface Props {
 <SInputNumber placeholder="123456789" v-model="..." />
 ```
 
-### `align`
+### `:align`
 
 Defines how the input value is aligned inside the input box. The default is `left`.
 
@@ -139,7 +139,7 @@ interface Props {
 <SInputNumber align="right" v-model="..." />
 ```
 
-### `separator`
+### `:separator`
 
 When this prop is set, the value gets displayed by adding comma to every 3 digits in the number. For example, `123456789` becomes `123,456,789`. The default is `false`.
 
@@ -153,7 +153,7 @@ interface Props {
 <SInputNumber separator v-model="..." />
 ```
 
-### `disabled`
+### `:disabled`
 
 Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
 
@@ -167,7 +167,7 @@ interface Props {
 <SInputNumber disabled v-model="..." />
 ```
 
-### `value`
+### `:value`
 
 Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
@@ -181,7 +181,7 @@ interface Props {
 <SInputNumber :value="1" />
 ```
 
-### `model-value`
+### `:model-value`
 
 The `v-model` binding for the input.
 
@@ -195,7 +195,7 @@ interface Props {
 <SInputNumber v-model="1" />
 ```
 
-### `validation`
+### `:validation`
 
 The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
 
@@ -222,7 +222,7 @@ export interface ValidatableError {
 <SInputNumber v-model="1" :validation="validation" />
 ```
 
-### `hide-error`
+### `:hide-error`
 
 Stop showing validation error message even when there are errors. This prop will not prevent the error color from appearing.
 
@@ -244,7 +244,7 @@ interface Props {
 
 Here are the list of slots you may define within the component.
 
-### `info` {#info-slot}
+### `#info` {#info-slot}
 
 Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
 
@@ -260,7 +260,7 @@ Same as `info` prop. When `info` prop and this slot are defined at the same time
 
 Here are the list of events the component may emit.
 
-### `update:model-value`
+### `@update:model-value`
 
 Emits when the user inputs any value. This event is always emitted together with `input` event.
 
@@ -270,7 +270,7 @@ interface Emits {
 }
 ```
 
-### `input`
+### `@input`
 
 Emits when the user inputs any value. This event is always emitted together with `update:model-value` event.
 

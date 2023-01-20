@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconQuestion from '@iconify-icons/ph/question'
-import { computed, unref } from 'vue'
+import { computed, unref, useSlots } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
@@ -14,6 +14,12 @@ const props = defineProps<{
   hideError?: boolean
   validation?: Validatable
 }>()
+
+const slots = useSlots()
+
+const hasInfo = computed(() => {
+  return slots.info || props.info
+})
 
 const error = computed(() => {
   if (!props.validation) {
@@ -45,12 +51,18 @@ function getErrorMsg(validation: Validatable) {
 <template>
   <div class="SInputBase" :class="{ 'has-error': error?.has }">
     <label v-if="label" class="label" :for="name">
-      <STooltip v-if="info" :text="info">
-        {{ label }} <SIcon class="info-icon" :icon="IconQuestion" />
+      <STooltip v-if="hasInfo" :text="info">
+        <div class="label-text">
+          <span class="label-text-value">{{ label }}</span>
+          <SIcon class="label-text-info" :icon="IconQuestion" />
+        </div>
         <template v-if="$slots.info" #text><slot name="info" /></template>
       </STooltip>
-      <template v-else>{{ label }}</template>
-      <span class="note">{{ note }}</span>
+      <div v-else class="label-text">
+        <span class="label-text-value">{{ label }}</span>
+      </div>
+
+      <span class="label-note">{{ note }}</span>
     </label>
 
     <slot />
@@ -65,50 +77,61 @@ function getErrorMsg(validation: Validatable) {
 
 <style lang="postcss" scoped>
 .SInputBase.mini {
-  .label {
-    padding-bottom: 6px;
-    font-size: 12px;
-  }
+  .label            { padding-bottom: 6px; }
+  .label-text-value { font-size: 12px; }
+  .label-text-info  { width: 14px; height: 14px; }
 }
 
 .SInputBase.small {
-  .label {
-    padding-bottom: 8px;
-    font-size: 14px;
-  }
+  .label            { padding-bottom: 8px; }
+  .label-text-value { font-size: 14px; }
+  .label-note       { transform: translateY(1px); }
 }
 
 .SInputBase.medium {
-  .label {
-    padding-bottom: 8px;
-    font-size: 14px;
-  }
+  .label            { padding-bottom: 8px; }
+  .label-text-value { font-size: 14px; }
+  .label-note       { transform: translateY(1px); }
 }
 
 .SInputBase.has-error {
-  .label {
+  .label-text-value {
     color: var(--input-error-text-color);
   }
 }
 
 .label {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 100%;
   line-height: 16px;
   font-weight: 500;
-  color: var(--input-label-color);
   cursor: pointer;
   transition: color 0.25s;
 }
 
-.info-icon {
-  display: inline-block;
-  vertical-align: baseline;
-  margin-bottom: -0.1em;
-  color: var(--c-text-2);
+.label-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.note {
+.label-text-value {
+  color: var(--input-label-color);
+}
+
+.label-text-info {
+  width: 16px;
+  height: 16px;
+  color: var(--c-text-2);
+  transition: color 0.25s;
+
+  .label-text:hover & {
+    color: var(--c-info-text);
+  }
+}
+
+.label-note {
   display: inline-block;
   margin-left: 8px;
   font-size: 12px;

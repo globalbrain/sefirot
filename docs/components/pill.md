@@ -35,7 +35,7 @@ import SPill from '@globalbrain/sefirot/lib/components/SPill.vue'
 
 Here are the list of props you may pass to the component.
 
-### `tag`
+### `:tag`
 
 Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
 
@@ -49,7 +49,7 @@ interface Props {
 <SPill tag="div" label="Pill" />
 ```
 
-### `size`
+### `:size`
 
 Defines the size of the pill. The default is `small`.
 
@@ -63,7 +63,7 @@ interface Props {
 <SPill size="small" label="Pill" />
 ```
 
-### `type`
+### `:type`
 
 Defines how the pill look. The default is `dimm`.
 
@@ -77,7 +77,7 @@ interface Props {
 <SPill type="fill" label="Pill" />
 ```
 
-### `mode`
+### `:mode`
 
 Defines the color of the pill. The default is `neutral`.
 
@@ -99,7 +99,7 @@ type Mode =
 <SPill mode="neutral" label="Pill" />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the pill.
 
@@ -113,7 +113,7 @@ interface Props {
 <SPill label="Pill" />
 ```
 
-### `clickable`
+### `:clickable`
 
 Mark pill clickable. When this prop is set, an user will be able to click the pill and the component will emit `click` event. Also, when this prop is set, the `button` HTML tag will be used instead of `span` unless `tag` prop is defined.
 
@@ -131,7 +131,7 @@ interface Props {
 
 Here are the list of events the component may emit.
 
-### `click`
+### `@click`
 
 Emits when an user clicks the button. This event will only be emitted when the `clickable` prop is set to `true`.
 
