@@ -8,6 +8,7 @@ const props = defineProps<{
   size?: Size
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   text: string
@@ -33,6 +34,7 @@ function onClick() {
     :class="[size ?? 'small']"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :validation="validation"
     :hide-error="hideError"
@@ -46,6 +48,7 @@ function onClick() {
         <p class="text">{{ text }}</p>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

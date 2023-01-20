@@ -49,7 +49,7 @@ const options = [
 
 Here are the list of props you may pass to the component.
 
-### `size`
+### `:size`
 
 Defines the size of the input. The default is `small`.
 
@@ -59,7 +59,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   size="small"
   :options="[...]"
@@ -67,7 +67,7 @@ interface Props {
 />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the input.
 
@@ -77,7 +77,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   label="Name"
   :options="[...]"
@@ -85,7 +85,25 @@ interface Props {
 />
 ```
 
-### `note`
+### `:info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputSelect
+  label="Country"
+  info="Some helpful information."
+  v-model="..."
+/>
+```
+
+### `:note`
 
 Adds small help text after the label. Best used along with `label` prop.
 
@@ -95,7 +113,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   label="Company URL"
   note="Optional"
@@ -104,7 +122,7 @@ interface Props {
 />
 ```
 
-### `placeholder`
+### `:placeholder`
 
 Defines the placeholder text to show when the value is empty. When `nullable` is set, and `placeholder` is not defined, it will defaults to `'Please select'`.
 
@@ -114,7 +132,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   placeholder="Please select"
   :options="[...]"
@@ -122,7 +140,7 @@ interface Props {
 />
 ```
 
-### `options`
+### `:options`
 
 The list of selectable options for the input.
 
@@ -140,7 +158,7 @@ export interface Option {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[
     { label: 'Item 001', value: 1 },
@@ -151,7 +169,7 @@ export interface Option {
 />
 ```
 
-### `nullable`
+### `:nullable`
 
 Enables an user to select `null` value option. The default is `false`. When this prop is set, the placeholder will be shown even if `placeholder` prop is not set in order to add `null` value option for users to select.
 
@@ -161,7 +179,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   nullable
@@ -169,7 +187,7 @@ interface Props {
 />
 ```
 
-### `disabled`
+### `:disabled`
 
 Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
 
@@ -179,7 +197,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   disabled
@@ -187,7 +205,7 @@ interface Props {
 />
 ```
 
-### `value`
+### `:value`
 
 Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
@@ -197,14 +215,14 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   :value="1"
 />
 ```
 
-### `model-value`
+### `:model-value`
 
 The `v-model` binding for the input.
 
@@ -214,14 +232,14 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
 />
 ```
 
-### `validation`
+### `:validation`
 
 The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
 
@@ -244,7 +262,7 @@ export interface ValidatableError {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
@@ -252,7 +270,7 @@ export interface ValidatableError {
 />
 ```
 
-### `hide-error`
+### `:hide-error`
 
 Stop showing validation error message even when there are errors. This prop will not prevent the error color from appearing.
 
@@ -262,7 +280,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputSelect
   :options="[...]"
   v-model="1"
@@ -271,11 +289,27 @@ interface Props {
 />
 ```
 
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `#info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputSelect label="Country" v-model="...">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputSelect>
+```
+
 ## Events
 
 Here are the list of events the component may emit.
 
-### `update:model-value`
+### `@update:model-value`
 
 Emits when the user selects the item. This event is always emitted together with `change` event.
 
@@ -287,7 +321,7 @@ interface Emits {
 type Value = string | number | boolean | null
 ```
 
-### `change`
+### `@change`
 
 Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
 

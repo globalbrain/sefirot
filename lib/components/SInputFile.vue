@@ -8,6 +8,7 @@ export type Size = 'mini' | 'small' | 'medium'
 const props = defineProps<{
   size?: Size
   label?: string
+  info?: string
   note?: string
   help?: string
   text?: string
@@ -56,6 +57,7 @@ function onChange(e: Event) {
     :class="classes"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :validation="validation"
     :hide-error="hideError"
@@ -79,6 +81,7 @@ function onChange(e: Event) {
         <p v-else-if="placeholder" class="placeholder">{{ placeholder }}</p>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

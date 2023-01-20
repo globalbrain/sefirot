@@ -16,6 +16,7 @@ export type ValueType = 'hour' | 'minute' | 'second'
 const props = defineProps<{
   size?: Size
   label?: string
+  info?: string
   note?: string
   help?: string
   noHour?: boolean
@@ -111,6 +112,7 @@ function createRequiredTouched(): boolean[] {
     :class="[size, { disabled }]"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -147,9 +149,8 @@ function createRequiredTouched(): boolean[] {
       >
     </div>
 
-    <template #before-help>
-      <slot name="before-help" />
-    </template>
+    <template #before-help><slot name="before-help" /></template>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

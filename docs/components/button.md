@@ -35,7 +35,7 @@ import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 Here are the list of props you may pass to the component.
 
-### `tag`
+### `:tag`
 
 Defines how the HTML tag for the button. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `button`. The `tag` prop will take precedence even when the `href` prop is set.
 
@@ -45,11 +45,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton tag="div" label="Button" />
 ```
 
-### `size`
+### `:size`
 
 Defines the size of the button. The default is `medium`.
 
@@ -66,11 +66,11 @@ type Size =
   | 'jumbo'
 ```
 
-```vue
+```vue-html
 <SButton size="small" label="Button" />
 ```
 
-### `type`
+### `:type`
 
 Defines how the button look. The default is `fill`.
 
@@ -82,11 +82,11 @@ interface Props {
 type Size = 'fill' | 'outline' | 'text'
 ```
 
-```vue
+```vue-html
 <SButton type="fill" label="Button" />
 ```
 
-### `mode`
+### `:mode`
 
 Defines the color of the button. The default is `neutral`.
 
@@ -106,11 +106,11 @@ type Mode =
   | 'danger'
 ```
 
-```vue
+```vue-html
 <SButton mode="neutral" label="Button" />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the button.
 
@@ -120,11 +120,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" />
 ```
 
-### `icon`
+### `:icon`
 
 Prepend the given icon to the button. You may pass any `@iconify-icons` icons.
 
@@ -144,7 +144,7 @@ import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
 </template>
 ```
 
-### `href`
+### `:href`
 
 The href attribute to be used in for link. When this prop is set, the button element will use `SLink` component under the hood. However, when `tag` prop is set it will take the precedence.
 
@@ -154,11 +154,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" href="https://example.com" />
 ```
 
-### `rounded`
+### `:rounded`
 
 Make the button to have rounded corners.
 
@@ -168,11 +168,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" rounded />
 ```
 
-### `block`
+### `:block`
 
 Set the button's display value to `display: block`. The default button display value is `display: inline-block`.
 
@@ -182,11 +182,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" block />
 ```
 
-### `loading`
+### `:loading`
 
 Display a loading spinner. While this prop is set to true, the `click` event will not be emitted.
 
@@ -196,11 +196,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" loading />
 ```
 
-### `disabled`
+### `:disabled`
 
 Mark button as disabled. It will dimm the color of the button, and prevent `hover` or `click` styles. While this prop is set to true, the `click` event will not be emitted.
 
@@ -210,7 +210,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SButton label="Button" disabled />
 ```
 
@@ -218,7 +218,7 @@ interface Props {
 
 Here are the list of events the component may emit.
 
-### `click`
+### `@click`
 
 Emits when an user clicks the button. This event will not be emitted when the `loading` or the `disabled` prop is set to `true`.
 

@@ -11,6 +11,7 @@ const props = defineProps<{
   size?: Size
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   type?: string
@@ -92,6 +93,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -121,6 +123,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         </div>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

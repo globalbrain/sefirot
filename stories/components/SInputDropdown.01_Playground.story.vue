@@ -21,6 +21,7 @@ const options = [
   >
     <SInputDropdown
       label="Dropdown input"
+      info="Some helpful information."
       placeholder="Please select items"
       :options="options"
       nullable

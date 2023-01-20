@@ -39,7 +39,7 @@ import SAvatar from '@globalbrain/sefirot/lib/components/SAvatar.vue'
 
 Here are the list of props you may pass to the component.
 
-### `size`
+### `:size`
 
 Defines the size of the component. The default is `medium`.
 
@@ -49,11 +49,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar size="medium" image="/image.jpg" />
 ```
 
-### `avatar`
+### `:avatar`
 
 The path to the image. 
 
@@ -63,11 +63,11 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar image="/image.jpg" />
 ```
 
-### `name`
+### `:name`
 
 The name of the avatar user. The initial value of the name gets displayed. When `avatar` prop is set, this value gets ignored.
 
@@ -77,6 +77,6 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SAvatar name="John Doe" />
 ```

@@ -11,6 +11,7 @@ const props = defineProps<{
   size?: Size
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   placeholder?: string
@@ -70,6 +71,7 @@ function emitUpdate(value: string | null) {
     type="number"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :align="align"
     :placeholder="placeholder"
@@ -80,5 +82,7 @@ function emitUpdate(value: string | null) {
     :validation="validation"
     @update:model-value="emitUpdate"
     @input="emitUpdate"
-  />
+  >
+    <template v-if="$slots.info" #info><slot name="info" /></template>
+  </SInputText>
 </template>

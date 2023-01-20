@@ -38,6 +38,7 @@ export interface OptionAvatar extends OptionBase {
 const props = defineProps<{
   size?: Size
   label?: string
+  info?: string
   note?: string
   help?: string
   placeholder?: string
@@ -128,6 +129,7 @@ function handleArray(value: OptionValue) {
     :class="classes"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :validation="validation"
   >
@@ -163,6 +165,7 @@ function handleArray(value: OptionValue) {
         <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

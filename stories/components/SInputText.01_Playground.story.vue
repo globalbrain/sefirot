@@ -27,6 +27,7 @@ const { data, validation, init, validateAndNotify } = useForm<Data>({
     <SInputText
       name="name"
       label="Label"
+      info="Some helpful information."
       note="Required"
       help="Please fill in your name."
       placeholder="John Doe"
@@ -35,8 +36,8 @@ const { data, validation, init, validateAndNotify } = useForm<Data>({
     />
 
     <div class="actions">
-      <SButton mode="info" label="Submit" @click="validateAndNotify" />
-      <SButton mode="mute" label="Reset" @click="init" />
+      <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
+      <SButton size="small" mode="mute" label="Reset" @click="init" />
     </div>
   </Board>
 </template>

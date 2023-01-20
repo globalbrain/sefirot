@@ -49,7 +49,7 @@ const options = [
 
 Here are the list of props you may pass to the component.
 
-### `size`
+### `:size`
 
 Defines the size of the input. The default is `small`.
 
@@ -59,7 +59,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   size="small"
   :options="[...]"
@@ -67,7 +67,7 @@ interface Props {
 />
 ```
 
-### `label`
+### `:label`
 
 Defines the label text of the input.
 
@@ -77,7 +77,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   label="Name"
   :options="[...]"
@@ -85,7 +85,25 @@ interface Props {
 />
 ```
 
-### `note`
+### `:info`
+
+Shows help icon after the label and shows info in a tooltip when the user hovers the label.
+
+```ts
+interface Props {
+  info?: string
+}
+```
+
+```vue-html
+<SInputRadios
+  label="Domain"
+  info="Some helpful information."
+  v-model="..."
+/>
+```
+
+### `:note`
 
 Adds small help text after the label. Best used along with `label` prop.
 
@@ -95,7 +113,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   label="Company URL"
   note="Optional"
@@ -104,7 +122,7 @@ interface Props {
 />
 ```
 
-### `options`
+### `:options`
 
 The list of selectable options for the input.
 
@@ -119,7 +137,7 @@ export interface Option {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[
     { label: 'Item 001', value: 1 },
@@ -130,7 +148,7 @@ export interface Option {
 />
 ```
 
-### `nullable`
+### `:nullable`
 
 Enables the user to deselect options. The default is `false`.
 
@@ -140,7 +158,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   nullable
@@ -148,7 +166,7 @@ interface Props {
 />
 ```
 
-### `value`
+### `:value`
 
 Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
@@ -158,14 +176,14 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   :value="1"
 />
 ```
 
-### `model-value`
+### `:model-value`
 
 The `v-model` binding for the input.
 
@@ -175,14 +193,14 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
 />
 ```
 
-### `validation`
+### `:validation`
 
 The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
 
@@ -205,7 +223,7 @@ export interface ValidatableError {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
@@ -213,7 +231,7 @@ export interface ValidatableError {
 />
 ```
 
-### `hide-error`
+### `:hide-error`
 
 Stop showing validation error message even when there are errors. This prop will not prevent the error color from appearing.
 
@@ -223,7 +241,7 @@ interface Props {
 }
 ```
 
-```vue
+```vue-html
 <SInputRadios
   :options="[...]"
   v-model="1"
@@ -232,11 +250,27 @@ interface Props {
 />
 ```
 
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `#info` {#info-slot}
+
+Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SInputRadios label="Domain" v-model="...">
+  <template #info>
+    Learn more about this field <SLink href="...">here</SLink>.
+  </template>
+</SInputRadios>
+```
+
 ## Events
 
 Here are the list of events the component may emit.
 
-### `update:model-value`
+### `@update:model-value`
 
 Emits when the user selects the item. This event is always emitted together with `change` event.
 
@@ -248,7 +282,7 @@ interface Emits {
 type Value = string | number | boolean | null
 ```
 
-### `change`
+### `@change`
 
 Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
 

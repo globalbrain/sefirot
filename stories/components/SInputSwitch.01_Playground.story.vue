@@ -13,6 +13,7 @@ const on = ref(false)
       class="switch"
       name="input"
       label="Label"
+      info="Some helpful information."
       note="Note text"
       text="Text for the switch"
       help="This is a help text."

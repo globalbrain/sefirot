@@ -8,6 +8,7 @@ import SInputBase from './SInputBase.vue'
 const props = defineProps<{
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   hideError?: boolean
@@ -42,6 +43,7 @@ function emitBlur() {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -69,6 +71,7 @@ function emitBlur() {
         >
       </DatePicker>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<{
   size?: Size
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   options: Option[]
@@ -72,6 +73,7 @@ function onChange(value: string | number | boolean) {
     :class="[size ?? 'small']"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -88,5 +90,6 @@ function onChange(value: string | number | boolean) {
         </div>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>

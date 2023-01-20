@@ -16,6 +16,7 @@ export type ValueType = 'year' | 'month' | 'date'
 const props = defineProps<{
   size?: Size
   label?: string
+  info?: string
   note?: string
   help?: string
   noYear?: boolean
@@ -101,6 +102,7 @@ function createRequiredTouched(): boolean[] {
     :class="[size ?? 'small', { disabled }]"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
     :validation="validation"
@@ -145,6 +147,7 @@ function createRequiredTouched(): boolean[] {
         @blur="updateDate"
       >
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

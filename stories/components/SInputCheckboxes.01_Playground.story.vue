@@ -18,6 +18,7 @@ const options = [
     <SInputCheckboxes
       name="input"
       label="Label"
+      info="Some helpful information."
       note="Note text"
       help="This is a help text."
       :options="options"

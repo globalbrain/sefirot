@@ -15,6 +15,7 @@ const props = defineProps<{
   size?: Size
   name?: string
   label?: string
+  info?: string
   note?: string
   help?: string
   options: Option[]
@@ -52,6 +53,7 @@ function handleChange(value: string | number | boolean): void {
     :name="name"
     :label="label"
     :note="note"
+    :info="info"
     :help="help"
     :hide-error="hideError"
   >
@@ -67,6 +69,7 @@ function handleChange(value: string | number | boolean): void {
         </div>
       </div>
     </div>
+    <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 

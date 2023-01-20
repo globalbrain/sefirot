@@ -11,6 +11,7 @@ const value = ref(false)
   >
     <SInputCheckbox
       label="Label"
+      info="Some helpful information."
       note="Note text"
       text="Text for the checkbox"
       help="This is a help text."
