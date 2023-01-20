@@ -14,7 +14,7 @@ describe('validation/rules/decimal', () => {
     expect(rule.$validator(true, null, null)).toBe(false)
   })
 
-  test('it can set custome error message', () => {
+  test('it can set custom error message', () => {
     const rule = decimal('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })
