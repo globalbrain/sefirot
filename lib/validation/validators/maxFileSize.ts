@@ -6,5 +6,5 @@ export function maxFileSize(file: File, size: string): boolean {
       : /kb/i.test(size)
         ? 1e3
         : 1
-  return file.size <= factor * +size.replace(/\D/g, '')
+  return file.size <= factor * +size.replace(/[^\d\.]/g, '')
 }
