@@ -258,6 +258,7 @@ function updateTagsFilter(value: string) {
 <template>
   <Board
     title="Components / STable / 01. Playground"
+    docs="/components/table"
   >
     <STable class="table" :options="table" />
   </Board>

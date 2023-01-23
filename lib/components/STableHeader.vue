@@ -37,6 +37,7 @@ defineProps<{
 }
 
 .total {
+  margin: 0;
   padding: 13px 0 11px;
   line-height: 24px;
   font-size: 12px;

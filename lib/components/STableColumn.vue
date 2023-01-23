@@ -156,6 +156,7 @@ function stopDialogPositionListener() {
 
 .label {
   flex-grow: 1;
+  margin: 0;
   line-height: 40px;
   text-align: left;
   font-size: 12px;
