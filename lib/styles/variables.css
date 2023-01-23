@@ -623,7 +623,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --table-border: 1px solid var(--c-divider-light);
+  --table-border: 1px solid var(--c-divider-2);
   --table-border-top: var(--table-border);
   --table-border-right: var(--table-border);
   --table-border-bottom: var(--table-border);

@@ -182,6 +182,92 @@ const options = useTable({
 })
 ```
 
+## Total number of records
+
+You may define `total` option to display the total number of records in the table.
+
+```ts
+import { MaybeRef } from '@vueuse/core'
+
+interface UseTableOptions {
+  total?: MaybeRef<number | null | undefined>
+}
+```
+
+```ts
+const options = useTable({
+  total: 50
+})
+```
+
+## Reset filters button
+
+Define `reset` option to show "Reset filters" button on table header. You can define `onReset` callback to listen to the click event on this button.
+
+```ts
+import { MaybeRef } from '@vueuse/core'
+
+interface UseTableOptions {
+  reset?: MaybeRef<boolean | undefined>
+  onReset?(): void
+}
+```
+
+```ts
+const options = useTable({
+  reset: true,
+  onReset: () => { ... }
+})
+```
+
+## Pagination
+
+By passing in `total`, `page`, and `perPage` option, the table footer gets displayed with pagination. You can listen to "Prev" and "Next" button click callback via `onPrev` and `onNext` option. Note that if both `onPrev` or `onNext` is not defined, it will not show the "Prev" and "Next" buttons.
+
+```ts
+import { MaybeRef } from '@vueuse/core'
+
+interface UseTableOptions {
+  total?: MaybeRef<number | null | undefined>
+  page?: MaybeRef<number | null | undefined>
+  perPage?: MaybeRef<number | null | undefined>
+  onPrev?(): void
+  onNext?(): void
+}
+```
+
+```ts
+const options = useTable({
+  total: 50,
+  page: 1,
+  perPage: 25,
+  onPrev: () => { ... },
+  onNext: () => { ... }
+})
+```
+
+## Table Header & Footer
+
+The Table Header and Footer is the part where it shows additional information such as total number of records or pagnation. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
+
+If you would like to diaplay or hide the header and footer regardless of the other options presense, set `boolean` to `header` or `footer` option.
+
+```ts
+import { MaybeRef } from '@vueuse/core'
+
+interface UseTableOptions {
+  header?: MaybeRef<number | undefined>
+  footer?: MaybeRef<number | undefined>
+}
+```
+
+```ts
+const options = useTable({
+  header: true,
+  footer: true
+})
+```
+
 ## Props
 
 Here are the list of props you may pass to the component.
@@ -191,130 +277,10 @@ Here are the list of props you may pass to the component.
 The whole definition of the table. The `Table` object should be created via `useTable` composable. For the details on each options, please refer to the corresponding section of this document.
 
 ```ts
+import { Table } from '@globalbrain/sefirot/composables/Table'
+
 interface Props {
   options?: Table
-}
-
-interface Table {
-  orders: string[]
-  columns: TableColumns
-  records?: Record<string, any>[] | null
-  total?: number | null
-  page?: number | null
-  perPage?: number | null
-  reset?: boolean
-  borderless?: boolean
-  loading?: boolean
-  onPrev?(): void
-  onNext?(): void
-  onReset?(): void
-}
-
-interface TableColumns {
-  [name: string]: TableColumn
-}
-
-interface TableColumn {
-  label: string
-  className?: string
-  dropdown?: DropdownSection[]
-  cell?: TableCell | ((value: any, record: any) => TableCell)
-}
-
-type TableCell =
-  | TableCellText
-  | TableCellDay
-  | TableCellPill
-  | TableCellPills
-  | TableCellAvatar
-  | TableCellAvatars
-  | TableCellComponent
-
-type TableCellType =
-  | 'text'
-  | 'day'
-  | 'pill'
-  | 'pills'
-  | 'avatar'
-  | 'avatars'
-  | 'component'
-
-interface TableCellBase {
-  type: TableCellType
-}
-
-interface TableCellText extends TableCellBase {
-  type: 'text'
-  icon?: any
-  value?: string | ((value: any, record: any) => string)
-  link?(value: any, record: any): string
-  color?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
-  iconColor?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
-  onClick?(value: any, record: any): void
-}
-
-type TableCellTextColor =
-  | 'neutral'
-  | 'soft'
-  | 'mute'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-
-interface TableCellDay extends TableCellBase {
-  type: 'day'
-  format?: string
-  color?: 'neutral' | 'soft' | 'mute'
-}
-
-interface TableCellPill extends TableCellBase {
-  type: 'pill'
-  value?: string | ((value: any) => string)
-  color?: TableCellPillColor | ((value: any) => TableCellPillColor)
-}
-
-type TableCellPillColor =
-  | 'neutral'
-  | 'mute'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-
-interface TableCellPills extends TableCellBase {
-  type: 'pills'
-  pills(value: any, record: any): TableCellPillItem[]
-}
-
-interface TableCellPillItem {
-  label: string
-  color: TableCellPillColor
-}
-
-interface TableCellAvatar extends TableCellBase {
-  type: 'avatar'
-  image?(value: any, record: any): string | undefined
-  name?(value: any, record: any): string
-  link?(value: any, record: any): string
-  color?: 'neutral' | 'soft' | 'mute'
-}
-
-interface TableCellAvatars extends TableCellBase {
-  type: 'avatars'
-  avatars(value: any, record: any): TableCellAvatarsOption[]
-  color?: 'neutral' | 'soft' | 'mute'
-}
-
-interface TableCellComponent extends TableCellBase {
-  type: 'component'
-  component: Component
-  props?: Record<string, any>
-}
-
-interface TableCellAvatarsOption {
-  image?: string
-  name?: string
 }
 ```
 
@@ -337,7 +303,7 @@ Use `--table-cell-font-size` and `--table-cell-font-weight` to customize the bas
 }
 ```
 
-### Table padding on both sides
+### Padding on both sides
 
 You may define `--table-padding-right` and `--table-padding-left` to adjust the padding of the table. This is useful when you want to have "full width" table and increase the first and last cell item padding.
 
@@ -345,5 +311,24 @@ You may define `--table-padding-right` and `--table-padding-left` to adjust the 
 :root {
   --table-padding-right: 0;
   --table-padding-left: 0;
+}
+```
+
+### Borders customization
+
+You may customize table borders via `--table-border` variable. `--table-border` will set all borders styles at once. If you want to only adjust top and bottom, or left and right part of the border, use dedicated variables such as `--table-border-top`.
+
+You may also adjust the border radius via `--table-border-radius` variable.
+
+```css
+:root {
+  --table-border: 1px solid var(--c-divider-2);
+
+  --table-border-top: var(--table-border);
+  --table-border-right: var(--table-border);
+  --table-border-bottom: var(--table-border);
+  --table-border-left: var(--table-border);
+
+  --table-border-radius: 6px;
 }
 ```

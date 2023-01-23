@@ -224,6 +224,8 @@ const table = useTable({
   page: 1,
   perPage: 5,
   reset: hasFilters,
+  onPrev: () => {},
+  onNext: () => {},
   onReset: resetFilters
 })
 

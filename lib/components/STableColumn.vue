@@ -12,6 +12,7 @@ const props = defineProps<{
   label: string
   className?: string
   dropdown?: DropdownSection[]
+  hasHeader: boolean
 }>()
 
 const emit = defineEmits<{
@@ -53,6 +54,13 @@ const active = computed(() => {
 const buttonActive = computed(() => {
   return isOpen.value || active.value
 })
+
+const classes = computed(() => [
+  { active: active.value },
+  { 'has-header': props.hasHeader },
+  props.className,
+  `col-${props.name}`
+])
 
 watch(isOpen, (value) => {
   value ? adjustDialogPosition() : stopDialogPositionListener()
@@ -112,7 +120,7 @@ function stopDialogPositionListener() {
 </script>
 
 <template>
-  <div class="STableColumn STableCell" :class="[{ active }, className, `col-${name}`]" ref="column">
+  <div class="STableColumn STableCell" :class="classes" ref="column">
     <div class="container">
       <p class="label">{{ label }}</p>
 
@@ -135,8 +143,11 @@ function stopDialogPositionListener() {
 
 <style scoped lang="postcss">
 .STableColumn {
-  border-top: 1px solid var(--c-divider-light);
   background-color: var(--c-bg-soft);
+
+  &.has-header {
+    border-top: 1px solid var(--c-divider-2);
+  }
 
   .STableItem:first-child & {
     padding-left: var(--table-padding-left);

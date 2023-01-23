@@ -42,7 +42,7 @@ const hasNext = computed(() => {
     <div class="container">
       <p class="info">{{ format(from) }}–{{ format(to) }} of {{ format(_total) }}</p>
 
-      <div class="actions">
+      <div v-if="onPrev && onNext" class="actions">
         <button class="button prev" :class="{ active: hasPrev }" @click="() => hasPrev && onPrev?.()">
           <SIcon :icon="IconCaretLeft" class="icon" />
         </button>
@@ -56,12 +56,11 @@ const hasNext = computed(() => {
 
 <style scoped lang="postcss">
 .STableFooter {
+  border-top: 1px solid var(--c-divider-2);
   border-radius: 0 0 6px 6px;
-  padding-top: 8px;
   padding-right: var(--table-padding-right);
-  padding-bottom: 8px;
   padding-left: var(--table-padding-left);
-  background-color: var(--c-bg-elv-up);
+  background-color: var(--c-bg-elv-3);
 
   &.borderless {
     border-radius: 0;
@@ -71,11 +70,13 @@ const hasNext = computed(() => {
 .container {
   display: flex;
   justify-content: flex-end;
+  padding-right: 16px;
+  min-height: 47px;
 }
 
 .info {
-  padding-right: 8px;
-  padding-top: 4px;
+  margin: 0;
+  padding: 13px 0 10px;
   line-height: 24px;
   font-size: 12px;
   font-weight: 500;
@@ -84,7 +85,12 @@ const hasNext = computed(() => {
 
 .actions {
   display: flex;
-  padding-right: 8px;
+  margin-right: -8px;
+  padding: 8px 0 7px;
+
+  .info + & {
+    padding-left: 8px;
+  }
 }
 
 .button {
@@ -104,7 +110,7 @@ const hasNext = computed(() => {
   }
 
   &.active:hover {
-    background-color: var(--c-bg-elv-down);
+    background-color: var(--c-bg-elv-1);
   }
 }
 

@@ -6,6 +6,8 @@ export interface Table {
   orders: string[]
   columns: TableColumns
   records?: Record<string, any>[] | null
+  header?: boolean
+  footer?: boolean
   total?: number | null
   page?: number | null
   perPage?: number | null
@@ -115,6 +117,8 @@ export interface UseTableOptions {
   orders: MaybeRef<string[]>
   columns: MaybeRef<TableColumns>
   records?: MaybeRef<Record<string, any>[] | null | undefined>
+  header?: MaybeRef<boolean | undefined>
+  footer?: MaybeRef<boolean | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>

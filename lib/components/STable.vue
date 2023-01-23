@@ -16,6 +16,8 @@ const {
   orders,
   columns,
   records,
+  header,
+  footer,
   total,
   page,
   perPage,
@@ -36,11 +38,31 @@ let bodyLock = false
 const colWidths = reactive<Record<string, string>>({})
 
 const showHeader = computed(() => {
-  return total?.value !== undefined
+  if (header?.value === true) {
+    return true
+  }
+
+  if (header?.value === false) {
+    return false
+  }
+
+  return total?.value !== undefined || !!reset?.value
 })
 
 const showFooter = computed(() => {
-  return !loading?.value && page?.value && total?.value
+  if (loading?.value) {
+    return false
+  }
+
+  if (footer?.value === true) {
+    return true
+  }
+
+  if (footer?.value === false) {
+    return false
+  }
+
+  return page?.value && perPage?.value && total?.value
 })
 
 watch(() => records?.value, () => {
@@ -114,6 +136,7 @@ function updateColWidth(key: string, value: string) {
                   :label="columns[key].label"
                   :class-name="columns[key].className"
                   :dropdown="columns[key].dropdown"
+                  :has-header="showHeader"
                   @resize="(value) => updateColWidth(key, value)"
                 />
               </STableItem>
@@ -180,12 +203,13 @@ function updateColWidth(key: string, value: string) {
 <style scoped lang="postcss">
 .box {
   position: relative;
-  border-top: var(--table-border);
-  border-right: var(--table-border);
-  border-bottom: var(--table-border);
-  border-left: var(--table-border);
+  border-top: var(--table-border-top, var(--table-border));
+  border-right: var(--table-border-right, var(--table-border));
+  border-bottom: var(--table-border-bottom, var(--table-border));
+  border-left: var(--table-border-left, var(--table-border));
   border-radius: var(--table-border-radius);
   width: 100%;
+  overflow: hidden;
 
   .STable.borderless & {
     border-right: 0;
@@ -210,7 +234,7 @@ function updateColWidth(key: string, value: string) {
     position: var(--table-head-position, static);
     top: var(--table-head-top, auto);
     z-index: 100;
-    background-color: var(--bg-elv);
+    background-color: var(--bg-elv-2);
 
     &::-webkit-scrollbar {
       display: none;
@@ -225,14 +249,18 @@ function updateColWidth(key: string, value: string) {
 
 .row {
   display: flex;
-  border-bottom: 1px solid var(--c-divider-light);
+  border-bottom: 1px solid var(--c-divider-2);
+
+  .body &:last-child {
+    border-bottom: 0;
+  }
 }
 
 .missing {
   border-radius: 0 0 6px 6px;
   padding: 48px 32px;
   text-align: center;
-  background-color: var(--c-bg-elv-up);
+  background-color: var(--c-bg-elv-3);
   line-height: 24px;
   font-size: 14px;
   font-weight: 500;
@@ -242,7 +270,7 @@ function updateColWidth(key: string, value: string) {
 .loading {
   border-radius: 0 0 6px 6px;
   padding: 64px 32px;
-  background-color: var(--c-bg-elv-up);
+  background-color: var(--c-bg-elv-3);
 }
 
 .loading-icon {
