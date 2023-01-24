@@ -27,8 +27,8 @@ export interface TableColumn {
   label: string
   className?: string
   dropdown?: DropdownSection[]
-  cell?: TableCell | ((value: any, record: any) => TableCell)
   resizable?: boolean
+  cell?: TableCell | ((value: any, record: any) => TableCell)
 }
 
 export type TableCell =
