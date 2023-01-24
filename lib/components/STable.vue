@@ -137,6 +137,7 @@ function updateColWidth(key: string, value: string) {
                   :class-name="columns[key].className"
                   :dropdown="columns[key].dropdown"
                   :has-header="showHeader"
+                  :resizable="columns[key].resizable"
                   @resize="(value) => updateColWidth(key, value)"
                 />
               </STableItem>

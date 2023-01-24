@@ -199,7 +199,8 @@ const table = useTable({
     createdAt: {
       label: 'Created at',
       dropdown: dropdownCreatedAt,
-      cell: { type: 'text', color: 'soft' }
+      cell: { type: 'text', color: 'soft' },
+      resizable: false
     },
 
     tags: {

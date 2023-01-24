@@ -182,17 +182,32 @@ const options = useTable({
 })
 ```
 
+## Disable column resize
+
+By default. all columns are resizable via the user. You may disable resizing for each column you specify by setting `resizable` option.
+
+```ts
+import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
+
+const options = useTable({
+  orders: [...],
+  columns: {
+    item_1: {
+      label: 'Item 1'
+    },
+    // This column is no longer resizable.
+    item_2: {
+      label: 'Item 2',
+      resizable: false
+    }
+  },
+  records: [...]
+})
+```
+
 ## Total number of records
 
 You may define `total` option to display the total number of records in the table.
-
-```ts
-import { MaybeRef } from '@vueuse/core'
-
-interface UseTableOptions {
-  total?: MaybeRef<number | null | undefined>
-}
-```
 
 ```ts
 const options = useTable({
@@ -205,15 +220,6 @@ const options = useTable({
 Define `reset` option to show "Reset filters" button on table header. You can define `onReset` callback to listen to the click event on this button.
 
 ```ts
-import { MaybeRef } from '@vueuse/core'
-
-interface UseTableOptions {
-  reset?: MaybeRef<boolean | undefined>
-  onReset?(): void
-}
-```
-
-```ts
 const options = useTable({
   reset: true,
   onReset: () => { ... }
@@ -223,18 +229,6 @@ const options = useTable({
 ## Pagination
 
 By passing in `total`, `page`, and `perPage` option, the table footer gets displayed with pagination. You can listen to "Prev" and "Next" button click callback via `onPrev` and `onNext` option. Note that if both `onPrev` or `onNext` is not defined, it will not show the "Prev" and "Next" buttons.
-
-```ts
-import { MaybeRef } from '@vueuse/core'
-
-interface UseTableOptions {
-  total?: MaybeRef<number | null | undefined>
-  page?: MaybeRef<number | null | undefined>
-  perPage?: MaybeRef<number | null | undefined>
-  onPrev?(): void
-  onNext?(): void
-}
-```
 
 ```ts
 const options = useTable({
@@ -251,15 +245,6 @@ const options = useTable({
 The Table Header and Footer is the part where it shows additional information such as total number of records or pagnation. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
 
 If you would like to diaplay or hide the header and footer regardless of the other options presense, set `boolean` to `header` or `footer` option.
-
-```ts
-import { MaybeRef } from '@vueuse/core'
-
-interface UseTableOptions {
-  header?: MaybeRef<number | undefined>
-  footer?: MaybeRef<number | undefined>
-}
-```
 
 ```ts
 const options = useTable({

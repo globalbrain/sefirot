@@ -7,13 +7,16 @@ import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 import SIcon from './SIcon.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   name: string
   label: string
   className?: string
   dropdown?: DropdownSection[]
   hasHeader: boolean
-}>()
+  resizable?: boolean
+}>(), {
+  resizable: true
+})
 
 const emit = defineEmits<{
   (e: 'resize', value: string): void
@@ -136,7 +139,7 @@ function stopDialogPositionListener() {
         </transition>
       </div>
 
-      <div class="grip" @mousedown="grip" />
+      <div v-if="resizable" class="grip" @mousedown="grip" />
     </div>
   </div>
 </template>
