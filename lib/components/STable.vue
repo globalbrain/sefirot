@@ -65,6 +65,12 @@ const showFooter = computed(() => {
   return page?.value && perPage?.value && total?.value
 })
 
+const classes = computed(() => ({
+  'has-header': showHeader.value,
+  'has-footer': showFooter.value,
+  'borderless': borderless?.value
+}))
+
 watch(() => records?.value, () => {
   headLock = true
   bodyLock = true
@@ -104,7 +110,7 @@ function updateColWidth(key: string, value: string) {
 </script>
 
 <template>
-  <div class="STable" :class="{ borderless }" ref="el">
+  <div class="STable" :class="classes" ref="el">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -210,7 +216,6 @@ function updateColWidth(key: string, value: string) {
   border-left: var(--table-border-left, var(--table-border));
   border-radius: var(--table-border-radius);
   width: 100%;
-  overflow: hidden;
 
   .STable.borderless & {
     border-right: 0;
@@ -230,16 +235,29 @@ function updateColWidth(key: string, value: string) {
   width: 100%;
   min-width: 100%;
   overflow-x: auto;
+}
 
-  &.head {
-    position: var(--table-head-position, static);
-    top: var(--table-head-top, auto);
-    z-index: 100;
-    background-color: var(--bg-elv-2);
+.container.head {
+  position: var(--table-head-position, static);
+  top: var(--table-head-top, auto);
+  z-index: 100;
+  border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
+  background-color: var(--bg-elv-2);
 
-    &::-webkit-scrollbar {
-      display: none;
-    }
+  .STable.has-header & {
+    border-radius: 0;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.container.body {
+  border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
+
+  .STable.has-footer & {
+    border-radius: 0;
   }
 }
 
