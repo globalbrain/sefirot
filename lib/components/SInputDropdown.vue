@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
+import { useElementBounding, useWindowSize } from '@vueuse/core'
 import xor from 'lodash-es/xor'
 import { computed } from 'vue'
 import { DropdownSectionFilter } from '../composables/Dropdown'
@@ -37,6 +38,7 @@ export interface OptionAvatar extends OptionBase {
 
 const props = defineProps<{
   size?: Size
+  position?: 'top' | 'bottom'
   label?: string
   info?: string
   note?: string
@@ -121,6 +123,11 @@ function handleArray(value: OptionValue) {
 
   emit('update:modelValue', difference)
 }
+
+const { bottom } = useElementBounding(container)
+const { height } = useWindowSize()
+
+const pos = computed(() => props.position || (bottom.value + 400 <= height.value ? 'bottom' : 'top'))
 </script>
 
 <template>
@@ -161,7 +168,7 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown">
+      <div v-if="isOpen" class="dropdown" :class="pos">
         <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
@@ -301,8 +308,15 @@ function handleArray(value: OptionValue) {
 
 .dropdown {
   position: absolute;
-  top: calc(100% + 8px);
   left: 0;
   z-index: var(--z-index-dropdown);
+
+  &.top {
+    bottom: calc(100% + 8px);
+  }
+
+  &.bottom {
+    top: calc(100% + 8px);
+  }
 }
 </style>
