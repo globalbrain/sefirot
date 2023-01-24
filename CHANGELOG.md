@@ -1,3 +1,20 @@
+# [2.14.0](https://github.com/globalbrain/sefirot/compare/v2.13.0...v2.14.0) (2023-01-24)
+
+### Bug Fixes
+
+* **input-select:** `value` and `modelValue` prop type is not correct when it's undefined ([#191](https://github.com/globalbrain/sefirot/issues/191)) ([#193](https://github.com/globalbrain/sefirot/issues/193)) ([0ed0bc3](https://github.com/globalbrain/sefirot/commit/0ed0bc33cd42bb0c970d6bf60f517feeadca121a))
+
+### Features
+
+* **input:** add info prop and slot to input components ([#189](https://github.com/globalbrain/sefirot/issues/189)) ([#196](https://github.com/globalbrain/sefirot/issues/196)) ([b8ce931](https://github.com/globalbrain/sefirot/commit/b8ce9315629c9f1e5933dc34411d40625401f734))
+* **input-radios:** refine styles ([e33446d](https://github.com/globalbrain/sefirot/commit/e33446d1e9a72e23e38d429c0431bc144620da25))
+* **input-file:** refine styles ([aab04b7](https://github.com/globalbrain/sefirot/commit/aab04b774b97bd6cf449081bf7161597b889957d))
+* **table:** add `header` and `footer` option ([d49b07b](https://github.com/globalbrain/sefirot/commit/d49b07b1c47e56bb6daa435b89155a9e379ab22c))
+* **table:** add `resizable` option to columns ([#201](https://github.com/globalbrain/sefirot/issues/201)) ([#203](https://github.com/globalbrain/sefirot/issues/203)) ([82a34e6](https://github.com/globalbrain/sefirot/commit/82a34e689865322d1256d22eba4a1409668ec232))
+* **tooltip:** refine styles ([c81bfae](https://github.com/globalbrain/sefirot/commit/c81bfae5f2b9498c949d33532a97e083f197d61e))
+* **validation:** add `maxFileSize` validation rule ([#197](https://github.com/globalbrain/sefirot/issues/197)) ([#198](https://github.com/globalbrain/sefirot/issues/198)) ([7b80d92](https://github.com/globalbrain/sefirot/commit/7b80d9220fc6924b0653b665c2df3b816a9c03fe))
+* **utils:** add `computedWhen` function ([d1ac49f](https://github.com/globalbrain/sefirot/commit/d1ac49f4cc583c8131c167164fa1d35512f3304a))
+
 # [2.13.0](https://github.com/globalbrain/sefirot/compare/v2.12.0...v2.13.0) (2023-01-16)
 
 ### Bug Fixes
