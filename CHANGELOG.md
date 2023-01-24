@@ -1,3 +1,9 @@
+## [2.14.1](https://github.com/globalbrain/sefirot/compare/v2.14.0...v2.14.1) (2023-01-24)
+
+### Bug Fixes
+
+* **table:** border style not applied correctly without header/footer ([985271b](https://github.com/globalbrain/sefirot/commit/985271b930c64f004c1ac6fb7e8b9e26ad627473))
+
 # [2.14.0](https://github.com/globalbrain/sefirot/compare/v2.13.0...v2.14.0) (2023-01-24)
 
 ### Bug Fixes
