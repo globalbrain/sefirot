@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
+import { useElementBounding, useWindowSize } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { DropdownSectionFilter } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
@@ -42,10 +43,11 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  options: Option[]
+  position?: 'top' | 'bottom'
   noSearch?: boolean
   nullable?: boolean
   closeOnClick?: boolean
-  options: Option[]
   disabled?: boolean
   modelValue: PrimitiveValue | ArrayValue
   validation?: Validatable
@@ -56,6 +58,11 @@ const emit = defineEmits<{
 }>()
 
 const { container, isOpen, open } = useFlyout()
+
+const { top, bottom } = useElementBounding(container)
+const { height } = useWindowSize()
+
+const pos = ref<'top' | 'bottom'>('bottom')
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -93,7 +100,27 @@ const removable = computed(() => {
 })
 
 async function handleOpen() {
-  !props.disabled && open()
+  if (!props.disabled) {
+    pos.value = getPosition()
+    open()
+  }
+}
+
+function getPosition() {
+  if (props.position) {
+    return props.position
+  }
+
+  const dialogHeight = 400
+
+  // If the space top of the input is not enough to show dialog, just show
+  // the dialo at the bottom of the input.
+  if (top.value < dialogHeight) {
+    return 'bottom'
+  }
+
+  // Else show dialog depending on the space bottom of the input.
+  return bottom.value + dialogHeight <= height.value ? 'bottom' : 'top'
 }
 
 function handleSelect(value: OptionValue) {
@@ -161,7 +188,7 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown">
+      <div v-if="isOpen" class="dropdown" :class="pos">
         <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
@@ -169,7 +196,7 @@ function handleArray(value: OptionValue) {
   </SInputBase>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SInputDropdown.mini {
   .box {
     min-height: 32px;
@@ -301,8 +328,10 @@ function handleArray(value: OptionValue) {
 
 .dropdown {
   position: absolute;
-  top: calc(100% + 8px);
   left: 0;
   z-index: var(--z-index-dropdown);
+
+  &.top    { bottom: calc(100% + 8px); }
+  &.bottom { top: calc(100% + 8px); }
 }
 </style>
