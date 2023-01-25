@@ -106,5 +106,6 @@
         "@algolia/client-search"
       ]
     }
-  }
+  },
+  "packageManager": "pnpm@7.26.0"
 }
