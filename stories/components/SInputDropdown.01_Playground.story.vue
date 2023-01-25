@@ -26,7 +26,6 @@ const options = [
       :options="options"
       nullable
       v-model="value"
-      position="bottom"
     />
   </Board>
 </template>
