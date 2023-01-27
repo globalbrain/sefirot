@@ -289,6 +289,44 @@ interface Props {
 />
 ```
 
+### `:check-icon`
+
+Icon to display at corner right of label. Useful to show the status of a particular input.
+
+```ts
+interface Props {
+  checkIcon?: IconifyIcon | DefineComponent
+}
+```
+
+### `:check-text`
+
+Text to display alongside `check-icon`.
+
+```ts
+interface Props {
+  checkText?: string
+}
+```
+
+### `:check-color`
+
+Defines the color of `check-icon` and `check-test`. The default is `neutral`.
+
+```ts
+interface Props {
+  checkColor?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+}
+```
+
+```vue-html
+<SInputSelect
+  :check-icon="IconCheckCircle"
+  check-text="Saved"
+  check-color="success"
+/>
+```
+
 ## Slots
 
 Here are the list of slots you may define within the component.
