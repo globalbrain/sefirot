@@ -183,6 +183,7 @@ function getErrorMsg(validation: Validatable) {
 .check {
   margin-left: auto;
   display: inline-flex;
+  align-items: center;
   gap: 4px;
   font-size: 16px;
 
