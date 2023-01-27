@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -26,7 +27,12 @@ const props = defineProps<{
   hideError?: boolean
   modelValue: Value
   validation?: Validatable
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Value): void
@@ -106,6 +112,9 @@ function createRequiredTouched(): boolean[] {
     :help="help"
     :hide-error="hideError"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container" :class="{ focus: isFocused }">
       <input

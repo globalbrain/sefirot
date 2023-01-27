@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -24,10 +25,15 @@ const props = withDefaults(defineProps<{
   modelValue?: string | number | boolean | null
   validation?: Validatable
   hideError?: boolean
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>(), {
   value: undefined,
   modelValue: undefined
 })
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | number | boolean | null): void
@@ -77,6 +83,9 @@ function onChange(value: string | number | boolean) {
     :help="help"
     :hide-error="hideError"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container">
       <div class="row">

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { PropType } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, PropType } from 'vue'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
@@ -10,6 +11,8 @@ interface CheckboxOption {
   value: any
 }
 
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
   name: { type: String, default: null },
@@ -18,7 +21,10 @@ const props = defineProps({
   note: { type: String, default: null },
   help: { type: String, default: null },
   options: { type: Array as PropType<CheckboxOption[]>, required: true },
-  modelValue: { type: Array, required: true }
+  modelValue: { type: Array, required: true },
+  checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
+  checkText: { type: String, default: null },
+  checkColor: { type: String as PropType<Color>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -45,6 +51,9 @@ function handleChange(value: unknown): void {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container">
       <div class="row">

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -15,7 +17,12 @@ const props = defineProps<{
   modelValue: boolean
   validation?: Validatable
   hideError?: boolean
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: boolean): void
@@ -38,6 +45,9 @@ function onClick() {
     :help="help"
     :validation="validation"
     :hide-error="hideError"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container">
       <div class="input" :class="{ on: props.modelValue }" role="button" @click="onClick">

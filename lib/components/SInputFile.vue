@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -17,7 +18,12 @@ const props = defineProps<{
   modelValue?: File | null
   hideError?: boolean
   validation?: Validatable
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', file: File | null): void
@@ -61,6 +67,9 @@ function onChange(e: Event) {
     :help="help"
     :validation="validation"
     :hide-error="hideError"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <input
       ref="input"

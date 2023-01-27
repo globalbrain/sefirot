@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import { computed, ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
@@ -29,10 +30,15 @@ const props = withDefaults(defineProps<{
   modelValue?: Value
   validation?: Validatable
   hideError?: boolean
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>(), {
   value: undefined,
   modelValue: undefined
 })
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: Value): void
@@ -83,6 +89,9 @@ function emitChange(e: any): void {
     :help="help"
     :hide-error="hideError"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="box" :class="{ focus: isFocused }">
       <select

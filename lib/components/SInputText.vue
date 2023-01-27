@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
@@ -23,7 +24,12 @@ const props = defineProps<{
   displayValue?: string | null
   hideError?: boolean
   validation?: Validatable
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | null): void
@@ -97,6 +103,9 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :help="help"
     :hide-error="hideError"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="$slots['addon-before']" class="addon before">

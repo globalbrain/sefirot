@@ -2,8 +2,9 @@
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
 import xor from 'lodash-es/xor'
-import { computed, ref } from 'vue'
 import { DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
 import { isArray } from '../support/Utils'
@@ -50,7 +51,12 @@ const props = defineProps<{
   disabled?: boolean
   modelValue: PrimitiveValue | ArrayValue
   validation?: Validatable
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
@@ -139,6 +145,9 @@ function handleArray(value: OptionValue) {
     :info="info"
     :help="help"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container" ref="container">
       <div

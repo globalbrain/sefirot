@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconQuestion from '@iconify-icons/ph/question'
-import { computed, unref, useSlots } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, unref, useSlots } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
@@ -13,7 +14,12 @@ const props = defineProps<{
   help?: string
   hideError?: boolean
   validation?: Validatable
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
 }>()
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const slots = useSlots()
 
@@ -63,6 +69,11 @@ function getErrorMsg(validation: Validatable) {
       </div>
 
       <span class="label-note">{{ note }}</span>
+
+      <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
+        <SIcon v-if="checkIcon" :icon="checkIcon"/>
+        <span v-if="checkText" class="check-text">{{ checkText }}</span>
+      </span>
     </label>
 
     <slot />
@@ -83,15 +94,15 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .SInputBase.small {
-  .label            { padding-bottom: 8px; }
-  .label-text-value { font-size: 14px; }
-  .label-note       { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; }
+  .label-text-value   { font-size: 14px; }
+  .label-note, .check { transform: translateY(1px); }
 }
 
 .SInputBase.medium {
-  .label            { padding-bottom: 8px; }
-  .label-text-value { font-size: 14px; }
-  .label-note       { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; }
+  .label-text-value   { font-size: 14px; }
+  .label-note, .check { transform: translateY(1px); }
 }
 
 .SInputBase.has-error {
@@ -167,5 +178,23 @@ function getErrorMsg(validation: Validatable) {
 .help-text + .help-error,
 .help-text + .help-text {
   padding: 0;
+}
+
+.check {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 4px;
+  font-size: 16px;
+
+  &.neutral { color: var(--c-neutral-1); }
+  &.mute    { color: var(--c-text-2); }
+  &.info    { color: var(--c-info-light); }
+  &.success { color: var(--c-success-light); }
+  &.warning { color: var(--c-warning-light); }
+  &.danger  { color: var(--c-danger-light); }
+
+  &-text {
+    font-size: 12px;
+  }
 }
 </style>

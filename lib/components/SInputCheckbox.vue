@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
-import { PropType } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, PropType } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 type Size = 'mini' | 'small' | 'medium'
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
@@ -15,7 +18,10 @@ const props = defineProps({
   help: { type: String, default: null },
   text: { type: String, required: true },
   modelValue: { type: Boolean, required: true },
-  validation: { type: Object as PropType<Validatable>, default: null }
+  validation: { type: Object as PropType<Validatable>, default: null },
+  checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
+  checkText: { type: String, default: null },
+  checkColor: { type: String as PropType<Color>, default: null }
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -34,6 +40,9 @@ function emitChange() {
     :info="info"
     :help="help"
     :validation="validation"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
   >
     <div class="container">
       <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
