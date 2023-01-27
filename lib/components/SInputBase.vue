@@ -71,7 +71,7 @@ function getErrorMsg(validation: Validatable) {
       <span class="label-note">{{ note }}</span>
 
       <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
-        <SIcon v-if="checkIcon" :icon="checkIcon"/>
+        <SIcon v-if="checkIcon" :icon="checkIcon" />
         <span v-if="checkText" class="check-text">{{ checkText }}</span>
       </span>
     </label>
