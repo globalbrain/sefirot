@@ -2,8 +2,12 @@
 import { Icon, IconifyIcon } from '@iconify/vue/dist/offline'
 import { DefineComponent } from 'vue'
 
-defineProps<{
+export interface SIconProps {
   icon: IconifyIcon | DefineComponent
+}
+
+defineProps<{
+  icon: SIconProps['icon']
 }>()
 </script>
 

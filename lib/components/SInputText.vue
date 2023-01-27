@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
-import SIcon from './SIcon.vue'
+import SIcon, { SIconProps } from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -16,7 +16,7 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
-  icon?: any
+  icon?: SIconProps['icon']
   align?: Align
   disabled?: boolean
   modelValue: string | null
@@ -99,6 +99,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :validation="validation"
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
+      <slot name="addon-before" />
       <div v-if="icon" class="icon">
         <SIcon :icon="icon" class="icon-svg" />
       </div>
@@ -122,6 +123,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
           {{ displayValue }}
         </div>
       </div>
+      <slot name="addon-after" />
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
@@ -161,6 +163,19 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     width: 16px;
     height: 16px;
   }
+
+  ::v-slotted(.SInputAddon) .addon-inner {
+    height: 30px;
+    padding: 0 8px;
+  }
+
+  ::v-slotted(.SInputAddon):has(+ :is(.icon, .value)) {
+    margin-right: 6px;
+  }
+
+  .value + ::v-slotted(.SInputAddon) {
+    margin-left: 6px;
+  }
 }
 
 .SInputText.small {
@@ -196,6 +211,19 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     width: 16px;
     height: 16px;
   }
+
+  ::v-slotted(.SInputAddon) .addon-inner {
+    height: 38px;
+    padding: 0 12px;
+  }
+
+  ::v-slotted(.SInputAddon):has(+ :is(.icon, .value)) {
+    margin-right: 10px;
+  }
+
+  .value + ::v-slotted(.SInputAddon) {
+    margin-left: 10px;
+  }
 }
 
 .SInputText.medium {
@@ -230,6 +258,19 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .icon-svg {
     width: 18px;
     height: 18px;
+  }
+
+  ::v-slotted(.SInputAddon) .addon-inner {
+    height: 46px;
+    padding: 0 12px;
+  }
+
+  ::v-slotted(.SInputAddon):has(+ :is(.icon, .value)) {
+    margin-right: 10px;
+  }
+
+  .value + ::v-slotted(.SInputAddon) {
+    margin-left: 10px;
   }
 }
 
@@ -287,7 +328,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   cursor: text;
   transition: border-color 0.25s;
 
-  &:hover {
+  &:hover:not(:has(.SInputAddon:is(.focused, :hover))) {
     border-color: var(--c-black);
   }
 
@@ -296,13 +337,21 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     border-color: var(--c-info);
   }
 
-  .dark &:hover {
+  .dark &:hover:not(:has(.SInputAddon:is(.focused, :hover))) {
     border-color: var(--c-gray);
   }
 
   .dark &.focus,
   .dark &:hover.focus {
     border-color: var(--c-info);
+  }
+
+  &:has(.SInputAddon + :is(.icon, .value)) {
+    padding-left: 0;
+  }
+
+  &:has(.value + .SInputAddon) {
+    padding-right: 0;
   }
 }
 
@@ -341,5 +390,65 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 .icon-svg {
   fill: currentColor;
+}
+
+::v-slotted(.SInputAddon) {
+  position: relative;
+  transition: background-color 0.25s;
+  background-color: var(--c-mute);
+
+  &:has(+ :is(.icon, .value)) {
+    border-right: 1px solid var(--c-divider);
+    border-radius: 6px 0 0 6px;
+  }
+
+  .value + & {
+    border-left: 1px solid var(--c-divider);
+    border-radius: 0 6px 6px 0;
+  }
+
+  &:hover:is(.button, .dropdown):has(+ :is(.icon, .value)):not(.disabled),
+  &.focused:is(.button, .dropdown):has(+ :is(.icon, .value)):not(.disabled),
+  .value + &:hover:is(.button, .dropdown):not(.disabled),
+  .value + &.focused:is(.button, .dropdown):not(.disabled) {
+    background-color: var(--button-fill-mute-hover-bg-color);
+  }
+
+  .addon-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &.disabled:hover:is(.button, .dropdown) .addon-inner {
+    cursor: not-allowed;
+  }
+
+  .addon-icon {
+    margin-left: 8px;
+  }
+
+  .addon-icon-svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+    color: var(--c-text-2);
+  }
+
+  .addon-dropdown {
+    position: absolute;
+    z-index: var(--z-index-dropdown);
+
+    &.top    { bottom: calc(100% + 8px); }
+    &.bottom { top: calc(100% + 8px); }
+  }
+
+  &:has(+ :is(.icon, .value)) .addon-dropdown {
+    left: 0
+  }
+
+  .value + & .addon-dropdown {
+    right: 0
+  }
 }
 </style>
