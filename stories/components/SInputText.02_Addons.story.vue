@@ -12,6 +12,7 @@ interface Data {
   password1: string | null
   password2: string | null
   password3: string | null
+  password4: string | null
   currency: string | null
   regularExpression: string | null
 }
@@ -22,6 +23,7 @@ const data = reactive<Data>({
   password1: null,
   password2: null,
   password3: null,
+  password4: null,
   currency: null,
   regularExpression: null
 })
@@ -149,7 +151,7 @@ function state() {
         <div class="group">
           <div class="title">Addon Dropdown (Before / After / Disabled)</div>
           <div class="grid">
-            <SInputText :size="state.size" placeholder="mypassword" disabled v-model="data.password3">
+            <SInputText :size="state.size" placeholder="mypassword" disabled v-model="data.password4">
               <template #addon-before>
                 <SInputAddon :label="IconDotsThree" disabled />
               </template>

@@ -10,6 +10,7 @@ interface Data {
   amount1: number | null
   amount2: number | null
   amount3: number | null
+  amount4: number | null
   lottery1: number | null
   lottery2: number | null
   currency: number | null
@@ -19,6 +20,7 @@ const data = reactive<Data>({
   amount1: null,
   amount2: null,
   amount3: null,
+  amount4: null,
   lottery1: null,
   lottery2: null,
   currency: null
@@ -182,7 +184,7 @@ function state() {
               placeholder="1,000,000"
               separator
               disabled
-              v-model="data.amount3"
+              v-model="data.amount4"
             >
               <template #addon-before>
                 <SInputAddon :label="IconDotsThree" disabled />

@@ -151,7 +151,7 @@ interface Props {
 
 ### `:disabled`
 
-Disable the addon action. When this prop is set, no events ets emitted.
+Disable the addon action. When this prop is set, no events are emitted.
 
 ```ts
 interface Props {
