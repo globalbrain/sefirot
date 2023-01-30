@@ -1,3 +1,11 @@
+# [2.15.0](https://github.com/globalbrain/sefirot/compare/v2.14.1...v2.15.0) (2023-01-30)
+
+### Features
+
+* **input:** allow showing check state in input components ([#194](https://github.com/globalbrain/sefirot/issues/194)) ([#207](https://github.com/globalbrain/sefirot/issues/207)) ([a0166db](https://github.com/globalbrain/sefirot/commit/a0166dbff277bad36f5d2d6628ad742ebec7cbeb))
+* **input-addon:** add `SInputAddon` ([#202](https://github.com/globalbrain/sefirot/issues/202)) ([#206](https://github.com/globalbrain/sefirot/issues/206)) ([f6661ed](https://github.com/globalbrain/sefirot/commit/f6661ed4f74bf0abfad84b3309fca90847a5a939))
+* **input-dropdown:** show dropdown on top if input is near viewport bottom ([#200](https://github.com/globalbrain/sefirot/issues/200)) ([#204](https://github.com/globalbrain/sefirot/issues/204)) ([1084ae5](https://github.com/globalbrain/sefirot/commit/1084ae5612bd3077284ec20c57d334c1c8376a20))
+
 ## [2.14.1](https://github.com/globalbrain/sefirot/compare/v2.14.0...v2.14.1) (2023-01-24)
 
 ### Bug Fixes
