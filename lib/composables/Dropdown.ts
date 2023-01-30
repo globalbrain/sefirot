@@ -84,7 +84,7 @@ export function useManualDropdownPosition(
     }
 
     // If the space top of the input is not enough to show dialog, just show
-    // the dialo at the bottom of the input.
+    // the dialog at the bottom of the input.
     if (top.value < dialogHeight) {
       position.value = 'bottom'
       return
