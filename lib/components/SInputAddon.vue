@@ -1,133 +1,143 @@
 <script setup lang="ts">
-import IconCaretDown from '@iconify-icons/ph/caret-down'
-import { useElementBounding, useWindowSize } from '@vueuse/core'
-import { DropdownSection } from 'sefirot/composables/Dropdown'
+import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
+import {
+  DropdownSection,
+  getSelectedOption,
+  useManualDropdownPosition
+} from 'sefirot/composables/Dropdown'
 import { useFlyout } from 'sefirot/composables/Flyout'
-import { computed, ref, unref } from 'vue'
+import { computed, ref } from 'vue'
+import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
-import SIcon, { SIconProps } from './SIcon.vue'
+import SIcon from './SIcon.vue'
 
 const props = withDefaults(defineProps<{
-  unclickable?: boolean
-  label?: string | SIconProps['icon']
+  label?: any
+  clickable?: boolean
   dropdown?: DropdownSection[]
+  dropdownCaret?: boolean
   dropdowpPosition?: 'top' | 'bottom'
-  noDropdownArrow?: boolean
   disabled?: boolean
 }>(), {
-  unclickable: false,
+  clickable: true,
   dropdown: () => [],
-  noDropdownArrow: false,
-  disabled: false
+  dropdownCaret: true
 })
 
 const emit = defineEmits<{
   (e: 'click'): void
 }>()
 
-const isTypeText = computed(() => props.unclickable)
-const isTypeButton = computed(() => !props.unclickable && !props.dropdown.length)
-const isTypeDropdown = computed(() => !props.unclickable && !!props.dropdown.length)
-
-const selectedOptionLabel = computed(() => {
-  for (const section of props.dropdown) {
-    if (section.type === 'filter') {
-      for (const { label, value } of unref(section.options)) {
-        if (unref(section.selected) === value) {
-          return label
-        }
-      }
-    }
-  }
-
-  return ''
-})
+const container = ref<any>(null)
 
 const isFocused = ref(false)
 
-const { container, isOpen, open } = useFlyout()
-const { top, bottom } = useElementBounding(container)
-const { height } = useWindowSize()
-const pos = ref<'top' | 'bottom'>('bottom')
+const classes = computed(() => [
+  { clickable: props.clickable },
+  { focused: isFocused.value },
+  { disabled: props.disabled }
+])
+
+const selectedOptionLabel = computed(() => {
+  return getSelectedOption(props.dropdown)?.label ?? null
+})
+
+const { isOpen, open } = useFlyout(container)
+const { position, update: updatePosition } = useManualDropdownPosition(container)
 
 function handleFocus() {
-  if (isTypeText.value || props.disabled) {
-    return
+  if (!props.disabled) {
+    isFocused.value = true
   }
-
-  isFocused.value = true
 }
 
 function handleBlur() {
-  if (isTypeText.value || props.disabled) {
-    return
+  if (!props.disabled) {
+    isFocused.value = false
   }
-
-  isFocused.value = false
 }
 
 function handleClickButton() {
-  if (isTypeText.value || props.disabled) {
-    return
+  if (!props.disabled) {
+    emit('click')
+
+    if (props.dropdown.length) {
+      updatePosition()
+      open()
+    }
   }
-
-  emit('click')
-
-  if (isTypeDropdown.value) {
-    pos.value = getPosition()
-    open()
-  }
-}
-
-function getPosition() {
-  if (props.dropdowpPosition) {
-    return props.dropdowpPosition
-  }
-
-  const dialogHeight = 400
-
-  // If the space top of the input is not enough to show dialog, just show
-  // the dialo at the bottom of the input.
-  if (top.value < dialogHeight) {
-    return 'bottom'
-  }
-
-  // Else show dialog depending on the space bottom of the input.
-  return bottom.value + dialogHeight <= height.value ? 'bottom' : 'top'
 }
 </script>
 
 <template>
-  <div
-    class="SInputAddon"
-    :class="{
-      text: isTypeText,
-      button: isTypeButton,
-      dropdown: isTypeDropdown,
-      focused: isFocused,
-      disabled: props.disabled
-    }"
-    ref="container"
-    @click.stop
-  >
+  <div class="SInputAddon" :class="classes" ref="container" @click.stop>
     <component
-      :is="isTypeText ? 'div' : 'button'"
-      :disabled="isTypeText ? null : props.disabled"
+      :is="clickable ? 'button' : 'div'"
+      class="action"
+      :disabled="clickable ? props.disabled : null"
       @focus="handleFocus"
       @blur="handleBlur"
       @click="handleClickButton"
-      class="addon-inner"
     >
-      <div class="addon-label">
-        <SIcon v-if="typeof props.label !== 'string' && props.label" :icon="props.label" class="addon-icon-svg" />
-        <span v-else>{{ props.label || selectedOptionLabel }}</span>
-      </div>
-      <div v-if="isTypeDropdown && !props.noDropdownArrow" class="addon-icon">
-        <SIcon :icon="IconCaretDown" class="addon-icon-svg down" />
-      </div>
+      <span class="action-label">
+        <SIcon
+          v-if="props.label && !isString(props.label)"
+          class="action-icon"
+          :icon="props.label"
+        />
+        <span v-else>
+          {{ props.label ?? selectedOptionLabel }}
+        </span>
+      </span>
+
+      <SIcon
+        v-if="props.dropdown.length && props.dropdownCaret"
+        class="caret"
+        :icon="IconCaretDown"
+      />
     </component>
-    <div v-if="isTypeDropdown && dropdown && isOpen" class="addon-dropdown" :class="pos">
+
+    <div v-if="isOpen" class="dialog" :class="position">
       <SDropdown :sections="dropdown" />
     </div>
   </div>
 </template>
+
+<style scoped lang="postcss">
+.SInputAddon {
+  position: relative;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  background-color: var(--button-fill-mute-bg-color);
+  transition: background-color 0.25s;
+
+  .SInputAddon.clickable &:hover,
+  .SInputAddon.clickable.focused & {
+    background-color: var(--button-fill-mute-hover-bg-color);
+  }
+
+  .SInputAddon.clickable &:active {
+    background-color: var(--button-fill-mute-active-bg-color);
+  }
+
+  .SInputAddon.disabled &,
+  .SInputAddon.disabled.clickable &:hover,
+  .SInputAddon.disabled.clickable &:active,
+  .SInputAddon.disabled.clickable.focused & {
+    background-color: var(--button-fill-mute-bg-color);
+    cursor: not-allowed;
+  }
+}
+
+.dialog {
+  position: absolute;
+  z-index: var(--z-index-dropdown);
+
+  &.top    { bottom: calc(100% + 8px); }
+  &.bottom { top: calc(100% + 8px); }
+}
+</style>

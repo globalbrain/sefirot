@@ -651,6 +651,7 @@
   --input-focus-border-color: var(--c-info-light);
   --input-error-text-color: var(--c-danger-text);
   --input-error-border-color: var(--c-danger-light);
+  --input-disabled-border-color: var(--c-divider-1);
   --input-disabled-value-color: var(--c-text-1);
   --input-disabled-bg-color: var(--c-mute);
 

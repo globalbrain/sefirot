@@ -31,7 +31,7 @@ export function assertEmitted(
   wrapper: VueWrapper<any>,
   event: string,
   count: number,
-  value: any
+  value?: any
 ): void {
   expect((wrapper.emitted(event) as any[][])[count - 1][0]).toBe(value)
 }

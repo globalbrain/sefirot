@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import IconDotsThree from '@iconify-icons/ph/dots-three'
-import IconLightbulb from '@iconify-icons/ph/lightbulb'
-import SButton from 'sefirot/components/SButton.vue'
+import IconDotsThree from '@iconify-icons/ph/dots-three-bold'
+import IconLightbulb from '@iconify-icons/ph/lightbulb-bold'
 import SInputAddon from 'sefirot/components/SInputAddon.vue'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
-import { useForm } from 'sefirot/composables/Form'
-import { maxValue, minValue, required } from 'sefirot/validation/rules'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 interface Data {
   amount1: number | null
@@ -18,39 +15,13 @@ interface Data {
   currency: number | null
 }
 
-const { data, validation, init, validateAndNotify } = useForm<Data>({
-  data: {
-    amount1: null,
-    amount2: null,
-    amount3: null,
-    lottery1: null,
-    lottery2: null,
-    currency: null
-  },
-  rules: {
-    amount1: {
-      required: required()
-    },
-    amount2: {
-      required: required()
-    },
-    amount3: {
-      required: required()
-    },
-    lottery1: {
-      required: required(),
-      minValue: minValue(1_000_000),
-      maxValue: maxValue(9_999_999)
-    },
-    lottery2: {
-      required: required(),
-      minValue: minValue(1_000_000),
-      maxValue: maxValue(9_999_999)
-    },
-    currency: {
-      required: required()
-    }
-  }
+const data = reactive<Data>({
+  amount1: null,
+  amount2: null,
+  amount3: null,
+  lottery1: null,
+  lottery2: null,
+  currency: null
 })
 
 function generate7DigitNumbers() {
@@ -61,6 +32,7 @@ function generate7DigitNumbers() {
 }
 
 const dropdown1SelectedValue = ref(1)
+
 const dropdown1 = createDropdown([
   {
     type: 'filter',
@@ -78,185 +50,151 @@ const dropdown2 = createDropdown([
     type: 'menu',
     options: [
       { label: 'Generate', onClick: () => data.amount3 = generate7DigitNumbers() },
-      { label: 'Reset', onClick: () => init() },
-      { label: 'Submit', onClick: () => validateAndNotify() }
+      { label: 'Reset', onClick: () => data.amount3 = null }
     ]
   }
 ])
+
+function state() {
+  return {
+    size: 'small'
+  } as const
+}
 </script>
 
 <template>
   <Board
     title="Components / SInputNumber / 02. Addons"
+    :state="state"
+    docs="components/input-number"
   >
-    <div class="root">
-      <div class="group">
-        <div class="title">Addon Text (Before)</div>
-        <div class="grid">
-          <SInputNumber
-            name="amount1"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in amount."
-            placeholder="1000"
-            :validation="validation.amount1"
-            v-model="data.amount1"
-            separator
-          >
-            <template #addon-before>
-              <SInputAddon label="¥" unclickable />
-            </template>
-          </SInputNumber>
+    <template #controls="{ state }">
+      <HstSelect
+        title="size"
+        :options="{
+          mini: 'mini',
+          small: 'small',
+          medium: 'medium'
+        }"
+        v-model="state.size"
+      />
+    </template>
 
-          <div class="actions">
-            <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
-            <SButton size="small" mode="mute" label="Reset" @click="init" />
+    <template #default="{ state }">
+      <div class="root">
+        <div class="group">
+          <div class="title">Addon Text (Before)</div>
+          <div class="grid">
+            <SInputNumber
+              :size="state.size"
+              placeholder="1,000"
+              separator
+              v-model="data.amount1"
+            >
+              <template #addon-before>
+                <SInputAddon label="¥" :clickable="false" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Text (After)</div>
+          <div class="grid">
+            <SInputNumber
+              :size="state.size"
+              placeholder="1,000"
+              separator
+              v-model="data.amount2"
+            >
+              <template #addon-after>
+                <SInputAddon label="yen" :clickable="false" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Button (Before / Text)</div>
+          <div class="grid">
+            <SInputNumber
+              :size="state.size"
+              placeholder="1000000"
+              v-model="data.lottery1"
+            >
+              <template #addon-before>
+                <SInputAddon label="Generate" @click="data.lottery1 = generate7DigitNumbers()" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Button (After / Icon)</div>
+          <div class="grid">
+            <SInputNumber
+              :size="state.size"
+              placeholder="1000000"
+              v-model="data.lottery2"
+            >
+              <template #addon-after>
+                <SInputAddon :label="IconLightbulb" @click="data.lottery2 = generate7DigitNumbers()" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
+          <div class="grid">
+            <SInputNumber
+              :size="state.size"
+              separator
+              placeholder="1,000,000"
+              v-model="data.currency"
+            >
+              <template #addon-before>
+                <SInputAddon :dropdown="dropdown1" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
+          <div class="grid">
+            <SInputNumber
+              placeholder="1,000,000"
+              separator
+              v-model="data.amount3"
+            >
+              <template #addon-after>
+                <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+              </template>
+            </SInputNumber>
+          </div>
+        </div>
+
+        <div class="group">
+          <div class="title">Addon Dropdown (Before / After / Disabled)</div>
+          <div class="grid">
+            <SInputNumber
+              placeholder="1,000,000"
+              separator
+              disabled
+              v-model="data.amount3"
+            >
+              <template #addon-before>
+                <SInputAddon :label="IconDotsThree" disabled />
+              </template>
+              <template #addon-after>
+                <SInputAddon :label="IconDotsThree" disabled />
+              </template>
+            </SInputNumber>
           </div>
         </div>
       </div>
-      <div class="group">
-        <div class="title">Addon Text (After)</div>
-        <div class="grid">
-          <SInputNumber
-            name="amount2"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in amount."
-            placeholder="1000"
-            :validation="validation.amount2"
-            v-model="data.amount2"
-            separator
-          >
-            <template #addon-after>
-              <SInputAddon label="yen" unclickable />
-            </template>
-          </SInputNumber>
-
-          <div class="actions">
-            <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
-            <SButton size="small" mode="mute" label="Reset" @click="init" />
-          </div>
-        </div>
-      </div>
-      <div class="group">
-        <div class="title">Addon Button (Before / Text)</div>
-        <div class="grid">
-          <SInputNumber
-            name="lottery1"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in 7-digit numbers"
-            placeholder="1000000"
-            :validation="validation.lottery1"
-            v-model="data.lottery1"
-          >
-            <template #addon-before>
-              <SInputAddon label="Generate" @click="data.lottery1 = generate7DigitNumbers()" />
-            </template>
-          </SInputNumber>
-
-          <div class="actions">
-            <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
-            <SButton size="small" mode="mute" label="Reset" @click="init" />
-          </div>
-        </div>
-      </div>
-      <div class="group">
-        <div class="title">Addon Button (After / Icon)</div>
-        <div class="grid">
-          <SInputNumber
-            name="lottery2"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in 7-digit numbers"
-            placeholder="1000000"
-            :validation="validation.lottery2"
-            v-model="data.lottery2"
-          >
-            <template #addon-after>
-              <SInputAddon :label="IconLightbulb" @click="data.lottery2 = generate7DigitNumbers()" />
-            </template>
-          </SInputNumber>
-
-          <div class="actions">
-            <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
-            <SButton size="small" mode="mute" label="Reset" @click="init" />
-          </div>
-        </div>
-      </div>
-      <div class="group">
-        <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
-        <div class="grid">
-          <SInputNumber
-            name="currency"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in currency and amount."
-            placeholder="1000000"
-            :validation="validation.currency"
-            v-model="data.currency"
-            separator
-          >
-            <template #addon-before>
-              <SInputAddon :dropdown="dropdown1" />
-            </template>
-          </SInputNumber>
-
-          <div class="actions">
-            <SButton size="small" mode="info" label="Submit" @click="validateAndNotify" />
-            <SButton size="small" mode="mute" label="Reset" @click="init" />
-          </div>
-        </div>
-      </div>
-      <div class="group">
-        <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
-        <div class="grid">
-          <SInputNumber
-            name="amount3"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in amount."
-            placeholder="1000000"
-            :validation="validation.amount3"
-            v-model="data.amount3"
-            separator
-          >
-            <template #addon-after>
-              <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" no-dropdown-arrow />
-            </template>
-          </SInputNumber>
-        </div>
-      </div>
-      <div class="group">
-        <div class="title">Addon Dropdown (Before / After / Disabled)</div>
-        <div class="grid">
-          <SInputText
-            name="amount3"
-            label="Label"
-            info="Some helpful information."
-            note="Required"
-            help="Please fill in amount."
-            placeholder="1000000"
-            :validation="validation.amount3"
-            v-model="data.amount3"
-            separator
-          >
-            <template #addon-before>
-              <SInputAddon :label="IconDotsThree" disabled />
-            </template>
-            <template #addon-after>
-              <SInputAddon :label="IconDotsThree" disabled />
-            </template>
-          </SInputText>
-        </div>
-      </div>
-    </div>
+    </template>
   </Board>
 </template>
 
@@ -264,6 +202,7 @@ const dropdown2 = createDropdown([
 .root {
   display: grid;
   gap: 32px;
+  padding-bottom: 96px;
 }
 
 .group {
@@ -276,11 +215,5 @@ const dropdown2 = createDropdown([
   font-size: 14px;
   font-weight: 500;
   color: var(--c-text-2);
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
-  padding-top: 24px;
 }
 </style>

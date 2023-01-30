@@ -1,7 +1,7 @@
-import { ref, watch } from 'vue'
+import { Ref, ref, watch } from 'vue'
 
-export function useFlyout() {
-  const container = ref<any>(null)
+export function useFlyout(container?: Ref<any>) {
+  const el = container ?? ref<any>(null)
 
   const isOpen = ref(false)
 
@@ -18,7 +18,7 @@ export function useFlyout() {
   }
 
   function closeOnClickOutside(event: any) {
-    if (!container.value.contains(event.target) && isVisible(container.value)) {
+    if (!el.value.contains(event.target) && isVisible(el.value)) {
       isOpen.value = false
     }
   }
@@ -37,7 +37,7 @@ export function useFlyout() {
   })
 
   return {
-    container,
+    container: el,
     isOpen,
     open,
     close,

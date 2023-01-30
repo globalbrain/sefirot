@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import { useElementBounding, useWindowSize } from '@vueuse/core'
 import xor from 'lodash-es/xor'
 import { computed, ref } from 'vue'
-import { DropdownSectionFilter } from '../composables/Dropdown'
+import { DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
 import { isArray } from '../support/Utils'
@@ -57,12 +56,10 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
 }>()
 
-const { container, isOpen, open } = useFlyout()
+const container = ref<any>(null)
 
-const { top, bottom } = useElementBounding(container)
-const { height } = useWindowSize()
-
-const pos = ref<'top' | 'bottom'>('bottom')
+const { isOpen, open } = useFlyout(container)
+const { position, update: updatePosition } = useManualDropdownPosition(container)
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -101,26 +98,9 @@ const removable = computed(() => {
 
 async function handleOpen() {
   if (!props.disabled) {
-    pos.value = getPosition()
+    updatePosition()
     open()
   }
-}
-
-function getPosition() {
-  if (props.position) {
-    return props.position
-  }
-
-  const dialogHeight = 400
-
-  // If the space top of the input is not enough to show dialog, just show
-  // the dialo at the bottom of the input.
-  if (top.value < dialogHeight) {
-    return 'bottom'
-  }
-
-  // Else show dialog depending on the space bottom of the input.
-  return bottom.value + dialogHeight <= height.value ? 'bottom' : 'top'
 }
 
 function handleSelect(value: OptionValue) {
@@ -188,7 +168,7 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :class="pos">
+      <div v-if="isOpen" class="dropdown" :class="position">
         <SDropdown :sections="dropdownOptions" />
       </div>
     </div>
