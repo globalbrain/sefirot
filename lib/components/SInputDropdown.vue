@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
 import xor from 'lodash-es/xor'
-import { computed, ref } from 'vue'
+import { DefineComponent, computed, ref } from 'vue'
 import { DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
@@ -13,6 +14,8 @@ import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
 export type PrimitiveValue = string | number | boolean | null
 export type ArrayValue = (string | number | boolean)[]
 export type OptionValue = string | number | boolean
@@ -42,6 +45,9 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   position?: 'top' | 'bottom'
   noSearch?: boolean
@@ -138,6 +144,9 @@ function handleArray(value: OptionValue) {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :validation="validation"
   >
     <div class="container" ref="container">

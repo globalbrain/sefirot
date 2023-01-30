@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -16,6 +18,9 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   icon?: any
   align?: Align
   disabled?: boolean
@@ -95,6 +100,9 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :hide-error="hideError"
     :validation="validation"
   >

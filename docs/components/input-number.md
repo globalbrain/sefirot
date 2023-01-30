@@ -125,6 +125,63 @@ interface Props {
 <SInputNumber placeholder="123456789" v-model="..." />
 ```
 
+### `:check-icon`
+
+Icon to display at corner right of label. Useful to show the status of a particular input.
+
+```ts
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent } from 'vue'
+
+interface Props {
+  checkIcon?: IconifyIcon | DefineComponent
+}
+```
+
+```vue-html
+<SInputNumber :check-icon="IconCheckCircle" />
+```
+
+### `:check-text`
+
+Text to display alongside `check-icon`.
+
+```ts
+interface Props {
+  checkText?: string
+}
+```
+
+```vue-html
+<SInputNumber :check-text="Saved" />
+```
+
+### `:check-color`
+
+Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+
+```ts
+interface Props {
+  checkColor?: Color
+}
+
+type Color =
+  | 'neutral' 
+  | 'mute' 
+  | 'info' 
+  | 'success' 
+  | 'warning' 
+  | 'danger'
+```
+
+```vue-html
+<SInputNumber
+  :check-icon="IconCheckCircle"
+  check-text="Uploaded"
+  check-color="success"
+/>
+```
+
 ### `:align`
 
 Defines how the input value is aligned inside the input box. The default is `left`.

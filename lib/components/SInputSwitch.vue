@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -13,6 +15,9 @@ const props = defineProps<{
   note?: string
   text?: string
   help?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   disabled?: boolean
   modelValue: boolean
   hideError?: boolean
@@ -41,6 +46,9 @@ function emitChange(): void {
     :label="label"
     :note="note"
     :info="info"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :help="help"
     :hide-error="hideError"
   >

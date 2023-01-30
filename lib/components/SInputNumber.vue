@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import { isNullish } from '../support/Utils'
 import SInputText from './SInputText.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -15,6 +17,9 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   align?: Align
   separator?: boolean
   disabled?: boolean
@@ -73,8 +78,11 @@ function emitUpdate(value: string | null) {
     :note="note"
     :info="info"
     :help="help"
-    :align="align"
     :placeholder="placeholder"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
+    :align="align"
     :disabled="disabled"
     :hide-error="hideError"
     :display-value="displayValue"

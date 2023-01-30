@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import { computed, ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 export type Value = string | number | boolean | null
 
 export interface Option {
@@ -22,6 +24,9 @@ const props = withDefaults(defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   nullable?: boolean
   disabled?: boolean
@@ -81,6 +86,9 @@ function emitChange(e: any): void {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :hide-error="hideError"
     :validation="validation"
   >

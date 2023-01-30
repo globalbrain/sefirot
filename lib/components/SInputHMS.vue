@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Value {
   hour: string | null
@@ -19,6 +21,9 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   noHour?: boolean
   noMinute?: boolean
   noSecond?: boolean
@@ -114,6 +119,9 @@ function createRequiredTouched(): boolean[] {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :hide-error="hideError"
     :validation="validation"
   >

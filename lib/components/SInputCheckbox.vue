@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
-import { PropType } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, PropType } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
@@ -13,6 +15,9 @@ const props = defineProps({
   info: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },
+  checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
+  checkText: { type: String, default: null },
+  checkColor: { type: String as PropType<Color>, default: null },
   text: { type: String, required: true },
   modelValue: { type: Boolean, required: true },
   validation: { type: Object as PropType<Validatable>, default: null }
@@ -33,6 +38,9 @@ function emitChange() {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :validation="validation"
   >
     <div class="container">

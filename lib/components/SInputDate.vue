@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DatePicker } from 'v-calendar'
-import { computed } from 'vue'
+import { DefineComponent, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
 import { Day, day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
+
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   name?: string
@@ -11,9 +14,12 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
-  hideError?: boolean
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   modelValue: Day | null
   validation?: Validatable
+  hideError?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -45,6 +51,9 @@ function emitBlur() {
     :note="note"
     :info="info"
     :help="help"
+    :check-icon="checkIcon"
+    :check-text="checkText"
+    :check-color="checkColor"
     :hide-error="hideError"
     :validation="validation"
   >

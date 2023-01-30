@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import IconQuestion from '@iconify-icons/ph/question'
-import { computed, unref, useSlots } from 'vue'
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent, computed, unref, useSlots } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
+
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   name?: string
@@ -11,8 +14,11 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
-  hideError?: boolean
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   validation?: Validatable
+  hideError?: boolean
 }>()
 
 const slots = useSlots()
@@ -63,6 +69,11 @@ function getErrorMsg(validation: Validatable) {
       </div>
 
       <span class="label-note">{{ note }}</span>
+
+      <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
+        <SIcon v-if="checkIcon" class="check-icon" :icon="checkIcon" />
+        <span v-if="checkText" class="check-text">{{ checkText }}</span>
+      </span>
     </label>
 
     <slot />
@@ -75,7 +86,7 @@ function getErrorMsg(validation: Validatable) {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SInputBase.mini {
   .label            { padding-bottom: 6px; }
   .label-text-value { font-size: 12px; }
@@ -83,15 +94,15 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .SInputBase.small {
-  .label            { padding-bottom: 8px; }
-  .label-text-value { font-size: 14px; }
-  .label-note       { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; }
+  .label-text-value   { font-size: 14px; }
+  .label-note, .check { transform: translateY(1px); }
 }
 
 .SInputBase.medium {
-  .label            { padding-bottom: 8px; }
-  .label-text-value { font-size: 14px; }
-  .label-note       { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; }
+  .label-text-value   { font-size: 14px; }
+  .label-note, .check { transform: translateY(1px); }
 }
 
 .SInputBase.has-error {
@@ -167,5 +178,32 @@ function getErrorMsg(validation: Validatable) {
 .help-text + .help-error,
 .help-text + .help-text {
   padding: 0;
+}
+
+.check {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  line-height: 16px;
+  font-size: 12px;
+
+  &.neutral { color: var(--c-text-1); }
+  &.mute    { color: var(--c-text-2); }
+  &.info    { color: var(--c-info-text); }
+  &.success { color: var(--c-success-text); }
+  &.warning { color: var(--c-warning-text); }
+  &.danger  { color: var(--c-danger-text); }
+}
+
+.check-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.check-icon.SSpinner {
+  margin: -4px;
+  width: 24px;
+  height: 24px;
 }
 </style>
