@@ -84,5 +84,7 @@ function emitUpdate(value: string | null) {
     @input="emitUpdate"
   >
     <template v-if="$slots.info" #info><slot name="info" /></template>
+    <template v-if="$slots['addon-before']" #addon-before><slot name="addon-before" /></template>
+    <template v-if="$slots['addon-after']" #addon-after><slot name="addon-after" /></template>
   </SInputText>
 </template>

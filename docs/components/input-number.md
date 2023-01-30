@@ -256,6 +256,30 @@ Same as `info` prop. When `info` prop and this slot are defined at the same time
 </SInputNumber>
 ```
 
+### `#addon-before`
+
+Inject [`<SInputAddon>`](/components/input-addon) before the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon). 
+
+```vue-html
+<SInputNumber label="..." v-model="...">
+  <template #addon-before>
+    <SInputAddon label="@" />
+  </template>
+</SInputNumber>
+```
+
+### `#addon-after`
+
+Inject [`<SInputAddon>`](/components/input-addon) after the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon). 
+
+```vue-html
+<SInputNumber label="..." v-model="...">
+  <template #addon-after>
+    <SInputAddon label="@" />
+  </template>
+</SInputNumber>
+```
+
 ## Events
 
 Here are the list of events the component may emit.

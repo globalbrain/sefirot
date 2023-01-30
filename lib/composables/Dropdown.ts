@@ -1,4 +1,5 @@
-import { MaybeRef } from '@vueuse/core'
+import { MaybeRef, useElementBounding, useWindowSize } from '@vueuse/core'
+import { Ref, ref, unref } from 'vue'
 
 export type DropdownSection =
   | DropdownSectionMenu
@@ -55,6 +56,70 @@ export interface DropdownSectionFilterOptionAvatar extends DropdownSectionFilter
   image?: string | null
 }
 
+export interface ManualDropdownPosition {
+  position: Ref<'top' | 'bottom'>
+  update(): void
+}
+
 export function createDropdown(section: DropdownSection[]): DropdownSection[] {
   return section
+}
+
+export function useManualDropdownPosition(
+  container?: Ref<any>,
+  initPosition?: 'top' | 'bottom'
+): ManualDropdownPosition {
+  const el = container ?? ref<any>(null)
+
+  const { top, bottom } = useElementBounding(el)
+  const { height } = useWindowSize()
+
+  const position = ref<'top' | 'bottom'>('bottom')
+
+  const dialogHeight = 400
+
+  function update(): void {
+    if (initPosition) {
+      return
+    }
+
+    // If the space top of the input is not enough to show dialog, just show
+    // the dialog at the bottom of the input.
+    if (top.value < dialogHeight) {
+      position.value = 'bottom'
+      return
+    }
+
+    // Else show dialog depending on the space bottom of the input.
+    if (bottom.value + dialogHeight <= height.value) {
+      position.value = 'bottom'
+      return
+    }
+
+    position.value = 'top'
+  }
+
+  return {
+    position,
+    update
+  }
+}
+
+export function getSelectedOption(
+  sections: DropdownSection[]
+): DropdownSectionFilterOption | null {
+  for (const section of sections) {
+    if (section.type === 'filter') {
+      const options = unref(section.options)
+      const selected = unref(section.selected)
+
+      for (const option of options) {
+        if (option.value === selected) {
+          return option
+        }
+      }
+    }
+  }
+
+  return null
 }
