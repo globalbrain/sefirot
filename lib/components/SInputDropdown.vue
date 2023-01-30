@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import xor from 'lodash-es/xor'
-import { DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { IconifyIcon } from '@iconify/vue/dist/offline'
+import xor from 'lodash-es/xor'
 import { DefineComponent, computed, ref } from 'vue'
+import { DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { Validatable } from '../composables/Validation'
 import { isArray } from '../support/Utils'
@@ -14,6 +14,8 @@ import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
 export type PrimitiveValue = string | number | boolean | null
 export type ArrayValue = (string | number | boolean)[]
 export type OptionValue = string | number | boolean
@@ -43,6 +45,9 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   position?: 'top' | 'bottom'
   noSearch?: boolean
@@ -51,12 +56,7 @@ const props = defineProps<{
   disabled?: boolean
   modelValue: PrimitiveValue | ArrayValue
   validation?: Validatable
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
@@ -144,10 +144,10 @@ function handleArray(value: OptionValue) {
     :note="note"
     :info="info"
     :help="help"
-    :validation="validation"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :validation="validation"
   >
     <div class="container" ref="container">
       <div

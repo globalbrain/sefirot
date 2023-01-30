@@ -2,7 +2,7 @@
   <svg
     class="SSpinner"
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="22 22 55 55"
+    viewBox="0 0 100 100"
     preserveAspectRatio="xMidYMid"
   >
     <g transform="rotate(0 50 50)">

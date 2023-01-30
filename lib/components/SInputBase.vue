@@ -6,20 +6,20 @@ import { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
 
+type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
 const props = defineProps<{
   name?: string
   label?: string
   info?: string
   note?: string
   help?: string
-  hideError?: boolean
-  validation?: Validatable
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  validation?: Validatable
+  hideError?: boolean
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const slots = useSlots()
 
@@ -71,7 +71,7 @@ function getErrorMsg(validation: Validatable) {
       <span class="label-note">{{ note }}</span>
 
       <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
-        <SIcon v-if="checkIcon" :icon="checkIcon" />
+        <SIcon v-if="checkIcon" class="check-icon" :icon="checkIcon" />
         <span v-if="checkText" class="check-text">{{ checkText }}</span>
       </span>
     </label>
@@ -86,7 +86,7 @@ function getErrorMsg(validation: Validatable) {
   </div>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SInputBase.mini {
   .label            { padding-bottom: 6px; }
   .label-text-value { font-size: 12px; }
@@ -181,21 +181,29 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .check {
-  margin-left: auto;
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 16px;
+  margin-left: auto;
+  line-height: 16px;
+  font-size: 12px;
 
-  &.neutral { color: var(--c-neutral-1); }
+  &.neutral { color: var(--c-text-1); }
   &.mute    { color: var(--c-text-2); }
-  &.info    { color: var(--c-info-light); }
-  &.success { color: var(--c-success-light); }
-  &.warning { color: var(--c-warning-light); }
-  &.danger  { color: var(--c-danger-light); }
+  &.info    { color: var(--c-info-text); }
+  &.success { color: var(--c-success-text); }
+  &.warning { color: var(--c-warning-text); }
+  &.danger  { color: var(--c-danger-text); }
+}
 
-  &-text {
-    font-size: 12px;
-  }
+.check-icon {
+  width: 14px;
+  height: 14px;
+}
+
+.check-icon.SSpinner {
+  margin: -4px;
+  width: 24px;
+  height: 24px;
 }
 </style>

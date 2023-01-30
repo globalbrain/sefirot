@@ -122,6 +122,63 @@ interface Props {
 />
 ```
 
+### `:check-icon`
+
+Icon to display at corner right of label. Useful to show the status of a particular input.
+
+```ts
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+import { DefineComponent } from 'vue'
+
+interface Props {
+  checkIcon?: IconifyIcon | DefineComponent
+}
+```
+
+```vue-html
+<SInputRadios :check-icon="IconCheckCircle" />
+```
+
+### `:check-text`
+
+Text to display alongside `check-icon`.
+
+```ts
+interface Props {
+  checkText?: string
+}
+```
+
+```vue-html
+<SInputRadios :check-text="Saved" />
+```
+
+### `:check-color`
+
+Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+
+```ts
+interface Props {
+  checkColor?: Color
+}
+
+type Color =
+  | 'neutral' 
+  | 'mute' 
+  | 'info' 
+  | 'success' 
+  | 'warning' 
+  | 'danger'
+```
+
+```vue-html
+<SInputRadios
+  :check-icon="IconCheckCircle"
+  check-text="Uploaded"
+  check-color="success"
+/>
+```
+
 ### `:options`
 
 The list of selectable options for the input.
@@ -247,44 +304,6 @@ interface Props {
   v-model="1"
   :validation="validation"
   hide-error
-/>
-```
-
-### `:check-icon`
-
-Icon to display at corner right of label. Useful to show the status of a particular input.
-
-```ts
-interface Props {
-  checkIcon?: IconifyIcon | DefineComponent
-}
-```
-
-### `:check-text`
-
-Text to display alongside `check-icon`.
-
-```ts
-interface Props {
-  checkText?: string
-}
-```
-
-### `:check-color`
-
-Defines the color of `check-icon` and `check-test`. The default is `neutral`.
-
-```ts
-interface Props {
-  checkColor?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-}
-```
-
-```vue-html
-<SInputRadios
-  :check-icon="IconCheckCircle"
-  check-text="Saved"
-  check-color="success"
 />
 ```
 

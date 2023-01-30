@@ -6,6 +6,7 @@ import SInputBase from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option {
   label: string
@@ -19,17 +20,15 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   disabled?: boolean
   modelValue: (string | number | boolean)[]
   hideError?: boolean
   validation?: Validatable
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: (string | number | boolean)[]): void
@@ -61,10 +60,10 @@ function handleChange(value: string | number | boolean): void {
     :note="note"
     :info="info"
     :help="help"
-    :hide-error="hideError"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :hide-error="hideError"
   >
     <div class="container">
       <div class="row">

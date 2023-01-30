@@ -6,21 +6,21 @@ import { Validatable } from '../composables/Validation'
 import { Day, day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
 const props = defineProps<{
   name?: string
   label?: string
   info?: string
   note?: string
   help?: string
-  hideError?: boolean
-  modelValue: Day | null
-  validation?: Validatable
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  modelValue: Day | null
+  validation?: Validatable
+  hideError?: boolean
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Day | null): void
@@ -51,11 +51,11 @@ function emitBlur() {
     :note="note"
     :info="info"
     :help="help"
-    :hide-error="hideError"
-    :validation="validation"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :hide-error="hideError"
+    :validation="validation"
   >
     <div class="container">
       <DatePicker

@@ -4,14 +4,13 @@ import { DefineComponent, PropType } from 'vue'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
-type Size = 'mini' | 'small' | 'medium'
+export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 interface CheckboxOption {
   label: string
   value: any
 }
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps({
   size: { type: String as PropType<Size>, default: 'small' },
@@ -20,11 +19,11 @@ const props = defineProps({
   info: { type: String, default: null },
   note: { type: String, default: null },
   help: { type: String, default: null },
-  options: { type: Array as PropType<CheckboxOption[]>, required: true },
-  modelValue: { type: Array, required: true },
   checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
   checkText: { type: String, default: null },
-  checkColor: { type: String as PropType<Color>, default: null }
+  checkColor: { type: String as PropType<Color>, default: null },
+  options: { type: Array as PropType<CheckboxOption[]>, required: true },
+  modelValue: { type: Array, required: true }
 })
 
 const emit = defineEmits(['update:modelValue'])

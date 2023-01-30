@@ -5,6 +5,7 @@ import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -13,16 +14,14 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   text: string
   modelValue: boolean
   validation?: Validatable
   hideError?: boolean
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: boolean): void
@@ -43,11 +42,11 @@ function onClick() {
     :note="note"
     :info="info"
     :help="help"
-    :validation="validation"
-    :hide-error="hideError"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :validation="validation"
+    :hide-error="hideError"
   >
     <div class="container">
       <div class="input" :class="{ on: props.modelValue }" role="button" @click="onClick">

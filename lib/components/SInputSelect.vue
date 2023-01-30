@@ -8,6 +8,7 @@ import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 export type Value = string | number | boolean | null
 
 export interface Option {
@@ -23,6 +24,9 @@ const props = withDefaults(defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   nullable?: boolean
   disabled?: boolean
@@ -30,15 +34,10 @@ const props = withDefaults(defineProps<{
   modelValue?: Value
   validation?: Validatable
   hideError?: boolean
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>(), {
   value: undefined,
   modelValue: undefined
 })
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: Value): void
@@ -87,11 +86,11 @@ function emitChange(e: any): void {
     :note="note"
     :info="info"
     :help="help"
-    :hide-error="hideError"
-    :validation="validation"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :hide-error="hideError"
+    :validation="validation"
   >
     <div class="box" :class="{ focus: isFocused }">
       <select

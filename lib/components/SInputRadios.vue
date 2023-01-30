@@ -6,6 +6,7 @@ import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option {
   label: string
@@ -19,21 +20,19 @@ const props = withDefaults(defineProps<{
   info?: string
   note?: string
   help?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   options: Option[]
   nullable?: boolean
   value?: string | number | boolean | null
   modelValue?: string | number | boolean | null
   validation?: Validatable
   hideError?: boolean
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>(), {
   value: undefined,
   modelValue: undefined
 })
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | number | boolean | null): void
@@ -81,11 +80,11 @@ function onChange(value: string | number | boolean) {
     :note="note"
     :info="info"
     :help="help"
-    :hide-error="hideError"
-    :validation="validation"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :hide-error="hideError"
+    :validation="validation"
   >
     <div class="container">
       <div class="row">

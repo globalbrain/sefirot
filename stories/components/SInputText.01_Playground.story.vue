@@ -28,22 +28,24 @@ const state = ref<'loading' | 'success' | 'failure'>()
 const check = computed(() => {
   if (state.value === 'loading') {
     return { icon: SSpinner as DefineComponent, text: 'Saving...', color: 'mute' as const }
-  }
-  if (state.value === 'success') {
+  } else if (state.value === 'success') {
     return { icon: IconCheckCircle, text: 'Saved', color: 'success' as const }
-  }
-  if (state.value === 'failure') {
+  } else if (state.value === 'failure') {
     return { icon: IconXCircle, text: 'Failed', color: 'danger' as const }
+  } else {
+    return null
   }
-  return null
 })
 
 let timeout: number
 
 async function submit() {
   clearTimeout(timeout)
+
   state.value = 'loading'
+
   const valid = await validateAndNotify()
+
   if (valid) {
     timeout = setTimeout(() => {
       state.value = 'success'
@@ -71,11 +73,11 @@ function reset() {
       note="Required"
       help="Please fill in your name."
       placeholder="John Doe"
-      v-model="data.name"
-      :validation="validation.name"
       :check-icon="check?.icon"
       :check-text="check?.text"
       :check-color="check?.color"
+      v-model="data.name"
+      :validation="validation.name"
     />
 
     <div class="actions">
@@ -90,9 +92,5 @@ function reset() {
   display: flex;
   gap: 12px;
   padding-top: 24px;
-}
-
-:deep(.SSpinner) {
-  width: 13px;
 }
 </style>

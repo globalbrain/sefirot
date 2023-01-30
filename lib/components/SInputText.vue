@@ -7,6 +7,7 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -17,6 +18,9 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
+  checkIcon?: IconifyIcon | DefineComponent
+  checkText?: string
+  checkColor?: Color
   icon?: any
   align?: Align
   disabled?: boolean
@@ -24,12 +28,7 @@ const props = defineProps<{
   displayValue?: string | null
   hideError?: boolean
   validation?: Validatable
-  checkIcon?: IconifyIcon | DefineComponent
-  checkText?: string
-  checkColor?: Color
 }>()
-
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | null): void
@@ -101,11 +100,11 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :note="note"
     :info="info"
     :help="help"
-    :hide-error="hideError"
-    :validation="validation"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :hide-error="hideError"
+    :validation="validation"
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="$slots['addon-before']" class="addon before">
