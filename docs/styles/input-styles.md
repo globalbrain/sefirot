@@ -17,14 +17,20 @@ Customize the font size of the generic input value. The font size is different d
    * undefined and size specific values defined below is used.
    */
   --input-font-size: undefined;
+  --input-label-font-size: undefined;
 
   /**
    * Set the font size of different `size` of inputs. When
    * `--button-font-size` is set, these values gets ignored.
    */
   --input-mini-font-size: 14px;
+  --input-mini-label-font-size: 12px;
+
   --input-small-font-size: 16px;
+  --input-small-label-font-size: 14px;
+  
   --input-medium-font-size: 16px;
+  --input-medium-label-font-size: 14px;
 }
 ```
 
