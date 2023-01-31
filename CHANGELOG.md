@@ -1,3 +1,9 @@
+# [2.16.0](https://github.com/globalbrain/sefirot/compare/v2.15.0...v2.16.0) (2023-01-31)
+
+### Features
+
+* **input:** add `unit-before` / `unit-after` props to `SInputText` and `SInputNumber` ([#210](https://github.com/globalbrain/sefirot/issues/210)) ([0593a89](https://github.com/globalbrain/sefirot/commit/0593a89845c8fcf4ace7ab860e9ad311a45abb1d))
+
 # [2.15.0](https://github.com/globalbrain/sefirot/compare/v2.14.1...v2.15.0) (2023-01-30)
 
 ### Features
