@@ -658,4 +658,8 @@
   --input-mini-font-size: 14px;
   --input-small-font-size: 16px;
   --input-medium-font-size: 16px;
+
+  --input-mini-label-font-size: 12px;
+  --input-small-label-font-size: 14px;
+  --input-medium-label-font-size: 14px;
 }

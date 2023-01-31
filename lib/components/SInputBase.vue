@@ -88,21 +88,19 @@ function getErrorMsg(validation: Validatable) {
 
 <style scoped lang="postcss">
 .SInputBase.mini {
-  .label            { padding-bottom: 6px; }
-  .label-text-value { font-size: 12px; }
+  .label            { padding-bottom: 6px; height: 22px; }
+  .label-text-value { font-size: var(--input-label-font-size, var(--input-mini-label-font-size)); }
   .label-text-info  { width: 14px; height: 14px; }
 }
 
 .SInputBase.small {
-  .label              { padding-bottom: 8px; }
-  .label-text-value   { font-size: 14px; }
-  .label-note, .check { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; height: 24px; }
+  .label-text-value   { font-size: var(--input-label-font-size, var(--input-small-label-font-size)); }
 }
 
 .SInputBase.medium {
-  .label              { padding-bottom: 8px; }
-  .label-text-value   { font-size: 14px; }
-  .label-note, .check { transform: translateY(1px); }
+  .label              { padding-bottom: 8px; height: 24px; }
+  .label-text-value   { font-size: var(--input-label-font-size, var(--input-medium-label-font-size)); }
 }
 
 .SInputBase.has-error {
@@ -113,7 +111,7 @@ function getErrorMsg(validation: Validatable) {
 
 .label {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   width: 100%;
   line-height: 16px;
   font-weight: 500;
