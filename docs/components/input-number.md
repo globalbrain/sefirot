@@ -125,6 +125,34 @@ interface Props {
 <SInputNumber placeholder="123456789" v-model="..." />
 ```
 
+### `:unit-before`
+
+Defines the prefix to show, which is not a part of `:value` nor `:model-value`.
+
+```ts
+interface Props {
+  unitBefore?: string
+}
+```
+
+```vue-html
+<SInputNumber unit-before="¥" v-model="..." />
+```
+
+### `:unit-before`
+
+Defines the postfix to show, which is not a part of `:value` nor `:model-value`.
+
+```ts
+interface Props {
+  unitAfter?: string
+}
+```
+
+```vue-html
+<SInputNumber unit-after="yen" v-model="..." />
+```
+
 ### `:check-icon`
 
 Icon to display at corner right of label. Useful to show the status of a particular input.
@@ -166,11 +194,11 @@ interface Props {
 }
 
 type Color =
-  | 'neutral' 
-  | 'mute' 
-  | 'info' 
-  | 'success' 
-  | 'warning' 
+  | 'neutral'
+  | 'mute'
+  | 'info'
+  | 'success'
+  | 'warning'
   | 'danger'
 ```
 
@@ -315,7 +343,7 @@ Same as `info` prop. When `info` prop and this slot are defined at the same time
 
 ### `#addon-before`
 
-Inject [`<SInputAddon>`](/components/input-addon) before the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon). 
+Inject [`<SInputAddon>`](/components/input-addon) before the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon).
 
 ```vue-html
 <SInputNumber label="..." v-model="...">
@@ -327,7 +355,7 @@ Inject [`<SInputAddon>`](/components/input-addon) before the input. Learn more d
 
 ### `#addon-after`
 
-Inject [`<SInputAddon>`](/components/input-addon) after the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon). 
+Inject [`<SInputAddon>`](/components/input-addon) after the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon).
 
 ```vue-html
 <SInputNumber label="..." v-model="...">
