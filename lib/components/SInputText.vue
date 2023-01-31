@@ -18,6 +18,8 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
+  unitBefore?: string
+  unitAfter?: string
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -116,22 +118,32 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
       </div>
 
       <div class="value">
-        <input
-          class="input entity"
-          :class="{ hide: showDisplay }"
-          :id="name"
-          :type="type ?? 'text'"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          :value="modelValue"
-          ref="input"
-          @focus="onFocus"
-          @blur="emitBlur"
-          @input="emitInput"
-          @keypress.enter="emitEnter"
-        >
-        <div v-if="showDisplay" class="input display">
-          {{ displayValue }}
+        <div v-if="props.unitBefore" class="unit before">
+          {{ props.unitBefore }}
+        </div>
+
+        <div class="area">
+          <input
+            class="input entity"
+            :class="{ hide: showDisplay }"
+            :id="name"
+            :type="type ?? 'text'"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :value="modelValue"
+            ref="input"
+            @focus="onFocus"
+            @blur="emitBlur"
+            @input="emitInput"
+            @keypress.enter="emitEnter"
+          >
+          <div v-if="showDisplay" class="input display">
+            {{ displayValue }}
+          </div>
+        </div>
+
+        <div v-if="props.unitAfter" class="unit after">
+          {{ props.unitAfter }}
         </div>
       </div>
 
@@ -147,6 +159,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
+  .area  { min-height: 30px; }
 
   .input {
     padding: 3px 8px;
@@ -154,6 +167,18 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
+
+  .unit + .area .input      { padding-left: 6px; }
+  .area:has(+ .unit) .input { padding-right: 6px; }
+
+  .unit {
+    padding: 3px 8px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 22px;
@@ -187,6 +212,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.small {
   .box   { min-height: 40px; }
   .value { min-height: 38px; }
+  .area  { min-height: 38px; }
 
   .input {
     padding: 7px 12px;
@@ -194,6 +220,18 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
+
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
+
+  .unit {
+    padding: 7px 12px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 26px;
@@ -227,6 +265,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.medium {
   .box   { min-height: 48px; }
   .value { min-height: 46px; }
+  .area  { min-height: 46px; }
 
   .input {
     padding: 11px 12px;
@@ -234,6 +273,18 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
+
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
+
+  .unit {
+    padding: 11px 12px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 28px;
@@ -275,7 +326,8 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     background-color: var(--input-disabled-bg-color);
   }
 
-  .box:hover .input {
+  .box:hover .input,
+  .box:hover .unit {
     cursor: not-allowed;
   }
 }
@@ -318,8 +370,11 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   }
 }
 
-.value {
+.value,
+.area {
   position: relative;
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 }
 
@@ -351,6 +406,11 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+.unit {
+  font-weight: 500;
+  color: var(--c-text-2);
 }
 
 .icon {
