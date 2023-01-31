@@ -17,6 +17,8 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
+  unitBefore?: string
+  unitAfter?: string
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -79,6 +81,8 @@ function emitUpdate(value: string | null) {
     :info="info"
     :help="help"
     :placeholder="placeholder"
+    :unit-before="unitBefore"
+    :unit-after="unitAfter"
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"

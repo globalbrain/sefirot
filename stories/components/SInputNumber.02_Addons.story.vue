@@ -59,7 +59,9 @@ const dropdown2 = createDropdown([
 
 function state() {
   return {
-    size: 'small'
+    size: 'small',
+    unitBefore: '',
+    unitAfter: ''
   } as const
 }
 </script>
@@ -79,6 +81,14 @@ function state() {
           medium: 'medium'
         }"
         v-model="state.size"
+      />
+      <HstText
+        title="unit-before for Addon Dropdown (Before / Single Select Dropdown)"
+        v-model="state.unitBefore"
+      />
+      <HstText
+        title="unit-after for Addon Dropdown (Before / Single Select Dropdown)"
+        v-model="state.unitAfter"
       />
     </template>
 
@@ -151,6 +161,8 @@ function state() {
           <div class="grid">
             <SInputNumber
               :size="state.size"
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               separator
               placeholder="1,000,000"
               v-model="data.currency"
@@ -166,6 +178,7 @@ function state() {
           <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
           <div class="grid">
             <SInputNumber
+              :size="state.size"
               placeholder="1,000,000"
               separator
               v-model="data.amount3"
@@ -181,6 +194,8 @@ function state() {
           <div class="title">Addon Dropdown (Before / After / Disabled)</div>
           <div class="grid">
             <SInputNumber
+              :size="state.size"
+              unit-after="disabled"
               placeholder="1,000,000"
               separator
               disabled

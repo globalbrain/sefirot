@@ -23,14 +23,14 @@ const { data, validation, init, validateAndNotify } = useForm<Data>({
   }
 })
 
-const state = ref<'loading' | 'success' | 'failure'>()
+const inputState = ref<'loading' | 'success' | 'failure'>()
 
 const check = computed(() => {
-  if (state.value === 'loading') {
+  if (inputState.value === 'loading') {
     return { icon: SSpinner as DefineComponent, text: 'Saving...', color: 'mute' as const }
-  } else if (state.value === 'success') {
+  } else if (inputState.value === 'success') {
     return { icon: IconCheckCircle, text: 'Saved', color: 'success' as const }
-  } else if (state.value === 'failure') {
+  } else if (inputState.value === 'failure') {
     return { icon: IconXCircle, text: 'Failed', color: 'danger' as const }
   } else {
     return null
@@ -42,48 +42,132 @@ let timeout: number
 async function submit() {
   clearTimeout(timeout)
 
-  state.value = 'loading'
+  inputState.value = 'loading'
 
   const valid = await validateAndNotify()
 
   if (valid) {
     timeout = setTimeout(() => {
-      state.value = 'success'
+      inputState.value = 'success'
     }, 2000) as any
   } else {
-    state.value = 'failure'
+    inputState.value = 'failure'
   }
 }
 
 function reset() {
   init()
   clearTimeout(timeout)
-  state.value = undefined
+  inputState.value = undefined
+}
+
+function state() {
+  return {
+    size: 'small',
+    label: 'Label',
+    info: 'Some helpful information.',
+    note: 'Required',
+    placeholder: 'John Doe',
+    unitBefore: '',
+    unitAfter: '',
+    help: 'Please fill in your name.',
+    align: 'left',
+    separator: true,
+    disabled: false,
+    error: false
+  } as const
 }
 </script>
 
 <template>
   <Board
     title="Components / SInputText / 01. Playground"
+    :state="state"
   >
-    <SInputText
-      name="name"
-      label="Label"
-      info="Some helpful information."
-      note="Required"
-      help="Please fill in your name."
-      placeholder="John Doe"
-      :check-icon="check?.icon"
-      :check-text="check?.text"
-      :check-color="check?.color"
-      v-model="data.name"
-      :validation="validation.name"
-    />
+    <template #controls="{ state }">
+      <HstSelect
+        title="size"
+        :options="{
+          mini: 'mini',
+          small: 'small',
+          medium: 'medium'
+        }"
+        v-model="state.size"
+      />
+      <HstText
+        title="label"
+        v-model="state.label"
+      />
+      <HstText
+        title="info"
+        v-model="state.info"
+      />
+      <HstText
+        title="note"
+        v-model="state.note"
+      />
+      <HstText
+        title="placeholder"
+        v-model="state.placeholder"
+      />
+      <HstText
+        title="unit-before"
+        v-model="state.unitBefore"
+      />
+      <HstText
+        title="unit-after"
+        v-model="state.unitAfter"
+      />
+      <HstText
+        title="help"
+        v-model="state.help"
+      />
+      <HstSelect
+        title="align"
+        :options="{
+          left: 'left',
+          center: 'center',
+          right: 'right'
+        }"
+        v-model="state.align"
+      />
+      <HstCheckbox
+        title="separator"
+        v-model="state.separator"
+      />
+      <HstCheckbox
+        title="disabled"
+        v-model="state.disabled"
+      />
+      <HstCheckbox
+        title="error"
+        v-model="state.error"
+      />
+    </template>
 
-    <div class="actions">
-      <SButton size="small" mode="info" label="Submit" @click="submit" />
-      <SButton size="small" mode="mute" label="Reset" @click="reset" />
-    </div>
+    <template #default="{ state }">
+      <SInputText
+        name="name"
+        :label="state.label"
+        :info="state.info"
+        :note="state.note"
+        :help="state.help"
+        :placeholder="state.placeholder"
+        :unit-before="state.unitBefore"
+        :unit-after="state.unitAfter"
+        :size="state.size"
+        :check-icon="check?.icon"
+        :check-text="check?.text"
+        :check-color="check?.color"
+        :validation="validation.name"
+        v-model="data.name"
+      />
+
+      <div class="actions">
+        <SButton size="small" mode="info" label="Submit" @click="submit" />
+        <SButton size="small" mode="mute" label="Reset" @click="reset" />
+      </div>
+    </template>
   </Board>
 </template>
 

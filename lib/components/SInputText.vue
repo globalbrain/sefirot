@@ -18,6 +18,8 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
+  unitBefore?: string
+  unitAfter?: string
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -116,6 +118,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
       </div>
 
       <div class="value">
+        <div v-if="props.unitBefore" class="unit">{{ props.unitBefore }}</div>
         <input
           class="input entity"
           :class="{ hide: showDisplay }"
@@ -133,6 +136,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         <div v-if="showDisplay" class="input display">
           {{ displayValue }}
         </div>
+        <div v-if="props.unitAfter" class="unit">{{ props.unitAfter }}</div>
       </div>
 
       <div v-if="$slots['addon-after']" class="addon after">
@@ -153,6 +157,28 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     letter-spacing: 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+
+  .unit + .input {
+    padding-left: 4px;
+  }
+
+  .input:has(+ .unit) {
+    padding-right: 4px;
+  }
+
+  .unit {
+    padding: 3px 4px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+
+  .unit:has(+ .input) {
+    padding-left: 8px;
+  }
+
+  .input + .unit {
+    padding-right: 8px;
   }
 
   .icon {
@@ -195,6 +221,28 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
+  .unit + .input {
+    padding-left: 6px;
+  }
+
+  .input:has(+ .unit) {
+    padding-right: 6px;
+  }
+
+  .unit {
+    padding: 7px 6px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .unit:has(+ .input) {
+    padding-left: 12px;
+  }
+
+  .input + .unit {
+    padding-right: 12px;
+  }
+
   .icon {
     width: 26px;
     height: 38px;
@@ -233,6 +281,28 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     letter-spacing: 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .unit + .input {
+    padding-left: 6px;
+  }
+
+  .input:has(+ .unit) {
+    padding-right: 6px;
+  }
+
+  .unit {
+    padding: 11px 6px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .unit:has(+ .input) {
+    padding-left: 12px;
+  }
+
+  .input + .unit {
+    padding-right: 12px;
   }
 
   .icon {
@@ -275,7 +345,8 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     background-color: var(--input-disabled-bg-color);
   }
 
-  .box:hover .input {
+  .box:hover .input,
+  .box:hover .unit {
     cursor: not-allowed;
   }
 }
@@ -320,16 +391,13 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 .value {
   position: relative;
+  display: flex;
+  align-items: center;
   flex-grow: 1;
 }
 
 .input {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  flex-grow: 1;
   color: var(--input-value-color);
   background-color: transparent;
   cursor: text;
@@ -351,6 +419,11 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   bottom: 0;
   left: 0;
   width: 100%;
+}
+
+.unit {
+  font-weight: 500;
+  color: var(--c-text-2);
 }
 
 .icon {

@@ -12,6 +12,8 @@ function state() {
     info: 'Some helpful information.',
     note: 'Note text',
     placeholder: '123,456,789',
+    unitBefore: '',
+    unitAfter: '',
     help: 'This is a help text.',
     align: 'left',
     separator: true,
@@ -59,6 +61,14 @@ function onInput(value: number | null) {
         v-model="state.placeholder"
       />
       <HstText
+        title="unit-before"
+        v-model="state.unitBefore"
+      />
+      <HstText
+        title="unit-after"
+        v-model="state.unitAfter"
+      />
+      <HstText
         title="help"
         v-model="state.help"
       />
@@ -94,6 +104,8 @@ function onInput(value: number | null) {
         :note="state.note"
         :help="state.help"
         :placeholder="state.placeholder"
+        :unit-before="state.unitBefore"
+        :unit-after="state.unitAfter"
         :align="state.align"
         :separator="state.separator"
         :disabled="state.disabled"
