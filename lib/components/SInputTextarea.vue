@@ -19,7 +19,7 @@ const props = defineProps<{
   checkColor?: Color
   placeholder?: string
   disabled?: boolean
-  rows?: number
+  rows?: number | 'fill'
   modelValue: string | null
   hideError?: boolean
   validation?: Validatable
@@ -31,7 +31,8 @@ const emit = defineEmits<{
 
 const classes = computed(() => [
   props.size ?? 'small',
-  { disabled: props.disabled }
+  { disabled: props.disabled },
+  { fill: props.rows === 'fill' }
 ])
 
 function emitInput(e: Event): void {
@@ -62,6 +63,7 @@ function emitBlur(e: FocusEvent): void {
     <textarea
       :id="name"
       class="input"
+      :class="rows === 'fill' && 'fill'"
       :placeholder="placeholder"
       :rows="rows ?? 3"
       :disabled="disabled"
@@ -155,5 +157,9 @@ function emitBlur(e: FocusEvent): void {
   .dark &:hover:focus {
     border-color: var(--c-info);
   }
+}
+
+.fill {
+  height: 100%;
 }
 </style>
