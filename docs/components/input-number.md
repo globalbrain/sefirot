@@ -127,7 +127,7 @@ interface Props {
 
 ### `:unit-before`
 
-Defines the prefix to show, which is not a part of `:value` nor `:model-value`.
+Add a static text before the input box.
 
 ```ts
 interface Props {
@@ -136,12 +136,12 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber unit-before="¥" v-model="..." />
+<SInputNumber unit-before="$" v-model="..." />
 ```
 
-### `:unit-before`
+### `:unit-after`
 
-Defines the postfix to show, which is not a part of `:value` nor `:model-value`.
+Add a static text after the input box.
 
 ```ts
 interface Props {
@@ -150,7 +150,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber unit-after="yen" v-model="..." />
+<SInputNumber unit-after="USD" v-model="..." />
 ```
 
 ### `:check-icon`

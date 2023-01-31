@@ -101,6 +101,8 @@ function state() {
               :size="state.size"
               placeholder="1,000"
               separator
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.amount1"
             >
               <template #addon-before>
@@ -117,6 +119,8 @@ function state() {
               :size="state.size"
               placeholder="1,000"
               separator
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.amount2"
             >
               <template #addon-after>
@@ -132,6 +136,8 @@ function state() {
             <SInputNumber
               :size="state.size"
               placeholder="1000000"
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.lottery1"
             >
               <template #addon-before>
@@ -147,6 +153,8 @@ function state() {
             <SInputNumber
               :size="state.size"
               placeholder="1000000"
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.lottery2"
             >
               <template #addon-after>
@@ -161,10 +169,10 @@ function state() {
           <div class="grid">
             <SInputNumber
               :size="state.size"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
               separator
               placeholder="1,000,000"
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.currency"
             >
               <template #addon-before>
@@ -181,6 +189,8 @@ function state() {
               :size="state.size"
               placeholder="1,000,000"
               separator
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               v-model="data.amount3"
             >
               <template #addon-after>
@@ -195,9 +205,10 @@ function state() {
           <div class="grid">
             <SInputNumber
               :size="state.size"
-              unit-after="disabled"
               placeholder="1,000,000"
               separator
+              :unit-before="state.unitBefore"
+              :unit-after="state.unitAfter"
               disabled
               v-model="data.amount4"
             >

@@ -118,25 +118,33 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
       </div>
 
       <div class="value">
-        <div v-if="props.unitBefore" class="unit">{{ props.unitBefore }}</div>
-        <input
-          class="input entity"
-          :class="{ hide: showDisplay }"
-          :id="name"
-          :type="type ?? 'text'"
-          :placeholder="placeholder"
-          :disabled="disabled"
-          :value="modelValue"
-          ref="input"
-          @focus="onFocus"
-          @blur="emitBlur"
-          @input="emitInput"
-          @keypress.enter="emitEnter"
-        >
-        <div v-if="showDisplay" class="input display">
-          {{ displayValue }}
+        <div v-if="props.unitBefore" class="unit before">
+          {{ props.unitBefore }}
         </div>
-        <div v-if="props.unitAfter" class="unit">{{ props.unitAfter }}</div>
+
+        <div class="area">
+          <input
+            class="input entity"
+            :class="{ hide: showDisplay }"
+            :id="name"
+            :type="type ?? 'text'"
+            :placeholder="placeholder"
+            :disabled="disabled"
+            :value="modelValue"
+            ref="input"
+            @focus="onFocus"
+            @blur="emitBlur"
+            @input="emitInput"
+            @keypress.enter="emitEnter"
+          >
+          <div v-if="showDisplay" class="input display">
+            {{ displayValue }}
+          </div>
+        </div>
+
+        <div v-if="props.unitAfter" class="unit after">
+          {{ props.unitAfter }}
+        </div>
       </div>
 
       <div v-if="$slots['addon-after']" class="addon after">
@@ -151,6 +159,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
+  .area  { min-height: 30px; }
 
   .input {
     padding: 3px 8px;
@@ -159,27 +168,17 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
-  .unit + .input {
-    padding-left: 4px;
-  }
-
-  .input:has(+ .unit) {
-    padding-right: 4px;
-  }
+  .unit + .area .input      { padding-left: 6px; }
+  .area:has(+ .unit) .input { padding-right: 6px; }
 
   .unit {
-    padding: 3px 4px;
+    padding: 3px 8px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
-  .unit:has(+ .input) {
-    padding-left: 8px;
-  }
-
-  .input + .unit {
-    padding-right: 8px;
-  }
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 22px;
@@ -213,6 +212,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.small {
   .box   { min-height: 40px; }
   .value { min-height: 38px; }
+  .area  { min-height: 38px; }
 
   .input {
     padding: 7px 12px;
@@ -221,27 +221,17 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
-  .unit + .input {
-    padding-left: 6px;
-  }
-
-  .input:has(+ .unit) {
-    padding-right: 6px;
-  }
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
 
   .unit {
-    padding: 7px 6px;
+    padding: 7px 12px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
-  .unit:has(+ .input) {
-    padding-left: 12px;
-  }
-
-  .input + .unit {
-    padding-right: 12px;
-  }
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 26px;
@@ -275,6 +265,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.medium {
   .box   { min-height: 48px; }
   .value { min-height: 46px; }
+  .area  { min-height: 46px; }
 
   .input {
     padding: 11px 12px;
@@ -283,27 +274,17 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
-  .unit + .input {
-    padding-left: 6px;
-  }
-
-  .input:has(+ .unit) {
-    padding-right: 6px;
-  }
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
 
   .unit {
-    padding: 11px 6px;
+    padding: 11px 12px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
-  .unit:has(+ .input) {
-    padding-left: 12px;
-  }
-
-  .input + .unit {
-    padding-right: 12px;
-  }
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
 
   .icon {
     width: 28px;
@@ -389,7 +370,8 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   }
 }
 
-.value {
+.value,
+.area {
   position: relative;
   display: flex;
   align-items: center;
@@ -397,7 +379,12 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .input {
-  flex-grow: 1;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   color: var(--input-value-color);
   background-color: transparent;
   cursor: text;
