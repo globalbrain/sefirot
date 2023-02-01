@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
+import IconFileSearch from '@iconify-icons/ph/file-search-bold'
 import IconXCircle from '@iconify-icons/ph/x-circle-bold'
 import SButton from 'sefirot/components/SButton.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
@@ -68,14 +69,34 @@ function state() {
     info: 'Some helpful information.',
     note: 'Required',
     placeholder: 'John Doe',
-    unitBefore: '',
-    unitAfter: '',
+    unitBeforeIcon: false,
+    unitBeforeText: '',
+    unitAfterIcon: false,
+    unitAfterText: '',
     help: 'Please fill in your name.',
     align: 'left',
     separator: true,
     disabled: false,
     error: false
   } as const
+}
+
+function updateUnitBefore(value: string | boolean, state: any) {
+  if (typeof value === 'string') {
+    state.unitBeforeIcon = false
+    state.unitBeforeText = value
+  } else {
+    state.unitBeforeIcon = value
+  }
+}
+
+function updateUnitAfter(value: string | boolean, state: any) {
+  if (typeof value === 'string') {
+    state.unitAfterIcon = false
+    state.unitAfterText = value
+  } else {
+    state.unitAfterIcon = value
+  }
 }
 </script>
 
@@ -110,13 +131,25 @@ function state() {
         title="placeholder"
         v-model="state.placeholder"
       />
-      <HstText
-        title="unit-before"
-        v-model="state.unitBefore"
+      <HstCheckbox
+        title="unit-before (icon)"
+        :model-value="state.unitBeforeIcon"
+        @update:model-value="updateUnitBefore($event, state)"
       />
       <HstText
-        title="unit-after"
-        v-model="state.unitAfter"
+        title="unit-before (text)"
+        :model-value="state.unitBeforeText"
+        @update:model-value="updateUnitBefore($event, state)"
+      />
+      <HstCheckbox
+        title="unit-after (icon)"
+        :model-value="state.unitAfterIcon"
+        @update:model-value="updateUnitAfter($event, state)"
+      />
+      <HstText
+        title="unit-after (text)"
+        :model-value="state.unitAfterText"
+        @update:model-value="updateUnitAfter($event, state)"
       />
       <HstText
         title="help"
@@ -153,8 +186,8 @@ function state() {
         :note="state.note"
         :help="state.help"
         :placeholder="state.placeholder"
-        :unit-before="state.unitBefore"
-        :unit-after="state.unitAfter"
+        :unit-before="state.unitBeforeIcon ? IconFileSearch : state.unitBeforeText ? state.unitBeforeText : null"
+        :unit-after="state.unitAfterIcon ? IconCheckCircle : state.unitAfterText ? state.unitAfterText : null"
         :size="state.size"
         :check-icon="check?.icon"
         :check-text="check?.text"

@@ -2,6 +2,7 @@
 import { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
+import { isString } from '../support/Utils'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
@@ -18,8 +19,8 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
-  unitBefore?: string
-  unitAfter?: string
+  unitBefore?: any
+  unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -119,7 +120,13 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
       <div class="value">
         <div v-if="props.unitBefore" class="unit before">
-          {{ props.unitBefore }}
+          <SIcon
+            v-if="props.unitBefore && !isString(props.unitBefore)"
+            :icon="props.unitBefore"
+          />
+          <span v-else>
+            {{ props.unitBefore }}
+          </span>
         </div>
 
         <div class="area">
@@ -143,7 +150,13 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         </div>
 
         <div v-if="props.unitAfter" class="unit after">
-          {{ props.unitAfter }}
+          <SIcon
+            v-if="props.unitAfter && !isString(props.unitAfter)"
+            :icon="props.unitAfter"
+          />
+          <span v-else>
+            {{ props.unitAfter }}
+          </span>
         </div>
       </div>
 
@@ -159,6 +172,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
+  .unit  { min-height: 30px; }
   .area  { min-height: 30px; }
 
   .input {
@@ -212,6 +226,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.small {
   .box   { min-height: 40px; }
   .value { min-height: 38px; }
+  .unit  { min-height: 38px; }
   .area  { min-height: 38px; }
 
   .input {
@@ -265,6 +280,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 .SInputText.medium {
   .box   { min-height: 48px; }
   .value { min-height: 46px; }
+  .unit  { min-height: 46px; }
   .area  { min-height: 46px; }
 
   .input {
@@ -409,6 +425,9 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .unit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 500;
   color: var(--c-text-2);
 }

@@ -17,8 +17,8 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
-  unitBefore?: string
-  unitAfter?: string
+  unitBefore?: any
+  unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
