@@ -9,7 +9,6 @@ import SInputBase from './SInputBase.vue'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
-  block?: boolean
   name?: string
   label?: string
   info?: string
@@ -18,6 +17,7 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  block?: boolean
   modelValue: Day | null
   validation?: Validatable
   hideError?: boolean
@@ -72,7 +72,7 @@ function emitBlur() {
         <input
           :id="name"
           class="input"
-          :class="block && 'block'"
+          :class="{ block }"
           type="text"
           placeholder="YYYY-MM-DD"
           :value="inputValue"
