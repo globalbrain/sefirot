@@ -1,3 +1,12 @@
+# [2.17.0](https://github.com/globalbrain/sefirot/compare/v2.16.0...v2.17.0) (2023-02-01)
+
+### Features
+
+* **input:** add `--input-label-font-size` css var ([#209](https://github.com/globalbrain/sefirot/issues/209)) ([#213](https://github.com/globalbrain/sefirot/issues/213)) ([4a199ac](https://github.com/globalbrain/sefirot/commit/4a199ac8d48e51b464ef7ca8d32d7040d4d55391))
+* **input:** add icon support for `unit-before` / `unit-after` props ([#214](https://github.com/globalbrain/sefirot/issues/214)) ([#217](https://github.com/globalbrain/sefirot/issues/217)) ([9e7f3fa](https://github.com/globalbrain/sefirot/commit/9e7f3fadc7ebfa2ec9158e04eb925a4bcf688919))
+* **input-date:** add `block` option ([#212](https://github.com/globalbrain/sefirot/issues/212)) ([#215](https://github.com/globalbrain/sefirot/issues/215)) ([66b89a0](https://github.com/globalbrain/sefirot/commit/66b89a0178da994546bc25a6367053914a5d2c21))
+* **input-textarea:** add `rows="fill"` option ([#208](https://github.com/globalbrain/sefirot/issues/208)) ([#216](https://github.com/globalbrain/sefirot/issues/216)) ([7054764](https://github.com/globalbrain/sefirot/commit/70547649130f98ec7ee80272e2af83913c0d2b5e))
+
 # [2.16.0](https://github.com/globalbrain/sefirot/compare/v2.15.0...v2.16.0) (2023-01-31)
 
 ### Features
