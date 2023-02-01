@@ -17,6 +17,7 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  block?: boolean
   modelValue: Day | null
   validation?: Validatable
   hideError?: boolean
@@ -71,6 +72,7 @@ function emitBlur() {
         <input
           :id="name"
           class="input"
+          :class="{ block }"
           type="text"
           placeholder="YYYY-MM-DD"
           :value="inputValue"
@@ -112,6 +114,10 @@ function emitBlur() {
   &::placeholder {
     font-weight: 500;
     color: var(--c-text-3);
+  }
+
+  &.block {
+    max-width: none;
   }
 }
 </style>
