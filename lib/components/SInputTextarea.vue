@@ -63,7 +63,7 @@ function emitBlur(e: FocusEvent): void {
     <textarea
       :id="name"
       class="input"
-      :class="rows === 'fill' && 'fill'"
+      :class="{ fill: rows === 'fill' }"
       :placeholder="placeholder"
       :rows="rows ?? 3"
       :disabled="disabled"
@@ -75,7 +75,7 @@ function emitBlur(e: FocusEvent): void {
   </SInputBase>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SInputTextarea.mini {
   .input {
     padding: 6px 12px;
@@ -157,9 +157,9 @@ function emitBlur(e: FocusEvent): void {
   .dark &:hover:focus {
     border-color: var(--c-info);
   }
-}
 
-.fill {
-  height: 100%;
+  &.fill {
+    height: 100%;
+  }
 }
 </style>
