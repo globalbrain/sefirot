@@ -83,11 +83,11 @@ function state() {
         v-model="state.size"
       />
       <HstText
-        title="unit-before for Addon Dropdown (Before / Single Select Dropdown)"
+        title="unit-before"
         v-model="state.unitBefore"
       />
       <HstText
-        title="unit-after for Addon Dropdown (Before / Single Select Dropdown)"
+        title="unit-after"
         v-model="state.unitAfter"
       />
     </template>
