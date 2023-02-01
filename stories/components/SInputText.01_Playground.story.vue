@@ -71,6 +71,7 @@ function state() {
     unitBefore: '',
     unitAfter: '',
     help: 'Please fill in your name.',
+    textColor: 'neutral',
     align: 'left',
     separator: true,
     disabled: false,
@@ -123,6 +124,17 @@ function state() {
         v-model="state.help"
       />
       <HstSelect
+        title="text-color"
+        :options="{
+          neutral: 'neutral',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+          danger: 'danger'
+        }"
+        v-model="state.textColor"
+      />
+      <HstSelect
         title="align"
         :options="{
           left: 'left',
@@ -152,6 +164,7 @@ function state() {
         :info="state.info"
         :note="state.note"
         :help="state.help"
+        :text-color="state.textColor"
         :placeholder="state.placeholder"
         :unit-before="state.unitBefore"
         :unit-after="state.unitAfter"

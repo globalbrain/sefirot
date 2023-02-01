@@ -9,6 +9,7 @@ import SInputBase from './SInputBase.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = Exclude<Color, 'mute'>
 
 const props = defineProps<{
   size?: Size
@@ -24,6 +25,7 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  textColor?: TextColor | ((value: string | number | null) => TextColor)
   align?: Align
   disabled?: boolean
   modelValue: string | null
@@ -48,8 +50,25 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
+const inputClasses = computed(() => [
+  color.value,
+  { hide: showDisplay.value }
+])
+
 const showDisplay = computed(() => {
   return !isFocused.value && props.displayValue
+})
+
+const color = computed(() => {
+  if (props.modelValue === null || !props.textColor) {
+    return undefined
+  }
+
+  if (typeof props.textColor === 'function') {
+    return props.textColor(props.modelValue)
+  }
+
+  return props.textColor
 })
 
 function focus(): void {
@@ -122,7 +141,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         <div class="area">
           <input
             class="input entity"
-            :class="{ hide: showDisplay }"
+            :class="inputClasses"
             :id="name"
             :type="type ?? 'text'"
             :placeholder="placeholder"
@@ -134,7 +153,11 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             @input="emitInput"
             @keypress.enter="emitEnter"
           >
-          <div v-if="showDisplay" class="input display">
+          <div
+            v-if="showDisplay"
+            class="input display"
+            :class="color"
+          >
             {{ displayValue }}
           </div>
         </div>
@@ -383,6 +406,12 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   &::placeholder {
     color: var(--input-placeholder-color);
   }
+
+  &.neutral:not(.hide) { color: var(--c-black); }
+  &.info:not(.hide) { color: var(--c-info); }
+  &.success:not(.hide) { color: var(--c-success); }
+  &.warning:not(.hide) { color: var(--c-warning); }
+  &.danger:not(.hide) { color: var(--c-danger); }
 }
 
 .display {

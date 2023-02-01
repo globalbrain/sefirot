@@ -43,4 +43,32 @@ describe('components/SInputText', () => {
     assertEmitted(wrapper, 'update:model-value', 1, 'text')
     assertEmitted(wrapper, 'enter', 1, 'text')
   })
+
+  it('should apply color when `textColor` value is set', async () => {
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: 'text',
+        textColor: 'info'
+      }
+    })
+
+    expect(wrapper.find('.SInputText .input').classes()).toContain('info')
+  })
+
+  it('should apply color when `textColor` callback is set', async () => {
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: 'text',
+        textColor: (value: string | number | null) => value === 'text' ? 'success' : 'danger'
+      }
+    })
+
+    const input = await wrapper.find('.SInputText .input')
+
+    expect(input.classes()).toContain('success')
+
+    await wrapper.setProps({ modelValue: 'not text' })
+
+    expect(input.classes()).toContain('danger')
+  })
 })

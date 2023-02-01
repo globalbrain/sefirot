@@ -8,6 +8,7 @@ import SInputText from './SInputText.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = Exclude<Color, 'mute'>
 
 const props = defineProps<{
   size?: Size
@@ -22,6 +23,7 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
+  textColor?: TextColor | ((value: string | number | null) => TextColor)
   align?: Align
   separator?: boolean
   disabled?: boolean
@@ -86,6 +88,7 @@ function emitUpdate(value: string | null) {
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
+    :text-color="textColor"
     :align="align"
     :disabled="disabled"
     :hide-error="hideError"

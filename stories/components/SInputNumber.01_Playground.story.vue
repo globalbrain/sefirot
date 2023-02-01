@@ -15,6 +15,7 @@ function state() {
     unitBefore: '',
     unitAfter: '',
     help: 'This is a help text.',
+    textColor: 'neutral',
     align: 'left',
     separator: true,
     disabled: false,
@@ -73,6 +74,17 @@ function onInput(value: number | null) {
         v-model="state.help"
       />
       <HstSelect
+        title="text-color"
+        :options="{
+          neutral: 'neutral',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+          danger: 'danger'
+        }"
+        v-model="state.textColor"
+      />
+      <HstSelect
         title="align"
         :options="{
           left: 'left',
@@ -103,6 +115,7 @@ function onInput(value: number | null) {
         :info="state.info"
         :note="state.note"
         :help="state.help"
+        :text-color="state.textColor"
         :placeholder="state.placeholder"
         :unit-before="state.unitBefore"
         :unit-after="state.unitAfter"
