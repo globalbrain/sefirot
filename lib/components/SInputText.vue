@@ -2,6 +2,7 @@
 import { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
+import { isString } from '../support/Utils'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
@@ -18,12 +19,11 @@ const props = defineProps<{
   help?: string
   type?: string
   placeholder?: string
-  unitBefore?: string
-  unitAfter?: string
+  unitBefore?: any
+  unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
-  icon?: any
   align?: Align
   disabled?: boolean
   modelValue: string | null
@@ -113,13 +113,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         <slot name="addon-before" />
       </div>
 
-      <div v-if="icon" class="icon">
-        <SIcon :icon="icon" class="icon-svg" />
-      </div>
-
       <div class="value">
-        <div v-if="props.unitBefore" class="unit before">
-          {{ props.unitBefore }}
+        <div v-if="unitBefore" class="unit before">
+          <span v-if="isString(unitBefore)" class="unit-text">{{ unitBefore }}</span>
+          <SIcon v-else class="unit-icon" :icon="unitBefore" />
         </div>
 
         <div class="area">
@@ -142,8 +139,9 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
           </div>
         </div>
 
-        <div v-if="props.unitAfter" class="unit after">
-          {{ props.unitAfter }}
+        <div v-if="unitAfter" class="unit after">
+          <span v-if="isString(unitAfter)" class="unit-text">{{ unitAfter }}</span>
+          <SIcon v-else class="unit-icon" :icon="unitAfter" />
         </div>
       </div>
 
@@ -160,6 +158,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
   .area  { min-height: 30px; }
+  .unit  { min-height: 30px; }
 
   .input {
     padding: 3px 8px;
@@ -180,12 +179,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .unit.before { padding-right: 0; }
   .unit.after  { padding-left: 0; }
 
-  .icon {
-    width: 22px;
-    height: 30px;
-  }
-
-  .icon-svg {
+  .unit-icon {
     width: 16px;
     height: 16px;
   }
@@ -213,6 +207,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .box   { min-height: 40px; }
   .value { min-height: 38px; }
   .area  { min-height: 38px; }
+  .unit  { min-height: 38px; }
 
   .input {
     padding: 7px 12px;
@@ -233,12 +228,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .unit.before { padding-right: 0; }
   .unit.after  { padding-left: 0; }
 
-  .icon {
-    width: 26px;
-    height: 38px;
-  }
-
-  .icon-svg {
+  .unit-icon {
     width: 16px;
     height: 16px;
   }
@@ -266,6 +256,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .box   { min-height: 48px; }
   .value { min-height: 46px; }
   .area  { min-height: 46px; }
+  .unit  { min-height: 46px; }
 
   .input {
     padding: 11px 12px;
@@ -286,14 +277,9 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .unit.before { padding-right: 0; }
   .unit.after  { padding-left: 0; }
 
-  .icon {
-    width: 28px;
-    height: 46px;
-  }
-
-  .icon-svg {
-    width: 18px;
-    height: 18px;
+  .unit-icon {
+    width: 16px;
+    height: 16px;
   }
 
   :slotted(.SInputAddon) .action {
@@ -409,19 +395,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .unit {
-  font-weight: 500;
-  color: var(--c-text-2);
-}
-
-.icon {
   display: flex;
   align-items: center;
-  cursor: text;
+  justify-content: center;
   color: var(--c-text-2);
 }
 
-.icon-svg {
-  fill: currentColor;
+.unit-text {
+  font-weight: 500;
 }
 
 .addon {

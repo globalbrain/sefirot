@@ -127,11 +127,13 @@ interface Props {
 
 ### `:unit-before`
 
-Add a static text before the input box.
+Add a static text or icon before the input box.
 
 ```ts
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+
 interface Props {
-  unitBefore?: string
+  unitBefore?: string | IconifyIcon
 }
 ```
 
@@ -141,11 +143,13 @@ interface Props {
 
 ### `:unit-after`
 
-Add a static text after the input box.
+Add a static text or icon after the input box.
 
 ```ts
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+
 interface Props {
-  unitAfter?: string
+  unitAfter?: string | IconifyIcon
 }
 ```
 
