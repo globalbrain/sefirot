@@ -214,6 +214,27 @@ type Color =
 />
 ```
 
+### `:text-color`
+
+Defines the color of the input text. You can pass the `TextColor` or the callback that takes an input value as an argument and returns the `TextColor`. The default is `neutral`.
+
+```ts
+interface Props {
+  textColor?: TextColor | ((value: number | null) => TextColor)
+}
+
+type TextColor = 
+  | 'neutral'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
+```
+
+```vue-html
+<SInputNumber text-color="info" v-model="..." />
+```
+
 ### `:align`
 
 Defines how the input value is aligned inside the input box. The default is `left`.

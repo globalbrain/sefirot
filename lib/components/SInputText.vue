@@ -8,7 +8,8 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -23,7 +24,8 @@ const props = defineProps<{
   unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
-  checkColor?: Color
+  checkColor?: CheckColor
+  textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
   modelValue: string | null
@@ -47,6 +49,23 @@ const classes = computed(() => [
   props.align ?? 'left',
   { disabled: props.disabled }
 ])
+
+const inputClasses = computed(() => [
+  textColor.value,
+  { hide: showDisplay.value }
+])
+
+const textColor = computed(() => {
+  if (!props.textColor) {
+    return 'neutral'
+  }
+
+  if (isString(props.textColor)) {
+    return props.textColor
+  }
+
+  return props.textColor(props.modelValue)
+})
 
 const showDisplay = computed(() => {
   return !isFocused.value && props.displayValue
@@ -122,7 +141,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         <div class="area">
           <input
             class="input entity"
-            :class="{ hide: showDisplay }"
+            :class="inputClasses"
             :id="name"
             :type="type ?? 'text'"
             :placeholder="placeholder"
@@ -134,7 +153,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             @input="emitInput"
             @keypress.enter="emitEnter"
           >
-          <div v-if="showDisplay" class="input display">
+          <div v-if="showDisplay" class="input display" :class="[textColor]">
             {{ displayValue }}
           </div>
         </div>
@@ -371,9 +390,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   bottom: 0;
   left: 0;
   width: 100%;
-  color: var(--input-value-color);
   background-color: transparent;
   cursor: text;
+
+  &.neutral:not(.hide) { color: var(--input-value-color); }
+  &.info:not(.hide)    { color: var(--c-info-text); }
+  &.success:not(.hide) { color: var(--c-success-text); }
+  &.warning:not(.hide) { color: var(--c-warning-text); }
+  &.danger:not(.hide)  { color: var(--c-danger-text); }
 
   &.hide,
   &.hide::placeholder {
