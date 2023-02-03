@@ -159,21 +159,21 @@ function state() {
 
     <template #default="{ state }">
       <SInputText
+        :size="state.size"
         name="name"
         :label="state.label"
         :info="state.info"
         :note="state.note"
         :help="state.help"
-        :text-color="state.textColor"
         :placeholder="state.placeholder"
         :unit-before="state.unitBefore"
         :unit-after="state.unitAfter"
-        :size="state.size"
         :check-icon="check?.icon"
         :check-text="check?.text"
         :check-color="check?.color"
-        :validation="validation.name"
+        :text-color="state.textColor"
         v-model="data.name"
+        :validation="validation.name"
       />
 
       <div class="actions">

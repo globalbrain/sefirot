@@ -8,8 +8,8 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-export type TextColor = Exclude<Color, 'mute'>
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -24,8 +24,8 @@ const props = defineProps<{
   unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
-  checkColor?: Color
-  textColor?: TextColor | ((value: string | number | null) => TextColor)
+  checkColor?: CheckColor
+  textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
   modelValue: string | null
@@ -51,24 +51,24 @@ const classes = computed(() => [
 ])
 
 const inputClasses = computed(() => [
-  color.value,
+  textColor.value,
   { hide: showDisplay.value }
 ])
 
-const showDisplay = computed(() => {
-  return !isFocused.value && props.displayValue
+const textColor = computed(() => {
+  if (!props.textColor) {
+    return 'neutral'
+  }
+
+  if (isString(props.textColor)) {
+    return props.textColor
+  }
+
+  return props.textColor(props.modelValue)
 })
 
-const color = computed(() => {
-  if (props.modelValue === null || !props.textColor) {
-    return undefined
-  }
-
-  if (typeof props.textColor === 'function') {
-    return props.textColor(props.modelValue)
-  }
-
-  return props.textColor
+const showDisplay = computed(() => {
+  return !isFocused.value && props.displayValue
 })
 
 function focus(): void {
@@ -153,11 +153,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             @input="emitInput"
             @keypress.enter="emitEnter"
           >
-          <div
-            v-if="showDisplay"
-            class="input display"
-            :class="color"
-          >
+          <div v-if="showDisplay" class="input display" :class="[textColor]">
             {{ displayValue }}
           </div>
         </div>
@@ -394,9 +390,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   bottom: 0;
   left: 0;
   width: 100%;
-  color: var(--input-value-color);
   background-color: transparent;
   cursor: text;
+
+  &.neutral:not(.hide) { color: var(--input-value-color); }
+  &.info:not(.hide)    { color: var(--c-info-text); }
+  &.success:not(.hide) { color: var(--c-success-text); }
+  &.warning:not(.hide) { color: var(--c-warning-text); }
+  &.danger:not(.hide)  { color: var(--c-danger-text); }
 
   &.hide,
   &.hide::placeholder {
@@ -406,12 +407,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   &::placeholder {
     color: var(--input-placeholder-color);
   }
-
-  &.neutral:not(.hide) { color: var(--c-black); }
-  &.info:not(.hide) { color: var(--c-info); }
-  &.success:not(.hide) { color: var(--c-success); }
-  &.warning:not(.hide) { color: var(--c-warning); }
-  &.danger:not(.hide) { color: var(--c-danger); }
 }
 
 .display {

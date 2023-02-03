@@ -216,7 +216,7 @@ type Color =
 
 ### `:text-color`
 
-Defines the color of the input text. You can pass the `TextColor` or the callback that takes an input value as an argument and returns the `TextColor`.
+Defines the color of the input text. You can pass the `TextColor` or the callback that takes an input value as an argument and returns the `TextColor`. The default is `neutral`.
 
 ```ts
 interface Props {

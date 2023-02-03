@@ -2,13 +2,13 @@
 import { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DefineComponent, computed } from 'vue'
 import { Validatable } from '../composables/Validation'
-import { isNullish } from '../support/Utils'
+import { isNullish, isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-export type TextColor = Exclude<Color, 'mute'>
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size?: Size
@@ -22,8 +22,8 @@ const props = defineProps<{
   unitAfter?: any
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
-  checkColor?: Color
-  textColor?: TextColor | ((value: string | number | null) => TextColor)
+  checkColor?: CheckColor
+  textColor?: TextColor | ((value: number | null) => TextColor)
   align?: Align
   separator?: boolean
   disabled?: boolean
@@ -43,6 +43,18 @@ const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
     : props.value !== undefined ? props.value : null
+})
+
+const _textColor = computed(() => {
+  if (!props.textColor) {
+    return 'neutral'
+  }
+
+  if (isString(props.textColor)) {
+    return props.textColor
+  }
+
+  return props.textColor(_value.value)
 })
 
 const valueWithSeparator = computed(() => {
@@ -88,7 +100,7 @@ function emitUpdate(value: string | null) {
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
-    :text-color="textColor"
+    :text-color="_textColor"
     :align="align"
     :disabled="disabled"
     :hide-error="hideError"
