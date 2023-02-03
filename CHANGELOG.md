@@ -1,3 +1,9 @@
+# [2.18.0](https://github.com/globalbrain/sefirot/compare/v2.17.0...v2.18.0) (2023-02-03)
+
+### Features
+
+* **input:** add  `text-color` props to `SInputText` and `SInputNumber` ([#218](https://github.com/globalbrain/sefirot/issues/218)) ([e03f642](https://github.com/globalbrain/sefirot/commit/e03f64225d46f4a919d211371a881429cf20ac16))
+
 # [2.17.0](https://github.com/globalbrain/sefirot/compare/v2.16.0...v2.17.0) (2023-02-01)
 
 ### Features
