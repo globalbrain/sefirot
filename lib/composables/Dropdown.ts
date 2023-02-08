@@ -57,6 +57,7 @@ export interface DropdownSectionFilterOptionAvatar extends DropdownSectionFilter
 }
 
 export interface ManualDropdownPosition {
+  container: Ref<any>
   position: Ref<'top' | 'bottom'>
   update(): void
 }
@@ -74,7 +75,7 @@ export function useManualDropdownPosition(
   const { top, bottom } = useElementBounding(el)
   const { height } = useWindowSize()
 
-  const position = ref<'top' | 'bottom'>('bottom')
+  const position = ref<'top' | 'bottom'>(initPosition ?? 'bottom')
 
   const dialogHeight = 400
 
@@ -100,6 +101,7 @@ export function useManualDropdownPosition(
   }
 
   return {
+    container: el,
     position,
     update
   }
