@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, ref } from 'vue'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -28,14 +28,22 @@ const props = defineProps<{
   noMinute?: boolean
   noSecond?: boolean
   disabled?: boolean
-  hideError?: boolean
-  modelValue: Value
+  value?: Value
+  modelValue?: Value
   validation?: Validatable
+  hideError?: boolean
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Value): void
+  (e: 'update:model-value', value: Value): void
+  (e: 'change', value: Value): void
 }>()
+
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : null
+})
 
 const isFocused = ref(false)
 
@@ -66,10 +74,17 @@ function updateSecond(e: FocusEvent): void {
 }
 
 function update(type: ValueType, value: string | null) {
-  emit('update:modelValue', {
-    ...props.modelValue,
+  if (_value.value === null) {
+    return
+  }
+
+  const newValue = {
+    ..._value.value,
     [type]: value !== null ? value.padStart(2, '0') : null
-  })
+  }
+
+  emit('update:model-value', newValue)
+  emit('change', newValue)
 
   emitTouch(type)
 
@@ -114,7 +129,7 @@ function createRequiredTouched(): boolean[] {
 <template>
   <SInputBase
     class="SInputHMS"
-    :class="[size, { disabled }]"
+    :class="[size ?? 'small', { disabled }]"
     :label="label"
     :note="note"
     :info="info"
@@ -129,8 +144,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noHour"
         class="input hour"
-        :value="modelValue.hour"
+        :value="_value?.hour"
         placeholder="00"
+        :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateHour"
@@ -139,8 +155,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noMinute"
         class="input minute"
-        :value="modelValue.minute"
+        :value="_value?.minute"
         placeholder="00"
+        :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateMinute"
@@ -149,8 +166,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noSecond"
         class="input second"
-        :value="modelValue.second"
+        :value="_value?.second"
         placeholder="00"
+        :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateSecond"
@@ -170,15 +188,15 @@ function createRequiredTouched(): boolean[] {
 
   .input {
     padding: 3px 0;
-    text-align: center;
-    font-size: 14px;
     width: 20px;
+    text-align: center;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
   .separator {
     padding: 3px 0;
     line-height: 24px;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
   .separator::before {
@@ -189,20 +207,21 @@ function createRequiredTouched(): boolean[] {
 .SInputHMS.small {
   .container {
     padding: 0 12px;
+    min-height: 40px;
   }
 
   .input {
     flex-shrink: 0;
-    padding: 8px 0 6px;
-    text-align: center;
-    font-size: 16px;
+    padding: 7px 0 6px;
     width: 20px;
+    text-align: center;
+    font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
   .separator {
     padding: 7px 0;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
   .separator::before {
@@ -218,14 +237,14 @@ function createRequiredTouched(): boolean[] {
   .input {
     padding: 12px 0 10px;
     text-align: center;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
     width: 24px;
   }
 
   .separator {
     padding: 11px 0;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
   .separator::before {
@@ -240,49 +259,37 @@ function createRequiredTouched(): boolean[] {
   }
 
   .container {
-    border-color: var(--input-border);
-    background-color: var(--input-disabled-bg);
+    background-color: var(--input-disabled-bg-color);
   }
+
+  .container:hover { border-color: var(--input-border-color); }
+  .container.focus { border-color: var(--input-border-color); }
 }
 
 .SInputHMS.has-error {
   .container {
-    border-color: var(--c-danger);
+    border-color: var(--input-error-border-color);
   }
 }
 
 .container {
   display: inline-flex;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--input-border-color);
   border-radius: 6px;
-  background-color: var(--c-bg);
+  background-color: var(--input-bg-color);
   transition: border-color 0.25s;
 
-  &:hover {
-    border-color: var(--c-black);
-  }
-
-  &.focus,
-  &:hover.focus {
-    border-color: var(--c-info);
-  }
-
-  .dark &:hover {
-    border-color: var(--c-gray);
-  }
-
-  .dark &.focus,
-  .dark &:hover.focus {
-    border-color: var(--c-info);
-  }
+  &:hover { border-color: var(--input-hover-border-color); }
+  &.focus { border-color: var(--input-focus-border-color); }
 }
 
 .input {
+  font-family: var(--font-family-number);
+  line-height: 24px;
   background-color: transparent;
 
   &::placeholder {
-    font-weight: 500;
-    color: var(--c-text-3);
+    color: var(--input-placeholder-color);
   }
 }
 
