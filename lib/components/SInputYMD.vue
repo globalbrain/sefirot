@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, ref } from 'vue'
+import { DefineComponent, computed, ref } from 'vue'
 import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -28,14 +28,30 @@ const props = defineProps<{
   noMonth?: boolean
   noDate?: boolean
   disabled?: boolean
-  hideError?: boolean
-  modelValue: Value
+  value?: Value
+  modelValue?: Value
   validation?: Validatable
+  hideError?: boolean
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Value): void
+  (e: 'update:model-value', value: Value): void
+  (e: 'change', value: Value): void
 }>()
+
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : null
+})
+
+const padValue = computed(() => {
+  return {
+    year: _value.value?.year?.toString().padStart(4, '0') ?? null,
+    month: _value.value?.month?.toString().padStart(2, '0') ?? null,
+    date: _value.value?.date?.toString().padStart(2, '0') ?? null
+  }
+})
 
 const isFocused = ref(false)
 
@@ -54,22 +70,29 @@ function blur() {
 }
 
 function updateYear(e: FocusEvent) {
-  update('year', Number((e.target as HTMLInputElement).value))
+  update('year', (e.target as HTMLInputElement).value)
 }
 
 function updateMonth(e: FocusEvent) {
-  update('month', Number((e.target as HTMLInputElement).value))
+  update('month', (e.target as HTMLInputElement).value)
 }
 
 function updateDate(e: FocusEvent) {
-  update('date', Number((e.target as HTMLInputElement).value))
+  update('date', (e.target as HTMLInputElement).value)
 }
 
-function update(type: ValueType, value: number) {
-  emit('update:modelValue', {
-    ...props.modelValue,
-    [type]: value === 0 ? null : value
-  })
+function update(type: ValueType, value: string) {
+  if (_value.value === null) {
+    return
+  }
+
+  const newValue = {
+    ..._value.value,
+    [type]: value ? Number(value) : null
+  }
+
+  emit('update:model-value', newValue)
+  emit('change', newValue)
 
   emitTouch(type)
 
@@ -119,9 +142,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noYear"
         class="input year"
-        type="number"
-        :value="modelValue.year"
-        placeholder="YYYY"
+        :value="padValue?.year"
+        placeholder="1998"
+        :maxlength="4"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateYear"
@@ -133,9 +156,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noMonth"
         class="input month"
-        type="number"
-        :value="modelValue.month"
-        placeholder="M"
+        :value="padValue?.month"
+        placeholder="01"
+        :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateMonth"
@@ -147,9 +170,9 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noDate"
         class="input date"
-        type="number"
-        :value="modelValue.date"
-        placeholder="D"
+        :value="padValue?.date"
+        placeholder="14"
+        :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
         @blur="updateDate"
@@ -159,7 +182,7 @@ function createRequiredTouched(): boolean[] {
   </SInputBase>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SInputYMD.mini {
   .container {
     padding: 0 4px;
@@ -168,7 +191,7 @@ function createRequiredTouched(): boolean[] {
   .input {
     padding: 3px 0;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
   .input.year  { width: 48px; }
@@ -178,51 +201,53 @@ function createRequiredTouched(): boolean[] {
   .separator {
     padding: 3px 0;
     line-height: 24px;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 }
 
 .SInputYMD.small {
   .container {
-    padding: 0 6px;
+    padding: 0 8px;
   }
 
   .input {
-    padding: 7px 0;
+    padding: 7px 0 6px;
     text-align: center;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
-  .input.year  { width: 56px; }
+  .input.year  { margin-right: 2px; }
+  .input.year  { width: 48px; }
   .input.month { width: 32px; }
-  .input.date  { width: 40px; }
+  .input.date  { width: 32px; }
 
   .separator {
     padding: 7px 0;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
   }
 }
 
 .SInputYMD.medium {
   .container {
-    padding: 0 4px;
+    padding: 0 8px;
   }
 
   .input {
     padding: 11px 0;
     text-align: center;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
-  .input.year  { width: 56px; }
-  .input.month { width: 40px; }
-  .input.date  { width: 40px; }
+  .input.year  { margin-right: 2px; }
+  .input.year  { width: 52px; }
+  .input.month { width: 36px; }
+  .input.date  { width: 36px; }
 
   .separator {
     padding: 11px 0;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 }
 
@@ -233,48 +258,34 @@ function createRequiredTouched(): boolean[] {
   }
 
   .container {
-    background-color: var(--input-disabled-bg);
+    background-color: var(--input-disabled-bg-color);
   }
 }
 
 .SInputYMD.has-error {
   .container {
-    border-color: var(--c-danger);
+    border-color: var(--input-error-border-color);
   }
 }
 
 .container {
   display: inline-flex;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--input-border-color);
   border-radius: 6px;
-  background-color: var(--c-bg);
-  transition: border-color 0.25s;
+  background-color: var(--input-bg-color);
+  transition: border-color 0.25s, background-color 0.25s;
 
-  &:hover {
-    border-color: var(--c-black);
-  }
-
-  &.focus,
-  &:hover.focus {
-    border-color: var(--c-info);
-  }
-
-  .dark &:hover {
-    border-color: var(--c-gray);
-  }
-
-  .dark &.focus,
-  .dark &:hover.focus {
-    border-color: var(--c-info);
-  }
+  &:hover { border-color: var(--input-hover-border-color); }
+  &.focus { border-color: var(--input-focus-border-color); }
 }
 
 .input {
+  font-family: var(--font-family-number);
+  line-height: 24px;
   background-color: transparent;
 
   &::placeholder {
-    font-weight: 500;
-    color: var(--c-text-3);
+    color: var(--input-placeholder-color);
   }
 }
 
