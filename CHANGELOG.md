@@ -1,3 +1,10 @@
+# [2.19.0](https://github.com/globalbrain/sefirot/compare/v2.18.0...v2.19.0) (2023-02-13)
+
+### Features
+
+* **input-ymd:** refine styles ([#221](https://github.com/globalbrain/sefirot/issues/221)) ([a92f6bb](https://github.com/globalbrain/sefirot/commit/a92f6bbedcacaf33f35b50fe3c8c79eee33003ed))
+* **input-hms:** refine styles ([#219](https://github.com/globalbrain/sefirot/issues/219)) ([8419cc6](https://github.com/globalbrain/sefirot/commit/8419cc644c09b98e59cbe466458d28cddcf9783d))
+
 # [2.18.0](https://github.com/globalbrain/sefirot/compare/v2.17.0...v2.18.0) (2023-02-03)
 
 ### Features
