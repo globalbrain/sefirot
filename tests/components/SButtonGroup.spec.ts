@@ -15,6 +15,7 @@ describe('compoents/SButtonGroup', () => {
 
     wrapper.find('.SButtonGroup .button').trigger('click')
 
+    expect(wrapper.emitted('click')).toBeTruthy()
     expect(wrapper.emitted('update:modelValue')).toBeTruthy()
   })
 })
