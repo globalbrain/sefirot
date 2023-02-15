@@ -1,148 +1,17 @@
-<script setup lang="ts">
-import { PropType, computed } from 'vue'
-
-export interface ButtonGroupItem {
-  label: string
-  value: string
-  mode?: Mode
-}
-
-export type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
-
-const props = defineProps({
-  items: { type: Array as PropType<ButtonGroupItem[]>, required: true },
-  size: { type: String as PropType<Size>, default: 'medium' },
-  modelValue: { type: String, default: null }
-})
-
-const emit = defineEmits(['update:modelValue'])
-
-const classes = computed(() => [props.size])
-
-function getButtonClasses(button: ButtonGroupItem) {
-  return [
-    { active: button.value === props.modelValue },
-    button.mode ?? 'neutral'
-  ]
-}
-
-function handleClick(value: string) {
-  emit('update:modelValue', value)
-}
-</script>
-
 <template>
-  <div class="SButtonGroup" :class="classes">
-    <button
-      v-for="item in items"
-      :key="item.value"
-      class="button"
-      :class="getButtonClasses(item)"
-      @click="handleClick(item.value)"
-    >
-      <span class="content">
-        {{ item.label }}
-      </span>
-    </button>
+  <div class="SButtonGroup">
+    <slot />
   </div>
 </template>
 
-<style lang="postcss" scoped>
-.SButtonGroup {
-  display: flex;
-  width: fit-content;
-  border: 1px solid var(--c-divider);
-  border-radius: 4px;
-  overflow: hidden;
-}
+<style scoped lang="postcss">
+.SButtonGroup :slotted(.SButton) {
+  border-left-width: 0;
+  border-radius: 0;
 
-.SButtonGroup.mini {
-  height: 28px;
+  &:first-child { border-left-width: 1px; }
 
-  .button {
-    padding: 0 8px;
-    height: 28px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-}
-
-.SButtonGroup.small {
-  height: 32px;
-
-  .button {
-    padding: 0 10px;
-    height: 32px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-}
-
-.SButtonGroup.medium {
-  height: 40px;
-
-  .button {
-    padding: 0 12px;
-    height: 40px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-}
-
-.SButtonGroup.large {
-  height: 48px;
-
-  .button {
-    padding: 0 14px;
-    height: 48px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-}
-
-.SButtonGroup.jumbo {
-  height: 64px;
-
-  .button {
-    padding: 0 24px;
-    height: 64px;
-    font-size: 14px;
-    font-weight: 500;
-  }
-}
-
-.button {
-  border-left: 1px solid transparent;
-  letter-spacing: .4px;
-  color: var(--c-text-2);
-  white-space: nowrap;
-  transition: color .25s, background-color .25s;
-
-  &:hover {
-    color: var(--c-text-1);
-  }
-}
-
-.button:not(:first-child) {
-  border-left: 1px solid var(--c-divider);
-}
-
-.button.active {
-  color: var(--c-text-dark-1);
-}
-
-.button.neutral.active { background-color: var(--c-black); }
-.button.info.active    { background-color: var(--c-info); }
-.button.success.active { background-color: var(--c-success); }
-.button.warning.active { background-color: var(--c-warning); }
-.button.danger.active  { background-color: var(--c-danger); }
-
-.content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+  &:first-child { border-radius: 6px 0 0 6px; }
+  &:last-child  { border-radius: 0 6px 6px 0; }
 }
 </style>

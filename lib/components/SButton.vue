@@ -81,7 +81,7 @@ function handleClick(): void {
   </component>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .SButton {
   position: relative;
   display: inline-flex;
@@ -156,7 +156,7 @@ function handleClick(): void {
 }
 
 .SButton.fill {
-  font-weight: 600;
+  font-weight: 500;
 
   &.neutral {
     border-color: var(--button-fill-neutral-border-color);
