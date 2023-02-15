@@ -9,17 +9,11 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: var(--font-family-base);
-  letter-spacing: .4px;
   line-height: 24px;
   font-size: 16px;
   font-weight: 400;
   color: var(--c-text-1);
   background-color: var(--c-bg);
-  direction: ltr;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 blockquote,
@@ -103,7 +97,6 @@ iframe,
 embed,
 object {
   display: block;
-  vertical-align: middle;
 }
 
 img,
@@ -119,6 +112,7 @@ select,
 textarea {
   border: 0;
   padding: 0;
+  letter-spacing: inherit;
   line-height: inherit;
   color: inherit;
 }
@@ -171,17 +165,20 @@ textarea {
 
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
   margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 input[type="select"],
 select {
   -webkit-appearance: none;
+  appearance: none;
 }
 
 fieldset {

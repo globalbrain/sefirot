@@ -1,21 +1,17 @@
 import { mount } from '@vue/test-utils'
+import SButton from 'sefirot/components/SButton.vue'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
-describe('compoents/SButtonGroup', () => {
-  it('should emit on click', () => {
-    const wrapper = mount(SButtonGroup as any, {
-      propsData: {
-        items: [
-          { label: 'Button A', value: 'button-a' },
-          { label: 'Button B', value: 'button-b' },
-          { label: 'Button C', value: 'button-c' }
-        ]
+describe('components/SButtonGroup', () => {
+  test('display slotted buttons', () => {
+    const wrapper = mount(SButtonGroup, {
+      slots: {
+        default: [SButton, SButton, SButton]
       }
     })
 
-    wrapper.find('.SButtonGroup .button').trigger('click')
+    const buttons = wrapper.findAll('.SButtonGroup .SButton')
 
-    expect(wrapper.emitted('click')).toBeTruthy()
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(buttons.length).toBe(3)
   })
 })
