@@ -1,3 +1,11 @@
+# [2.20.0](https://github.com/globalbrain/sefirot/compare/v2.19.0...v2.20.0) (2023-02-16)
+
+### Features
+
+* refine overall font stylings ([595dc50](https://github.com/globalbrain/sefirot/commit/595dc5015826e9795f70ed907f31494c16df75a9))
+* **style:** add `--c-soft` color ([0463f23](https://github.com/globalbrain/sefirot/commit/0463f23925ea004b19459ee8e714dc111e8aefe5))
+* **button-group:** refine styles ([#222](https://github.com/globalbrain/sefirot/issues/222)) ([06f5934](https://github.com/globalbrain/sefirot/commit/06f59345789aba89848319f31c7a7f9b597a002e))
+
 # [2.19.0](https://github.com/globalbrain/sefirot/compare/v2.18.0...v2.19.0) (2023-02-13)
 
 ### Features
