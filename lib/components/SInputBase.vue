@@ -114,7 +114,6 @@ function getErrorMsg(validation: Validatable) {
   align-items: baseline;
   width: 100%;
   line-height: 16px;
-  font-weight: 500;
   cursor: pointer;
   transition: color 0.25s;
 }
@@ -126,6 +125,7 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .label-text-value {
+  font-weight: 500;
   color: var(--input-label-color);
 }
 
@@ -144,7 +144,7 @@ function getErrorMsg(validation: Validatable) {
   display: inline-block;
   margin-left: 8px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--c-text-2);
 }
 
@@ -158,7 +158,7 @@ function getErrorMsg(validation: Validatable) {
   padding: 6px 0 0 0;
   line-height: 18px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--input-error-text-color);
   transition: opacity 0.25s, transform 0.25s;
 }
@@ -168,7 +168,7 @@ function getErrorMsg(validation: Validatable) {
   padding: 4px 0 0;
   line-height: 20px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--c-text-2);
 }
 

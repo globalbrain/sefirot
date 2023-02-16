@@ -22,6 +22,6 @@ defineProps<{
   display: inline-block;
   line-height: 20px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
 }
 </style>

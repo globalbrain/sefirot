@@ -53,7 +53,7 @@ function onClick() {
   display: inline-block;
   border: 1px solid transparent;
   letter-spacing: 0.4px;
-  font-weight: 600;
+  font-weight: 500;
   transition: border-color 0.25s, color 0.25s, background-color 0.25s;
 }
 

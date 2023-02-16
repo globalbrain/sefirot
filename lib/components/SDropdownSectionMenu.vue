@@ -29,7 +29,7 @@ defineProps<{
   text-align: left;
   line-height: 32px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   transition: color 0.25s, background-color 0.25s;
 
   &:hover {

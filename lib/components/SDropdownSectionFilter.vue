@@ -102,13 +102,12 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   border-radius: 6px;
   padding: 0 8px;
   width: 100%;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 32px;
   background-color: var(--c-bg);
   transition: border-color 0.25s;
 
   &::placeholder {
-    font-weight: 500;
     color: var(--c-text-3);
   }
 

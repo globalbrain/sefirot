@@ -32,7 +32,7 @@ defineProps<{
   display: inline-block;
   padding-left: 8px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
