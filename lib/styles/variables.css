@@ -198,6 +198,8 @@
   --c-text-inverse-2: var(--c-text-dark-2);
   --c-text-inverse-3: var(--c-text-dark-3);
 
+  --c-soft: var(--c-white-soft);
+
   --c-mute: #f1f1f1;
   --c-mute-light: #f9f9f9;
   --c-mute-lighter: #ffffff;
@@ -250,6 +252,8 @@
   --c-text-inverse-1: var(--c-text-light-1);
   --c-text-inverse-2: var(--c-text-light-2);
   --c-text-inverse-3: var(--c-text-light-3);
+
+  --c-soft: #222226;
 
   --c-mute: #2c2c2e;
   --c-mute-light: #3a3a3c;
