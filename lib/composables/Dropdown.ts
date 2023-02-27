@@ -4,8 +4,9 @@ import { Ref, ref, unref } from 'vue'
 export type DropdownSection =
   | DropdownSectionMenu
   | DropdownSectionFilter
+  | DropdownSectionComponent
 
-export type DropdownSectionType = 'menu' | 'filter'
+export type DropdownSectionType = 'menu' | 'filter' | 'component'
 
 export interface DropdownSectionBase {
   type: DropdownSectionType
@@ -54,6 +55,11 @@ export interface DropdownSectionFilterOptionText extends DropdownSectionFilterOp
 export interface DropdownSectionFilterOptionAvatar extends DropdownSectionFilterOptionBase {
   type: 'avatar'
   image?: string | null
+}
+
+export interface DropdownSectionComponent extends DropdownSectionBase {
+  type: 'component'
+  component: any
 }
 
 export interface ManualDropdownPosition {
