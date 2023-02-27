@@ -1,7 +1,7 @@
 export interface Hms {
-  hour?: string
-  minute?: string
-  second?: string
+  hour?: string | null
+  minute?: string | null
+  second?: string | null
 }
 
 export type HmsType = 'h' | 'm' | 's'
@@ -13,5 +13,5 @@ export const HmsMap = {
 } as const
 
 export function requiredHms(hms: Hms, required: HmsType[] = ['h', 'm', 's']): boolean {
-  return required.every((r) => hms[HmsMap[r]] !== undefined)
+  return required.every((r) => hms[HmsMap[r]] != null)
 }
