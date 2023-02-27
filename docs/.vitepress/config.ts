@@ -55,6 +55,7 @@ function sidebar() {
         { text: 'SInputNumber', link: '/components/input-number' },
         { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
+        { text: 'SInputSwitch', link: '/components/input-switch' },
         { text: 'SInputYMD', link: '/components/input-ymd' },
         { text: 'SPill', link: '/components/pill' },
         { text: 'STable', link: '/components/table' },

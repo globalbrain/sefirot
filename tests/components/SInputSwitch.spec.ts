@@ -1,29 +1,57 @@
 import { mount } from '@vue/test-utils'
 import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
+import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputSwitch', () => {
-  it('should emit on click', () => {
+  test('it accepts `value` prop', async () => {
     const wrapper = mount(SInputSwitch, {
-      propsData: {
+      props: {
+        value: true
+      }
+    })
+
+    expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(true)
+  })
+
+  test('it accepts `modelValue` prop', () => {
+    const wrapper = mount(SInputSwitch, {
+      props: {
+        modelValue: true
+      }
+    })
+
+    expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(true)
+  })
+
+  test('value defaults to `false` if both `value` and `modelValue` is undefined', () => {
+    const wrapper = mount(SInputSwitch)
+
+    expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(false)
+  })
+
+  test('it emits `update:model-value` and `change` events when item is selected', async () => {
+    const wrapper = mount(SInputSwitch, {
+      props: {
         modelValue: false
       }
     })
 
-    wrapper.find('.SInputSwitch .input').trigger('click')
+    await wrapper.find('.SInputSwitch .input').trigger('click')
 
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    assertEmitted(wrapper, 'update:model-value', 1, true)
+    assertEmitted(wrapper, 'change', 1, true)
   })
 
-  it('should not emit when disabled', () => {
+  test('should not emit when disabled', async () => {
     const wrapper = mount(SInputSwitch, {
-      propsData: {
+      props: {
         modelValue: false,
         disabled: true
       }
     })
 
-    wrapper.find('.SInputSwitch .input').trigger('click')
+    await wrapper.find('.SInputSwitch .input').trigger('click')
 
-    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    assertNotEmitted(wrapper, 'update:model-value')
   })
 })
