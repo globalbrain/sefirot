@@ -10,8 +10,8 @@ const sections = createDropdown([
   {
     type: 'menu',
     options: [
-      { label: 'Sort ascending (A...Z)', onClick: () => {} },
-      { label: 'Sort descending (Z...A)', onClick: () => {} }
+      { label: 'Select all', onClick: selectAll },
+      { label: 'Clear all', onClick: clearAll }
     ]
   },
   {
@@ -24,11 +24,26 @@ const sections = createDropdown([
       { label: 'Archived', value: 'Archived' }
     ],
     onClick: updateFilter
+  },
+  {
+    type: 'actions',
+    options: [
+      { mode: 'mute', label: 'Cancel', onClick: () => {} },
+      { mode: 'info', label: 'Apply', onClick: () => {} }
+    ]
   }
 ])
 
 function updateFilter(value: string) {
   selected.value = xor(selected.value, [value])
+}
+
+function selectAll() {
+  selected.value = ['Draft', 'Published', 'Archived']
+}
+
+function clearAll() {
+  selected.value = []
 }
 </script>
 
@@ -36,14 +51,8 @@ function updateFilter(value: string) {
   <Board
     title="Components / SDropdown / 01. Playground"
   >
-    <div class="container">
+    <div class="max-w-256">
       <SDropdown :sections="sections" />
     </div>
   </Board>
 </template>
-
-<style scoped>
-.container {
-  max-width: 256px;
-}
-</style>

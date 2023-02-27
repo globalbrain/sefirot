@@ -5,8 +5,9 @@ export type DropdownSection =
   | DropdownSectionMenu
   | DropdownSectionFilter
   | DropdownSectionComponent
+  | DropdownSectionActions
 
-export type DropdownSectionType = 'menu' | 'filter' | 'component'
+export type DropdownSectionType = 'menu' | 'filter' | 'actions' | 'component'
 
 export interface DropdownSectionBase {
   type: DropdownSectionType
@@ -55,6 +56,17 @@ export interface DropdownSectionFilterOptionText extends DropdownSectionFilterOp
 export interface DropdownSectionFilterOptionAvatar extends DropdownSectionFilterOptionBase {
   type: 'avatar'
   image?: string | null
+}
+
+export interface DropdownSectionActions extends DropdownSectionBase {
+  type: 'actions'
+  options: DropdownSectionActionsOption[]
+}
+
+export interface DropdownSectionActionsOption {
+  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  label: string
+  onClick(): void
 }
 
 export interface DropdownSectionComponent extends DropdownSectionBase {
