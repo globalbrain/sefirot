@@ -1,3 +1,15 @@
+# [2.21.0](https://github.com/globalbrain/sefirot/compare/v2.20.0...v2.21.0) (2023-02-28)
+
+### Bug Fixes
+
+* **validation:** `requiredHms` not validating `null` values ([3f5e57d](https://github.com/globalbrain/sefirot/commit/3f5e57de77db7b052cb5ae74f75a00383b81d7c1))
+
+### Features
+
+* **dropdown:** add `actions` type ([#225](https://github.com/globalbrain/sefirot/issues/225)) ([#227](https://github.com/globalbrain/sefirot/issues/227)) ([7e3361c](https://github.com/globalbrain/sefirot/commit/7e3361cad4c033c72cb5c34342a6abb00a7498e3))
+* **dropdown:** add `component` type ([#224](https://github.com/globalbrain/sefirot/issues/224)) ([#226](https://github.com/globalbrain/sefirot/issues/226)) ([ce1dc49](https://github.com/globalbrain/sefirot/commit/ce1dc490510e9163c4975533679a2c1d672debc3))
+* **input-switch:** refine styles ([#228](https://github.com/globalbrain/sefirot/issues/228)) ([c34c7c9](https://github.com/globalbrain/sefirot/commit/c34c7c97744a1086821aed98cc7744bc9bef5fd4))
+
 # [2.20.0](https://github.com/globalbrain/sefirot/compare/v2.19.0...v2.20.0) (2023-02-16)
 
 ### Features
