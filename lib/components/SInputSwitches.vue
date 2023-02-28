@@ -6,7 +6,7 @@ import SInputBase from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option {
   label: string
@@ -22,7 +22,7 @@ const props = defineProps<{
   help?: string
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
-  checkColor?: Color
+  checkColor?: CheckColor
   options: Option[]
   disabled?: boolean
   modelValue: (string | number | boolean)[]

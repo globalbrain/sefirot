@@ -33,7 +33,13 @@ export function assertEmitted(
   count: number,
   value?: any
 ): void {
-  expect((wrapper.emitted(event) as any[][])[count - 1][0]).toStrictEqual(value)
+  const e = wrapper.emitted(event)
+
+  if (!e) {
+    throw new Error(`Event \`${event}\` not emitted`)
+  }
+
+  expect(e[count - 1][0]).toStrictEqual(value)
 }
 
 export function assertNotEmitted(wrapper: VueWrapper<any>, event: string): void {

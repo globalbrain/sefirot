@@ -57,4 +57,6 @@ body {
 .gap-y-24 { row-gap: 24px; }
 .gap-y-32 { row-gap: 32px; }
 
+.max-w-128 { max-width: 128px; }
+.max-w-192 { max-width: 192px; }
 .max-w-256 { max-width: 256px; }

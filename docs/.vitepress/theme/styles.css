@@ -9,3 +9,7 @@
 .gap-8  { gap: 8px; }
 .gap-12 { gap: 12px; }
 .gap-16 { gap: 16px; }
+
+.max-w-128 { max-width: 128px; }
+.max-w-192 { max-width: 192px; }
+.max-w-256 { max-width: 256px; }

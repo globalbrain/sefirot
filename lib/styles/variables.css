@@ -666,4 +666,14 @@
   --input-mini-label-font-size: 12px;
   --input-small-label-font-size: 14px;
   --input-medium-label-font-size: 14px;
+
+  --input-switch-toggle-color: var(--c-neutral-1);
+  --input-switch-bg-color: var(--c-mute);
+  --input-switch-disabled-toggle-color: var(--c-gray);
+  --input-switch-disabled-bg-color: var(--c-mute);
+}
+
+.dark {
+  --input-switch-bg-color: var(--c-bg-elv-1);
+  --input-switch-disabled-bg-color: var(--c-mute);
 }

@@ -5,36 +5,53 @@ import { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   name?: string
   label?: string
   info?: string
   note?: string
   text?: string
+  color?: ActiveColor
   help?: string
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
-  checkColor?: Color
+  checkColor?: CheckColor
   disabled?: boolean
-  modelValue: boolean
+  value?: boolean
+  modelValue?: boolean
   hideError?: boolean
   validation?: Validatable
-}>()
+}>(), {
+  value: undefined,
+  modelValue: undefined
+})
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void
+  (e: 'update:model-value', value: boolean): void
+  (e: 'change', value: boolean): void
 }>()
 
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : false
+})
+
 const classes = computed(() => [
-  [props.size ?? 'small'],
+  props.size ?? 'small',
+  props.color ?? 'info',
   { disabled: props.disabled }
 ])
 
 function emitChange(): void {
-  !props.disabled && emit('update:modelValue', !props.modelValue)
+  if (!props.disabled) {
+    emit('update:model-value', !_value.value)
+    emit('change', !_value.value)
+  }
 }
 </script>
 
@@ -53,11 +70,10 @@ function emitChange(): void {
     :hide-error="hideError"
   >
     <div class="container">
-      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
+      <div class="input" :class="{ on: _value }" role="button" @click="emitChange">
         <p v-if="text" class="text">{{ text }}</p>
-
         <div class="box">
-          <div class="check" />
+          <div class="toggle" />
         </div>
       </div>
     </div>
@@ -65,7 +81,185 @@ function emitChange(): void {
   </SInputBase>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
+.SInputSwitch.mini {
+  .input {
+    height: 32px;
+  }
+
+  .text {
+    line-height: 20px;
+    font-size: 14px;
+  }
+
+  .box {
+    border-radius: 9px;
+    width: 32px;
+    height: 18px;
+  }
+
+  .toggle {
+    top: 1px;
+    left: 1px;
+    width: 14px;
+    height: 14px;
+  }
+
+  .input.on .toggle {
+    transform: translateX(14px);
+  }
+}
+
+.SInputSwitch.small {
+  .input {
+    height: 32px;
+  }
+
+  .text {
+    line-height: 20px;
+    font-size: 14px;
+  }
+
+  .box {
+    border-radius: 11px;
+    width: 40px;
+    height: 22px;
+  }
+
+  .toggle {
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .input.on .toggle {
+    transform: translateX(18px);
+  }
+}
+
+.SInputSwitch.medium {
+  .input {
+    height: 32px;
+  }
+
+  .text {
+    line-height: 20px;
+    font-size: 14px;
+  }
+
+  .box {
+    border-radius: 13px;
+    width: 46px;
+    height: 26px;
+  }
+
+  .toggle {
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+  }
+
+  .input.on .toggle {
+    transform: translateX(20px);
+  }
+}
+
+.SInputSwitch.info {
+  .box:hover {
+    border-color: var(--c-info-light);
+  }
+
+  .input.on .box {
+    border-color: var(--c-info-light);
+    background-color: var(--c-info);
+  }
+}
+
+.SInputSwitch.success {
+  .box:hover {
+    border-color: var(--c-success-light);
+  }
+
+  .input.on .box {
+    border-color: var(--c-success-light);
+    background-color: var(--c-success);
+  }
+}
+
+.SInputSwitch.warning {
+  .box:hover {
+    border-color: var(--c-warning-light);
+  }
+
+  .input.on .box {
+    border-color: var(--c-warning-light);
+    background-color: var(--c-warning);
+  }
+}
+
+.SInputSwitch.danger {
+  .box:hover {
+    border-color: var(--c-danger-light);
+  }
+
+  .input.on .box {
+    border-color: var(--c-danger-light);
+    background-color: var(--c-danger);
+  }
+}
+
+.SInputSwitch.disabled {
+  .input {
+    cursor: not-allowed;
+  }
+
+  .box {
+    background-color: var(--input-switch-disabled-bg-color);
+  }
+
+  .box:hover {
+    border-color: var(--c-divider-1);
+  }
+
+  .toggle {
+    background-color: var(--input-switch-disabled-toggle-color);
+  }
+
+  .input.on .toggle {
+    opacity: 0.5;
+  }
+
+  &.info {
+    .input.on .box {
+      border-color: var(--c-info);
+      background-color: var(--c-info-dark);
+    }
+  }
+
+  &.success {
+    .input.on .box {
+      border-color: var(--c-success);
+      background-color: var(--c-success-dark);
+    }
+  }
+
+  &.warning {
+    .input.on .box {
+      border-color: var(--c-warning);
+      background-color: var(--c-warning-dark);
+    }
+  }
+
+  &.danger {
+    .input.on .box {
+      border-color: var(--c-danger);
+      background-color: var(--c-danger-dark);
+    }
+  }
+}
+
 .container {
   display: flex;
 }
@@ -76,11 +270,7 @@ function emitChange(): void {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 32px;
-
-  &:hover {
-    .box { border-color: var(--c-info); }
-  }
+  cursor: pointer;
 }
 
 .input.on .box {
@@ -88,43 +278,28 @@ function emitChange(): void {
   background-color: var(--c-info);
 }
 
-.input.on .check {
+.input.on .toggle {
   background-color: var(--c-white);
-  transform: translateX(18px);
 }
 
 .text {
   flex-grow: 1;
   margin: 0;
   padding-right: 16px;
-  line-height: 20px;
-  font-size: 14px;
-  font-weight: 500;
 }
 
 .box {
   position: relative;
   flex-shrink: 0;
-  border: 1px solid var(--c-divider);
-  border-radius: 11px;
-  width: 40px;
-  height: 22px;
-  background-color: var(--c-bg-elv-down);
+  border: 1px solid var(--c-divider-1);
+  background-color: var(--input-switch-bg-color);
   transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
 }
 
-.check {
+.toggle {
   position: absolute;
   border-radius: 50%;
-  background-color: var(--c-black);
-  top: 2px;
-  left: 2px;
-  width: 16px;
-  height: 16px;
-  transition: background-color .25s, transform .25s;
-
-  .dark & {
-    background-color: var(--c-white);
-  }
+  background-color: var(--input-switch-toggle-color);
+  transition: background-color 0.25s, transform 0.25s;
 }
 </style>
