@@ -31,16 +31,16 @@ Here are the list of accent colors you may use. Accent color is same for both li
 
 ```css
 :root {
-  --c-info: #0284c7;
-  --c-info-light: #0ea5e9;
-  --c-info-lighter: #38bdf8;
-  --c-info-lghtest: #7dd3fc;
-  --c-info-dark: #0369a1;
-  --c-info-darker: #075985;
-  --c-info-darkest: #0c4a6e;
-  --c-info-dimm-1: rgba(2, 132, 199, 0.12);
-  --c-info-dimm-2: rgba(2, 132, 199, 0.2);
-  --c-info-dimm-3: rgba(2, 132, 199, 0.28);
+  --c-info: #1668b6;
+  --c-info-light: #2997ff;
+  --c-info-lighter: #5bafff;
+  --c-info-lghtest: #7dc0ff;
+  --c-info-dark: #104c85;
+  --c-info-darker: #0c3963;
+  --c-info-darkest: #092e51;
+  --c-info-dimm-1: rgba(22, 104, 182, 0.12);
+  --c-info-dimm-2: rgba(22, 104, 182, 0.2);
+  --c-info-dimm-3: rgba(22, 104, 182, 0.28);
   --c-info-text: var(--c-info-light);
   --c-info-text-light: var(--c-info-lighter);
   --c-info-text-lighter: var(--c-info-lightest);
