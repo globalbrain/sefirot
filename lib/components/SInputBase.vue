@@ -123,11 +123,13 @@ function getErrorMsg(validation: Validatable) {
   display: flex;
   align-items: center;
   gap: 4px;
+  transition: color 0.25s;
 }
 
 .label-text-value {
   font-weight: 500;
   color: var(--input-label-color);
+  transition: color 0.25s;
 }
 
 .label-text-info {
