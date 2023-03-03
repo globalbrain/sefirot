@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import type { IconifyIcon } from '@iconify/vue/dist/offline'
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, computed, ref } from 'vue'
-import { Validatable } from '../composables/Validation'
+import type { DefineComponent } from 'vue'
+import { computed, ref } from 'vue'
+import type { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 

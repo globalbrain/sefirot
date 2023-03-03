@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { Position, useTooltip } from '../composables/Tooltip'
+import type { Position } from '../composables/Tooltip'
+import { useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
 
 const props = defineProps<{

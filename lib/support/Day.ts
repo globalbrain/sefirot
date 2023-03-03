@@ -1,4 +1,5 @@
-import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import type { ConfigType, Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'

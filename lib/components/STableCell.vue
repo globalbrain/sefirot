@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { TableCell } from '../composables/Table'
+import type { TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellDay from './STableCellDay.vue'

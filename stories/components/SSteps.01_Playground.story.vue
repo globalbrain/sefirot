@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SSteps from 'sefirot/components/SSteps.vue'
-import { Step } from 'sefirot/composables/Step'
+import type { Step } from 'sefirot/composables/Step'
 
 const steps: Step[] = [
   { status: 'done', text: 'Create account' },

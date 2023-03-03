@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { TableCellAvatarsOption } from '../composables/Table'
+import type { TableCellAvatarsOption } from '../composables/Table'
 import SAvatar from './SAvatar.vue'
 
 const props = defineProps<{

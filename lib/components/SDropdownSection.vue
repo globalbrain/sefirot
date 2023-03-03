@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DropdownSection } from '../composables/Dropdown'
+import type { DropdownSection } from '../composables/Dropdown'
 import SDropdownSectionActions from './SDropdownSectionActions.vue'
 import SDropdownSectionComponent from './SDropdownSectionComponent.vue'
 import SDropdownSectionFilter from './SDropdownSectionFilter.vue'

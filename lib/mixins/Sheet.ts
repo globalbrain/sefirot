@@ -1,4 +1,4 @@
-import { App } from 'vue'
+import type { App } from 'vue'
 import SSheet from '../components/SSheet.vue'
 import SSheetFooter from '../components/SSheetFooter.vue'
 import SSheetFooterAction from '../components/SSheetFooterAction.vue'

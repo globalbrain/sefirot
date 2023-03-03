@@ -1,4 +1,5 @@
-import { Ref, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import type { Ref } from 'vue'
+import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 
 export interface Grid {
   container: Ref<HTMLElement | null>

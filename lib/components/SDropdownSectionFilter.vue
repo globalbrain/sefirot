@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
-import { MaybeRef } from '@vueuse/core'
+import type { MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
 import { computed, onMounted, ref, unref } from 'vue'
-import { DropdownSectionFilterOption, DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
+import type { DropdownSectionFilterOption, DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SIcon from './SIcon.vue'
@@ -23,7 +23,7 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  return !props.search || !query.value
+  return (!props.search || !query.value)
     ? unref(props.options)
     : fuse.value.search(query.value).map((r) => r.item)
 })

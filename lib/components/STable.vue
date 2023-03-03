@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref, toRefs, watch } from 'vue'
-import { Table } from '../composables/Table'
+import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'

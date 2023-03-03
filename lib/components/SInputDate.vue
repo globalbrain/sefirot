@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { IconifyIcon } from '@iconify/vue/dist/offline'
+import type { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DatePicker } from 'v-calendar'
-import { DefineComponent, computed } from 'vue'
-import { Validatable } from '../composables/Validation'
-import { Day, day } from '../support/Day'
+import type { DefineComponent } from 'vue'
+import { computed } from 'vue'
+import type { Validatable } from '../composables/Validation'
+import type { Day } from '../support/Day'
+import { day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

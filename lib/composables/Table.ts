@@ -1,6 +1,7 @@
-import { MaybeRef } from '@vueuse/core'
-import { Component, reactive } from 'vue'
-import { DropdownSection } from './Dropdown'
+import type { MaybeRef } from '@vueuse/core'
+import type { Component } from 'vue'
+import { reactive } from 'vue'
+import type { DropdownSection } from './Dropdown'
 
 export interface Table {
   orders: string[]

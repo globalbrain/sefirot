@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, computed } from 'vue'
-import { Validatable } from '../composables/Validation'
+import type { IconifyIcon } from '@iconify/vue/dist/offline'
+import type { DefineComponent } from 'vue'
+import { computed } from 'vue'
+import type { Validatable } from '../composables/Validation'
 import { isNullish, isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
 
@@ -40,7 +41,7 @@ const emit = defineEmits<{
 }>()
 
 const _value = computed(() => {
-  return props.modelValue !== undefined
+  return (props.modelValue !== undefined)
     ? props.modelValue
     : props.value !== undefined ? props.value : null
 })
@@ -72,7 +73,7 @@ const displayValue = computed(() => {
     return props.displayValue
   }
 
-  return !props.separator || valueWithSeparator.value === null
+  return (!props.separator || valueWithSeparator.value === null)
     ? null
     : valueWithSeparator.value
 })

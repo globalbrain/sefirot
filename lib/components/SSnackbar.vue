@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconX from '@iconify-icons/ph/x'
-import { SnackbarAction, useSnackbars } from '../stores/Snackbars'
+import type { SnackbarAction } from '../stores/Snackbars'
+import { useSnackbars } from '../stores/Snackbars'
 import SButton from './SButton.vue'
 import SIcon from './SIcon.vue'
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import type { IconifyIcon } from '@iconify/vue/dist/offline'
 import IconCheck from '@iconify-icons/ph/check'
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, PropType } from 'vue'
-import { Validatable } from '../composables/Validation'
+import type { DefineComponent, PropType } from 'vue'
+import type { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 

@@ -1,5 +1,7 @@
-import { MaybeRef, useElementBounding, useWindowSize } from '@vueuse/core'
-import { Ref, ref, unref } from 'vue'
+import type { MaybeRef } from '@vueuse/core'
+import { useElementBounding, useWindowSize } from '@vueuse/core'
+import type { Ref } from 'vue'
+import { ref, unref } from 'vue'
 
 export type DropdownSection =
   | DropdownSectionMenu

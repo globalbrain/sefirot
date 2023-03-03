@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent, PropType } from 'vue'
+import type { IconifyIcon } from '@iconify/vue/dist/offline'
+import type { DefineComponent, PropType } from 'vue'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 

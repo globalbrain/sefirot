@@ -22,8 +22,8 @@ export function hms(hms: Hms, required: HmsType[] = ['h', 'm', 's']): boolean {
 
     const valueAsNumber = Number(value)
 
-    return r === 'h'
-      ? valueAsNumber >= 0 && valueAsNumber < 24
-      : valueAsNumber >= 0 && valueAsNumber < 60
+    return (r === 'h')
+      ? (valueAsNumber >= 0 && valueAsNumber < 24)
+      : (valueAsNumber >= 0 && valueAsNumber < 60)
   })
 }

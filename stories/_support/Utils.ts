@@ -1,4 +1,4 @@
-import { Vue3StorySetupHandler } from '@histoire/plugin-vue'
+import type { Vue3StorySetupHandler } from '@histoire/plugin-vue'
 import { createMemoryHistory, createRouter, routerKey } from 'vue-router'
 
 export function setupRouter({ app }: Parameters<Vue3StorySetupHandler>[number]) {

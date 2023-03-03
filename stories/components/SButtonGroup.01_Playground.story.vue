@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SButton, { Mode, Size } from 'sefirot/components/SButton.vue'
+import type { Mode, Size } from 'sefirot/components/SButton.vue'
+import SButton from 'sefirot/components/SButton.vue'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 function state() {

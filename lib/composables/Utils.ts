@@ -1,5 +1,7 @@
-import { MaybeComputedRef, resolveUnref } from '@vueuse/core'
-import { ComputedRef, computed } from 'vue'
+import type { MaybeComputedRef } from '@vueuse/core'
+import { resolveUnref } from '@vueuse/core'
+import type { ComputedRef } from 'vue'
+import { computed } from 'vue'
 
 export type WhenCondition<T> = MaybeComputedRef<T>
 

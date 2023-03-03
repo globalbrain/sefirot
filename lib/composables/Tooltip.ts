@@ -1,4 +1,5 @@
-import { Ref, ref } from 'vue'
+import type { Ref } from 'vue'
+import { ref } from 'vue'
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 

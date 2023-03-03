@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputSwitch, { ActiveColor, Size } from 'sefirot/components/SInputSwitch.vue'
+import type { ActiveColor, Size } from 'sefirot/components/SInputSwitch.vue'
+import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
 import { ref } from 'vue'
 
 const on = ref(false)

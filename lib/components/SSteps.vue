@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { PropType, computed } from 'vue'
-import { BarMode, Step } from '../composables/Step'
+import type { PropType } from 'vue'
+import { computed } from 'vue'
+import type { BarMode, Step } from '../composables/Step'
 import SStep from './SStep.vue'
 
 const props = defineProps({
@@ -19,7 +20,7 @@ function getBarLeftMode(index: number): BarMode | null {
   const current = props.steps[index]
   const prev = props.steps[index - 1]
 
-  return isActive(prev) && isActive(current) ? 'active' : 'mute'
+  return (isActive(prev) && isActive(current)) ? 'active' : 'mute'
 }
 
 function getBarRightMode(index: number): BarMode | null {
@@ -30,7 +31,7 @@ function getBarRightMode(index: number): BarMode | null {
   const current = props.steps[index]
   const next = props.steps[index + 1]
 
-  return isActive(current) && isActive(next) ? 'active' : 'mute'
+  return (isActive(current) && isActive(next)) ? 'active' : 'mute'
 }
 
 function isActive(step: Step): boolean {

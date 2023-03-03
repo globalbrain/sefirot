@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DefineComponent } from 'vue'
+import type { DefineComponent } from 'vue'
 
 defineProps<{
   comp: DefineComponent

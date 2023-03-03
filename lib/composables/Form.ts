@@ -1,7 +1,10 @@
-import { Ref, computed } from 'vue'
+import type { Ref } from 'vue'
+import { computed } from 'vue'
 import { useSnackbars } from '../stores/Snackbars'
-import { UseDataInput, useData } from './Data'
-import { Validation, useValidation } from './Validation'
+import type { UseDataInput } from './Data'
+import { useData } from './Data'
+import type { Validation } from './Validation'
+import { useValidation } from './Validation'
 
 export interface Form<T extends Record<string, any>> {
   data: T

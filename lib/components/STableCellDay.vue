@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Day } from '../support/Day'
+import type { Day } from '../support/Day'
 
 defineProps<{
   value?: Day | null
