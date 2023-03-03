@@ -18,18 +18,18 @@ const input = ref<string | null>(null)
 
 ## Usage
 
-Import `<SInputNumber>` component and pass in the `value` prop.
+Import `<SInputTextarea>` component and pass in the `value` prop.
 
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import SInputNumber from '@globalbrain/sefirot/lib/components/SInputNumber.vue'
+import SInputTextarea from '@globalbrain/sefirot/lib/components/SInputTextarea.vue'
 
-const input = ref<number | null>(null)
+const input = ref<string | null>(null)
 </script>
 
 <template>
-  <SInputNumber placeholder="123456789" v-model="input" />
+  <SInputTextarea placeholder="Placeholder text" v-model="input" />
 </template>
 ```
 
@@ -48,7 +48,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber size="small" v-model="..." />
+<SInputTextarea size="small" v-model="..." />
 ```
 
 ### `:name`
@@ -62,7 +62,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber name="age" v-model="..." />
+<SInputTextarea name="message" v-model="..." />
 ```
 
 ### `:label`
@@ -76,7 +76,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber label="Age" v-model="..." />
+<SInputTextarea label="Message" v-model="..." />
 ```
 
 ### `:info`
@@ -90,8 +90,8 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber
-  label="Age"
+<SInputTextarea
+  label="Message"
   info="Some helpful information."
   v-model="..."
 />
@@ -108,7 +108,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber label="Age" note="Optional" v-model="..." />
+<SInputTextarea label="Message" note="Optional" v-model="..." />
 ```
 
 ### `:placeholder`
@@ -122,39 +122,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber placeholder="123456789" v-model="..." />
-```
-
-### `:unit-before`
-
-Add a static text or icon before the input box.
-
-```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
-interface Props {
-  unitBefore?: string | IconifyIcon
-}
-```
-
-```vue-html
-<SInputNumber unit-before="$" v-model="..." />
-```
-
-### `:unit-after`
-
-Add a static text or icon after the input box.
-
-```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
-interface Props {
-  unitAfter?: string | IconifyIcon
-}
-```
-
-```vue-html
-<SInputNumber unit-after="USD" v-model="..." />
+<SInputTextarea placeholder="Placeholder text" v-model="..." />
 ```
 
 ### `:check-icon`
@@ -171,7 +139,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber :check-icon="IconCheckCircle" />
+<SInputTextarea :check-icon="IconCheckCircle" v-model="..." />
 ```
 
 ### `:check-text`
@@ -185,7 +153,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber :check-text="Saved" />
+<SInputTextarea :check-text="Saved" v-model="..." />
 ```
 
 ### `:check-color`
@@ -207,60 +175,26 @@ type Color =
 ```
 
 ```vue-html
-<SInputNumber
+<SInputTextarea
   :check-icon="IconCheckCircle"
   check-text="Uploaded"
   check-color="success"
+  v-model="..."
 />
 ```
 
-### `:text-color`
+### `:rows`
 
-Defines the color of the input text. You can pass the `TextColor` or the callback that takes an input value as an argument and returns the `TextColor`. The default is `neutral`.
-
-```ts
-interface Props {
-  textColor?: TextColor | ((value: number | null) => TextColor)
-}
-
-type TextColor = 
-  | 'neutral'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-```
-
-```vue-html
-<SInputNumber text-color="info" v-model="..." />
-```
-
-### `:align`
-
-Defines how the input value is aligned inside the input box. The default is `left`.
+Defines the height of the input. The default is `3`. If you pass `'fill'`, the input will fill the available space defined by the parent container.
 
 ```ts
 interface Props {
-  align?: 'left' | 'center' | 'right'
+  rows?: number | 'fill'
 }
 ```
 
 ```vue-html
-<SInputNumber align="right" v-model="..." />
-```
-
-### `:separator`
-
-When this prop is set, the value gets displayed by adding comma to every 3 digits in the number. For example, `123456789` becomes `123,456,789`. The default is `false`.
-
-```ts
-interface Props {
-  separator?: boolean
-}
-```
-
-```vue-html
-<SInputNumber separator v-model="..." />
+<SInputTextarea :rows="8" v-model="..." />
 ```
 
 ### `:disabled`
@@ -274,7 +208,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber disabled v-model="..." />
+<SInputTextarea disabled v-model="..." />
 ```
 
 ### `:value`
@@ -283,12 +217,12 @@ Sets the input value. When `model-value` prop is set (e.g. via `v-model` directi
 
 ```ts
 interface Props {
-  value?: number | null
+  value?: string | null
 }
 ```
 
 ```vue-html
-<SInputNumber :value="1" />
+<SInputTextarea :value="Lorem ipsum..." />
 ```
 
 ### `:model-value`
@@ -297,12 +231,12 @@ The `v-model` binding for the input.
 
 ```ts
 interface Props {
-  modelValue?: number | null
+  modelValue?: string | null
 }
 ```
 
 ```vue-html
-<SInputNumber v-model="1" />
+<SInputTextarea v-model="Lorem ipsum..." />
 ```
 
 ### `:validation`
@@ -329,7 +263,7 @@ export interface ValidatableError {
 ```
 
 ```vue-html
-<SInputNumber v-model="1" :validation="validation" />
+<SInputTextarea v-model="..." :validation="validation" />
 ```
 
 ### `:hide-error`
@@ -343,8 +277,8 @@ interface Props {
 ```
 
 ```vue-html
-<SInputNumber
-  v-model="1"
+<SInputTextarea
+  v-model="..."
   :validation="validation"
   hide-error
 />
@@ -359,35 +293,11 @@ Here are the list of slots you may define within the component.
 Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
-<SInputNumber label="Age" v-model="...">
+<SInputTextarea label="Message" v-model="...">
   <template #info>
     Learn more about this field <SLink href="...">here</SLink>.
   </template>
-</SInputNumber>
-```
-
-### `#addon-before`
-
-Inject [`<SInputAddon>`](/components/input-addon) before the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon).
-
-```vue-html
-<SInputNumber label="..." v-model="...">
-  <template #addon-before>
-    <SInputAddon label="@" />
-  </template>
-</SInputNumber>
-```
-
-### `#addon-after`
-
-Inject [`<SInputAddon>`](/components/input-addon) after the input. Learn more details about addon in [Components: SInputAddon](/components/input-addon).
-
-```vue-html
-<SInputNumber label="..." v-model="...">
-  <template #addon-after>
-    <SInputAddon label="@" />
-  </template>
-</SInputNumber>
+</SInputTextarea>
 ```
 
 ## Events
@@ -396,11 +306,11 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user inputs any value. This event is always emitted together with `input` event.
+Emits when the user inputs value, and when the focus is out. This event is always emitted together with `input` and `blur` event.
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: number | null): void
+  (e: 'update:model-value', value: string | null): void
 }
 ```
 
@@ -410,7 +320,17 @@ Emits when the user inputs any value. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: number | null): void
+  (e: 'input', value: string | null): void
+}
+```
+
+### `@blur`
+
+Emits when the input lose its focus. This event is always emitted together with `update:model-value` event.
+
+```ts
+interface Emits {
+  (e: 'blur', value: string | null): void
 }
 ```
 

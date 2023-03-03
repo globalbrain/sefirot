@@ -1,3 +1,7 @@
+textarea {
+  font-family: inherit;
+}
+
 .flex {
   display: flex;
 }
