@@ -1,3 +1,11 @@
+# [2.22.0](https://github.com/globalbrain/sefirot/compare/v2.21.0...v2.22.0) (2023-03-06)
+
+### Features
+
+* **style:** adjust `--c-info` color to be bit more systematic ([d41f164](https://github.com/globalbrain/sefirot/commit/d41f16415107eb2ae21f1b020e06c15da12db2b6))
+* **input:** add transition to label ([0ba5e01](https://github.com/globalbrain/sefirot/commit/0ba5e01c8bf4683e639f55321b9b044253477083))
+* **input-textarea:** refine styles ([8fae90a](https://github.com/globalbrain/sefirot/commit/8fae90a6832bfc72c43f2366a341a124bc303124))
+
 # [2.21.0](https://github.com/globalbrain/sefirot/compare/v2.20.0...v2.21.0) (2023-02-28)
 
 ### Bug Fixes
