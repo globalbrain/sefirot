@@ -111,7 +111,7 @@ function onChange(e: Event) {
   .placeholder {
     line-height: 30px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
-    font-weight: 500;
+    font-weight: 400;
   }
 }
 
@@ -123,7 +123,7 @@ function onChange(e: Event) {
   .button {
     padding: 0 8px;
     line-height: 26px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
   }
 
@@ -132,10 +132,6 @@ function onChange(e: Event) {
     line-height: 38px;
     font-size: var(--input-font-size, var(--input-small-font-size));
     font-weight: 400;
-  }
-
-  .placeholder {
-    font-weight: 500;
   }
 }
 
@@ -156,10 +152,6 @@ function onChange(e: Event) {
     line-height: 46px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
     font-weight: 400;
-  }
-
-  .placeholder {
-    font-weight: 500;
   }
 }
 
