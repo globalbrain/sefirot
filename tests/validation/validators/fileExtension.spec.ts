@@ -1,4 +1,4 @@
-import { fileExtension } from 'sefirot/validation/validators/fileExtension'
+import { fileExtension } from 'sefirot/validation/validators'
 
 describe('vaidation/validators/fileExtension', () => {
   it('should validate if the file has valid extension', () => {

@@ -1,14 +1,9 @@
 import day from 'dayjs'
+import type { Ymd } from '../../support/Day'
 
-export interface Ymd {
-  year: number | null
-  month: number | null
-  date: number | null
-}
+type YmdType = 'y' | 'm' | 'd'
 
-export type YmdType = 'y' | 'm' | 'd'
-
-export const YmdMap = {
+const YmdMap = {
   y: 'year',
   m: 'month',
   d: 'date'

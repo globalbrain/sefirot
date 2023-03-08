@@ -1,12 +1,8 @@
-export interface Hms {
-  hour?: string | null
-  minute?: string | null
-  second?: string | null
-}
+import type { Hms } from '../../support/Day'
 
-export type HmsType = 'h' | 'm' | 's'
+type HmsType = 'h' | 'm' | 's'
 
-export const HmsMap = {
+const HmsMap = {
   h: 'hour',
   m: 'minute',
   s: 'second'
@@ -16,7 +12,7 @@ export function hms(hms: Hms, required: HmsType[] = ['h', 'm', 's']): boolean {
   return required.every((r) => {
     const value = hms[HmsMap[r]]
 
-    if (value === undefined) {
+    if (value === null) {
       return true
     }
 

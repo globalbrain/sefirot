@@ -1,12 +1,8 @@
-export interface Hms {
-  hour?: string | null
-  minute?: string | null
-  second?: string | null
-}
+import type { Hms } from '../../support/Day'
 
-export type HmsType = 'h' | 'm' | 's'
+type HmsType = 'h' | 'm' | 's'
 
-export const HmsMap = {
+const HmsMap = {
   h: 'hour',
   m: 'minute',
   s: 'second'

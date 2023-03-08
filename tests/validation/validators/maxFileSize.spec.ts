@@ -1,4 +1,4 @@
-import { maxFileSize } from 'sefirot/validation/validators/maxFileSize'
+import { maxFileSize } from 'sefirot/validation/validators'
 
 describe('vaidation/validators/maxFileSize', () => {
   it('should validate if the file is smaller than provided size', () => {

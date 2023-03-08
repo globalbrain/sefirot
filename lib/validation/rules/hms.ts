@@ -1,6 +1,8 @@
 import { helpers } from '@vuelidate/validators'
-import type { Hms, HmsType } from '../validators/hms'
+import type { Hms } from '../../support/Day'
 import { hms as baseHms } from '../validators/hms'
+
+type HmsType = 'h' | 'm' | 's'
 
 export function hms(required?: HmsType[], msg?: string) {
   return helpers.withMessage(

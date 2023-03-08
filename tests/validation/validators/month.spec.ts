@@ -1,4 +1,4 @@
-import { month } from 'sefirot/validation/validators/month'
+import { month } from 'sefirot/validation/validators'
 
 describe('validation/validators/month', () => {
   test('validate given month is valid month', () => {

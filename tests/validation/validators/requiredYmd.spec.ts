@@ -1,4 +1,4 @@
-import { requiredYmd } from 'sefirot/validation/validators/requiredYmd'
+import { requiredYmd } from 'sefirot/validation/validators'
 
 describe('validation/validators/requiredYmd', () => {
   test('validates if the year, month, and date are present', () => {

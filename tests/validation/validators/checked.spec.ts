@@ -1,4 +1,4 @@
-import { checked } from 'sefirot/validation/validators/checked'
+import { checked } from 'sefirot/validation/validators'
 
 describe('validation/validators/checked', () => {
   it('should validates if the value is true', () => {

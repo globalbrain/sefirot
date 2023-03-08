@@ -1,6 +1,8 @@
 import { helpers } from '@vuelidate/validators'
-import type { Ymd, YmdType } from '../validators/requiredYmd'
+import type { Ymd } from '../../support/Day'
 import { requiredYmd as baseRequiredYmd } from '../validators/requiredYmd'
+
+type YmdType = 'y' | 'm' | 'd'
 
 export function requiredYmd(required?: YmdType[], msg?: string) {
   return helpers.withMessage(

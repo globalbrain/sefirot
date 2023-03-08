@@ -1,4 +1,4 @@
-import { ymd } from 'sefirot/validation/validators/ymd'
+import { ymd } from 'sefirot/validation/validators'
 
 describe('validation/validators/ymd', () => {
   it('should validate if the year, month, and date is valid value', () => {
