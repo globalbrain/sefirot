@@ -112,7 +112,7 @@ function onClick() {
   align-items: center;
   border-radius: 50%;
   width: 100%;
-  background-color: var(--c-info-bg);
+  background-color: var(--c-info-light);
   opacity: 0;
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;

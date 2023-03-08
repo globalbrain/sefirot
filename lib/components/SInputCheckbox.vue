@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { IconifyIcon } from '@iconify/vue/dist/offline'
-import IconCheck from '@iconify-icons/ph/check'
-import type { DefineComponent, PropType } from 'vue'
+import IconCheck from '@iconify-icons/ph/check-bold'
+import { computed } from 'vue'
 import type { Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
@@ -9,31 +9,46 @@ import SInputBase from './SInputBase.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  label: { type: String, default: null },
-  info: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
-  checkText: { type: String, default: null },
-  checkColor: { type: String as PropType<Color>, default: null },
-  text: { type: String, required: true },
-  modelValue: { type: Boolean, required: true },
-  validation: { type: Object as PropType<Validatable>, default: null }
+const props = withDefaults(defineProps<{
+  size?: Size
+  label?: string
+  info?: string
+  note?: string
+  help?: string
+  checkIcon?: IconifyIcon
+  checkText?: string
+  checkColor?: Color
+  text?: string
+  value?: boolean
+  modelValue?: boolean
+  validation?: Validatable
+  hideError?: boolean
+}>(), {
+  value: undefined,
+  modelValue: undefined
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:model-value', value: boolean): void
+  (e: 'change', value: boolean): void
+}>()
 
-function emitChange() {
-  emit('update:modelValue', !props.modelValue)
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : false
+})
+
+function onClick() {
+  emit('update:model-value', !_value.value)
+  emit('change', !_value.value)
 }
 </script>
 
 <template>
   <SInputBase
     class="SInputCheckbox"
-    :class="[size]"
+    :class="[size ?? 'small']"
     :label="label"
     :note="note"
     :info="info"
@@ -44,21 +59,21 @@ function emitChange() {
     :validation="validation"
   >
     <div class="container">
-      <div class="input" :class="{ on: modelValue }" role="button" @click="emitChange">
+      <div class="input" :class="{ on: _value }" role="button" @click="onClick">
         <div class="box">
           <div class="check">
             <SIcon :icon="IconCheck" class="check-icon" />
           </div>
         </div>
 
-        <p class="text">{{ text }}</p>
+        <p v-if="text" class="text">{{ text }}</p>
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 
-<style lang="postcss" scoped>
+<style scoped lang="postcss">
 .container {
   display: flex;
 }
@@ -68,19 +83,19 @@ function emitChange() {
   display: flex;
   align-items: center;
   height: 32px;
+  cursor: pointer;
 
   &:hover {
     .box {
-      border-color: var(--c-black);
+      border-color: var(--c-info-light);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-black);
-    background-color: var(--c-black);
-    box-shadow: var(--shadow-depth-3);
+    border-color: var(--c-info-light);
+    background-color: var(--c-info-light);
   }
 
   .check {
@@ -91,11 +106,12 @@ function emitChange() {
 
 .box {
   position: relative;
-  border: 2px solid var(--c-text-3);
-  border-radius: 2px;
-  width: 18px;
-  height: 18px;
-  transition: border-color .25s, background-color .25s, box-shadow .25s;
+  border: 1px solid var(--c-divider-1);
+  border-radius: 4px;
+  width: 16px;
+  height: 16px;
+  background-color: var(--input-bg-color);
+  transition: border-color 0.25s, background-color 0.25s;
 }
 
 .check {
@@ -118,9 +134,9 @@ function emitChange() {
 
 .text {
   margin: 0;
-  padding-left: 12px;
+  padding-left: 10px;
   line-height: 20px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
 }
 </style>

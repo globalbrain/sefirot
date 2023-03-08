@@ -50,6 +50,8 @@ function sidebar() {
         { text: 'SButton', link: '/components/button' },
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SInputAddon', link: '/components/input-addon' },
+        { text: 'SInputCheckbox', link: '/components/input-checkbox' },
+        { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
         { text: 'SInputFile', link: '/components/input-file' },
         { text: 'SInputHMS', link: '/components/input-hms' },
         { text: 'SInputNumber', link: '/components/input-number' },

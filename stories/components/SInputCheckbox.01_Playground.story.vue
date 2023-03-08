@@ -3,19 +3,73 @@ import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 import { ref } from 'vue'
 
 const value = ref(false)
+
+function state() {
+  return {
+    size: 'small',
+    label: 'Label',
+    info: 'Some helpful information.',
+    note: 'Note text',
+    help: 'This is a help text.',
+    text: 'Text for the checkbox',
+    error: false
+  }
+}
 </script>
 
 <template>
   <Board
     title="Components / SInputCheckbox / 01. Playground"
+    :state="state"
+    docs="components/input-checkbox"
   >
-    <SInputCheckbox
-      label="Label"
-      info="Some helpful information."
-      note="Note text"
-      text="Text for the checkbox"
-      help="This is a help text."
-      v-model="value"
-    />
+    <template #controls="{ state }">
+      <HstSelect
+        title="size"
+        :options="{
+          mini: 'mini',
+          small: 'small',
+          medium: 'medium'
+        }"
+        v-model="state.size"
+      />
+      <HstText
+        title="label"
+        v-model="state.label"
+      />
+      <HstText
+        title="info"
+        v-model="state.info"
+      />
+      <HstText
+        title="note"
+        v-model="state.note"
+      />
+      <HstText
+        title="help"
+        v-model="state.help"
+      />
+      <HstText
+        title="text"
+        v-model="state.text"
+      />
+      <HstCheckbox
+        title="error"
+        v-model="state.error"
+      />
+    </template>
+
+    <template #default="{ state }">
+      <SInputCheckbox
+        :class="{ 'has-error': state.error }"
+        :size="state.size"
+        :label="state.label"
+        :info="state.info"
+        :note="state.note"
+        :help="state.help"
+        :text="state.text"
+        v-model="value"
+      />
+    </template>
   </Board>
 </template>

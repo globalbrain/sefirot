@@ -1,50 +1,73 @@
 <script setup lang="ts">
 import type { IconifyIcon } from '@iconify/vue/dist/offline'
-import type { DefineComponent, PropType } from 'vue'
+import { computed } from 'vue'
+import type { Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-interface CheckboxOption {
+export type Value = string | number | boolean
+
+export interface Option {
   label: string
-  value: any
+  value: Value
 }
 
-const props = defineProps({
-  size: { type: String as PropType<Size>, default: 'small' },
-  name: { type: String, default: null },
-  label: { type: String, default: null },
-  info: { type: String, default: null },
-  note: { type: String, default: null },
-  help: { type: String, default: null },
-  checkIcon: { type: Object as PropType<IconifyIcon | DefineComponent>, default: null },
-  checkText: { type: String, default: null },
-  checkColor: { type: String as PropType<Color>, default: null },
-  options: { type: Array as PropType<CheckboxOption[]>, required: true },
-  modelValue: { type: Array, required: true }
+const props = withDefaults(defineProps<{
+  size?: Size
+  name?: string
+  label?: string
+  info?: string
+  note?: string
+  help?: string
+  checkIcon?: IconifyIcon
+  checkText?: string
+  checkColor?: Color
+  options: Option[]
+  nullable?: boolean
+  value?: Value[]
+  modelValue?: Value[]
+  validation?: Validatable
+  hideError?: boolean
+}>(), {
+  nullable: true
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits<{
+  (e: 'update:model-value', value: Value[]): void
+  (e: 'change', value: Value[]): void
+}>()
 
-function isChecked(value: unknown): boolean {
-  return props.modelValue.includes(value)
+const _value = computed(() => {
+  return props.modelValue !== undefined
+    ? props.modelValue
+    : props.value !== undefined ? props.value : []
+})
+
+function isChecked(value: Value): boolean {
+  return _value.value.includes(value)
 }
 
-function handleChange(value: unknown): void {
-  const distinct = props.modelValue
+function handleChange(value: Value): void {
+  const distinct = _value.value
     .filter((v) => v !== value)
-    .concat(props.modelValue.includes(value) ? [] : [value])
+    .concat(_value.value.includes(value) ? [] : [value])
 
-  emit('update:modelValue', distinct)
+  if (distinct.length === 0 && !props.nullable) {
+    return
+  }
+
+  emit('update:model-value', distinct)
+  emit('change', distinct)
 }
 </script>
 
 <template>
   <SInputBase
     class="SInputCheckboxes"
-    :class="[size]"
+    :class="[size ?? 'small']"
     :name="name"
     :label="label"
     :note="note"
@@ -56,7 +79,7 @@ function handleChange(value: unknown): void {
   >
     <div class="container">
       <div class="row">
-        <div v-for="option in options" :key="option.value" class="col">
+        <div v-for="option in options" :key="String(option.value)" class="col">
           <SInputCheckbox
             :text="option.label"
             :model-value="isChecked(option.value)"
@@ -68,17 +91,3 @@ function handleChange(value: unknown): void {
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
-
-<style lang="postcss" scoped>
-.container {
-  display: flex;
-}
-
-.row {
-  margin: -2px -8px;
-}
-
-.col {
-  padding: 2px 8px;
-}
-</style>
