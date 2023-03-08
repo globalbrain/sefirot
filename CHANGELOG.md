@@ -1,3 +1,10 @@
+# [2.23.0](https://github.com/globalbrain/sefirot/compare/v2.22.0...v2.23.0) (2023-03-08)
+
+### Features
+
+* **input-checkbox:** refine styles ([dbc3a11](https://github.com/globalbrain/sefirot/commit/dbc3a119b6780343941b9dde416cae0b3c00ca78))
+* **input-file:** use lighter font weight for placeholder ([ffdc454](https://github.com/globalbrain/sefirot/commit/ffdc4548fae2182ba5a5b70e2f480ad2c6118eb1))
+
 # [2.22.0](https://github.com/globalbrain/sefirot/compare/v2.21.0...v2.22.0) (2023-03-06)
 
 ### Features
