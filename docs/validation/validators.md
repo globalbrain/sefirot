@@ -1,0 +1,213 @@
+# Validators
+
+The `Validators` provides set of functions to validate values. Sefirot encourages to use builtin validatoes provided by [Vuelidate](https://github.com/vuelidate/vuelidate) library. These validators are which is not provided by Vuelidate.
+
+You may import functions from `validation/validators`.
+
+```ts
+import { ... } from '@globalbrain/sefirot/lib/validation/validators'
+```
+
+## `checked`
+
+Checks if the given value is `true`. This is useful for validating inputs for things like a checkbox.
+
+```ts
+function checked(value: boolean): boolean
+```
+
+```ts
+import { checked } from '@globalbrain/sefirot/lib/validation/validators'
+
+checked(false)
+```
+
+## `fileExtension`
+
+Checks if the given `File` has a given extension.
+
+```ts
+function fileExtension(file: File, extensions: string[]): boolean
+```
+
+```ts
+import { fileExtension } from '@globalbrain/sefirot/lib/validation/validators'
+
+fileExtension(file, ['jpg', 'png'])
+```
+
+## `hms`
+
+Checks if the given hour, minute and second has a valid value. This validator will not validate the presence of the value so it will return `true` if a value is `null`. To check the presence of the value, use [`requiredHms`](#requiredhms) validator.
+
+```ts
+import type { Hms } from '@globalbrain/sefirot/lib/support/Day'
+
+function hms(
+  hms: Hms,
+  required: ('h' | 'm' | 's')[] = ['h', 'm', 's']
+): boolean
+```
+
+```ts
+import { hms } from '@globalbrain/sefirot/lib/validation/validators'
+
+const time = {
+  hour: '10',
+  minute: '61', // Invalid value.
+  second: '00'
+}
+
+hms(time) // <- false
+```
+
+You may pass 2nd argument to specify which fields to validate. For example,if you pass `['h', 'm']`, it will validate only hour and minute.
+
+```ts
+const time = {
+  hour: '10',
+  minute: '30',
+  second: '61' // Invalid seconds, but this will be ignored.
+}
+
+hms(time, ['h', 'm']) // <- true
+```
+
+## `maxFileSize`
+
+Checks if the given `File` in smaller the given size. You can specify size in b, kb, mb or gb by passing a string such as `100mb` or `2gb`.
+
+```ts
+function maxFileSize(file: File, size: string): boolean
+```
+
+```ts
+import { maxFileSize } from '@globalbrain/sefirot/lib/validation/validators'
+
+maxFileSize(file, '100mb')
+```
+
+## `month`
+
+Checks if the given number is a valid month number (1–12).
+
+```ts
+function month(value: number): boolean
+```
+
+```ts
+import { month } from '@globalbrain/sefirot/lib/validation/validators'
+
+month(13) // <- false
+```
+
+## `requiredHms`
+
+Checks if the given hour, minute and second is present. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`hms`](#hms) validator.
+
+```ts
+import type { Hms } from '@globalbrain/sefirot/lib/support/Day'
+
+function requiredHms(
+  hms: Hms,
+  required: ('h' | 'm' | 's')[] = ['h', 'm', 's']
+): boolean
+```
+
+```ts
+import { requiredHms } from '@globalbrain/sefirot/lib/validation/validators'
+
+const time = {
+  hour: '10',
+  minute: null, // Value missing.
+  second: '00'
+}
+
+requiredHms(time) // <- false
+```
+
+You may pass 2nd argument to specify which fields to validate. For example,if you pass `['h', 'm']`, it will validate only hour and minute.
+
+```ts
+const time = {
+  hour: '10',
+  minute: '30',
+  second: null // Valud missing, but this will be ignored.
+}
+
+hms(time, ['h', 'm']) // <- true
+```
+
+## `requiredYmd`
+
+Checks if the given year, month and date is present. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`ymd`](#ymd) validator.
+
+```ts
+import type { Ymd } from '@globalbrain/sefirot/lib/support/Day'
+
+function requiredYmd(
+  ymd: Ymd,
+  required: ('y' | 'm' | 'd')[] = ['y', 'm', 'd']
+): boolean
+```
+
+```ts
+import { requiredYmd } from '@globalbrain/sefirot/lib/validation/validators'
+
+const date = {
+  year: 1985,
+  month: null, // Value missing.
+  date: 10
+}
+
+requiredHms(date) // <- false
+```
+
+You may pass 2nd argument to specify which fields to validate. For example,if you pass `['y', 'm']`, it will validate only year and month.
+
+```ts
+const date = {
+  year: 1985,
+  month: 10,
+  date: null // Valud missing, but this will be ignored.
+}
+
+hms(date, ['y', 'm']) // <- true
+```
+
+## `ymd`
+
+Checks if the given year, month and date has a valid value. This validator will not validate the presence of the value so it will return `true` if a value is `null`. To check the presence of the value, use [`requiredYmd`](#requiredymd) validator.
+
+```ts
+import type { Ymd } from '@globalbrain/sefirot/lib/support/Day'
+
+function ymd(
+  ymd: Ymd,
+  required: ('y' | 'm' | 'd')[] = ['y', 'm', 'd']
+): boolean
+```
+
+```ts
+import { ymd } from '@globalbrain/sefirot/lib/validation/validators'
+
+const date = {
+  year: 1985,
+  month: 15, // Invalid value.
+  date: 10
+}
+
+ymd(date) // <- false
+```
+
+You may pass 2nd argument to specify which fields to validate. For example,if you pass `['y', 'm']`, it will validate only year and month.
+
+```ts
+const date = {
+  hour: 1985,
+  minute: 10,
+  second: 35 // Invalid date, but this will be ignored.
+}
+
+ymd(date, ['y', 'm']) // <- true
+```

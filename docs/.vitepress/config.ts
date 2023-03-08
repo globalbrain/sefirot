@@ -72,13 +72,19 @@ function sidebar() {
       ]
     },
     {
-      text: 'Helpers',
+      text: 'Validation',
       items: [
-        { text: 'Day', link: '/helpers/day' },
-        { text: 'File', link: '/helpers/file' },
-        { text: 'Num', link: '/helpers/num' },
-        { text: 'Time', link: '/helpers/time' },
-        { text: 'Utils', link: '/helpers/utils' }
+        { text: 'Validators', link: '/validation/validators' }
+      ]
+    },
+    {
+      text: 'Support',
+      items: [
+        { text: 'Day', link: '/support/day' },
+        { text: 'File', link: '/support/file' },
+        { text: 'Num', link: '/support/num' },
+        { text: 'Time', link: '/support/time' },
+        { text: 'Utils', link: '/support/utils' }
       ]
     }
   ]
