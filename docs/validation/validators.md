@@ -87,6 +87,20 @@ import { maxFileSize } from '@globalbrain/sefirot/lib/validation/validators'
 maxFileSize(file, '100mb')
 ```
 
+## `maxTotalFileSize`
+
+Checks if the total size of the given files is smaller the specified size. You can specify size in b, kb, mb or gb by passing a string such as `100mb` or `2gb`.
+
+```ts
+function maxTotalFileSize(files: File[], size: string): boolean
+```
+
+```ts
+import { maxTotalFileSize } from '@globalbrain/sefirot/lib/validation/validators'
+
+maxTotalFileSize([fileA, fileB], '100mb')
+```
+
 ## `month`
 
 Checks if the given number is a valid month number (1–12).
