@@ -1,12 +1,15 @@
-# [2.24.0](https://github.com/globalbrain/sefirot/compare/v2.23.0...v2.24.0) (2023-03-09)
+# [2.25.0](https://github.com/globalbrain/sefirot/compare/v2.24.0...v2.25.0) (2023-03-09)
 
+### Features
+
+* **validation:** add `computed` option to `useForm` ([1bdcbd1](https://github.com/globalbrain/sefirot/commit/1bdcbd1d01a3a01e2b2fba77326c2f6902839c11))
+
+# [2.24.0](https://github.com/globalbrain/sefirot/compare/v2.23.0...v2.24.0) (2023-03-09)
 
 ### Features
 
 * **day:** add ymd and hms creation method ([042abc9](https://github.com/globalbrain/sefirot/commit/042abc9c615af491eb91fa6a6aa470112e7f1b08))
 * **validation:** add `maxTotalFileSize` rule ([b46af00](https://github.com/globalbrain/sefirot/commit/b46af000eaa242d5aee2ee1498e6dfc85aa47f83))
-
-
 
 # [2.23.0](https://github.com/globalbrain/sefirot/compare/v2.22.0...v2.23.0) (2023-03-08)
 
