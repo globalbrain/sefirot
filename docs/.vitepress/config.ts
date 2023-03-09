@@ -1,11 +1,11 @@
-import { defineConfig } from 'vitepress'
+import { type DefaultTheme, defineConfig } from 'vitepress'
 
 export default defineConfig({
   lang: 'en-US',
   title: 'Sefirot',
   description: 'Vue Components for Global Brain Design System.',
 
-  cleanUrls: 'without-subfolders',
+  cleanUrls: true,
   lastUpdated: true,
 
   vite: {
@@ -34,10 +34,11 @@ export default defineConfig({
   }
 })
 
-function sidebar() {
+function sidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'Styles',
+      collapsed: false,
       items: [
         { text: 'Colors', link: '/styles/colors' },
         { text: 'Shared Input Styles', link: '/styles/input-styles' }
@@ -45,6 +46,7 @@ function sidebar() {
     },
     {
       text: 'Components',
+      collapsed: false,
       items: [
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
@@ -67,18 +69,21 @@ function sidebar() {
     },
     {
       text: 'Composables',
+      collapsed: false,
       items: [
         { text: 'Utils', link: '/composables/utils' }
       ]
     },
     {
       text: 'Validation',
+      collapsed: false,
       items: [
         { text: 'Validators', link: '/validation/validators' }
       ]
     },
     {
       text: 'Support',
+      collapsed: false,
       items: [
         { text: 'Day', link: '/support/day' },
         { text: 'File', link: '/support/file' },
