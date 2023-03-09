@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, shallowRef } from 'vue'
 import type { Position } from '../composables/Tooltip'
 import { useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
@@ -10,8 +10,8 @@ const props = defineProps<{
   position?: Position
 }>()
 
-const tip = ref<HTMLElement | null>(null)
-const content = ref<HTMLElement | null>(null)
+const tip = shallowRef<HTMLElement | null>(null)
+const content = shallowRef<HTMLElement | null>(null)
 const classes = computed(() => [props.position ?? 'top'])
 
 const { on, show, hide } = useTooltip(

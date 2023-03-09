@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, shallowRef, watch } from 'vue'
 import type { LinkCallback, LinkSubscriberPayload } from '../composables/Markdown'
 import { useLink, useMarkdown } from '../composables/Markdown'
 
@@ -14,7 +14,7 @@ const emit = defineEmits<{
   (e: 'clicked', payload: LinkSubscriberPayload): void
 }>()
 
-const container = ref<Element | null>(null)
+const container = shallowRef<Element | null>(null)
 
 const { addListeners, subscribe } = useLink({
   container,

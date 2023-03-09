@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, toRefs, watch } from 'vue'
+import { computed, reactive, shallowRef, toRefs, watch } from 'vue'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -29,8 +29,8 @@ const {
   onReset
 } = toRefs(props.options)
 
-const head = ref<HTMLElement | null>(null)
-const body = ref<HTMLElement | null>(null)
+const head = shallowRef<HTMLElement | null>(null)
+const body = shallowRef<HTMLElement | null>(null)
 
 let headLock = false
 let bodyLock = false
