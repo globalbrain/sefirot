@@ -2,6 +2,9 @@
 import { logEvent as log } from 'histoire/client'
 import SButton from 'sefirot/components/SButton.vue'
 
+const title = 'Components / SButton / 01. Playground'
+const docs = '/components/button'
+
 function state() {
   return {
     type: 'fill',
@@ -13,11 +16,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SButton / 01. Playground"
-    :state="state"
-    docs="/components/button"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="type"
@@ -47,13 +46,15 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SButton
-        :type="state.type"
-        :mode="state.mode"
-        :label="state.label"
-        :loading="state.loading"
-        @click="log('click', null)"
-      />
+      <Board :title="title" :docs="docs">
+        <SButton
+          :type="state.type"
+          :mode="state.mode"
+          :label="state.label"
+          :loading="state.loading"
+          @click="log('click', null)"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

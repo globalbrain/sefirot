@@ -2,6 +2,9 @@
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputTextarea / 01. Playground'
+const docs = '/components/input-textarea'
+
 const text = ref('')
 
 function state() {
@@ -20,11 +23,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputTextarea / 01. Playground"
-    :state="state"
-    docs="components/input-textarea"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -70,18 +69,20 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputTextarea
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :placeholder="state.placeholder"
-        :rows="state.rows"
-        :disabled="state.disabled"
-        v-model="text"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputTextarea
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :placeholder="state.placeholder"
+          :rows="state.rows"
+          :disabled="state.disabled"
+          v-model="text"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

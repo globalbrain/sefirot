@@ -3,6 +3,9 @@ import type { Mode, Size } from 'sefirot/components/SButton.vue'
 import SButton from 'sefirot/components/SButton.vue'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
+const title = 'Components / SButtonGroup / 01. Playground'
+const docs = '/components/button-group'
+
 function state() {
   return {
     size: 'medium' as Size,
@@ -15,11 +18,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SButtonGroup / 01. Playground"
-    docs="/components/button-group"
-    :state="state"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -59,12 +58,15 @@ function state() {
         v-model="state.labelC"
       />
     </template>
+
     <template #default="{ state }">
-      <SButtonGroup>
-        <SButton :size="state.size" :mode="state.mode" :label="state.labelA" />
-        <SButton :size="state.size" :mode="state.mode" :label="state.labelB" />
-        <SButton :size="state.size" :mode="state.mode" :label="state.labelC" />
-      </SButtonGroup>
+      <Board :title="title" :docs="docs">
+        <SButtonGroup>
+          <SButton :size="state.size" :mode="state.mode" :label="state.labelA" />
+          <SButton :size="state.size" :mode="state.mode" :label="state.labelB" />
+          <SButton :size="state.size" :mode="state.mode" :label="state.labelC" />
+        </SButtonGroup>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

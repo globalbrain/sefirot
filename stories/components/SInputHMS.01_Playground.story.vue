@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import SInputYMD from 'sefirot/components/SInputYMD.vue'
+import SInputHMS from 'sefirot/components/SInputHMS.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputHMS / 01. Playground'
+const docs = '/components/input-hms'
+
 const input = ref({
-  year: null,
-  month: null,
-  date: null
+  hour: null,
+  minute: null,
+  second: null
 })
 
 function state() {
@@ -15,9 +18,9 @@ function state() {
     info: 'Some helpful information.',
     note: 'Note',
     help: 'This is a help text.',
-    noYear: false,
-    noMonth: false,
-    noDate: false,
+    noHour: false,
+    noMinute: false,
+    noSecond: false,
     disabled: false,
     error: false
   } as const
@@ -25,11 +28,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputYMD / 01. Playground"
-    :state="state"
-    docs="components/input-ymd"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -57,16 +56,16 @@ function state() {
         v-model="state.help"
       />
       <HstCheckbox
-        title="no-year"
-        v-model="state.noYear"
+        title="no-hour"
+        v-model="state.noHour"
       />
       <HstCheckbox
-        title="no-month"
-        v-model="state.noMonth"
+        title="no-minute"
+        v-model="state.noMinute"
       />
       <HstCheckbox
-        title="no-date"
-        v-model="state.noDate"
+        title="no-second"
+        v-model="state.noSecond"
       />
       <HstCheckbox
         title="disabled"
@@ -79,19 +78,21 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputYMD
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :no-year="state.noYear"
-        :no-month="state.noMonth"
-        :no-date="state.noDate"
-        :disabled="state.disabled"
-        v-model="input"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputHMS
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :no-hour="state.noHour"
+          :no-minute="state.noMinute"
+          :no-second="state.noSecond"
+          :disabled="state.disabled"
+          v-model="input"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

@@ -4,6 +4,8 @@ import SDropdown from 'sefirot/components/SDropdown.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { ref } from 'vue'
 
+const title = 'Components / SDropdown / 01. Playground'
+
 const selected = ref<string[]>([])
 
 const sections = createDropdown([
@@ -48,11 +50,11 @@ function clearAll() {
 </script>
 
 <template>
-  <Board
-    title="Components / SDropdown / 01. Playground"
-  >
-    <div class="max-w-256">
-      <SDropdown :sections="sections" />
-    </div>
-  </Board>
+  <Story :title="title" source="Not available" auto-props-disabled>
+    <Board :title="title">
+      <div class="max-w-256">
+        <SDropdown :sections="sections" />
+      </div>
+    </Board>
+  </Story>
 </template>

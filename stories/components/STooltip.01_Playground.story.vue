@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import STooltip from 'sefirot/components/STooltip.vue'
 
+const title = 'Components / STooltip / 01. Playground'
+const docs = '/components/tooltip'
+
 function state() {
   return {
     position: 'top',
@@ -10,11 +13,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / STooltip / 01. Playground"
-    :state="state"
-    docs="/components/tooltip"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="position"
@@ -33,9 +32,11 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <STooltip :text="state.text" :position="state.position">
-        Hover this text.
-      </STooltip>
+      <Board :title="title" :docs="docs">
+        <STooltip :text="state.text" :position="state.position">
+          Hover this text.
+        </STooltip>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

@@ -3,6 +3,9 @@ import { logEvent as log } from 'histoire/client'
 import SInputSelect from 'sefirot/components/SInputSelect.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputSelect / 01. Playground'
+const docs = '/components/input-select'
+
 const input = ref<number | null>(null)
 
 const options = [
@@ -27,11 +30,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputSelect / 01. Playground"
-    :state="state"
-    docs="components/input-select"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -77,21 +76,23 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputSelect
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :placeholder="state.placeholder"
-        :options="options"
-        :nullable="state.nullable"
-        :disabled="state.disabled"
-        v-model="input"
-        @update:model-value="(value) => log('update:model-value', { value })"
-        @change="(value) => log('change', { value })"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputSelect
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :placeholder="state.placeholder"
+          :options="options"
+          :nullable="state.nullable"
+          :disabled="state.disabled"
+          v-model="input"
+          @update:model-value="(value) => log('update:model-value', { value })"
+          @change="(value) => log('change', { value })"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

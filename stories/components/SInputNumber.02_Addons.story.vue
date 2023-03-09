@@ -6,6 +6,9 @@ import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { reactive, ref } from 'vue'
 
+const title = 'Components / SInputNumber / 02. Addons'
+const docs = '/components/input-number'
+
 interface Data {
   amount1: number | null
   amount2: number | null
@@ -67,11 +70,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputNumber / 02. Addons"
-    :state="state"
-    docs="components/input-number"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -93,137 +92,139 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="root">
-        <div class="group">
-          <div class="title">Addon Text (Before)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1,000"
-              separator
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.amount1"
-            >
-              <template #addon-before>
-                <SInputAddon label="¥" :clickable="false" />
-              </template>
-            </SInputNumber>
+      <Board :title="title" :docs="docs">
+        <div class="root">
+          <div class="group">
+            <div class="title">Addon Text (Before)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1,000"
+                separator
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.amount1"
+              >
+                <template #addon-before>
+                  <SInputAddon label="¥" :clickable="false" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Text (After)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1,000"
-              separator
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.amount2"
-            >
-              <template #addon-after>
-                <SInputAddon label="yen" :clickable="false" />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Text (After)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1,000"
+                separator
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.amount2"
+              >
+                <template #addon-after>
+                  <SInputAddon label="yen" :clickable="false" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Button (Before / Text)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1000000"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.lottery1"
-            >
-              <template #addon-before>
-                <SInputAddon label="Generate" @click="data.lottery1 = generate7DigitNumbers()" />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Button (Before / Text)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1000000"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.lottery1"
+              >
+                <template #addon-before>
+                  <SInputAddon label="Generate" @click="data.lottery1 = generate7DigitNumbers()" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Button (After / Icon)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1000000"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.lottery2"
-            >
-              <template #addon-after>
-                <SInputAddon :label="IconLightbulb" @click="data.lottery2 = generate7DigitNumbers()" />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Button (After / Icon)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1000000"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.lottery2"
+              >
+                <template #addon-after>
+                  <SInputAddon :label="IconLightbulb" @click="data.lottery2 = generate7DigitNumbers()" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              separator
-              placeholder="1,000,000"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.currency"
-            >
-              <template #addon-before>
-                <SInputAddon :dropdown="dropdown1" />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                separator
+                placeholder="1,000,000"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.currency"
+              >
+                <template #addon-before>
+                  <SInputAddon :dropdown="dropdown1" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1,000,000"
-              separator
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.amount3"
-            >
-              <template #addon-after>
-                <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1,000,000"
+                separator
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.amount3"
+              >
+                <template #addon-after>
+                  <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (Before / After / Disabled)</div>
-          <div class="grid">
-            <SInputNumber
-              :size="state.size"
-              placeholder="1,000,000"
-              separator
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              disabled
-              v-model="data.amount4"
-            >
-              <template #addon-before>
-                <SInputAddon :label="IconDotsThree" disabled />
-              </template>
-              <template #addon-after>
-                <SInputAddon :label="IconDotsThree" disabled />
-              </template>
-            </SInputNumber>
+          <div class="group">
+            <div class="title">Addon Dropdown (Before / After / Disabled)</div>
+            <div class="grid">
+              <SInputNumber
+                :size="state.size"
+                placeholder="1,000,000"
+                separator
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                disabled
+                v-model="data.amount4"
+              >
+                <template #addon-before>
+                  <SInputAddon :label="IconDotsThree" disabled />
+                </template>
+                <template #addon-after>
+                  <SInputAddon :label="IconDotsThree" disabled />
+                </template>
+              </SInputNumber>
+            </div>
           </div>
         </div>
-      </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

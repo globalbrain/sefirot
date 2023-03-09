@@ -2,6 +2,9 @@
 import SInputCheckboxes from 'sefirot/components/SInputCheckboxes.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputCheckboxes / 01. Playground'
+const docs = '/components/input-checkboxes'
+
 const input = ref([])
 
 const options = [
@@ -25,11 +28,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputCheckboxes / 01. Playground"
-    :state="state"
-    docs="components/input-checkboxes"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -71,17 +70,19 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputCheckboxes
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :options="options"
-        :nullable="state.nullable"
-        v-model="input"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputCheckboxes
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :options="options"
+          :nullable="state.nullable"
+          v-model="input"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

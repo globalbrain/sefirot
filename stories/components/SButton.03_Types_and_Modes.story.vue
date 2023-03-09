@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 
+const title = 'Components / SButton / 03. Types and Modes'
+const docs = '/components/button'
+
 const variants = [
   { title: 'Fill', type: 'fill' },
   { title: 'Outline', type: 'outline' },
@@ -27,11 +30,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SButton / 03. Types and Modes"
-    :state="state"
-    docs="/components/button"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText title="label" v-model="state.label" />
       <HstCheckbox title="rounded" v-model="state.rounded" />
@@ -40,27 +39,29 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="root">
-        <div v-for="v in variants" :key="v.type" class="group">
-          <div class="title">{{ v.title }}</div>
+      <Board :title="title" :docs="docs">
+        <div class="root">
+          <div v-for="v in variants" :key="v.type" class="group">
+            <div class="title">{{ v.title }}</div>
 
-          <div class="grid">
-            <SButton
-              v-for="m in modes"
-              :key="m"
-              size="medium"
-              :type="v.type"
-              :mode="m"
-              :label="state.label"
-              :rounded="state.rounded"
-              :loading="state.loading"
-              :disabled="state.disabled"
-            />
+            <div class="grid">
+              <SButton
+                v-for="m in modes"
+                :key="m"
+                size="medium"
+                :type="v.type"
+                :mode="m"
+                :label="state.label"
+                :rounded="state.rounded"
+                :loading="state.loading"
+                :disabled="state.disabled"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

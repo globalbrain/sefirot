@@ -9,6 +9,8 @@ import { required } from 'sefirot/validation/rules'
 import type { DefineComponent } from 'vue'
 import { computed, ref } from 'vue'
 
+const title = 'Components / SInputText / 01. Playground'
+
 interface Data {
   name: string | null
 }
@@ -82,10 +84,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputText / 01. Playground"
-    :state="state"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -159,30 +158,32 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputText
-        :size="state.size"
-        name="name"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :placeholder="state.placeholder"
-        :unit-before="state.unitBefore"
-        :unit-after="state.unitAfter"
-        :check-icon="check?.icon"
-        :check-text="check?.text"
-        :check-color="check?.color"
-        :text-color="state.textColor"
-        v-model="data.name"
-        :validation="validation.name"
-      />
+      <Board :title="title">
+        <SInputText
+          :size="state.size"
+          name="name"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :placeholder="state.placeholder"
+          :unit-before="state.unitBefore"
+          :unit-after="state.unitAfter"
+          :check-icon="check?.icon"
+          :check-text="check?.text"
+          :check-color="check?.color"
+          :text-color="state.textColor"
+          v-model="data.name"
+          :validation="validation.name"
+        />
 
-      <div class="actions">
-        <SButton size="small" mode="info" label="Submit" @click="submit" />
-        <SButton size="small" mode="mute" label="Reset" @click="reset" />
-      </div>
+        <div class="actions">
+          <SButton size="small" mode="info" label="Submit" @click="submit" />
+          <SButton size="small" mode="mute" label="Reset" @click="reset" />
+        </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

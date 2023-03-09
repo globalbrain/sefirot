@@ -19,5 +19,9 @@ export default defineConfig({
     { label: 'Transparent', color: 'transparent' },
     { label: 'Light', color: '#fafafa' },
     { label: 'Dark', color: '#191919' }
-  ]
+  ],
+
+  defaultStoryProps: {
+    autoPropsDisabled: true
+  }
 })

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 
+const title = 'Components / SButton / 02. Sizes'
+const docs = '/components/button'
+
 const variants = [
   { title: 'Mini', size: 'mini' },
   { title: 'Small', size: 'small' },
@@ -19,11 +22,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SButton / 02. Sizes"
-    :state="state"
-    docs="/components/button"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="mode"
@@ -44,25 +43,27 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="root">
-        <div v-for="v in variants" :key="v.size" class="group">
-          <div class="title">{{ v.title }}</div>
+      <Board :title="title" :docs="docs">
+        <div class="root">
+          <div v-for="v in variants" :key="v.size" class="group">
+            <div class="title">{{ v.title }}</div>
 
-          <div class="grid">
-            <SButton
-              v-for="t in ['fill', 'outline', 'text'] as const"
-              :key="t"
-              :size="v.size"
-              :type="t"
-              :mode="state.mode"
-              :label="state.label"
-              :rounded="state.rounded"
-            />
+            <div class="grid">
+              <SButton
+                v-for="t in ['fill', 'outline', 'text'] as const"
+                :key="t"
+                :size="v.size"
+                :type="t"
+                :mode="state.mode"
+                :label="state.label"
+                :rounded="state.rounded"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

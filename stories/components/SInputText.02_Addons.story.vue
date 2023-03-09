@@ -6,6 +6,8 @@ import SInputText from 'sefirot/components/SInputText.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { reactive, ref } from 'vue'
 
+const title = 'Components / SInputText / 02. Addons'
+
 interface Data {
   name: string | null
   domain: string | null
@@ -66,10 +68,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputText / 02. Addons"
-    :state="state"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -91,132 +90,134 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="root">
-        <div class="group">
-          <div class="title">Addon Text (Before)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="John Doe"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.name"
-            >
-              <template #addon-before>
-                <SInputAddon label="@" :clickable="false" />
-              </template>
-            </SInputText>
+      <Board :title="title">
+        <div class="root">
+          <div class="group">
+            <div class="title">Addon Text (Before)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="John Doe"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.name"
+              >
+                <template #addon-before>
+                  <SInputAddon label="@" :clickable="false" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Text (After)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="sample"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.domain"
-            >
-              <template #addon-after>
-                <SInputAddon label=".com" :clickable="false" />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Text (After)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="sample"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.domain"
+              >
+                <template #addon-after>
+                  <SInputAddon label=".com" :clickable="false" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Button (Before / Text)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="mypassword"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.password1"
-            >
-              <template #addon-before>
-                <SInputAddon label="Generate" @click="data.password1 = generatePassword()" />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Button (Before / Text)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="mypassword"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.password1"
+              >
+                <template #addon-before>
+                  <SInputAddon label="Generate" @click="data.password1 = generatePassword()" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Button (After / Icon)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="mypassword"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.password2"
-            >
-              <template #addon-after>
-                <SInputAddon :label="IconLightbulb" @click="data.password2 = generatePassword()" />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Button (After / Icon)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="mypassword"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.password2"
+              >
+                <template #addon-after>
+                  <SInputAddon :label="IconLightbulb" @click="data.password2 = generatePassword()" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              placeholder="1000"
-              v-model="data.currency"
-            >
-              <template #addon-before>
-                <SInputAddon :dropdown="dropdown1" />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                placeholder="1000"
+                v-model="data.currency"
+              >
+                <template #addon-before>
+                  <SInputAddon :dropdown="dropdown1" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="mypassword"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              v-model="data.password3"
-            >
-              <template #addon-after>
-                <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="mypassword"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                v-model="data.password3"
+              >
+                <template #addon-after>
+                  <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+                </template>
+              </SInputText>
+            </div>
           </div>
-        </div>
 
-        <div class="group">
-          <div class="title">Addon Dropdown (Before / After / Disabled)</div>
-          <div class="grid">
-            <SInputText
-              :size="state.size"
-              placeholder="mypassword"
-              :unit-before="state.unitBefore"
-              :unit-after="state.unitAfter"
-              disabled
-              v-model="data.password4"
-            >
-              <template #addon-before>
-                <SInputAddon :label="IconDotsThree" disabled />
-              </template>
-              <template #addon-after>
-                <SInputAddon :label="IconDotsThree" disabled />
-              </template>
-            </SInputText>
+          <div class="group">
+            <div class="title">Addon Dropdown (Before / After / Disabled)</div>
+            <div class="grid">
+              <SInputText
+                :size="state.size"
+                placeholder="mypassword"
+                :unit-before="state.unitBefore"
+                :unit-after="state.unitAfter"
+                disabled
+                v-model="data.password4"
+              >
+                <template #addon-before>
+                  <SInputAddon :label="IconDotsThree" disabled />
+                </template>
+                <template #addon-after>
+                  <SInputAddon :label="IconDotsThree" disabled />
+                </template>
+              </SInputText>
+            </div>
           </div>
         </div>
-      </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

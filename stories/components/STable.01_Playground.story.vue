@@ -7,6 +7,8 @@ import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { computed, markRaw, reactive, ref } from 'vue'
 
+const title = 'Components / STable / 01. Playground'
+
 interface Sort {
   by: string
   order: 'asc' | 'desc'
@@ -259,12 +261,11 @@ function updateTagsFilter(value: string) {
 </script>
 
 <template>
-  <Board
-    title="Components / STable / 01. Playground"
-    docs="/components/table"
-  >
-    <STable class="table" :options="table" />
-  </Board>
+  <Story :title="title" source="Not available" auto-props-disabled>
+    <Board :title="title">
+      <STable class="table" :options="table" />
+    </Board>
+  </Story>
 </template>
 
 <style scoped>

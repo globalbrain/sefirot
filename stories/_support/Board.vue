@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 import { computed } from 'vue'
-import { setupRouter } from './Utils'
 
 const props = defineProps<{
   title: string
-  state?: () => Record<string, any>
   docs?: string
 }>()
 
@@ -23,39 +21,26 @@ const href = computed(() => {
 </script>
 
 <template>
-  <Story
-    class="Board"
-    :title="title"
-    :init-state="state ?? (() => ({}))"
-    :setup-app="setupRouter"
-    source="Not available"
-    auto-props-disabled
-  >
-    <template v-if="$slots.controls" #controls="{ state }">
-      <slot name="controls" :state="state" />
-    </template>
+  <div class="Board">
+    <div class="b-root">
+      <div class="b-menu">
+        <div class="b-title">{{ title }}</div>
 
-    <template v-if="$slots.default" #default="{ state }">
-      <div class="b-root">
-        <div class="b-menu">
-          <div class="b-title">{{ title }}</div>
-
-          <SButton
-            v-if="href"
-            class="b-button"
-            size="mini"
-            mode="mute"
-            label="View Documentation"
-            :href="href"
-          />
-        </div>
-
-        <div class="b-page">
-          <slot :state="state" />
-        </div>
+        <SButton
+          v-if="href"
+          class="b-button"
+          size="mini"
+          mode="mute"
+          label="View Documentation"
+          :href="href"
+        />
       </div>
-    </template>
-  </Story>
+
+      <div class="b-page">
+        <slot />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

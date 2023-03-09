@@ -2,6 +2,9 @@
 import SInputRadios from 'sefirot/components/SInputRadios.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputRadios / 01. Playground'
+const docs = '/components/input-radios'
+
 const value = ref(1)
 
 const options = [
@@ -25,11 +28,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputRadios / 01. Playground"
-    :state="state"
-    docs="components/input-radios"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -67,17 +66,19 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputRadios
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :nullable="state.nullable"
-        :options="options"
-        v-model="value"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputRadios
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :nullable="state.nullable"
+          :options="options"
+          v-model="value"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

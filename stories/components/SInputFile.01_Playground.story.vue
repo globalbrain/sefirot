@@ -2,6 +2,9 @@
 import SInputFile from 'sefirot/components/SInputFile.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputFile / 01. Playground'
+const docs = '/components/input-file'
+
 const input = ref(null)
 
 function state() {
@@ -19,11 +22,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputFile / 01. Playground"
-    :state="state"
-    docs="components/input-file"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -65,17 +64,19 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SInputFile
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :text="state.text"
-        :placeholder="state.placeholder"
-        v-model="input"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputFile
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :text="state.text"
+          :placeholder="state.placeholder"
+          v-model="input"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

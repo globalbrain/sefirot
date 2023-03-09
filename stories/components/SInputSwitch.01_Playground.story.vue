@@ -3,6 +3,9 @@ import type { ActiveColor, Size } from 'sefirot/components/SInputSwitch.vue'
 import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputSwitch / 01. Playground'
+const docs = '/components/input-switch'
+
 const on = ref(false)
 
 function state() {
@@ -21,11 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputSwitch / 01. Playground"
-    :state="state"
-    docs="components/input-switch"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -77,20 +76,22 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="max-w-192">
-        <SInputSwitch
-          :class="{ 'has-error': state.error }"
-          :size="state.size"
-          :label="state.label"
-          :info="state.info"
-          :note="state.note"
-          :text="state.text"
-          :color="state.color"
-          :help="state.help"
-          :disabled="state.disabled"
-          v-model="on"
-        />
-      </div>
+      <Board :title="title" :docs="docs">
+        <div class="max-w-192">
+          <SInputSwitch
+            :class="{ 'has-error': state.error }"
+            :size="state.size"
+            :label="state.label"
+            :info="state.info"
+            :note="state.note"
+            :text="state.text"
+            :color="state.color"
+            :help="state.help"
+            :disabled="state.disabled"
+            v-model="on"
+          />
+        </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

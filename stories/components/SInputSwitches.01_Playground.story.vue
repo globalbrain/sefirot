@@ -2,6 +2,8 @@
 import SInputSwitches from 'sefirot/components/SInputSwitches.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputSwitches / 01. Playground'
+
 const data = ref([2])
 
 const options = [
@@ -12,20 +14,20 @@ const options = [
 </script>
 
 <template>
-  <Board
-    title="Components / SInputSwitches / 01. Playground"
-  >
-    <SInputSwitches
-      class="switches"
-      name="input"
-      label="Label"
-      info="Some helpful information."
-      note="Note text"
-      help="This is a help text."
-      :options="options"
-      v-model="data"
-    />
-  </Board>
+  <Story :title="title" source="Not available" auto-props-disabled>
+    <Board :title="title">
+      <SInputSwitches
+        class="switches"
+        name="input"
+        label="Label"
+        info="Some helpful information."
+        note="Note text"
+        help="This is a help text."
+        :options="options"
+        v-model="data"
+      />
+    </Board>
+  </Story>
 </template>
 
 <style scoped>

@@ -4,6 +4,9 @@ import IconImageSquare from '@iconify-icons/ph/image-square-bold'
 import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass-bold'
 import SButton from 'sefirot/components/SButton.vue'
 
+const title = 'Components / SButton / 04. Icons'
+const docs = '/components/button'
+
 const variants = [
   { title: 'Fill', type: 'fill' },
   { title: 'Outline', type: 'outline' },
@@ -26,11 +29,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SButton / 04. Icons"
-    :state="state"
-    docs="/components/button"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -58,25 +57,27 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div class="root">
-        <div v-for="v in variants" :key="v.type" class="group">
-          <div class="title">{{ v.title }}</div>
+      <Board :title="title" :docs="docs">
+        <div class="root">
+          <div v-for="v in variants" :key="v.type" class="group">
+            <div class="title">{{ v.title }}</div>
 
-          <div class="grid">
-            <SButton
-              v-for="(i, index) in icons"
-              :key="index"
-              :size="state.size"
-              :type="v.type"
-              :mode="state.mode"
-              :icon="i"
-              :label="state.label"
-            />
+            <div class="grid">
+              <SButton
+                v-for="(i, index) in icons"
+                :key="index"
+                :size="state.size"
+                :type="v.type"
+                :mode="state.mode"
+                :icon="i"
+                :label="state.label"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>
 
 <style scoped>

@@ -3,6 +3,9 @@ import { logEvent as log } from 'histoire/client'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputNumber / 01. Playground'
+const docs = '/components/input-number'
+
 const input = ref<number | null>(null)
 
 function state() {
@@ -30,11 +33,7 @@ function onInput(value: number | null) {
 </script>
 
 <template>
-  <Board
-    title="Components / SInputNumber / 01. Playground"
-    :state="state"
-    docs="components/input-number"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -108,24 +107,26 @@ function onInput(value: number | null) {
     </template>
 
     <template #default="{ state }">
-      <SInputNumber
-        :class="{ 'has-error': state.error }"
-        :size="state.size"
-        :label="state.label"
-        :info="state.info"
-        :note="state.note"
-        :help="state.help"
-        :placeholder="state.placeholder"
-        :unit-before="state.unitBefore"
-        :unit-after="state.unitAfter"
-        :text-color="state.textColor"
-        :align="state.align"
-        :separator="state.separator"
-        :disabled="state.disabled"
-        :value="input"
-        @update:model-value="onInput"
-        @input="(value) => log('input', { value })"
-      />
+      <Board :title="title" :docs="docs">
+        <SInputNumber
+          :class="{ 'has-error': state.error }"
+          :size="state.size"
+          :label="state.label"
+          :info="state.info"
+          :note="state.note"
+          :help="state.help"
+          :placeholder="state.placeholder"
+          :unit-before="state.unitBefore"
+          :unit-after="state.unitAfter"
+          :text-color="state.textColor"
+          :align="state.align"
+          :separator="state.separator"
+          :disabled="state.disabled"
+          :value="input"
+          @update:model-value="onInput"
+          @input="(value) => log('input', { value })"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

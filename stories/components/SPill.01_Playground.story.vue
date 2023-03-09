@@ -2,6 +2,9 @@
 import { logEvent as log } from 'histoire/client'
 import SPill from 'sefirot/components/SPill.vue'
 
+const title = 'Components / SPill / 01. Playground'
+const docs = '/components/pill'
+
 function state() {
   return {
     size: 'small',
@@ -14,11 +17,7 @@ function state() {
 </script>
 
 <template>
-  <Board
-    title="Components / SPill / 01. Playground"
-    :state="state"
-    docs="/components/pill"
-  >
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -61,14 +60,16 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <SPill
-        :size="state.size"
-        :type="state.type"
-        :mode="state.mode"
-        :label="state.label"
-        :clickable="state.clickable"
-        @click="log('click', null)"
-      />
+      <Board :title="title" :docs="docs">
+        <SPill
+          :size="state.size"
+          :type="state.type"
+          :mode="state.mode"
+          :label="state.label"
+          :clickable="state.clickable"
+          @click="log('click', null)"
+        />
+      </Board>
     </template>
-  </Board>
+  </Story>
 </template>

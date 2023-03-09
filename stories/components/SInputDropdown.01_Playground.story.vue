@@ -2,6 +2,8 @@
 import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
+const title = 'Components / SInputDropdown / 01. Playground'
+
 const value = ref<string[]>([])
 
 const options = [
@@ -16,16 +18,16 @@ const options = [
 </script>
 
 <template>
-  <Board
-    title="Components / SInputDropdown / 01. Playground"
-  >
-    <SInputDropdown
-      label="Dropdown input"
-      info="Some helpful information."
-      placeholder="Please select items"
-      :options="options"
-      nullable
-      v-model="value"
-    />
-  </Board>
+  <Story :title="title" source="Not available" auto-props-disabled>
+    <Board :title="title">
+      <SInputDropdown
+        label="Dropdown input"
+        info="Some helpful information."
+        placeholder="Please select items"
+        :options="options"
+        nullable
+        v-model="value"
+      />
+    </Board>
+  </Story>
 </template>
