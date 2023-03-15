@@ -74,8 +74,8 @@ export interface TableCellDay extends TableCellBase {
 
 export interface TableCellPill extends TableCellBase {
   type: 'pill'
-  value?: string | ((value: any) => string)
-  color?: TableCellPillColor | ((value: any) => TableCellPillColor)
+  value?: string | ((value: any, record: any) => string)
+  color?: TableCellPillColor | ((value: any, record: any) => TableCellPillColor)
 }
 
 export type TableCellPillColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

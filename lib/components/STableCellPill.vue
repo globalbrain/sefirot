@@ -7,8 +7,8 @@ export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'dange
 const props = defineProps<{
   value?: any
   record: any
-  getter?: string | ((value: any) => string)
-  color?: Color | ((value: any) => Color)
+  getter?: string | ((value: any, record: any) => string)
+  color?: Color | ((value: any, record: any) => Color)
 }>()
 
 const _value = computed(() => {
@@ -18,7 +18,7 @@ const _value = computed(() => {
 
   return typeof props.getter === 'string'
     ? props.getter
-    : props.getter(props.value)
+    : props.getter(props.value, props.record)
 })
 
 const _color = computed(() => {
@@ -28,7 +28,7 @@ const _color = computed(() => {
 
   return typeof props.color === 'string'
     ? props.color
-    : props.color(props.value)
+    : props.color(props.value, props.record)
 })
 </script>
 
@@ -38,7 +38,7 @@ const _color = computed(() => {
       v-if="_value"
       size="mini"
       :mode="_color"
-      :label="value"
+      :label="_value"
     />
   </div>
 </template>
