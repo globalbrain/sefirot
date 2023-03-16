@@ -4,6 +4,7 @@ import type { TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellDay from './STableCellDay.vue'
+import STableCellEmpty from './STableCellEmpty.vue'
 import STableCellPill from './STableCellPill.vue'
 import STableCellPills from './STableCellPills.vue'
 import STableCellText from './STableCellText.vue'
@@ -41,6 +42,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       v-else-if="computedCell.type === 'day'"
       :value="value"
       :record="record"
+      :getter="computedCell.value"
       :format="computedCell.format"
       :color="computedCell.color"
     />
@@ -72,6 +74,9 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record="record"
       :avatars="computedCell.avatars"
       :color="computedCell.color"
+    />
+    <STableCellEmpty
+      v-else-if="computedCell.type === 'empty'"
     />
     <component
       v-else-if="computedCell.type === 'component'"

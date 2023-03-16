@@ -39,9 +39,19 @@ export type TableCell =
   | TableCellPills
   | TableCellAvatar
   | TableCellAvatars
+  | TableCellEmpty
   | TableCellComponent
 
 export type TableCellType = 'text' | 'day' | 'pill' | 'pills' | 'avatar' | 'avatars' | 'component'
+export type TableCellType =
+  | 'text'
+  | 'day'
+  | 'pill'
+  | 'pills'
+  | 'avatar'
+  | 'avatars'
+  | 'empty'
+  | 'component'
 
 export interface TableCellBase {
   type: TableCellType
@@ -102,6 +112,10 @@ export interface TableCellAvatars extends TableCellBase {
   type: 'avatars'
   avatars(value: any, record: any): TableCellAvatarsOption[]
   color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellEmpty extends TableCellBase {
+  type: 'empty'
 }
 
 export interface TableCellComponent extends TableCellBase {
