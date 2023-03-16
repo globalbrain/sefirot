@@ -6,12 +6,14 @@ import SAvatar from './SAvatar.vue'
 const props = defineProps<{
   value?: any
   record?: any
-  avatars(value: any, record: any): TableCellAvatarsOption[]
+  avatars: TableCellAvatarsOption[] | ((value: any, record: any) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
 }>()
 
 const _avatars = computed(() => {
-  return props.avatars(props.value, props.record)
+  return typeof props.avatars === 'function'
+    ? props.avatars(props.value, props.record)
+    : props.avatars
 })
 
 const displayAvatars = computed(() => {
@@ -28,10 +30,10 @@ const names = computed(() => {
   }
 
   if (_avatars.value.length === 2) {
-    return `${_avatars.value[0].name} and ${_avatars.value[1].name}`
+    return `${_avatars.value[0].name}, ${_avatars.value[1].name}`
   }
 
-  return `${_avatars.value[0].name} +${_avatars.value.length - 1}`
+  return `${_avatars.value[0].name}, ${_avatars.value[1].name} +${_avatars.value.length - 1}`
 })
 </script>
 

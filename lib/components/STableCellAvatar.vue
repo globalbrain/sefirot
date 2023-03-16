@@ -6,19 +6,32 @@ import SLink from './SLink.vue'
 const props = defineProps<{
   value?: any
   record?: any
-  image?(value: any, record: any): string | undefined
-  name?(value: any, record: any): string
-  link?(value: any, record: any): string
+  image?: string | null | ((value: any, record: any) => string | null | undefined)
+  name?: string | null | ((value: any, record: any) => string | null | undefined)
+  link?: string | null | ((value: any, record: any) => string | null | undefined)
   color?: 'neutral' | 'soft' | 'mute'
 }>()
 
-const _image = computed(() => props.image?.(props.value, props.record))
-const _name = computed(() => props.name?.(props.value, props.record))
+const _image = computed(() => resolve(props.image))
+const _name = computed(() => resolve(props.name))
+const _link = computed(() => resolve(props.link))
+
+function resolve(
+  value?: string | null | ((value: any, record: any) => string | null | undefined)
+) {
+  if (value == null || value === '') {
+    return null
+  }
+
+  return typeof value === 'function'
+    ? value(props.value, props.record)
+    : value
+}
 </script>
 
 <template>
   <div class="STableCellAvatar" :class="[{ link }, color]">
-    <SLink class="container" :href="link?.(value, record)">
+    <SLink class="container" :href="_link ?? undefined">
       <div v-if="_image" class="avatar">
         <SAvatar size="mini" :avatar="_image" :name="_name" />
       </div>

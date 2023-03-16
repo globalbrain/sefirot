@@ -1,12 +1,16 @@
 import type { MaybeRef } from '@vueuse/core'
 import type { Component } from 'vue'
 import { reactive } from 'vue'
+import type { Day } from '../support/Day'
 import type { DropdownSection } from './Dropdown'
 
-export interface Table {
-  orders: string[]
-  columns: TableColumns
-  records?: Record<string, any>[] | null
+export interface Table<
+  O extends string = any,
+  R extends Record<string, any> = any
+> {
+  orders: O[]
+  columns: TableColumns<O, R>
+  records?: R[] | null
   header?: boolean
   footer?: boolean
   total?: number | null
@@ -20,17 +24,21 @@ export interface Table {
   onReset?(): void
 }
 
-export interface TableColumns {
-  [name: string]: TableColumn
+export type TableColumns<
+  O extends string,
+  R extends Record<string, any>
+> = {
+  [K in O]: K extends keyof R
+    ? TableColumn<R[K], R>
+    : TableColumn<undefined, R>
 }
 
-export interface TableColumn {
-  label: string
+export interface TableColumn<V, R> {
   label?: string
   className?: string
   dropdown?: DropdownSection[]
   resizable?: boolean
-  cell?: TableCell | ((value: any, record: any) => TableCell)
+  cell?: TableCell | ((value: V, record: R) => TableCell)
 }
 
 export type TableCell =
@@ -43,7 +51,6 @@ export type TableCell =
   | TableCellEmpty
   | TableCellComponent
 
-export type TableCellType = 'text' | 'day' | 'pill' | 'pills' | 'avatar' | 'avatars' | 'component'
 export type TableCellType =
   | 'text'
   | 'day'
@@ -61,7 +68,7 @@ export interface TableCellBase {
 export interface TableCellText extends TableCellBase {
   type: 'text'
   icon?: any
-  value?: string | ((value: any, record: any) => string)
+  value?: string | null | ((value: any, record: any) => string | null)
   link?(value: any, record: any): string
   color?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
   iconColor?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
@@ -79,6 +86,7 @@ export type TableCellTextColor =
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
+  value?: Day | null
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
 }
@@ -103,16 +111,21 @@ export interface TableCellPillItem {
 
 export interface TableCellAvatar extends TableCellBase {
   type: 'avatar'
-  image?(value: any, record: any): string | undefined
-  name?(value: any, record: any): string
-  link?(value: any, record: any): string
+  image?: string | null | ((value: any, record: any) => string | null | undefined)
+  name?: string | null | ((value: any, record: any) => string | null | undefined)
+  link?: string | null | ((value: any, record: any) => string | null | undefined)
   color?: 'neutral' | 'soft' | 'mute'
 }
 
 export interface TableCellAvatars extends TableCellBase {
   type: 'avatars'
-  avatars(value: any, record: any): TableCellAvatarsOption[]
+  avatars: TableCellAvatarsOption[] | ((value: any, record: any) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
+}
+
+export interface TableCellAvatarsOption {
+  image?: string | null
+  name?: string | null
 }
 
 export interface TableCellEmpty extends TableCellBase {
@@ -125,15 +138,10 @@ export interface TableCellComponent extends TableCellBase {
   props?: Record<string, any>
 }
 
-export interface TableCellAvatarsOption {
-  image?: string
-  name?: string
-}
-
-export interface UseTableOptions {
-  orders: MaybeRef<string[]>
-  columns: MaybeRef<TableColumns>
-  records?: MaybeRef<Record<string, any>[] | null | undefined>
+export interface UseTableOptions<O extends string, R extends Record<string, any>> {
+  orders: MaybeRef<O[]>
+  columns: MaybeRef<TableColumns<O, R>>
+  records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
   total?: MaybeRef<number | null | undefined>
@@ -147,6 +155,8 @@ export interface UseTableOptions {
   onReset?(): void
 }
 
-export function useTable(options: UseTableOptions): Table {
-  return reactive(options)
+export function useTable<O extends string, R extends Record<string, any>>(
+  options: UseTableOptions<O, R>
+): Table<O, R> {
+  return reactive(options) as Table<O, R>
 }
