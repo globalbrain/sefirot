@@ -8,9 +8,11 @@ import type { Day } from '../support/Day'
 import { day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 
+export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
+  size?: Size
   name?: string
   label?: string
   info?: string
@@ -28,6 +30,10 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Day | null): void
 }>()
+
+const classes = computed(() => [
+  props.size ?? 'small'
+])
 
 const value = computed(() => {
   return props.modelValue
@@ -48,7 +54,8 @@ function emitBlur() {
 
 <template>
   <SInputBase
-    class="SInputDate small"
+    class="SInputDate"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
@@ -99,17 +106,42 @@ function emitBlur() {
   }
 }
 
+.SInputDate.mini {
+  .input {
+    padding: 3px 8px;
+    max-width: 120px;
+    height: 32px;
+    line-height: 24px;
+    font-size: 14px;
+  }
+}
+
+.SInputDate.small {
+  .input {
+    padding: 5px 12px;
+    max-width: 144px;
+    height: 40px;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
+.SInputDate.medium {
+  .input {
+    padding: 11px 12px;
+    max-width: 160px;
+    height: 48px;
+    line-height: 24px;
+    font-size: 16px;
+  }
+}
+
 .input {
   display: block;
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  padding: 5px 12px;
   width: 100%;
-  max-width: 144px;
-  height: 40px;
   letter-spacing: 0;
-  line-height: 24px;
-  font-size: 16px;
   background-color: var(--c-bg);
   transition: border-color 0.25s, background-color 0.25s;
 

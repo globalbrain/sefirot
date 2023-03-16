@@ -85,6 +85,7 @@
     "execa": "^5.1.1",
     "fuse.js": "^6.6.2",
     "histoire": "^0.15.8",
+    "jsdom": "^21.1.1",
     "lodash-es": "^4.17.21",
     "markdown-it": "^13.0.1",
     "normalize.css": "^8.0.1",
