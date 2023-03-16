@@ -1,3 +1,15 @@
+# [2.26.0](https://github.com/globalbrain/sefirot/compare/v2.25.0...v2.26.0) (2023-03-16)
+
+### Bug Fixes
+
+* **table:** pill component not using `value` property ([2e1220e](https://github.com/globalbrain/sefirot/commit/2e1220e2ae356f9d7c7ab9d23230fcd3a5d4c19e))
+
+### Features
+
+* **table:** add `empty` cell type ([cc39283](https://github.com/globalbrain/sefirot/commit/cc39283d5ee2a1743d4b7f89f74ed7d5f638767b))
+* **table:** make column label optional ([28dd714](https://github.com/globalbrain/sefirot/commit/28dd7143c7129e64425994e7d58b53f25bd8bb45))
+* **table:** enhance typings ([3ae8817](https://github.com/globalbrain/sefirot/commit/3ae881708f5305a38fa2f2160d83df73b29b5660))
+
 # [2.25.0](https://github.com/globalbrain/sefirot/compare/v2.24.0...v2.25.0) (2023-03-09)
 
 ### Features
