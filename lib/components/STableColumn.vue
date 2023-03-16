@@ -9,7 +9,7 @@ import SIcon from './SIcon.vue'
 
 const props = withDefaults(defineProps<{
   name: string
-  label: string
+  label?: string
   className?: string
   dropdown?: DropdownSection[]
   hasHeader: boolean
@@ -165,6 +165,7 @@ function stopDialogPositionListener() {
 .container {
   display: flex;
   justify-content: space-between;
+  min-height: 40px;
   padding-left: 16px;
 }
 

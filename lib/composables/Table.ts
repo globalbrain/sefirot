@@ -26,6 +26,7 @@ export interface TableColumns {
 
 export interface TableColumn {
   label: string
+  label?: string
   className?: string
   dropdown?: DropdownSection[]
   resizable?: boolean
