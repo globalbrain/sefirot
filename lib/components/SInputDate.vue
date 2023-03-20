@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import type { IconifyIcon } from '@iconify/vue/dist/offline'
 import { DatePicker } from 'v-calendar'
-import type { DefineComponent } from 'vue'
 import { computed } from 'vue'
 import type { Validatable } from '../composables/Validation'
-import type { Day } from '../support/Day'
-import { day } from '../support/Day'
+import { type Day, day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 
+export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
+  size?: Size
   name?: string
   label?: string
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: IconifyIcon
   checkText?: string
   checkColor?: Color
   block?: boolean
@@ -26,8 +26,12 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: Day | null): void
+  (e: 'update:model-value', value: Day | null): void
 }>()
+
+const classes = computed(() => [
+  props.size ?? 'small'
+])
 
 const value = computed(() => {
   return props.modelValue
@@ -36,7 +40,7 @@ const value = computed(() => {
 })
 
 function emitInput(date?: string) {
-  emit('update:modelValue', date ? day(date) : null)
+  emit('update:model-value', date ? day(date) : null)
 }
 
 function emitBlur() {
@@ -48,7 +52,8 @@ function emitBlur() {
 
 <template>
   <SInputBase
-    class="SInputDate small"
+    class="SInputDate"
+    :class="classes"
     :name="name"
     :label="label"
     :note="note"
@@ -89,33 +94,58 @@ function emitBlur() {
 </template>
 
 <style lang="postcss" scoped>
+.SInputDate.mini {
+  .input {
+    padding: 3px 8px;
+    max-width: 120px;
+    height: 32px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+}
+
+.SInputDate.small {
+  .input {
+    padding: 5px 12px;
+    max-width: 128px;
+    height: 40px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+}
+
+.SInputDate.medium {
+  .input {
+    padding: 11px 12px;
+    max-width: 160px;
+    height: 48px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+}
+
 .SInputDate.has-error {
   .input {
-    border-color: var(--c-danger);
+    border-color: var(--input-error-border-color);
 
     &:focus {
-      border-color: var(--c-danger);
+      border-color: var(--input-error-border-color);
     }
   }
 }
 
 .input {
   display: block;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--input-border-color);
   border-radius: 6px;
-  padding: 5px 12px;
   width: 100%;
-  max-width: 144px;
-  height: 40px;
-  letter-spacing: 0;
-  line-height: 24px;
-  font-size: 16px;
-  background-color: var(--c-bg);
+  font-family: var(--font-family-number);
+  font-weight: 400;
+  background-color: var(--input-bg-color);
   transition: border-color 0.25s, background-color 0.25s;
 
   &::placeholder {
-    font-weight: 500;
-    color: var(--c-text-3);
+    color: var(--input-placeholder-color);
   }
 
   &.block {
