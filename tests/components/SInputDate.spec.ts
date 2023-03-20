@@ -12,7 +12,7 @@ describe('components/SInputDate', () => {
     })
 
     await wrapper.find('.SInputDate .input').setValue('2023-01-01')
-    assertEmitted(wrapper, 'update:modelValue', 1, day('2023-01-01'))
+    assertEmitted(wrapper, 'update:model-value', 1, day('2023-01-01'))
   })
 
   test('should emit blur event', async () => {
