@@ -1,3 +1,9 @@
+# [2.27.0](https://github.com/globalbrain/sefirot/compare/v2.26.0...v2.27.0) (2023-03-20)
+
+### Features
+
+* **input-date:** add size props to SInputDate ([#229](https://github.com/globalbrain/sefirot/issues/229)) ([120fd68](https://github.com/globalbrain/sefirot/commit/120fd6833c21ea020416ba51ec9c00ce6e5c8e38))
+
 # [2.26.0](https://github.com/globalbrain/sefirot/compare/v2.25.0...v2.26.0) (2023-03-16)
 
 ### Bug Fixes
