@@ -4,6 +4,10 @@ import { reactive } from 'vue'
 import type { Day } from '../support/Day'
 import type { DropdownSection } from './Dropdown'
 
+type Optional<T> = {
+  [P in keyof T]?: T[P] | null | undefined
+}
+
 export interface Table<
   O extends string = any,
   R extends Record<string, any> = any
@@ -13,6 +17,7 @@ export interface Table<
   records?: R[] | null
   header?: boolean
   footer?: boolean
+  summary?: Optional<R> | null
   total?: number | null
   page?: number | null
   perPage?: number | null
@@ -144,6 +149,7 @@ export interface UseTableOptions<O extends string, R extends Record<string, any>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
+  summary?: MaybeRef<Optional<R> | null | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>

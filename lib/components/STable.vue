@@ -18,6 +18,7 @@ const {
   records,
   header,
   footer,
+  summary,
   total,
   page,
   perPage,
@@ -178,6 +179,24 @@ function updateColWidth(key: string, value: string) {
                 />
               </STableItem>
             </div>
+            <div v-if="summary" class="row summary">
+              <STableItem
+                v-for="key in orders"
+                :key="key"
+                :name="key"
+                :class-name="columns[key].className"
+                :width="colWidths[key]"
+              >
+                <STableCell
+                  :name="key"
+                  :class-name="columns[key].className"
+                  :cell="columns[key].cell"
+                  :value="summary[key]"
+                  :record="summary"
+                  :records="records"
+                />
+              </STableItem>
+            </div>
           </div>
         </div>
       </div>
@@ -272,6 +291,10 @@ function updateColWidth(key: string, value: string) {
 
   .body &:last-child {
     border-bottom: 0;
+  }
+
+  &.summary {
+    --table-cell-font-weight: 600;
   }
 }
 
