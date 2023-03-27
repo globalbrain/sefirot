@@ -30,6 +30,13 @@ const {
   onReset
 } = toRefs(props.options)
 
+const recordsWithSummary = computed(() => {
+  if (records?.value && summary?.value) {
+    return [...records?.value, summary?.value]
+  }
+  return records?.value ?? []
+})
+
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 
@@ -161,7 +168,12 @@ function updateColWidth(key: string, value: string) {
           @scroll="syncBodyScroll"
         >
           <div class="block">
-            <div v-for="(record, rIndex) in records" :key="rIndex" class="row">
+            <div
+              v-for="(record, rIndex) in recordsWithSummary"
+              :key="rIndex"
+              class="row"
+              :class="rIndex === records?.length && 'summary'"
+            >
               <STableItem
                 v-for="key in orders"
                 :key="key"
@@ -175,24 +187,6 @@ function updateColWidth(key: string, value: string) {
                   :cell="columns[key].cell"
                   :value="record[key]"
                   :record="record"
-                  :records="records"
-                />
-              </STableItem>
-            </div>
-            <div v-if="summary" class="row summary">
-              <STableItem
-                v-for="key in orders"
-                :key="key"
-                :name="key"
-                :class-name="columns[key].className"
-                :width="colWidths[key]"
-              >
-                <STableCell
-                  :name="key"
-                  :class-name="columns[key].className"
-                  :cell="columns[key].cell"
-                  :value="summary[key]"
-                  :record="summary"
                   :records="records"
                 />
               </STableItem>
