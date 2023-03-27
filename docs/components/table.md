@@ -255,7 +255,7 @@ const options = useTable({
 
 ## Summary Row
 
-You may define `summary` option to display a summary row at the bottom of the table. The summary row is a special row that gets displayed at the bottom of the table. It is useful to display the total of each column.
+You may define `summary` option to display a summary row at the bottom of the table. It is useful to display information such as the total of each column.
 
 ```ts
 const options = useTable({
