@@ -242,14 +242,30 @@ const options = useTable({
 
 ## Table Header & Footer
 
-The Table Header and Footer is the part where it shows additional information such as total number of records or pagnation. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
+The Table Header and Footer is the part where it shows additional information such as total number of records or pagination. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
 
-If you would like to diaplay or hide the header and footer regardless of the other options presense, set `boolean` to `header` or `footer` option.
+If you would like to display or hide the header and footer regardless of the other options present, set `boolean` to `header` or `footer` option.
 
 ```ts
 const options = useTable({
   header: true,
   footer: true
+})
+```
+
+## Summary Row
+
+You may define `summary` option to display a summary row at the bottom of the table. The summary row is a special row that gets displayed at the bottom of the table. It is useful to display the total of each column.
+
+```ts
+const options = useTable({
+  orders: ['name', 'amount'],
+  columns: {...},
+
+  summary: {
+    name: 'Total',
+    amount: 100
+  }
 })
 ```
 
