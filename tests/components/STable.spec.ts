@@ -24,7 +24,7 @@ describe('components/STable', () => {
     expect(wrapper.find('.STable .head .col-item_3 .label').text()).toBe('item_3')
   })
 
-  test('it display summary row at bottom', () => {
+  test('it displays summary row at bottom', () => {
     const table = useTable({
       orders: ['name', 'amount'],
       columns: {
