@@ -42,5 +42,9 @@ const _value = computed(() => {
   .STableCellDay.neutral & { color: var(--c-text-1); }
   .STableCellDay.soft &    { color: var(--c-text-2); }
   .STableCellDay.mute &    { color: var(--c-text-3); }
+
+  .STableCell.summary & {
+    font-weight: var(--table-cell-summary-font-weight);
+  }
 }
 </style>

@@ -253,14 +253,14 @@ const options = useTable({
 })
 ```
 
-## Summary Row
+## Summary row
 
-You may define `summary` option to display a summary row at the bottom of the table. It is useful to display information such as the total of each column.
+You may define `summary` option to display a summary row at the bottom of the table. It's useful to display information such as the total of each column.
 
 ```ts
 const options = useTable({
   orders: ['name', 'amount'],
-  columns: {...},
+  columns: { ... },
 
   summary: {
     name: 'Total',
@@ -268,6 +268,8 @@ const options = useTable({
   }
 })
 ```
+
+Each field defined at the `summary` option must match the key of the `columns` option, and the type of cell is applied as same as other records. For example, if the cell type of the `name` field is `text`, then the `name` field of the `summary` option will be displayed as `text` type.
 
 ## Props
 
@@ -293,14 +295,16 @@ interface Props {
 
 You may customize the styles by overriding `--table` prefixed CSS variables.
 
-### Global font style
+### Font style
 
-Use `--table-cell-font-size` and `--table-cell-font-weight` to customize the base font style in the table.
+Use `--table-cell-font-size` and `--table-cell-font-weight` to customize the base font style in the table. Also, you can use `--table-cell-summary-font-weight` to adjust the font weight of the cell added by `summary` option.
 
 ```css
 :root {
   --table-cell-font-size: 14px;
   --table-cell-font-weight: 400;
+
+  --table-cell-summary-font-weight: 600;
 }
 ```
 

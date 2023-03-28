@@ -110,6 +110,10 @@ const _iconColor = computed(() => {
   .STableCellText.link:hover &.warning { color: var(--c-warning-darker); }
   .STableCellText.link &.danger        { color: var(--c-danger); }
   .STableCellText.link:hover &.danger  { color: var(--c-danger-dark); }
+
+  .STableCell.summary & {
+    font-weight: var(--table-cell-summary-font-weight);
+  }
 }
 
 .icon {

@@ -34,10 +34,6 @@ export type TableColumns<
     : TableColumn<undefined, R>
 }
 
-export type TableSummary<T> = {
-  [P in keyof T]?: T[P] | null | undefined
-}
-
 export interface TableColumn<V, R> {
   label?: string
   className?: string
@@ -141,6 +137,10 @@ export interface TableCellComponent extends TableCellBase {
   type: 'component'
   component: Component
   props?: Record<string, any>
+}
+
+export type TableSummary<T> = {
+  [P in keyof T]?: T[P] | null | undefined
 }
 
 export interface UseTableOptions<O extends string, R extends Record<string, any>> {

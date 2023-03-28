@@ -30,13 +30,6 @@ const {
   onReset
 } = toRefs(props.options)
 
-const recordsWithSummary = computed(() => {
-  if (records?.value && summary?.value) {
-    return [...records?.value, summary?.value]
-  }
-  return records?.value ?? []
-})
-
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 
@@ -78,6 +71,12 @@ const classes = computed(() => ({
   'has-footer': showFooter.value,
   'borderless': borderless?.value
 }))
+
+const recordsWithSummary = computed(() => {
+  return (records?.value && summary?.value)
+    ? [...records?.value, summary?.value]
+    : records?.value ?? []
+})
 
 watch(() => records?.value, () => {
   headLock = true
@@ -183,6 +182,7 @@ function updateColWidth(key: string, value: string) {
               >
                 <STableCell
                   :name="key"
+                  :class="rIndex === records?.length && 'summary'"
                   :class-name="columns[key].className"
                   :cell="columns[key].cell"
                   :value="record[key]"
@@ -285,10 +285,6 @@ function updateColWidth(key: string, value: string) {
 
   .body &:last-child {
     border-bottom: 0;
-  }
-
-  &.summary {
-    --table-cell-font-weight: 600;
   }
 }
 
