@@ -1,3 +1,9 @@
+# [2.28.0](https://github.com/globalbrain/sefirot/compare/v2.27.0...v2.28.0) (2023-03-28)
+
+### Features
+
+* **table:** allow adding summary row ([#230](https://github.com/globalbrain/sefirot/issues/230)) ([#231](https://github.com/globalbrain/sefirot/issues/231)) ([e55ec58](https://github.com/globalbrain/sefirot/commit/e55ec5859fb1551d328858d3d3f2d82a1136cc86))
+
 # [2.27.0](https://github.com/globalbrain/sefirot/compare/v2.26.0...v2.27.0) (2023-03-20)
 
 ### Features
