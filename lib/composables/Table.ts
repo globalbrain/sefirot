@@ -6,14 +6,15 @@ import type { DropdownSection } from './Dropdown'
 
 export interface Table<
   O extends string = any,
-  R extends Record<string, any> = any
+  R extends Record<string, any> = any,
+  SR extends Record<string, any> = any
 > {
   orders: O[]
-  columns: TableColumns<O, R>
+  columns: TableColumns<O, R, SR>
   records?: R[] | null
   header?: boolean
   footer?: boolean
-  summary?: TableSummary<R> | null
+  summary?: SR | null
   total?: number | null
   page?: number | null
   perPage?: number | null
@@ -27,20 +28,22 @@ export interface Table<
 
 export type TableColumns<
   O extends string,
-  R extends Record<string, any>
+  R extends Record<string, any>,
+  SR extends Record<string, any>
 > = {
-  [K in O]: K extends keyof R
-    ? TableColumn<R[K], R>
-    : TableColumn<undefined, R>
+  [K in O]: TableColumn<R[K], R, SR[K], SR>
 }
 
-export interface TableColumn<V, R> {
+export interface TableColumn<V, R, SV, SR> {
   label?: string
   className?: string
   dropdown?: DropdownSection[]
   resizable?: boolean
-  cell?: TableCell | ((value: V, record: R) => TableCell)
+  cell?: TableCell | TableColumnCellFn<V, R>
+  summaryCell?: TableCell | TableColumnCellFn<SV, SR>
 }
+
+export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell
 
 export type TableCell =
   | TableCellText
@@ -139,17 +142,17 @@ export interface TableCellComponent extends TableCellBase {
   props?: Record<string, any>
 }
 
-export type TableSummary<T> = {
-  [P in keyof T]?: T[P] | null | undefined
-}
-
-export interface UseTableOptions<O extends string, R extends Record<string, any>> {
+export interface UseTableOptions<
+  O extends string,
+  R extends Record<string, any>,
+  SR extends Record<string, any>
+> {
   orders: MaybeRef<O[]>
-  columns: MaybeRef<TableColumns<O, R>>
+  columns: MaybeRef<TableColumns<O, R, SR>>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
-  summary?: MaybeRef<TableSummary<R> | null | undefined>
+  summary?: MaybeRef<SR | null | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>
@@ -161,8 +164,12 @@ export interface UseTableOptions<O extends string, R extends Record<string, any>
   onReset?(): void
 }
 
-export function useTable<O extends string, R extends Record<string, any>>(
-  options: UseTableOptions<O, R>
-): Table<O, R> {
-  return reactive(options) as Table<O, R>
+export function useTable<
+  O extends string,
+  R extends Record<string, any>,
+  SR extends Record<string, any>
+>(
+  options: UseTableOptions<O, R, SR>
+): Table<O, R, SR> {
+  return reactive(options) as Table<O, R, SR>
 }

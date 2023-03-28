@@ -114,6 +114,16 @@ function lockBody(value: boolean) {
 function updateColWidth(key: string, value: string) {
   colWidths[key] = value
 }
+
+function isSummary(index: number) {
+  return index === records?.value?.length
+}
+
+function getCell(key: string, index: number) {
+  return (isSummary(index) && columns.value[key]?.summaryCell)
+    ? columns.value[key]?.summaryCell
+    : columns.value[key]?.cell
+}
 </script>
 
 <template>
@@ -171,7 +181,7 @@ function updateColWidth(key: string, value: string) {
               v-for="(record, rIndex) in recordsWithSummary"
               :key="rIndex"
               class="row"
-              :class="rIndex === records?.length && 'summary'"
+              :class="isSummary(rIndex) && 'summary'"
             >
               <STableItem
                 v-for="key in orders"
@@ -182,9 +192,9 @@ function updateColWidth(key: string, value: string) {
               >
                 <STableCell
                   :name="key"
-                  :class="rIndex === records?.length && 'summary'"
+                  :class="isSummary(rIndex) && 'summary'"
                   :class-name="columns[key].className"
-                  :cell="columns[key].cell"
+                  :cell="getCell(key, rIndex)"
                   :value="record[key]"
                   :record="record"
                   :records="records"
