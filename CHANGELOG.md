@@ -1,3 +1,9 @@
+# [2.29.0](https://github.com/globalbrain/sefirot/compare/v2.28.0...v2.29.0) (2023-03-28)
+
+### Features
+
+* **table:** add `summaryCell` option ([c9e1327](https://github.com/globalbrain/sefirot/commit/c9e13276fc776f40f0af269d5de1b480972109ca))
+
 # [2.28.0](https://github.com/globalbrain/sefirot/compare/v2.27.0...v2.28.0) (2023-03-28)
 
 ### Features
