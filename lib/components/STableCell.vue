@@ -95,7 +95,11 @@ const computedCell = computed<TableCell | undefined>(() =>
   overflow: hidden;
 
   .row:hover & {
-    background-color: var(--c-bg-elv);
+    background-color: var(--c-bg-elv-1);
+  }
+
+  .summary & {
+    background-color: var(--c-bg-elv-2);
   }
 
   .STableItem:first-child & {

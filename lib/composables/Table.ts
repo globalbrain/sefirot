@@ -13,6 +13,7 @@ export interface Table<
   records?: R[] | null
   header?: boolean
   footer?: boolean
+  summary?: TableSummary<R> | null
   total?: number | null
   page?: number | null
   perPage?: number | null
@@ -138,12 +139,17 @@ export interface TableCellComponent extends TableCellBase {
   props?: Record<string, any>
 }
 
+export type TableSummary<T> = {
+  [P in keyof T]?: T[P] | null | undefined
+}
+
 export interface UseTableOptions<O extends string, R extends Record<string, any>> {
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R>>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
+  summary?: MaybeRef<TableSummary<R> | null | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>

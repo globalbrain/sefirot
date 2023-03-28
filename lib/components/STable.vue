@@ -18,6 +18,7 @@ const {
   records,
   header,
   footer,
+  summary,
   total,
   page,
   perPage,
@@ -70,6 +71,12 @@ const classes = computed(() => ({
   'has-footer': showFooter.value,
   'borderless': borderless?.value
 }))
+
+const recordsWithSummary = computed(() => {
+  return (records?.value && summary?.value)
+    ? [...records?.value, summary?.value]
+    : records?.value ?? []
+})
 
 watch(() => records?.value, () => {
   headLock = true
@@ -160,7 +167,12 @@ function updateColWidth(key: string, value: string) {
           @scroll="syncBodyScroll"
         >
           <div class="block">
-            <div v-for="(record, rIndex) in records" :key="rIndex" class="row">
+            <div
+              v-for="(record, rIndex) in recordsWithSummary"
+              :key="rIndex"
+              class="row"
+              :class="rIndex === records?.length && 'summary'"
+            >
               <STableItem
                 v-for="key in orders"
                 :key="key"
@@ -170,6 +182,7 @@ function updateColWidth(key: string, value: string) {
               >
                 <STableCell
                   :name="key"
+                  :class="rIndex === records?.length && 'summary'"
                   :class-name="columns[key].className"
                   :cell="columns[key].cell"
                   :value="record[key]"

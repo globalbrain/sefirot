@@ -639,6 +639,8 @@
 
   --table-cell-font-size: 14px;
   --table-cell-font-weight: 400;
+
+  --table-cell-summary-font-weight: 600;
 }
 
 /**

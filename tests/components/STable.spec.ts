@@ -23,4 +23,30 @@ describe('components/STable', () => {
     expect(wrapper.find('.STable .head .col-item_2 .label').text()).toBe('item_2')
     expect(wrapper.find('.STable .head .col-item_3 .label').text()).toBe('item_3')
   })
+
+  test('it displays summary row at bottom', () => {
+    const table = useTable({
+      orders: ['name', 'amount'],
+      columns: {
+        name: { label: 'Name' },
+        amount: { label: 'Amount' }
+      },
+      records: [
+        { name: 'Item 1', amount: 10 },
+        { name: 'Item 2', amount: 90 }
+      ],
+      summary: {
+        name: 'Total', amount: 100
+      }
+    })
+
+    const wrapper = mount(STable, {
+      props: {
+        options: table
+      }
+    })
+
+    expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
+    expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+  })
 })

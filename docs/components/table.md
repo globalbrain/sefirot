@@ -242,9 +242,9 @@ const options = useTable({
 
 ## Table Header & Footer
 
-The Table Header and Footer is the part where it shows additional information such as total number of records or pagnation. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
+The Table Header and Footer is the part where it shows additional information such as total number of records or pagination. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
 
-If you would like to diaplay or hide the header and footer regardless of the other options presense, set `boolean` to `header` or `footer` option.
+If you would like to display or hide the header and footer regardless of the other options present, set `boolean` to `header` or `footer` option.
 
 ```ts
 const options = useTable({
@@ -252,6 +252,24 @@ const options = useTable({
   footer: true
 })
 ```
+
+## Summary row
+
+You may define `summary` option to display a summary row at the bottom of the table. It's useful to display information such as the total of each column.
+
+```ts
+const options = useTable({
+  orders: ['name', 'amount'],
+  columns: { ... },
+
+  summary: {
+    name: 'Total',
+    amount: 100
+  }
+})
+```
+
+Each field defined at the `summary` option must match the key of the `columns` option, and the type of cell is applied as same as other records. For example, if the cell type of the `name` field is `text`, then the `name` field of the `summary` option will be displayed as `text` type.
 
 ## Props
 
@@ -277,14 +295,16 @@ interface Props {
 
 You may customize the styles by overriding `--table` prefixed CSS variables.
 
-### Global font style
+### Font style
 
-Use `--table-cell-font-size` and `--table-cell-font-weight` to customize the base font style in the table.
+Use `--table-cell-font-size` and `--table-cell-font-weight` to customize the base font style in the table. Also, you can use `--table-cell-summary-font-weight` to adjust the font weight of the cell added by `summary` option.
 
 ```css
 :root {
   --table-cell-font-size: 14px;
   --table-cell-font-weight: 400;
+
+  --table-cell-summary-font-weight: 600;
 }
 ```
 
