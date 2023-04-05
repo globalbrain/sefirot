@@ -28,6 +28,7 @@ const props = defineProps<{
   noYear?: boolean
   noMonth?: boolean
   noDate?: boolean
+  block?: boolean
   disabled?: boolean
   value?: Value
   modelValue?: Value
@@ -139,7 +140,7 @@ function createRequiredTouched(): boolean[] {
     :hide-error="hideError"
     :validation="validation"
   >
-    <div class="container" :class="{ focus: isFocused }">
+    <div class="container" :class="{ focus: isFocused, block }">
       <input
         v-if="!noYear"
         class="input year"
@@ -278,11 +279,15 @@ function createRequiredTouched(): boolean[] {
 
   &:hover { border-color: var(--input-hover-border-color); }
   &.focus { border-color: var(--input-focus-border-color); }
+
+  &.block {
+    width: 100%;
+  }
 }
 
 .input {
-  font-family: var(--font-family-number);
   line-height: 24px;
+  font-feature-settings: "tnum";
   background-color: transparent;
 
   &::placeholder {

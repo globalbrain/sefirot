@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SInputYMD from 'sefirot/components/SInputYMD.vue'
 import { ref } from 'vue'
+import { setupRouter } from '../_support/Utils'
 
 const title = 'Components / SInputYMD / 01. Playground'
 const docs = '/components/input-ymd'
@@ -21,6 +22,7 @@ function state() {
     noYear: false,
     noMonth: false,
     noDate: false,
+    block: false,
     disabled: false,
     error: false
   } as const
@@ -28,7 +30,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title="title" :setup-app="setupRouter" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -68,6 +70,10 @@ function state() {
         v-model="state.noDate"
       />
       <HstCheckbox
+        title="block"
+        v-model="state.block"
+      />
+      <HstCheckbox
         title="disabled"
         v-model="state.disabled"
       />
@@ -89,6 +95,7 @@ function state() {
           :no-year="state.noYear"
           :no-month="state.noMonth"
           :no-date="state.noDate"
+          :block="state.block"
           :disabled="state.disabled"
           v-model="input"
         />

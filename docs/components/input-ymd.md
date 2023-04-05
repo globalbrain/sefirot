@@ -27,7 +27,7 @@ Import `<SInputYMD>` component and pass in `:value` props. The value should be a
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import SInputHMS from '@globalbrain/sefirot/lib/components/SInputYMD.vue'
+import SInputYMD from '@globalbrain/sefirot/lib/components/SInputYMD.vue'
 
 const input = ref({
   year: null,
@@ -206,6 +206,20 @@ interface Props {
 
 ```vue-html
 <SInputYMD no-date v-model="..." />
+```
+
+### `:block`
+
+Make the input full width to fit the parent container.
+
+```ts
+interface Props {
+  block?: boolean
+}
+```
+
+```vue-html
+<SInputYMD block v-model="..." />
 ```
 
 ### `:disabled`
