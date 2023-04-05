@@ -97,30 +97,42 @@ function emitBlur() {
 .SInputDate.mini {
   .input {
     padding: 3px 8px;
-    max-width: 120px;
+    max-width: 114px;
     height: 32px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+
+  .input.block {
+    max-width: 100%;
   }
 }
 
 .SInputDate.small {
   .input {
     padding: 5px 12px;
-    max-width: 128px;
+    max-width: 136px;
     height: 40px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .input.block {
+    max-width: 100%;
   }
 }
 
 .SInputDate.medium {
   .input {
     padding: 11px 12px;
-    max-width: 160px;
+    max-width: 136px;
     height: 48px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .input.block {
+    max-width: 100%;
   }
 }
 
@@ -139,17 +151,13 @@ function emitBlur() {
   border: 1px solid var(--input-border-color);
   border-radius: 6px;
   width: 100%;
-  font-family: var(--font-family-number);
   font-weight: 400;
+  font-feature-settings: 'tnum';
   background-color: var(--input-bg-color);
   transition: border-color 0.25s, background-color 0.25s;
 
   &::placeholder {
     color: var(--input-placeholder-color);
-  }
-
-  &.block {
-    max-width: none;
   }
 }
 </style>
