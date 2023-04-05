@@ -95,7 +95,7 @@ const computedCell = computed<TableCell | undefined>(() =>
   overflow: hidden;
 
   .row:hover & {
-    background-color: var(--c-bg-elv-1);
+    background-color: var(--c-bg-elv-2);
   }
 
   .summary & {
