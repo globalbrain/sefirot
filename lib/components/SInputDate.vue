@@ -20,6 +20,7 @@ const props = defineProps<{
   checkText?: string
   checkColor?: Color
   block?: boolean
+  disabled?: boolean
   modelValue: Day | null
   validation?: Validatable
   hideError?: boolean
@@ -79,12 +80,13 @@ function emitBlur() {
         <input
           :id="name"
           class="input"
-          :class="{ block }"
+          :class="{ block, disabled }"
           type="text"
           placeholder="YYYY-MM-DD"
-          :value="inputValue"
           autocomplete="off"
-          v-on="inputEvents"
+          :value="inputValue"
+          :disabled="disabled"
+          v-on="disabled || inputEvents"
           @blur="emitBlur"
         >
       </DatePicker>
@@ -158,6 +160,12 @@ function emitBlur() {
 
   &::placeholder {
     color: var(--input-placeholder-color);
+  }
+
+  &.disabled {
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-bg-color);
+    cursor: not-allowed;
   }
 }
 </style>
