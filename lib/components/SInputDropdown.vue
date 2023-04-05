@@ -241,11 +241,12 @@ function handleArray(value: OptionValue) {
 
 .SInputDropdown.disabled {
   .box {
-    background-color: var(--c-bg);
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-bg-color);
     cursor: not-allowed;
 
-    &:hover                     { border-color: var(--c-divider); }
-    &:focus:not(:focus-visible) { border-color: var(--c-divider); }
+    &:hover                     { border-color: var(--input-disabled-border-color); }
+    &:focus:not(:focus-visible) { border-color: var(--input-disabled-border-color); }
   }
 
   .box-icon {
