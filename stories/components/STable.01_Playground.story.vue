@@ -125,7 +125,7 @@ const data = [
     tags: ['Info']
   },
   {
-    name: 'Artwork 003',
+    name: 'Artwork 003 Long Long Long',
     link: 'https://example.com',
     status: 'Published',
     type: 'Photo',
@@ -172,7 +172,8 @@ const table = useTable({
         type: 'text',
         icon: markRaw(IconImageSquare),
         link: (_value, record) => record.link
-      }
+      },
+      grow: true
     },
 
     status: {
@@ -273,5 +274,5 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-status)    { --table-col-width: 144px; }
 .table :deep(.col-type)      { --table-col-width: 144px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
-.table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }
+.table :deep(.col-createdAt) { --table-col-width: 192px; }
 </style>

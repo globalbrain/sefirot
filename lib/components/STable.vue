@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, reactive, shallowRef, toRefs, watch } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
+import { computed, nextTick, reactive, shallowRef, toRefs, watch } from 'vue'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -32,6 +33,13 @@ const {
 
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
+
+const row = shallowRef<HTMLElement | null>(null)
+const colToGrow = computed(
+  () => orders.value?.findIndex((key) => columns.value[key]?.grow) ?? -1
+)
+const colNameToGrow = computed(() => orders.value[colToGrow.value])
+const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
 
 let headLock = false
 let bodyLock = false
@@ -89,6 +97,28 @@ watch(() => records?.value, () => {
   bodyLock = false
 }, { flush: 'post' })
 
+useResizeObserver(head, async () => {
+  if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) { return }
+
+  const initialWidth = getComputedStyle(cellOfColToGrow.value)
+    .getPropertyValue('--table-col-width')
+    .trim()
+
+  updateColWidth(colNameToGrow.value, initialWidth)
+  await nextTick()
+
+  let totalWidth = 0
+  for (const el of row.value.children) {
+    totalWidth += el.getBoundingClientRect().width
+  }
+
+  const availableFill = row.value.getBoundingClientRect().width - totalWidth
+  updateColWidth(
+    colNameToGrow.value,
+    `calc(${availableFill}px + ${initialWidth})`
+  )
+})
+
 function syncHeadScroll() {
   bodyLock || syncScroll(head.value, body.value)
 }
@@ -127,7 +157,7 @@ function getCell(key: string, index: number) {
 </script>
 
 <template>
-  <div class="STable" :class="classes" ref="el">
+  <div class="STable" :class="classes">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -146,7 +176,7 @@ function getCell(key: string, index: number) {
           @scroll="syncHeadScroll"
         >
           <div class="block">
-            <div class="row">
+            <div class="row" ref="row">
               <STableItem
                 v-for="key in orders"
                 :key="key"
