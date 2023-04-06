@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { computed, nextTick, reactive, shallowRef, toRefs, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  reactive,
+  ref,
+  shallowRef,
+  toRefs,
+  watch
+} from 'vue'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -35,10 +43,13 @@ const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 
 const row = shallowRef<HTMLElement | null>(null)
-const colToGrow = computed(
-  () => orders.value?.findIndex((key) => columns.value[key]?.grow) ?? -1
+const colToGrowAdjusted = ref(false)
+const colToGrow = computed(() =>
+  colToGrowAdjusted.value
+    ? -1
+    : orders.value?.findIndex((key) => columns.value[key]?.grow) ?? -1
 )
-const colNameToGrow = computed(() => orders.value[colToGrow.value])
+const nameOfColToGrow = computed(() => orders.value[colToGrow.value])
 const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
 
 let headLock = false
@@ -98,13 +109,15 @@ watch(() => records?.value, () => {
 }, { flush: 'post' })
 
 useResizeObserver(head, async () => {
-  if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) { return }
+  if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) {
+    return
+  }
 
   const initialWidth = getComputedStyle(cellOfColToGrow.value)
     .getPropertyValue('--table-col-width')
     .trim()
 
-  updateColWidth(colNameToGrow.value, initialWidth)
+  updateColWidth(nameOfColToGrow.value, initialWidth)
   await nextTick()
 
   let totalWidth = 0
@@ -114,7 +127,7 @@ useResizeObserver(head, async () => {
 
   const availableFill = row.value.getBoundingClientRect().width - totalWidth
   updateColWidth(
-    colNameToGrow.value,
+    nameOfColToGrow.value,
     `calc(${availableFill}px + ${initialWidth})`
   )
 })
@@ -141,7 +154,21 @@ function lockBody(value: boolean) {
   bodyLock = value
 }
 
-function updateColWidth(key: string, value: string) {
+function updateColWidth(key: string, value: string, triggeredByUser = false) {
+  if (
+    triggeredByUser
+    && !colToGrowAdjusted.value
+    && key === nameOfColToGrow.value
+  ) {
+    colToGrowAdjusted.value = true
+    Object.entries(columns.value).some(([key, col]) => {
+      if (col.fillOnAdjust) {
+        colWidths[key] = 'auto'
+        return true
+      }
+      return false
+    })
+  }
   colWidths[key] = value
 }
 
@@ -191,7 +218,7 @@ function getCell(key: string, index: number) {
                   :dropdown="columns[key].dropdown"
                   :has-header="showHeader"
                   :resizable="columns[key].resizable"
-                  @resize="(value) => updateColWidth(key, value)"
+                  @resize="(value) => updateColWidth(key, value, true)"
                 />
               </STableItem>
             </div>
