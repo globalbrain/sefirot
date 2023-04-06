@@ -108,7 +108,7 @@ watch(() => records?.value, () => {
   bodyLock = false
 }, { flush: 'post' })
 
-useResizeObserver(head, async () => {
+const handleResize = async () => {
   if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) {
     return
   }
@@ -130,7 +130,9 @@ useResizeObserver(head, async () => {
     nameOfColToGrow.value,
     `calc(${availableFill}px + ${initialWidth})`
   )
-})
+}
+
+useResizeObserver(head, handleResize)
 
 function syncHeadScroll() {
   bodyLock || syncScroll(head.value, body.value)
@@ -155,21 +157,21 @@ function lockBody(value: boolean) {
 }
 
 function updateColWidth(key: string, value: string, triggeredByUser = false) {
-  if (
-    triggeredByUser
-    && !colToGrowAdjusted.value
-    && key === nameOfColToGrow.value
-  ) {
-    colToGrowAdjusted.value = true
-    Object.entries(columns.value).some(([key, col]) => {
-      if (col.fillOnAdjust) {
-        colWidths[key] = 'auto'
-        return true
-      }
-      return false
-    })
-  }
   colWidths[key] = value
+  if (triggeredByUser && !colToGrowAdjusted.value) {
+    if (key === nameOfColToGrow.value) {
+      colToGrowAdjusted.value = true
+      Object.entries(columns.value).some(([key, col]) => {
+        if (col.fillOnAdjust) {
+          colWidths[key] = 'auto'
+          return true
+        }
+        return false
+      })
+    } else {
+      nextTick(handleResize)
+    }
+  }
 }
 
 function isSummary(index: number) {
