@@ -13,6 +13,17 @@ const variants = [
   { title: 'Text', type: 'text' }
 ] as const
 
+const modes = [
+  'neutral',
+  'mute',
+  'white',
+  'black',
+  'info',
+  'success',
+  'warning',
+  'danger'
+]
+
 const icons = [
   IconCheckCircle,
   IconImageSquare,
@@ -44,15 +55,21 @@ function state() {
       />
       <HstSelect
         title="mode"
-        :options="{
-          neutral: 'neutral',
-          mute: 'mute'
-        }"
+        :options="modes"
         v-model="state.mode"
+      />
+      <HstSelect
+        title="icon-mode"
+        :options="modes"
+        v-model="state.iconMode"
       />
       <HstText
         title="label"
         v-model="state.label"
+      />
+      <HstCheckbox
+        title="disabled"
+        v-model="state.disabled"
       />
     </template>
 
@@ -70,7 +87,9 @@ function state() {
                 :type="v.type"
                 :mode="state.mode"
                 :icon="i"
+                :icon-mode="state.iconMode"
                 :label="state.label"
+                :disabled="state.disabled"
               />
             </div>
           </div>
