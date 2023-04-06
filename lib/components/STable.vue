@@ -159,18 +159,14 @@ function lockBody(value: boolean) {
 function updateColWidth(key: string, value: string, triggeredByUser = false) {
   colWidths[key] = value
   if (triggeredByUser && !colToGrowAdjusted.value) {
-    if (key === nameOfColToGrow.value) {
-      colToGrowAdjusted.value = true
-      Object.entries(columns.value).some(([key, col]) => {
-        if (col.fillOnAdjust) {
-          colWidths[key] = 'auto'
-          return true
-        }
-        return false
-      })
-    } else {
-      nextTick(handleResize)
-    }
+    colToGrowAdjusted.value = true
+    Object.entries(columns.value).some(([key, col]) => {
+      if (col.fillOnAdjust) {
+        colWidths[key] = 'auto'
+        return true
+      }
+      return false
+    })
   }
 }
 
