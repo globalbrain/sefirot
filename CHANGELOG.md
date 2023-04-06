@@ -1,3 +1,16 @@
+# [2.30.0](https://github.com/globalbrain/sefirot/compare/v2.29.0...v2.30.0) (2023-04-06)
+
+### Bug Fixes
+
+* **input-date:** `block` option is not working ([#232](https://github.com/globalbrain/sefirot/issues/232)) ([9f40d96](https://github.com/globalbrain/sefirot/commit/9f40d96cdfe7cf721ecb89fef59fbba25f636222))
+* **input-dropdown:** `disabled` style is not applied ([#236](https://github.com/globalbrain/sefirot/issues/236)) ([5a7b586](https://github.com/globalbrain/sefirot/commit/5a7b586eb7a883dba4175b3f1ef80561a0cf3312))
+* **table:** wrong hover color ([#238](https://github.com/globalbrain/sefirot/issues/238)) ([2174185](https://github.com/globalbrain/sefirot/commit/21741857247fa16128080508bb35148fee536177))
+
+### Features
+
+* **input-date:** add `disabled` option ([#233](https://github.com/globalbrain/sefirot/issues/233)) ([c4aa07e](https://github.com/globalbrain/sefirot/commit/c4aa07ef59c65b35ff65ff352d976db7bf205efd))
+* **input-ymd:** add `block` option ([#234](https://github.com/globalbrain/sefirot/issues/234)) ([0db52f4](https://github.com/globalbrain/sefirot/commit/0db52f46c680e6297c8a5809763c0344bc223d41))
+
 # [2.29.0](https://github.com/globalbrain/sefirot/compare/v2.28.0...v2.29.0) (2023-03-28)
 
 ### Features
