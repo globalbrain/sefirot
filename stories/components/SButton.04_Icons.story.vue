@@ -63,6 +63,11 @@ function state() {
         :options="modes"
         v-model="state.iconMode"
       />
+      <HstSelect
+        title="label-mode"
+        :options="modes"
+        v-model="state.labelMode"
+      />
       <HstText
         title="label"
         v-model="state.label"
@@ -89,6 +94,7 @@ function state() {
                 :icon="i"
                 :icon-mode="state.iconMode"
                 :label="state.label"
+                :label-mode="state.labelMode"
                 :disabled="state.disabled"
               />
             </div>

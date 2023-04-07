@@ -25,6 +25,7 @@ const props = defineProps<{
   mode?: Mode
   icon?: any
   iconMode?: Mode
+  labelMode?: Mode
   label?: string
   href?: string
   rounded?: boolean
@@ -70,8 +71,10 @@ function handleClick(): void {
     @click="handleClick"
   >
     <span class="content">
-      <span v-if="icon" class="icon"><SIcon :icon="icon" class="icon-svg" :class="iconMode" /></span>
-      <span v-if="label" class="label">{{ label }}</span>
+      <span v-if="icon" class="icon" :class="iconMode">
+        <SIcon :icon="icon" class="icon-svg" />
+      </span>
+      <span v-if="label" class="label" :class="labelMode">{{ label }}</span>
     </span>
 
     <transition name="fade">
@@ -639,69 +642,75 @@ function handleClick(): void {
   height: 32px;
 }
 
-.SButton.fill .icon-svg {
-  &.neutral { color: var(--button-fill-neutral-icon-color);}
-  &.mute    { color: var(--button-fill-mute-icon-color); }
-  &.white   { color: var(--button-fill-white-icon-color); }
-  &.black   { color: var(--button-fill-black-icon-color); }
-  &.info    { color: var(--button-fill-info-icon-color); }
-  &.success { color: var(--button-fill-success-icon-color); }
-  &.warning { color: var(--button-fill-warning-icon-color); }
-  &.danger  { color: var(--button-fill-danger-icon-color); }
+.SButton.fill .icon,
+.SButton.fill .label {
+  &.neutral { color: var(--button-fill-neutral-content-color);}
+  &.mute    { color: var(--button-fill-mute-content-color); }
+  &.white   { color: var(--button-fill-white-content-color); }
+  &.black   { color: var(--button-fill-black-content-color); }
+  &.info    { color: var(--button-fill-info-content-color); }
+  &.success { color: var(--button-fill-success-content-color); }
+  &.warning { color: var(--button-fill-warning-content-color); }
+  &.danger  { color: var(--button-fill-danger-content-color); }
 }
 
-.SButton.fill.disabled .icon-svg {
-  &.neutral { color: var(--button-fill-neutral-disabled-icon-color); }
-  &.white   { color: var(--button-fill-white-disabled-icon-color); }
-  &.black   { color: var(--button-fill-black-disabled-icon-color); }
-  &.mute    { color: var(--button-fill-mute-disabled-icon-color); }
-  &.info    { color: var(--button-fill-info-disabled-icon-color); }
-  &.success { color: var(--button-fill-success-disabled-icon-color); }
-  &.warning { color: var(--button-fill-warning-disabled-icon-color); }
-  &.danger  { color: var(--button-fill-danger-disabled-icon-color); }
+.SButton.fill.disabled .icon,
+.SButton.fill.disabled .label {
+  &.neutral { color: var(--button-fill-neutral-disabled-content-color); }
+  &.white   { color: var(--button-fill-white-disabled-content-color); }
+  &.black   { color: var(--button-fill-black-disabled-content-color); }
+  &.mute    { color: var(--button-fill-mute-disabled-content-color); }
+  &.info    { color: var(--button-fill-info-disabled-content-color); }
+  &.success { color: var(--button-fill-success-disabled-content-color); }
+  &.warning { color: var(--button-fill-warning-disabled-content-color); }
+  &.danger  { color: var(--button-fill-danger-disabled-content-color); }
 }
 
-.SButton.outline .icon-svg {
-  &.neutral { color: var(--button-outline-neutral-icon-color); }
-  &.white   { color: var(--button-outline-white-icon-color); }
-  &.black   { color: var(--button-outline-black-icon-color); }
-  &.mute    { color: var(--button-outline-mute-icon-color); }
-  &.info    { color: var(--button-outline-info-icon-color); }
-  &.success { color: var(--button-outline-success-icon-color); }
-  &.warning { color: var(--button-outline-warning-icon-color); }
-  &.danger  { color: var(--button-outline-danger-icon-color); }
+.SButton.outline .icon,
+.SButton.outline .label {
+  &.neutral { color: var(--button-outline-neutral-content-color); }
+  &.white   { color: var(--button-outline-white-content-color); }
+  &.black   { color: var(--button-outline-black-content-color); }
+  &.mute    { color: var(--button-outline-mute-content-color); }
+  &.info    { color: var(--button-outline-info-content-color); }
+  &.success { color: var(--button-outline-success-content-color); }
+  &.warning { color: var(--button-outline-warning-content-color); }
+  &.danger  { color: var(--button-outline-danger-content-color); }
 }
 
-.SButton.outline.disabled .icon-svg {
-  &.neutral { color: var(--button-outline-neutral-disabled-icon-color); }
-  &.white   { color: var(--button-outline-white-disabled-icon-color); }
-  &.black   { color: var(--button-outline-black-disabled-icon-color); }
-  &.mute    { color: var(--button-outline-mute-disabled-icon-color); }
-  &.info    { color: var(--button-outline-info-disabled-icon-color); }
-  &.success { color: var(--button-outline-success-disabled-icon-color); }
-  &.warning { color: var(--button-outline-warning-disabled-icon-color); }
-  &.danger  { color: var(--button-outline-danger-disabled-icon-color); }
+.SButton.outline.disabled .icon,
+.SButton.outline.disabled .label {
+  &.neutral { color: var(--button-outline-neutral-disabled-content-color); }
+  &.white   { color: var(--button-outline-white-disabled-content-color); }
+  &.black   { color: var(--button-outline-black-disabled-content-color); }
+  &.mute    { color: var(--button-outline-mute-disabled-content-color); }
+  &.info    { color: var(--button-outline-info-disabled-content-color); }
+  &.success { color: var(--button-outline-success-disabled-content-color); }
+  &.warning { color: var(--button-outline-warning-disabled-content-color); }
+  &.danger  { color: var(--button-outline-danger-disabled-content-color); }
 }
 
-.SButton.text .icon-svg {
-  &.neutral { color: var(--button-text-neutral-icon-color); }
-  &.white   { color: var(--button-text-white-icon-color); }
-  &.black   { color: var(--button-text-black-icon-color); }
-  &.mute    { color: var(--button-text-mute-icon-color); }
-  &.info    { color: var(--button-text-info-icon-color); }
-  &.success { color: var(--button-text-success-icon-color); }
-  &.warning { color: var(--button-text-warning-icon-color); }
-  &.danger  { color: var(--button-text-danger-icon-color); }
+.SButton.text .icon,
+.SButton.text .label {
+  &.neutral { color: var(--button-text-neutral-content-color); }
+  &.white   { color: var(--button-text-white-content-color); }
+  &.black   { color: var(--button-text-black-content-color); }
+  &.mute    { color: var(--button-text-mute-content-color); }
+  &.info    { color: var(--button-text-info-content-color); }
+  &.success { color: var(--button-text-success-content-color); }
+  &.warning { color: var(--button-text-warning-content-color); }
+  &.danger  { color: var(--button-text-danger-content-color); }
 }
 
-.SButton.text.disabled .icon-svg {
-  &.neutral { color: var(--button-text-neutral-disabled-icon-color); }
-  &.white   { color: var(--button-text-white-disabled-icon-color); }
-  &.black   { color: var(--button-text-black-disabled-icon-color); }
-  &.mute    { color: var(--button-text-mute-disabled-icon-color); }
-  &.info    { color: var(--button-text-info-disabled-icon-color); }
-  &.success { color: var(--button-text-success-disabled-icon-color); }
-  &.warning { color: var(--button-text-warning-disabled-icon-color); }
-  &.danger  { color: var(--button-text-danger-disabled-icon-color); }
+.SButton.text.disabled .icon,
+.SButton.text.disabled .label {
+  &.neutral { color: var(--button-text-neutral-disabled-content-color); }
+  &.white   { color: var(--button-text-white-disabled-content-color); }
+  &.black   { color: var(--button-text-black-disabled-content-color); }
+  &.mute    { color: var(--button-text-mute-disabled-content-color); }
+  &.info    { color: var(--button-text-info-disabled-content-color); }
+  &.success { color: var(--button-text-success-disabled-content-color); }
+  &.warning { color: var(--button-text-warning-disabled-content-color); }
+  &.danger  { color: var(--button-text-danger-disabled-content-color); }
 }
 </style>
