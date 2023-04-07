@@ -42,7 +42,7 @@ const options = useTable({
 <style scoped>
 .table :deep(.col-name)   { --table-col-width: 128px; }
 .table :deep(.col-group)  { --table-col-width: 128px; }
-.table :deep(.col-status) { --table-col-width: 128px; --table-col-max-width: auto; }
+.table :deep(.col-status) { --table-col-width: 128px; }
 </style>
 
 # STable

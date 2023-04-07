@@ -44,11 +44,13 @@ const body = shallowRef<HTMLElement | null>(null)
 
 const row = shallowRef<HTMLElement | null>(null)
 const colToGrowAdjusted = ref(false)
-const colToGrow = computed(() =>
-  colToGrowAdjusted.value
-    ? -1
-    : orders.value?.findIndex((key) => columns.value[key]?.grow) ?? -1
-)
+const colToGrow = computed(() => {
+  if (colToGrowAdjusted.value) {
+    return -1
+  }
+
+  return orders.value.findIndex((key) => columns.value[key]?.grow) ?? -1
+})
 const nameOfColToGrow = computed(() => orders.value[colToGrow.value])
 const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
 
@@ -108,8 +110,16 @@ watch(() => records?.value, () => {
   bodyLock = false
 }, { flush: 'post' })
 
-const handleResize = async () => {
+const resizeObserver = useResizeObserver(head, handleResize)
+
+function stopObserving() {
+  colWidths[orders.value[orders.value.length - 1]] = 'auto'
+  resizeObserver.stop()
+}
+
+async function handleResize() {
   if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) {
+    stopObserving()
     return
   }
 
@@ -131,8 +141,6 @@ const handleResize = async () => {
     `calc(${availableFill}px + ${initialWidth})`
   )
 }
-
-useResizeObserver(head, handleResize)
 
 function syncHeadScroll() {
   bodyLock || syncScroll(head.value, body.value)
@@ -158,9 +166,9 @@ function lockBody(value: boolean) {
 
 function updateColWidth(key: string, value: string, triggeredByUser = false) {
   colWidths[key] = value
-  if (triggeredByUser && !colToGrowAdjusted.value) {
+  if (triggeredByUser && colToGrow.value >= 0) {
     colToGrowAdjusted.value = true
-    colWidths[orders.value[orders.value.length - 1]] = 'auto'
+    stopObserving()
   }
 }
 
