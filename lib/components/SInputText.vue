@@ -417,6 +417,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   bottom: 0;
   left: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .unit {
