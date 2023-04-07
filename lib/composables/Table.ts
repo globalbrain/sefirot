@@ -39,7 +39,6 @@ export interface TableColumn<V, R, SV, SR> {
   className?: string
   dropdown?: DropdownSection[]
   grow?: boolean
-  fillOnAdjust?: boolean
   resizable?: boolean
   cell?: TableCell | TableColumnCellFn<V, R>
   summaryCell?: TableCell | TableColumnCellFn<SV, SR>

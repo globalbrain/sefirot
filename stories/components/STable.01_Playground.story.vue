@@ -203,8 +203,7 @@ const table = useTable({
       label: 'Created at',
       dropdown: dropdownCreatedAt,
       cell: { type: 'text', color: 'soft' },
-      resizable: false,
-      fillOnAdjust: true
+      resizable: false
     },
 
     tags: {

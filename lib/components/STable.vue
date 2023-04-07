@@ -160,13 +160,7 @@ function updateColWidth(key: string, value: string, triggeredByUser = false) {
   colWidths[key] = value
   if (triggeredByUser && !colToGrowAdjusted.value) {
     colToGrowAdjusted.value = true
-    Object.entries(columns.value).some(([key, col]) => {
-      if (col.fillOnAdjust) {
-        colWidths[key] = 'auto'
-        return true
-      }
-      return false
-    })
+    colWidths[orders.value[orders.value.length - 1]] = 'auto'
   }
 }
 
