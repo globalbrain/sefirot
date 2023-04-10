@@ -24,7 +24,7 @@ defineProps<{
   flex-grow: 1;
   border-right: 1px solid var(--c-divider-light);
   min-width: var(--table-col-width);
-  max-width: var(--table-col-max-width, var(--table-col-width));
+  max-width: var(--table-col-width);
 
   &:last-child {
     border-right: 0;

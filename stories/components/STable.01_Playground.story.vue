@@ -168,6 +168,7 @@ const table = useTable({
     name: {
       label: 'Name',
       dropdown: dropdownName,
+      grow: true,
       cell: {
         type: 'text',
         icon: markRaw(IconImageSquare),
@@ -273,5 +274,5 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-status)    { --table-col-width: 144px; }
 .table :deep(.col-type)      { --table-col-width: 144px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
-.table :deep(.col-createdAt) { --table-col-width: 192px; --table-col-max-width: auto; }
+.table :deep(.col-createdAt) { --table-col-width: 192px; }
 </style>
