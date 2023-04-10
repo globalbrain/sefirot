@@ -1,5 +1,4 @@
 @import "normalize.css";
 @import "v-calendar/dist/style.css";
-@import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 @import "./variables";
 @import "./base";
