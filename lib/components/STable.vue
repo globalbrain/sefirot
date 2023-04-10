@@ -41,15 +41,13 @@ const {
 
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
-
 const row = shallowRef<HTMLElement | null>(null)
+
 const colToGrowAdjusted = ref(false)
 const colToGrow = computed(() => {
-  if (colToGrowAdjusted.value) {
-    return -1
-  }
-
-  return orders.value.findIndex((key) => columns.value[key]?.grow) ?? -1
+  return colToGrowAdjusted.value
+    ? -1
+    : orders.value.findIndex((key) => columns.value[key]?.grow) ?? -1
 })
 const nameOfColToGrow = computed(() => orders.value[colToGrow.value])
 const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
@@ -128,6 +126,7 @@ async function handleResize() {
     .trim()
 
   updateColWidth(nameOfColToGrow.value, initialWidth)
+
   await nextTick()
 
   let totalWidth = 0

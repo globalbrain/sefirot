@@ -182,29 +182,6 @@ const options = useTable({
 })
 ```
 
-## Disable column resize
-
-By default, all columns are resizable via the user. You may disable resizing for each column you specify by setting `resizable` option.
-
-```ts
-import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
-
-const options = useTable({
-  orders: [...],
-  columns: {
-    item_1: {
-      label: 'Item 1'
-    },
-    // This column is no longer resizable.
-    item_2: {
-      label: 'Item 2',
-      resizable: false
-    }
-  },
-  records: [...]
-})
-```
-
 ## Auto grow column
 
 You may define `grow` option to automatically grow the column if there is space left on the table.
@@ -228,7 +205,30 @@ const options = useTable({
 })
 ```
 
-If the user adjusts any column's width, the `grow` option will be ignored and the last column will fill up the remaining space.
+Note that if the user adjusts any column's width, the `grow` option will be ignored and the last column will fill up the remaining space (in the above case it's `item_2`).
+
+## Disable column resize
+
+By default, all columns are resizable via the user. You may disable resizing for each column you specify by setting `resizable` option.
+
+```ts
+import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
+
+const options = useTable({
+  orders: [...],
+  columns: {
+    item_1: {
+      label: 'Item 1'
+    },
+    // This column is no longer resizable.
+    item_2: {
+      label: 'Item 2',
+      resizable: false
+    }
+  },
+  records: [...]
+})
+```
 
 ## Total number of records
 

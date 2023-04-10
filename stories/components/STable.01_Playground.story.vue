@@ -125,7 +125,7 @@ const data = [
     tags: ['Info']
   },
   {
-    name: 'Artwork 003 Long Long Long',
+    name: 'Artwork 003',
     link: 'https://example.com',
     status: 'Published',
     type: 'Photo',
@@ -168,12 +168,12 @@ const table = useTable({
     name: {
       label: 'Name',
       dropdown: dropdownName,
+      grow: true,
       cell: {
         type: 'text',
         icon: markRaw(IconImageSquare),
         link: (_value, record) => record.link
-      },
-      grow: true
+      }
     },
 
     status: {
