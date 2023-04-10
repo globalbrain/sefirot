@@ -5,10 +5,34 @@ import SButton from 'sefirot/components/SButton.vue'
 const title = 'Components / SButton / 01. Playground'
 const docs = '/components/button'
 
+const modes = [
+  'neutral',
+  'mute',
+  'white',
+  'black',
+  'info',
+  'success',
+  'warning',
+  'danger'
+]
+
+const contentModes = [
+  { label: 'null', value: null },
+  { label: 'neutral', value: 'neutral' },
+  { label: 'mute', value: 'mute' },
+  { label: 'white', value: 'white' },
+  { label: 'black', value: 'black' },
+  { label: 'info', value: 'info' },
+  { label: 'success', value: 'success' },
+  { label: 'warning', value: 'warning' },
+  { label: 'danger', value: 'danger' }
+]
+
 function state() {
   return {
     type: 'fill',
     mode: 'neutral',
+    labelMode: null,
     label: 'Button',
     loading: false
   }
@@ -29,11 +53,13 @@ function state() {
       />
       <HstSelect
         title="mode"
-        :options="{
-          neutral: 'neutral',
-          mute: 'mute'
-        }"
+        :options="modes"
         v-model="state.mode"
+      />
+      <HstSelect
+        title="label-mode"
+        :options="contentModes"
+        v-model="state.labelMode"
       />
       <HstText
         title="label"
@@ -51,6 +77,7 @@ function state() {
           :type="state.type"
           :mode="state.mode"
           :label="state.label"
+          :label-mode="state.labelMode"
           :loading="state.loading"
           @click="log('click', null)"
         />

@@ -24,6 +24,18 @@ const modes = [
   'danger'
 ]
 
+const contentModes = [
+  { label: 'null', value: null },
+  { label: 'neutral', value: 'neutral' },
+  { label: 'mute', value: 'mute' },
+  { label: 'white', value: 'white' },
+  { label: 'black', value: 'black' },
+  { label: 'info', value: 'info' },
+  { label: 'success', value: 'success' },
+  { label: 'warning', value: 'warning' },
+  { label: 'danger', value: 'danger' }
+]
+
 const icons = [
   IconCheckCircle,
   IconImageSquare,
@@ -34,6 +46,8 @@ function state() {
   return {
     size: 'medium',
     mode: 'neutral',
+    iconMode: null,
+    labelMode: null,
     label: 'Button'
   } as const
 }
@@ -60,12 +74,12 @@ function state() {
       />
       <HstSelect
         title="icon-mode"
-        :options="modes"
+        :options="contentModes"
         v-model="state.iconMode"
       />
       <HstSelect
         title="label-mode"
-        :options="modes"
+        :options="contentModes"
         v-model="state.labelMode"
       />
       <HstText

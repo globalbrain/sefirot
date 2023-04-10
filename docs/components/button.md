@@ -132,6 +132,16 @@ Defines the color of the button's label.
 interface Props {
   labelMode?: Mode
 }
+
+type Mode =
+  | 'neutral'
+  | 'mute'
+  | 'white'
+  | 'black'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
 ```
 
 ```vue-html
@@ -143,8 +153,10 @@ interface Props {
 Prepend the given icon to the button. You may pass any `@iconify-icons` icons.
 
 ```ts
+import { IconifyIcon } from '@iconify/vue/dist/offline'
+
 interface Props {
-  label?: string
+  icon?: IconifyIcon
 }
 ```
 
@@ -166,6 +178,16 @@ Defines the color of the button's icon.
 interface Props {
   iconMode?: Mode
 }
+
+type Mode =
+  | 'neutral'
+  | 'mute'
+  | 'white'
+  | 'black'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
 ```
 
 ```vue
@@ -174,7 +196,11 @@ import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
 </script>
 
 <template>
-  <SButton :icon="IconCheckCircle" label="Button" icon-mode="success" />
+  <SButton
+    :icon="IconCheckCircle"
+    icon-mode="success"
+    label="Button"
+  />
 </template>
 ```
 
