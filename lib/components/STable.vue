@@ -261,9 +261,7 @@ function getCell(key: string, index: number) {
                   :class="
                     isSummary(rIndex)
                       ? 'summary'
-                      : lastRow(rIndex)
-                      ? 'last'
-                      : ''
+                      : lastRow(rIndex) ? 'last' : ''
                   "
                 >
                   <STableItem
