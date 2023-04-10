@@ -1,6 +1,6 @@
 import type { MaybeRef } from '@vueuse/core'
 import type { Component } from 'vue'
-import { reactive } from 'vue'
+import { shallowReactive } from 'vue'
 import type { Day } from '../support/Day'
 import type { DropdownSection } from './Dropdown'
 
@@ -172,5 +172,5 @@ export function useTable<
 >(
   options: UseTableOptions<O, R, SR>
 ): Table<O, R, SR> {
-  return reactive(options) as Table<O, R, SR>
+  return shallowReactive(options) as Table<O, R, SR>
 }

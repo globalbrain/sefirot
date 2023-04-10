@@ -9,6 +9,7 @@ import {
   toRefs,
   watch
 } from 'vue'
+import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -41,6 +42,7 @@ const {
 
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
+const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const colToGrowAdjusted = ref(false)
@@ -56,6 +58,7 @@ let headLock = false
 let bodyLock = false
 
 const colWidths = reactive<Record<string, string>>({})
+const blockWidth = ref<number | undefined>()
 
 const showHeader = computed(() => {
   if (header?.value === true) {
@@ -107,6 +110,10 @@ watch(() => records?.value, () => {
   headLock = false
   bodyLock = false
 }, { flush: 'post' })
+
+useResizeObserver(block, ([entry]) => {
+  blockWidth.value = entry.contentRect.width
+})
 
 const resizeObserver = useResizeObserver(head, handleResize)
 
@@ -175,6 +182,10 @@ function isSummary(index: number) {
   return index === records?.value?.length
 }
 
+function lastRow(index: number) {
+  return index === recordsWithSummary.value.length - 1
+}
+
 function getCell(key: string, index: number) {
   return (isSummary(index) && columns.value[key]?.summaryCell)
     ? columns.value[key]?.summaryCell
@@ -201,7 +212,7 @@ function getCell(key: string, index: number) {
           @mouseleave="lockHead(false)"
           @scroll="syncHeadScroll"
         >
-          <div class="block">
+          <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
                 v-for="key in orders"
@@ -232,32 +243,50 @@ function getCell(key: string, index: number) {
           @mouseleave="lockBody(false)"
           @scroll="syncBodyScroll"
         >
-          <div class="block">
-            <div
-              v-for="(record, rIndex) in recordsWithSummary"
-              :key="rIndex"
-              class="row"
-              :class="isSummary(rIndex) && 'summary'"
-            >
-              <STableItem
-                v-for="key in orders"
-                :key="key"
-                :name="key"
-                :class-name="columns[key].className"
-                :width="colWidths[key]"
+          <DynamicScroller
+            :items="recordsWithSummary"
+            :min-item-size="40"
+            :key-field="orders[0]"
+            class="block"
+            :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
+          >
+            <template #default="{ item: record, index: rIndex, active }">
+              <DynamicScrollerItem
+                :item="record"
+                :active="active"
+                :data-index="rIndex"
               >
-                <STableCell
-                  :name="key"
-                  :class="isSummary(rIndex) && 'summary'"
-                  :class-name="columns[key].className"
-                  :cell="getCell(key, rIndex)"
-                  :value="record[key]"
-                  :record="record"
-                  :records="records"
-                />
-              </STableItem>
-            </div>
-          </div>
+                <div
+                  class="row"
+                  :class="
+                    isSummary(rIndex)
+                      ? 'summary'
+                      : lastRow(rIndex)
+                      ? 'last'
+                      : ''
+                  "
+                >
+                  <STableItem
+                    v-for="key in orders"
+                    :key="key"
+                    :name="key"
+                    :class-name="columns[key].className"
+                    :width="colWidths[key]"
+                  >
+                    <STableCell
+                      :name="key"
+                      :class="isSummary(rIndex) && 'summary'"
+                      :class-name="columns[key].className"
+                      :cell="getCell(key, rIndex)"
+                      :value="record[key]"
+                      :record="record"
+                      :records="records"
+                    />
+                  </STableItem>
+                </div>
+              </DynamicScrollerItem>
+            </template>
+          </DynamicScroller>
         </div>
       </div>
 
@@ -338,6 +367,12 @@ function getCell(key: string, index: number) {
   .STable.has-footer & {
     border-radius: 0;
   }
+
+  .block {
+    margin-bottom: -5px;
+    max-height: var(--table-max-height, 65vh);
+    overflow-y: auto;
+  }
 }
 
 .block {
@@ -345,13 +380,14 @@ function getCell(key: string, index: number) {
   min-width: 100%;
 }
 
-.row {
+:deep(.row) {
   display: flex;
   border-bottom: 1px solid var(--c-divider-2);
+}
 
-  .body &:last-child {
-    border-bottom: 0;
-  }
+:deep(.row.last),
+:deep(.row.summary) {
+  border-bottom: 0;
 }
 
 .missing {
