@@ -359,7 +359,7 @@ function getCell(key: string, index: number) {
   }
 
   .block {
-    max-height: var(--table-max-height, 65vh);
+    max-height: var(--table-max-height, 100%);
     overflow-y: auto;
   }
 }
