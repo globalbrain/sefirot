@@ -351,6 +351,7 @@ function getCell(key: string, index: number) {
 }
 
 .container.body {
+  display: flex;
   border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
 
   .STable.has-footer & {
@@ -358,7 +359,6 @@ function getCell(key: string, index: number) {
   }
 
   .block {
-    margin-bottom: -5px;
     max-height: var(--table-max-height, 65vh);
     overflow-y: auto;
   }
