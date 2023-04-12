@@ -345,6 +345,7 @@ function getCell(key: string, index: number) {
     border-radius: 0;
   }
 
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
