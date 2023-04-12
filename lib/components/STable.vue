@@ -352,13 +352,13 @@ function getCell(key: string, index: number) {
 
 .container.body {
   border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
+  line-height: 0;
 
   .STable.has-footer & {
     border-radius: 0;
   }
 
   .block {
-    margin-bottom: -5px;
     max-height: var(--table-max-height, 100%);
     overflow-y: auto;
   }
