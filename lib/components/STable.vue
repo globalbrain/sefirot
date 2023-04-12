@@ -1,14 +1,6 @@
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import {
-  computed,
-  nextTick,
-  reactive,
-  ref,
-  shallowRef,
-  toRefs,
-  watch
-} from 'vue'
+import { computed, nextTick, reactive, ref, shallowRef, unref, watch } from 'vue'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import type { Table } from '../composables/Table'
@@ -23,24 +15,6 @@ const props = defineProps<{
   options: Table
 }>()
 
-const {
-  orders,
-  columns,
-  records,
-  header,
-  footer,
-  summary,
-  total,
-  page,
-  perPage,
-  reset,
-  borderless,
-  loading,
-  onPrev,
-  onNext,
-  onReset
-} = toRefs(props.options)
-
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
@@ -50,9 +24,13 @@ const colToGrowAdjusted = ref(false)
 const colToGrow = computed(() => {
   return colToGrowAdjusted.value
     ? -1
-    : orders.value.findIndex((key) => columns.value[key]?.grow) ?? -1
+    : unref(props.options.orders).findIndex(
+      (key) => unref(props.options.columns)[key]?.grow
+    ) ?? -1
 })
-const nameOfColToGrow = computed(() => orders.value[colToGrow.value])
+const nameOfColToGrow = computed(
+  () => unref(props.options.orders)[colToGrow.value]
+)
 const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
 
 let headLock = false
@@ -62,51 +40,52 @@ const colWidths = reactive<Record<string, string>>({})
 const blockWidth = ref<number | undefined>()
 
 const showHeader = computed(() => {
-  if (header?.value === true) {
-    return true
+  const header = unref(props.options.header)
+
+  if (header != null) {
+    return header
   }
 
-  if (header?.value === false) {
-    return false
-  }
-
-  return total?.value !== undefined || !!reset?.value
+  return unref(props.options.total) != null || !!unref(props.options.reset)
 })
 
 const showFooter = computed(() => {
-  if (loading?.value) {
+  if (unref(props.options.loading)) {
     return false
   }
 
-  if (footer?.value === true) {
-    return true
+  const footer = unref(props.options.footer)
+
+  if (footer != null) {
+    return footer
   }
 
-  if (footer?.value === false) {
-    return false
-  }
-
-  return page?.value && perPage?.value && total?.value
+  return (
+    unref(props.options.page)
+    && unref(props.options.perPage)
+    && unref(props.options.total)
+  )
 })
 
 const classes = computed(() => ({
   'has-header': showHeader.value,
   'has-footer': showFooter.value,
-  'borderless': borderless?.value
+  'borderless': unref(props.options.borderless)
 }))
 
 const recordsWithSummary = computed(() => {
-  return (records?.value && summary?.value)
-    ? [...records?.value, summary?.value]
-    : records?.value ?? []
+  const records = unref(props.options.records) ?? []
+  const summary = unref(props.options.summary)
+
+  return summary ? [...records, summary] : records
 })
 
-watch(() => records?.value, () => {
+watch(() => props.options.records, () => {
   headLock = true
   bodyLock = true
 }, { flush: 'pre' })
 
-watch(() => records?.value, () => {
+watch(() => props.options.records, () => {
   syncScroll(head.value, body.value)
   headLock = false
   bodyLock = false
@@ -119,7 +98,8 @@ useResizeObserver(block, ([entry]) => {
 const resizeObserver = useResizeObserver(head, handleResize)
 
 function stopObserving() {
-  colWidths[orders.value[orders.value.length - 1]] = 'auto'
+  const orders = unref(props.options.orders)
+  colWidths[orders[orders.length - 1]] = 'auto'
   resizeObserver.stop()
 }
 
@@ -180,7 +160,7 @@ function updateColWidth(key: string, value: string, triggeredByUser = false) {
 }
 
 function isSummary(index: number) {
-  return index === records?.value?.length
+  return index === unref(props.options.records)?.length
 }
 
 function lastRow(index: number) {
@@ -188,9 +168,8 @@ function lastRow(index: number) {
 }
 
 function getCell(key: string, index: number) {
-  return (isSummary(index) && columns.value[key]?.summaryCell)
-    ? columns.value[key]?.summaryCell
-    : columns.value[key]?.cell
+  const col = unref(props.options.columns)[key]
+  return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
 }
 </script>
 
@@ -199,10 +178,10 @@ function getCell(key: string, index: number) {
     <div class="box">
       <STableHeader
         v-if="showHeader"
-        :total="total"
-        :reset="reset"
-        :borderless="borderless"
-        :on-reset="onReset"
+        :total="unref(options.total)"
+        :reset="unref(options.reset)"
+        :borderless="unref(options.borderless)"
+        :on-reset="options.onReset"
       />
 
       <div class="table" role="grid">
@@ -216,19 +195,19 @@ function getCell(key: string, index: number) {
           <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
-                v-for="key in orders"
+                v-for="key in options.orders"
                 :key="key"
                 :name="key"
-                :class-name="columns[key].className"
+                :class-name="unref(options.columns)[key].className"
                 :width="colWidths[key]"
               >
                 <STableColumn
                   :name="key"
-                  :label="columns[key].label"
-                  :class-name="columns[key].className"
-                  :dropdown="columns[key].dropdown"
+                  :label="unref(options.columns)[key].label"
+                  :class-name="unref(options.columns)[key].className"
+                  :dropdown="unref(options.columns)[key].dropdown"
                   :has-header="showHeader"
-                  :resizable="columns[key].resizable"
+                  :resizable="unref(options.columns)[key].resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
                 />
               </STableItem>
@@ -237,7 +216,7 @@ function getCell(key: string, index: number) {
         </div>
 
         <div
-          v-if="!loading && records && records.length"
+          v-if="!unref(options.loading) && unref(options.records)?.length"
           class="container body"
           ref="body"
           @mouseenter="lockBody(true)"
@@ -247,7 +226,7 @@ function getCell(key: string, index: number) {
           <DynamicScroller
             :items="recordsWithSummary"
             :min-item-size="40"
-            :key-field="orders[0]"
+            :key-field="unref(options.orders)[0]"
             class="block"
             :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
           >
@@ -266,20 +245,20 @@ function getCell(key: string, index: number) {
                   "
                 >
                   <STableItem
-                    v-for="key in orders"
+                    v-for="key in options.orders"
                     :key="key"
                     :name="key"
-                    :class-name="columns[key].className"
+                    :class-name="unref(options.columns)[key].className"
                     :width="colWidths[key]"
                   >
                     <STableCell
                       :name="key"
                       :class="isSummary(rIndex) && 'summary'"
-                      :class-name="columns[key].className"
+                      :class-name="unref(options.columns)[key].className"
                       :cell="getCell(key, rIndex)"
                       :value="record[key]"
                       :record="record"
-                      :records="records"
+                      :records="unref(options.records)!"
                     />
                   </STableItem>
                 </div>
@@ -289,13 +268,13 @@ function getCell(key: string, index: number) {
         </div>
       </div>
 
-      <div v-if="!loading && records && !records.length" class="missing">
+      <div v-if="!unref(options.loading) && unref(options.records) && !unref(options.records)?.length" class="missing">
         <p class="missing-text">
           No results matched your search.
         </p>
       </div>
 
-      <div v-if="loading" class="loading">
+      <div v-if="unref(options.loading)" class="loading">
         <div class="loading-icon">
           <SSpinner class="loading-svg" />
         </div>
@@ -303,12 +282,12 @@ function getCell(key: string, index: number) {
 
       <STableFooter
         v-if="showFooter"
-        :total="total"
-        :page="page"
-        :per-page="perPage"
-        :borderless="borderless"
-        :on-prev="onPrev"
-        :on-next="onNext"
+        :total="unref(options.total)"
+        :page="unref(options.page)"
+        :per-page="unref(options.perPage)"
+        :borderless="unref(options.borderless)"
+        :on-prev="options.onPrev"
+        :on-next="options.onNext"
       />
     </div>
   </div>
