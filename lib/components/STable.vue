@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import { useResizeObserver } from '@vueuse/core'
-import { computed, nextTick, reactive, ref, shallowRef, unref, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  reactive,
+  ref,
+  shallowRef,
+  unref,
+  watch
+} from 'vue'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import type { Table } from '../composables/Table'
@@ -241,7 +249,9 @@ function getCell(key: string, index: number) {
                   :class="
                     isSummary(rIndex)
                       ? 'summary'
-                      : lastRow(rIndex) ? 'last' : ''
+                      : lastRow(rIndex)
+                        ? 'last'
+                        : ''
                   "
                 >
                   <STableItem
@@ -268,10 +278,11 @@ function getCell(key: string, index: number) {
         </div>
       </div>
 
-      <div v-if="!unref(options.loading) && unref(options.records) && !unref(options.records)?.length" class="missing">
-        <p class="missing-text">
-          No results matched your search.
-        </p>
+      <div
+        v-if="!unref(options.loading) && unref(options.records) && !unref(options.records)!.length"
+        class="missing"
+      >
+        <p class="missing-text">No results matched your search.</p>
       </div>
 
       <div v-if="unref(options.loading)" class="loading">
