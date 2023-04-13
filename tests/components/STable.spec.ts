@@ -24,31 +24,29 @@ describe('components/STable', () => {
     expect(wrapper.find('.STable .head .col-item_3 .label').text()).toBe('item_3')
   })
 
-  // FIXME: Does not work because of virtualization
-  //
-  // test('it displays summary row at bottom', () => {
-  //   const table = useTable({
-  //     orders: ['name', 'amount'],
-  //     columns: {
-  //       name: { label: 'Name' },
-  //       amount: { label: 'Amount' }
-  //     },
-  //     records: [
-  //       { name: 'Item 1', amount: 10 },
-  //       { name: 'Item 2', amount: 90 }
-  //     ],
-  //     summary: {
-  //       name: 'Total', amount: 100
-  //     }
-  //   })
+  test('it displays summary row at bottom', () => {
+    const table = useTable({
+      orders: ['name', 'amount'],
+      columns: {
+        name: { label: 'Name' },
+        amount: { label: 'Amount' }
+      },
+      records: [
+        { name: 'Item 1', amount: 10 },
+        { name: 'Item 2', amount: 90 }
+      ],
+      summary: {
+        name: 'Total', amount: 100
+      }
+    })
 
-  //   const wrapper = mount(STable, {
-  //     props: {
-  //       options: table
-  //     }
-  //   })
+    const wrapper = mount(STable, {
+      props: {
+        options: table
+      }
+    })
 
-  //   expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
-  //   expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
-  // })
+    expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
+    expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+  })
 })

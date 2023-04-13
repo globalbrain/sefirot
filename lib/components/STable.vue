@@ -242,6 +242,7 @@ function getCell(key: string, index: number) {
             key-field="__index"
             class="block"
             :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
+            :prerender="Math.min(10, recordsWithSummary.length)"
           >
             <template #default="{ item: record, index: rIndex, active }">
               <DynamicScrollerItem
