@@ -85,7 +85,12 @@ const recordsWithSummary = computed(() => {
   const records = unref(props.options.records) ?? []
   const summary = unref(props.options.summary)
 
-  return summary ? [...records, summary] : records
+  const res = summary ? [...records, summary] : records
+  res.forEach((record, index) => {
+    record.__index = index
+  })
+
+  return res
 })
 
 watch(() => props.options.records, () => {
@@ -234,7 +239,7 @@ function getCell(key: string, index: number) {
           <DynamicScroller
             :items="recordsWithSummary"
             :min-item-size="40"
-            :key-field="unref(options.orders)[0]"
+            key-field="__index"
             class="block"
             :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
           >
