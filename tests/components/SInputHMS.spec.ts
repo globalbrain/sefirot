@@ -15,9 +15,9 @@ describe('components/SInputHMS', async () => {
       }
     })
 
-    expect(getInputValue(wrapper.find('.SInputHMS .input.hour'))).toBe('1')
-    expect(getInputValue(wrapper.find('.SInputHMS .input.minute'))).toBe('2')
-    expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('3')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.hour'))).toBe('01')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.minute'))).toBe('02')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('03')
   })
 
   test('accepts `:model-value`', async () => {
@@ -27,9 +27,9 @@ describe('components/SInputHMS', async () => {
       }
     })
 
-    expect(getInputValue(wrapper.find('.SInputHMS .input.hour'))).toBe('1')
-    expect(getInputValue(wrapper.find('.SInputHMS .input.minute'))).toBe('2')
-    expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('3')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.hour'))).toBe('01')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.minute'))).toBe('02')
+    expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('03')
   })
 
   test('focuses conatiner when input is focused', async () => {
@@ -49,18 +49,18 @@ describe('components/SInputHMS', async () => {
 
     await wrapper.find('.SInputHMS .input.hour').setValue('4')
     await wrapper.find('.SInputHMS .input.hour').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 1, { hour: '04', minute: '2', second: '3' })
-    assertEmitted(wrapper, 'change', 1, { hour: '04', minute: '2', second: '3' })
+    assertEmitted(wrapper, 'update:model-value', 1, { hour: '4', minute: '2', second: '3' })
+    assertEmitted(wrapper, 'change', 1, { hour: '4', minute: '2', second: '3' })
 
     await wrapper.find('.SInputHMS .input.minute').setValue('5')
     await wrapper.find('.SInputHMS .input.minute').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 2, { hour: '1', minute: '05', second: '3' })
-    assertEmitted(wrapper, 'change', 2, { hour: '1', minute: '05', second: '3' })
+    assertEmitted(wrapper, 'update:model-value', 2, { hour: '1', minute: '5', second: '3' })
+    assertEmitted(wrapper, 'change', 2, { hour: '1', minute: '5', second: '3' })
 
     await wrapper.find('.SInputHMS .input.second').setValue('6')
     await wrapper.find('.SInputHMS .input.second').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 3, { hour: '1', minute: '2', second: '06' })
-    assertEmitted(wrapper, 'change', 3, { hour: '1', minute: '2', second: '06' })
+    assertEmitted(wrapper, 'update:model-value', 3, { hour: '1', minute: '2', second: '6' })
+    assertEmitted(wrapper, 'change', 3, { hour: '1', minute: '2', second: '6' })
   })
 
   test('emits events with `null` when the input is not number', async () => {
