@@ -1,21 +1,23 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   name: string
   className?: string
   width?: string
 }>()
+
+const classes = computed(() => [
+  'STableItem',
+  props.className,
+  `col-${props.name}`,
+  { adjusted: props.width },
+  { auto: props.width === 'auto' }
+])
 </script>
 
 <template>
-  <div
-    class="STableItem"
-    :class="[
-      className,
-      `col-${name}`,
-      { adjusted: width },
-      { auto: width === 'auto' }
-    ]"
-  >
+  <div :class="classes">
     <slot />
   </div>
 </template>
