@@ -16,12 +16,19 @@ export interface Value {
 
 export type ValueType = 'year' | 'month' | 'date'
 
+export interface Placeholder {
+  year: number
+  month: number
+  date: number
+}
+
 const props = defineProps<{
   size?: Size
   label?: string
   info?: string
   note?: string
   help?: string
+  placeholder?: Placeholder
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -52,6 +59,14 @@ const padValue = computed(() => {
     year: _value.value?.year?.toString().padStart(4, '0') ?? null,
     month: _value.value?.month?.toString().padStart(2, '0') ?? null,
     date: _value.value?.date?.toString().padStart(2, '0') ?? null
+  }
+})
+
+const padPlaceholder = computed(() => {
+  return {
+    year: props.placeholder?.year.toString().padStart(4, '0') ?? '1998',
+    month: props.placeholder?.month.toString().padStart(2, '0') ?? '01',
+    date: props.placeholder?.date.toString().padStart(2, '0') ?? '14'
   }
 })
 
@@ -145,7 +160,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noYear"
         class="input year"
         :value="padValue?.year"
-        placeholder="1998"
+        :placeholder="padPlaceholder.year"
         :maxlength="4"
         :disabled="disabled"
         @focus="onFocus"
@@ -159,7 +174,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noMonth"
         class="input month"
         :value="padValue?.month"
-        placeholder="01"
+        :placeholder="padPlaceholder.month"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -173,7 +188,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noDate"
         class="input date"
         :value="padValue?.date"
-        placeholder="14"
+        :placeholder="padPlaceholder.date"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
