@@ -4,6 +4,7 @@ import {
   assertEmitted,
   assertNotEmitted,
   createValidatable,
+  getInputPlaceholder,
   getInputValue
 } from 'tests/Utils'
 
@@ -30,6 +31,22 @@ describe('components/SInputHMS', async () => {
     expect(getInputValue(wrapper.find('.SInputHMS .input.hour'))).toBe('01')
     expect(getInputValue(wrapper.find('.SInputHMS .input.minute'))).toBe('02')
     expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('03')
+  })
+
+  test('accepts `:placeholder`', async () => {
+    const wrapper = mount(SInputHMS, {
+      props: {
+        placeholder: {
+          hour: '10',
+          minute: '8',
+          second: '6'
+        }
+      }
+    })
+
+    expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.hour'))).toBe('10')
+    expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.minute'))).toBe('08')
+    expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.second'))).toBe('06')
   })
 
   test('focuses conatiner when input is focused', async () => {

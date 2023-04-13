@@ -15,9 +15,9 @@ export interface Value {
 }
 
 export interface Placeholder {
-  hour: number
-  minute: number
-  second: number
+  hour: string
+  minute: string
+  second: string
 }
 
 export type ValueType = 'hour' | 'minute' | 'second'
@@ -61,7 +61,7 @@ const padValue = computed(() => {
   }
 })
 
-const _placeholder = computed(() => {
+const padPlaceholder = computed(() => {
   return {
     hour: props.placeholder?.hour.toString().padStart(2, '0') ?? '00',
     minute: props.placeholder?.minute.toString().padStart(2, '0') ?? '00',
@@ -169,7 +169,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noHour"
         class="input hour"
         :value="padValue?.hour"
-        :placeholder="_placeholder.hour"
+        :placeholder="padPlaceholder.hour"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -180,7 +180,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noMinute"
         class="input minute"
         :value="padValue?.minute"
-        :placeholder="_placeholder.minute"
+        :placeholder="padPlaceholder.minute"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -191,7 +191,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noSecond"
         class="input second"
         :value="padValue?.second"
-        :placeholder="_placeholder.second"
+        :placeholder="padPlaceholder.second"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
