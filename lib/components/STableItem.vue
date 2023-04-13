@@ -9,7 +9,12 @@ defineProps<{
 <template>
   <div
     class="STableItem"
-    :class="[className, `col-${name}`, { adjusted: width }, { auto: width === 'auto' }]"
+    :class="[
+      className,
+      `col-${name}`,
+      { adjusted: width },
+      { auto: width === 'auto' }
+    ]"
   >
     <slot />
   </div>
