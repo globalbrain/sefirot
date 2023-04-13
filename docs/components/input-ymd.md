@@ -109,6 +109,33 @@ interface Props {
 />
 ```
 
+### `:placeholder`
+
+Defines the placeholder to show when the value is empty. The default is `1998/01/14`, which is the founded date of [Global Brain](https://globalbrain.co.jp/).
+
+```ts
+interface Props {
+  placeholder?: Placeholder
+}
+
+interface Placeholder {
+  year: number
+  month: number
+  date: number
+}
+```
+
+```vue-html
+<SInputYMD
+  :placeholder="{
+    year: 1985,
+    month: 10,
+    date: 10
+  }"
+  v-model="..."
+/>
+```
+
 ### `:check-icon`
 
 Icon to display at corner right of label. Useful to show the status of a particular input.

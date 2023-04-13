@@ -4,6 +4,7 @@ import {
   assertEmitted,
   assertNotEmitted,
   createValidatable,
+  getInputPlaceholder,
   getInputValue
 } from 'tests/Utils'
 
@@ -30,6 +31,22 @@ describe('components/SInputYMD', async () => {
     expect(getInputValue(wrapper.find('.SInputYMD .input.year'))).toBe('1970')
     expect(getInputValue(wrapper.find('.SInputYMD .input.month'))).toBe('01')
     expect(getInputValue(wrapper.find('.SInputYMD .input.date'))).toBe('01')
+  })
+
+  test('accepts `:placeholder`', async () => {
+    const wrapper = mount(SInputYMD, {
+      props: {
+        placeholder: {
+          year: 1985,
+          month: 10,
+          date: 15
+        }
+      }
+    })
+
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.year'))).toBe('1985')
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.month'))).toBe('10')
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.date'))).toBe('15')
   })
 
   test('focuses conatiner when input is focused', async () => {

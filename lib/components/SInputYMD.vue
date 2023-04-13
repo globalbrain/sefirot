@@ -14,13 +14,13 @@ export interface Value {
   date: number | null
 }
 
+export type ValueType = 'year' | 'month' | 'date'
+
 export interface Placeholder {
   year: number
   month: number
   date: number
 }
-
-export type ValueType = 'year' | 'month' | 'date'
 
 const props = defineProps<{
   size?: Size
@@ -62,7 +62,7 @@ const padValue = computed(() => {
   }
 })
 
-const _placeholder = computed(() => {
+const padPlaceholder = computed(() => {
   return {
     year: props.placeholder?.year.toString().padStart(4, '0') ?? '1998',
     month: props.placeholder?.month.toString().padStart(2, '0') ?? '01',
@@ -160,7 +160,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noYear"
         class="input year"
         :value="padValue?.year"
-        :placeholder="_placeholder.year"
+        :placeholder="padPlaceholder.year"
         :maxlength="4"
         :disabled="disabled"
         @focus="onFocus"
@@ -174,7 +174,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noMonth"
         class="input month"
         :value="padValue?.month"
-        :placeholder="_placeholder.month"
+        :placeholder="padPlaceholder.month"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -188,7 +188,7 @@ function createRequiredTouched(): boolean[] {
         v-if="!noDate"
         class="input date"
         :value="padValue?.date"
-        :placeholder="_placeholder.date"
+        :placeholder="padPlaceholder.date"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
