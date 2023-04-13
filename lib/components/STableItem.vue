@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div
     class="STableItem"
-    :class="[className, `col-${name}`, { adjusted: width }]"
+    :class="[className, `col-${name}`, { adjusted: width }, { auto: width === 'auto' }]"
   >
     <slot />
   </div>
@@ -32,8 +32,11 @@ defineProps<{
 
   &.adjusted {
     width: v-bind(width) !important;
-    min-width: v-bind(width) !important;
     max-width: v-bind(width) !important;
+  }
+
+  &.adjusted:not(.auto) {
+    min-width: v-bind(width) !important;
   }
 }
 </style>
