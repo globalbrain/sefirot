@@ -109,6 +109,33 @@ interface Props {
 />
 ```
 
+### `:placeholder`
+
+Defines the placeholder to show when the value is empty. The default is `00:00:00`.
+
+```ts
+interface Props {
+  placeholder?: Placeholder
+}
+
+interface Placeholder {
+  hour: string
+  minute: string
+  second: string
+}
+```
+
+```vue-html
+<SInputHMS
+  :placeholder="{
+    hour: 18,
+    minute: 30,
+    second: 15
+  }"
+  v-model="..."
+/>
+```
+
 ### `:check-icon`
 
 Icon to display at corner right of label. Useful to show the status of a particular input.

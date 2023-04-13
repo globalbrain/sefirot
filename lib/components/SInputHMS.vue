@@ -14,6 +14,12 @@ export interface Value {
   second: string | null
 }
 
+export interface Placeholder {
+  hour: string
+  minute: string
+  second: string
+}
+
 export type ValueType = 'hour' | 'minute' | 'second'
 
 const props = defineProps<{
@@ -22,6 +28,7 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
+  placeholder?: Placeholder
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -44,6 +51,22 @@ const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
     : props.value !== undefined ? props.value : null
+})
+
+const padValue = computed(() => {
+  return {
+    hour: _value.value?.hour?.padStart(2, '0') ?? null,
+    minute: _value.value?.minute?.padStart(2, '0') ?? null,
+    second: _value.value?.second?.padStart(2, '0') ?? null
+  }
+})
+
+const padPlaceholder = computed(() => {
+  return {
+    hour: props.placeholder?.hour.toString().padStart(2, '0') ?? '00',
+    minute: props.placeholder?.minute.toString().padStart(2, '0') ?? '00',
+    second: props.placeholder?.second.toString().padStart(2, '0') ?? '00'
+  }
 })
 
 const isFocused = ref(false)
@@ -81,7 +104,7 @@ function update(type: ValueType, value: string | null) {
 
   const newValue = {
     ..._value.value,
-    [type]: value !== null ? value.padStart(2, '0') : null
+    [type]: value ?? null
   }
 
   emit('update:model-value', newValue)
@@ -145,8 +168,8 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noHour"
         class="input hour"
-        :value="_value?.hour"
-        placeholder="00"
+        :value="padValue?.hour"
+        :placeholder="padPlaceholder.hour"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -156,8 +179,8 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noMinute"
         class="input minute"
-        :value="_value?.minute"
-        placeholder="00"
+        :value="padValue?.minute"
+        :placeholder="padPlaceholder.minute"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
@@ -167,8 +190,8 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noSecond"
         class="input second"
-        :value="_value?.second"
-        placeholder="00"
+        :value="padValue?.second"
+        :placeholder="padPlaceholder.second"
         :maxlength="2"
         :disabled="disabled"
         @focus="onFocus"
