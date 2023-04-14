@@ -50,6 +50,7 @@ export type TableCell =
   | TableCellDay
   | TableCellPill
   | TableCellPills
+  | TableCellState
   | TableCellAvatar
   | TableCellAvatars
   | TableCellEmpty
@@ -60,6 +61,7 @@ export type TableCellType =
   | 'day'
   | 'pill'
   | 'pills'
+  | 'state'
   | 'avatar'
   | 'avatars'
   | 'empty'
@@ -140,6 +142,12 @@ export interface TableCellComponent extends TableCellBase {
   type: 'component'
   component: Component
   props?: Record<string, any>
+}
+
+export interface TableCellState extends TableCellBase {
+  type: 'state'
+  label: string
+  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 }
 
 export function useTable<
