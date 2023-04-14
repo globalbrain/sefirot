@@ -10,7 +10,6 @@ import {
   watch
 } from 'vue'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
-import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -29,17 +28,24 @@ const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const colToGrowAdjusted = ref(false)
+
 const colToGrow = computed(() => {
-  return colToGrowAdjusted.value
-    ? -1
-    : unref(props.options.orders).findIndex(
-      (key) => unref(props.options.columns)[key]?.grow
-    ) ?? -1
+  if (colToGrowAdjusted.value) {
+    return -1
+  }
+
+  return unref(props.options.orders).findIndex((key) => {
+    return unref(props.options.columns)[key]?.grow
+  }) ?? -1
 })
-const nameOfColToGrow = computed(
-  () => unref(props.options.orders)[colToGrow.value]
-)
-const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
+
+const nameOfColToGrow = computed(() => {
+  return unref(props.options.orders)[colToGrow.value]
+})
+
+const cellOfColToGrow = computed(() => {
+  return row.value?.children[colToGrow.value]
+})
 
 let headLock = false
 let bodyLock = false
@@ -75,6 +81,14 @@ const showFooter = computed(() => {
   )
 })
 
+const showMissing = computed(() => {
+  return (
+    !unref(props.options.loading)
+    && unref(props.options.records)
+    && !unref(props.options.records)!.length
+  )
+})
+
 const classes = computed(() => ({
   'has-header': showHeader.value,
   'has-footer': showFooter.value,
@@ -86,6 +100,7 @@ const recordsWithSummary = computed(() => {
   const summary = unref(props.options.summary)
 
   const res = summary ? [...records, summary] : records
+
   res.forEach((record, index) => {
     record.__index = index
   })
@@ -172,6 +187,14 @@ function updateColWidth(key: string, value: string, triggeredByUser = false) {
   }
 }
 
+function isSummaryOrLastClass(index: number) {
+  if (isSummary(index)) {
+    return 'summary'
+  }
+
+  return lastRow(index) ? 'last' : ''
+}
+
 function isSummary(index: number) {
   return index === unref(props.options.records)?.length
 }
@@ -250,16 +273,7 @@ function getCell(key: string, index: number) {
                 :active="active"
                 :data-index="rIndex"
               >
-                <div
-                  class="row"
-                  :class="
-                    isSummary(rIndex)
-                      ? 'summary'
-                      : lastRow(rIndex)
-                        ? 'last'
-                        : ''
-                  "
-                >
+                <div class="row" :class="isSummaryOrLastClass(rIndex)">
                   <STableItem
                     v-for="key in options.orders"
                     :key="key"
@@ -284,10 +298,7 @@ function getCell(key: string, index: number) {
         </div>
       </div>
 
-      <div
-        v-if="!unref(options.loading) && unref(options.records) && !unref(options.records)!.length"
-        class="missing"
-      >
+      <div v-if="showMissing" class="missing">
         <p class="missing-text">No results matched your search.</p>
       </div>
 
@@ -346,14 +357,14 @@ function getCell(key: string, index: number) {
   z-index: 100;
   border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
   background-color: var(--bg-elv-2);
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .STable.has-header & {
     border-radius: 0;
-  }
-
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
   }
 }
 

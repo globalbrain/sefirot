@@ -4,9 +4,9 @@ import type { Day } from '../support/Day'
 import type { DropdownSection } from './Dropdown'
 
 export interface Table<
-O extends string = any,
-R extends Record<string, any> = any,
-SR extends Record<string, any> = any
+  O extends string = any,
+  R extends Record<string, any> = any,
+  SR extends Record<string, any> = any
 > {
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
@@ -146,6 +146,6 @@ export function useTable<
   O extends string,
   R extends Record<string, any>,
   SR extends Record<string, any>
->(options: Table<O, R, SR>) {
+>(options: Table<O, R, SR>): Table<O, R, SR> {
   return options
 }
