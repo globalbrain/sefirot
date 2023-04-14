@@ -1,0 +1,108 @@
+<script setup lang="ts">
+import SState from 'sefirot/components/SState.vue'
+
+const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+</script>
+
+# SState
+
+`<SState>` is a badge that indicates the state of the object.
+
+<Showcase
+  path="/components/SState.vue"
+  story="/stories-components-sstate-01-playground-story-vue"
+>
+  <div class="flex flex-wrap gap-12">
+    <SState v-for="m in modes" :key="m" :mode="m" label="State" />
+  </div>
+</Showcase>
+
+## Usage
+
+Import `<SState>` component and set `:mode` and `:label`.
+
+```vue
+<script setup lang="ts">
+import SState from '@globalbrain/sefirot/lib/components/SState.vue'
+</script>
+
+<template>
+  <SState mode="success" label="Completed" />
+</template>
+```
+
+## Difference from SPill
+
+The `<SState>` is different from [`<SPill>`](pill) where `<SPill>` should be used to list certain types of items for the object, but `<SState>` is used to indicate the "State" of the object.
+
+For example, `<SState>` should be used for things like "Status" (Open, In progress, Completed, etc.).
+
+`<SPill>` on the other hand should be used for things like "Tag" (List of available items, User's roles, etc.)
+
+## Props
+
+Here are the list of props you may pass to the component.
+
+### `:as`
+
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default is `span`.
+
+```ts
+interface Props {
+  as?: string
+}
+```
+
+```vue-html
+<SState as="div" label="State" />
+```
+
+### `:size`
+
+Defines the size of the component. The default is `small`.
+
+```ts
+interface Props {
+  size?: 'mini' | 'small' | 'medium' | 'large'
+}
+```
+
+```vue-html
+<SState size="small" label="State" />
+```
+
+### `:mode`
+
+Defines the color of the state. The default is `neutral`.
+
+```ts
+interface Props {
+  mode?: Mode
+}
+
+type Mode =
+  | 'neutral'
+  | 'mute'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
+```
+
+```vue-html
+<SState mode="neutral" label="State" />
+```
+
+### `:label`
+
+Defines the label text of the state.
+
+```ts
+interface Props {
+  label?: string
+}
+```
+
+```vue-html
+<SState label="State" />
+```

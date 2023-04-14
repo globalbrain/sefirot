@@ -31,6 +31,14 @@ import SPill from '@globalbrain/sefirot/lib/components/SPill.vue'
 </template>
 ```
 
+## Difference from SState
+
+The [`<SState>`](state) is different from `<SPill>` where `<SPill>` should be used to list certain types of items for the object, but `<SState>` is used to indicate the "State" of the object.
+
+For example, `<SState>` should be used for things like "Status" (Open, In progress, Completed, etc.).
+
+`<SPill>` on the other hand should be used for things like "Tag" (List of available items, User's roles, etc.)
+
 ## Props
 
 Here are the list of props you may pass to the component.
