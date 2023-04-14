@@ -1,16 +1,23 @@
 <script setup lang="ts">
-defineProps<{
+import { computed } from 'vue'
+
+const props = defineProps<{
   name: string
   className?: string
   width?: string
 }>()
+
+const classes = computed(() => [
+  'STableItem',
+  props.className,
+  `col-${props.name}`,
+  { adjusted: props.width },
+  { auto: props.width === 'auto' }
+])
 </script>
 
 <template>
-  <div
-    class="STableItem"
-    :class="[className, `col-${name}`, { adjusted: width }]"
-  >
+  <div :class="classes">
     <slot />
   </div>
 </template>
@@ -32,8 +39,11 @@ defineProps<{
 
   &.adjusted {
     width: v-bind(width) !important;
-    min-width: v-bind(width) !important;
     max-width: v-bind(width) !important;
+  }
+
+  &.adjusted:not(.auto) {
+    min-width: v-bind(width) !important;
   }
 }
 </style>

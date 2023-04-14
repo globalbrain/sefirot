@@ -1,6 +1,5 @@
 import type { MaybeRef } from '@vueuse/core'
 import type { Component } from 'vue'
-import { reactive } from 'vue'
 import type { Day } from '../support/Day'
 import type { DropdownSection } from './Dropdown'
 
@@ -9,18 +8,18 @@ export interface Table<
   R extends Record<string, any> = any,
   SR extends Record<string, any> = any
 > {
-  orders: O[]
-  columns: TableColumns<O, R, SR>
-  records?: R[] | null
-  header?: boolean
-  footer?: boolean
-  summary?: SR | null
-  total?: number | null
-  page?: number | null
-  perPage?: number | null
-  reset?: boolean
-  borderless?: boolean
-  loading?: boolean
+  orders: MaybeRef<O[]>
+  columns: MaybeRef<TableColumns<O, R, SR>>
+  records?: MaybeRef<R[] | null | undefined>
+  header?: MaybeRef<boolean | undefined>
+  footer?: MaybeRef<boolean | undefined>
+  summary?: MaybeRef<SR | null | undefined>
+  total?: MaybeRef<number | null | undefined>
+  page?: MaybeRef<number | null | undefined>
+  perPage?: MaybeRef<number | null | undefined>
+  reset?: MaybeRef<boolean | undefined>
+  borderless?: MaybeRef<boolean>
+  loading?: MaybeRef<boolean | undefined>
   onPrev?(): void
   onNext?(): void
   onReset?(): void
@@ -143,34 +142,10 @@ export interface TableCellComponent extends TableCellBase {
   props?: Record<string, any>
 }
 
-export interface UseTableOptions<
-  O extends string,
-  R extends Record<string, any>,
-  SR extends Record<string, any>
-> {
-  orders: MaybeRef<O[]>
-  columns: MaybeRef<TableColumns<O, R, SR>>
-  records?: MaybeRef<R[] | null | undefined>
-  header?: MaybeRef<boolean | undefined>
-  footer?: MaybeRef<boolean | undefined>
-  summary?: MaybeRef<SR | null | undefined>
-  total?: MaybeRef<number | null | undefined>
-  page?: MaybeRef<number | null | undefined>
-  perPage?: MaybeRef<number | null | undefined>
-  reset?: MaybeRef<boolean | undefined>
-  borderless?: boolean
-  loading?: MaybeRef<boolean | undefined>
-  onPrev?(): void
-  onNext?(): void
-  onReset?(): void
-}
-
 export function useTable<
   O extends string,
   R extends Record<string, any>,
   SR extends Record<string, any>
->(
-  options: UseTableOptions<O, R, SR>
-): Table<O, R, SR> {
-  return reactive(options) as Table<O, R, SR>
+>(options: Table<O, R, SR>): Table<O, R, SR> {
+  return options
 }

@@ -6,9 +6,10 @@ import {
   reactive,
   ref,
   shallowRef,
-  toRefs,
+  unref,
   watch
 } from 'vue'
+import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import type { Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -21,97 +22,112 @@ const props = defineProps<{
   options: Table
 }>()
 
-const {
-  orders,
-  columns,
-  records,
-  header,
-  footer,
-  summary,
-  total,
-  page,
-  perPage,
-  reset,
-  borderless,
-  loading,
-  onPrev,
-  onNext,
-  onReset
-} = toRefs(props.options)
-
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
+const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const colToGrowAdjusted = ref(false)
+
 const colToGrow = computed(() => {
-  return colToGrowAdjusted.value
-    ? -1
-    : orders.value.findIndex((key) => columns.value[key]?.grow) ?? -1
+  if (colToGrowAdjusted.value) {
+    return -1
+  }
+
+  return unref(props.options.orders).findIndex((key) => {
+    return unref(props.options.columns)[key]?.grow
+  }) ?? -1
 })
-const nameOfColToGrow = computed(() => orders.value[colToGrow.value])
-const cellOfColToGrow = computed(() => row.value?.children[colToGrow.value])
+
+const nameOfColToGrow = computed(() => {
+  return unref(props.options.orders)[colToGrow.value]
+})
+
+const cellOfColToGrow = computed(() => {
+  return row.value?.children[colToGrow.value]
+})
 
 let headLock = false
 let bodyLock = false
 
 const colWidths = reactive<Record<string, string>>({})
+const blockWidth = ref<number | undefined>()
 
 const showHeader = computed(() => {
-  if (header?.value === true) {
-    return true
+  const header = unref(props.options.header)
+
+  if (header != null) {
+    return header
   }
 
-  if (header?.value === false) {
-    return false
-  }
-
-  return total?.value !== undefined || !!reset?.value
+  return unref(props.options.total) != null || !!unref(props.options.reset)
 })
 
 const showFooter = computed(() => {
-  if (loading?.value) {
+  if (unref(props.options.loading)) {
     return false
   }
 
-  if (footer?.value === true) {
-    return true
+  const footer = unref(props.options.footer)
+
+  if (footer != null) {
+    return footer
   }
 
-  if (footer?.value === false) {
-    return false
-  }
+  return (
+    unref(props.options.page)
+    && unref(props.options.perPage)
+    && unref(props.options.total)
+  )
+})
 
-  return page?.value && perPage?.value && total?.value
+const showMissing = computed(() => {
+  return (
+    !unref(props.options.loading)
+    && unref(props.options.records)
+    && !unref(props.options.records)!.length
+  )
 })
 
 const classes = computed(() => ({
   'has-header': showHeader.value,
   'has-footer': showFooter.value,
-  'borderless': borderless?.value
+  'borderless': unref(props.options.borderless)
 }))
 
 const recordsWithSummary = computed(() => {
-  return (records?.value && summary?.value)
-    ? [...records?.value, summary?.value]
-    : records?.value ?? []
+  const records = unref(props.options.records) ?? []
+  const summary = unref(props.options.summary)
+
+  const res = summary ? [...records, summary] : records
+
+  res.forEach((record, index) => {
+    record.__index = index
+  })
+
+  return res
 })
 
-watch(() => records?.value, () => {
+watch(() => props.options.records, () => {
   headLock = true
   bodyLock = true
 }, { flush: 'pre' })
 
-watch(() => records?.value, () => {
+watch(() => props.options.records, () => {
   syncScroll(head.value, body.value)
   headLock = false
   bodyLock = false
 }, { flush: 'post' })
 
+useResizeObserver(block, ([entry]) => {
+  blockWidth.value = entry.contentRect.width
+})
+
 const resizeObserver = useResizeObserver(head, handleResize)
 
 function stopObserving() {
-  colWidths[orders.value[orders.value.length - 1]] = 'auto'
+  const orders = unref(props.options.orders)
+  colWidths[orders[orders.length - 1]] = 'auto'
   resizeObserver.stop()
 }
 
@@ -171,14 +187,25 @@ function updateColWidth(key: string, value: string, triggeredByUser = false) {
   }
 }
 
+function isSummaryOrLastClass(index: number) {
+  if (isSummary(index)) {
+    return 'summary'
+  }
+
+  return lastRow(index) ? 'last' : ''
+}
+
 function isSummary(index: number) {
-  return index === records?.value?.length
+  return index === unref(props.options.records)?.length
+}
+
+function lastRow(index: number) {
+  return index === recordsWithSummary.value.length - 1
 }
 
 function getCell(key: string, index: number) {
-  return (isSummary(index) && columns.value[key]?.summaryCell)
-    ? columns.value[key]?.summaryCell
-    : columns.value[key]?.cell
+  const col = unref(props.options.columns)[key]
+  return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
 }
 </script>
 
@@ -187,10 +214,10 @@ function getCell(key: string, index: number) {
     <div class="box">
       <STableHeader
         v-if="showHeader"
-        :total="total"
-        :reset="reset"
-        :borderless="borderless"
-        :on-reset="onReset"
+        :total="unref(options.total)"
+        :reset="unref(options.reset)"
+        :borderless="unref(options.borderless)"
+        :on-reset="options.onReset"
       />
 
       <div class="table" role="grid">
@@ -201,22 +228,22 @@ function getCell(key: string, index: number) {
           @mouseleave="lockHead(false)"
           @scroll="syncHeadScroll"
         >
-          <div class="block">
+          <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
-                v-for="key in orders"
+                v-for="key in options.orders"
                 :key="key"
                 :name="key"
-                :class-name="columns[key].className"
+                :class-name="unref(options.columns)[key].className"
                 :width="colWidths[key]"
               >
                 <STableColumn
                   :name="key"
-                  :label="columns[key].label"
-                  :class-name="columns[key].className"
-                  :dropdown="columns[key].dropdown"
+                  :label="unref(options.columns)[key].label"
+                  :class-name="unref(options.columns)[key].className"
+                  :dropdown="unref(options.columns)[key].dropdown"
                   :has-header="showHeader"
-                  :resizable="columns[key].resizable"
+                  :resizable="unref(options.columns)[key].resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
                 />
               </STableItem>
@@ -225,49 +252,57 @@ function getCell(key: string, index: number) {
         </div>
 
         <div
-          v-if="!loading && records && records.length"
+          v-if="!unref(options.loading) && unref(options.records)?.length"
           class="container body"
           ref="body"
           @mouseenter="lockBody(true)"
           @mouseleave="lockBody(false)"
           @scroll="syncBodyScroll"
         >
-          <div class="block">
-            <div
-              v-for="(record, rIndex) in recordsWithSummary"
-              :key="rIndex"
-              class="row"
-              :class="isSummary(rIndex) && 'summary'"
-            >
-              <STableItem
-                v-for="key in orders"
-                :key="key"
-                :name="key"
-                :class-name="columns[key].className"
-                :width="colWidths[key]"
+          <DynamicScroller
+            :items="recordsWithSummary"
+            :min-item-size="40"
+            key-field="__index"
+            class="block"
+            :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
+            :prerender="Math.min(10, recordsWithSummary.length)"
+          >
+            <template #default="{ item: record, index: rIndex, active }">
+              <DynamicScrollerItem
+                :item="record"
+                :active="active"
+                :data-index="rIndex"
               >
-                <STableCell
-                  :name="key"
-                  :class="isSummary(rIndex) && 'summary'"
-                  :class-name="columns[key].className"
-                  :cell="getCell(key, rIndex)"
-                  :value="record[key]"
-                  :record="record"
-                  :records="records"
-                />
-              </STableItem>
-            </div>
-          </div>
+                <div class="row" :class="isSummaryOrLastClass(rIndex)">
+                  <STableItem
+                    v-for="key in options.orders"
+                    :key="key"
+                    :name="key"
+                    :class-name="unref(options.columns)[key].className"
+                    :width="colWidths[key]"
+                  >
+                    <STableCell
+                      :name="key"
+                      :class="isSummary(rIndex) && 'summary'"
+                      :class-name="unref(options.columns)[key].className"
+                      :cell="getCell(key, rIndex)"
+                      :value="record[key]"
+                      :record="record"
+                      :records="unref(options.records)!"
+                    />
+                  </STableItem>
+                </div>
+              </DynamicScrollerItem>
+            </template>
+          </DynamicScroller>
         </div>
       </div>
 
-      <div v-if="!loading && records && !records.length" class="missing">
-        <p class="missing-text">
-          No results matched your search.
-        </p>
+      <div v-if="showMissing" class="missing">
+        <p class="missing-text">No results matched your search.</p>
       </div>
 
-      <div v-if="loading" class="loading">
+      <div v-if="unref(options.loading)" class="loading">
         <div class="loading-icon">
           <SSpinner class="loading-svg" />
         </div>
@@ -275,12 +310,12 @@ function getCell(key: string, index: number) {
 
       <STableFooter
         v-if="showFooter"
-        :total="total"
-        :page="page"
-        :per-page="perPage"
-        :borderless="borderless"
-        :on-prev="onPrev"
-        :on-next="onNext"
+        :total="unref(options.total)"
+        :page="unref(options.page)"
+        :per-page="unref(options.perPage)"
+        :borderless="unref(options.borderless)"
+        :on-prev="options.onPrev"
+        :on-next="options.onNext"
       />
     </div>
   </div>
@@ -322,21 +357,28 @@ function getCell(key: string, index: number) {
   z-index: 100;
   border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
   background-color: var(--bg-elv-2);
-
-  .STable.has-header & {
-    border-radius: 0;
-  }
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
+  }
+
+  .STable.has-header & {
+    border-radius: 0;
   }
 }
 
 .container.body {
   border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
+  line-height: 0;
 
   .STable.has-footer & {
     border-radius: 0;
+  }
+
+  .block {
+    max-height: var(--table-max-height, 100%);
+    overflow-y: auto;
   }
 }
 
@@ -345,13 +387,14 @@ function getCell(key: string, index: number) {
   min-width: 100%;
 }
 
-.row {
+:deep(.row) {
   display: flex;
   border-bottom: 1px solid var(--c-divider-2);
+}
 
-  .body &:last-child {
-    border-bottom: 0;
-  }
+:deep(.row.last),
+:deep(.row.summary) {
+  border-bottom: 0;
 }
 
 .missing {

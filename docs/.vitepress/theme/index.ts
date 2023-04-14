@@ -1,6 +1,7 @@
 import { Theme } from 'vitepress'
 import VitePressTheme from 'vitepress/theme'
 
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 import 'sefirot/styles/variables.css'
 import './styles.css'
 
