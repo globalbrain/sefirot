@@ -1,3 +1,23 @@
+# [2.31.0](https://github.com/globalbrain/sefirot/compare/v2.30.0...v2.31.0) (2023-04-17)
+
+### Bug Fixes
+
+* **input-text:** text overflows on `display-value` ([#237](https://github.com/globalbrain/sefirot/issues/237)) ([#242](https://github.com/globalbrain/sefirot/issues/242)) ([97711c5](https://github.com/globalbrain/sefirot/commit/97711c535abd8408458121ba58174a9c03e33491))
+
+### Features
+
+* **style:** add `--c-bg-soft` color ([6151aa5](https://github.com/globalbrain/sefirot/commit/6151aa53f6f364b2a971e315422abf92001d4280))
+* **button:** add `icon-mode` and `label-mode` options ([#235](https://github.com/globalbrain/sefirot/issues/235)) ([#241](https://github.com/globalbrain/sefirot/issues/241)) ([7c84109](https://github.com/globalbrain/sefirot/commit/7c841099d548f1a87113b74fc042083acb4c98a6))
+* **input-hms:** add `placeholder` options ([#250](https://github.com/globalbrain/sefirot/issues/250)) ([c1b37ab](https://github.com/globalbrain/sefirot/commit/c1b37ab677eabf159865696289be451870ff3da5))
+* **input-ymd:** add `placeholder` option ([#245](https://github.com/globalbrain/sefirot/issues/245)) ([#246](https://github.com/globalbrain/sefirot/issues/246)) ([7147678](https://github.com/globalbrain/sefirot/commit/71476784df062456a1814b1e103ea8e639a7027f))
+* **state:** add `SState` component ([687f3da](https://github.com/globalbrain/sefirot/commit/687f3dafdd4ef51aa3a2542bad87500dda98e0ca))
+* **table:** add an option to grow a column to fill available space ([#239](https://github.com/globalbrain/sefirot/issues/239)) ([#240](https://github.com/globalbrain/sefirot/issues/240)) ([115e973](https://github.com/globalbrain/sefirot/commit/115e9735122496cbb8d028cef75da169f5bd2759))
+* **table:** add `TableCellState` type ([#248](https://github.com/globalbrain/sefirot/issues/248)) ([#251](https://github.com/globalbrain/sefirot/issues/251)) ([3f74439](https://github.com/globalbrain/sefirot/commit/3f7443957e7d42d4f33c73d553394e3d68f1314c))
+
+### Performance Improvements
+
+* **table:** use virtualization and reduce reactivity overhead ([#244](https://github.com/globalbrain/sefirot/issues/244)) ([418f22b](https://github.com/globalbrain/sefirot/commit/418f22b5a966e0969635ea01335c34610bec5529))
+
 # [2.30.0](https://github.com/globalbrain/sefirot/compare/v2.29.0...v2.30.0) (2023-04-06)
 
 ### Bug Fixes
