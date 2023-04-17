@@ -7,6 +7,7 @@ import STableCellDay from './STableCellDay.vue'
 import STableCellEmpty from './STableCellEmpty.vue'
 import STableCellPill from './STableCellPill.vue'
 import STableCellPills from './STableCellPills.vue'
+import STableCellState from './STableCellState.vue'
 import STableCellText from './STableCellText.vue'
 
 const props = defineProps<{
@@ -58,6 +59,11 @@ const computedCell = computed<TableCell | undefined>(() =>
       :value="value"
       :record="record"
       :pills="computedCell.pills"
+    />
+    <STableCellState
+      v-else-if="computedCell.type === 'state'"
+      :value="computedCell.label"
+      :mode="computedCell.mode"
     />
     <STableCellAvatar
       v-else-if="computedCell.type === 'avatar'"

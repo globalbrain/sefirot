@@ -179,18 +179,13 @@ const table = useTable({
     status: {
       label: 'Status',
       dropdown: dropdownStatus,
-      cell: {
-        type: 'pill',
-        color(value) {
-          if (value === 'Published') {
-            return 'success'
-          } else if (value === 'Draft') {
-            return 'info'
-          } else {
-            return 'mute'
-          }
-        }
-      }
+      cell: (_value, record) => ({
+        type: 'state',
+        label: record.status,
+        mode: record.status === 'Published'
+          ? 'success'
+          : record.status === 'Draft' ? 'info' : 'mute'
+      })
     },
 
     type: {
