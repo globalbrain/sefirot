@@ -2,6 +2,11 @@ import { mount } from '@vue/test-utils'
 import STable from 'sefirot/components/STable.vue'
 import { useTable } from 'sefirot/composables/Table'
 
+vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
+  disconnect: vi.fn(),
+  observe: vi.fn()
+})))
+
 describe('components/STable', () => {
   test('it displays columns in order', () => {
     const table = useTable({
