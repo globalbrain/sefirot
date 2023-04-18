@@ -1,3 +1,9 @@
+## [2.31.1](https://github.com/globalbrain/sefirot/compare/v2.31.0...v2.31.1) (2023-04-18)
+
+### Bug Fixes
+
+* **table:** orders option not being unref ([#254](https://github.com/globalbrain/sefirot/issues/254)) ([53f66e8](https://github.com/globalbrain/sefirot/commit/53f66e80c19a211b3bb97ff183580378deec9c8d))
+
 # [2.31.0](https://github.com/globalbrain/sefirot/compare/v2.30.0...v2.31.0) (2023-04-17)
 
 ### Bug Fixes
