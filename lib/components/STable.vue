@@ -231,7 +231,7 @@ function getCell(key: string, index: number) {
           <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
-                v-for="key in options.orders"
+                v-for="key in unref(options.orders)"
                 :key="key"
                 :name="key"
                 :class-name="unref(options.columns)[key].className"
@@ -275,7 +275,7 @@ function getCell(key: string, index: number) {
               >
                 <div class="row" :class="isSummaryOrLastClass(rIndex)">
                   <STableItem
-                    v-for="key in options.orders"
+                    v-for="key in unref(options.orders)"
                     :key="key"
                     :name="key"
                     :class-name="unref(options.columns)[key].className"
