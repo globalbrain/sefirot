@@ -18,13 +18,17 @@ const props = defineProps<{
 const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
+const enabledOptions = computed(() => {
+  return unref(props.options).filter((o) => !o.disabled)
+})
+
 const fuse = computed(() => {
-  return new Fuse(unref(props.options), { keys: ['label'] })
+  return new Fuse(unref(enabledOptions), { keys: ['label'] })
 })
 
 const filteredOptions = computed(() => {
   return (!props.search || !query.value)
-    ? unref(props.options)
+    ? unref(enabledOptions)
     : fuse.value.search(query.value).map((r) => r.item)
 })
 
