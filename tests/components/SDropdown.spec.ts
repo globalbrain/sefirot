@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import SDropdownSectionFilter from 'sefirot/components/SDropdownSectionFilter.vue'
 
-describe('components/SDropdownSectionFilter', async () => {
+describe('components/SDropdown', async () => {
   describe('SDropdownSectionFilter', () => {
     test('hide disabled options', async () => {
       const wrapper = mount(SDropdownSectionFilter, {
