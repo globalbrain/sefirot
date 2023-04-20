@@ -27,6 +27,7 @@ export type Option = OptionText | OptionAvatar
 export interface OptionBase {
   type?: 'text' | 'avatar'
   value: OptionValue
+  disabled?: boolean
 }
 
 export interface OptionText extends OptionBase {

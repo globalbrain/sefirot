@@ -48,6 +48,7 @@ export interface DropdownSectionFilterOptionBase {
   type?: 'text' | 'avatar'
   label: string
   value: string | number | boolean
+  disabled?: boolean
   onClick?(value: string | number | boolean): void
 }
 
