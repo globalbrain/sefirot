@@ -288,6 +288,18 @@ interface Emits {
 }
 ```
 
+### `@disabled-click`
+
+Emits when an user clicks the button with the `:disabled` set to `true`. This event will not be emitted when the `loading` or the `disabled` prop is set to `false`.
+
+This event gives you a chance to, for example, show a message to the user about why the button is disabled.
+
+```ts
+interface Emits {
+  (e: 'disabled-click'): void
+}
+```
+
 ## Styles
 
 You may customize the styles by overriding `--button` prefixed CSS variables.
