@@ -1,3 +1,10 @@
+# [2.32.0](https://github.com/globalbrain/sefirot/compare/v2.31.1...v2.32.0) (2023-04-21)
+
+### Features
+
+* **button:** emit `disabled-click` event ([#257](https://github.com/globalbrain/sefirot/issues/257)) ([#261](https://github.com/globalbrain/sefirot/issues/261)) ([87b963c](https://github.com/globalbrain/sefirot/commit/87b963cf8a866fbbd0c8a10a121a187b7a626fea))
+* **dropdown:** add `disabled` options ([#260](https://github.com/globalbrain/sefirot/issues/260)) ([d9298a8](https://github.com/globalbrain/sefirot/commit/d9298a897ebdb8e7769ada47823ba0aaae0d9e59))
+
 ## [2.31.1](https://github.com/globalbrain/sefirot/compare/v2.31.0...v2.31.1) (2023-04-18)
 
 ### Bug Fixes
