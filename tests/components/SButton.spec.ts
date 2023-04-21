@@ -51,4 +51,16 @@ describe('components/SButton', () => {
 
     assertEmitted(wrapper, 'click', 1, undefined)
   })
+
+  test('it emits disabled-click event on click', () => {
+    const wrapper = mount(SButton, {
+      props: {
+        disabled: true
+      }
+    })
+
+    wrapper.find('.SButton').trigger('click')
+
+    assertEmitted(wrapper, 'disabled-click', 1, undefined)
+  })
 })

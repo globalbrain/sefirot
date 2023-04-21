@@ -36,6 +36,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'click'): void
+  (e: 'disabled-click'): void
 }>()
 
 const classes = computed(() => [
@@ -57,7 +58,9 @@ const computedTag = computed(() => {
 })
 
 function handleClick(): void {
-  !props.disabled && !props.loading && emit('click')
+  if (!props.loading) {
+    props.disabled ? emit('disabled-click') : emit('click')
+  }
 }
 </script>
 
