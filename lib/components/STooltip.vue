@@ -10,6 +10,7 @@ const props = defineProps<{
   text?: string
   position?: Position
   timeout?: number
+  tabindex?: number
 }>()
 
 const el = shallowRef<HTMLElement | null>(null)
@@ -27,7 +28,7 @@ const { on, show, hide } = useTooltip(
 )
 
 onKeyStroke('Escape', (e) => {
-  if (on.value && el.value === document.activeElement) {
+  if (on.value && el.value?.matches(':focus-within')) {
     e.preventDefault()
     e.stopPropagation()
     hide()
@@ -35,7 +36,7 @@ onKeyStroke('Escape', (e) => {
 })
 
 const onMouseLeave = () => {
-  if (el.value !== document.activeElement) {
+  if (!el.value?.matches(':focus-within')) {
     hide()
   }
 }
@@ -53,11 +54,11 @@ const onFocus = () => {
     ref="el"
     :is="tag ?? 'span'"
     class="STooltip"
-    tabindex="0"
+    :tabindex="tabindex ?? 0"
     @mouseenter="show"
     @mouseleave="onMouseLeave"
-    @focus="onFocus"
-    @blur="hide"
+    @focusin="onFocus"
+    @focusout="hide"
   >
     <span class="content" ref="content">
       <slot />
