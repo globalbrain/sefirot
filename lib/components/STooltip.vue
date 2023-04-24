@@ -9,8 +9,6 @@ const props = defineProps<{
   tag?: string
   text?: string
   position?: Position
-  openDelay?: number
-  closeDelay?: number
   timeout?: number
 }>()
 
@@ -25,8 +23,6 @@ const { on, show, hide } = useTooltip(
   content,
   tip,
   computed(() => props.position ?? 'top'),
-  computed(() => props.openDelay ?? 100),
-  computed(() => props.closeDelay ?? 100),
   timeoutId
 )
 

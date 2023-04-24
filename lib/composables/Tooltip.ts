@@ -15,8 +15,6 @@ export function useTooltip(
   content: Ref<HTMLElement | null>,
   tip: Ref<HTMLElement | null>,
   position: Ref<Position>,
-  openDelay: Ref<number>,
-  closeDelay: Ref<number>,
   timeoutId: Ref<number | null>
 ) {
   const on = ref(false)
@@ -24,9 +22,7 @@ export function useTooltip(
   function show(): void {
     if (on.value) { return }
     setPosition()
-    setTimeout(() => {
-      on.value = true
-    }, openDelay.value)
+    setTimeout(() => { on.value = true })
   }
 
   function hide(): void {
@@ -38,7 +34,7 @@ export function useTooltip(
       }
       on.value = false
       el.value?.blur()
-    }, closeDelay.value)
+    })
   }
 
   function setPosition(): void {
