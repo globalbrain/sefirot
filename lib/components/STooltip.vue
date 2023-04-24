@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
+import { onKeyStroke } from '@vueuse/core'
+import { computed, ref, shallowRef } from 'vue'
 import type { Position } from '../composables/Tooltip'
 import { useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
@@ -8,21 +9,60 @@ const props = defineProps<{
   tag?: string
   text?: string
   position?: Position
+  openDelay?: number
+  closeDelay?: number
+  timeout?: number
 }>()
 
+const el = shallowRef<HTMLElement | null>(null)
 const tip = shallowRef<HTMLElement | null>(null)
 const content = shallowRef<HTMLElement | null>(null)
 const classes = computed(() => [props.position ?? 'top'])
+const timeoutId = ref<number | null>(null)
 
 const { on, show, hide } = useTooltip(
+  el,
   content,
   tip,
-  computed(() => props.position ?? 'top')
+  computed(() => props.position ?? 'top'),
+  computed(() => props.openDelay ?? 100),
+  computed(() => props.closeDelay ?? 100),
+  timeoutId
 )
+
+onKeyStroke('Escape', (e) => {
+  if (on.value && el.value === document.activeElement) {
+    e.preventDefault()
+    e.stopPropagation()
+    hide()
+  }
+})
+
+const onMouseLeave = () => {
+  if (el.value !== document.activeElement) {
+    hide()
+  }
+}
+
+const onFocus = () => {
+  show()
+  if (props.timeout) {
+    timeoutId.value = setTimeout(hide, props.timeout) as any
+  }
+}
 </script>
 
 <template>
-  <component :is="tag ?? 'span'" class="STooltip" @mouseenter="show" @mouseleave="hide">
+  <component
+    ref="el"
+    :is="tag ?? 'span'"
+    class="STooltip"
+    tabindex="0"
+    @mouseenter="show"
+    @mouseleave="onMouseLeave"
+    @focus="onFocus"
+    @blur="hide"
+  >
     <span class="content" ref="content">
       <slot />
     </span>
@@ -39,6 +79,10 @@ const { on, show, hide } = useTooltip(
 <style scoped lang="postcss">
 .STooltip {
   position: relative;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .content {

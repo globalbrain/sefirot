@@ -11,19 +11,34 @@ const SCREEN_PADDING = 16
  * `bottom` since we only care about left and right of the screen.
  */
 export function useTooltip(
+  el: Ref<HTMLElement | null>,
   content: Ref<HTMLElement | null>,
   tip: Ref<HTMLElement | null>,
-  position: Ref<Position>
+  position: Ref<Position>,
+  openDelay: Ref<number>,
+  closeDelay: Ref<number>,
+  timeoutId: Ref<number | null>
 ) {
   const on = ref(false)
 
   function show(): void {
+    if (on.value) { return }
     setPosition()
-    setTimeout(() => { on.value = true })
+    setTimeout(() => {
+      on.value = true
+    }, openDelay.value)
   }
 
   function hide(): void {
-    setTimeout(() => { on.value = false })
+    if (!on.value) { return }
+    setTimeout(() => {
+      if (timeoutId.value) {
+        clearTimeout(timeoutId.value)
+        timeoutId.value = null
+      }
+      on.value = false
+      el.value?.blur()
+    }, closeDelay.value)
   }
 
   function setPosition(): void {
