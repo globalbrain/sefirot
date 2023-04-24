@@ -38,13 +38,13 @@ onKeyStroke('Escape', (e) => {
   }
 })
 
-const onMouseEnter = () => {
+function onMouseEnter() {
   if (props.trigger === 'hover' || props.trigger === 'both') {
     show()
   }
 }
 
-const onMouseLeave = () => {
+function onMouseLeave() {
   if (
     props.trigger === 'hover'
     || (props.trigger === 'both' && !el.value?.matches(':focus-within'))
@@ -53,7 +53,7 @@ const onMouseLeave = () => {
   }
 }
 
-const onFocus = () => {
+function onFocus() {
   if (props.trigger === 'focus' || props.trigger === 'both') {
     show()
     if (props.timeout) {
@@ -62,7 +62,7 @@ const onFocus = () => {
   }
 }
 
-const onBlur = () => {
+function onBlur() {
   if (props.trigger === 'focus' || props.trigger === 'both') {
     hide()
   }
