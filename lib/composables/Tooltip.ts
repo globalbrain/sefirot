@@ -5,6 +5,8 @@ export type Position = 'top' | 'right' | 'bottom' | 'left'
 
 const SCREEN_PADDING = 16
 
+const globalHide = ref<() => void>()
+
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
  * the current window size. This only applies to position `top` and
@@ -21,8 +23,10 @@ export function useTooltip(
 
   function show(): void {
     if (on.value) { return }
+    globalHide.value?.()
     setPosition()
     setTimeout(() => { on.value = true })
+    globalHide.value = hide
   }
 
   function hide(): void {

@@ -5,13 +5,16 @@ import type { Position } from '../composables/Tooltip'
 import { useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
 
-const props = defineProps<{
-  tag?: string
-  text?: string
-  position?: Position
-  timeout?: number
-  tabindex?: number
-}>()
+const props = withDefaults(
+  defineProps<{
+    tag?: string
+    text?: string
+    position?: Position
+    trigger?: 'hover' | 'focus' | 'both'
+    timeout?: number
+    tabindex?: number
+  }>(), { trigger: 'hover' }
+)
 
 const el = shallowRef<HTMLElement | null>(null)
 const tip = shallowRef<HTMLElement | null>(null)
@@ -35,16 +38,33 @@ onKeyStroke('Escape', (e) => {
   }
 })
 
+const onMouseEnter = () => {
+  if (props.trigger === 'hover' || props.trigger === 'both') {
+    show()
+  }
+}
+
 const onMouseLeave = () => {
-  if (!el.value?.matches(':focus-within')) {
+  if (
+    props.trigger === 'hover'
+    || (props.trigger === 'both' && !el.value?.matches(':focus-within'))
+  ) {
     hide()
   }
 }
 
 const onFocus = () => {
-  show()
-  if (props.timeout) {
-    timeoutId.value = setTimeout(hide, props.timeout) as any
+  if (props.trigger === 'focus' || props.trigger === 'both') {
+    show()
+    if (props.timeout) {
+      timeoutId.value = setTimeout(hide, props.timeout) as any
+    }
+  }
+}
+
+const onBlur = () => {
+  if (props.trigger === 'focus' || props.trigger === 'both') {
+    hide()
   }
 }
 </script>
@@ -55,10 +75,10 @@ const onFocus = () => {
     :is="tag ?? 'span'"
     class="STooltip"
     :tabindex="tabindex ?? 0"
-    @mouseenter="show"
+    @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
     @focusin="onFocus"
-    @focusout="hide"
+    @focusout="onBlur"
   >
     <span class="content" ref="content">
       <slot />
