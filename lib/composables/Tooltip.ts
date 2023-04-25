@@ -1,9 +1,16 @@
-import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { type Ref, ref } from 'vue'
+
+export interface Tooltip {
+  on: Ref<boolean>
+  show: () => void
+  hide: () => void
+}
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 
 const SCREEN_PADDING = 16
+
+const globalHide = ref<() => void>()
 
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
@@ -11,19 +18,34 @@ const SCREEN_PADDING = 16
  * `bottom` since we only care about left and right of the screen.
  */
 export function useTooltip(
+  el: Ref<HTMLElement | null>,
   content: Ref<HTMLElement | null>,
   tip: Ref<HTMLElement | null>,
-  position: Ref<Position>
-) {
+  position: Ref<Position>,
+  timeoutId: Ref<number | null>
+): Tooltip {
   const on = ref(false)
 
   function show(): void {
+    if (on.value) { return }
+    globalHide.value?.()
     setPosition()
     setTimeout(() => { on.value = true })
+    globalHide.value = hide
   }
 
   function hide(): void {
-    setTimeout(() => { on.value = false })
+    if (!on.value) { return }
+    setTimeout(() => {
+      if (timeoutId.value) {
+        clearTimeout(timeoutId.value)
+        timeoutId.value = null
+      }
+      on.value = false
+      if (el.value?.matches(':focus-within')) {
+        (document.activeElement as HTMLElement)?.blur?.()
+      }
+    })
   }
 
   function setPosition(): void {
