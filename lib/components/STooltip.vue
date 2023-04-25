@@ -74,6 +74,7 @@ function onBlur() {
     ref="el"
     :is="tag ?? 'span'"
     class="STooltip"
+    :class="trigger !== 'hover' && 'focusable'"
     :tabindex="tabindex ?? 0"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
@@ -99,6 +100,10 @@ function onBlur() {
 
   &:focus {
     outline: none;
+  }
+
+  &.focusable {
+    cursor: pointer;
   }
 }
 
