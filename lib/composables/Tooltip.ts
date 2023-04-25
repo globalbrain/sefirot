@@ -37,7 +37,9 @@ export function useTooltip(
         timeoutId.value = null
       }
       on.value = false
-      el.value?.blur()
+      if (el.value?.matches(':focus-within')) {
+        (document.activeElement as HTMLElement)?.blur?.()
+      }
     })
   }
 
