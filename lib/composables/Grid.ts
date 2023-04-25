@@ -13,7 +13,7 @@ export interface UseGridOptions {
 
 type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
 
-export function useGrid(options: UseGridOptions): Grid {
+export function useGrid(options: UseGridOptions = {}): Grid {
   const container: Ref<HTMLElement | null> = ref(null)
 
   const spacerClass = options.class ? toClassName(options.class) : 'spacer'
