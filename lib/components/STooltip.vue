@@ -22,6 +22,13 @@ const content = shallowRef<HTMLElement | null>(null)
 const classes = computed(() => [props.position ?? 'top'])
 const timeoutId = ref<number | null>(null)
 
+const tabindex = computed(() => {
+  if (props.trigger === 'focus' || props.trigger === 'both') {
+    return props.tabindex ?? 0
+  }
+  return -1
+})
+
 const { on, show, hide } = useTooltip(
   el,
   content,
@@ -74,8 +81,8 @@ function onBlur() {
     ref="el"
     :is="tag ?? 'span'"
     class="STooltip"
-    :class="trigger !== 'hover' && 'focusable'"
-    :tabindex="tabindex ?? 0"
+    :class="tabindex > -1 && 'focusable'"
+    :tabindex="tabindex"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
     @focusin="onFocus"
