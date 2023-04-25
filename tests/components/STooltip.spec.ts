@@ -11,7 +11,7 @@ describe('components/STooltip', () => {
     expect(wrapper.find('.STooltip').element.tagName).toBe('SPAN')
   })
 
-  test('it shows `text` slot content', () => {
+  test('shows `text` slot content', () => {
     const wrapper = mount(STooltip, {
       slots: {
         text: 'Example text.'
@@ -21,7 +21,7 @@ describe('components/STooltip', () => {
     expect(wrapper.find('.STooltip .tip').text()).toBe('Example text.')
   })
 
-  test('it shows `text` prop content', () => {
+  test('shows `text` prop content', () => {
     const wrapper = mount(STooltip, {
       props: {
         text: 'Example text.'
@@ -31,7 +31,7 @@ describe('components/STooltip', () => {
     expect(wrapper.find('.STooltip .tip').text()).toBe('Example text.')
   })
 
-  test('it shows tooltip on hover', async () => {
+  test('shows tooltip on hover', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {
@@ -56,7 +56,7 @@ describe('components/STooltip', () => {
     vi.useRealTimers()
   })
 
-  test('it shows tooltip on focus', async () => {
+  test('shows tooltip on focus', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {

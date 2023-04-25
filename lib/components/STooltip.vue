@@ -1,25 +1,26 @@
 <script setup lang="ts">
 import { onKeyStroke } from '@vueuse/core'
 import { computed, ref, shallowRef } from 'vue'
-import type { Position } from '../composables/Tooltip'
-import { useTooltip } from '../composables/Tooltip'
+import { type Position, useTooltip } from '../composables/Tooltip'
 import SMarkdown from './SMarkdown.vue'
 
-const props = withDefaults(
-  defineProps<{
-    tag?: string
-    text?: string
-    position?: Position
-    trigger?: 'hover' | 'focus' | 'both'
-    timeout?: number
-    tabindex?: number
-  }>(), { trigger: 'hover' }
-)
+const props = withDefaults(defineProps<{
+  tag?: string
+  text?: string
+  position?: Position
+  trigger?: 'hover' | 'focus' | 'both'
+  timeout?: number
+  tabindex?: number
+}>(), {
+  tag: 'span',
+  position: 'top',
+  trigger: 'hover'
+})
 
 const el = shallowRef<HTMLElement | null>(null)
 const tip = shallowRef<HTMLElement | null>(null)
 const content = shallowRef<HTMLElement | null>(null)
-const classes = computed(() => [props.position ?? 'top'])
+const classes = computed(() => [props.position])
 const timeoutId = ref<number | null>(null)
 
 const tabindex = computed(() => {
@@ -33,7 +34,7 @@ const { on, show, hide } = useTooltip(
   el,
   content,
   tip,
-  computed(() => props.position ?? 'top'),
+  computed(() => props.position),
   timeoutId
 )
 
@@ -79,7 +80,7 @@ function onBlur() {
 <template>
   <component
     ref="el"
-    :is="tag ?? 'span'"
+    :is="tag"
     class="STooltip"
     :class="tabindex > -1 && 'focusable'"
     :tabindex="tabindex"
@@ -131,7 +132,7 @@ function onBlur() {
   &.top .tip    { transform: translateY(8px); }
   &.right .tip  { transform: translateX(-8px); }
   &.bottom .tip { transform: translateY(-8px); }
-  &.left  .tip  { transform: translateX(8px); }
+  &.left .tip   { transform: translateX(8px); }
 }
 
 .container.top {
@@ -164,12 +165,11 @@ function onBlur() {
   display: block;
   border: 1px solid var(--tooltip-border-color);
   border-radius: 6px;
-  padding: 12px;
+  padding: 10px 12px;
   width: max-content;
   max-width: var(--tooltip-max-width);
-  line-height: 18px;
+  line-height: 20px;
   font-size: 12px;
-  font-weight: 500;
   color: var(--tooltip-text-color);
   background-color: var(--tooltip-bg-color);
   transition: transform 0.25s;

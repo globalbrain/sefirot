@@ -1,5 +1,10 @@
-import type { Ref } from 'vue'
-import { ref } from 'vue'
+import { type Ref, ref } from 'vue'
+
+export interface Tooltip {
+  on: Ref<boolean>
+  show: () => void
+  hide: () => void
+}
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 
@@ -18,7 +23,7 @@ export function useTooltip(
   tip: Ref<HTMLElement | null>,
   position: Ref<Position>,
   timeoutId: Ref<number | null>
-) {
+): Tooltip {
   const on = ref(false)
 
   function show(): void {
