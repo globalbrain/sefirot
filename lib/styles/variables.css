@@ -7,6 +7,22 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  /**
+   * DEPRECATED: These values are no longer used. Equivalent colors are defined
+   * directly in theme-aware color definitions.
+   */
+  --c-white-soft: #fafafa;
+  --c-white-mute: #f2f2f2;
+  --c-white-elv: #fafafa;
+  --c-white-elv-up: #ffffff;
+  --c-white-elv-down: #f2f2f2;
+  --c-black: #000000;
+  --c-black-soft: #171717;
+  --c-black-mute: #1c1c1e;
+  --c-black-elv: #171717;
+  --c-black-elv-up: #1c1c1e;
+  --c-black-elv-down: #000000;
+
   --c-white: #ffffff;
   --c-black: #000000;
 
@@ -135,22 +151,6 @@
   --c-danger-bg-lighter: var(--c-danger-lighter);
   --c-danger-bg-dark: var(--c-danger-dark);
   --c-danger-bg-darker: var(--c-danger-darker);
-
-  /**
-   * DEPRECATED: These values are no longer used. Equivalent colors are defined
-   * directly in theme-aware color definitions.
-   */
-  --c-white-soft: #fafafa;
-  --c-white-mute: #f2f2f2;
-  --c-white-elv: #fafafa;
-  --c-white-elv-up: #ffffff;
-  --c-white-elv-down: #f2f2f2;
-  --c-black: #000000;
-  --c-black-soft: #171717;
-  --c-black-mute: #1c1c1e;
-  --c-black-elv: #171717;
-  --c-black-elv-up: #1c1c1e;
-  --c-black-elv-down: #000000;
 }
 
 /**
@@ -158,6 +158,23 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  /* DEPRECATED: Use `--c-bg-elv-{number}`. */
+  --c-bg: var(--c-white);
+  --c-bg-soft: var(--c-white-soft);
+  --c-bg-mute: var(--c-white-mute);
+  --c-bg-elv: var(--c-white-elv);
+  --c-bg-elv-up: var(--c-white-elv-up);
+  --c-bg-elv-down: var(--c-white-elv-down);
+  --c-bg-lift-1: var(--c-white-soft);
+  --c-bg-lift-2: var(--c-white-mute);
+
+  /* DEPRECATED: Use `--c-divider-x`. */
+  --c-divider: var(--c-divider-light-1);
+  --c-divider-light: var(--c-divider-light-2);
+
+  /* DEPRECATED: Use `--c-bg-soft`. */
+  --c-soft: var(--c-white-soft);
+
   --c-bg-elv-1: #ffffff;
   --c-bg-elv-2: #f9f9f9;
   --c-bg-elv-3: #ffffff;
@@ -193,26 +210,26 @@
   --c-mute-darker: #d1d1d1;
   --c-mute-dimm-1: #f1f1f1;
   --c-mute-dimm-2: #e3e3e3;
-
-  /* DEPRECATED: Use `--c-bg-elv-{number}`. */
-  --c-bg: var(--c-white);
-  --c-bg-soft: var(--c-white-soft);
-  --c-bg-mute: var(--c-white-mute);
-  --c-bg-elv: var(--c-white-elv);
-  --c-bg-elv-up: var(--c-white-elv-up);
-  --c-bg-elv-down: var(--c-white-elv-down);
-  --c-bg-lift-1: var(--c-white-soft);
-  --c-bg-lift-2: var(--c-white-mute);
-
-  /* DEPRECATED: Use `--c-divider-x`. */
-  --c-divider: var(--c-divider-light-1);
-  --c-divider-light: var(--c-divider-light-2);
-
-  /* DEPRECATED: Use `--c-bg-soft`. */
-  --c-soft: var(--c-white-soft);
 }
 
 .dark {
+  /* DEPRECATED: Use `--c-bg-elv-x`. */
+  --c-bg-elv: var(--c-black-elv);
+  --c-bg-elv-up: var(--c-black-elv-up);
+  --c-bg-elv-down: var(--c-black-elv-down);
+  --c-bg: var(--c-black);
+  --c-bg-soft: var(--c-black-soft);
+  --c-bg-mute: var(--c-black-mute);
+  --c-bg-lift-1: #222226;
+  --c-bg-lift-2: #2c2c2e;
+
+  /* DEPRECATED: Use `--c-divider-1` and `--c-divider-2` instead. */
+  --c-divider: var(--c-divider-dark-1);
+  --c-divider-light: var(--c-divider-dark-2);
+
+  /* DEPRECATED: Use `--c-bg-soft`. */
+  --c-soft: #222226;
+
   --c-bg-elv-1: #000000;
   --c-bg-elv-2: #171717;
   --c-bg-elv-3: #1c1c1e;
@@ -248,23 +265,6 @@
   --c-mute-darker: #1c1c1e;
   --c-mute-dimm-1: #222226;
   --c-mute-dimm-2: #2c2c2e;
-
-  /* DEPRECATED: Use `--c-bg-elv-x`. */
-  --c-bg-elv: var(--c-black-elv);
-  --c-bg-elv-up: var(--c-black-elv-up);
-  --c-bg-elv-down: var(--c-black-elv-down);
-  --c-bg: var(--c-black);
-  --c-bg-soft: var(--c-black-soft);
-  --c-bg-mute: var(--c-black-mute);
-  --c-bg-lift-1: #222226;
-  --c-bg-lift-2: #2c2c2e;
-
-  /* DEPRECATED: Use `--c-divider-1` and `--c-divider-2` instead. */
-  --c-divider: var(--c-divider-dark-1);
-  --c-divider-light: var(--c-divider-dark-2);
-
-  /* DEPRECATED: Use `--c-bg-soft`. */
-  --c-soft: #222226;
 }
 
 /**
