@@ -102,6 +102,54 @@ interface Props {
 </STooltip>
 ```
 
+### `:trigger`
+
+Defines the trigger event to show the tooltip. Defaults to `'hover'`.
+
+```ts
+interface Props {
+  trigger?: 'hover' | 'focus' | 'both'
+}
+```
+
+```vue-html
+<STooltip text="..." trigger="focus">
+  ...
+</STooltip>
+```
+
+### `:timeout`
+
+Defines the timeout in milliseconds to hide the tooltip. Used only when `trigger` is set to `'focus'` or `'both'`. Defaults to `undefined` (the tooltip will not hide automatically).
+
+```ts
+interface Props {
+  timeout?: number
+}
+```
+
+```vue-html
+<STooltip text="..." trigger="focus" timeout="1000">
+  ...
+</STooltip>
+```
+
+### `:tabindex`
+
+Defines the `tabindex` attribute of the tooltip. Defaults to `0`. Useful when nesting focusable elements like buttons within the tooltip.
+
+```ts
+interface Props {
+  tabindex?: number
+}
+```
+
+```vue-html
+<STooltip text="..." tabindex="-1">
+  ...
+</STooltip>
+```
+
 ## Slots
 
 Here are the list of slots you may define within the component.
