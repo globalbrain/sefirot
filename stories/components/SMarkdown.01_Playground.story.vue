@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
-import { setupRouter } from '../_support/Utils'
 
 const title = 'Components / SMarkdown / 01. Playground'
 </script>
 
 <template>
-  <Story :title="title" :setup-app="setupRouter" source="Not available" auto-props-disabled>
+  <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title">
       <SMarkdown
         class="markdown"

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SInputDate from 'sefirot/components/SInputDate.vue'
 import { ref } from 'vue'
-import { setupRouter } from '../_support/Utils'
 
 const title = 'Components / SInputDate / 01. Playground'
 
@@ -15,7 +14,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :setup-app="setupRouter" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

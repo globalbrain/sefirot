@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import SInputYMD from 'sefirot/components/SInputYMD.vue'
 import { ref } from 'vue'
-import { setupRouter } from '../_support/Utils'
 
 const title = 'Components / SInputYMD / 01. Playground'
 const docs = '/components/input-ymd'
@@ -30,7 +29,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :setup-app="setupRouter" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
