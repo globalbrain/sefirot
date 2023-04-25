@@ -198,6 +198,6 @@ Override following styles to customize the component.
   /* Colors of tooltip. */
   --tooltip-border-color: var(--c-divider-2);
   --tooltip-text-color: var(--c-text-1);
-  --tooltip-bg-color: var(--c-bg-elv-3);
+  --tooltip-bg-color: var(--c-bg-soft);
 }
 ```
