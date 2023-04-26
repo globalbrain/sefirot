@@ -13,32 +13,32 @@ export interface UseGridOptions {
 
 type CssStyles = Partial<Record<keyof CSSStyleDeclaration, string>>
 
-export function useGrid(options: UseGridOptions): Grid {
+export function useGrid(options: UseGridOptions = {}): Grid {
   const container: Ref<HTMLElement | null> = ref(null)
 
   const spacerClass = options.class ? toClassName(options.class) : 'spacer'
   const spacerTag = options.tag ?? 'div'
   const type = options.type ?? 'fit'
 
-  const observer = new MutationObserver((_, observer) => {
-    observer.disconnect()
-
-    adjustSpacer()
-
-    observer.observe(container.value!, { childList: true })
-  })
+  let observer: MutationObserver | null = null
 
   watchEffect(() => {
-    observer.disconnect()
+    observer?.disconnect()
 
     if (container.value) {
       adjustSpacer()
-      observer.observe(container.value, { childList: true })
+      observer?.observe(container.value, { childList: true })
     }
   })
 
   onMounted(() => {
     window.addEventListener('resize', adjustSpacer)
+
+    observer = new MutationObserver((_, observer) => {
+      observer.disconnect()
+      adjustSpacer()
+      observer.observe(container.value!, { childList: true })
+    })
   })
 
   onUnmounted(() => {
