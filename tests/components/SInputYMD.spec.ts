@@ -49,6 +49,19 @@ describe('components/SInputYMD', async () => {
     expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.date'))).toBe('15')
   })
 
+  test('accepts `:placeholder` partially', async () => {
+    const wrapper = mount(SInputYMD)
+
+    await wrapper.setProps({ placeholder: { year: 1985 } })
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.year'))).toBe('1985')
+
+    await wrapper.setProps({ placeholder: { month: 10 } })
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.month'))).toBe('10')
+
+    await wrapper.setProps({ placeholder: { date: 15 } })
+    expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.date'))).toBe('15')
+  })
+
   test('focuses conatiner when input is focused', async () => {
     const wrapper = mount(SInputYMD)
 
