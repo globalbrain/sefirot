@@ -39,6 +39,7 @@ const props = defineProps<{
     tag?: string
     text?: string
     position?: Position
+    trigger?: 'hover' | 'focus' | 'both'
     timeout?: number
   }
 }>()
@@ -85,7 +86,7 @@ function handleClick(): void {
     :tag="tooltip?.tag"
     :text="tooltip?.text"
     :position="tooltip?.position"
-    trigger="focus"
+    :trigger="tooltip?.trigger ?? 'both'"
     :timeout="tooltip?.timeout"
     :tabindex="-1"
   >
