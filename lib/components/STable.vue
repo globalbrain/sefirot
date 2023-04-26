@@ -28,6 +28,7 @@ const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const colToGrowAdjusted = ref(false)
+const translateX = ref('0px')
 
 const colToGrow = computed(() => {
   if (colToGrowAdjusted.value) {
@@ -167,6 +168,9 @@ function syncBodyScroll() {
 
 function syncScroll(from: HTMLElement | null, to: HTMLElement | null) {
   if (from && to) {
+    if (unref(props.options.sticky)) {
+      translateX.value = `${from.scrollLeft}px`
+    }
     to.scrollLeft = from.scrollLeft
   }
 }
@@ -424,5 +428,11 @@ function getCell(key: string, index: number) {
   width: 48px;
   height: 48px;
   color: var(--c-text-1);
+}
+
+.row > .STableItem:first-child {
+  --table-col-position: relative;
+  left: v-bind(translateX);
+  transition: left 200ms ease-in-out 100ms;
 }
 </style>

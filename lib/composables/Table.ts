@@ -20,6 +20,7 @@ export interface Table<
   reset?: MaybeRef<boolean | undefined>
   borderless?: MaybeRef<boolean>
   loading?: MaybeRef<boolean | undefined>
+  sticky?: MaybeRef<boolean | undefined>
   onPrev?(): void
   onNext?(): void
   onReset?(): void
