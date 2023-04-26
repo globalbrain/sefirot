@@ -15,9 +15,9 @@ export interface Value {
 }
 
 export interface Placeholder {
-  hour: string
-  minute: string
-  second: string
+  hour?: string
+  minute?: string
+  second?: string
 }
 
 export type ValueType = 'hour' | 'minute' | 'second'
