@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
+import type { Position } from '../composables/Tooltip'
+import Fragment from './Fragment.vue'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
+import STooltip from './STooltip.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
@@ -32,6 +35,12 @@ const props = defineProps<{
   block?: boolean
   loading?: boolean
   disabled?: boolean
+  tooltip?: {
+    tag?: string
+    text?: string
+    position?: Position
+    timeout?: number
+  }
 }>()
 
 const emit = defineEmits<{
@@ -57,6 +66,12 @@ const computedTag = computed(() => {
     : props.href ? SLink : 'button'
 })
 
+const slots = useSlots()
+
+const hasTooltip = computed(() => {
+  return slots['tooltip-text'] || props.tooltip?.text
+})
+
 function handleClick(): void {
   if (!props.loading) {
     props.disabled ? emit('disabled-click') : emit('click')
@@ -65,29 +80,40 @@ function handleClick(): void {
 </script>
 
 <template>
-  <Component
-    :is="computedTag"
-    class="SButton"
-    :class="classes"
-    :href="href"
-    role="button"
-    @click="handleClick"
+  <Fragment
+    :is="hasTooltip && STooltip"
+    :tag="tooltip?.tag"
+    :text="tooltip?.text"
+    :position="tooltip?.position"
+    trigger="focus"
+    :timeout="tooltip?.timeout"
+    :tabindex="-1"
   >
-    <span class="content">
-      <span v-if="icon" class="icon" :class="iconMode">
-        <SIcon :icon="icon" class="icon-svg" />
+    <template v-if="$slots['tooltip-text']" #text><slot name="tooltip-text" /></template>
+    <component
+      :is="computedTag"
+      class="SButton"
+      :class="classes"
+      :href="href"
+      role="button"
+      @click="handleClick"
+    >
+      <span class="content">
+        <span v-if="icon" class="icon" :class="iconMode">
+          <SIcon :icon="icon" class="icon-svg" />
+        </span>
+        <span v-if="label" class="label" :class="labelMode">
+          {{ label }}
+        </span>
       </span>
-      <span v-if="label" class="label" :class="labelMode">
-        {{ label }}
-      </span>
-    </span>
 
-    <Transition name="fade">
-      <span v-if="loading" key="loading" class="loader">
-        <SSpinner class="loader-icon" />
-      </span>
-    </Transition>
-  </Component>
+      <transition name="fade">
+        <span v-if="loading" key="loading" class="loader">
+          <SSpinner class="loader-icon" />
+        </span>
+      </transition>
+    </component>
+  </Fragment>
 </template>
 
 <style scoped lang="postcss">
