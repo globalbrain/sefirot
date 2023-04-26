@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import type { Position } from '../composables/Tooltip'
-import Fragment from './Fragment.vue'
+import SFragment from './SFragment.vue'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
@@ -80,7 +80,7 @@ function handleClick(): void {
 </script>
 
 <template>
-  <Fragment
+  <SFragment
     :is="hasTooltip && STooltip"
     :tag="tooltip?.tag"
     :text="tooltip?.text"
@@ -113,7 +113,7 @@ function handleClick(): void {
         </span>
       </transition>
     </component>
-  </Fragment>
+  </SFragment>
 </template>
 
 <style scoped lang="postcss">
