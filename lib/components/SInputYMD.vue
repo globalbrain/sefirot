@@ -17,9 +17,9 @@ export interface Value {
 export type ValueType = 'year' | 'month' | 'date'
 
 export interface Placeholder {
-  year: number
-  month: number
-  date: number
+  year?: number
+  month?: number
+  date?: number
 }
 
 const props = defineProps<{
