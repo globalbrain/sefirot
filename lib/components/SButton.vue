@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import type { MaybeRef } from '@vueuse/core'
+import { computed, unref, useSlots } from 'vue'
 import type { Position } from '../composables/Tooltip'
 import SFragment from './SFragment.vue'
 import SIcon from './SIcon.vue'
@@ -37,7 +38,7 @@ const props = defineProps<{
   disabled?: boolean
   tooltip?: {
     tag?: string
-    text?: string
+    text?: MaybeRef<string>
     position?: Position
     trigger?: 'hover' | 'focus' | 'both'
     timeout?: number
@@ -70,7 +71,7 @@ const computedTag = computed(() => {
 const slots = useSlots()
 
 const hasTooltip = computed(() => {
-  return slots['tooltip-text'] || props.tooltip?.text
+  return slots['tooltip-text'] || unref(props.tooltip?.text)
 })
 
 function handleClick(): void {
@@ -84,7 +85,7 @@ function handleClick(): void {
   <SFragment
     :is="hasTooltip && STooltip"
     :tag="tooltip?.tag"
-    :text="tooltip?.text"
+    :text="unref(tooltip?.text)"
     :position="tooltip?.position"
     :trigger="tooltip?.trigger ?? 'both'"
     :timeout="tooltip?.timeout"
