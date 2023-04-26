@@ -71,7 +71,10 @@ function onFocus() {
 }
 
 function onBlur() {
-  if (props.trigger === 'focus' || props.trigger === 'both') {
+  if (
+    props.trigger === 'focus'
+    || (props.trigger === 'both' && !el.value?.matches(':hover'))
+  ) {
     hide()
   }
 }
