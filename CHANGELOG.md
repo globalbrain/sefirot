@@ -1,3 +1,17 @@
+# [2.33.0](https://github.com/globalbrain/sefirot/compare/v2.32.0...v2.33.0) (2023-04-27)
+
+### Bug Fixes
+
+* **grid:** not usable in SSR environment ([#263](https://github.com/globalbrain/sefirot/issues/263)) ([#268](https://github.com/globalbrain/sefirot/issues/268)) ([90bb10c](https://github.com/globalbrain/sefirot/commit/90bb10ce6812b19ea5ebbc3aae9e977102ecc724))
+* **style:** deprecated styles overriding non-deprecated styles ([51ba2a1](https://github.com/globalbrain/sefirot/commit/51ba2a1c7150e8d0b5feccdef583bfba8b212893))
+
+### Features
+
+* make placeholder fields optional for `SInputYMD` and `SInputHMS` ([#269](https://github.com/globalbrain/sefirot/issues/269)) ([cb3b998](https://github.com/globalbrain/sefirot/commit/cb3b998a4fb21012d0563b9b1c87f336dff5e7fb))
+* **button:** add tooltip prop ([#255](https://github.com/globalbrain/sefirot/issues/255)) ([#258](https://github.com/globalbrain/sefirot/issues/258)) ([#271](https://github.com/globalbrain/sefirot/issues/271)) ([5a74398](https://github.com/globalbrain/sefirot/commit/5a74398d0947f614c7cb562c3e0eed6b87ae0da7))
+* **tooltip:** allow using focus as trigger and specifying timeout ([#256](https://github.com/globalbrain/sefirot/issues/256)) ([#262](https://github.com/globalbrain/sefirot/issues/262)) ([9634fcd](https://github.com/globalbrain/sefirot/commit/9634fcd88874b13aa53be47784f3276e3af1c430))
+* **tooltip:** make bg color more visible ([e8e2e00](https://github.com/globalbrain/sefirot/commit/e8e2e009cbca2703111b16616b175a4031db4d02))
+
 # [2.32.0](https://github.com/globalbrain/sefirot/compare/v2.31.1...v2.32.0) (2023-04-21)
 
 ### Features
