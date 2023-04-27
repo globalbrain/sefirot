@@ -15,9 +15,9 @@ export interface Value {
 }
 
 export interface Placeholder {
-  hour: string
-  minute: string
-  second: string
+  hour?: string
+  minute?: string
+  second?: string
 }
 
 export type ValueType = 'hour' | 'minute' | 'second'
@@ -63,9 +63,9 @@ const padValue = computed(() => {
 
 const padPlaceholder = computed(() => {
   return {
-    hour: props.placeholder?.hour.toString().padStart(2, '0') ?? '00',
-    minute: props.placeholder?.minute.toString().padStart(2, '0') ?? '00',
-    second: props.placeholder?.second.toString().padStart(2, '0') ?? '00'
+    hour: props.placeholder?.hour?.toString().padStart(2, '0') ?? '00',
+    minute: props.placeholder?.minute?.toString().padStart(2, '0') ?? '00',
+    second: props.placeholder?.second?.toString().padStart(2, '0') ?? '00'
   }
 })
 

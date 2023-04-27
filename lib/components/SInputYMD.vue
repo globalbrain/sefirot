@@ -17,9 +17,9 @@ export interface Value {
 export type ValueType = 'year' | 'month' | 'date'
 
 export interface Placeholder {
-  year: number
-  month: number
-  date: number
+  year?: number
+  month?: number
+  date?: number
 }
 
 const props = defineProps<{
@@ -64,9 +64,9 @@ const padValue = computed(() => {
 
 const padPlaceholder = computed(() => {
   return {
-    year: props.placeholder?.year.toString().padStart(4, '0') ?? '1998',
-    month: props.placeholder?.month.toString().padStart(2, '0') ?? '01',
-    date: props.placeholder?.date.toString().padStart(2, '0') ?? '14'
+    year: props.placeholder?.year?.toString().padStart(4, '0') ?? '1998',
+    month: props.placeholder?.month?.toString().padStart(2, '0') ?? '01',
+    date: props.placeholder?.date?.toString().padStart(2, '0') ?? '14'
   }
 })
 
