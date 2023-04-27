@@ -274,6 +274,65 @@ interface Props {
 <SButton label="Button" disabled />
 ```
 
+### `:tooltip`
+
+Display a tooltip when the user interacts with the button. Under the hood, this component uses [`STooltip`](tooltip) component.
+
+The tooltip will only be visible when `:tooltip.text` is set.
+
+```ts
+interface Props {
+  tooltip?: {
+    // The HTML tag to be used for the tooltip.
+    // Defaults to `span`.
+    tag?: string
+
+    // The text to be displayed in the tooltip. The tooltip
+    // will only be visible when this prop is set.
+    text?: MaybeRef<string>
+
+    // The position of the tooltip relative to the button.
+    // Defaults to `top`
+    position?: 'top' | 'right' | 'bottom' | 'left'
+
+    // The trigger to show the tooltip.
+    // Defaults to `both`
+    trigger?: 'hover' | 'focus' | 'both'
+
+    // Defines the timeout in milliseconds to hide the tooltip.
+    // Used only when `trigger` is set to `'focus'` or `'both'`.
+    // Defaults to `undefined` (the tooltip will not hide
+    // automatically).
+    timeout?: number
+  }
+}
+```
+
+```vue-html
+<SButton
+  label="Button"
+  :tooltip="{
+    text: 'Tooltip text'
+  }"
+/>
+```
+
+## Slots
+
+Here are the list of slots you may define within the component.
+
+### `@tooltip-text`
+
+The content of tooltip. Same as `:tooltip.text` prop. When `:tooltip.text` prop and this slot are defined at the same time, this slot will take precedence.
+
+```vue-html
+<SButton label="Button">
+  <template #tooltip-text>
+    Tooltip text
+  </template>
+</SButton>
+```
+
 ## Events
 
 Here are the list of events the component may emit.

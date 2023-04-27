@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   tag?: string
   text?: string
   position?: Position
+  display?: 'inline' | 'inline-block' | 'block'
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
   tabindex?: number
@@ -20,7 +21,14 @@ const props = withDefaults(defineProps<{
 const el = shallowRef<HTMLElement | null>(null)
 const tip = shallowRef<HTMLElement | null>(null)
 const content = shallowRef<HTMLElement | null>(null)
-const classes = computed(() => [props.position])
+
+const rootClasses = computed(() => [
+  props.display,
+  props.tabindex && (props.tabindex > -1) && 'focusable'
+])
+
+const containerClasses = computed(() => [props.position])
+
 const timeoutId = ref<number | null>(null)
 
 const tabindex = computed(() => {
@@ -85,7 +93,7 @@ function onBlur() {
     ref="el"
     :is="tag"
     class="STooltip"
-    :class="tabindex > -1 && 'focusable'"
+    :class="rootClasses"
     :tabindex="tabindex"
     @mouseenter="onMouseEnter"
     @mouseleave="onMouseLeave"
@@ -97,7 +105,7 @@ function onBlur() {
     </span>
 
     <transition name="fade">
-      <span v-show="on" class="container" :class="classes" ref="tip">
+      <span v-show="on" class="container" :class="containerClasses" ref="tip">
         <span v-if="$slots.text" class="tip"><slot name="text" /></span>
         <SMarkdown v-else-if="text" tag="span" class="tip" :content="text" inline />
       </span>
@@ -116,6 +124,10 @@ function onBlur() {
   &.focusable {
     cursor: pointer;
   }
+
+  &.inline       { display: inline; }
+  &.inline-block { display: inline-block; }
+  &.block        { display: block; }
 }
 
 .content {

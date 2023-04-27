@@ -34,7 +34,14 @@ function state() {
     mode: 'neutral',
     labelMode: null,
     label: 'Button',
-    loading: false
+    loading: false,
+    disabled: false,
+    tooltip: {
+      text: '',
+      position: 'top',
+      trigger: 'both',
+      timeout: 0
+    }
   }
 }
 </script>
@@ -65,9 +72,40 @@ function state() {
         title="label"
         v-model="state.label"
       />
+      <HstText
+        title="tooltip.text"
+        v-model="state.tooltip.text"
+      />
+      <HstSelect
+        title="tooltip.position"
+        :options="{
+          top: 'top',
+          right: 'right',
+          bottom: 'bottom',
+          left: 'left'
+        }"
+        v-model="state.tooltip.position"
+      />
+      <HstSelect
+        title="tooltip.trigger"
+        :options="{
+          both: 'both',
+          hover: 'hover',
+          focus: 'focus'
+        }"
+        v-model="state.tooltip.trigger"
+      />
+      <HstNumber
+        title="tooltip.timeout"
+        v-model="state.tooltip.timeout"
+      />
       <HstCheckbox
         title="loading"
         v-model="state.loading"
+      />
+      <HstCheckbox
+        title="disabled"
+        v-model="state.disabled"
       />
     </template>
 
@@ -79,6 +117,13 @@ function state() {
           :label="state.label"
           :label-mode="state.labelMode"
           :loading="state.loading"
+          :disabled="state.disabled"
+          :tooltip="{
+            text: state.tooltip.text,
+            position: state.tooltip.position,
+            trigger: state.tooltip.trigger,
+            timeout: state.tooltip.timeout
+          }"
           @click="log('click', null)"
         />
       </Board>

@@ -22,6 +22,14 @@ export type Mode =
   | 'warning'
   | 'danger'
 
+export interface Tooltip {
+  tag?: string
+  text?: MaybeRef<string>
+  position?: Position
+  trigger?: 'hover' | 'focus' | 'both'
+  timeout?: number
+}
+
 const props = defineProps<{
   tag?: string
   size?: Size
@@ -36,13 +44,7 @@ const props = defineProps<{
   block?: boolean
   loading?: boolean
   disabled?: boolean
-  tooltip?: {
-    tag?: string
-    text?: MaybeRef<string>
-    position?: Position
-    trigger?: 'hover' | 'focus' | 'both'
-    timeout?: number
-  }
+  tooltip?: Tooltip
 }>()
 
 const emit = defineEmits<{
@@ -87,6 +89,7 @@ function handleClick(): void {
     :tag="tooltip?.tag"
     :text="unref(tooltip?.text)"
     :position="tooltip?.position"
+    display="inline-block"
     :trigger="tooltip?.trigger ?? 'both'"
     :timeout="tooltip?.timeout"
     :tabindex="-1"

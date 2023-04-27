@@ -51,6 +51,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
         { text: 'SButtonGroup', link: '/components/button-group' },
+        { text: 'SFragment', link: '/components/fragment' },
         { text: 'SInputAddon', link: '/components/input-addon' },
         { text: 'SInputCheckbox', link: '/components/input-checkbox' },
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
