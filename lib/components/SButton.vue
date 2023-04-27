@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import type { MaybeRef } from '@vueuse/core'
+import { computed, unref, useSlots } from 'vue'
+import type { Position } from '../composables/Tooltip'
+import SFragment from './SFragment.vue'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
+import STooltip from './STooltip.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 
@@ -18,6 +22,14 @@ export type Mode =
   | 'warning'
   | 'danger'
 
+export interface Tooltip {
+  tag?: string
+  text?: MaybeRef<string>
+  position?: Position
+  trigger?: 'hover' | 'focus' | 'both'
+  timeout?: number
+}
+
 const props = defineProps<{
   tag?: string
   size?: Size
@@ -32,6 +44,7 @@ const props = defineProps<{
   block?: boolean
   loading?: boolean
   disabled?: boolean
+  tooltip?: Tooltip
 }>()
 
 const emit = defineEmits<{
@@ -57,6 +70,12 @@ const computedTag = computed(() => {
     : props.href ? SLink : 'button'
 })
 
+const slots = useSlots()
+
+const hasTooltip = computed(() => {
+  return slots['tooltip-text'] || unref(props.tooltip?.text)
+})
+
 function handleClick(): void {
   if (!props.loading) {
     props.disabled ? emit('disabled-click') : emit('click')
@@ -65,29 +84,41 @@ function handleClick(): void {
 </script>
 
 <template>
-  <Component
-    :is="computedTag"
-    class="SButton"
-    :class="classes"
-    :href="href"
-    role="button"
-    @click="handleClick"
+  <SFragment
+    :is="hasTooltip && STooltip"
+    :tag="tooltip?.tag"
+    :text="unref(tooltip?.text)"
+    :position="tooltip?.position"
+    display="inline-block"
+    :trigger="tooltip?.trigger ?? 'both'"
+    :timeout="tooltip?.timeout"
+    :tabindex="-1"
   >
-    <span class="content">
-      <span v-if="icon" class="icon" :class="iconMode">
-        <SIcon :icon="icon" class="icon-svg" />
+    <template v-if="$slots['tooltip-text']" #text><slot name="tooltip-text" /></template>
+    <component
+      :is="computedTag"
+      class="SButton"
+      :class="classes"
+      :href="href"
+      role="button"
+      @click="handleClick"
+    >
+      <span class="content">
+        <span v-if="icon" class="icon" :class="iconMode">
+          <SIcon :icon="icon" class="icon-svg" />
+        </span>
+        <span v-if="label" class="label" :class="labelMode">
+          {{ label }}
+        </span>
       </span>
-      <span v-if="label" class="label" :class="labelMode">
-        {{ label }}
-      </span>
-    </span>
 
-    <Transition name="fade">
-      <span v-if="loading" key="loading" class="loader">
-        <SSpinner class="loader-icon" />
-      </span>
-    </Transition>
-  </Component>
+      <transition name="fade">
+        <span v-if="loading" key="loading" class="loader">
+          <SSpinner class="loader-icon" />
+        </span>
+      </transition>
+    </component>
+  </SFragment>
 </template>
 
 <style scoped lang="postcss">

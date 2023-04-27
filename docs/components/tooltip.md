@@ -102,6 +102,22 @@ interface Props {
 </STooltip>
 ```
 
+### `:display`
+
+Defines the css `display` property of the tooltip. Defaults to undefined.
+
+```ts
+interface Props {
+  display?: 'inline' | 'inline-block' | 'block'
+}
+```
+
+```vue-html
+<STooltip text="..." display="inline-block">
+  ...
+</STooltip>
+```
+
 ### `:trigger`
 
 Defines the trigger event to show the tooltip. Defaults to `'hover'`.
