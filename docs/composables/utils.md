@@ -4,12 +4,12 @@
 
 ## `WhenCondition`
 
-A type alias of `MaybeComputedRef` from `@vueuse/core`. Used in "when" related utilities.
+A type alias of `MaybeRefOrGetter` from `@vueuse/core`. Used in "when" related utilities.
 
 ```ts
-import { MaybeComputedRef } from '@vueuse/core'
+import { MaybeRefOrGetter } from '@vueuse/core'
 
-type WhenCondition<T> = MaybeComputedRef<T>
+type WhenCondition<T> = MaybeRefOrGetter<T>
 ```
 
 ## `computedWhen`

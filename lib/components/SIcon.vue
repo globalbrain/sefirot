@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Icon, IconifyIcon } from '@iconify/vue/dist/offline'
+import { Icon, type IconifyIcon } from '@iconify/vue/dist/offline'
 import { type DefineComponent } from 'vue'
 
 defineProps<{
