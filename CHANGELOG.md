@@ -1,3 +1,9 @@
+## [2.34.1](https://github.com/globalbrain/sefirot/compare/v2.34.0...v2.34.1) (2023-05-10)
+
+### Bug Fixes
+
+* **button:** label gets misaligned in some cases ([#276](https://github.com/globalbrain/sefirot/issues/276)) ([#274](https://github.com/globalbrain/sefirot/pull/274))
+
 # [2.34.0](https://github.com/globalbrain/sefirot/compare/v2.33.0...v2.34.0) (2023-05-10)
 
 ### Features
