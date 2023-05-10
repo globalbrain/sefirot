@@ -1,3 +1,9 @@
+# [2.34.0](https://github.com/globalbrain/sefirot/compare/v2.33.0...v2.34.0) (2023-05-10)
+
+### Features
+
+* **table:** allow disabling virtual scrolling ([#272](https://github.com/globalbrain/sefirot/issues/272)) ([20d6358](https://github.com/globalbrain/sefirot/commit/20d6358fd9db85d90dfcc4939a53d390f6ab8cf6)), closes [#266](https://github.com/globalbrain/sefirot/issues/266)
+
 # [2.33.0](https://github.com/globalbrain/sefirot/compare/v2.32.0...v2.33.0) (2023-04-27)
 
 ### Bug Fixes
