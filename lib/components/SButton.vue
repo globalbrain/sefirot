@@ -705,6 +705,7 @@ function handleClick(): void {
 
 .SButton.block {
   display: flex;
+  justify-content: center;
   width: 100%;
 }
 
