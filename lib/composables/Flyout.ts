@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { ref, watch } from 'vue'
 
 export function useFlyout(container?: Ref<any>) {

@@ -6,7 +6,7 @@ import SInputText from 'sefirot/components/SInputText.vue'
 import SSpinner from 'sefirot/components/SSpinner.vue'
 import { useForm } from 'sefirot/composables/Form'
 import { required } from 'sefirot/validation/rules'
-import type { DefineComponent } from 'vue'
+import { type DefineComponent } from 'vue'
 import { computed, ref } from 'vue'
 
 const title = 'Components / SInputText / 01. Playground'

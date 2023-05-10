@@ -1,5 +1,5 @@
 import day from 'dayjs'
-import type { Ymd } from '../../support/Day'
+import { type Ymd } from '../../support/Day'
 
 type YmdType = 'y' | 'm' | 'd'
 

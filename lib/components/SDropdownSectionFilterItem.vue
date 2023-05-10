@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DropdownSectionFilterOption } from '../composables/Dropdown'
+import { type DropdownSectionFilterOption } from '../composables/Dropdown'
 import SDropdownSectionFilterItemAvatar from './SDropdownSectionFilterItemAvatar.vue'
 import SDropdownSectionFilterItemText from './SDropdownSectionFilterItemText.vue'
 

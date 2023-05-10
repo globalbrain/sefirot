@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
 import IconX from '@iconify-icons/ph/x'
-import type { PropType } from 'vue'
-import type { BarMode, StepStatus } from '../composables/Step'
+import { type PropType } from 'vue'
+import { type BarMode, type StepStatus } from '../composables/Step'
 import SIcon from './SIcon.vue'
 
 defineProps({

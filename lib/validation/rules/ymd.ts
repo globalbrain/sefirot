@@ -1,5 +1,5 @@
 import { helpers } from '@vuelidate/validators'
-import type { Ymd } from '../../support/Day'
+import { type Ymd } from '../../support/Day'
 import { ymd as baseYmd } from '../validators/ymd'
 
 type YmdType = 'y' | 'm' | 'd'

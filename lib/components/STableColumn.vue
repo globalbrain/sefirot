@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconDotsThree from '@iconify-icons/ph/dots-three'
 import { computed, nextTick, ref, unref, watch } from 'vue'
-import type { DropdownSection } from '../composables/Dropdown'
+import { type DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'

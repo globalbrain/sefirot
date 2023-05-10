@@ -1,7 +1,7 @@
-import type { MaybeRef } from '@vueuse/core'
-import type { Component } from 'vue'
-import type { Day } from '../support/Day'
-import type { DropdownSection } from './Dropdown'
+import { type MaybeRef } from '@vueuse/core'
+import { type Component } from 'vue'
+import { type Day } from '../support/Day'
+import { type DropdownSection } from './Dropdown'
 
 export interface Table<
   O extends string = any,

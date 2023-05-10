@@ -1,4 +1,4 @@
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { onMounted, onUnmounted, ref, watchEffect } from 'vue'
 
 export interface Grid {

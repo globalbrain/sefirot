@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
-import type { MockedFunction } from 'vitest'
+import { type MockedFunction } from 'vitest'
 import { vi } from 'vitest'
 import { useRouter } from 'vue-router'
 

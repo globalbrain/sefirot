@@ -1,6 +1,6 @@
-import type { MaybeRef } from '@vueuse/core'
+import { type MaybeRef } from '@vueuse/core'
 import { useElementBounding, useWindowSize } from '@vueuse/core'
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { ref, unref } from 'vue'
 
 export type DropdownSection =

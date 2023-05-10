@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { type PropType } from 'vue'
 import { computed } from 'vue'
-import type { BarMode, Step } from '../composables/Step'
+import { type BarMode, type Step } from '../composables/Step'
 import SStep from './SStep.vue'
 
 const props = defineProps({

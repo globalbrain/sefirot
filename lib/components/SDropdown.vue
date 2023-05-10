@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DropdownSection } from '../composables/Dropdown'
+import { type DropdownSection } from '../composables/Dropdown'
 import SDropdownSection from './SDropdownSection.vue'
 
 defineProps<{

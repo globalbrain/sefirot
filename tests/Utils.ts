@@ -1,5 +1,5 @@
 import { type DOMWrapper, type VueWrapper, config } from '@vue/test-utils'
-import type { Validatable } from 'sefirot/composables/Validation'
+import { type Validatable } from 'sefirot/composables/Validation'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 export function setupRouter(): void {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { Day } from '../support/Day'
+import { type Day } from '../support/Day'
 
 const props = defineProps<{
   value?: Day | null

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { TableCellPillColor } from '../composables/Table'
+import { type TableCellPillColor } from '../composables/Table'
 import STableCellPill from './STableCellPill.vue'
 
 export interface Pill {

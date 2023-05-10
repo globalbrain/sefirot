@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { IconifyIcon } from '@iconify/vue/dist/offline'
+import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import IconQuestion from '@iconify-icons/ph/question'
-import type { DefineComponent } from 'vue'
+import { type DefineComponent } from 'vue'
 import { computed, unref, useSlots } from 'vue'
-import type { Validatable } from '../composables/Validation'
+import { type Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DropdownSectionActionsOption } from '../composables/Dropdown'
+import { type DropdownSectionActionsOption } from '../composables/Dropdown'
 
 defineProps<{
   options: DropdownSectionActionsOption[]

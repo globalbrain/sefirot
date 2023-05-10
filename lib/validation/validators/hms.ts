@@ -1,4 +1,4 @@
-import type { Hms } from '../../support/Day'
+import { type Hms } from '../../support/Day'
 
 type HmsType = 'h' | 'm' | 's'
 

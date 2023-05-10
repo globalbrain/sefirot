@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SSteps from 'sefirot/components/SSteps.vue'
-import type { Step } from 'sefirot/composables/Step'
+import { type Step } from 'sefirot/composables/Step'
 
 const title = 'Components / SPill / 03. Types and Modes'
 

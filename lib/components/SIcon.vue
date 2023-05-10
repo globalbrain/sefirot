@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon, IconifyIcon } from '@iconify/vue/dist/offline'
-import type { DefineComponent } from 'vue'
+import { type DefineComponent } from 'vue'
 
 defineProps<{
   icon: IconifyIcon | DefineComponent

@@ -10,7 +10,7 @@ import {
   watch
 } from 'vue'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
-import type { Table } from '../composables/Table'
+import { type Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
