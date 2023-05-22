@@ -125,6 +125,7 @@ function handleClick(): void {
 .SButton {
   position: relative;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   letter-spacing: 0;
   text-align: center;

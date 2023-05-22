@@ -183,6 +183,8 @@
   --c-divider-1: var(--c-divider-light-1);
   --c-divider-2: var(--c-divider-light-2);
 
+  --c-gutter: var(--c-divider-light-2);
+
   --c-neutral-1: var(--c-neutral-light-1);
   --c-neutral-2: var(--c-neutral-light-2);
   --c-neutral-3: var(--c-neutral-light-3);
@@ -237,6 +239,8 @@
 
   --c-divider-1: var(--c-divider-dark-1);
   --c-divider-2: var(--c-divider-dark-2);
+
+  --c-gutter: #000000;
 
   --c-neutral-1: var(--c-neutral-dark-1);
   --c-neutral-2: var(--c-neutral-dark-2);
@@ -538,8 +542,8 @@
 
   --button-text-mute-text-color: var(--c-text-2);
   --button-text-mute-content-color: var(--c-text-2);
-  --button-text-mute-hover-bg-color: var(--c-mute-dimm-1);
-  --button-text-mute-active-bg-color: var(--c-mute-dimm-2);
+  --button-text-mute-hover-bg-color: var(--c-mute);
+  --button-text-mute-active-bg-color: var(--c-mute-light);
   --button-text-mute-disabled-text-color: var(--c-text-3);
   --button-text-mute-disabled-content-color: var(--c-text-3);
 
