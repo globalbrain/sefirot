@@ -90,13 +90,13 @@ function stopResizeListener() {
 }
 
 async function adjustDialogPosition() {
-  if (!props.dropdown || !isOpen.value) {
+  const rect = container.value?.getBoundingClientRect()
+
+  if (!props.dropdown || !isOpen.value || !rect) {
     return
   }
 
   startDialogPositionListener()
-
-  const rect = container.value.getBoundingClientRect()
 
   await nextTick()
 

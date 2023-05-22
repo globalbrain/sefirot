@@ -19,13 +19,13 @@ export function useFlyout(container?: Ref<any>) {
   }
 
   function closeOnClickOutside(event: any) {
-    if (!el.value.contains(event.target) && isVisible(el.value)) {
+    if (!el.value?.contains(event.target) && isVisible(el.value)) {
       isOpen.value = false
     }
   }
 
   function isVisible(el: any) {
-    return !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
+    return !!el && !!(el?.offsetWidth || el?.offsetHeight || el.getClientRects().length)
   }
 
   watch(isOpen, (value) => {
