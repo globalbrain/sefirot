@@ -33,7 +33,7 @@ const { isCollapsed } = provideCardState()
 .SModal > .SCard {
   margin: 12px 12px 128px;
   box-shadow: var(--shadow-depth-3);
-  transition: opacity 0.5s, transform 0.5s;
+  transition: opacity 0.25s, transform 0.25s;
 
   @media (min-width: 512px) {
     margin: 24px 24px 128px;

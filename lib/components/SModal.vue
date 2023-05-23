@@ -46,7 +46,7 @@ function onClick(e: MouseEvent) {
   left: 0;
   z-index: var(--z-index-backdrop);
   background-color: rgba(0, 0, 0, .8);
-  transition: opacity 0.5s;
+  transition: opacity 0.25s;
   overflow: hidden;
   overflow-y: auto;
 }
