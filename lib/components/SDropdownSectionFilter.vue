@@ -74,7 +74,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
           @keyup.down.prevent="focusNext"
           @click="handleClick(option, option.value)"
         >
-          <span v-if="false" class="checkbox">
+          <span v-if="isArray(unref(selected))" class="checkbox">
             <span class="checkbox-box">
               <SIcon :icon="IconCheck" class="checkbox-icon" />
             </span>
