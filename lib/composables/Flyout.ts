@@ -19,7 +19,7 @@ export function useFlyout(container?: Ref<any>) {
   }
 
   function closeOnClickOutside(event: any) {
-    if (!el.value.contains(event.target) && isVisible(el.value)) {
+    if (!el.value?.contains(event.target) && isVisible(el.value)) {
       isOpen.value = false
     }
   }
