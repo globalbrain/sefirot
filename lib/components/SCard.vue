@@ -1,5 +1,11 @@
+<script setup lang="ts">
+import { provideCardState } from '../composables/Card'
+
+const { isCollapsed } = provideCardState()
+</script>
+
 <template>
-  <div class="SCard">
+  <div class="SCard" :class="{ collapsed: isCollapsed }">
     <slot />
   </div>
 </template>

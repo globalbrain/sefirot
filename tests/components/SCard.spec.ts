@@ -12,6 +12,7 @@ import SCardHeaderActionCollapse from 'sefirot/components/SCardHeaderActionColla
 import SCardHeaderActions from 'sefirot/components/SCardHeaderActions.vue'
 import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
 import { assertEmitted } from 'tests/Utils'
+import { h } from 'vue'
 
 describe('components/SCard', () => {
   describe('SCard', () => {
@@ -83,14 +84,21 @@ describe('components/SCard', () => {
 
   describe('SCardHeaderActionCollapse', () => {
     test('renders `SCardHeaderActionCollapse` element', () => {
-      const wrapper = mount(SCardHeaderActionCollapse)
+      const wrapper = mount(SCard, {
+        slots: {
+          default: SCardHeaderActionCollapse
+        }
+      })
+
       expect(wrapper.find('.SCardHeaderActionCollapse').exists()).toBe(true)
     })
 
     test('sets default collapsed value via `:collapsed` prop', async () => {
-      const wrapper = mount(SCardHeaderActionCollapse, {
-        props: {
-          collapsed: true
+      const wrapper = mount(SCard, {
+        slots: {
+          default: () => h(SCardHeaderActionCollapse, {
+            collapsed: true
+          })
         }
       })
 
