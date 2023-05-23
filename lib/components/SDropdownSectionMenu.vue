@@ -19,6 +19,7 @@ defineProps<{
 <style scoped lang="postcss">
 .SDropdownSectionMenu {
   padding: 8px;
+  background-color: var(--c-bg-elv-3);
 }
 
 .button {
@@ -28,12 +29,12 @@ defineProps<{
   width: 100%;
   text-align: left;
   line-height: 32px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   transition: color 0.25s, background-color 0.25s;
 
   &:hover {
-    background-color: var(--c-bg-elv-down);
+    background-color: var(--c-mute);
   }
 }
 </style>
