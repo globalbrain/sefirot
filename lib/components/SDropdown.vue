@@ -19,25 +19,20 @@ defineProps<{
 
 <style scoped lang="postcss">
 .SDropdown {
-  border: 1px solid var(--c-divider-light);
-  border-radius: 12px;
+  border: 1px solid var(--c-divider-2);
+  border-radius: 6px;
   min-width: 256px;
   max-height: 384px;
-  background-color: var(--c-bg);
   overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;
   }
-
-  .dark & {
-    background-color: var(--c-bg-mute);
-  }
 }
 
-.section {
-  & + & {
-    border-top: 1px solid var(--c-divider-light);
-  }
+.container {
+  display: grid;
+  gap: 1px;
+  background-color: var(--c-gutter);
 }
 </style>

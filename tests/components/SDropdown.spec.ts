@@ -1,8 +1,23 @@
 import { mount } from '@vue/test-utils'
 import SDropdownSectionFilter from 'sefirot/components/SDropdownSectionFilter.vue'
 
-describe('components/SDropdown', async () => {
+describe('components/SDropdown', () => {
   describe('SDropdownSectionFilter', () => {
+    test('shows avatar type filter', async () => {
+      const wrapper = mount(SDropdownSectionFilter, {
+        props: {
+          selected: 1,
+          options: [
+            { type: 'avatar', label: 'User A', value: 1 },
+            { type: 'avatar', label: 'User B', value: 2 },
+            { type: 'avatar', label: 'User C', value: 3 }
+          ]
+        }
+      })
+
+      expect(wrapper.findAll('.SDropdownSectionFilterItemAvatar').length).toBe(3)
+    })
+
     test('hide disabled options', async () => {
       const wrapper = mount(SDropdownSectionFilter, {
         props: {

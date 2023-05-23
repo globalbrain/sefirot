@@ -12,8 +12,18 @@ const sections = createDropdown([
   {
     type: 'menu',
     options: [
-      { label: 'Select all', onClick: selectAll },
-      { label: 'Clear all', onClick: clearAll }
+      {
+        label: 'Select all',
+        onClick() {
+          selected.value = ['Draft', 'Published', 'Archived']
+        }
+      },
+      {
+        label: 'Clear all',
+        onClick() {
+          selected.value = []
+        }
+      }
     ]
   },
   {
@@ -25,7 +35,9 @@ const sections = createDropdown([
       { label: 'Published', value: 'Published' },
       { label: 'Archived', value: 'Archived' }
     ],
-    onClick: updateFilter
+    onClick(value: string) {
+      selected.value = xor(selected.value, [value])
+    }
   },
   {
     type: 'actions',
@@ -35,18 +47,6 @@ const sections = createDropdown([
     ]
   }
 ])
-
-function updateFilter(value: string) {
-  selected.value = xor(selected.value, [value])
-}
-
-function selectAll() {
-  selected.value = ['Draft', 'Published', 'Archived']
-}
-
-function clearAll() {
-  selected.value = []
-}
 </script>
 
 <template>

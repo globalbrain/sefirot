@@ -20,7 +20,9 @@ defineProps<{
 .SDropdownSectionActions {
   display: flex;
   justify-content: flex-end;
+  gap: 4px;
   padding: 8px;
+  background-color: var(--c-bg-elv-3);
 }
 
 .button {
@@ -30,8 +32,7 @@ defineProps<{
   width: 100%;
   text-align: left;
   line-height: 32px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
   transition: color 0.25s, background-color 0.25s;
 
   &.neutral        { color: var(--button-text-neutral-text-color); }
