@@ -3,11 +3,12 @@ import IconArrowsInLineVertical from '@iconify-icons/ph/arrows-in-line-vertical-
 import IconArrowsOutLineVertical from '@iconify-icons/ph/arrows-out-line-vertical-bold'
 import { computed, shallowRef } from 'vue'
 import { useCardState } from '../composables/Card'
-import SButton from './SButton.vue'
+import SButton, { type Tooltip } from './SButton.vue'
 
 const props = defineProps<{
   collapsed?: boolean
   disabled?: boolean
+  tooltip?: Tooltip
 }>()
 
 defineEmits<{
@@ -39,6 +40,7 @@ const icon = computed(() => {
       size="small"
       :icon="icon"
       :disabled="disabled"
+      :tooltip="tooltip"
       @click="toggleCollapse"
     />
   </div>

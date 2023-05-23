@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SButton, { type Mode } from './SButton.vue'
+import SButton, { type Mode, type Tooltip } from './SButton.vue'
 
 defineProps<{
   mode?: Mode
@@ -7,6 +7,7 @@ defineProps<{
   labelMode?: Mode
   loading?: boolean
   disabled?: boolean
+  tooltip?: Tooltip
 }>()
 
 defineEmits<{
@@ -23,6 +24,7 @@ defineEmits<{
       :label-mode="labelMode"
       :loading="loading"
       :disabled="disabled"
+      :tooltip="tooltip"
       @click="$emit('click')"
     />
   </div>

@@ -104,15 +104,23 @@ Use `<SCardHeader>` to display header element.
 
 You may use `<SCardHeaderActions>` with nested `<SCardHeaderAction>` to add header actions. `<SCardHeaderAction>` accepts following props, and emits `@click` event when user clicks on the button.
 
+It uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
+
 ```ts
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 
 interface Props {
-  // Icon to display.
   icon: IconifyIcon
-
-  // Mark button disabled.
   disabled?: boolean
+  tooltip?: Tooltip
+}
+
+export interface Tooltip {
+  tag?: string
+  text?: MaybeRef<string>
+  position?: Position
+  trigger?: 'hover' | 'focus' | 'both'
+  timeout?: number
 }
 ```
 
@@ -210,7 +218,7 @@ If you need to adjust the padding responsively, you may use `--card-padding` css
 
 Similar to `<SCardHeader>`, use `<SCardFooter>` to add the "footer" section of the card. `<SCardFooter>` comes with nested `<SCardFooterActions>` and `<SCardFooterAction>` to display action buttons.
 
-`<SCardFooterAction>` accepts following props.
+`<SCardFooterAction>` accepts following props. As same as `<SCardHeaderAction>`, it uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
 
 ```ts
 interface Props {
@@ -219,6 +227,15 @@ interface Props {
   labelMode?: Mode
   loading?: boolean
   disabled?: boolean
+  tooltip?: Tooltip
+}
+
+export interface Tooltip {
+  tag?: string
+  text?: MaybeRef<string>
+  position?: Position
+  trigger?: 'hover' | 'focus' | 'both'
+  timeout?: number
 }
 ```
 

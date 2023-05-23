@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import SButton from './SButton.vue'
+import SButton, { type Tooltip } from './SButton.vue'
 
 defineProps<{
   icon: IconifyIcon
   disabled?: boolean
+  tooltip?: Tooltip
 }>()
 
 defineEmits<{
@@ -20,6 +21,7 @@ defineEmits<{
       size="small"
       :icon="icon"
       :disabled="disabled"
+      :tooltip="tooltip"
       @click="$emit('click')"
     />
   </div>
