@@ -183,7 +183,7 @@
   --c-divider-1: var(--c-divider-light-1);
   --c-divider-2: var(--c-divider-light-2);
 
-  --c-gutter: var(--c-divider-light-2);
+  --c-gutter: #e8e8e8;
 
   --c-neutral-1: var(--c-neutral-light-1);
   --c-neutral-2: var(--c-neutral-light-2);

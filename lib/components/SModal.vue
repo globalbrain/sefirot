@@ -29,11 +29,11 @@ function onClick(e: MouseEvent) {
 
 <template>
   <Teleport to="#sefirot-modals">
-    <transition name="fade">
+    <Transition name="fade">
       <div v-if="open" class="SModal" ref="el" @mousedown="onClick">
         <slot />
       </div>
-    </transition>
+    </Transition>
   </Teleport>
 </template>
 
