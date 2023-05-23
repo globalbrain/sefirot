@@ -25,7 +25,7 @@ export function useFlyout(container?: Ref<any>) {
   }
 
   function isVisible(el: any) {
-    return !!el && !!(el?.offsetWidth || el?.offsetHeight || el.getClientRects().length)
+    return !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
   }
 
   watch(isOpen, (value) => {
