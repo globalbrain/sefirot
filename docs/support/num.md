@@ -18,6 +18,8 @@ format(100000) // <- '100,000'
 
 ## `abbreviate`
 
+Abbreviates the given value to a human readable format (such as `1K` or `1M`).
+
 ```ts
 function abbreviate(value: number, precision = 0): string
 ```
