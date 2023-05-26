@@ -67,9 +67,9 @@ export function useTooltip(
     const contentRightX = contentRect.x + contentRect.width
     const tipRightX = tipRect.x + tipRect.width
 
-    if (tipRect.x < 0) {
+    if (tipRect.x < SCREEN_PADDING) {
       adjustLeftPosition(contentRect.x)
-    } else if (tipRightX > window.outerWidth) {
+    } else if (tipRightX > (document.body.clientWidth - SCREEN_PADDING)) {
       adjustRightPosition(contentRightX)
     }
 
@@ -85,7 +85,7 @@ export function useTooltip(
   function adjustRightPosition(contentRightX: number): void {
     tip.value!.style.left = 'auto'
     tip.value!.style.right = '0'
-    setTransform((window.outerWidth - contentRightX) - SCREEN_PADDING)
+    setTransform((document.body.clientWidth - contentRightX) - SCREEN_PADDING)
   }
 
   function resetPosition(): void {
