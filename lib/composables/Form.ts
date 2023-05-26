@@ -1,5 +1,5 @@
 import { type Ref, computed, reactive, toRefs } from 'vue'
-import { useSnackbars } from '../stores/Snackbars'
+import { type Snackbar, useSnackbars } from '../stores/Snackbars'
 import { type UseDataInput, useData } from './Data'
 import { type Validation, useValidation } from './Validation'
 
@@ -9,7 +9,7 @@ export interface Form<T extends Record<string, any>> {
   init(): void
   reset(): void
   validate(): Promise<boolean>
-  validateAndNotify(): Promise<boolean>
+  validateAndNotify(message?: Snackbar): Promise<boolean>
 }
 
 export type ComputedData<T extends Record<string, () => any>> = {
@@ -69,11 +69,11 @@ export function useForm<
     return validation.value.$validate()
   }
 
-  async function validateAndNotify(): Promise<boolean> {
+  async function validateAndNotify(message?: Snackbar): Promise<boolean> {
     const valid = await validate()
 
     if (!valid) {
-      snackbars.push({
+      snackbars.push(message ?? {
         mode: 'danger',
         text: 'Form contains errors. Please correct them and try again.'
       })
