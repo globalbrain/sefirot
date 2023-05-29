@@ -8,8 +8,6 @@ export interface Tooltip {
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 
-const SCREEN_PADDING = 16
-
 const globalHide = ref<() => void>()
 
 /**
@@ -61,31 +59,32 @@ export function useTooltip(
     // Temporally show tip to get its size.
     tip.value!.style.display = 'block'
 
+    const screenPadding = document.body.clientWidth >= 512 ? 24 : 8
     const contentRect = content.value!.getBoundingClientRect()
     const tipRect = tip.value!.getBoundingClientRect()
 
     const contentRightX = contentRect.x + contentRect.width
     const tipRightX = tipRect.x + tipRect.width
 
-    if (tipRect.x < SCREEN_PADDING) {
-      adjustLeftPosition(contentRect.x)
-    } else if (tipRightX > (document.body.clientWidth - SCREEN_PADDING)) {
-      adjustRightPosition(contentRightX)
+    if (tipRect.x < screenPadding) {
+      adjustLeftPosition(screenPadding, contentRect.x)
+    } else if (tipRightX > (document.body.clientWidth - screenPadding)) {
+      adjustRightPosition(screenPadding, contentRightX)
     }
 
     tip.value!.style.display = 'none'
   }
 
-  function adjustLeftPosition(contentRectX: number): void {
+  function adjustLeftPosition(screenPadding: number, contentRectX: number): void {
     tip.value!.style.left = '0'
     tip.value!.style.right = 'auto'
-    setTransform(-contentRectX + SCREEN_PADDING)
+    setTransform(-contentRectX + screenPadding)
   }
 
-  function adjustRightPosition(contentRightX: number): void {
+  function adjustRightPosition(screenPadding: number, contentRightX: number): void {
     tip.value!.style.left = 'auto'
     tip.value!.style.right = '0'
-    setTransform((document.body.clientWidth - contentRightX) - SCREEN_PADDING)
+    setTransform((document.body.clientWidth - contentRightX) - screenPadding)
   }
 
   function resetPosition(): void {
