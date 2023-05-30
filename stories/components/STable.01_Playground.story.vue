@@ -170,9 +170,10 @@ const table = useTable({
       dropdown: dropdownName,
       grow: true,
       cell: {
-        type: 'text',
-        icon: markRaw(IconImageSquare),
-        link: (_value, record) => record.link
+        type: 'avatar',
+        name: (value) => value,
+        image: '/annonymous.png',
+        onClick: () => alert('clicked!')
       }
     },
 
@@ -191,7 +192,11 @@ const table = useTable({
     type: {
       label: 'Type',
       dropdown: dropdownType,
-      cell: { type: 'text', color: 'soft' }
+      cell: {
+        type: 'text',
+        color: 'soft',
+        link: (_value, record) => record.link
+      }
     },
 
     createdAt: {
