@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
@@ -173,6 +172,7 @@ const table = useTable({
         type: 'avatar',
         name: (value) => value,
         image: '/annonymous.png',
+        // eslint-disable-next-line no-alert
         onClick: () => alert('clicked!')
       }
     },
