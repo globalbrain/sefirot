@@ -86,12 +86,12 @@ function handleClick(): void {
 <template>
   <SFragment
     :is="hasTooltip && STooltip"
-    :tag="tooltip?.tag"
-    :text="unref(tooltip?.text)"
-    :position="tooltip?.position"
+    :tag="props.tooltip?.tag"
+    :text="unref(props.tooltip?.text)"
+    :position="props.tooltip?.position"
     display="inline-block"
-    :trigger="tooltip?.trigger ?? 'both'"
-    :timeout="tooltip?.timeout"
+    :trigger="props.tooltip?.trigger ?? 'both'"
+    :timeout="props.tooltip?.timeout"
     :tabindex="-1"
   >
     <template v-if="$slots['tooltip-text']" #text><slot name="tooltip-text" /></template>
