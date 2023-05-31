@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps({
-  href: { type: String, default: null }
+const props = withDefaults(defineProps<{
+  href: string | null
+  external?: boolean
+}>(), {
+  href: null
 })
 
 const OUTBOUND_REGEX = /^[a-z]+:/i
 
-const isExternal = computed(() => OUTBOUND_REGEX.test(props.href))
+const isExternal = computed(() => {
+  if (!props.href) {
+    return false
+  }
+
+  return props.external || OUTBOUND_REGEX.test(props.href)
+})
 
 const component = computed(() => {
   if (!props.href) {
