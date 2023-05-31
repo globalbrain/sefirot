@@ -1,3 +1,9 @@
+# [2.36.0](https://github.com/globalbrain/sefirot/compare/v2.35.0...v2.36.0) (2023-05-31)
+
+### Features
+
+* **link:** add `external` option ([#293](https://github.com/globalbrain/sefirot/issues/293)) ([#294](https://github.com/globalbrain/sefirot/issues/294)) ([9179f1d](https://github.com/globalbrain/sefirot/commit/9179f1d36bf80cf46bb3e057b827b5c0cd4a4c40))
+
 # [2.35.0](https://github.com/globalbrain/sefirot/compare/v2.34.1...v2.35.0) (2023-05-31)
 
 ### Bug Fixes
