@@ -1,3 +1,21 @@
+# [2.35.0](https://github.com/globalbrain/sefirot/compare/v2.34.1...v2.35.0) (2023-05-31)
+
+### Bug Fixes
+
+* error on accessing nullable template ref ([#277](https://github.com/globalbrain/sefirot/issues/277)) ([c6372bf](https://github.com/globalbrain/sefirot/commit/c6372bf6810663bb85cd7b56bccfd3727fecec21))
+* **tooltip:** positioning breaks on some edge cases ([#288](https://github.com/globalbrain/sefirot/issues/288)) ([5506309](https://github.com/globalbrain/sefirot/commit/5506309bf92bf548a49b9a95ff2673fad15ea2dc))
+* **types:** button fails to build due to vue-tsc bug ([#289](https://github.com/globalbrain/sefirot/issues/289)) ([8fb554d](https://github.com/globalbrain/sefirot/commit/8fb554d603b056eee704d55f6b7cb69b3f2fda1a))
+
+### Features
+
+* **card:** add `<SCard>` component ([#278](https://github.com/globalbrain/sefirot/issues/278)) ([f6d3446](https://github.com/globalbrain/sefirot/commit/f6d3446554d890c9a33508233db83c7e3bbc6c3b))
+* **dropdown:** show radio button when selected is not array ([#280](https://github.com/globalbrain/sefirot/issues/280)) ([976081b](https://github.com/globalbrain/sefirot/commit/976081bd138599482384643aaedd5f64fbb273e4))
+* **form:** allow specifying message in `validateAndNotify` ([#284](https://github.com/globalbrain/sefirot/issues/284)) ([#287](https://github.com/globalbrain/sefirot/issues/287)) ([9a136a8](https://github.com/globalbrain/sefirot/commit/9a136a899a66f7591742aba3c40f3b988bc70d44))
+* **style:** update accent color schema ([#283](https://github.com/globalbrain/sefirot/issues/283)) ([5f46653](https://github.com/globalbrain/sefirot/commit/5f466536abe5ea9df50ee2b3e3f0c951545403a6))
+* **support:** add `abbreviate` utility ([#285](https://github.com/globalbrain/sefirot/issues/285)) ([#286](https://github.com/globalbrain/sefirot/issues/286)) ([aaf8f06](https://github.com/globalbrain/sefirot/commit/aaf8f061f877092416f49e502fb6470190afb12a))
+* **table:** add `onClick` option to `TableCellAvatar` ([#291](https://github.com/globalbrain/sefirot/issues/291)) ([#292](https://github.com/globalbrain/sefirot/issues/292)) ([ab0111c](https://github.com/globalbrain/sefirot/commit/ab0111c0c0c1d2afb66ec62e0c7a9f0bfcb4ac6a))
+* **table:** adjust table header bg color ([f95e5e6](https://github.com/globalbrain/sefirot/commit/f95e5e61fed8195ba4fac3ff9e36327d19642cca))
+
 ## [2.34.1](https://github.com/globalbrain/sefirot/compare/v2.34.0...v2.34.1) (2023-05-10)
 
 ### Bug Fixes
