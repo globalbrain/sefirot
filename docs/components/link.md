@@ -1,10 +1,10 @@
 # SLink
 
-`<SLink>` is a style less component that renders an anchor tag with custom utility options.
+`<SLink>` is a styleless component that renders an anchor tag with custom utility options.
 
 ## Usage
 
-You may use `<SLink>` as almost same as `<a>` tag. Wrap text with it and it will render an anchor tag with the text inside.
+You may use `<SLink>` as almost the same as `<a>` tag. Wrap text with it and it will render an anchor tag with the text inside.
 
 ```vue
 <script setup lang="ts">
@@ -30,7 +30,7 @@ import SLink from '@globalbrain/sefirot/lib/components/SLink.vue'
 <RouterLink to="/about">
 ```
 
-You may pass `:external` prop to override this behavior. For example, if you would like to have internal link open in another tab, set `:external` to `true`.
+You may pass `:external` prop to override this behavior. For example, if you would like to have an internal link open in another tab, set `:external` to `true`.
 
 ```vue-html
 <SLink href="/about" external>
