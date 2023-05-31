@@ -73,7 +73,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :name="computedCell.name"
       :link="computedCell.link"
       :color="computedCell.color"
-      :on-click="computedCell?.onClick"
+      :on-click="computedCell.onClick"
     />
     <STableCellAvatars
       v-else-if="computedCell.type === 'avatars'"

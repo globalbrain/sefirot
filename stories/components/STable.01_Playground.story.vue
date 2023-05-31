@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
@@ -169,11 +170,9 @@ const table = useTable({
       dropdown: dropdownName,
       grow: true,
       cell: {
-        type: 'avatar',
-        name: (value) => value,
-        image: '/annonymous.png',
-        // eslint-disable-next-line no-alert
-        onClick: () => alert('clicked!')
+        type: 'text',
+        icon: markRaw(IconImageSquare),
+        link: (_value, record) => record.link
       }
     },
 
@@ -192,11 +191,7 @@ const table = useTable({
     type: {
       label: 'Type',
       dropdown: dropdownType,
-      cell: {
-        type: 'text',
-        color: 'soft',
-        link: (_value, record) => record.link
-      }
+      cell: { type: 'text', color: 'soft' }
     },
 
     createdAt: {

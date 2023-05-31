@@ -9,8 +9,8 @@ const props = defineProps<{
   image?: string | null | ((value: any, record: any) => string | null | undefined)
   name?: string | null | ((value: any, record: any) => string | null | undefined)
   link?: string | null | ((value: any, record: any) => string | null | undefined)
-  onClick?(value: any, record: any): void
   color?: 'neutral' | 'soft' | 'mute'
+  onClick?(value: any, record: any): void
 }>()
 
 const _image = computed(() => resolve(props.image))
