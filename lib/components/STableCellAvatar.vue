@@ -10,6 +10,7 @@ const props = defineProps<{
   name?: string | null | ((value: any, record: any) => string | null | undefined)
   link?: string | null | ((value: any, record: any) => string | null | undefined)
   color?: 'neutral' | 'soft' | 'mute'
+  onClick?(value: any, record: any): void
 }>()
 
 const _image = computed(() => resolve(props.image))
@@ -30,8 +31,13 @@ function resolve(
 </script>
 
 <template>
-  <div class="STableCellAvatar" :class="[{ link }, color]">
-    <SLink class="container" :href="_link ?? undefined">
+  <div class="STableCellAvatar" :class="[{ link: link || onClick }, color]">
+    <SLink
+      class="container"
+      :href="_link ?? undefined"
+      :role="onClick ? 'button' : null"
+      @click="() => onClick?.(value, record)"
+    >
       <div v-if="_image" class="avatar">
         <SAvatar size="mini" :avatar="_image" :name="_name" />
       </div>

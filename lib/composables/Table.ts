@@ -122,6 +122,7 @@ export interface TableCellAvatar extends TableCellBase {
   name?: string | null | ((value: any, record: any) => string | null | undefined)
   link?: string | null | ((value: any, record: any) => string | null | undefined)
   color?: 'neutral' | 'soft' | 'mute'
+  onClick?(value: any, record: any): void
 }
 
 export interface TableCellAvatars extends TableCellBase {
