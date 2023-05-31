@@ -2,10 +2,10 @@
 import { computed } from 'vue'
 
 const props = withDefaults(defineProps<{
-  href: string | null
-  external?: boolean
+  href?: string | null
+  external?: boolean | null
 }>(), {
-  href: null
+  external: null
 })
 
 const OUTBOUND_REGEX = /^[a-z]+:/i
@@ -15,7 +15,11 @@ const isExternal = computed(() => {
     return false
   }
 
-  return props.external || OUTBOUND_REGEX.test(props.href)
+  if (props.external !== null) {
+    return props.external
+  }
+
+  return OUTBOUND_REGEX.test(props.href)
 })
 
 const component = computed(() => {
