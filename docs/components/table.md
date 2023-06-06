@@ -60,7 +60,7 @@ const options = useTable({
 
 ## Usage
 
-Import `<STable>` component and `useTable` composable. Create table object with `useTable` composable and pass it to the `:options` props of the `STable` component. Here is the relatively simple table definitions.
+Import `<STable>` component and `useTable` composable. Create a table object with `useTable` composable and pass it to the `:options` props of the `STable` component. Here are the relatively simple table definitions.
 
 ```vue
 <script setup lang="ts">
@@ -111,7 +111,7 @@ const options = useTable({
 
 `Orders`, `columns`, and `Records` are the base building block of the table. In order to display table records, you must define all of them.
 
-The `orders` defines the existing columns on the table and the order to display it. In below example, you can see we have 3 items in this table definition.
+The `orders` defines the existing columns on the table and the order to display them. In the below example, you can see we have 3 items in this table definition.
 
 ```ts
 import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
@@ -125,7 +125,7 @@ const options = useTable({
 })
 ```
 
-Next, you should define `columns` that matches the value defined on `orders` property. Each columns must contain `label` key. This value will be used for the column name.
+Next, you should define `columns` that match the value defined on the `orders` property. Each column must contain a `label` key. This value will be used for the column name.
 
 ```ts
 import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
@@ -150,9 +150,9 @@ const options = useTable({
 })
 ```
 
-The `columns` key may contain several more options. We'll go through them on the later section of this page.
+The `columns` key may contain several more options. We'll go through them in the later section of this page.
 
-Next, define `records` key with the data you would like to display. The key for the each record must match the key of the `columns` property else it gtes ignored.
+Next, define the `records` key with the data you would like to display. The key for each record must match the key of the `columns` property else it gets ignored.
 
 ```ts
 import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
@@ -182,7 +182,90 @@ const options = useTable({
 })
 ```
 
-## Auto grow column
+## Header options
+
+The header is the top part of the table. The header displays information such as the total number of records or menu items.
+
+### Header menu
+
+You may define `menu` option to display a menu button on the table header. The menu is dropdown options that can display any kind of dropdown items.
+
+This is useful when you would like to add filter options that does not make sense adding it to the column options.
+
+```ts
+const options = useTable({
+  menu: [
+    {
+      label: 'Option A',
+      dropdown: {
+        type: 'menu',
+        options: [
+          { label: 'Option 1', onClick: () => {} },
+          { label: 'Option 2', onClick: () => {} },
+          { label: 'Option 3', onClick: () => {} }
+        ]
+      }
+    }
+  ]
+})
+```
+
+You may also pass `state` option to change how the menu button looks. The `state` option can be one of `inactive`, `active`, or `indicate`.
+
+- `inactive` – The default state. The menu button fill looks slightly muted.
+- `active` – The menu button label text will appear with `--c-text-1` color.
+- `indicate` – Adds blue dot indicator on the menu button. Use this to indicate the user that the menu is now different than its default state (e.g. user has selected some option).
+
+```ts
+const options = useTable({
+  menu: [
+    {
+      label: 'Option A',
+      state: 'indicate',
+      dropdown: { ... }
+    }
+  ]
+})
+```
+
+### Total number of records
+
+You may define `total` option to display the total number of records in the table.
+
+```ts
+const options = useTable({
+  total: 50
+})
+```
+
+### Reset filters button
+
+Define `reset` option to show the "Reset filters" button on the table header. You can define `onReset` callback to listen to the click event on this button.
+
+```ts
+const options = useTable({
+  reset: true,
+  onReset: () => { ... }
+})
+```
+
+### Hide Header
+
+The header gets displayed depending on when it has any data to display. For example, the header gets displayed when `total` or `reset` option is set.
+
+If you would like to display or hide the header regardless of the other options presence, set `boolean` to `header`.
+
+```ts
+const options = useTable({
+  header: true
+})
+```
+
+## Column options
+
+The columns are the part where it displays the label of each record. You may add several options to the column such as displaying the dropdown menu or adjusting how the user can resize the column.
+
+### Auto grow column
 
 You may define `grow` option to automatically grow the column if there is space left on the table.
 
@@ -207,7 +290,7 @@ const options = useTable({
 
 Note that if the user adjusts any column's width, the `grow` option will be ignored and the last column will fill up the remaining space (in the above case it's `item_2`).
 
-## Disable column resize
+### Disable column resize
 
 By default, all columns are resizable via the user. You may disable resizing for each column you specify by setting `resizable` option.
 
@@ -230,97 +313,72 @@ const options = useTable({
 })
 ```
 
-## Total number of records
+## Records & Cell options
 
-You may define `total` option to display the total number of records in the table.
+The records are each row of data in the table and the cell is each item within the record. You may define various types of cells such as text, pill, or date.
 
-```ts
-const options = useTable({
-  total: 50
-})
-```
+### Number cell
 
-## Reset filters button
-
-Define `reset` option to show "Reset filters" button on table header. You can define `onReset` callback to listen to the click event on this button.
+You may use `type: 'number'` cell to define the cell as a number type. It has several number-specific options and also it changes the font style to monospace so that all numbers in the table get aligned.
 
 ```ts
 const options = useTable({
-  reset: true,
-  onReset: () => { ... }
-})
-```
-
-## Header menu
-
-You may define `menu` option to display a menu button on the table header. The menu is dropdown options that can display any kind of dropdown items.
-
-This is useful when you would like to add filter options that does not make sense adding it to the column options.
-
-```ts
-const options = useTable({
-  menu: [
-    {
-      label: 'Option A',
-      dropdown: {
-        type: 'menu',
-        options: [
-          { label: 'Option 1', onClick: () => {} },
-          { label: 'Option 2', onClick: () => {} },
-          { label: 'Option 3', onClick: () => {} }
-        ]
+  orders: ['age'],
+  columns: {
+    age: {
+      label: 'Age',
+      cell: {
+        type: 'number'
       }
     }
-  ]
+  }
 })
 ```
 
-You may also pass `state` option to change how the menu button looks like. The `state` option can be one of `inactive`, `active`, and `indicate`.
-
-- `inactive` – The default state. The menu button fill look slightly muted.
-- `active` – The menu button label text will appear with `--c-text-1` color.
-- `indicate` – Adds blue dot indicator on the menu button. Use this to indicate user that the menu is now different than its default state (e.g. user has selected some option).
+Below are the complete list of options you may pass to the number type cell.
 
 ```ts
-const options = useTable({
-  menu: [
-    {
-      label: 'Option A',
-      state: 'indicate',
-      dropdown: { ... }
-    }
-  ]
-})
+export interface TableCellNumber {
+  // Type of the cell. Must be `number`.
+  type: 'number'
+
+  // Icon to display in from of the value.
+  icon?: any
+
+  // The value for the cell. If omitted, it will use the value
+  // from the record.
+  value?: number | null
+
+  // When set to `true`, it will display the value with
+  // thousand separator. e.g. 1000 -> 1,000.
+  separator?: boolean
+
+  // URL to link the value. When specified, cell becomes a link.
+  link?: string | null
+
+  // Color of the value. Defaults to `neutral`.
+  color?: TableCellValueColor
+
+  // Color of the icon. If not defined, it will use the same
+  // color as `color` option.
+  iconColor?: TableCellValueColor
+
+  // When defined, this callback gets called when user clicks
+  // on the cell.
+  onClick?(value: any, record: any): void
+}
+
+export type TableCellValueColor =
+  | 'neutral'
+  | 'soft'
+  | 'mute'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
 ```
 
-## Pagination
-
-By passing in `total`, `page`, and `perPage` option, the table footer gets displayed with pagination. You can listen to "Prev" and "Next" button click callback via `onPrev` and `onNext` option. Note that if both `onPrev` or `onNext` is not defined, it will not show the "Prev" and "Next" buttons.
-
-```ts
-const options = useTable({
-  total: 50,
-  page: 1,
-  perPage: 25,
-  onPrev: () => { ... },
-  onNext: () => { ... }
-})
-```
-
-## Table Header & Footer
-
-The Table Header and Footer is the part where it shows additional information such as total number of records or pagination. The header and footer gets displayed depending on it has any data to display or not. For example, header gets displayed when there's `total` or `reset` option is set.
-
-If you would like to display or hide the header and footer regardless of the other options present, set `boolean` to `header` or `footer` option.
-
-```ts
-const options = useTable({
-  header: true,
-  footer: true
-})
-```
-
-## Summary row
+### Summary row
 
 You may define `summary` option to display a summary row at the bottom of the table. It's useful to display information such as the total of each column.
 
@@ -338,13 +396,43 @@ const options = useTable({
 
 Each field defined at the `summary` option must match the key of the `columns` option, and the type of cell is applied as same as other records. For example, if the cell type of the `name` field is `text`, then the `name` field of the `summary` option will be displayed as `text` type.
 
+## Footer options
+
+The footer is the very bottom part of the table. The footer provides features such as pagination.
+
+### Pagination
+
+By passing in `total`, `page`, and `perPage` option, the table footer gets displayed with pagination. You can listen to "Prev" and "Next" buttons and click callback via `onPrev` and `onNext` option. Note that if both `onPrev` or `onNext` is not defined, it will not show the "Prev" and "Next" buttons.
+
+```ts
+const options = useTable({
+  total: 50,
+  page: 1,
+  perPage: 25,
+  onPrev: () => { ... },
+  onNext: () => { ... }
+})
+```
+
+### Hide Footer
+
+The footer gets displayed when it has any data to display. For example, fotter gets displayed when  pagination options are set.
+
+If you would like to display or hide the footer regardless of the other options present, set `boolean` to `footer` option.
+
+```ts
+const options = useTable({
+  footer: true
+})
+```
+
 ## Props
 
 Here are the list of props you may pass to the component.
 
 ### `:options`
 
-The whole definition of the table. The `Table` object should be created via `useTable` composable. For the details on each options, please refer to the corresponding section of this document.
+The whole definition of the table. The `Table` object should be created via `useTable` composable. For the details on each option, please refer to the corresponding section of this document.
 
 ```ts
 import { Table } from '@globalbrain/sefirot/composables/Table'
@@ -390,7 +478,7 @@ You may define `--table-padding-right` and `--table-padding-left` to adjust the 
 
 You may customize table borders via `--table-border` variable. `--table-border` will set all borders styles at once. If you want to only adjust top and bottom, or left and right part of the border, use dedicated variables such as `--table-border-top`.
 
-You may also adjust the border radius via `--table-border-radius` variable.
+You may also adjust the border-radius via `--table-border-radius` variable.
 
 ```css
 :root {

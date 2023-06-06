@@ -5,6 +5,7 @@ import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellDay from './STableCellDay.vue'
 import STableCellEmpty from './STableCellEmpty.vue'
+import STableCellNumber from './STableCellNumber.vue'
 import STableCellPill from './STableCellPill.vue'
 import STableCellPills from './STableCellPills.vue'
 import STableCellState from './STableCellState.vue'
@@ -38,6 +39,18 @@ const computedCell = computed<TableCell | undefined>(() =>
       :color="computedCell?.color"
       :icon-color="computedCell?.iconColor"
       :on-click="computedCell?.onClick"
+    />
+    <STableCellNumber
+      v-else-if="computedCell.type === 'number'"
+      :value="value"
+      :record="record"
+      :icon="computedCell.icon"
+      :getter="computedCell.value"
+      :separator="computedCell.separator"
+      :link="computedCell.link"
+      :color="computedCell.color"
+      :icon-color="computedCell.iconColor"
+      :on-click="computedCell.onClick"
     />
     <STableCellDay
       v-else-if="computedCell.type === 'day'"
