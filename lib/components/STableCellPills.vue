@@ -33,6 +33,7 @@ const items = computed(() => props.pills(props.value, props.record))
 .STableCellPills {
   display: flex;
   padding: 0 14px;
+  min-height: 40px;
 
   :deep(.STableCellPill) {
     padding-right: 2px;
