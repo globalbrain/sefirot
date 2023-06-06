@@ -1,7 +1,6 @@
 import { watchOnce } from '@vueuse/core'
 import cloneDeep from 'lodash-es/cloneDeep'
-import { type WatchSource } from 'vue'
-import { reactive } from 'vue'
+import { type WatchSource, reactive } from 'vue'
 import { isNullish, isObject } from '../support/Utils'
 
 export interface Data<T extends Record<string, any>> {

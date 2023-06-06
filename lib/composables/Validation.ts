@@ -1,9 +1,7 @@
 import {
   type GlobalConfig,
   type Validation,
-  type ValidationArgs
-} from '@vuelidate/core'
-import {
+  type ValidationArgs,
   useVuelidate
 } from '@vuelidate/core'
 import { type Ref, type ToRefs } from 'vue'
