@@ -251,6 +251,48 @@ const options = useTable({
 })
 ```
 
+## Header menu
+
+You may define `menu` option to display a menu button on the table header. The menu is dropdown options that can display any kind of dropdown items.
+
+This is useful when you would like to add filter options that does not make sense adding it to the column options.
+
+```ts
+const options = useTable({
+  menu: [
+    {
+      label: 'Option A',
+      dropdown: {
+        type: 'menu',
+        options: [
+          { label: 'Option 1', onClick: () => {} },
+          { label: 'Option 2', onClick: () => {} },
+          { label: 'Option 3', onClick: () => {} }
+        ]
+      }
+    }
+  ]
+})
+```
+
+You may also pass `state` option to change how the menu button looks like. The `state` option can be one of `inactive`, `active`, and `indicate`.
+
+- `inactive` – The default state. The menu button fill look slightly muted.
+- `active` – The menu button label text will appear with `--c-text-1` color.
+- `indicate` – Adds blue dot indicator on the menu button. Use this to indicate user that the menu is now different than its default state (e.g. user has selected some option).
+
+```ts
+const options = useTable({
+  menu: [
+    {
+      label: 'Option A',
+      state: 'indicate',
+      dropdown: { ... }
+    }
+  ]
+})
+```
+
 ## Pagination
 
 By passing in `total`, `page`, and `perPage` option, the table footer gets displayed with pagination. You can listen to "Prev" and "Next" button click callback via `onPrev` and `onNext` option. Note that if both `onPrev` or `onNext` is not defined, it will not show the "Prev" and "Next" buttons.

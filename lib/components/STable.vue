@@ -60,7 +60,11 @@ const showHeader = computed(() => {
     return header
   }
 
-  return unref(props.options.total) != null || !!unref(props.options.reset)
+  return (
+    unref(props.options.total) != null
+    || !!unref(props.options.reset)
+    || !!unref(props.options.menu)
+  )
 })
 
 const showFooter = computed(() => {
@@ -216,6 +220,7 @@ function getCell(key: string, index: number) {
         v-if="showHeader"
         :total="unref(options.total)"
         :reset="unref(options.reset)"
+        :menu="unref(options.menu)"
         :borderless="unref(options.borderless)"
         :on-reset="options.onReset"
       />

@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import { type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
+import STableHeaderMenu from './STableHeaderMenu.vue'
 
 defineProps<{
   total?: number | null
   reset?: boolean
+  menu?: TableMenu[] | TableMenu[][]
   borderless?: boolean
   onReset?(): void
 }>()
@@ -13,14 +16,18 @@ defineProps<{
 <template>
   <div class="STableHeader" :class="{ borderless }">
     <div class="container">
-      <p v-if="!isNullish(total)" class="total">
-        {{ format(total) }} {{ (total) > 1 ? 'records' : 'record' }}
-      </p>
-
-      <div v-if="reset" class="reset">
-        <button class="button" @click="onReset">
-          Reset filters
-        </button>
+      <div class="stat">
+        <p v-if="!isNullish(total)" class="total">
+          {{ format(total) }} {{ (total) > 1 ? 'records' : 'record' }}
+        </p>
+        <div v-if="reset" class="reset">
+          <button class="button" @click="onReset">
+            Reset filters
+          </button>
+        </div>
+      </div>
+      <div v-if="menu && menu.length" class="menu">
+        <STableHeaderMenu :menu="menu" />
       </div>
     </div>
   </div>
@@ -36,13 +43,18 @@ defineProps<{
 
 .container {
   display: flex;
-  padding: 0 16px;
   min-height: 48px;
+}
+
+.stat {
+  display: flex;
+  flex-grow: 1;
+  padding: 0 16px;
 }
 
 .total {
   margin: 0;
-  padding: 13px 0 11px;
+  padding: 12px 0;
   line-height: 24px;
   font-size: 12px;
   font-weight: 500;
@@ -68,7 +80,7 @@ defineProps<{
 }
 
 .button {
-  padding: 13px 0 11px;
+  padding: 12px 0;
   line-height: 24px;
   font-size: 12px;
   font-weight: 500;
@@ -78,5 +90,10 @@ defineProps<{
   &:hover {
     color: var(--c-info-text-dark);
   }
+}
+
+.menu {
+  flex-shrink: 0;
+  padding-right: 8px;
 }
 </style>

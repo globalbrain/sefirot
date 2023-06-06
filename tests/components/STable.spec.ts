@@ -8,50 +8,175 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
 })))
 
 describe('components/STable', () => {
-  test('it displays columns in order', () => {
-    const table = useTable({
-      orders: ['item_1', 'item_2', 'item_3'],
-      columns: {
-        item_1: { label: 'item_1' },
-        item_2: { label: 'item_2' },
-        item_3: { label: 'item_3' }
-      }
-    })
+  describe('basics', () => {
+    test('it displays columns in order', () => {
+      const table = useTable({
+        orders: ['item_1', 'item_2', 'item_3'],
+        columns: {
+          item_1: { label: 'item_1' },
+          item_2: { label: 'item_2' },
+          item_3: { label: 'item_3' }
+        }
+      })
 
-    const wrapper = mount(STable, {
-      props: {
-        options: table
-      }
-    })
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
 
-    expect(wrapper.find('.STable .head .col-item_1 .label').text()).toBe('item_1')
-    expect(wrapper.find('.STable .head .col-item_2 .label').text()).toBe('item_2')
-    expect(wrapper.find('.STable .head .col-item_3 .label').text()).toBe('item_3')
+      expect(wrapper.find('.STable .head .col-item_1 .label').text()).toBe('item_1')
+      expect(wrapper.find('.STable .head .col-item_2 .label').text()).toBe('item_2')
+      expect(wrapper.find('.STable .head .col-item_3 .label').text()).toBe('item_3')
+    })
   })
 
-  test('it displays summary row at bottom', () => {
-    const table = useTable({
-      orders: ['name', 'amount'],
-      columns: {
-        name: { label: 'Name' },
-        amount: { label: 'Amount' }
-      },
-      records: [
-        { name: 'Item 1', amount: 10 },
-        { name: 'Item 2', amount: 90 }
-      ],
-      summary: {
-        name: 'Total', amount: 100
-      }
+  describe('menu', () => {
+    test('menu items is displayed in the header when `:menu` is set', () => {
+      const table = useTable({
+        orders: ['name'],
+        columns: {
+          name: { label: 'Name' }
+        },
+        menu: [
+          {
+            label: 'Option A',
+            dropdown: [{
+              type: 'menu',
+              options: [{ label: 'Option A1', onClick: () => {} }]
+            }]
+          }
+        ],
+        records: []
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STableHeaderMenuItem .label').text()).toBe('Option A')
     })
 
-    const wrapper = mount(STable, {
-      props: {
-        options: table
-      }
+    test('displays divider when multiple group of menus are passed', async () => {
+      const table = useTable({
+        orders: ['name'],
+        columns: {
+          name: { label: 'Name' }
+        },
+        menu: [
+          [{
+            label: 'Option A',
+            dropdown: [{
+              type: 'menu',
+              options: [{ label: 'Option A1', onClick: () => {} }]
+            }]
+          }],
+          [{
+            label: 'Option B',
+            dropdown: [{
+              type: 'menu',
+              options: [{ label: 'Option B1', onClick: () => {} }]
+            }]
+          }]
+        ],
+        records: []
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STableHeaderMenu .divider').exists()).toBe(true)
     })
 
-    expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
-    expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+    test('display indicator icon when the state is set to `indicate`', () => {
+      const table = useTable({
+        orders: ['name'],
+        columns: {
+          name: { label: 'Name' }
+        },
+        menu: [
+          {
+            label: 'Option A',
+            state: 'indicate',
+            dropdown: [{
+              type: 'menu',
+              options: [{ label: 'Option A1', onClick: () => {} }]
+            }]
+          }
+        ],
+        records: []
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STableHeaderMenuItem .indicator').exists()).toBe(true)
+      expect(wrapper.find('.STableHeaderMenuItem .caret').exists()).toBe(false)
+    })
+
+    test('opens dropdown dialog when clicking the menu item', async () => {
+      const table = useTable({
+        orders: ['name'],
+        columns: {
+          name: { label: 'Name' }
+        },
+        menu: [
+          {
+            label: 'Option A',
+            dropdown: [{
+              type: 'menu',
+              options: [{ label: 'Option A1', onClick: () => {} }]
+            }]
+          }
+        ],
+        records: []
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STableHeaderMenuItem .dialog').exists()).toBe(false)
+      await wrapper.find('.STableHeaderMenuItem .button').trigger('click')
+      expect(wrapper.find('.STableHeaderMenuItem .dialog').exists()).toBe(true)
+    })
+  })
+
+  describe('summary', () => {
+    test('it displays summary row at bottom', () => {
+      const table = useTable({
+        orders: ['name', 'amount'],
+        columns: {
+          name: { label: 'Name' },
+          amount: { label: 'Amount' }
+        },
+        records: [
+          { name: 'Item 1', amount: 10 },
+          { name: 'Item 2', amount: 90 }
+        ],
+        summary: {
+          name: 'Total', amount: 100
+        }
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
+      expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+    })
   })
 })

@@ -10,6 +10,7 @@ export interface Table<
 > {
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
+  menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
@@ -150,6 +151,12 @@ export interface TableCellState extends TableCellBase {
   type: 'state'
   label: string
   mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+}
+
+export interface TableMenu {
+  label: string
+  state?: 'inactive' | 'active' | 'indicate'
+  dropdown: DropdownSection[]
 }
 
 export function useTable<
