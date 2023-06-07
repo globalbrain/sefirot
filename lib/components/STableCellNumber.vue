@@ -8,6 +8,7 @@ import SLink from './SLink.vue'
 const props = defineProps<{
   value?: any
   record: any
+  align?: 'left' | 'center' | 'right'
   icon?: any
   getter?: number | null
   separator?: boolean
@@ -22,6 +23,7 @@ const _color = computed(() => props.color ?? 'neutral')
 const _iconColor = computed(() => props.iconColor ?? _color.value)
 
 const classes = computed(() => [
+  props.align ?? 'left',
   _color,
   { link: props.link || props.onClick }
 ])
@@ -55,6 +57,10 @@ const classes = computed(() => [
   display: flex;
   gap: 4px;
   padding: 8px 16px;
+
+  .STableCellNumber.left &   { justify-content: flex-start; }
+  .STableCellNumber.center & { justify-content: center; }
+  .STableCellNumber.right &  { justify-content: flex-end; }
 }
 
 .value {

@@ -77,6 +77,7 @@ export interface TableCellBase {
 
 export interface TableCellText extends TableCellBase {
   type: 'text'
+  align?: 'left' | 'center' | 'right'
   icon?: any
   value?: string | null | ((value: any, record: any) => string | null)
   link?(value: any, record: any): string
@@ -87,6 +88,7 @@ export interface TableCellText extends TableCellBase {
 
 export interface TableCellNumber extends TableCellBase {
   type: 'number'
+  align?: 'left' | 'center' | 'right'
   icon?: any
   value?: number | null
   separator?: boolean
@@ -107,6 +109,7 @@ export type TableCellValueColor =
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
+  align?: 'left' | 'center' | 'right'
   value?: Day | null
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
