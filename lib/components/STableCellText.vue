@@ -43,7 +43,7 @@ const _color = computed(() => {
 const _iconColor = computed(() => {
   return typeof props.iconColor === 'function'
     ? props.iconColor(props.value, props.record)
-    : props.iconColor ?? 'neutral'
+    : props.iconColor ?? _color.value
 })
 </script>
 
@@ -93,28 +93,28 @@ const _iconColor = computed(() => {
   &.neutral { color: var(--c-text-1); }
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
-  &.info    { color: var(--c-info); }
-  &.success { color: var(--c-success); }
-  &.warning { color: var(--c-warning); }
-  &.danger  { color: var(--c-danger); }
+  &.info    { color: var(--c-info-text); }
+  &.success { color: var(--c-success-text); }
+  &.warning { color: var(--c-warning-text); }
+  &.danger  { color: var(--c-danger-text); }
 
-  .STableCellText.link &       { color: var(--c-info); }
-  .STableCellText.link:hover & { color: var(--c-info-dark); }
+  .STableCellText.link &       { color: var(--c-info-text); }
+  .STableCellText.link:hover & { color: var(--c-info-text-dark); }
 
   .STableCellText.link &.neutral       { color: var(--c-text-1); }
-  .STableCellText.link:hover &.neutral { color: var(--c-info); }
+  .STableCellText.link:hover &.neutral { color: var(--c-info-text); }
   .STableCellText.link &.soft          { color: var(--c-text-2); }
-  .STableCellText.link:hover &.soft    { color: var(--c-info); }
+  .STableCellText.link:hover &.soft    { color: var(--c-info-text); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
   .STableCellText.link:hover &.mute    { color: var(--c-text-3); }
-  .STableCellText.link &.info          { color: var(--c-info); }
-  .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
-  .STableCellText.link &.success       { color: var(--c-success); }
-  .STableCellText.link:hover &.success { color: var(--c-success-dark); }
-  .STableCellText.link &.warning       { color: var(--c-warning); }
-  .STableCellText.link:hover &.warning { color: var(--c-warning-darker); }
-  .STableCellText.link &.danger        { color: var(--c-danger); }
-  .STableCellText.link:hover &.danger  { color: var(--c-danger-dark); }
+  .STableCellText.link &.info          { color: var(--c-info-text); }
+  .STableCellText.link:hover &.info    { color: var(--c-info-text-dark); }
+  .STableCellText.link &.success       { color: var(--c-success-text); }
+  .STableCellText.link:hover &.success { color: var(--c-success-text-dark); }
+  .STableCellText.link &.warning       { color: var(--c-warning-text); }
+  .STableCellText.link:hover &.warning { color: var(--c-warning-text-darker); }
+  .STableCellText.link &.danger        { color: var(--c-danger-text); }
+  .STableCellText.link:hover &.danger  { color: var(--c-danger-text-dark); }
 
   .STableCell.summary & {
     font-weight: var(--table-cell-summary-font-weight);
@@ -135,23 +135,23 @@ const _iconColor = computed(() => {
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
 
-  .STableCellText.link &       { color: var(--c-info); }
-  .STableCellText.link:hover & { color: var(--c-info-dark); }
+  .STableCellText.link &       { color: var(--c-info-text); }
+  .STableCellText.link:hover & { color: var(--c-info-text-dark); }
 
   .STableCellText.link &.neutral       { color: var(--c-text-1); }
-  .STableCellText.link:hover &.neutral { color: var(--c-info); }
+  .STableCellText.link:hover &.neutral { color: var(--c-info-text); }
   .STableCellText.link &.soft          { color: var(--c-text-2); }
-  .STableCellText.link:hover &.soft    { color: var(--c-info); }
+  .STableCellText.link:hover &.soft    { color: var(--c-info-text); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
-  .STableCellText.link:hover &.mute    { color: var(--c-info); }
-  .STableCellText.link &.info          { color: var(--c-info); }
+  .STableCellText.link:hover &.mute    { color: var(--c-info-text); }
+  .STableCellText.link &.info          { color: var(--c-info-text); }
   .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
-  .STableCellText.link &.success       { color: var(--c-success); }
-  .STableCellText.link:hover &.success { color: var(--c-success-dark); }
-  .STableCellText.link &.warning       { color: var(--c-warning); }
-  .STableCellText.link:hover &.warning { color: var(--c-warning-dark); }
-  .STableCellText.link &.danger        { color: var(--c-danger); }
-  .STableCellText.link:hover &.danger  { color: var(--c-danger-dark); }
+  .STableCellText.link &.success       { color: var(--c-success-text); }
+  .STableCellText.link:hover &.success { color: var(--c-success-text-dark); }
+  .STableCellText.link &.warning       { color: var(--c-warning-text); }
+  .STableCellText.link:hover &.warning { color: var(--c-warning-text-dark); }
+  .STableCellText.link &.danger        { color: var(--c-danger-text); }
+  .STableCellText.link:hover &.danger  { color: var(--c-danger-text-dark); }
 }
 
 .svg {
