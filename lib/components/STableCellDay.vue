@@ -5,6 +5,7 @@ import { type Day } from '../support/Day'
 const props = defineProps<{
   value?: Day | null
   record: any
+  align?: 'left' | 'center' | 'right'
   getter?: Day | null
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
@@ -16,9 +17,9 @@ const _value = computed(() => {
 </script>
 
 <template>
-  <div class="STableCellDay" :class="[color ?? 'neutral']">
+  <div class="STableCellDay" :class="[align ?? 'left', color ?? 'neutral']">
     <div v-if="_value" class="value">
-      {{ _value.format(format ?? 'YYYY / MM / DD HH:mm:ss') }}
+      {{ _value.format(format ?? 'YYYY-MM-DD HH:mm:ss') }}
     </div>
   </div>
 </template>
@@ -31,13 +32,17 @@ const _value = computed(() => {
 
 .value {
   line-height: 24px;
-  font-family: var(--font-family-number);
   font-size: var(--table-cell-font-size);
   font-weight: var(--table-cell-font-weight);
+  font-feature-settings: "tnum";
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: color 0.25s;
+
+  .STableCellDay.left &   { text-align: left; }
+  .STableCellDay.center & { text-align: center; }
+  .STableCellDay.right &  { text-align: right; }
 
   .STableCellDay.neutral & { color: var(--c-text-1); }
   .STableCellDay.soft &    { color: var(--c-text-2); }

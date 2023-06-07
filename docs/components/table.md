@@ -342,7 +342,10 @@ export interface TableCellNumber {
   // Type of the cell. Must be `number`.
   type: 'number'
 
-  // Icon to display in from of the value.
+  // The alignment of the value in the cell. Defaults to `left`.
+  align?: 'left' | 'center' | 'right'
+
+  // Icon to display in front of the value.
   icon?: any
 
   // The value for the cell. If omitted, it will use the value

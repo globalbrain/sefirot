@@ -15,6 +15,7 @@ export type Color =
 const props = defineProps<{
   value?: any
   record: any
+  align?: 'left' | 'center' | 'right'
   icon?: any
   getter?: string | null | ((value: any, record: any) => string | null)
   color?: Color | ((value: any, record: any) => Color)
@@ -47,7 +48,7 @@ const _iconColor = computed(() => {
 </script>
 
 <template>
-  <div class="STableCellText" :class="[{ link: link || onClick }, _color]">
+  <div class="STableCellText" :class="[align ?? 'left', { link: link || onClick }, _color]">
     <SLink
       v-if="_value"
       class="container"
@@ -74,6 +75,10 @@ const _iconColor = computed(() => {
   display: flex;
   gap: 4px;
   padding: 8px 16px;
+
+  .STableCellText.left &   { justify-content: flex-start; }
+  .STableCellText.center & { justify-content: center; }
+  .STableCellText.right &  { justify-content: flex-end; }
 }
 
 .text {

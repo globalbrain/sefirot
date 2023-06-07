@@ -5,6 +5,7 @@ import xor from 'lodash-es/xor'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
+import { day } from 'sefirot/support/Day'
 import { computed, markRaw, reactive, ref } from 'vue'
 
 const title = 'Components / STable / 01. Playground'
@@ -124,7 +125,7 @@ const data = [
     status: 'Published',
     type: 'Photo',
     width: 1280,
-    createdAt: '2022-10-10',
+    createdAt: day('2022-10-10'),
     tags: ['Info', 'News', 'Latest']
   },
   {
@@ -133,7 +134,7 @@ const data = [
     status: 'Draft',
     type: 'Icon',
     width: 1280,
-    createdAt: '2022-10-09',
+    createdAt: day('2022-10-09'),
     tags: ['Info']
   },
   {
@@ -142,7 +143,7 @@ const data = [
     status: 'Published',
     type: 'Photo',
     width: 1920,
-    createdAt: '2022-10-02',
+    createdAt: day('2022-10-02'),
     tags: ['Info', 'News']
   },
   {
@@ -151,7 +152,7 @@ const data = [
     status: 'Published',
     type: 'Illustration',
     width: 768,
-    createdAt: '2022-09-12',
+    createdAt: day('2022-09-12'),
     tags: ['Info', 'News']
   },
   {
@@ -160,7 +161,7 @@ const data = [
     status: 'Archived',
     type: 'Other',
     width: 512,
-    createdAt: '2022-09-08',
+    createdAt: day('2022-09-08'),
     tags: ['Info']
   }
 ]
@@ -221,14 +222,20 @@ const table = useTable({
       dropdown: dropdownWidth,
       cell: {
         type: 'number',
-        separator: true
+        align: 'right',
+        separator: true,
+        color: 'soft'
       }
     },
 
     createdAt: {
       label: 'Created at',
       dropdown: dropdownCreatedAt,
-      cell: { type: 'text', color: 'soft' },
+      cell: {
+        type: 'day',
+        format: 'YYYY-MM-DD',
+        color: 'soft'
+      },
       resizable: false
     },
 
