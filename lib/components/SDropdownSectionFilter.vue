@@ -103,6 +103,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 .search {
   position: sticky;
   top: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--c-gutter);
   padding: 8px;
   background-color: var(--c-bg-elv-up);
