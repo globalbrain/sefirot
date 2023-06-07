@@ -1,3 +1,17 @@
+# [2.37.0](https://github.com/globalbrain/sefirot/compare/v2.36.0...v2.37.0) (2023-06-07)
+
+### Bug Fixes
+
+* **dropdown:** radio button overflows on search input ([#300](https://github.com/globalbrain/sefirot/issues/300)) ([#301](https://github.com/globalbrain/sefirot/issues/301)) ([8bc9a18](https://github.com/globalbrain/sefirot/commit/8bc9a183fbfaf4f44ceaa89198d017c7609bae3a))
+* **table:** no background color when pills are empty ([#297](https://github.com/globalbrain/sefirot/issues/297)) ([c7443f7](https://github.com/globalbrain/sefirot/commit/c7443f765cb762eb8636d063b17b19f4f94aa097))
+
+### Features
+
+* **table:** add `align` option ([#295](https://github.com/globalbrain/sefirot/issues/295)) ([#299](https://github.com/globalbrain/sefirot/issues/299)) ([d2a6a61](https://github.com/globalbrain/sefirot/commit/d2a6a6145512d7d78ee8f23aa5916eabe3df15f4))
+* **table:** add `menu` option ([#249](https://github.com/globalbrain/sefirot/issues/249)) ([#290](https://github.com/globalbrain/sefirot/issues/290)) ([b06e1af](https://github.com/globalbrain/sefirot/commit/b06e1af36e623dbdc223abdb9664947d23bb7746))
+* **table:** add cell type `number` ([#296](https://github.com/globalbrain/sefirot/issues/296)) ([#298](https://github.com/globalbrain/sefirot/issues/298)) ([5ff4ee7](https://github.com/globalbrain/sefirot/commit/5ff4ee79d648d0ae2a3d3a7a1d0fddbf963b52e1))
+* **table:** refine text cell styles ([653fd36](https://github.com/globalbrain/sefirot/commit/653fd36060901f2702658338de296881a70431c5))
+
 # [2.36.0](https://github.com/globalbrain/sefirot/compare/v2.35.0...v2.36.0) (2023-05-31)
 
 ### Features
