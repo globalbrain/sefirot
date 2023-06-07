@@ -74,6 +74,16 @@ const dropdownType = createDropdown([
   }
 ])
 
+const dropdownWidth = createDropdown([
+  {
+    type: 'menu',
+    options: [
+      { label: 'Sort ascending (A...Z)', onClick: () => updateSort('width', 'asc') },
+      { label: 'Sort descending (Z...A)', onClick: () => updateSort('width', 'desc') }
+    ]
+  }
+])
+
 const dropdownTagsSelected = ref<string[]>([])
 
 const dropdownTags = createDropdown([
@@ -113,6 +123,7 @@ const data = [
     link: 'https://example.com',
     status: 'Published',
     type: 'Photo',
+    width: 1280,
     createdAt: '2022-10-10',
     tags: ['Info', 'News', 'Latest']
   },
@@ -121,6 +132,7 @@ const data = [
     link: 'https://example.com',
     status: 'Draft',
     type: 'Icon',
+    width: 1280,
     createdAt: '2022-10-09',
     tags: ['Info']
   },
@@ -129,6 +141,7 @@ const data = [
     link: 'https://example.com',
     status: 'Published',
     type: 'Photo',
+    width: 1920,
     createdAt: '2022-10-02',
     tags: ['Info', 'News']
   },
@@ -137,6 +150,7 @@ const data = [
     link: 'https://example.com',
     status: 'Published',
     type: 'Illustration',
+    width: 768,
     createdAt: '2022-09-12',
     tags: ['Info', 'News']
   },
@@ -145,6 +159,7 @@ const data = [
     link: 'https://example.com',
     status: 'Archived',
     type: 'Other',
+    width: 512,
     createdAt: '2022-09-08',
     tags: ['Info']
   }
@@ -162,7 +177,14 @@ const orderedData = computed(() => {
 })
 
 const table = useTable({
-  orders: ['name', 'status', 'type', 'tags', 'createdAt'],
+  orders: [
+    'name',
+    'status',
+    'type',
+    'width',
+    'tags',
+    'createdAt'
+  ],
 
   columns: {
     name: {
@@ -192,6 +214,15 @@ const table = useTable({
       label: 'Type',
       dropdown: dropdownType,
       cell: { type: 'text', color: 'soft' }
+    },
+
+    width: {
+      label: 'Width',
+      dropdown: dropdownWidth,
+      cell: {
+        type: 'number',
+        separator: true
+      }
     },
 
     createdAt: {
@@ -267,7 +298,8 @@ function updateTagsFilter(value: string) {
 <style scoped>
 .table :deep(.col-name)      { --table-col-width: 160px; }
 .table :deep(.col-status)    { --table-col-width: 144px; }
-.table :deep(.col-type)      { --table-col-width: 144px; }
+.table :deep(.col-type)      { --table-col-width: 128px; }
+.table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
 </style>

@@ -49,6 +49,7 @@ export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell
 
 export type TableCell =
   | TableCellText
+  | TableCellNumber
   | TableCellDay
   | TableCellPill
   | TableCellPills
@@ -60,6 +61,7 @@ export type TableCell =
 
 export type TableCellType =
   | 'text'
+  | 'number'
   | 'day'
   | 'pill'
   | 'pills'
@@ -78,12 +80,23 @@ export interface TableCellText extends TableCellBase {
   icon?: any
   value?: string | null | ((value: any, record: any) => string | null)
   link?(value: any, record: any): string
-  color?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
-  iconColor?: TableCellTextColor | ((value: any, record: any) => TableCellTextColor)
+  color?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
+  iconColor?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
   onClick?(value: any, record: any): void
 }
 
-export type TableCellTextColor =
+export interface TableCellNumber extends TableCellBase {
+  type: 'number'
+  icon?: any
+  value?: number | null
+  separator?: boolean
+  link?: string | null
+  color?: TableCellValueColor
+  iconColor?: TableCellValueColor
+  onClick?(value: any, record: any): void
+}
+
+export type TableCellValueColor =
   | 'neutral'
   | 'soft'
   | 'mute'
