@@ -152,6 +152,33 @@ describe('components/STable', () => {
     })
   })
 
+  describe('cell number', () => {
+    test('it displays `0` value', () => {
+      const table = useTable({
+        orders: ['num'],
+        columns: {
+          num: {
+            label: 'Name',
+            cell: {
+              type: 'number'
+            }
+          }
+        },
+        records: [
+          { num: 0 }
+        ]
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STableCellNumber .value').text()).toBe('0')
+    })
+  })
+
   describe('summary', () => {
     test('it displays summary row at bottom', () => {
       const table = useTable({

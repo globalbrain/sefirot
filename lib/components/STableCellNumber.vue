@@ -32,7 +32,7 @@ const classes = computed(() => [
 <template>
   <div class="STableCellNumber" :class="classes">
     <SLink
-      v-if="_value"
+      v-if="_value != null"
       class="container"
       :href="link"
       :role="onClick ? 'button' : null"
