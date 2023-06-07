@@ -1,3 +1,9 @@
+## [2.37.1](https://github.com/globalbrain/sefirot/compare/v2.37.0...v2.37.1) (2023-06-07)
+
+### Bug Fixes
+
+* **table:** `0` value not displayed on number type cell ([#302](https://github.com/globalbrain/sefirot/issues/302)) ([6c002c1](https://github.com/globalbrain/sefirot/commit/6c002c16851c4d4dc6a73e3a20a3d7971b05b0ab))
+
 # [2.37.0](https://github.com/globalbrain/sefirot/compare/v2.36.0...v2.37.0) (2023-06-07)
 
 ### Bug Fixes
