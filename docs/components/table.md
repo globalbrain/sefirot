@@ -317,6 +317,66 @@ const options = useTable({
 
 The records are each row of data in the table and the cell is each item within the record. You may define various types of cells such as text, pill, or date.
 
+### Text cell
+
+You may use `type: 'text'` cell to define the cell as a text type. Use this cell to display any kind of text. However, when displaying more data with more specific formats, consider using other cell types such as `type: 'number'` or `type: 'day'`.
+
+```ts
+const options = useTable({
+  orders: ['name'],
+  columns: {
+    age: {
+      label: 'Name',
+      cell: {
+        type: 'text'
+      }
+    }
+  }
+})
+```
+
+Below are the complete list of options you may pass to the text type cell.
+
+```ts
+export interface TableCellNumber {
+  // Type of the cell. Must be `text`.
+  type: 'text'
+
+  // The alignment of the value in the cell. Defaults to `left`.
+  align?: 'left' | 'center' | 'right'
+
+  // Icon to display in front of the value.
+  icon?: any
+
+  // The value for the cell. If omitted, it will use the value
+  // from the record.
+  value?: string | null
+
+  // URL to link the value. When specified, cell becomes a link.
+  link?: string | null
+
+  // Color of the value. Defaults to `neutral`.
+  color?: TableCellValueColor
+
+  // Color of the icon. If not defined, it will use the same
+  // color as `color` option.
+  iconColor?: TableCellValueColor
+
+  // When defined, this callback gets called when user clicks
+  // on the cell.
+  onClick?(value: any, record: any): void
+}
+
+export type TableCellValueColor =
+  | 'neutral'
+  | 'soft'
+  | 'mute'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
+```
+
 ### Number cell
 
 You may use `type: 'number'` cell to define the cell as a number type. It has several number-specific options and also it changes the font style to monospace so that all numbers in the table get aligned.
