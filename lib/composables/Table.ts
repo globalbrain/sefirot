@@ -80,7 +80,7 @@ export interface TableCellText extends TableCellBase {
   align?: 'left' | 'center' | 'right'
   icon?: any
   value?: string | null | ((value: any, record: any) => string | null)
-  link?(value: any, record: any): string
+  link?: string | null | ((value: any, record: any) => string)
   color?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
   iconColor?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
   onClick?(value: any, record: any): void

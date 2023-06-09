@@ -20,7 +20,7 @@ const props = defineProps<{
   getter?: string | null | ((value: any, record: any) => string | null)
   color?: Color | ((value: any, record: any) => Color)
   iconColor?: Color | ((value: any, record: any) => Color)
-  link?(value: any, record: any): string
+  link?: string | null | ((value: any, record: any) => string)
   onClick?(value: any, record: any): void
 }>()
 
@@ -32,6 +32,12 @@ const _value = computed(() => {
   return typeof props.getter === 'function'
     ? props.getter(props.value, props.record)
     : props.getter
+})
+
+const _link = computed(() => {
+  return typeof props.link === 'function'
+    ? props.link(props.value, props.record)
+    : props.link
 })
 
 const _color = computed(() => {
@@ -52,7 +58,7 @@ const _iconColor = computed(() => {
     <SLink
       v-if="_value"
       class="container"
-      :href="link?.(value, record)"
+      :href="_link"
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >

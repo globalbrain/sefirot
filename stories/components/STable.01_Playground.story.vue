@@ -192,11 +192,11 @@ const table = useTable({
       label: 'Name',
       dropdown: dropdownName,
       grow: true,
-      cell: {
+      cell: (_, record) => ({
         type: 'text',
         icon: markRaw(IconImageSquare),
-        link: (_value, record) => record.link
-      }
+        link: record.link
+      })
     },
 
     status: {
