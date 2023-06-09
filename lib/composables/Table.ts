@@ -43,6 +43,7 @@ export interface TableColumn<V, R, SV, SR> {
   resizable?: boolean
   cell?: TableCell | TableColumnCellFn<V, R>
   summaryCell?: TableCell | TableColumnCellFn<SV, SR>
+  show?: boolean
 }
 
 export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell
