@@ -313,6 +313,28 @@ const options = useTable({
 })
 ```
 
+### Conditionally hide columns
+
+You can conditionally hide columns by defining `show` option.
+
+```ts
+import { useTable } from '@globalbrain/sefirot/lib/composables/Table'
+
+const options = useTable({
+  orders: ['name', 'age', 'email'],
+
+  columns: computed(() => ({
+    name: { ... },
+    age: { ... },
+    email: {
+      label: 'Email',
+      show: showEmail
+    }
+  }))
+  ...
+})
+```
+
 ## Records & Cell options
 
 The records are each row of data in the table and the cell is each item within the record. You may define various types of cells such as text, pill, or date.
