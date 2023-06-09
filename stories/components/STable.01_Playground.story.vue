@@ -2,11 +2,14 @@
 import IconImageSquare from '@iconify-icons/ph/image-square'
 import orderBy from 'lodash-es/orderBy'
 import xor from 'lodash-es/xor'
+import SButton from 'sefirot/components/SButton.vue'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, markRaw, reactive, ref } from 'vue'
+
+const showTags = ref(true)
 
 const title = 'Components / STable / 01. Playground'
 
@@ -187,7 +190,7 @@ const table = useTable({
     'createdAt'
   ],
 
-  columns: {
+  columns: computed(() => ({
     name: {
       label: 'Name',
       dropdown: dropdownName,
@@ -242,6 +245,7 @@ const table = useTable({
     tags: {
       label: 'Tags',
       dropdown: dropdownTags,
+      show: showTags.value,
       cell: {
         type: 'pills',
         pills(items: string[]) {
@@ -254,9 +258,9 @@ const table = useTable({
         }
       }
     }
-  },
+  })),
 
-  records: orderedData,
+  records: orderedData as any, // FIXME
   total: computed(() => orderedData.value.length),
   page: 1,
   perPage: 5,
@@ -298,6 +302,7 @@ function updateTagsFilter(value: string) {
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title">
       <STable class="table" :options="table" />
+      <SButton @click="showTags = !showTags" label="Toggle tags" />
     </Board>
   </Story>
 </template>
@@ -309,4 +314,8 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
+
+.table {
+  margin-bottom: 16px;
+}
 </style>
