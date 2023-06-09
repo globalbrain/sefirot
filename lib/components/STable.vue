@@ -27,6 +27,14 @@ const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
+const ordersToShow = computed(() => {
+  return unref(props.options.orders).filter((key) => {
+    return unref(props.options.columns)[key]?.show !== false
+  })
+})
+
+watch(() => ordersToShow.value, handleResize)
+
 const colToGrowAdjusted = ref(false)
 
 const colToGrow = computed(() => {
@@ -34,13 +42,13 @@ const colToGrow = computed(() => {
     return -1
   }
 
-  return unref(props.options.orders).findIndex((key) => {
+  return ordersToShow.value.findIndex((key) => {
     return unref(props.options.columns)[key]?.grow
   }) ?? -1
 })
 
 const nameOfColToGrow = computed(() => {
-  return unref(props.options.orders)[colToGrow.value]
+  return ordersToShow.value[colToGrow.value]
 })
 
 const cellOfColToGrow = computed(() => {
@@ -130,7 +138,7 @@ useResizeObserver(block, ([entry]) => {
 const resizeObserver = useResizeObserver(head, handleResize)
 
 function stopObserving() {
-  const orders = unref(props.options.orders)
+  const orders = ordersToShow.value
   colWidths[orders[orders.length - 1]] = 'auto'
   resizeObserver.stop()
 }
@@ -236,7 +244,7 @@ function getCell(key: string, index: number) {
           <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
-                v-for="key in unref(options.orders)"
+                v-for="key in ordersToShow"
                 :key="key"
                 :name="key"
                 :class-name="unref(options.columns)[key].className"
@@ -281,7 +289,7 @@ function getCell(key: string, index: number) {
                 >
                   <div class="row" :class="isSummaryOrLastClass(rIndex)">
                     <STableItem
-                      v-for="key in unref(options.orders)"
+                      v-for="key in ordersToShow"
                       :key="key"
                       :name="key"
                       :class-name="unref(options.columns)[key].className"
@@ -313,7 +321,7 @@ function getCell(key: string, index: number) {
               >
                 <div class="row" :class="isSummaryOrLastClass(rIndex)">
                   <STableItem
-                    v-for="key in unref(options.orders)"
+                    v-for="key in ordersToShow"
                     :key="key"
                     :name="key"
                     :class-name="unref(options.columns)[key].className"

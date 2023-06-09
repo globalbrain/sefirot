@@ -206,4 +206,29 @@ describe('components/STable', () => {
       expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
     })
   })
+
+  describe('conditional hide', () => {
+    test('it hides column when `show` is set to `false`', () => {
+      const table = useTable({
+        orders: ['name', 'amount'],
+        columns: {
+          name: { label: 'Name' },
+          amount: { label: 'Amount', show: false }
+        },
+        records: [
+          { name: 'Item 1', amount: 10 },
+          { name: 'Item 2', amount: 90 }
+        ]
+      })
+
+      const wrapper = mount(STable, {
+        props: {
+          options: table
+        }
+      })
+
+      expect(wrapper.find('.STable .head .col-name').exists()).toBe(true)
+      expect(wrapper.find('.STable .head .col-amount').exists()).toBe(false)
+    })
+  })
 })

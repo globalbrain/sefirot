@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import IconImageSquare from '@iconify-icons/ph/image-square'
-import orderBy from 'lodash-es/orderBy'
-import xor from 'lodash-es/xor'
+import { orderBy, xor } from 'lodash-es'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, markRaw, reactive, ref } from 'vue'
 
-const title = 'Components / STable / 01. Playground'
-
 interface Sort {
   by: string
   order: 'asc' | 'desc'
 }
+
+const title = 'Components / STable / 01. Playground'
+const docs = '/components/table'
+
+const optionsSelected = ref<string[]>([])
 
 const sort = reactive<Sort>({
   by: 'name',
@@ -187,7 +189,7 @@ const table = useTable({
     'createdAt'
   ],
 
-  columns: {
+  columns: computed(() => ({
     name: {
       label: 'Name',
       dropdown: dropdownName,
@@ -213,12 +215,14 @@ const table = useTable({
 
     type: {
       label: 'Type',
+      show: !optionsSelected.value.includes('hide-type'),
       dropdown: dropdownType,
       cell: { type: 'text', color: 'soft' }
     },
 
     width: {
       label: 'Width',
+      show: !optionsSelected.value.includes('hide-width'),
       dropdown: dropdownWidth,
       cell: {
         type: 'number',
@@ -241,6 +245,7 @@ const table = useTable({
 
     tags: {
       label: 'Tags',
+      show: !optionsSelected.value.includes('hide-tags'),
       dropdown: dropdownTags,
       cell: {
         type: 'pills',
@@ -254,9 +259,27 @@ const table = useTable({
         }
       }
     }
-  },
+  })),
 
-  records: orderedData,
+  menu: computed(() => [
+    {
+      label: 'Options',
+      state: optionsSelected.value.length ? 'indicate' : 'inactive',
+      dropdown: createDropdown([
+        {
+          type: 'filter',
+          selected: optionsSelected,
+          options: [
+            { label: 'Hide type', value: 'hide-type', onClick: updateOptions },
+            { label: 'Hide width', value: 'hide-width', onClick: updateOptions },
+            { label: 'Hide tags', value: 'hide-tags', onClick: updateOptions }
+          ]
+        }
+      ])
+    }
+  ]),
+
+  records: orderedData as any, // FIXME
   total: computed(() => orderedData.value.length),
   page: 1,
   perPage: 5,
@@ -265,6 +288,10 @@ const table = useTable({
   onNext: () => {},
   onReset: resetFilters
 })
+
+function updateOptions(value: string) {
+  optionsSelected.value = xor(optionsSelected.value, [value])
+}
 
 function updateSort(by: string, order: 'asc' | 'desc') {
   sort.by = by
@@ -296,7 +323,7 @@ function updateTagsFilter(value: string) {
 
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
+    <Board :title="title" :docs="docs">
       <STable class="table" :options="table" />
     </Board>
   </Story>
@@ -309,4 +336,8 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
+
+.table {
+  margin-bottom: 16px;
+}
 </style>
