@@ -1,3 +1,11 @@
+# [2.38.0](https://github.com/globalbrain/sefirot/compare/v2.37.1...v2.38.0) (2023-06-19)
+
+### Features
+
+* **dropdown:** allow disabling menu options ([#306](https://github.com/globalbrain/sefirot/issues/306)) ([#307](https://github.com/globalbrain/sefirot/issues/307)) ([cbfa10d](https://github.com/globalbrain/sefirot/commit/cbfa10de3478e8c37daba15a41438014ef7ff5c3))
+* **table:** add show option ([#304](https://github.com/globalbrain/sefirot/issues/304)) ([#305](https://github.com/globalbrain/sefirot/issues/305)) ([00b2e45](https://github.com/globalbrain/sefirot/commit/00b2e45a9d6f936c4056a0ee0749169dee4b0c21))
+* **table:** support passing plain string to text cell `link` option ([#303](https://github.com/globalbrain/sefirot/issues/303)) ([91b9e7e](https://github.com/globalbrain/sefirot/commit/91b9e7efb0c35a34f5a18cb016ec18f896b02e81))
+
 ## [2.37.1](https://github.com/globalbrain/sefirot/compare/v2.37.0...v2.37.1) (2023-06-07)
 
 ### Bug Fixes
