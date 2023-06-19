@@ -9,7 +9,11 @@ defineProps<{
 <template>
   <ul class="SDropdownSectionMenu">
     <li v-for="option in options" :key="option.label" class="item">
-      <button class="button" @click="option.onClick">
+      <button
+        class="button"
+        @click="option.onClick"
+        :disabled="option.disabled"
+      >
         {{ option.label }}
       </button>
     </li>
@@ -33,8 +37,13 @@ defineProps<{
   font-weight: 400;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: var(--c-mute);
+  }
+
+  &:disabled {
+    color: var(--c-text-3);
+    cursor: not-allowed;
   }
 }
 </style>

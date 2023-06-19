@@ -21,6 +21,7 @@ export interface DropdownSectionMenu extends DropdownSectionBase {
 
 export interface DropdownSectionMenuOption {
   label: string
+  disabled?: boolean
   onClick(): void
 }
 
