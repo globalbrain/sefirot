@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { type DefineComponent } from 'vue'
+import { type Component } from 'vue'
 
 defineProps<{
-  comp: DefineComponent
+  comp: Component
+  props?: Record<string, any>
 }>()
 </script>
 
 <template>
-  <Component :is="comp" />
+  <component :is="comp" v-bind="props" />
 </template>

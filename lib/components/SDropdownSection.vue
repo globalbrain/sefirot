@@ -29,5 +29,6 @@ defineProps<{
   <SDropdownSectionComponent
     v-else-if="section.type === 'component'"
     :comp="section.component"
+    :props="section.props"
   />
 </template>
