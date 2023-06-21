@@ -1,3 +1,9 @@
+# [2.39.0](https://github.com/globalbrain/sefirot/compare/v2.38.0...v2.39.0) (2023-06-21)
+
+### Features
+
+* **dropdown:** allow passing props to component ([#308](https://github.com/globalbrain/sefirot/issues/308)) ([#309](https://github.com/globalbrain/sefirot/issues/309)) ([6a3f9a1](https://github.com/globalbrain/sefirot/commit/6a3f9a136d4ad4804f36ccb0410144cd300cbbde))
+
 # [2.38.0](https://github.com/globalbrain/sefirot/compare/v2.37.1...v2.38.0) (2023-06-19)
 
 ### Features
