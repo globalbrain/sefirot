@@ -1,5 +1,5 @@
 import { type MaybeRef, useElementBounding, useWindowSize } from '@vueuse/core'
-import { type Ref } from 'vue'
+import { type Component, type Ref } from 'vue'
 import { ref, unref } from 'vue'
 
 export type DropdownSection =
@@ -74,7 +74,8 @@ export interface DropdownSectionActionsOption {
 
 export interface DropdownSectionComponent extends DropdownSectionBase {
   type: 'component'
-  component: any
+  component: Component
+  props?: Record<string, any>
 }
 
 export interface ManualDropdownPosition {
