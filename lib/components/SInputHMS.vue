@@ -122,7 +122,7 @@ function getValue(value: string): string | null {
 
   const input = Number(value)
 
-  return isNaN(input) ? null : String(input)
+  return Number.isNaN(input) ? null : String(input)
 }
 
 function emitTouch(type: ValueType): void {

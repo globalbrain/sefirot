@@ -86,7 +86,7 @@ export function useLink({ container, callbacks }: UseLinkOptions): UseLink {
     }
 
     if (isCallback) {
-      const idx = parseInt(target.dataset.callbackId || '')
+      const idx = Number.parseInt(target.dataset.callbackId || '')
       const callback = (callbacks ?? [])[idx]
 
       if (!callback) {
