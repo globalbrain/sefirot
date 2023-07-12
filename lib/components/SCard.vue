@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { provideCardState } from '../composables/Card'
 
-export type Size = 'small' | 'medium'
+export type Size = 'small' | 'medium' | 'large'
 
 defineProps<{
   size?: Size
@@ -55,6 +55,13 @@ const { isCollapsed } = provideCardState()
   }
 
   &.medium {
+    @media (min-width: 736px) {
+      margin: 48px auto 128px;
+      max-width: 640px;
+    }
+  }
+
+  &.large {
     @media (min-width: 864px) {
       margin: 48px auto 128px;
       max-width: 768px;
