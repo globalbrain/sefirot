@@ -20,4 +20,10 @@ textarea {
 .max-w-192 { max-width: 192px; }
 .max-w-256 { max-width: 256px; }
 
+.h-64 { height: 64px; }
+
 .text-14 { font-size: 14px !important; }
+
+.bg-info { background-color: var(--c-info); }
+
+.rounded-6 { border-radius: 6px; }

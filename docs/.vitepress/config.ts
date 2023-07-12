@@ -53,6 +53,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SCard', link: '/components/card' },
         { text: 'SFragment', link: '/components/fragment' },
+        { text: 'SGrid', link: '/components/grid' },
         { text: 'SInputAddon', link: '/components/input-addon' },
         { text: 'SInputCheckbox', link: '/components/input-checkbox' },
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
