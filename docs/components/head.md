@@ -9,8 +9,8 @@ import SHeadTitle from 'sefirot/components/SHeadTitle.vue'
 `<SHead>` denotes the title and start of a given section.
 
 <Showcase
-  path="/components/SCard.vue"
-  story="/stories-components-scard-01-playground-story-vue"
+  path="/components/SHead.vue"
+  story="/stories-components-shead-01-playground-story-vue"
 >
   <SHead>
     <SHeadTitle>The head title</SHeadTitle>
