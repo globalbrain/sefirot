@@ -200,7 +200,7 @@ interface Props {
 </SCard>
 ```
 
-The spacing should be consistant across the application depending on the size of the `<SCard>` component. Use `compact` for  card width smaller than `640px`, and `wide` for larger width.
+To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card widths smaller than `640px` and the `wide` class for larger widths.
 
 ## Footer
 
