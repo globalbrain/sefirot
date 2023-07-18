@@ -184,7 +184,7 @@ Use `<SCardBlock>` to display generic block element. This component is usually u
 
 ### Spacing
 
-For combinience, `<SCardBlock>` component comes with `:space` props that lets you control the padding of the block. You may pass either `compact` or `wide` as a value.
+The `<SCardBlock>` component provides a convenient way to control the padding of the block using the `:space` prop. You can choose between two values: `compact` or `wide`.
 
 ```ts
 interface Props {
