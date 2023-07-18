@@ -97,7 +97,7 @@ interface Props {
 
 ## Responsive design
 
-When you need to change the overall grid layout depending on the screen size, use plain CSS instead of using props. Those props are there for convenience, and you may always CSS to define complex layout structure.
+If you need to adjust the overall grid layout based on different screen sizes or other conditions, it is recommended to use CSS instead of props. The props are provided for convenience, but for more complex layout structures, CSS should be used.
 
 ```vue
 <template>
