@@ -102,6 +102,8 @@ Use `<SCardHeader>` to display header element.
 </SCard>
 ```
 
+### Actions
+
 You may use `<SCardHeaderActions>` with nested `<SCardHeaderAction>` to add header actions. `<SCardHeaderAction>` accepts following props, and emits `@click` event when user clicks on the button.
 
 It uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
@@ -180,7 +182,9 @@ Use `<SCardBlock>` to display generic block element. This component is usually u
 </SCard>
 ```
 
-For combinience, `<SCardBlock>` component comes with `:space` props that lets you control the padding of the block. You may pass wither `compact` or `wide` as a value.
+### Spacing
+
+The `<SCardBlock>` component provides a convenient way to control the padding of the block using the `:space` prop. You can choose between two values: `compact` or `wide`.
 
 ```ts
 interface Props {
@@ -196,27 +200,24 @@ interface Props {
 </SCard>
 ```
 
-If you need to adjust the padding responsively, you may use `--card-padding` css variable to control them.
-
-```vue
-<template>
-  <SCard class="card">
-    <SCardBlock space="compact">
-      <p>Lorem ipsum...</p>
-    </SCardBlock>
-  </SCard>
-</template>
-
-<style scoped lang="postcss">
-.card {
-  --card-padding: 24px;
-}
-</style>
-```
+To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card widths smaller than `640px` and the `wide` class for larger widths.
 
 ## Footer
 
 Similar to `<SCardHeader>`, use `<SCardFooter>` to add the "footer" section of the card. `<SCardFooter>` comes with nested `<SCardFooterActions>` and `<SCardFooterAction>` to display action buttons.
+
+```vue-html
+<SCard>
+  <SCardFooter>
+    <SCardFooterActions>
+      <SCardFooterAction mode="mute" label="Cancel" @click="onClick" />
+      <SCardFooterAction mode="info" label="Submit" @click="onClick" />
+    </SCardFooterActions>
+  </SCardFooter>
+</SCard>
+```
+
+### Actions
 
 `<SCardFooterAction>` accepts following props. As same as `<SCardHeaderAction>`, it uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
 
@@ -239,19 +240,24 @@ export interface Tooltip {
 }
 ```
 
+### Spacing
+
+Same as, `<SCardBlock>`, `<SCardFooter>` also comes with `:space` props that lets you control the padding of the block. You may pass either `compact` or `wide` as a value.
+
+```ts
+interface Props {
+  space?: 'compact' | 'wide'
+}
+```
+
 ```vue-html
 <SCard>
-  <SCardFooterActions>
-    <SCardFooterAction
-      mode="mute"
-      label="Cancel"
-      @click="onClick"
-    />
-    <SCardFooterAction
-      mode="info"
-      label="Submit"
-      @click="onClick"
-    />
+  <SCardFooter space="compact">
+    ...
   </SCardFooter>
 </SCard>
 ```
+
+To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card widths smaller than `640px` and the `wide` class for larger widths.
+
+It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions.

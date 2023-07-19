@@ -18,7 +18,7 @@ defineProps<{
   background-color: var(--c-bg-elv-3);
 
   &.compact { padding: 24px; }
-  &.wide    { padding: 48px; }
+  &.wide    { padding: 32px; }
 }
 
 .SCard > .SCardBlock:first-child {

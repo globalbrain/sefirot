@@ -1,5 +1,13 @@
+<script setup lang="ts">
+export type Space = 'compact' | 'wide'
+
+defineProps<{
+  space?: Space
+}>()
+</script>
+
 <template>
-  <div class="SCardFooter">
+  <div class="SCardFooter" :class="[space ?? 'compact']">
     <slot />
   </div>
 </template>
