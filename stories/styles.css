@@ -35,6 +35,10 @@ body {
 .font-600 { font-weight: 600; }
 .font-700 { font-weight: 700; }
 
+.bg-info { background-color: var(--c-info); }
+
+.rounded-6 { border-radius: 6px; }
+
 .flex {
   display: flex;
 }
@@ -61,3 +65,5 @@ body {
 .max-w-192 { max-width: 192px; }
 .max-w-256 { max-width: 256px; }
 .max-w-512 { max-width: 512px; }
+
+.h-64 { height: 64px; }
