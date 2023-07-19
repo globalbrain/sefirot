@@ -65,5 +65,7 @@ body {
 .max-w-192 { max-width: 192px; }
 .max-w-256 { max-width: 256px; }
 .max-w-512 { max-width: 512px; }
+.max-w-592 { max-width: 592px; }
+.max-w-640 { max-width: 640px; }
 
 .h-64 { height: 64px; }
