@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import SMedium from 'sefirot/components/SMedium.vue'
+import SContent from 'sefirot/components/SContent.vue'
 </script>
 
-# SMedium
+# SContent
 
-`<SMedium>` applies basic styles to the native HTML elements.
+`<SContent>` applies basic styles to the native HTML elements.
 
 <Showcase
-  path="/components/SMedium.vue"
-  story="/stories-components-smedium-01-playground-story-vue"
+  path="/components/SContent.vue"
+  story="/stories-components-scontent-01-playground-story-vue"
 >
-  <SMedium>
+  <SContent>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     <ul>
       <li>Excepteur sint occaecat cupidatat.</li>
       <li>Voluptate velit esse cillum dolore.</li>
       <li>Labore et dolore magna aliqua.</li>
     </ul>
-  </SMedium>
+  </SContent>
 </Showcase>
 
 ## Usage
 
-Place HTML elements inside `<SMedium>` component and it will apply basic styles to the element, including spacing between elements.
+Place HTML elements inside `<SContent>` component and it will apply basic styles to the element, including spacing between elements.
 
 ```vue
 <script setup lang="ts">
-import SMedium from '@globalbrain/sefirot/lib/components/SMedium.vue'
+import SContent from '@globalbrain/sefirot/lib/components/SContent.vue'
 </script>
 
 <template>
-  <SMedium>
+  <SContent>
     <p>Lorem ipsum dolor sit amet.</p>
     <p>Consectetur adipiscing elit.</p>
     <ul>
@@ -38,7 +38,7 @@ import SMedium from '@globalbrain/sefirot/lib/components/SMedium.vue'
       <li>Voluptate velit esse cillum dolore.</li>
       <li>Labore et dolore magna aliqua.</li>
     </ul>
-  </SMedium>
+  </SContent>
 </template>
 ```
 

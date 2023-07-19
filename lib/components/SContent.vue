@@ -1,17 +1,17 @@
 <template>
-  <div class="SMedium">
+  <div class="SContent">
     <slot />
   </div>
 </template>
 
 <style scoped lang="postcss">
-.SMedium {
+.SContent {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.SMedium :deep(p) {
+.SContent :deep(p) {
   margin: 0;
   line-height: 24px;
   font-size: 14px;
@@ -19,11 +19,11 @@
   color: var(--c-text-1);
 }
 
-.SMedium :deep(strong) {
+.SContent :deep(strong) {
   font-weight: 600;
 }
 
-.SMedium :deep(a) {
+.SContent :deep(a) {
   color: var(--c-info-text);
   transition: color 0.25s;
 
@@ -32,18 +32,18 @@
   }
 }
 
-.SMedium :deep(ul),
-.SMedium :deep(ol) {
+.SContent :deep(ul),
+.SContent :deep(ol) {
   margin: 0;
   padding-left: 0;
   list-style: none;
 }
 
-.SMedium :deep(ol) {
+.SContent :deep(ol) {
   counter-reset: s-medium-counter;
 }
 
-.SMedium :deep(li) {
+.SContent :deep(li) {
   position: relative;
   margin: 0;
   padding-left: 20px;
@@ -53,7 +53,7 @@
   color: var(--c-text-1);
 }
 
-.SMedium :deep(ul > li::before) {
+.SContent :deep(ul > li::before) {
   position: absolute;
   top: 8px;
   left: 2px;
@@ -64,11 +64,11 @@
   content: "";
 }
 
-.SMedium :deep(ol > li) {
+.SContent :deep(ol > li) {
   counter-increment: s-medium-counter;
 }
 
-.SMedium :deep(ol > li::before) {
+.SContent :deep(ol > li::before) {
   margin-right: 3px;
   margin-left: -20px;
   color: var(--c-text-2);

@@ -1,16 +1,16 @@
 <script setup lang="ts">
+import SContent from 'sefirot/components/SContent.vue'
 import SLink from 'sefirot/components/SLink.vue'
-import SMedium from 'sefirot/components/SMedium.vue'
 
-const title = 'Components / SMedium / 01. Playground'
-const docs = '/components/medium'
+const title = 'Components / SContent / 01. Playground'
+const docs = '/components/content'
 </script>
 
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
       <div class="max-w-640">
-        <SMedium>
+        <SContent>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <SLink href="https://example.com">quis nostrud exercitation</SLink> ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
           <p><strong>Duis aute irure dolor in reprehenderit</strong> in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -41,7 +41,7 @@ const docs = '/components/medium'
             <li>Sed ut perspiciatis unde omnis iste natus error.</li>
             <li>Lorem ipsum dolor sit amet.</li>
           </ol>
-        </SMedium>
+        </SContent>
       </div>
     </Board>
   </Story>
