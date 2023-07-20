@@ -1,0 +1,39 @@
+import { type App } from 'vue'
+import SDesc from '../components/SDesc.vue'
+import SDescDay from '../components/SDescDay.vue'
+import SDescEmpty from '../components/SDescEmpty.vue'
+import SDescItem from '../components/SDescItem.vue'
+import SDescLabel from '../components/SDescLabel.vue'
+import SDescLink from '../components/SDescLink.vue'
+import SDescNumber from '../components/SDescNumber.vue'
+import SDescPill from '../components/SDescPill.vue'
+import SDescState from '../components/SDescState.vue'
+import SDescText from '../components/SDescText.vue'
+
+export function mixin(app: App): void {
+  app.component('SDesc', SDesc)
+  app.component('SDescDay', SDescDay)
+  app.component('SDescEmpty', SDescEmpty)
+  app.component('SDescItem', SDescItem)
+  app.component('SDescLabel', SDescLabel)
+  app.component('SDescLink', SDescLink)
+  app.component('SDescNumber', SDescNumber)
+  app.component('SDescPill', SDescPill)
+  app.component('SDescState', SDescState)
+  app.component('SDescText', SDescText)
+}
+
+declare module 'vue' {
+  export interface GlobalComponents {
+    SDesc: typeof SDesc
+    SDescDay: typeof SDescDay
+    SDescEmpty: typeof SDescEmpty
+    SDescItem: typeof SDescItem
+    SDescLabel: typeof SDescLabel
+    SDescLink: typeof SDescLink
+    SDescNumber: typeof SDescNumber
+    SDescPill: typeof SDescPill
+    SDescState: typeof SDescState
+    SDescText: typeof SDescText
+  }
+}
