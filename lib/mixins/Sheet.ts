@@ -8,15 +8,23 @@ import SSheetMedium from '../components/SSheetMedium.vue'
 import SSheetTitle from '../components/SSheetTitle.vue'
 
 export function mixin(app: App): void {
-  app.mixin({
-    components: {
-      SSheet,
-      SSheetTitle,
-      SSheetMedium,
-      SSheetForm,
-      SSheetFooter,
-      SSheetFooterActions,
-      SSheetFooterAction
-    }
-  })
+  app.component('SSheet', SSheet)
+  app.component('SSheetFooter', SSheetFooter)
+  app.component('SSheetFooterAction', SSheetFooterAction)
+  app.component('SSheetFooterActions', SSheetFooterActions)
+  app.component('SSheetForm', SSheetForm)
+  app.component('SSheetMedium', SSheetMedium)
+  app.component('SSheetTitle', SSheetTitle)
+}
+
+declare module 'vue' {
+  export interface GlobalComponents {
+    SSheet: typeof SSheet
+    SSheetFooter: typeof SSheetFooter
+    SSheetFooterAction: typeof SSheetFooterAction
+    SSheetFooterActions: typeof SSheetFooterActions
+    SSheetForm: typeof SSheetForm
+    SSheetMedium: typeof SSheetMedium
+    SSheetTitle: typeof SSheetTitle
+  }
 }

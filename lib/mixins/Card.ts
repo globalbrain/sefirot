@@ -12,19 +12,31 @@ import SCardHeaderActions from '../components/SCardHeaderActions.vue'
 import SCardHeaderTitle from '../components/SCardHeaderTitle.vue'
 
 export function mixin(app: App): void {
-  app.mixin({
-    components: {
-      SCard,
-      SCardBlock,
-      SCardFooter,
-      SCardFooterAction,
-      SCardFooterActions,
-      SCardHeader,
-      SCardHeaderAction,
-      SCardHeaderActionClose,
-      SCardHeaderActionCollapse,
-      SCardHeaderActions,
-      SCardHeaderTitle
-    }
-  })
+  app.component('SCard', SCard)
+  app.component('SCardBlock', SCardBlock)
+  app.component('SCardFooter', SCardFooter)
+  app.component('SCardFooterAction', SCardFooterAction)
+  app.component('SCardFooterActions', SCardFooterActions)
+  app.component('SCardHeader', SCardHeader)
+  app.component('SCardHeaderAction', SCardHeaderAction)
+  app.component('SCardHeaderActionClose', SCardHeaderActionClose)
+  app.component('SCardHeaderActionCollapse', SCardHeaderActionCollapse)
+  app.component('SCardHeaderActions', SCardHeaderActions)
+  app.component('SCardHeaderTitle', SCardHeaderTitle)
+}
+
+declare module 'vue' {
+  export interface GlobalComponents {
+    SCard: typeof SCard
+    SCardBlock: typeof SCardBlock
+    SCardFooter: typeof SCardFooter
+    SCardFooterAction: typeof SCardFooterAction
+    SCardFooterActions: typeof SCardFooterActions
+    SCardHeader: typeof SCardHeader
+    SCardHeaderAction: typeof SCardHeaderAction
+    SCardHeaderActionClose: typeof SCardHeaderActionClose
+    SCardHeaderActionCollapse: typeof SCardHeaderActionCollapse
+    SCardHeaderActions: typeof SCardHeaderActions
+    SCardHeaderTitle: typeof SCardHeaderTitle
+  }
 }
