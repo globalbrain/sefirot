@@ -1,6 +1,15 @@
+<script setup lang="ts">
+defineProps<{
+  value?: string | null
+}>()
+</script>
+
 <template>
   <div class="SDescLabel">
-    <div class="value"><slot /></div>
+    <div class="value">
+      <slot v-if="$slots.default" />
+      <template v-else>{{ value }}</template>
+    </div>
   </div>
 </template>
 
