@@ -24,6 +24,7 @@ defineProps<{
   min-width: 256px;
   max-height: 384px;
   overflow-y: auto;
+  white-space: normal;
 
   &::-webkit-scrollbar {
     display: none;
