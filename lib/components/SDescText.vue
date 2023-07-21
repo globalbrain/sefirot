@@ -1,0 +1,61 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import SDescEmpty from './SDescEmpty.vue'
+
+const props = defineProps<{
+  value?: string | null
+  lineClamp?: string | number
+  preWrap?: boolean
+}>()
+
+const classes = computed(() => [
+  { 'line-clamp': props.lineClamp },
+  { 'pre-wrap': props.preWrap }
+])
+
+const lineClamp = computed(() => props.lineClamp ?? 'none')
+</script>
+
+<template>
+  <div v-if="$slots.default || value" class="SDescText" :class="classes">
+    <div class="value">
+      <slot v-if="$slots.default" />
+      <template v-else>{{ value }}</template>
+    </div>
+  </div>
+  <SDescEmpty v-else />
+</template>
+
+<style scoped lang="postcss">
+.SDescText {
+  border-bottom: 1px dashed var(--c-divider-1);
+  padding-bottom: 7px;
+}
+
+.value {
+  line-height: 24px;
+  font-size: 14px;
+  font-weight: 400;
+
+  .SDescText.line-clamp & {
+    display: -webkit-box;
+    -webkit-line-clamp: v-bind(lineClamp);
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .SDescText.pre-wrap & {
+    white-space: pre-wrap;
+  }
+}
+
+.value :deep(a) {
+  color: var(--c-info-text);
+  transition: color 0.25s;
+
+  &:hover {
+    color: var(--c-info-text-dark);
+  }
+}
+</style>

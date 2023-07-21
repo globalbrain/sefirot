@@ -53,6 +53,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SCard', link: '/components/card' },
         { text: 'SContent', link: '/components/content' },
+        { text: 'SDesc', link: '/components/desc' },
         { text: 'SFragment', link: '/components/fragment' },
         { text: 'SGrid', link: '/components/grid' },
         { text: 'SHead', link: '/components/head' },
