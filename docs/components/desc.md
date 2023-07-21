@@ -148,7 +148,7 @@ The `<SDescText>` has builtin styling support for links. You may make part of th
   <SDescItem span="1">
     <SDescLabel>About</SDescLabel>
     <SDescText>
-      For more details<SLink href="...">refer to this link</SLink>.
+      For more details <SLink href="...">refer to this link</SLink>.
     </SDescText>
   </SDescItem>
 </SDesc>
