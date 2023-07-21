@@ -10,7 +10,7 @@ import SDescText from 'sefirot/components/SDescText.vue'
 
 # SDesc
 
-`<SDesc>` is a component for creating "Description List". It's a list of key-value pairs, usually used to display a list of data.
+`<SDesc>` is a component for creating "Description List". It is a list of key-value pairs, usually used to display a list of data.
 
 <Showcase
   path="/components/SDesc.vue"
@@ -44,7 +44,7 @@ import SDescText from 'sefirot/components/SDescText.vue'
 
 ## Usage
 
-The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use the `<SDesc>` component.
+The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use the `<SDesc>`.
 
 ```vue
 <script setup lang="ts">
@@ -106,7 +106,7 @@ Place labels with `<SDescLabel>` followed by value components such as `<SDescTex
 </SDesc>
 ```
 
-You may also pass value through `:value` prop instead of the default slot to `<SDescLabel>`. When you define both `:value` prop and default slot, the slot value will take precedence.
+You may also pass value through `:value` instead of the default slot to `<SDescLabel>`. When you define both `:value` and default slot, the slot value will take precedence.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -130,7 +130,7 @@ Use `<SDescText>` to display text value. Note that this component is the most ge
 </SDesc>
 ```
 
-You may also use `:value` prop instead of the default slot. When you define both `:value` prop and default slot, the slot value will take precedence.
+You may also use `:value` instead of the default slot. When you define both `:value` and default slot, the slot value will take precedence.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -154,7 +154,7 @@ The `<SDescText>` has builtin styling support for links. You may make part of th
 </SDesc>
 ```
 
-When displaying long text, there might be a case where you want to trim the texts into certain length. You can do so by passing `:line-clamp` prop. The value is the number of lines you want to display.
+When displaying long text, there might be a case where you want to trim the texts into certain length. You can do so by defining `:line-clamp`. The value is the number of lines you want to display.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -167,7 +167,7 @@ When displaying long text, there might be a case where you want to trim the text
 </SDesc>
 ```
 
-You may also use `:pre-wrap` prop to preserve users line breaks in the text. This is especially helpful when the content comes from user inputs, such as through a `<textarea>` element. With this feature, the original formatting provided by users will be retained, making the displayed text consistent with their input.
+You may also use `:pre-wrap` to preserve line breaks in the text. This is especially helpful when the content comes from user inputs, such as through a `<textarea>` element. With this feature, the original formatting provided by users will be retained, making the displayed text consistent with their input.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -182,7 +182,7 @@ You may also use `:pre-wrap` prop to preserve users line breaks in the text. Thi
 
 ## Number value
 
-Use `<SDescNumber>` component, which is a specialized version of `<SDescText>` that is tailored to display numbers. It provides additional styling and formatting options that are not available in `<SDescText>`.
+Use `<SDescNumber>` which is a specialized version of `<SDescText>` that is tailored to display numbers. It provides additional styling and formatting options that are not available in `<SDescText>`.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -193,7 +193,7 @@ Use `<SDescNumber>` component, which is a specialized version of `<SDescText>` t
 </SDesc>
 ```
 
-You may also use `:value` prop instead of the default slot. When you define both `:value` prop and default slot, the slot value will take precedence.
+You may also use `:value` instead of the default slot. When you define both `:value` and default slot, the slot value will take precedence.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -204,7 +204,7 @@ You may also use `:value` prop instead of the default slot. When you define both
 </SDesc>
 ```
 
-The `<SDescNumber>` supports `:separator` prop add thousand separators to the number.
+The `<SDescNumber>` supports `:separator` that adds thousand separators to the number.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -218,7 +218,7 @@ The `<SDescNumber>` supports `:separator` prop add thousand separators to the nu
 
 ## Link value
 
-If the whole value should be a link, use `<SDescLink>` component. The displayed value is similar to how `<SDescText>` displays links. However, `<SDescLink>` will always trim the value in single line.
+If the whole value should be a link, use `<SDescLink>`. The displayed value is similar to how `<SDescText>` displays links. However, `<SDescLink>` will always trim the value in single line.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -229,7 +229,7 @@ If the whole value should be a link, use `<SDescLink>` component. The displayed 
 </SDesc>
 ```
 
-You may also use `:value` prop instead of the default slot. When you define both `:value` prop and default slot, the slot value will take precedence.
+You may also use `:value` instead of the default slot. When you define both `:value` and default slot, the slot value will take precedence.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -240,7 +240,7 @@ You may also use `:value` prop instead of the default slot. When you define both
 </SDesc>
 ```
 
-You may pass in `:href` prop to specify the link destination. Use this to make link value and link destination different.
+You may pass in `:href` to specify the link destination. Use this to make link value and link destination different.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -256,7 +256,7 @@ You may pass in `:href` prop to specify the link destination. Use this to make l
 
 ## Date value
 
-When displaying a date, use `<SDescDay>` component. This component adds slightly different styling specialized for dates, and also provides additional formatting options.
+When displaying a date, use `<SDescDay>`. This component adds slightly different styling specialized for dates, and also provides additional formatting options.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -267,7 +267,7 @@ When displaying a date, use `<SDescDay>` component. This component adds slightly
 </SDesc>
 ```
 
-You may also pass in the value as [`Day`](../support/day) object with optional `:format` prop. The `:format` prop supports [formatting syntax of Day.js](https://day.js.org/docs/en/display/format) with the default being `YYYY-MM-DD HH:mm:ss`.
+You may also pass in the value as [`Day`](../support/day) object with optional `:format`. The `:format` supports [formatting syntax of Day.js](https://day.js.org/docs/en/display/format) with the default being `YYYY-MM-DD HH:mm:ss`.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -280,7 +280,7 @@ You may also pass in the value as [`Day`](../support/day) object with optional `
 
 ## Pill value
 
-You may use `<SDescPill>` component to display a value using [`<SPill>`](./pill) component. The size of the pill will be automatically adjusted to fit the description list item.
+You may use `<SDescPill>` to display a value using [`<SPill>`](./pill). The size of the pill will be automatically adjusted to fit the description list item.
 
 ```ts
 interface Props {
@@ -329,7 +329,7 @@ You may also pass in mutiple pills as an array.
 
 ## State value
 
-Use `<SDescState>` component to display a value using [`<SState>`](./state) component. The size of the pill will be automatically adjusted to fit the description list item.
+Use `<SDescState>` component to display a value using [`<SState>`](./state). The size of the pill will be automatically adjusted to fit the description list item.
 
 ```ts
 interface Props {
@@ -364,7 +364,7 @@ type Mode =
 
 ## Empty state
 
-All components that support `:value` can accept empty values, which are represented as `null` or `undefined`. When `:value` is not present or is empty, the `<SDescEmpty>` component is displayed.
+All components that support `:value` can accept empty values, which are represented as `null` or `undefined`. When `:value` is not present or is empty, the `<SDescEmpty>` is displayed.
 
 Although it may not be very useful, you have the option to directly use `<SDescEmpty>` to display empty values.
 
