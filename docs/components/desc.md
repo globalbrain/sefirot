@@ -364,9 +364,9 @@ type Mode =
 
 ## Empty state
 
-All value components accepts empty value as `null` and `undefined`. When the value is not present, the `<SDescEmpty>` component are displayed.
+All components that support `:value` can accept empty values, which are represented as `null` or `undefined`. When `:value` is not present or is empty, the `<SDescEmpty>` component is displayed.
 
-Although probably not very useful, you could directly use `<SDescEmpty>` component to display empty value.
+Although it may not be very useful, you have the option to directly use `<SDescEmpty>` to display empty values.
 
 ```vue-html
 <SDesc cols="2" gap="24">
