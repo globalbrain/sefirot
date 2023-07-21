@@ -1,3 +1,17 @@
+# [2.40.0](https://github.com/globalbrain/sefirot/compare/v2.39.0...v2.40.0) (2023-07-21)
+
+### Bug Fixes
+
+* **dropdown:** reset white space wrapping ([#319](https://github.com/globalbrain/sefirot/issues/319)) ([#320](https://github.com/globalbrain/sefirot/issues/320)) ([fe2264e](https://github.com/globalbrain/sefirot/commit/fe2264ef51f2c81add3dcb537ef492babd5df73e))
+
+### Features
+
+* **card:** add `large` size and `space` option to footer ([#312](https://github.com/globalbrain/sefirot/issues/312)) ([f628b8e](https://github.com/globalbrain/sefirot/commit/f628b8eb03c291e3b2c3b9453a028dc0ca87abac))
+* **content:** add `SContent` component ([#314](https://github.com/globalbrain/sefirot/issues/314)) ([b510f9d](https://github.com/globalbrain/sefirot/commit/b510f9d3e4ee56d6f9fc2cbb33b2838bfc37f148))
+* **desc:** add `SDesc` component ([#318](https://github.com/globalbrain/sefirot/issues/318)) ([9550ee5](https://github.com/globalbrain/sefirot/commit/9550ee58beb58be98473ec79663165c2e9d27125))
+* **grid:** add `SGrid` component ([#313](https://github.com/globalbrain/sefirot/issues/313)) ([ec92c7b](https://github.com/globalbrain/sefirot/commit/ec92c7b3c3474210d93b52aecc5abc15eaefdfa7))
+* **head:** add `SHead` component ([#315](https://github.com/globalbrain/sefirot/issues/315)) ([a70236c](https://github.com/globalbrain/sefirot/commit/a70236cc4449996066e78f8c9e980302bf3d0881))
+
 # [2.39.0](https://github.com/globalbrain/sefirot/compare/v2.38.0...v2.39.0) (2023-06-21)
 
 ### Features
