@@ -393,6 +393,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   width: 100%;
   background-color: transparent;
   cursor: text;
+  font-family: var(--input-value-font-family);
 
   &.neutral:not(.hide) { color: var(--input-value-color); }
   &.info:not(.hide)    { color: var(--c-info-text); }
