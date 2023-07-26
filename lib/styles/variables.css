@@ -848,6 +848,8 @@
   --input-small-label-font-size: 14px;
   --input-medium-label-font-size: 14px;
 
+  --input-value-font-family: var(--font-family-base);
+
   --input-switch-toggle-color: var(--c-neutral-1);
   --input-switch-bg-color: var(--c-mute);
   --input-switch-disabled-toggle-color: var(--c-gray);

@@ -147,6 +147,7 @@ function emitBlur(e: FocusEvent): void {
   border: 1px solid var(--input-border-color);
   border-radius: 6px;
   width: 100%;
+  font-family: var(--input-value-font-family);
   font-weight: 400;
   background-color: var(--input-bg-color);
   transition: border-color 0.25s, background-color 0.25s;
