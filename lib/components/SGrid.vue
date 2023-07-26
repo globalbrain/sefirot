@@ -6,17 +6,16 @@ const props = defineProps<{
   gap?: string | number
 }>()
 
-const gridTemplateColumns = computed(() => {
-  return `repeat(${props.cols ?? 1}, minmax(0, 1fr))`
-})
-
-const gap = computed(() => {
-  return `${props.gap ?? 0}px`
+const styles = computed(() => {
+  return {
+    '--grid-template-columns': `repeat(${props.cols ?? 1}, minmax(0, 1fr))`,
+    '--gap': `${props.gap ?? 0}px`
+  }
 })
 </script>
 
 <template>
-  <div class="SGrid">
+  <div class="SGrid" :style="styles">
     <slot />
   </div>
 </template>
@@ -24,7 +23,7 @@ const gap = computed(() => {
 <style scoped lang="postcss">
 .SGrid {
   display: grid;
-  grid-template-columns: v-bind(gridTemplateColumns);
-  gap: v-bind(gap);
+  grid-template-columns: var(--grid-template-columns);
+  gap: var(--gap);
 }
 </style>
