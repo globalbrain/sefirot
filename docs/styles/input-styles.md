@@ -6,14 +6,20 @@ Input related component such as `SInputText` or `SInputSelect` shares many commo
 
 Here are the list of all available CSS variables that you can customize.
 
-### Font size
+### Font stylings
 
-Customize the font size of the generic input value. The font size is different depending on the input's size defined by the `size` prop. You may override the font size for all inputsizes, or customize them individually.
+Customize the font size and family of the generic input value. The font size is different depending on the input's size defined by the `size` prop. You may override the font size for all input sizes, or customize them individually.
 
 ```css
 :root {
   /**
-   * Set the font size for all size of inputs. By default it's
+   * Set the font family for all size of inputs. By default it is
+   * undefined and base font family will be used.
+   */
+  --input-value-font-family: undefined;
+
+  /**
+   * Set the font size and family for all size of inputs. By default it's
    * undefined and size specific values defined below is used.
    */
   --input-font-size: undefined;
