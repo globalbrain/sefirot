@@ -132,7 +132,7 @@ The `<SCardHeaderTitle>` allows you to display the title text in the header.
 </SCard>
 ```
 
-You may also pass `:mode` to change the appearance of the title text. Combine this prop with `:mode` prop of `<SCard>` to enpassize the card's purpose.
+You may also pass `:mode` to change the appearance of the title text. Combine this prop with `:mode` prop of `<SCard>` to emphasize the card's purpose.
 
 ```ts
 interface Props {
