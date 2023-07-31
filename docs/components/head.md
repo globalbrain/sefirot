@@ -37,4 +37,19 @@ import SHeadTitle from '@globalbrain/sefirot/lib/components/SHeadTitle.vue'
 </template>
 ```
 
-Note that the `<SHeadLead>` component also styles `<a>` elements when it is passed so there is no need to style links manually.
+You may also define `:mode` on `<SHeadTitle>` to change the title's appearance. The default mode is `neutral`.
+
+```ts
+interface Props {
+  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+}
+```
+
+```vue-html
+<SHead>
+  <SHeadTitle mode="danger">Dangerous title</SHeadTitle>
+  <SHeadLead>Lorem ipsum dolor sit, amet consectetur.</SHeadLead>
+</SHead>
+```
+
+Also, note that the `<SHeadLead>` component also styles `<a>` elements when it is passed so there is no need to style links manually.

@@ -8,6 +8,7 @@ const docs = '/components/head'
 
 function state() {
   return {
+    mode: 'neutral',
     title: 'The head title',
     lead: 'Lorem ipsum dolor sit, amet consectetur.'
   }
@@ -17,6 +18,17 @@ function state() {
 <template>
   <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
+      <HstSelect
+        title="mode"
+        :options="{
+          neutral: 'neutral',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+          danger: 'danger'
+        }"
+        v-model="state.mode"
+      />
       <HstText
         title="Title"
         v-model="state.title"
@@ -31,7 +43,7 @@ function state() {
       <Board :title="title" :docs="docs">
         <div class="max-w-512">
           <SHead>
-            <SHeadTitle v-if="state.title">{{ state.title }}</SHeadTitle>
+            <SHeadTitle v-if="state.title" :mode="state.mode">{{ state.title }}</SHeadTitle>
             <SHeadLead v-if="state.lead">{{ state.lead }}</SHeadLead>
           </SHead>
         </div>
