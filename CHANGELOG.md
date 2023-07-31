@@ -1,3 +1,13 @@
+# [2.41.0](https://github.com/globalbrain/sefirot/compare/v2.40.0...v2.41.0) (2023-07-31)
+
+### Bug Fixes
+
+* **grid:** make styles overridable via CSS ([#321](https://github.com/globalbrain/sefirot/issues/321)) ([#323](https://github.com/globalbrain/sefirot/issues/323)) ([843dd2b](https://github.com/globalbrain/sefirot/commit/843dd2b5414a14941c1033282efa418ad6036104))
+
+### Features
+
+* **input:** enable input `font-family` custom property ([#322](https://github.com/globalbrain/sefirot/issues/322)) ([#324](https://github.com/globalbrain/sefirot/issues/324)) ([4f111b1](https://github.com/globalbrain/sefirot/commit/4f111b1d00759d403a5ae8d0b603970ebafb7899))
+
 # [2.40.0](https://github.com/globalbrain/sefirot/compare/v2.39.0...v2.40.0) (2023-07-21)
 
 ### Bug Fixes
