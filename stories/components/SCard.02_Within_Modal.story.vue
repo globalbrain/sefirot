@@ -16,41 +16,75 @@ const title = 'Components / SCard / 02. Within Modal'
 const docs = '/components/card'
 
 const open = ref(false)
+
+function state() {
+  return {
+    cardMode: 'neutral',
+    titleMode: 'neutral'
+  }
+}
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <div id="sefirot-modals" />
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+    <template #controls="{ state }">
+      <HstSelect
+        title="Card mode"
+        :options="{
+          neutral: 'neutral',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+          danger: 'danger'
+        }"
+        v-model="state.cardMode"
+      />
+      <HstSelect
+        title="Title mode"
+        :options="{
+          neutral: 'neutral',
+          info: 'info',
+          success: 'success',
+          warning: 'warning',
+          danger: 'danger'
+        }"
+        v-model="state.titleMode"
+      />
+    </template>
 
-    <Board :title="title" :docs="docs">
-      <SButton mode="info" label="Open dialog" @click="open = true" />
+    <template #default="{ state }">
+      <div id="sefirot-modals" />
 
-      <SModal :open="open" @close="open = false">
-        <SCard size="small">
-          <SCardHeader>
-            <SCardHeaderTitle>Header title</SCardHeaderTitle>
-            <SCardHeaderActions>
-              <SCardHeaderActionClose @click="open = false" />
-            </SCardHeaderActions>
-          </SCardHeader>
+      <Board :title="title" :docs="docs">
+        <SButton mode="info" label="Open dialog" @click="open = true" />
 
-          <SCardBlock space="compact">
-            <p class="text-14">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat.
-            </p>
-          </SCardBlock>
+        <SModal :open="open" @close="open = false">
+          <SCard size="small" :mode="state.cardMode">
+            <SCardHeader>
+              <SCardHeaderTitle :mode="state.titleMode">Header title</SCardHeaderTitle>
+              <SCardHeaderActions>
+                <SCardHeaderActionClose @click="open = false" />
+              </SCardHeaderActions>
+            </SCardHeader>
 
-          <SCardFooter>
-            <SCardFooterActions>
-              <SCardFooterAction mode="mute" label="Cancel" @click="open = false" />
-              <SCardFooterAction mode="info" label="Submit" @click="open = false" />
-            </SCardFooterActions>
-          </SCardFooter>
-        </SCard>
-      </SModal>
-    </Board>
+            <SCardBlock space="compact">
+              <p class="text-14">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat.
+              </p>
+            </SCardBlock>
+
+            <SCardFooter>
+              <SCardFooterActions>
+                <SCardFooterAction mode="mute" label="Cancel" @click="open = false" />
+                <SCardFooterAction mode="info" label="Submit" @click="open = false" />
+              </SCardFooterActions>
+            </SCardFooter>
+          </SCard>
+        </SModal>
+      </Board>
+    </template>
   </Story>
 </template>

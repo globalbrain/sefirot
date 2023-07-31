@@ -1,17 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { provideCardState } from '../composables/Card'
 
 export type Size = 'small' | 'medium' | 'large'
+export type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
-defineProps<{
+const props = defineProps<{
   size?: Size
+  mode?: Mode
 }>()
 
 const { isCollapsed } = provideCardState()
+
+const classes = computed(() => [
+  props.size,
+  props.mode ?? 'neutral',
+  { collapsed: isCollapsed.value }
+])
 </script>
 
 <template>
-  <div class="SCard" :class="[size, { collapsed: isCollapsed }]">
+  <div class="SCard" :class="classes">
     <slot />
   </div>
 </template>
@@ -20,10 +29,16 @@ const { isCollapsed } = provideCardState()
 .SCard {
   display: grid;
   gap: 1px;
-  border: 1px solid var(--c-divider-2);
+  border: 1px solid transparent;
   border-radius: 6px;
   background-color: var(--c-gutter);
 }
+
+.SCard.neutral { border-color: var(--c-divider-2); }
+.SCard.info    { border-color: var(--c-info-border); }
+.SCard.success { border-color: var(--c-success-border); }
+.SCard.warning { border-color: var(--c-warning-border); }
+.SCard.danger  { border-color: var(--c-danger-border); }
 
 .SCard.collapsed {
   height: 48px;
