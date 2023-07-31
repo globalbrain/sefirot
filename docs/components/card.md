@@ -86,11 +86,41 @@ import SCardHeaderTitle from '@globalbrain/sefirot/lib/components/SCardHeaderTit
 
 Learn more about each child component's usage in the following sections.
 
+## Root
+
+The `<SCard>` is the root component of the card. All child components must be placed under this component.
+
+```vue-html
+<SCard>
+  <SCardHeader>...</SCardHeader>
+  <SCardBlock>...</SCardBlock>
+  <SCardFooter>...</SCardFooter>
+</SCard>
+```
+
+### Root mode
+
+You may define `:mode` to change the appearance of the card. Usually, this is most used when creating "dangerous" cards, such as a card that displays a warning message before deleting something.
+
+```ts
+interface Props {
+  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+}
+```
+
+```vue-html
+<SCard mode="danger">
+  ...
+</SCard>
+```
+
 ## Header
 
-Use `<SCardHeader>` to display header element.
+Use `<SCardHeader>` with `<SCardHeaderTitle>` and `<SCardActions>` to construct the header. 
 
-`<SCardHeaderTitle>` allows you to display the title text.
+### Header title
+
+The `<SCardHeaderTitle>` allows you to display the title text in the header.
 
 ```vue-html
 <SCard>
@@ -102,7 +132,25 @@ Use `<SCardHeader>` to display header element.
 </SCard>
 ```
 
-### Actions
+You may also pass `:mode` to change the appearance of the title text. Combine this prop with `:mode` prop of `<SCard>` to emphasize the card's purpose.
+
+```ts
+interface Props {
+  mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+}
+```
+
+```vue-html
+<SCard mode="danger">
+  <SCardHeader>
+    <SCardHeaderTitle mode="danger">
+      Header title
+    </SCardHeaderTitle>
+  </SCardHeader>
+</SCard>
+```
+
+### Header actions
 
 You may use `<SCardHeaderActions>` with nested `<SCardHeaderAction>` to add header actions. `<SCardHeaderAction>` accepts following props, and emits `@click` event when user clicks on the button.
 
@@ -182,7 +230,7 @@ Use `<SCardBlock>` to display generic block element. This component is usually u
 </SCard>
 ```
 
-### Spacing
+### Block spacing
 
 The `<SCardBlock>` component provides a convenient way to control the padding of the block using the `:space` prop. You can choose between two values: `compact` or `wide`.
 
@@ -217,7 +265,7 @@ Similar to `<SCardHeader>`, use `<SCardFooter>` to add the "footer" section of t
 </SCard>
 ```
 
-### Actions
+### Footer actions
 
 `<SCardFooterAction>` accepts following props. As same as `<SCardHeaderAction>`, it uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
 
@@ -240,7 +288,7 @@ export interface Tooltip {
 }
 ```
 
-### Spacing
+### Footer spacing
 
 Same as, `<SCardBlock>`, `<SCardFooter>` also comes with `:space` props that lets you control the padding of the block. You may pass either `compact` or `wide` as a value.
 
