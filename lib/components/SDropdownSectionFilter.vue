@@ -115,6 +115,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   padding: 0 8px;
   width: 100%;
   font-size: 14px;
+  font-family: var(--input-value-font-family);
   line-height: 32px;
   background-color: var(--input-bg-color);
   transition: border-color 0.25s;
