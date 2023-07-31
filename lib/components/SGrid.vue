@@ -8,8 +8,8 @@ const props = defineProps<{
 
 const styles = computed(() => {
   return {
-    gridTemplateColumns: `repeat(${props.cols ?? 1}, minmax(0, 1fr))`,
-    gap: `${props.gap ?? 0}px`
+    '--grid-template-columns': `repeat(${props.cols ?? 1}, minmax(0, 1fr))`,
+    '--gap': `${props.gap ?? 0}px`
   }
 })
 </script>
@@ -23,5 +23,7 @@ const styles = computed(() => {
 <style scoped lang="postcss">
 .SGrid {
   display: grid;
+  grid-template-columns: var(--grid-template-columns);
+  gap: var(--gap);
 }
 </style>
