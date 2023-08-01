@@ -1,3 +1,10 @@
+# [2.42.0](https://github.com/globalbrain/sefirot/compare/v2.41.0...v2.42.0) (2023-08-01)
+
+### Features
+
+* **card:** add `:mode` to root and header components ([#325](https://github.com/globalbrain/sefirot/issues/325)) ([b5ec2db](https://github.com/globalbrain/sefirot/commit/b5ec2dbd489bf3649b411d175c068d00a10a1b41))
+* **head:** add `:mode` to title component ([#326](https://github.com/globalbrain/sefirot/issues/326)) ([7cb95f8](https://github.com/globalbrain/sefirot/commit/7cb95f82bb0be93181f936606379566ccf5722d4))
+
 # [2.41.0](https://github.com/globalbrain/sefirot/compare/v2.40.0...v2.41.0) (2023-07-31)
 
 ### Bug Fixes
