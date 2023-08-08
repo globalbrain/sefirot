@@ -53,6 +53,10 @@ const lineClamp = computed(() => props.lineClamp ?? 'none')
   }
 }
 
+.value :deep(p + p) {
+  margin-top: 12px;
+}
+
 .value :deep(a) {
   color: var(--c-info-text);
   transition: color 0.25s;
