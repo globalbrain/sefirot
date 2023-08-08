@@ -1,3 +1,13 @@
+# [2.43.0](https://github.com/globalbrain/sefirot/compare/v2.42.0...v2.43.0) (2023-08-08)
+
+### Bug Fixes
+
+* **desc:** empty slot not showing empty state ([#328](https://github.com/globalbrain/sefirot/issues/328)) ([823772e](https://github.com/globalbrain/sefirot/commit/823772e24b1db68259915578a7818c7e3ccde1ea))
+
+### Features
+
+* **desc:** add multi paragraph support for `<SDescText>` ([#329](https://github.com/globalbrain/sefirot/issues/329)) ([82a87e3](https://github.com/globalbrain/sefirot/commit/82a87e3a80910b0b997c8fd1e9ded4af8459ce88))
+
 # [2.42.0](https://github.com/globalbrain/sefirot/compare/v2.41.0...v2.42.0) (2023-08-01)
 
 ### Features
