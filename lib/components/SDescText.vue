@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useHasSlotContent } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
 
 const props = defineProps<{
@@ -13,13 +14,15 @@ const classes = computed(() => [
   { 'pre-wrap': props.preWrap }
 ])
 
+const hasSlot = useHasSlotContent()
+
 const lineClamp = computed(() => props.lineClamp ?? 'none')
 </script>
 
 <template>
-  <div v-if="$slots.default || value" class="SDescText" :class="classes">
+  <div v-if="hasSlot || value" class="SDescText" :class="classes">
     <div class="value">
-      <slot v-if="$slots.default" />
+      <slot v-if="hasSlot" />
       <template v-else>{{ value }}</template>
     </div>
   </div>
