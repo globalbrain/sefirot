@@ -154,6 +154,20 @@ The `<SDescText>` has builtin styling support for links. You may make part of th
 </SDesc>
 ```
 
+You may also pass in multiple paragraphs as a content. This is useful when you want to display markdown content as a value.
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel>About</SDescLabel>
+    <SDescText>
+      <p>Line one...</p>
+      <p>Line two...</p>
+    </SDescText>
+  </SDescItem>
+</SDesc>
+```
+
 When displaying long text, there might be a case where you want to trim the texts into certain length. You can do so by defining `:line-clamp`. The value is the number of lines you want to display.
 
 ```vue-html
