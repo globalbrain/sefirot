@@ -84,3 +84,39 @@ const menu = computedArray((arr) => {
   }
 })
 ```
+
+## `useHasSlotContent`
+
+Checks whether the slot has a non empty value. If the slot contains empty string, it will return `false`. If the slot contains child nodes, it will return `true`.
+
+You may pass slot name as an argument. If you do not pass it, it will check the default slot.
+
+```ts
+function useHasSlotContent(name: string): ComputedRef<boolean>
+```
+
+```ts
+import { useHasSlotContent } from '@globalbrain/sefirot/lib/composables/Utils'
+
+const hasSlotContent = useHasSlotContent('default')
+
+hasSlotContent.value // <- true or false
+```
+
+## `useSlotValue`
+
+Get the slot value. If the slot contains child nodes, it will get ignored and treated as if it was empty. This composable is useful to get the plain text out of the slot content.
+
+You may pass the slot name as an argument. If you do not pass it, it will check the default slot.
+
+```ts
+function useSlotValue(name: string): ComputedRef<string | null>
+```
+
+```ts
+import { useSlotValue } from '@globalbrain/sefirot/lib/composables/Utils'
+
+const slotValue = useSlotValue('default')
+
+slotValue.value // <- string or null
+```

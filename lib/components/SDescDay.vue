@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
+import { useSlotValue } from '../composables/Utils'
 import { type Day } from '../support/Day'
 import SDescEmpty from './SDescEmpty.vue'
 
@@ -8,13 +9,11 @@ const props = defineProps<{
   format?: string
 }>()
 
-const slots = useSlots()
+const slotValue = useSlotValue()
 
 const _value = computed(() => {
-  const slotValue = slots.default?.()[0].children
-
-  if (typeof slotValue === 'string') {
-    return slotValue
+  if (slotValue.value) {
+    return slotValue.value
   }
 
   if (props.value) {

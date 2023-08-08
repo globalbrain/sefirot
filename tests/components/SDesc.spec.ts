@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils'
+import { h } from 'vue'
 import SDesc from 'sefirot/components/SDesc.vue'
 import SDescDay from 'sefirot/components/SDescDay.vue'
 import SDescItem from 'sefirot/components/SDescItem.vue'
@@ -58,6 +59,27 @@ describe('components/SDesc', () => {
       expect(wrapper.find('.SDescText .value').text()).toBe('John Doe')
     })
 
+    test('renders child nodes if passed', () => {
+      const wrapper = mount(SDescText, {
+        slots: {
+          default: h('div', [h('p', 'John Doe')])
+        }
+      })
+
+      expect(wrapper.find('.SDescText .value p').text()).toBe('John Doe')
+    })
+
+    test('shows `SDescEmpty` when the #default is empty', () => {
+      const wrapper = mount(SDescText, {
+        slots: {
+          default: h('div', '')
+        }
+      })
+
+      expect(wrapper.find('.SDescText').exists()).toBe(false)
+      expect(wrapper.find('.SDescEmpty').exists()).toBe(true)
+    })
+
     test('shows `SDescEmpty` when the value is empty', () => {
       const wrapper = mount(SDescText)
 
@@ -99,6 +121,17 @@ describe('components/SDesc', () => {
       })
 
       expect(wrapper.find('.SDescNumber .value').text()).toBe('123,456')
+    })
+
+    test('shows `SDescEmpty` when the #default is empty', () => {
+      const wrapper = mount(SDescNumber, {
+        slots: {
+          default: h('div', '')
+        }
+      })
+
+      expect(wrapper.find('.SDescNumber').exists()).toBe(false)
+      expect(wrapper.find('.SDescEmpty').exists()).toBe(true)
     })
 
     test('shows `SDescEmpty` when the value is empty', () => {

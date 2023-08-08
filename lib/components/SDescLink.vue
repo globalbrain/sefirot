@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
+import { useSlotValue } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
 import SLink from './SLink.vue'
 
@@ -8,27 +9,23 @@ const props = defineProps<{
   href?: string
 }>()
 
-const slots = useSlots()
+const slotValue = useSlotValue()
 
 const link = computed(() => {
   if (props.href) {
     return props.href
   }
 
-  const slotValue = slots.default?.()[0].children
-
-  if (typeof slotValue === 'string') {
-    return slotValue
-  }
-
-  return props.value
+  return slotValue.value
+    ? slotValue.value
+    : props.value
 })
 </script>
 
 <template>
-  <div v-if="$slots.default || value" class="SDescLink">
+  <div v-if="slotValue || value" class="SDescLink">
     <SLink class="value" :href="link">
-      <slot v-if="$slots.default" />
+      <slot v-if="slotValue" />
       <template v-else>{{ value }}</template>
     </SLink>
   </div>
