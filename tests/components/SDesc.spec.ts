@@ -1,5 +1,4 @@
 import { mount } from '@vue/test-utils'
-import { h } from 'vue'
 import SDesc from 'sefirot/components/SDesc.vue'
 import SDescDay from 'sefirot/components/SDescDay.vue'
 import SDescItem from 'sefirot/components/SDescItem.vue'
@@ -10,6 +9,7 @@ import SDescPill from 'sefirot/components/SDescPill.vue'
 import SDescState from 'sefirot/components/SDescState.vue'
 import SDescText from 'sefirot/components/SDescText.vue'
 import { day } from 'sefirot/support/Day'
+import { h } from 'vue'
 
 describe('components/SDesc', () => {
   describe('SDesc', () => {
