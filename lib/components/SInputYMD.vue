@@ -277,6 +277,9 @@ function createRequiredTouched(): boolean[] {
   .container {
     background-color: var(--input-disabled-bg-color);
   }
+
+  .container:hover { border-color: var(--input-border-color); }
+  .container.focus { border-color: var(--input-border-color); }
 }
 
 .SInputYMD.has-error {
