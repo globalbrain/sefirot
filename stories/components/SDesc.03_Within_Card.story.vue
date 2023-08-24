@@ -13,7 +13,7 @@ import SDescPill from 'sefirot/components/SDescPill.vue'
 import SDescState from 'sefirot/components/SDescState.vue'
 import SDescText from 'sefirot/components/SDescText.vue'
 
-const title = 'Components / SDesc / 02. Within Card'
+const title = 'Components / SDesc / 03. Within Card'
 const docs = '/components/desc'
 </script>
 

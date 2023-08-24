@@ -34,11 +34,6 @@ const _value = computed(() => {
 </template>
 
 <style scoped lang="postcss">
-.SDescNumber {
-  border-bottom: 1px dashed var(--c-divider-1);
-  padding-bottom: 7px;
-}
-
 .value {
   line-height: 24px;
   font-size: 14px;

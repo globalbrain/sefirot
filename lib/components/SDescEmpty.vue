@@ -5,11 +5,6 @@
 </template>
 
 <style scoped lang="postcss">
-.SDescEmpty {
-  border-bottom: 1px dashed var(--c-divider-1);
-  padding-bottom: 7px;
-}
-
 .value {
   line-height: 24px;
   font-size: 14px;
