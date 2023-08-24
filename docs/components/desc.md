@@ -87,6 +87,41 @@ At the top level, use `<SDesc>` and `<SDescItem>` to define the layout. `<SDesc>
 </SDesc>
 ```
 
+You may also define `:dir` to control the direction of the label and value stack. The default is set to `column` which stacks the label and value vertically. You may set it to `row` to stack them horizontally.
+
+When setting `:dir` to `row`, you should also specify `labelWidth` prop which will determine how much width should the label are have in the grid system. The value is in `px`.
+
+```ts
+interface Prop {
+  // Defaults to `column`.
+  dir?: 'column' | 'row'
+
+  // Defaults to 128.
+  labelWidth?: string | number
+}
+```
+
+```vue-html
+<SDesc cols="2" gap="24" dir="row" label-width="96">
+  ...
+</SDesc>
+```
+
+At last, you may show/hide divider via `:divider`. It defaults to `true`.
+
+```ts
+interface Prop {
+  // Defaults to `true`.
+  divider?: boolean
+}
+```
+
+```vue-html
+<SDesc cols="2" gap="24" :divider="false">
+  ...
+</SDesc>
+```
+
 ## Label
 
 Place labels with `<SDescLabel>` followed by value components such as `<SDescText>` or `<SDescLink>` under `<SDescItem>`.

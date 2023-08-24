@@ -33,11 +33,6 @@ const link = computed(() => {
 </template>
 
 <style scoped lang="postcss">
-.SDescLink {
-  border-bottom: 1px dashed var(--c-divider-1);
-  padding-bottom: 7px;
-}
-
 .value {
   display: block;
   line-height: 24px;

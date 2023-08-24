@@ -32,11 +32,6 @@ const pills = computed(() => {
 </template>
 
 <style scoped lang="postcss">
-.SDescPill {
-  border-bottom: 1px dashed var(--c-divider-1);
-  padding-bottom: 7px;
-}
-
 .value {
   display: flex;
   gap: 4px 6px;

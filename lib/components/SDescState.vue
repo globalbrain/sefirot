@@ -22,11 +22,6 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
-.SDescState {
-  border-bottom: 1px dashed var(--c-divider-1);
-  padding-bottom: 7px;
-}
-
 .value {
   display: flex;
   align-items: center;
