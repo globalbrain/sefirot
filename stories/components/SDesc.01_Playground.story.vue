@@ -14,8 +14,6 @@ const docs = '/components/desc'
 
 function state() {
   return {
-    cols: 2,
-    gap: 24,
     divider: true
   }
 }
@@ -24,14 +22,6 @@ function state() {
 <template>
   <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
-      <HstNumber
-        title="cols"
-        v-model="state.cols"
-      />
-      <HstNumber
-        title="gap"
-        v-model="state.gap"
-      />
       <HstCheckbox
         title="divider"
         v-model="state.divider"
@@ -41,8 +31,8 @@ function state() {
     <template #default="{ state }">
       <Board :title="title" :docs="docs">
         <SDesc
-          :cols="state.cols"
-          :gap="state.gap"
+          cols="2"
+          gap="24"
           :divider="state.divider"
         >
           <SDescItem span="1">
