@@ -107,7 +107,7 @@ interface Prop {
 </SDesc>
 ```
 
-At last, you may show/hide divider via `:divider`. It defaults to `true`.
+You may show/hide the divider by setting `:divider`. It defaults to `true`.
 
 ```ts
 interface Prop {
