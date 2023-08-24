@@ -89,7 +89,7 @@ At the top level, use `<SDesc>` and `<SDescItem>` to define the layout. `<SDesc>
 
 You may also define `:dir` to control the direction of the label and value stack. The default is set to `column` which stacks the label and value vertically. You may set it to `row` to stack them horizontally.
 
-When setting `:dir` to `row`, you should also specify `labelWidth` prop which will determine how much width should the label are have in the grid system. The value is in `px`.
+When setting `:dir` to `row`, you should also specify `labelWidth` prop which will determine how much width the label should have in the grid system. The value is in `px`.
 
 ```ts
 interface Prop {
