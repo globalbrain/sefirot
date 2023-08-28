@@ -63,7 +63,10 @@ function onClick() {
       <div class="input" :class="{ on: _value }" role="button" @click="onClick">
         <div class="box">
           <div class="check">
-            <SIcon :icon="_value === 'indeterminate' ? IconMinus : IconCheck" class="check-icon" />
+            <SIcon
+              :icon="_value === 'indeterminate' ? IconMinus : IconCheck"
+              class="check-icon"
+            />
           </div>
         </div>
 
