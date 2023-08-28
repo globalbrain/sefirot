@@ -63,4 +63,19 @@ describe('components/SInputCheckboxes', () => {
     assertNotEmitted(wrapper, 'update:model-value')
     assertNotEmitted(wrapper, 'change')
   })
+
+  test('does not emit on click when `:disabled`', async () => {
+    const wrapper = mount(SInputCheckboxes, {
+      props: {
+        options: [{ label: 'Item 01', value: 1 }],
+        value: [],
+        disabled: true
+      }
+    })
+
+    await wrapper.find('.SInputCheckboxes .SInputCheckbox .input').trigger('click')
+
+    assertNotEmitted(wrapper, 'update:model-value')
+    assertNotEmitted(wrapper, 'change')
+  })
 })
