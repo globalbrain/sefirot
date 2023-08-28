@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import IconCheck from '@iconify-icons/ph/check-bold'
+import IconMinus from '@iconify-icons/ph/minus-bold'
 import { computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
@@ -19,8 +20,8 @@ const props = withDefaults(defineProps<{
   checkText?: string
   checkColor?: Color
   text?: string
-  value?: boolean
-  modelValue?: boolean
+  value?: boolean | 'indeterminate'
+  modelValue?: boolean | 'indeterminate'
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -62,7 +63,7 @@ function onClick() {
       <div class="input" :class="{ on: _value }" role="button" @click="onClick">
         <div class="box">
           <div class="check">
-            <SIcon :icon="IconCheck" class="check-icon" />
+            <SIcon :icon="_value === 'indeterminate' ? IconMinus : IconCheck" class="check-icon" />
           </div>
         </div>
 
