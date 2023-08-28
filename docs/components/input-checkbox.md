@@ -175,6 +175,20 @@ interface Props {
 />
 ```
 
+### `:disabled`
+
+Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
+
+```ts
+interface Props {
+  disabled?: boolean
+}
+```
+
+```vue-html
+<SInputCheckbox disabled v-model="..." />
+```
+
 ### `:value`
 
 Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
