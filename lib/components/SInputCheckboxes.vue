@@ -13,6 +13,7 @@ export type Value = string | number | boolean
 export interface Option {
   label: string
   value: Value
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<{
@@ -83,7 +84,7 @@ function handleChange(value: Value): void {
         <div v-for="option in options" :key="String(option.value)" class="col">
           <SInputCheckbox
             :text="option.label"
-            :disabled="disabled"
+            :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="handleChange(option.value)"
           />
