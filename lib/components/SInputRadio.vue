@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent } from 'vue'
+import { type DefineComponent, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
@@ -18,6 +18,7 @@ const props = defineProps<{
   checkText?: string
   checkColor?: Color
   text: string
+  disabled?: boolean
   modelValue: boolean
   validation?: Validatable
   hideError?: boolean
@@ -28,16 +29,23 @@ const emit = defineEmits<{
   (e: 'change', value: boolean): void
 }>()
 
+const classes = computed(() => [
+  props.size ?? 'small',
+  { disabled: props.disabled }
+])
+
 function onClick() {
-  emit('update:model-value', !props.modelValue)
-  emit('change', !props.modelValue)
+  if (!props.disabled) {
+    emit('update:model-value', !props.modelValue)
+    emit('change', !props.modelValue)
+  }
 }
 </script>
 
 <template>
   <SInputBase
     class="SInputRadio"
-    :class="[size ?? 'small']"
+    :class="classes"
     :label="label"
     :note="note"
     :info="info"
@@ -49,7 +57,13 @@ function onClick() {
     :hide-error="hideError"
   >
     <div class="container">
-      <div class="input" :class="{ on: props.modelValue }" role="button" @click="onClick">
+      <div
+        class="input"
+        :class="{ on: props.modelValue }"
+        role="button"
+        @click="onClick"
+        :aria-disabled="disabled"
+      >
         <div class="box">
           <div class="check" />
         </div>
@@ -124,5 +138,17 @@ function onClick() {
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.SInputRadio.disabled {
+  .box {
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-bg-color);
+
+    &:hover                     { border-color: var(--input-disabled-border-color); }
+    &:focus:not(:focus-visible) { border-color: var(--input-disabled-border-color); }
+  }
+
+  .input { cursor: not-allowed; }
 }
 </style>

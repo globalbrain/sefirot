@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<{
   checkColor?: Color
   options: Option[]
   nullable?: boolean
+  disabled?: boolean
   value?: string | number | boolean | null
   modelValue?: string | number | boolean | null
   validation?: Validatable
@@ -92,6 +93,7 @@ function onChange(value: string | number | boolean) {
         <div v-for="(option, index) in options" :key="index" class="col">
           <SInputRadio
             :text="option.label"
+            :disabled="disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="onUpdate(option.value)"
             @change="onChange(option.value)"

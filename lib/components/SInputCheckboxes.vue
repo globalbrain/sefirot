@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<{
   checkColor?: Color
   options: Option[]
   nullable?: boolean
+  disabled?: boolean
   value?: Value[]
   modelValue?: Value[]
   validation?: Validatable
@@ -82,6 +83,7 @@ function handleChange(value: Value): void {
         <div v-for="option in options" :key="String(option.value)" class="col">
           <SInputCheckbox
             :text="option.label"
+            :disabled="disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="handleChange(option.value)"
           />

@@ -22,6 +22,7 @@ function state() {
     help: 'This is a help text.',
     text: 'Text for the checkbox',
     nullable: true,
+    disabled: false,
     error: false
   }
 }
@@ -64,6 +65,10 @@ function state() {
         v-model="state.nullable"
       />
       <HstCheckbox
+        title="disabled"
+        v-model="state.disabled"
+      />
+      <HstCheckbox
         title="error"
         v-model="state.error"
       />
@@ -80,6 +85,7 @@ function state() {
           :help="state.help"
           :options="options"
           :nullable="state.nullable"
+          :disabled="state.disabled"
           v-model="input"
         />
       </Board>
