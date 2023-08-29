@@ -56,6 +56,10 @@ function state() {
         v-model="state.help"
       />
       <HstCheckbox
+        title="disabled"
+        v-model="state.disabled"
+      />
+      <HstCheckbox
         title="nullable"
         v-model="state.nullable"
       />
@@ -75,6 +79,7 @@ function state() {
           :note="state.note"
           :help="state.help"
           :nullable="state.nullable"
+          :disabled="state.disabled"
           :options="options"
           v-model="value"
         />

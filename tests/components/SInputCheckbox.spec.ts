@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
-import { assertEmitted } from 'tests/Utils'
+import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputCheckbox', () => {
   test('accepts `:value`', async () => {
@@ -40,5 +40,19 @@ describe('components/SInputCheckbox', () => {
 
     assertEmitted(wrapper, 'update:model-value', 1, true)
     assertEmitted(wrapper, 'change', 1, true)
+  })
+
+  test('does not emit on click when `:disabled`', async () => {
+    const wrapper = mount(SInputCheckbox, {
+      props: {
+        value: false,
+        disabled: true
+      }
+    })
+
+    await wrapper.find('.SInputCheckbox .input').trigger('click')
+
+    assertNotEmitted(wrapper, 'update:model-value')
+    assertNotEmitted(wrapper, 'change')
   })
 })

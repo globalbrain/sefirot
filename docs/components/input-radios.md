@@ -191,6 +191,7 @@ interface Props {
 export interface Option {
   label: string
   value: string | number | boolean
+  disabled?: boolean
 }
 ```
 
@@ -219,6 +220,24 @@ interface Props {
 <SInputRadios
   :options="[...]"
   nullable
+  v-model="..."
+/>
+```
+
+### `:disabled`
+
+Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
+
+```ts
+interface Props {
+  disabled?: boolean
+}
+```
+
+```vue-html
+<SInputRadios
+  :options="[...]"
+  disabled
   v-model="..."
 />
 ```
