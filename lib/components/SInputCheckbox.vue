@@ -40,10 +40,14 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
+const isIndeterminate = computed(() => {
+  return props.modelValue === 'indeterminate' || props.value === 'indeterminate'
+})
+
 const _value = computed(() => {
   return props.modelValue !== undefined
-    ? props.modelValue
-    : props.value !== undefined ? props.value : false
+    ? props.modelValue === true
+    : props.value !== undefined ? props.value === true : false
 })
 
 function onClick() {
@@ -70,7 +74,7 @@ function onClick() {
     <div class="container">
       <div
         class="input"
-        :class="{ on: _value }"
+        :class="{ on: _value || isIndeterminate }"
         role="button"
         @click="onClick"
         :aria-disabled="disabled"
@@ -78,7 +82,7 @@ function onClick() {
         <div class="box">
           <div class="check">
             <SIcon
-              :icon="_value === 'indeterminate' ? IconMinus : IconCheck"
+              :icon="isIndeterminate ? IconMinus : IconCheck"
               class="check-icon"
             />
           </div>
