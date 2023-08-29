@@ -1,3 +1,14 @@
+# [2.44.0](https://github.com/globalbrain/sefirot/compare/v2.43.0...v2.44.0) (2023-08-29)
+
+### Bug Fixes
+
+* **input-ymd:** don't apply hover styles if input is disabled ([#339](https://github.com/globalbrain/sefirot/issues/339)) ([#331](https://github.com/globalbrain/sefirot/issues/331)) ([9257cca](https://github.com/globalbrain/sefirot/commit/9257cca132f36b6a9700546f73d7325c9026a771)), closes [#330](https://github.com/globalbrain/sefirot/issues/330)
+
+### Features
+
+* **desc:** add `:dir` option ([#332](https://github.com/globalbrain/sefirot/issues/332)) ([daa8905](https://github.com/globalbrain/sefirot/commit/daa8905ca3fe114b1248165495ecfd3bbdfd986d))
+* **input:** add `disabled` prop to checkboxes and radios ([#333](https://github.com/globalbrain/sefirot/issues/333)) ([#334](https://github.com/globalbrain/sefirot/issues/334)) ([332cc10](https://github.com/globalbrain/sefirot/commit/332cc1096b98639dd813df929b748af461cfa804))
+
 # [2.43.0](https://github.com/globalbrain/sefirot/compare/v2.42.0...v2.43.0) (2023-08-08)
 
 ### Bug Fixes
