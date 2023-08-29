@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
   checkText?: string
   checkColor?: Color
   text?: string
+  disabled?: boolean
   value?: boolean | 'indeterminate'
   modelValue?: boolean | 'indeterminate'
   validation?: Validatable
@@ -34,6 +35,11 @@ const emit = defineEmits<{
   (e: 'change', value: boolean): void
 }>()
 
+const classes = computed(() => [
+  props.size ?? 'small',
+  { disabled: props.disabled }
+])
+
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
@@ -41,15 +47,17 @@ const _value = computed(() => {
 })
 
 function onClick() {
-  emit('update:model-value', !_value.value)
-  emit('change', !_value.value)
+  if (!props.disabled) {
+    emit('update:model-value', !_value.value)
+    emit('change', !_value.value)
+  }
 }
 </script>
 
 <template>
   <SInputBase
     class="SInputCheckbox"
-    :class="[size ?? 'small']"
+    :class="classes"
     :label="label"
     :note="note"
     :info="info"
@@ -60,7 +68,13 @@ function onClick() {
     :validation="validation"
   >
     <div class="container">
-      <div class="input" :class="{ on: _value }" role="button" @click="onClick">
+      <div
+        class="input"
+        :class="{ on: _value }"
+        role="button"
+        @click="onClick"
+        :aria-disabled="disabled"
+      >
         <div class="box">
           <div class="check">
             <SIcon
@@ -142,5 +156,17 @@ function onClick() {
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.SInputCheckbox.disabled {
+  .box {
+    border-color: var(--input-disabled-border-color);
+    background-color: var(--input-disabled-bg-color);
+
+    &:hover                     { border-color: var(--input-disabled-border-color); }
+    &:focus:not(:focus-visible) { border-color: var(--input-disabled-border-color); }
+  }
+
+  .input { cursor: not-allowed; }
 }
 </style>

@@ -12,6 +12,7 @@ export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'dange
 export interface Option {
   label: string
   value: string | number | boolean
+  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<{
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<{
   checkColor?: Color
   options: Option[]
   nullable?: boolean
+  disabled?: boolean
   value?: string | number | boolean | null
   modelValue?: string | number | boolean | null
   validation?: Validatable
@@ -92,6 +94,7 @@ function onChange(value: string | number | boolean) {
         <div v-for="(option, index) in options" :key="index" class="col">
           <SInputRadio
             :text="option.label"
+            :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="onUpdate(option.value)"
             @change="onChange(option.value)"
