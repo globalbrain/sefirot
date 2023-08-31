@@ -1,3 +1,9 @@
+# [2.45.0](https://github.com/globalbrain/sefirot/compare/v2.44.0...v2.45.0) (2023-08-31)
+
+### Features
+
+* **checkbox:** allow `indeterminate` as the value ([#335](https://github.com/globalbrain/sefirot/issues/335)) ([#336](https://github.com/globalbrain/sefirot/issues/336)) ([a0d4aba](https://github.com/globalbrain/sefirot/commit/a0d4aba685f3e79e3a3255d5682a925161569c6b))
+
 # [2.44.0](https://github.com/globalbrain/sefirot/compare/v2.43.0...v2.44.0) (2023-08-29)
 
 ### Bug Fixes
