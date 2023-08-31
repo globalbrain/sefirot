@@ -195,7 +195,7 @@ Sets the input value. When `model-value` prop is set (e.g. via `v-model` directi
 
 ```ts
 interface Props {
-  value?: boolean
+  value?: boolean | 'indeterminate'
 }
 ```
 
@@ -209,7 +209,7 @@ The `v-model` binding for the input.
 
 ```ts
 interface Props {
-  modelValue?: boolean
+  modelValue?: boolean | 'indeterminate'
 }
 ```
 

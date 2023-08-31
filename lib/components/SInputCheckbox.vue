@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import IconCheck from '@iconify-icons/ph/check-bold'
+import IconMinus from '@iconify-icons/ph/minus-bold'
 import { computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SIcon from './SIcon.vue'
@@ -20,8 +21,8 @@ const props = withDefaults(defineProps<{
   checkColor?: Color
   text?: string
   disabled?: boolean
-  value?: boolean
-  modelValue?: boolean
+  value?: boolean | 'indeterminate'
+  modelValue?: boolean | 'indeterminate'
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -39,10 +40,14 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
+const isIndeterminate = computed(() => {
+  return props.modelValue === 'indeterminate' || props.value === 'indeterminate'
+})
+
 const _value = computed(() => {
   return props.modelValue !== undefined
-    ? props.modelValue
-    : props.value !== undefined ? props.value : false
+    ? props.modelValue === true
+    : props.value !== undefined ? props.value === true : false
 })
 
 function onClick() {
@@ -69,14 +74,17 @@ function onClick() {
     <div class="container">
       <div
         class="input"
-        :class="{ on: _value }"
+        :class="{ on: _value || isIndeterminate }"
         role="button"
         @click="onClick"
         :aria-disabled="disabled"
       >
         <div class="box">
           <div class="check">
-            <SIcon :icon="IconCheck" class="check-icon" />
+            <SIcon
+              :icon="isIndeterminate ? IconMinus : IconCheck"
+              class="check-icon"
+            />
           </div>
         </div>
 
