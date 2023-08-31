@@ -49,6 +49,6 @@ const control = computed({
 
 <style scoped>
 .indent {
-  margin-left: 20px;
+  margin-left: 24px;
 }
 </style>
