@@ -22,6 +22,9 @@ devDependencies:
   '@iconify/vue':
     specifier: ^4.1.1
     version: 4.1.1(vue@3.3.4)
+  '@tanstack/vue-virtual':
+    specifier: 3.0.0-beta.60
+    version: 3.0.0-beta.60(vue@3.3.4)
   '@types/body-scroll-lock':
     specifier: ^3.1.0
     version: 3.1.0
@@ -992,6 +995,19 @@ packages:
 
   /@sinclair/typebox@0.27.8:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
+    dev: true
+
+  /@tanstack/virtual-core@3.0.0-beta.60:
+    resolution: {integrity: sha512-QlCdhsV1+JIf0c0U6ge6SQmpwsyAT0oQaOSZk50AtEeAyQl9tQrd6qCHAslxQpgphrfe945abvKG8uYvw3hIGA==}
+    dev: true
+
+  /@tanstack/vue-virtual@3.0.0-beta.60(vue@3.3.4):
+    resolution: {integrity: sha512-sJdNB4IAHzM8a4rEozQlp7RjXJ/0nFf9tIaJNfJ1mCygORCmoJBBoepvkVSgzPLxJROQNNNm2sSlp+2d+R15rw==}
+    peerDependencies:
+      vue: ^2.7.0 || ^3.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.0.0-beta.60
+      vue: 3.3.4
     dev: true
 
   /@tootallnate/once@2.0.0:
