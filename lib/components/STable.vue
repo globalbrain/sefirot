@@ -284,7 +284,10 @@ function getCell(key: string, index: number) {
               position: 'relative'
             }"
           >
-            <div v-for="{ index, key: __key, size, start } in virtualItems" :key="__key">
+            <div
+              v-for="{ index, key: __key, size, start } in virtualItems"
+              :key="__key"
+            >
               <div
                 class="row"
                 :class="isSummaryOrLastClass(index)"
