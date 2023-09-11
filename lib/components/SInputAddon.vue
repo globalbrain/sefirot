@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
-import { type DropdownSection } from 'sefirot/composables/Dropdown'
 import {
+  type DropdownSection,
   getSelectedOption,
   useManualDropdownPosition
 } from 'sefirot/composables/Dropdown'

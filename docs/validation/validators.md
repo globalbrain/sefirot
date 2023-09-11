@@ -41,7 +41,7 @@ fileExtension(file, ['jpg', 'png'])
 Checks if the given hour, minute and second has a valid value. This validator will not validate the presence of the value so it will return `true` if a value is `null`. To check the presence of the value, use [`requiredHms`](#requiredhms) validator.
 
 ```ts
-import type { Hms } from '@globalbrain/sefirot/lib/support/Day'
+import { type Hms } from '@globalbrain/sefirot/lib/support/Day'
 
 function hms(
   hms: Hms,
@@ -120,7 +120,7 @@ month(13) // <- false
 Checks if the given hour, minute and second is present. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`hms`](#hms) validator.
 
 ```ts
-import type { Hms } from '@globalbrain/sefirot/lib/support/Day'
+import { type Hms } from '@globalbrain/sefirot/lib/support/Day'
 
 function requiredHms(
   hms: Hms,
@@ -157,7 +157,7 @@ hms(time, ['h', 'm']) // <- true
 Checks if the given year, month and date is present. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`ymd`](#ymd) validator.
 
 ```ts
-import type { Ymd } from '@globalbrain/sefirot/lib/support/Day'
+import { type Ymd } from '@globalbrain/sefirot/lib/support/Day'
 
 function requiredYmd(
   ymd: Ymd,
@@ -194,7 +194,7 @@ hms(date, ['y', 'm']) // <- true
 Checks if the given year, month and date has a valid value. This validator will not validate the presence of the value so it will return `true` if a value is `null`. To check the presence of the value, use [`requiredYmd`](#requiredymd) validator.
 
 ```ts
-import type { Ymd } from '@globalbrain/sefirot/lib/support/Day'
+import { type Ymd } from '@globalbrain/sefirot/lib/support/Day'
 
 function ymd(
   ymd: Ymd,

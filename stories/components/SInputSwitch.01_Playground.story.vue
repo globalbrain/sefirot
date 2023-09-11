@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type ActiveColor, type Size } from 'sefirot/components/SInputSwitch.vue'
-import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
+import SInputSwitch, { type ActiveColor, type Size } from 'sefirot/components/SInputSwitch.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputSwitch / 01. Playground'

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type Mode, type Type } from './SButton.vue'
-import SButton from './SButton.vue'
+import SButton, { type Mode, type Type } from './SButton.vue'
 
 defineProps<{
   type?: Type

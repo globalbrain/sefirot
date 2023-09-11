@@ -17,9 +17,8 @@ export default defineConfig({
     testTimeout: 2000,
 
     coverage: {
-      provider: 'c8',
+      provider: 'v8',
       all: true,
-      src: ['lib'],
       include: ['lib'],
       exclude: [
         'lib/components/SSheet.vue',

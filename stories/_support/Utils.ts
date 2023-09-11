@@ -1,7 +1,7 @@
-import { type Vue3StorySetupHandler } from '@histoire/plugin-vue'
+import { type App } from 'vue'
 import { createMemoryHistory, createRouter, routerKey } from 'vue-router'
 
-export function setupRouter({ app }: Parameters<Vue3StorySetupHandler>[number]) {
+export function setupRouter({ app }: { app: App }) {
   app.provide(routerKey, createRouter({
     history: createMemoryHistory(),
     routes: [{
