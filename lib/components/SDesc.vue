@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   divider: true
 })
 
-provide('sefirot-desc-label-wdith', () => props.labelWidth)
+provide('sefirot-desc-label-width', () => props.labelWidth)
 </script>
 
 <template>

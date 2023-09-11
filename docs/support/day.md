@@ -25,7 +25,7 @@ type Day = Dayjs
 ```
 
 ```ts
-import type { Day } from '@globalbrain/sefirot/lib/support/Day'
+import { type Day } from '@globalbrain/sefirot/lib/support/Day'
 ```
 
 ## `Input`
@@ -39,7 +39,7 @@ type Input = ConfigType
 ```
 
 ```ts
-import type { ConfigType } from '@globalbrain/sefirot/lib/support/Day'
+import { type ConfigType } from '@globalbrain/sefirot/lib/support/Day'
 ```
 
 ## `Ymd`
@@ -55,7 +55,7 @@ interface Ymd {
 ```
 
 ```ts
-import type { Ymd } from '@globalbrain/sefirot/lib/support/Day'
+import { type Ymd } from '@globalbrain/sefirot/lib/support/Day'
 ```
 
 ## `Hms`
@@ -71,7 +71,7 @@ interface Hms {
 ```
 
 ```ts
-import type { Hms } from '@globalbrain/sefirot/lib/support/Day'
+import { type Hms } from '@globalbrain/sefirot/lib/support/Day'
 ```
 
 ## `day`

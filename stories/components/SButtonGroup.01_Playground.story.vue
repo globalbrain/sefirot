@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type Mode, type Size } from 'sefirot/components/SButton.vue'
-import SButton from 'sefirot/components/SButton.vue'
+import SButton, { type Mode, type Size } from 'sefirot/components/SButton.vue'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 const title = 'Components / SButtonGroup / 01. Playground'
