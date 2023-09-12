@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputText from 'sefirot/components/SInputText.vue'
-import { assertEmitted } from 'tests/Utils'
+import { assertEmitted, createValidatable } from 'tests/Utils'
 
 describe('components/SInputText', () => {
   it('should apply color when `textColor` prop is set as value', async () => {
@@ -70,5 +70,80 @@ describe('components/SInputText', () => {
     await wrapper.find('.SInputText .input').trigger('keypress', { key: 'enter' })
     assertEmitted(wrapper, 'update:model-value', 1, 'text')
     assertEmitted(wrapper, 'enter', 1, 'text')
+  })
+
+  it('renders addon slots', async () => {
+    const wrapper = mount(SInputText, {
+      slots: {
+        'addon-before': '<span>before</span>',
+        'addon-after': '<span>after</span>'
+      },
+      props: {
+        modelValue: 'text'
+      }
+    })
+
+    const box = wrapper.find('.SInputText .box').element
+
+    expect(box.children[0].textContent).toBe('before')
+    expect(box.children[2].textContent).toBe('after')
+  })
+
+  it('adds focus class to box when input is focused', async () => {
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: 'text'
+      }
+    })
+
+    await wrapper.find('.SInputText .input').trigger('focus')
+    expect(wrapper.find('.SInputText .box').classes()).toContain('focus')
+
+    await wrapper.find('.SInputText .input').trigger('blur')
+    expect(wrapper.find('.SInputText .box').classes()).not.toContain('focus')
+  })
+
+  it('focuses input when box is clicked', async () => {
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: 'text'
+      },
+      attachTo: document.body
+    })
+
+    await wrapper.find('.SInputText .box').trigger('click')
+    expect(wrapper.find('.SInputText .input').element).toBe(document.activeElement)
+  })
+
+  test('touches validation on blur', async () => {
+    const spy = vi.fn()
+
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: null,
+        validation: createValidatable({
+          $touch: spy
+        })
+      }
+    })
+
+    await wrapper.find('.SInputText .input').trigger('blur')
+    expect(spy).toHaveBeenCalledTimes(1)
+  })
+
+  test('touches validation on enter', async () => {
+    const spy = vi.fn()
+
+    const wrapper = mount(SInputText, {
+      props: {
+        modelValue: null,
+        validation: createValidatable({
+          $touch: spy
+        })
+      }
+    })
+
+    await wrapper.find('.SInputText .input').trigger('keypress', { key: 'enter' })
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 })
