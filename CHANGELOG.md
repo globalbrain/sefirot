@@ -1,3 +1,9 @@
+## [2.46.1](https://github.com/globalbrain/sefirot/compare/v2.46.0...v2.46.1) (2023-09-12)
+
+### Bug Fixes
+
+- fixes build error
+
 # [2.46.0](https://github.com/globalbrain/sefirot/compare/v2.45.0...v2.46.0) (2023-09-12)
 
 ### Features
