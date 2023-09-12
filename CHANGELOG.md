@@ -1,3 +1,9 @@
+# [2.46.0](https://github.com/globalbrain/sefirot/compare/v2.45.0...v2.46.0) (2023-09-12)
+
+### Features
+
+* **table:** allow using virtual scroll with fixed column ([#266](https://github.com/globalbrain/sefirot/issues/266)) ([#339](https://github.com/globalbrain/sefirot/issues/339)) ([45ce637](https://github.com/globalbrain/sefirot/commit/45ce637012c7a89d9c7c29afc60fa9685df2166c))
+
 # [2.45.0](https://github.com/globalbrain/sefirot/compare/v2.44.0...v2.45.0) (2023-08-31)
 
 ### Features
