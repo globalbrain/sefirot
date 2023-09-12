@@ -21,7 +21,7 @@ export interface Table<
   reset?: MaybeRef<boolean | undefined>
   borderless?: MaybeRef<boolean>
   loading?: MaybeRef<boolean | undefined>
-  virtualScroll?: MaybeRef<boolean | undefined>
+  rowSize?: MaybeRef<number | undefined>
   onPrev?(): void
   onNext?(): void
   onReset?(): void

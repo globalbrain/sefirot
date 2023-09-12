@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import {
   computed,
@@ -9,7 +10,6 @@ import {
   unref,
   watch
 } from 'vue'
-import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
 import { type Table } from '../composables/Table'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -111,14 +111,18 @@ const recordsWithSummary = computed(() => {
   const records = unref(props.options.records) ?? []
   const summary = unref(props.options.summary)
 
-  const res = summary ? [...records, summary] : records
-
-  res.forEach((record, index) => {
-    record.__index = index
-  })
-
-  return res
+  return summary ? [...records, summary] : records
 })
+
+const virtualizerOptions = computed(() => ({
+  count: recordsWithSummary.value.length,
+  getScrollElement: () => body.value,
+  estimateSize: () => unref(props.options.rowSize) ?? 41,
+  overscan: 10
+}))
+
+const rowVirtualizer = useVirtualizer(virtualizerOptions)
+const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
 
 watch(() => props.options.records, () => {
   headLock = true
@@ -272,75 +276,50 @@ function getCell(key: string, index: number) {
           @mouseleave="lockBody(false)"
           @scroll="syncBodyScroll"
         >
-          <template v-if="unref(options.virtualScroll)">
-            <DynamicScroller
-              :items="recordsWithSummary"
-              :min-item-size="40"
-              key-field="__index"
-              class="block"
-              :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
-              :prerender="Math.min(10, recordsWithSummary.length)"
-            >
-              <template #default="{ item: record, index: rIndex, active }">
-                <DynamicScrollerItem
-                  :item="record"
-                  :active="active"
-                  :data-index="rIndex"
-                >
-                  <div class="row" :class="isSummaryOrLastClass(rIndex)">
-                    <STableItem
-                      v-for="key in ordersToShow"
-                      :key="key"
-                      :name="key"
-                      :class-name="unref(options.columns)[key].className"
-                      :width="colWidths[key]"
-                    >
-                      <STableCell
-                        :name="key"
-                        :class="isSummary(rIndex) && 'summary'"
-                        :class-name="unref(options.columns)[key].className"
-                        :cell="getCell(key, rIndex)"
-                        :value="record[key]"
-                        :record="record"
-                        :records="unref(options.records)!"
-                      />
-                    </STableItem>
-                  </div>
-                </DynamicScrollerItem>
-              </template>
-            </DynamicScroller>
-          </template>
-          <template v-else>
+          <div
+            class="block"
+            :style="{
+              width: blockWidth ? `${blockWidth}px` : '100%',
+              height: `${rowVirtualizer.getTotalSize()}px`,
+              position: 'relative'
+            }"
+          >
             <div
-              class="block"
-              :style="blockWidth ? { width: `${blockWidth}px` } : undefined"
+              v-for="{ index, key: __key, size, start } in virtualItems"
+              :key="__key"
             >
               <div
-                v-for="(record, rIndex) in recordsWithSummary"
-                :key="record.__index"
+                class="row"
+                :class="isSummaryOrLastClass(index)"
+                :style="{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: `${size}px`,
+                  transform: `translateY(${start}px)`
+                }"
               >
-                <div class="row" :class="isSummaryOrLastClass(rIndex)">
-                  <STableItem
-                    v-for="key in ordersToShow"
-                    :key="key"
+                <STableItem
+                  v-for="key in ordersToShow"
+                  :key="key"
+                  :name="key"
+                  :class-name="unref(options.columns)[key].className"
+                  :width="colWidths[key]"
+                >
+                  <STableCell
                     :name="key"
+                    :class="isSummary(index) && 'summary'"
                     :class-name="unref(options.columns)[key].className"
-                    :width="colWidths[key]"
-                  >
-                    <STableCell
-                      :name="key"
-                      :class="isSummary(rIndex) && 'summary'"
-                      :class-name="unref(options.columns)[key].className"
-                      :cell="getCell(key, rIndex)"
-                      :value="record[key]"
-                      :record="record"
-                      :records="unref(options.records)!"
-                    />
-                  </STableItem>
-                </div>
+                    :cell="getCell(key, index)"
+                    :value="recordsWithSummary[index][key]"
+                    :record="recordsWithSummary[index]"
+                    :records="unref(options.records)!"
+                  />
+                </STableItem>
               </div>
             </div>
-          </template>
+          </div>
         </div>
       </div>
 
@@ -417,13 +396,10 @@ function getCell(key: string, index: number) {
 .container.body {
   border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
   line-height: 0;
+  max-height: var(--table-max-height, 100%);
 
   .STable.has-footer & {
     border-radius: 0;
-  }
-
-  .block {
-    max-height: var(--table-max-height, 100%);
   }
 }
 
