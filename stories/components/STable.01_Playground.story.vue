@@ -168,18 +168,6 @@ const data = [
   }
 ]
 
-for (let i = 0; i < 10000; ++i) {
-  data.push({
-    name: `Artwork ${i}`,
-    link: 'https://example.com',
-    status: 'Published',
-    type: 'Photo',
-    width: 512,
-    createdAt: day('2022-10-10'),
-    tags: ['Info', 'News', 'Latest']
-  })
-}
-
 const filteredData = computed(() => {
   return data
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
@@ -351,11 +339,5 @@ function updateTagsFilter(value: string) {
 
 .table {
   margin-bottom: 16px;
-  --table-max-height: 400px;
-}
-
-.table :deep(.col-name) {
-  --table-col-position: sticky;
-  --table-col-z-index: 50;
 }
 </style>
