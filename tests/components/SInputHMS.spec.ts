@@ -148,7 +148,7 @@ describe('components/SInputHMS', async () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('touches validation when all inputs are blured', async () => {
+  test('touches validation when all inputs are blurred', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputHMS, {
