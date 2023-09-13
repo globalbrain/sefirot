@@ -21,11 +21,11 @@ import STableItem from './STableItem.vue'
 
 const props = defineProps<{
   options: Table
-  selected?: any[]
+  selected?: number[]
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:selected', value: any[]): void
+  (e: 'update:selected', value: number[]): void
 }>()
 
 const head = shallowRef<HTMLElement | null>(null)
