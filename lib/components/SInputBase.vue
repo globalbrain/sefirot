@@ -57,16 +57,12 @@ function getErrorMsg(validation: Validatable) {
 <template>
   <div class="SInputBase" :class="{ 'has-error': error?.has }">
     <label v-if="label" class="label" :for="name">
-      <STooltip v-if="hasInfo" :text="info">
-        <div class="label-text">
-          <span class="label-text-value">{{ label }}</span>
-          <SIcon class="label-text-info" :icon="IconQuestion" />
-        </div>
+      <span class="label-text">{{ label }}</span>
+
+      <STooltip v-if="hasInfo" :text="info" trigger="focus" @click.prevent>
+        <SIcon class="label-info" :icon="IconQuestion" />
         <template v-if="$slots.info" #text><slot name="info" /></template>
       </STooltip>
-      <div v-else class="label-text">
-        <span class="label-text-value">{{ label }}</span>
-      </div>
 
       <span class="label-note">{{ note }}</span>
 
@@ -119,26 +115,29 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .label-text {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  transition: color 0.25s;
-}
-
-.label-text-value {
   font-weight: 500;
   color: var(--input-label-color);
   transition: color 0.25s;
 }
 
-.label-text-info {
-  width: 16px;
-  height: 16px;
-  color: var(--c-text-2);
-  transition: color 0.25s;
+:deep(.STooltip) {
+  .label-info {
+    display: inline-block;
+    margin-left: 4px;
+    width: 16px;
+    height: 16px;
+    color: var(--c-text-2);
+    transition: color 0.25s;
+  }
 
-  .label-text:hover & {
-    color: var(--c-info-text);
+  &:hover, &:focus, &:focus-within {
+    .label-info {
+      color: var(--c-info-text);
+    }
+  }
+
+  .content {
+    vertical-align: middle;
   }
 }
 
