@@ -11,6 +11,7 @@ import {
   watch
 } from 'vue'
 import { type Table } from '../composables/Table'
+import SInputCheckbox from './SInputCheckbox.vue'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
@@ -20,6 +21,11 @@ import STableItem from './STableItem.vue'
 
 const props = defineProps<{
   options: Table
+  selected?: any[]
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:selected', value: any[]): void
 }>()
 
 const head = shallowRef<HTMLElement | null>(null)
@@ -28,9 +34,13 @@ const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const ordersToShow = computed(() => {
-  return unref(props.options.orders).filter((key) => {
+  const orders = unref(props.options.orders).filter((key) => {
     return unref(props.options.columns)[key]?.show !== false
   })
+  if (props.selected) {
+    return ['__select', ...orders]
+  }
+  return orders
 })
 
 watch(() => ordersToShow.value, handleResize)
@@ -112,6 +122,29 @@ const recordsWithSummary = computed(() => {
   const summary = unref(props.options.summary)
 
   return summary ? [...records, summary] : records
+})
+
+const wm = reactive(new WeakMap())
+
+const control = computed({
+  get() {
+    const records = unref(props.options.records) ?? []
+    const selected = records
+      .map((record, i) => (wm.get(record) ? i : -1))
+      .filter((i) => i >= 0)
+    emit('update:selected', selected)
+
+    return selected.length === records.length
+      ? true
+      : selected.length ? 'indeterminate' : false
+  },
+
+  set(newValue) {
+    const records = unref(props.options.records) ?? []
+    for (const record of records) {
+      wm.set(record, newValue === true)
+    }
+  }
 })
 
 const virtualizerOptions = computed(() => ({
@@ -220,6 +253,9 @@ function lastRow(index: number) {
 }
 
 function getCell(key: string, index: number) {
+  if (key === '__select') {
+    return { type: 'empty' }
+  }
   const col = unref(props.options.columns)[key]
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
 }
@@ -251,18 +287,20 @@ function getCell(key: string, index: number) {
                 v-for="key in ordersToShow"
                 :key="key"
                 :name="key"
-                :class-name="unref(options.columns)[key].className"
+                :class-name="unref(options.columns)[key]?.className"
                 :width="colWidths[key]"
               >
                 <STableColumn
                   :name="key"
-                  :label="unref(options.columns)[key].label"
-                  :class-name="unref(options.columns)[key].className"
-                  :dropdown="unref(options.columns)[key].dropdown"
+                  :label="unref(options.columns)[key]?.label"
+                  :class-name="unref(options.columns)[key]?.className"
+                  :dropdown="unref(options.columns)[key]?.dropdown"
                   :has-header="showHeader"
-                  :resizable="unref(options.columns)[key].resizable"
+                  :resizable="unref(options.columns)[key]?.resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
-                />
+                >
+                  <SInputCheckbox v-if="key === '__select'" v-model="control" />
+                </STableColumn>
               </STableItem>
             </div>
           </div>
@@ -304,18 +342,24 @@ function getCell(key: string, index: number) {
                   v-for="key in ordersToShow"
                   :key="key"
                   :name="key"
-                  :class-name="unref(options.columns)[key].className"
+                  :class-name="unref(options.columns)[key]?.className"
                   :width="colWidths[key]"
                 >
                   <STableCell
                     :name="key"
                     :class="isSummary(index) && 'summary'"
-                    :class-name="unref(options.columns)[key].className"
+                    :class-name="unref(options.columns)[key]?.className"
                     :cell="getCell(key, index)"
                     :value="recordsWithSummary[index][key]"
                     :record="recordsWithSummary[index]"
                     :records="unref(options.records)!"
-                  />
+                  >
+                    <SInputCheckbox
+                      v-if="key === '__select' && !isSummary(index)"
+                      :value="wm.get(recordsWithSummary[index])"
+                      @change="(c) => wm.set(recordsWithSummary[index], c)"
+                    />
+                  </STableCell>
                 </STableItem>
               </div>
             </div>
@@ -445,5 +489,17 @@ function getCell(key: string, index: number) {
   width: 48px;
   height: 48px;
   color: var(--c-text-1);
+}
+
+.col-__select {
+  :deep(.input) {
+    align-items: center;
+    padding: 0 16px;
+    min-height: 40px;
+  }
+
+  :deep(.container) {
+    padding: 0;
+  }
 }
 </style>

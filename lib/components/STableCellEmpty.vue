@@ -1,5 +1,7 @@
 <template>
-  <div class="STableCellEmpty" />
+  <div class="STableCellEmpty">
+    <slot />
+  </div>
 </template>
 
 <style scoped lang="postcss">

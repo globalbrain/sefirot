@@ -4,7 +4,7 @@ import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
 
 export interface Table<
-  O extends string = any,
+  O extends string = string,
   R extends Record<string, any> = any,
   SR extends Record<string, any> = any
 > {

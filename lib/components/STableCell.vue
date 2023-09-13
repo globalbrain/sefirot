@@ -100,7 +100,9 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellEmpty
       v-else-if="computedCell.type === 'empty'"
-    />
+    >
+      <slot />
+    </STableCellEmpty>
     <component
       v-else-if="computedCell.type === 'component'"
       :is="computedCell.component"

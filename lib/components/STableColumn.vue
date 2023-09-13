@@ -125,21 +125,23 @@ function stopDialogPositionListener() {
 <template>
   <div class="STableColumn STableCell" :class="classes" ref="column">
     <div class="container">
-      <p class="label">{{ label }}</p>
+      <slot>
+        <p class="label">{{ label }}</p>
 
-      <div v-if="dropdown" class="action" ref="container">
-        <button class="button" :class="{ active: buttonActive }" @click="toggle">
-          <SIcon :icon="IconDotsThree" class="icon" />
-        </button>
+        <div v-if="dropdown" class="action" ref="container">
+          <button class="button" :class="{ active: buttonActive }" @click="toggle">
+            <SIcon :icon="IconDotsThree" class="icon" />
+          </button>
 
-        <transition name="fade">
-          <div v-if="isOpen" class="dialog" :style="{ top, left }" ref="dialog">
-            <SDropdown :sections="dropdown" />
-          </div>
-        </transition>
-      </div>
+          <transition name="fade">
+            <div v-if="isOpen" class="dialog" :style="{ top, left }" ref="dialog">
+              <SDropdown :sections="dropdown" />
+            </div>
+          </transition>
+        </div>
 
-      <div v-if="resizable" class="grip" @mousedown="grip" />
+        <div v-if="resizable" class="grip" @mousedown="grip" />
+      </slot>
     </div>
   </div>
 </template>
