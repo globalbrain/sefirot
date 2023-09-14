@@ -22,6 +22,7 @@ export interface Table<
   borderless?: MaybeRef<boolean>
   loading?: MaybeRef<boolean | undefined>
   rowSize?: MaybeRef<number | undefined>
+  indexField?: string
   onPrev?(): void
   onNext?(): void
   onReset?(): void

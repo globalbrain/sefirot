@@ -129,9 +129,12 @@ const wm = reactive(new WeakMap())
 const control = computed({
   get() {
     const records = unref(props.options.records) ?? []
+    const indexField = unref(props.options.indexField)
 
     const selected = records
-      .map((record, i) => (wm.get(record) ? i : -1))
+      .map((record, i) =>
+        wm.get(record) ? (indexField ? record[indexField] : i) : -1
+      )
       .filter((i) => i >= 0)
 
     emit('update:selected', selected)
@@ -492,7 +495,7 @@ function getCell(key: string, index: number) {
   color: var(--c-text-1);
 }
 
-.col-__select {
+.STable .col-__select {
   --table-padding-left: 0;
   --table-col-width: auto;
 
