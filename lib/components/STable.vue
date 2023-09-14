@@ -129,9 +129,11 @@ const wm = reactive(new WeakMap())
 const control = computed({
   get() {
     const records = unref(props.options.records) ?? []
+
     const selected = records
       .map((record, i) => (wm.get(record) ? i : -1))
       .filter((i) => i >= 0)
+
     emit('update:selected', selected)
 
     return selected.length === records.length
@@ -140,10 +142,9 @@ const control = computed({
   },
 
   set(newValue) {
-    const records = unref(props.options.records) ?? []
-    for (const record of records) {
+    unref(props.options.records)?.forEach((record) => {
       wm.set(record, newValue === true)
-    }
+    })
   }
 })
 
