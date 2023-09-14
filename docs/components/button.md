@@ -289,7 +289,7 @@ interface Props {
 
     // The text to be displayed in the tooltip. The tooltip
     // will only be visible when this prop is set.
-    text?: MaybeRef<string>
+    text?: MaybeRef<string | null>
 
     // The position of the tooltip relative to the button.
     // Defaults to `top`

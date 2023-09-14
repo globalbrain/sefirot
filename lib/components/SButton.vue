@@ -24,7 +24,7 @@ export type Mode =
 
 export interface Tooltip {
   tag?: string
-  text?: MaybeRef<string>
+  text?: MaybeRef<string | null>
   position?: Position
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
