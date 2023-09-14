@@ -492,6 +492,9 @@ function getCell(key: string, index: number) {
 }
 
 .col-__select {
+  --table-padding-left: 0;
+  --table-col-width: auto;
+
   :deep(.input) {
     align-items: center;
     padding: 0 16px;
