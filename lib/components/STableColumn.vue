@@ -241,13 +241,12 @@ function stopDialogPositionListener() {
 }
 
 .grip {
-  position: relative;
+  position: absolute;
   right: -8px;
   top: 0px;
   bottom: 0px;
   width: 16px;
   z-index: 1;
-  position: absolute;
   cursor: col-resize;
 
   &::before {

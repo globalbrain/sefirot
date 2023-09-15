@@ -53,7 +53,7 @@ const stats = computed(() => {
   background-color: var(--c-bg-soft);
 
   &:not(.borderless) {
-    border-radius: 6px 6px 0 0;
+    border-radius: 5px 5px 0 0;
   }
 }
 
