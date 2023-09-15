@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
+import xor from 'lodash-es/xor'
 import {
   computed,
   nextTick,
@@ -137,7 +138,7 @@ const control = computed({
       )
       .filter((i) => i >= 0)
 
-    emit('update:selected', selected)
+    updateSelected(selected)
 
     return selected.length === records.length
       ? true
@@ -262,6 +263,12 @@ function getCell(key: string, index: number) {
   }
   const col = unref(props.options.columns)[key]
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
+}
+
+function updateSelected(selected: unknown[]) {
+  if (xor(selected, props.selected ?? []).length) {
+    emit('update:selected', selected)
+  }
 }
 </script>
 
