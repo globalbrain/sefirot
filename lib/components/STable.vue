@@ -505,7 +505,7 @@ function updateSelected(selected: unknown[]) {
 
 .STable .col-__select {
   --table-padding-left: 0;
-  --table-col-width: auto;
+  --table-col-width: 48px;
 
   :deep(.input) {
     align-items: center;
