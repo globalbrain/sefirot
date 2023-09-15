@@ -58,6 +58,7 @@ export type TableCell =
   | TableCellState
   | TableCellAvatar
   | TableCellAvatars
+  | TableCellValue
   | TableCellEmpty
   | TableCellComponent
 
@@ -70,6 +71,7 @@ export type TableCellType =
   | 'state'
   | 'avatar'
   | 'avatars'
+  | 'value'
   | 'empty'
   | 'component'
 
@@ -153,6 +155,10 @@ export interface TableCellAvatars extends TableCellBase {
 export interface TableCellAvatarsOption {
   image?: string | null
   name?: string | null
+}
+
+export interface TableCellValue extends TableCellBase {
+  type: 'value'
 }
 
 export interface TableCellEmpty extends TableCellBase {

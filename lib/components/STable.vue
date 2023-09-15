@@ -21,7 +21,7 @@ import STableItem from './STableItem.vue'
 
 const props = defineProps<{
   options: Table
-  selected?: number[]
+  selected?: unknown[]
 }>()
 
 const emit = defineEmits<{
@@ -258,7 +258,7 @@ function lastRow(index: number) {
 
 function getCell(key: string, index: number) {
   if (key === '__select') {
-    return { type: 'empty' }
+    return { type: 'value' }
   }
   const col = unref(props.options.columns)[key]
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell

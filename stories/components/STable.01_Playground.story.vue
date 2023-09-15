@@ -320,7 +320,7 @@ function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
 
-const selected = ref([])
+const selected = ref<number[]>([])
 
 watchEffect(() => {
   // eslint-disable-next-line no-console

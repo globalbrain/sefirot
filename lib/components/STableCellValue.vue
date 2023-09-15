@@ -1,9 +1,11 @@
 <template>
-  <div class="STableCellEmpty" />
+  <div class="STableCellValue">
+    <slot />
+  </div>
 </template>
 
 <style scoped lang="postcss">
-.STableCellEmpty {
+.STableCellValue {
   min-height: 40px;
 }
 </style>
