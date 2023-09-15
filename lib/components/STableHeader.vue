@@ -14,11 +14,11 @@ const props = defineProps<{
   selected?: unknown[]
 }>()
 
-const stat = computed(() => {
+const stats = computed(() => {
   if (isNullish(props.total)) {
     return null
   }
-  let text = `${format(props.total)} ${props.total === 1 ? 'record' : 'records'}`
+  let text = `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
   if (props.selected?.length) {
     text = `${format(props.selected.length)} of ${text} selected`
   }
@@ -29,9 +29,9 @@ const stat = computed(() => {
 <template>
   <div class="STableHeader" :class="{ borderless }">
     <div class="container">
-      <div class="stat">
-        <p v-if="!isNullish(total)" class="total">
-          {{ stat }}
+      <div class="stats">
+        <p v-if="stats" class="total">
+          {{ stats }}
         </p>
         <div v-if="reset" class="reset">
           <button class="button" @click="onReset">
@@ -59,7 +59,7 @@ const stat = computed(() => {
   min-height: 48px;
 }
 
-.stat {
+.stats {
   display: flex;
   flex-grow: 1;
   padding: 0 16px;
