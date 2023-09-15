@@ -48,10 +48,13 @@ const stats = computed(() => {
 
 <style scoped lang="postcss">
 .STableHeader {
-  border-radius: 6px 6px 0 0;
   padding-right: var(--table-padding-right);
   padding-left: var(--table-padding-left);
   background-color: var(--c-bg-soft);
+
+  &:not(.borderless) {
+    border-radius: 6px 6px 0 0;
+  }
 }
 
 .container {

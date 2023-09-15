@@ -155,7 +155,11 @@ const control = computed({
 const virtualizerOptions = computed(() => ({
   count: recordsWithSummary.value.length,
   getScrollElement: () => body.value,
-  estimateSize: () => unref(props.options.rowSize) ?? 41,
+  estimateSize: (index: number) => {
+    const rowSize = unref(props.options.rowSize) ?? 40
+    const borderSize = unref(props.options.borderSize) ?? 1
+    return lastRow(index) ? rowSize : rowSize + borderSize
+  },
   overscan: 10
 }))
 
@@ -311,7 +315,7 @@ function updateSelected(selected: unknown[]) {
                   :resizable="unref(options.columns)[key]?.resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
                 >
-                  <SInputCheckbox v-if="key === '__select'" v-model="control" />
+                  <SInputCheckbox v-if="key === '__select' && unref(options.records)?.length" v-model="control" />
                 </STableColumn>
               </STableItem>
             </div>
