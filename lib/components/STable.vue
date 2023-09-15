@@ -443,6 +443,7 @@ function updateSelected(selected: unknown[]) {
   border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
   background-color: var(--bg-elv-2);
   scrollbar-width: none;
+  line-height: 0;
 
   &::-webkit-scrollbar {
     display: none;
