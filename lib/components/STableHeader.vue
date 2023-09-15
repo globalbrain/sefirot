@@ -1,16 +1,29 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
 import STableHeaderMenu from './STableHeaderMenu.vue'
 
-defineProps<{
+const props = defineProps<{
   total?: number | null
   reset?: boolean
   menu?: TableMenu[] | TableMenu[][]
   borderless?: boolean
   onReset?(): void
+  selected?: unknown[]
 }>()
+
+const stat = computed(() => {
+  if (isNullish(props.total)) {
+    return null
+  }
+  let text = `${format(props.total)} ${props.total === 1 ? 'record' : 'records'}`
+  if (props.selected?.length) {
+    text = `${format(props.selected.length)} of ${text} selected`
+  }
+  return text
+})
 </script>
 
 <template>
@@ -18,7 +31,7 @@ defineProps<{
     <div class="container">
       <div class="stat">
         <p v-if="!isNullish(total)" class="total">
-          {{ format(total) }} {{ (total) > 1 ? 'records' : 'record' }}
+          {{ stat }}
         </p>
         <div v-if="reset" class="reset">
           <button class="button" @click="onReset">

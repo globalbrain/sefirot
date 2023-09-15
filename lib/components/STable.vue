@@ -282,6 +282,7 @@ function updateSelected(selected: unknown[]) {
         :menu="unref(options.menu)"
         :borderless="unref(options.borderless)"
         :on-reset="options.onReset"
+        :selected="selected"
       />
 
       <div class="table" role="grid">
