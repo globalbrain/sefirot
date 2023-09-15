@@ -25,7 +25,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:selected', value: number[]): void
+  (e: 'update:selected', value: unknown[]): void
 }>()
 
 const head = shallowRef<HTMLElement | null>(null)
