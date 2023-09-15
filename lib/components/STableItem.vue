@@ -25,7 +25,7 @@ const classes = computed(() => [
 <style scoped lang="postcss">
 .STableItem {
   position: var(--table-col-position, relative);
-  left: 0;
+  left: var(--table-col-left, 0);
   z-index: var(--table-col-z-index, auto);
   flex-shrink: 0;
   flex-grow: 1;
