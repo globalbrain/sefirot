@@ -258,7 +258,7 @@ function lastRow(index: number) {
 
 function getCell(key: string, index: number) {
   if (key === '__select') {
-    return { type: 'value' }
+    return { type: 'custom' }
   }
   const col = unref(props.options.columns)[key]
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell

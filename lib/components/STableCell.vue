@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { type TableCell } from '../composables/Table'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
+import STableCellCustom from './STableCellCustom.vue'
 import STableCellDay from './STableCellDay.vue'
 import STableCellEmpty from './STableCellEmpty.vue'
 import STableCellNumber from './STableCellNumber.vue'
@@ -10,7 +11,6 @@ import STableCellPill from './STableCellPill.vue'
 import STableCellPills from './STableCellPills.vue'
 import STableCellState from './STableCellState.vue'
 import STableCellText from './STableCellText.vue'
-import STableCellValue from './STableCellValue.vue'
 
 const props = defineProps<{
   name: string
@@ -99,11 +99,11 @@ const computedCell = computed<TableCell | undefined>(() =>
       :avatars="computedCell.avatars"
       :color="computedCell.color"
     />
-    <STableCellValue
-      v-else-if="computedCell.type === 'value'"
+    <STableCellCustom
+      v-else-if="computedCell.type === 'custom'"
     >
       <slot />
-    </STableCellValue>
+    </STableCellCustom>
     <STableCellEmpty
       v-else-if="computedCell.type === 'empty'"
     />
