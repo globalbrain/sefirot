@@ -5,7 +5,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, markRaw, reactive, ref } from 'vue'
+import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
 
 interface Sort {
   by: string
@@ -120,7 +120,7 @@ const hasFilters = computed(() => {
   ].some((length) => length)
 })
 
-const data = [
+const data = shallowRef([
   {
     name: 'Artwork 001',
     link: 'https://example.com',
@@ -166,10 +166,10 @@ const data = [
     createdAt: day('2022-09-08'),
     tags: ['Info']
   }
-]
+])
 
 const filteredData = computed(() => {
-  return data
+  return data.value
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
     .filter((i) => dropdownTagsSelected.value.every((tag) => i.tags.includes(tag)))
@@ -178,6 +178,8 @@ const filteredData = computed(() => {
 const orderedData = computed(() => {
   return orderBy(filteredData.value, [sort.by], [sort.order])
 })
+
+const selected = ref<string[]>([])
 
 const table = useTable({
   orders: [
@@ -279,6 +281,16 @@ const table = useTable({
     }
   ]),
 
+  actions: computed(() => [
+    {
+      label: 'Delete selected',
+      onClick: deleteSelected,
+      type: 'danger',
+      show: selected.value.length > 0
+    }
+  ]),
+
+  indexField: 'name',
   records: orderedData as any, // FIXME
   total: computed(() => orderedData.value.length),
   page: 1,
@@ -319,12 +331,19 @@ function updateTypeFilter(value: string) {
 function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
+
+function deleteSelected() {
+  // eslint-disable-next-line no-alert
+  if (window.confirm('Are you sure?') === false) { return }
+  data.value = data.value.filter((i) => !selected.value.includes(i.name))
+  selected.value = []
+}
 </script>
 
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
-      <STable class="table" :options="table" />
+      <STable class="table" :options="table" v-model:selected="selected" />
     </Board>
   </Story>
 </template>
