@@ -23,7 +23,7 @@ export interface Table<
   loading?: MaybeRef<boolean | undefined>
   rowSize?: MaybeRef<number | undefined>
   borderSize?: MaybeRef<number | undefined>
-  indexField?: string
+  indexField?: keyof R
   onPrev?(): void
   onNext?(): void
   onReset?(): void
