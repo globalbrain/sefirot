@@ -279,6 +279,7 @@ const table = useTable({
     }
   ]),
 
+  indexField: 'name',
   records: orderedData as any, // FIXME
   total: computed(() => orderedData.value.length),
   page: 1,

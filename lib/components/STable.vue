@@ -125,31 +125,43 @@ const recordsWithSummary = computed(() => {
   return summary ? [...records, summary] : records
 })
 
-const wm = reactive(new WeakMap())
+const indexes = computed(() => {
+  const records = unref(props.options.records) ?? []
+  const indexField = unref(props.options.indexField)
+
+  return records.map((record, i) => indexField ? record[indexField] : i)
+})
+
+const selectedIndexes = reactive(new Set())
 
 const control = computed({
   get() {
-    const records = unref(props.options.records) ?? []
-    const indexField = unref(props.options.indexField)
-
-    const selected = records
-      .map((record, i) =>
-        wm.get(record) ? (indexField ? record[indexField] : i) : -1
-      )
-      .filter((i) => i >= 0)
+    const selected = indexes.value.filter((index) => {
+      return selectedIndexes.has(index)
+    })
 
     updateSelected(selected)
 
-    return selected.length === records.length
+    return selected.length === indexes.value.length
       ? true
       : selected.length ? 'indeterminate' : false
   },
 
   set(newValue) {
-    unref(props.options.records)?.forEach((record) => {
-      wm.set(record, newValue === true)
-    })
+    if (newValue === false) {
+      selectedIndexes.clear()
+    } else if (newValue === true) {
+      indexes.value.forEach((index) => {
+        selectedIndexes.add(index)
+      })
+    }
   }
+})
+
+watch(indexes, (newValue, oldValue) => {
+  xor(newValue, oldValue).forEach((index) => {
+    selectedIndexes.delete(index)
+  })
 })
 
 const virtualizerOptions = computed(() => ({
@@ -372,8 +384,8 @@ function updateSelected(selected: unknown[]) {
                   >
                     <SInputCheckbox
                       v-if="key === '__select' && !isSummary(index)"
-                      :value="wm.get(recordsWithSummary[index])"
-                      @change="(c) => wm.set(recordsWithSummary[index], c)"
+                      :value="selectedIndexes.has(indexes[index])"
+                      @change="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
                     />
                   </STableCell>
                 </STableItem>
