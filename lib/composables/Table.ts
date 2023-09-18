@@ -11,6 +11,7 @@ export interface Table<
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
+  actions?: MaybeRef<TableAction[]>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
@@ -182,6 +183,13 @@ export interface TableMenu {
   label: string
   state?: 'inactive' | 'active' | 'indicate'
   dropdown: DropdownSection[]
+}
+
+export interface TableAction {
+  label: string
+  onClick?(): void
+  show?: boolean
+  type?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 }
 
 export function useTable<

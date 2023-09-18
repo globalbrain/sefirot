@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type TableMenu } from '../composables/Table'
+import { type TableAction, type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
+import STableHeaderActions from './STableHeaderActions.vue'
 import STableHeaderMenu from './STableHeaderMenu.vue'
 
 const props = defineProps<{
   total?: number | null
   reset?: boolean
   menu?: TableMenu[] | TableMenu[][]
+  actions?: TableAction[]
   borderless?: boolean
   onReset?(): void
   selected?: unknown[]
@@ -24,21 +26,20 @@ const stats = computed(() => {
   }
   return text
 })
+
+const actionsWithStatsAndReset = computed(() => {
+  return [
+    ...(stats.value ? [{ label: stats.value }] : []),
+    ...(props.reset ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' as const }] : []),
+    ...(props.actions || [])
+  ]
+})
 </script>
 
 <template>
   <div class="STableHeader" :class="{ borderless }">
     <div class="container">
-      <div class="stats">
-        <p v-if="stats" class="total">
-          {{ stats }}
-        </p>
-        <div v-if="reset" class="reset">
-          <button class="button" @click="onReset">
-            Reset filters
-          </button>
-        </div>
-      </div>
+      <STableHeaderActions :actions="actionsWithStatsAndReset" />
       <div v-if="menu && menu.length" class="menu">
         <STableHeaderMenu :menu="menu" />
       </div>
@@ -60,52 +61,6 @@ const stats = computed(() => {
 .container {
   display: flex;
   min-height: 48px;
-}
-
-.stats {
-  display: flex;
-  flex-grow: 1;
-  padding: 0 16px;
-}
-
-.total {
-  margin: 0;
-  padding: 12px 0;
-  line-height: 24px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-text-2);
-}
-
-.reset {
-  position: relative;
-
-  .total + & {
-    margin-left: 16px;
-  }
-
-  .total + &::before {
-    display: inline-block;
-    margin-right: 16px;
-    width: 1px;
-    height: 16px;
-    background-color: var(--c-divider-2);
-    content: "";
-    transform: translateY(4px);
-  }
-}
-
-.button {
-  padding: 12px 0;
-  line-height: 24px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-info-text);
-  transition: color 0.25s;
-
-  &:hover {
-    color: var(--c-info-text-dark);
-  }
 }
 
 .menu {
