@@ -38,10 +38,10 @@ const ordersToShow = computed(() => {
   const orders = unref(props.options.orders).filter((key) => {
     return unref(props.options.columns)[key]?.show !== false
   })
-  if (props.selected) {
-    return ['__select', ...orders]
+  if (!props.selected) {
+    return orders
   }
-  return orders
+  return ['__select', ...orders]
 })
 
 watch(() => ordersToShow.value, handleResize)
@@ -126,6 +126,9 @@ const recordsWithSummary = computed(() => {
 })
 
 const indexes = computed(() => {
+  if (!props.selected) {
+    return []
+  }
   const records = unref(props.options.records) ?? []
   const indexField = unref(props.options.indexField)
 
@@ -136,6 +139,9 @@ const selectedIndexes = reactive(new Set())
 
 const control = computed({
   get() {
+    if (!props.selected) {
+      return false
+    }
     const selected = indexes.value.filter((index) => {
       return selectedIndexes.has(index)
     })
@@ -159,6 +165,9 @@ const control = computed({
 })
 
 watch(indexes, (newValue, oldValue) => {
+  if (!props.selected) {
+    return
+  }
   xor(newValue, oldValue).forEach((index) => {
     selectedIndexes.delete(index)
   })
