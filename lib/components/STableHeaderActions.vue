@@ -15,16 +15,6 @@ defineProps<{ actions: TableAction[] }>()
 .STableHeaderActions {
   display: flex;
   flex-grow: 1;
-  padding: 0 16px;
-  gap: 32px;
-
-  > :deep(*):not(:first-child)::before {
-    content: '';
-    display: inline-block;
-    width: 1px;
-    height: 16px;
-    background-color: var(--c-divider-2);
-    transform: translate(-16px, 4px);
-  }
+  gap: 8px;
 }
 </style>

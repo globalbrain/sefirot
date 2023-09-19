@@ -20,16 +20,14 @@ const stats = computed(() => {
   if (isNullish(props.total)) {
     return null
   }
-  let text = `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
-  if (props.selected?.length) {
-    text = `${format(props.selected.length)} of ${text} selected`
-  }
-  return text
+
+  return props.selected?.length
+    ? `${format(props.selected.length)} of ${props.total} selected`
+    : `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
 })
 
-const actionsWithStatsAndReset = computed(() => {
+const actionsWithReset = computed(() => {
   return [
-    ...(stats.value ? [{ label: stats.value }] : []),
     ...(props.reset ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' as const }] : []),
     ...(props.actions || [])
   ]
@@ -39,7 +37,14 @@ const actionsWithStatsAndReset = computed(() => {
 <template>
   <div class="STableHeader" :class="{ borderless }">
     <div class="container">
-      <STableHeaderActions :actions="actionsWithStatsAndReset" />
+      <div class="primary">
+        <div v-if="stats" class="stats">
+          {{ stats }}
+        </div>
+        <div v-if="actionsWithReset.length" class="actions">
+          <STableHeaderActions :actions="actionsWithReset" />
+        </div>
+      </div>
       <div v-if="menu && menu.length" class="menu">
         <STableHeaderMenu :menu="menu" />
       </div>
@@ -61,6 +66,22 @@ const actionsWithStatsAndReset = computed(() => {
 .container {
   display: flex;
   min-height: 48px;
+}
+
+.primary {
+  display: flex;
+  gap: 16px;
+  flex-grow: 1;
+  padding: 0 16px;
+  min-height: 48px;
+}
+
+.stats {
+  padding: 12px 0;
+  line-height: 24px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-text-2);
 }
 
 .menu {

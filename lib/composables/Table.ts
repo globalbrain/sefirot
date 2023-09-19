@@ -186,10 +186,11 @@ export interface TableMenu {
 }
 
 export interface TableAction {
-  label: string
-  onClick?(): void
   show?: boolean
-  type?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  label: string
+  labelMode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  onClick?(): void
 }
 
 export function useTable<
