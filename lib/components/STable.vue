@@ -337,7 +337,10 @@ function updateSelected(selected: unknown[]) {
                   :resizable="unref(options.columns)[key]?.resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
                 >
-                  <SInputCheckbox v-if="key === '__select' && unref(options.records)?.length" v-model="control" />
+                  <SInputCheckbox
+                    v-if="key === '__select' && unref(options.records)?.length"
+                    v-model="control"
+                  />
                 </STableColumn>
               </STableItem>
             </div>
