@@ -283,6 +283,12 @@ const table = useTable({
 
   actions: computed(() => [
     {
+      label: 'Reset filters',
+      onClick: resetFilters,
+      type: 'info',
+      show: hasFilters.value
+    },
+    {
       label: 'Delete selected',
       onClick: deleteSelected,
       labelMode: 'danger',
@@ -295,10 +301,8 @@ const table = useTable({
   total: computed(() => orderedData.value.length),
   page: 1,
   perPage: 5,
-  reset: hasFilters,
   onPrev: () => {},
-  onNext: () => {},
-  onReset: resetFilters
+  onNext: () => {}
 })
 
 function updateOptions(value: string) {

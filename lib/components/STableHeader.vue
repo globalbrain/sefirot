@@ -26,11 +26,9 @@ const stats = computed(() => {
     : `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
 })
 
-const actionsWithReset = computed(() => {
-  return [
-    ...(props.reset ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' as const }] : []),
-    ...(props.actions || [])
-  ]
+// deprecated `reset` prop in favor of `actions`
+const resetAction = computed(() => {
+  return props.reset ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' as const }] : []
 })
 </script>
 
@@ -41,8 +39,11 @@ const actionsWithReset = computed(() => {
         <div v-if="stats" class="stats">
           {{ stats }}
         </div>
-        <div v-if="actionsWithReset.length" class="actions">
-          <STableHeaderActions :actions="actionsWithReset" />
+        <div v-if="actions?.length" class="actions">
+          <STableHeaderActions :actions="actions" />
+        </div>
+        <div v-else>
+          <STableHeaderActions :actions="resetAction" />
         </div>
       </div>
       <div v-if="menu && menu.length" class="menu">
