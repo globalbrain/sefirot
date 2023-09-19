@@ -513,10 +513,14 @@ function updateSelected(selected: unknown[]) {
   font-size: 14px;
   font-weight: 500;
   color: var(--c-text-3);
+
+  .has-footer & {
+    border-radius: 0;
+  }
 }
 
 .loading {
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 5px 5px;
   padding: 64px 32px;
   background-color: var(--c-bg-elv-3);
 }
