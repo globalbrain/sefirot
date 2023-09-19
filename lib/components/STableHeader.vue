@@ -62,7 +62,7 @@ const resetAction = computed(() => {
   background-color: var(--c-bg-soft);
 
   &:not(.borderless) {
-    border-radius: 5px 5px 0 0;
+    border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   }
 }
 

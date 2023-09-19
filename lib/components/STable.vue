@@ -480,7 +480,7 @@ function updateSelected(selected: unknown[]) {
 }
 
 .container.body {
-  border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   line-height: 0;
   max-height: var(--table-max-height, 100%);
 
@@ -505,7 +505,7 @@ function updateSelected(selected: unknown[]) {
 }
 
 .missing {
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding: 48px 32px;
   text-align: center;
   background-color: var(--c-bg-elv-3);
@@ -520,7 +520,7 @@ function updateSelected(selected: unknown[]) {
 }
 
 .loading {
-  border-radius: 0 0 5px 5px;
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding: 64px 32px;
   background-color: var(--c-bg-elv-3);
 }
