@@ -29,13 +29,7 @@ const stats = computed(() => {
 // deprecated `reset` prop in favor of `actions`, remove this in next major version
 const resetAction = computed(() => {
   return props.reset
-    ? [
-        {
-          label: 'Reset filters',
-          onClick: props.onReset,
-          type: 'info' as const
-        }
-      ]
+    ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' }]
     : []
 })
 </script>
