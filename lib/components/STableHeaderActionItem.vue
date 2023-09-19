@@ -10,17 +10,15 @@ withDefaults(defineProps<TableAction>(), {
 </script>
 
 <template>
-  <template v-if="show">
-    <div class="STableHeaderActionItem">
-      <SButton
-        size="mini"
-        :mode="mode"
-        :label="label"
-        :label-mode="labelMode"
-        @click="onClick"
-      />
-    </div>
-  </template>
+  <div v-if="show" class="STableHeaderActionItem">
+    <SButton
+      size="mini"
+      :mode="mode"
+      :label="label"
+      :label-mode="labelMode"
+      @click="onClick"
+    />
+  </div>
 </template>
 
 <style scoped lang="postcss">
