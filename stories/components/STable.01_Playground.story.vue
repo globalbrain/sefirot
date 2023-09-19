@@ -285,7 +285,6 @@ const table = useTable({
     {
       label: 'Delete selected',
       onClick: deleteSelected,
-      mode: 'mute',
       labelMode: 'danger',
       show: selected.value.length > 0
     }
