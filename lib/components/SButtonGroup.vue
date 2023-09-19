@@ -5,7 +5,7 @@
 </template>
 
 <style scoped lang="postcss">
-.SButtonGroup :slotted(.SButton) {
+.SButtonGroup :deep(.SButton) {
   border-left-width: 0;
   border-radius: 0;
 
