@@ -1,5 +1,4 @@
-import { type MaybeRef } from '@vueuse/core'
-import { type Component } from 'vue'
+import { type Component, type MaybeRef } from 'vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
 
@@ -19,6 +18,7 @@ export interface Table<
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>
+  /** @deprecated use `actions` instead */
   reset?: MaybeRef<boolean | undefined>
   borderless?: MaybeRef<boolean>
   loading?: MaybeRef<boolean | undefined>
@@ -27,6 +27,7 @@ export interface Table<
   indexField?: keyof R
   onPrev?(): void
   onNext?(): void
+  /** @deprecated use `actions` instead */
   onReset?(): void
 }
 
