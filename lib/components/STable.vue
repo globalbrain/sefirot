@@ -465,7 +465,7 @@ function updateSelected(selected: unknown[]) {
   position: var(--table-head-position, static);
   top: var(--table-head-top, auto);
   z-index: 100;
-  border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
+  border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   background-color: var(--bg-elv-2);
   scrollbar-width: none;
   line-height: 0;
