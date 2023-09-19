@@ -44,7 +44,7 @@ const resetAction = computed(() => {
         <div v-if="actions?.length" class="actions">
           <STableHeaderActions :actions="actions" />
         </div>
-        <div v-else>
+        <div v-else-if="resetAction.length">
           <STableHeaderActions :actions="resetAction" />
         </div>
       </div>
