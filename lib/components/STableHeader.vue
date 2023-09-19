@@ -26,9 +26,17 @@ const stats = computed(() => {
     : `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
 })
 
-// deprecated `reset` prop in favor of `actions`
+// deprecated `reset` prop in favor of `actions`, remove this in next major version
 const resetAction = computed(() => {
-  return props.reset ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' as const }] : []
+  return props.reset
+    ? [
+        {
+          label: 'Reset filters',
+          onClick: props.onReset,
+          type: 'info' as const
+        }
+      ]
+    : []
 })
 </script>
 
