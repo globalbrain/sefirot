@@ -5,7 +5,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, markRaw, reactive, ref } from 'vue'
+import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
 
 interface Sort {
   by: string
@@ -120,7 +120,7 @@ const hasFilters = computed(() => {
   ].some((length) => length)
 })
 
-const data = [
+const data = shallowRef([
   {
     name: 'Artwork 001',
     link: 'https://example.com',
@@ -166,10 +166,10 @@ const data = [
     createdAt: day('2022-09-08'),
     tags: ['Info']
   }
-]
+])
 
 const filteredData = computed(() => {
-  return data
+  return data.value
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
     .filter((i) => dropdownTagsSelected.value.every((tag) => i.tags.includes(tag)))
@@ -279,14 +279,22 @@ const table = useTable({
     }
   ]),
 
+  actions: computed(() => [
+    {
+      label: 'Reset filters',
+      onClick: resetFilters,
+      type: 'info',
+      show: hasFilters.value
+    }
+  ]),
+
+  indexField: 'name',
   records: orderedData as any, // FIXME
   total: computed(() => orderedData.value.length),
   page: 1,
   perPage: 5,
-  reset: hasFilters,
   onPrev: () => {},
-  onNext: () => {},
-  onReset: resetFilters
+  onNext: () => {}
 })
 
 function updateOptions(value: string) {

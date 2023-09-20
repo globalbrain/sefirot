@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check'
-import { type MaybeRef } from '@vueuse/core'
 import Fuse from 'fuse.js'
-import { computed, onMounted, ref, unref } from 'vue'
+import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
 import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'

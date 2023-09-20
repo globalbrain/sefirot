@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type MaybeRef } from '@vueuse/core'
-import { computed, unref, useSlots } from 'vue'
+import { type MaybeRef, computed, unref, useSlots } from 'vue'
 import { type Position } from '../composables/Tooltip'
 import SFragment from './SFragment.vue'
 import SIcon from './SIcon.vue'

@@ -1,16 +1,16 @@
-import { type MaybeRef } from '@vueuse/core'
-import { type Component } from 'vue'
+import { type Component, type MaybeRef } from 'vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
 
 export interface Table<
-  O extends string = any,
+  O extends string = string,
   R extends Record<string, any> = any,
   SR extends Record<string, any> = any
 > {
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
+  actions?: MaybeRef<TableAction[]>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
@@ -18,12 +18,16 @@ export interface Table<
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>
+  /** @deprecated use `actions` instead */
   reset?: MaybeRef<boolean | undefined>
   borderless?: MaybeRef<boolean>
   loading?: MaybeRef<boolean | undefined>
   rowSize?: MaybeRef<number | undefined>
+  borderSize?: MaybeRef<number | undefined>
+  indexField?: keyof R
   onPrev?(): void
   onNext?(): void
+  /** @deprecated use `actions` instead */
   onReset?(): void
 }
 
@@ -57,6 +61,7 @@ export type TableCell =
   | TableCellState
   | TableCellAvatar
   | TableCellAvatars
+  | TableCellCustom
   | TableCellEmpty
   | TableCellComponent
 
@@ -69,6 +74,7 @@ export type TableCellType =
   | 'state'
   | 'avatar'
   | 'avatars'
+  | 'custom'
   | 'empty'
   | 'component'
 
@@ -154,6 +160,10 @@ export interface TableCellAvatarsOption {
   name?: string | null
 }
 
+export interface TableCellCustom extends TableCellBase {
+  type: 'custom'
+}
+
 export interface TableCellEmpty extends TableCellBase {
   type: 'empty'
 }
@@ -174,6 +184,14 @@ export interface TableMenu {
   label: string
   state?: 'inactive' | 'active' | 'indicate'
   dropdown: DropdownSection[]
+}
+
+export interface TableAction {
+  show?: boolean
+  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  label: string
+  labelMode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  onClick?(): void
 }
 
 export function useTable<

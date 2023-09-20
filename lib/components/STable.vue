@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
+import xor from 'lodash-es/xor'
 import {
   computed,
   nextTick,
@@ -11,6 +12,7 @@ import {
   watch
 } from 'vue'
 import { type Table } from '../composables/Table'
+import SInputCheckbox from './SInputCheckbox.vue'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
@@ -20,6 +22,11 @@ import STableItem from './STableItem.vue'
 
 const props = defineProps<{
   options: Table
+  selected?: unknown[]
+}>()
+
+const emit = defineEmits<{
+  (e: 'update:selected', value: unknown[]): void
 }>()
 
 const head = shallowRef<HTMLElement | null>(null)
@@ -28,9 +35,13 @@ const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
 const ordersToShow = computed(() => {
-  return unref(props.options.orders).filter((key) => {
+  const orders = unref(props.options.orders).filter((key) => {
     return unref(props.options.columns)[key]?.show !== false
   })
+  if (!props.selected) {
+    return orders
+  }
+  return ['__select', ...orders]
 })
 
 watch(() => ordersToShow.value, handleResize)
@@ -114,10 +125,62 @@ const recordsWithSummary = computed(() => {
   return summary ? [...records, summary] : records
 })
 
+const indexes = computed(() => {
+  if (!props.selected) {
+    return []
+  }
+  const records = unref(props.options.records) ?? []
+  const indexField = unref(props.options.indexField)
+
+  return records.map((record, i) => indexField ? record[indexField] : i)
+})
+
+const selectedIndexes = reactive(new Set())
+
+const control = computed({
+  get() {
+    if (!props.selected) {
+      return false
+    }
+    const selected = indexes.value.filter((index) => {
+      return selectedIndexes.has(index)
+    })
+
+    updateSelected(selected)
+
+    return selected.length === indexes.value.length
+      ? true
+      : selected.length ? 'indeterminate' : false
+  },
+
+  set(newValue) {
+    if (newValue === false) {
+      selectedIndexes.clear()
+    } else if (newValue === true) {
+      indexes.value.forEach((index) => {
+        selectedIndexes.add(index)
+      })
+    }
+  }
+})
+
+watch(indexes, (newValue, oldValue) => {
+  if (!props.selected) {
+    return
+  }
+  xor(newValue, oldValue).forEach((index) => {
+    selectedIndexes.delete(index)
+  })
+})
+
 const virtualizerOptions = computed(() => ({
   count: recordsWithSummary.value.length,
   getScrollElement: () => body.value,
-  estimateSize: () => unref(props.options.rowSize) ?? 41,
+  estimateSize: (index: number) => {
+    const rowSize = unref(props.options.rowSize) ?? 40
+    const borderSize = unref(props.options.borderSize) ?? 1
+    return lastRow(index) ? rowSize : rowSize + borderSize
+  },
   overscan: 10
 }))
 
@@ -220,8 +283,17 @@ function lastRow(index: number) {
 }
 
 function getCell(key: string, index: number) {
+  if (key === '__select') {
+    return { type: 'custom' }
+  }
   const col = unref(props.options.columns)[key]
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
+}
+
+function updateSelected(selected: unknown[]) {
+  if (xor(selected, props.selected ?? []).length) {
+    emit('update:selected', selected)
+  }
 }
 </script>
 
@@ -233,8 +305,10 @@ function getCell(key: string, index: number) {
         :total="unref(options.total)"
         :reset="unref(options.reset)"
         :menu="unref(options.menu)"
+        :actions="unref(options.actions)"
         :borderless="unref(options.borderless)"
         :on-reset="options.onReset"
+        :selected="selected"
       />
 
       <div class="table" role="grid">
@@ -251,18 +325,23 @@ function getCell(key: string, index: number) {
                 v-for="key in ordersToShow"
                 :key="key"
                 :name="key"
-                :class-name="unref(options.columns)[key].className"
+                :class-name="unref(options.columns)[key]?.className"
                 :width="colWidths[key]"
               >
                 <STableColumn
                   :name="key"
-                  :label="unref(options.columns)[key].label"
-                  :class-name="unref(options.columns)[key].className"
-                  :dropdown="unref(options.columns)[key].dropdown"
+                  :label="unref(options.columns)[key]?.label"
+                  :class-name="unref(options.columns)[key]?.className"
+                  :dropdown="unref(options.columns)[key]?.dropdown"
                   :has-header="showHeader"
-                  :resizable="unref(options.columns)[key].resizable"
+                  :resizable="unref(options.columns)[key]?.resizable"
                   @resize="(value) => updateColWidth(key, value, true)"
-                />
+                >
+                  <SInputCheckbox
+                    v-if="key === '__select' && unref(options.records)?.length"
+                    v-model="control"
+                  />
+                </STableColumn>
               </STableItem>
             </div>
           </div>
@@ -304,18 +383,24 @@ function getCell(key: string, index: number) {
                   v-for="key in ordersToShow"
                   :key="key"
                   :name="key"
-                  :class-name="unref(options.columns)[key].className"
+                  :class-name="unref(options.columns)[key]?.className"
                   :width="colWidths[key]"
                 >
                   <STableCell
                     :name="key"
                     :class="isSummary(index) && 'summary'"
-                    :class-name="unref(options.columns)[key].className"
+                    :class-name="unref(options.columns)[key]?.className"
                     :cell="getCell(key, index)"
                     :value="recordsWithSummary[index][key]"
                     :record="recordsWithSummary[index]"
                     :records="unref(options.records)!"
-                  />
+                  >
+                    <SInputCheckbox
+                      v-if="key === '__select' && !isSummary(index)"
+                      :value="selectedIndexes.has(indexes[index])"
+                      @change="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                    />
+                  </STableCell>
                 </STableItem>
               </div>
             </div>
@@ -380,9 +465,10 @@ function getCell(key: string, index: number) {
   position: var(--table-head-position, static);
   top: var(--table-head-top, auto);
   z-index: 100;
-  border-radius: var(--table-border-radius) var(--table-border-radius) 0 0;
+  border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   background-color: var(--bg-elv-2);
   scrollbar-width: none;
+  line-height: 0;
 
   &::-webkit-scrollbar {
     display: none;
@@ -394,7 +480,7 @@ function getCell(key: string, index: number) {
 }
 
 .container.body {
-  border-radius: 6px 6px var(--table-border-radius) var(--table-border-radius);
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   line-height: 0;
   max-height: var(--table-max-height, 100%);
 
@@ -419,7 +505,7 @@ function getCell(key: string, index: number) {
 }
 
 .missing {
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding: 48px 32px;
   text-align: center;
   background-color: var(--c-bg-elv-3);
@@ -427,10 +513,14 @@ function getCell(key: string, index: number) {
   font-size: 14px;
   font-weight: 500;
   color: var(--c-text-3);
+
+  .has-footer & {
+    border-radius: 0;
+  }
 }
 
 .loading {
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding: 64px 32px;
   background-color: var(--c-bg-elv-3);
 }
@@ -445,5 +535,20 @@ function getCell(key: string, index: number) {
   width: 48px;
   height: 48px;
   color: var(--c-text-1);
+}
+
+.STable .col-__select {
+  --table-padding-left: 0;
+  --table-col-width: 48px;
+
+  :deep(.input) {
+    align-items: center;
+    padding: 0 16px;
+    min-height: 40px;
+  }
+
+  :deep(.container) {
+    padding: 0;
+  }
 }
 </style>

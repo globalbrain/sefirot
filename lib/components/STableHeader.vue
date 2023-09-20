@@ -1,29 +1,51 @@
 <script setup lang="ts">
-import { type TableMenu } from '../composables/Table'
+import { computed } from 'vue'
+import { type TableAction, type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
+import STableHeaderActions from './STableHeaderActions.vue'
 import STableHeaderMenu from './STableHeaderMenu.vue'
 
-defineProps<{
+const props = defineProps<{
   total?: number | null
   reset?: boolean
   menu?: TableMenu[] | TableMenu[][]
+  actions?: TableAction[]
   borderless?: boolean
   onReset?(): void
+  selected?: unknown[]
 }>()
+
+const stats = computed(() => {
+  if (isNullish(props.total)) {
+    return null
+  }
+
+  return props.selected?.length
+    ? `${format(props.selected.length)} of ${props.total} selected`
+    : `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
+})
+
+// deprecated `reset` prop in favor of `actions`, remove this in next major version
+const resetAction = computed(() => {
+  return props.reset
+    ? [{ label: 'Reset filters', onClick: props.onReset, type: 'info' }]
+    : []
+})
 </script>
 
 <template>
   <div class="STableHeader" :class="{ borderless }">
     <div class="container">
-      <div class="stat">
-        <p v-if="!isNullish(total)" class="total">
-          {{ format(total) }} {{ (total) > 1 ? 'records' : 'record' }}
-        </p>
-        <div v-if="reset" class="reset">
-          <button class="button" @click="onReset">
-            Reset filters
-          </button>
+      <div class="primary">
+        <div v-if="stats" class="stats">
+          {{ stats }}
+        </div>
+        <div v-if="actions?.length" class="actions">
+          <STableHeaderActions :actions="actions" />
+        </div>
+        <div v-else-if="resetAction.length">
+          <STableHeaderActions :actions="resetAction" />
         </div>
       </div>
       <div v-if="menu && menu.length" class="menu">
@@ -35,10 +57,14 @@ defineProps<{
 
 <style scoped lang="postcss">
 .STableHeader {
-  border-radius: 6px 6px 0 0;
+  border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   padding-right: var(--table-padding-right);
   padding-left: var(--table-padding-left);
   background-color: var(--c-bg-soft);
+
+  &.borderless {
+    border-radius: 0;
+  }
 }
 
 .container {
@@ -46,50 +72,20 @@ defineProps<{
   min-height: 48px;
 }
 
-.stat {
+.primary {
   display: flex;
+  gap: 16px;
   flex-grow: 1;
   padding: 0 16px;
+  min-height: 48px;
 }
 
-.total {
-  margin: 0;
+.stats {
   padding: 12px 0;
   line-height: 24px;
   font-size: 12px;
   font-weight: 500;
   color: var(--c-text-2);
-}
-
-.reset {
-  position: relative;
-
-  .total + & {
-    margin-left: 16px;
-  }
-
-  .total + &::before {
-    display: inline-block;
-    margin-right: 16px;
-    width: 1px;
-    height: 16px;
-    background-color: var(--c-divider-2);
-    content: "";
-    transform: translateY(4px);
-  }
-}
-
-.button {
-  padding: 12px 0;
-  line-height: 24px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--c-info-text);
-  transition: color 0.25s;
-
-  &:hover {
-    color: var(--c-info-text-dark);
-  }
 }
 
 .menu {

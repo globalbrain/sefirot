@@ -1,5 +1,4 @@
-import { type MaybeRefOrGetter, resolveUnref } from '@vueuse/core'
-import { type ComputedRef, computed, useSlots } from 'vue'
+import { type ComputedRef, type MaybeRefOrGetter, computed, toValue, useSlots } from 'vue'
 import { isArray, isString } from '../support/Utils'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
@@ -21,7 +20,7 @@ export function computedWhen<T, C, D>(
   whenFalse?: D
 ): ComputedRef<T | D> {
   return computed(() => {
-    const c = resolveUnref(condition)
+    const c = toValue(condition)
 
     return c ? fn(c) : whenFalse as D
   })
