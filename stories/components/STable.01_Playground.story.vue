@@ -179,8 +179,6 @@ const orderedData = computed(() => {
   return orderBy(filteredData.value, [sort.by], [sort.order])
 })
 
-const selected = ref<string[]>([])
-
 const table = useTable({
   orders: [
     'name',
@@ -287,12 +285,6 @@ const table = useTable({
       onClick: resetFilters,
       type: 'info',
       show: hasFilters.value
-    },
-    {
-      label: 'Delete selected',
-      onClick: deleteSelected,
-      labelMode: 'danger',
-      show: selected.value.length > 0
     }
   ]),
 
@@ -335,19 +327,12 @@ function updateTypeFilter(value: string) {
 function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
-
-function deleteSelected() {
-  // eslint-disable-next-line no-alert
-  if (window.confirm('Are you sure?') === false) { return }
-  data.value = data.value.filter((i) => !selected.value.includes(i.name))
-  selected.value = []
-}
 </script>
 
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
-      <STable class="table" :options="table" v-model:selected="selected" />
+      <STable class="table" :options="table" />
     </Board>
   </Story>
 </template>
