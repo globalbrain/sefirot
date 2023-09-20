@@ -57,12 +57,13 @@ const resetAction = computed(() => {
 
 <style scoped lang="postcss">
 .STableHeader {
+  border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   padding-right: var(--table-padding-right);
   padding-left: var(--table-padding-left);
   background-color: var(--c-bg-soft);
 
-  &:not(.borderless) {
-    border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
+  &.borderless {
+    border-radius: 0;
   }
 }
 
