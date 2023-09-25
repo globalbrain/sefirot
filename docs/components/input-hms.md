@@ -348,7 +348,7 @@ Same as `info` prop. When `info` prop and this slot are defined at the same time
   <template #info>
     Learn more about this field <SLink href="...">here</SLink>.
   </template>
-</SInputSelect>
+</SInputHMS>
 ```
 
 ## Events
