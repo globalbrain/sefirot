@@ -20,15 +20,15 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
-  value?: File | null
-  modelValue?: File | null
+  value?: File | File[] | null
+  modelValue?: File | File[] | null
   hideError?: boolean
   validation?: Validatable
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', file: File | null): void
-  (e: 'change', file: File | null): void
+  (e: 'update:model-value', file: File | File[] | null): void
+  (e: 'change', file: File | File[] | null): void
 }>()
 
 const _value = computed(() => {
@@ -41,15 +41,19 @@ const input = ref<HTMLInputElement | null>(null)
 
 const classes = computed(() => [props.size ?? 'small'])
 
-const fileName = computed(() => _value.value?.name ?? null)
+const fileName = computed(() => Array.isArray(_value.value)
+  ? _value.value.map((file) => file.name).join(', ')
+  : _value.value?.name ?? ''
+)
 
-/* c8 ignore next 4 */
 function open() {
   input.value!.click()
 }
 
 function onChange(e: Event) {
-  const file = (e.target as any).files[0]
+  const file = props.multiple
+    ? Array.from((e.target as HTMLInputElement).files ?? [])
+    : ((e.target as HTMLInputElement).files ?? [])[0]
 
   emit('update:model-value', file ?? null)
   emit('change', file ?? null)
