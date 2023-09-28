@@ -28,6 +28,7 @@ const classes = computed(() => [
 <style scoped lang="postcss">
 .SCard {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1px;
   border: 1px solid transparent;
   border-radius: 6px;
