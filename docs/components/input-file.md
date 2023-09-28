@@ -25,7 +25,7 @@ Import `<SInputFile>` and pass in the `value` prop.
 import { ref } from 'vue'
 import SInputFile from '@globalbrain/sefirot/lib/components/SInputFile.vue'
 
-const input = ref<File | null>(null)
+const input = ref<File | File[] | null>(null)
 </script>
 
 <template>
@@ -238,7 +238,7 @@ Sets the input value. When `model-value` prop is set (e.g. via `v-model` directi
 
 ```ts
 interface Props {
-  value?: File | null
+  value?: File | File[] | null
 }
 ```
 
@@ -252,7 +252,7 @@ The `v-model` binding for the input.
 
 ```ts
 interface Props {
-  modelValue?: File | null
+  modelValue?: File | File[] | null
 }
 ```
 
@@ -334,7 +334,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: File | null): void
+  (e: 'update:model-value', value: File | File[] | null): void
 }
 ```
 
@@ -344,7 +344,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: File | null): void
+  (e: 'change', value: File | File[] | null): void
 }
 ```
 
