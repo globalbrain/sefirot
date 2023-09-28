@@ -147,6 +147,34 @@ interface Props {
 <SInputFile placeholder="No file choosen" v-model="..." />
 ```
 
+### `:accept`
+
+Defines the file types to accept.
+
+```ts
+interface Props {
+  accept?: string
+}
+```
+
+```vue-html
+<SInputFile accept="image/*" v-model="..." />
+```
+
+### `:multiple`
+
+Defines whether to accept multiple files.
+
+```ts
+interface Props {
+  multiple?: boolean
+}
+```
+
+```vue-html
+<SInputFile multiple v-model="..." />
+```
+
 ### `:check-icon`
 
 Icon to display at corner right of label. Useful to show the status of a particular input.

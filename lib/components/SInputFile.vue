@@ -15,6 +15,8 @@ const props = defineProps<{
   help?: string
   text?: string
   placeholder?: string
+  accept?: string
+  multiple?: boolean
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
@@ -74,6 +76,8 @@ function onChange(e: Event) {
       ref="input"
       class="input"
       type="file"
+      :accept="accept"
+      :multiple="multiple"
       @change="onChange"
     >
 
