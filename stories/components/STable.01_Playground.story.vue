@@ -67,7 +67,7 @@ const dropdownType = createDropdown([
   {
     type: 'filter',
     search: true,
-    selected: markRaw(dropdownTypeSelected),
+    selected: dropdownTypeSelected,
     options: [
       { label: 'Photo', value: 'Photo', onClick: updateTypeFilter },
       { label: 'Illustration', value: 'Illustration', onClick: updateTypeFilter },
@@ -93,7 +93,7 @@ const dropdownTags = createDropdown([
   {
     type: 'filter',
     search: true,
-    selected: markRaw(dropdownTagsSelected),
+    selected: dropdownTagsSelected,
     options: [
       { label: 'Info', value: 'Info', onClick: updateTagsFilter },
       { label: 'News', value: 'News', onClick: updateTagsFilter },

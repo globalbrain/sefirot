@@ -66,9 +66,6 @@ const cellOfColToGrow = computed(() => {
   return row.value?.children[colToGrow.value]
 })
 
-let headLock = false
-let bodyLock = false
-
 const colWidths = reactive<Record<string, string>>({})
 const blockWidth = ref<number | undefined>()
 
@@ -187,15 +184,18 @@ const virtualizerOptions = computed(() => ({
 const rowVirtualizer = useVirtualizer(virtualizerOptions)
 const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
 
-watch(() => props.options.records, () => {
-  headLock = true
-  bodyLock = true
+let isSyncingHead = false
+let isSyncingBody = false
+
+watch(() => unref(props.options.records), () => {
+  isSyncingHead = true
+  isSyncingBody = true
 }, { flush: 'pre' })
 
-watch(() => props.options.records, () => {
+watch(() => unref(props.options.records), () => {
   syncScroll(head.value, body.value)
-  headLock = false
-  bodyLock = false
+  isSyncingHead = false
+  isSyncingBody = false
 }, { flush: 'post' })
 
 useResizeObserver(block, ([entry]) => {
@@ -237,25 +237,25 @@ async function handleResize() {
 }
 
 function syncHeadScroll() {
-  bodyLock || syncScroll(head.value, body.value)
+  if (!isSyncingHead) {
+    isSyncingBody = true
+    syncScroll(head.value, body.value)
+  }
+  isSyncingHead = false
 }
 
 function syncBodyScroll() {
-  headLock || syncScroll(body.value, head.value)
+  if (!isSyncingBody) {
+    isSyncingHead = true
+    syncScroll(body.value, head.value)
+  }
+  isSyncingBody = false
 }
 
 function syncScroll(from: HTMLElement | null, to: HTMLElement | null) {
   if (from && to) {
     to.scrollLeft = from.scrollLeft
   }
-}
-
-function lockHead(value: boolean) {
-  headLock = value
-}
-
-function lockBody(value: boolean) {
-  bodyLock = value
 }
 
 function updateColWidth(key: string, value: string, triggeredByUser = false) {
@@ -315,8 +315,6 @@ function updateSelected(selected: unknown[]) {
         <div
           class="container head"
           ref="head"
-          @mouseenter="lockHead(true)"
-          @mouseleave="lockHead(false)"
           @scroll="syncHeadScroll"
         >
           <div class="block" ref="block">
@@ -351,8 +349,6 @@ function updateSelected(selected: unknown[]) {
           v-if="!unref(options.loading) && unref(options.records)?.length"
           class="container body"
           ref="body"
-          @mouseenter="lockBody(true)"
-          @mouseleave="lockBody(false)"
           @scroll="syncBodyScroll"
         >
           <div
