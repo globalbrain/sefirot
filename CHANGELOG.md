@@ -1,3 +1,17 @@
+# [2.47.0](https://github.com/globalbrain/sefirot/compare/v2.46.1...v2.47.0) (2023-10-02)
+
+### Bug Fixes
+
+* **card:** prevent content from expanding card ([#347](https://github.com/globalbrain/sefirot/issues/347)) ([3c7dd6c](https://github.com/globalbrain/sefirot/commit/3c7dd6c78fe913225d09e1323a9a99220e91fd92))
+* **input:** open info tooltip on click ([#259](https://github.com/globalbrain/sefirot/issues/259)) ([#341](https://github.com/globalbrain/sefirot/issues/341)) ([1ce9a93](https://github.com/globalbrain/sefirot/commit/1ce9a93ae1b35e6ca43b3e076b9de147d5a0f62c))
+* **table:** sync scroll on filter/sort and remove hover listeners ([#348](https://github.com/globalbrain/sefirot/issues/348)) ([a4a7e82](https://github.com/globalbrain/sefirot/commit/a4a7e828bbd02b829281a468c21980d0e2add00e))
+* **types:** allow tooltip text to be null ([d3d4893](https://github.com/globalbrain/sefirot/commit/d3d4893a0221eb5a79c38540eb7b4f1202989a8e))
+
+### Features
+
+* **input-file:** allow specifying `accept` and `multiple` on the input element ([#346](https://github.com/globalbrain/sefirot/issues/346)) ([fb22baf](https://github.com/globalbrain/sefirot/commit/fb22bafdc7ba915041b8ac944bdf26e88fb2c441))
+* **table:** allow selecting rows ([#343](https://github.com/globalbrain/sefirot/issues/343)) ([#344](https://github.com/globalbrain/sefirot/issues/344)) ([78b1af0](https://github.com/globalbrain/sefirot/commit/78b1af0d9ee69dd300fc3e4cff962f7374153be4))
+
 ## [2.46.1](https://github.com/globalbrain/sefirot/compare/v2.46.0...v2.46.1) (2023-09-12)
 
 ### Bug Fixes

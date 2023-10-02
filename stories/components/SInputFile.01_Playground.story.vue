@@ -73,6 +73,7 @@ function state() {
           :note="state.note"
           :help="state.help"
           :text="state.text"
+          multiple
           :placeholder="state.placeholder"
           v-model="input"
         />
