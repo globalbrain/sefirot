@@ -1,3 +1,9 @@
+## [2.47.2](https://github.com/globalbrain/sefirot/compare/v2.47.1...v2.47.2) (2023-10-03)
+
+### Bug Fixes
+
+* **input:** fix typo in class names ([#350](https://github.com/globalbrain/sefirot/issues/350)) ([#351](https://github.com/globalbrain/sefirot/issues/351)) ([b4a9b81](https://github.com/globalbrain/sefirot/commit/b4a9b8161bdce576fa61b1f890f295b47dcaabab))
+
 ## [2.47.1](https://github.com/globalbrain/sefirot/compare/v2.47.0...v2.47.1) (2023-10-03)
 
 ### Bug Fixes
