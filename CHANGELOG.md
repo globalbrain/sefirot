@@ -1,3 +1,9 @@
+## [2.47.1](https://github.com/globalbrain/sefirot/compare/v2.47.0...v2.47.1) (2023-10-03)
+
+### Bug Fixes
+
+* **table:** mark `onClick` as required in `TableAction` ([#349](https://github.com/globalbrain/sefirot/issues/349)) ([b5d4131](https://github.com/globalbrain/sefirot/commit/b5d413137b10aecb4643fdeff9d479b0588289cc))
+
 # [2.47.0](https://github.com/globalbrain/sefirot/compare/v2.46.1...v2.47.0) (2023-10-02)
 
 ### Bug Fixes
