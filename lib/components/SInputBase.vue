@@ -84,23 +84,23 @@ function getErrorMsg(validation: Validatable) {
 
 <style scoped lang="postcss">
 .SInputBase.mini {
-  .label            { padding-bottom: 6px; height: 22px; }
-  .label-text-value { font-size: var(--input-label-font-size, var(--input-mini-label-font-size)); }
-  .label-text-info  { width: 14px; height: 14px; }
+  .label      { padding-bottom: 6px; height: 22px; }
+  .label-text { font-size: var(--input-label-font-size, var(--input-mini-label-font-size)); }
+  .label-info { width: 14px; height: 14px; }
 }
 
 .SInputBase.small {
-  .label              { padding-bottom: 8px; height: 24px; }
-  .label-text-value   { font-size: var(--input-label-font-size, var(--input-small-label-font-size)); }
+  .label      { padding-bottom: 8px; height: 24px; }
+  .label-text { font-size: var(--input-label-font-size, var(--input-small-label-font-size)); }
 }
 
 .SInputBase.medium {
-  .label              { padding-bottom: 8px; height: 24px; }
-  .label-text-value   { font-size: var(--input-label-font-size, var(--input-medium-label-font-size)); }
+  .label      { padding-bottom: 8px; height: 24px; }
+  .label-text { font-size: var(--input-label-font-size, var(--input-medium-label-font-size)); }
 }
 
 .SInputBase.has-error {
-  .label-text-value {
+  .label-text {
     color: var(--input-error-text-color);
   }
 }
