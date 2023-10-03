@@ -191,7 +191,7 @@ export interface TableAction {
   mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
   label: string
   labelMode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-  onClick?(): void
+  onClick(): void
 }
 
 export function useTable<
