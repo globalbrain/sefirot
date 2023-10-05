@@ -155,6 +155,7 @@ function getErrorMsg(validation: Validatable) {
 
 .help-error {
   width: 100%;
+  max-width: 65ch;
   margin: 0;
   padding: 6px 0 0 0;
   line-height: 18px;
@@ -165,6 +166,7 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .help-text {
+  max-width: 65ch;
   margin: 0;
   padding: 4px 0 0;
   line-height: 20px;
