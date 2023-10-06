@@ -1,3 +1,9 @@
+## [2.47.3](https://github.com/globalbrain/sefirot/compare/v2.47.2...v2.47.3) (2023-10-06)
+
+### Bug Fixes
+
+* **input:** limit help and error text width ([#353](https://github.com/globalbrain/sefirot/issues/353)) ([#354](https://github.com/globalbrain/sefirot/issues/354)) ([b8647e4](https://github.com/globalbrain/sefirot/commit/b8647e458f6a1f233b80ca538c1bbebf3f7ac463))
+
 ## [2.47.2](https://github.com/globalbrain/sefirot/compare/v2.47.1...v2.47.2) (2023-10-03)
 
 ### Bug Fixes
