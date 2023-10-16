@@ -1,3 +1,9 @@
+## [2.47.4](https://github.com/globalbrain/sefirot/compare/v2.47.3...v2.47.4) (2023-10-16)
+
+### Bug Fixes
+
+* bump deps and add back types as peerDeps ([#355](https://github.com/globalbrain/sefirot/issues/355)) ([165d54b](https://github.com/globalbrain/sefirot/commit/165d54b98dcbdac9bc6457bc279da349b1469c37))
+
 ## [2.47.3](https://github.com/globalbrain/sefirot/compare/v2.47.2...v2.47.3) (2023-10-06)
 
 ### Bug Fixes
