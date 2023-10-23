@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import IconCheck from '@iconify-icons/ph/check-bold'
 import IconImageSquare from '@iconify-icons/ph/image-square'
+import IconNotePencil from '@iconify-icons/ph/note-pencil'
+import IconTrash from '@iconify-icons/ph/trash'
 import { orderBy, xor } from 'lodash-es'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
@@ -186,7 +189,8 @@ const table = useTable({
     'type',
     'width',
     'tags',
-    'createdAt'
+    'createdAt',
+    'actions'
   ],
 
   columns: computed(() => ({
@@ -257,6 +261,31 @@ const table = useTable({
               : item === 'Latest' ? 'success' : 'mute'
           }))
         }
+      }
+    },
+
+    actions: {
+      cell: {
+        type: 'actions',
+        /* eslint-disable no-alert */
+        actions: [
+          {
+            icon: markRaw(IconCheck),
+            onClick: () => { alert('Publish') },
+            mode: 'success'
+          },
+          {
+            icon: markRaw(IconNotePencil),
+            onClick: () => { alert('Edit') },
+            labelMode: 'neutral'
+          },
+          {
+            icon: markRaw(IconTrash),
+            onClick: () => { alert('Delete') },
+            mode: 'danger'
+          }
+        ]
+        /* eslint-enable */
       }
     }
   })),
@@ -344,6 +373,7 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
+.table :deep(.col-actions)   { --table-col-width: 128px; }
 
 .table {
   margin-bottom: 16px;

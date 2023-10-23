@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type TableCell } from '../composables/Table'
+import STableCellActions from './STableCellActions.vue'
 import STableCellAvatar from './STableCellAvatar.vue'
 import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellCustom from './STableCellCustom.vue'
@@ -98,6 +99,12 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record="record"
       :avatars="computedCell.avatars"
       :color="computedCell.color"
+    />
+    <STableCellActions
+      v-else-if="computedCell.type === 'actions'"
+      :value="value"
+      :record="record"
+      :actions="computedCell.actions"
     />
     <STableCellCustom
       v-else-if="computedCell.type === 'custom'"

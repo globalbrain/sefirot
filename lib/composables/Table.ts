@@ -10,7 +10,7 @@ export interface Table<
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
-  actions?: MaybeRef<TableAction[]>
+  actions?: MaybeRef<TableHeaderAction[]>
   records?: MaybeRef<R[] | null | undefined>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
@@ -64,6 +64,7 @@ export type TableCell =
   | TableCellCustom
   | TableCellEmpty
   | TableCellComponent
+  | TableCellActions
 
 export type TableCellType =
   | 'text'
@@ -77,6 +78,9 @@ export type TableCellType =
   | 'custom'
   | 'empty'
   | 'component'
+  | 'actions'
+
+export type ColorModes = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface TableCellBase {
   type: TableCellType
@@ -105,14 +109,7 @@ export interface TableCellNumber extends TableCellBase {
   onClick?(value: any, record: any): void
 }
 
-export type TableCellValueColor =
-  | 'neutral'
-  | 'soft'
-  | 'mute'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
+export type TableCellValueColor = ColorModes | 'soft'
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
@@ -128,7 +125,7 @@ export interface TableCellPill extends TableCellBase {
   color?: TableCellPillColor | ((value: any, record: any) => TableCellPillColor)
 }
 
-export type TableCellPillColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TableCellPillColor = ColorModes
 
 export interface TableCellPills extends TableCellBase {
   type: 'pills'
@@ -177,7 +174,21 @@ export interface TableCellComponent extends TableCellBase {
 export interface TableCellState extends TableCellBase {
   type: 'state'
   label: string
-  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  mode?: ColorModes
+}
+
+export interface TableCellActions extends TableCellBase {
+  type: 'actions'
+  actions: TableCellAction[]
+}
+
+export interface TableCellAction {
+  mode?: ColorModes
+  icon?: any
+  iconMode?: ColorModes
+  label?: string
+  labelMode?: ColorModes
+  onClick(value: any, record: any): void
 }
 
 export interface TableMenu {
@@ -186,11 +197,11 @@ export interface TableMenu {
   dropdown: DropdownSection[]
 }
 
-export interface TableAction {
+export interface TableHeaderAction {
   show?: boolean
-  mode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  mode?: ColorModes
   label: string
-  labelMode?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+  labelMode?: ColorModes
   onClick(): void
 }
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type TableAction } from '../composables/Table'
+import { type TableHeaderAction } from '../composables/Table'
 import STableHeaderActionItem from './STableHeaderActionItem.vue'
 
-defineProps<{ actions: TableAction[] }>()
+defineProps<{ actions: TableHeaderAction[] }>()
 </script>
 
 <template>
