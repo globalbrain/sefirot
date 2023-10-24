@@ -1,3 +1,9 @@
+# [2.48.0](https://github.com/globalbrain/sefirot/compare/v2.47.4...v2.48.0) (2023-10-24)
+
+### Features
+
+* **table:** add action column type ([#360](https://github.com/globalbrain/sefirot/issues/360)) ([acb1313](https://github.com/globalbrain/sefirot/commit/acb13138d9aeab66fd1278c513e6ed3fce994388))
+
 ## [2.47.4](https://github.com/globalbrain/sefirot/compare/v2.47.3...v2.47.4) (2023-10-16)
 
 ### Bug Fixes
