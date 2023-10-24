@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type TableAction, type TableMenu } from '../composables/Table'
+import { type TableHeaderAction, type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
 import STableHeaderActions from './STableHeaderActions.vue'
@@ -10,7 +10,7 @@ const props = defineProps<{
   total?: number | null
   reset?: boolean
   menu?: TableMenu[] | TableMenu[][]
-  actions?: TableAction[]
+  actions?: TableHeaderAction[]
   borderless?: boolean
   onReset?(): void
   selected?: unknown[]

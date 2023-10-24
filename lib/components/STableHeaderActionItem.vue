@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type TableAction } from '../composables/Table'
+import { type TableHeaderAction } from '../composables/Table'
 import SButton from './SButton.vue'
 
-withDefaults(defineProps<TableAction>(), {
+withDefaults(defineProps<TableHeaderAction>(), {
   show: true,
   mode: 'mute',
   labelMode: 'neutral'
