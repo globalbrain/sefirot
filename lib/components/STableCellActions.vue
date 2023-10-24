@@ -16,7 +16,7 @@ defineProps<{
       :key="i"
       size="mini"
       type="text"
-      :mode="action.mode"
+      :mode="action.mode ?? 'mute'"
       :icon="action.icon"
       :icon-mode="action.iconMode"
       :label="action.label"
@@ -34,6 +34,5 @@ defineProps<{
   justify-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
-  gap: 2px;
 }
 </style>

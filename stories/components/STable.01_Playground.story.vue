@@ -271,18 +271,15 @@ const table = useTable({
         actions: [
           {
             icon: markRaw(IconCheck),
-            onClick: () => { alert('Publish') },
-            mode: 'success'
+            onClick: () => { alert('Publish') }
           },
           {
             icon: markRaw(IconNotePencil),
-            onClick: () => { alert('Edit') },
-            labelMode: 'neutral'
+            onClick: () => { alert('Edit') }
           },
           {
             icon: markRaw(IconTrash),
-            onClick: () => { alert('Delete') },
-            mode: 'danger'
+            onClick: () => { alert('Delete') }
           }
         ]
         /* eslint-enable */
@@ -373,7 +370,7 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
-.table :deep(.col-actions)   { --table-col-width: 128px; }
+.table :deep(.col-actions)   { --table-col-width: 100px; }
 
 .table {
   margin-bottom: 16px;
