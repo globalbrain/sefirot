@@ -65,6 +65,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SInputNumber', link: '/components/input-number' },
         { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
+        { text: 'SInputSegments', link: '/components/input-segments' },
         { text: 'SInputSwitch', link: '/components/input-switch' },
         { text: 'SInputTextarea', link: '/components/input-textarea' },
         { text: 'SInputYMD', link: '/components/input-ymd' },
