@@ -33,7 +33,7 @@ const names = computed(() => {
     return `${_avatars.value[0].name}, ${_avatars.value[1].name}`
   }
 
-  return `${_avatars.value[0].name}, ${_avatars.value[1].name} +${_avatars.value.length - 1}`
+  return `${_avatars.value[0].name}, ${_avatars.value[1].name} +${_avatars.value.length - 2}`
 })
 </script>
 
