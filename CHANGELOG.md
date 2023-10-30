@@ -1,3 +1,13 @@
+# [2.49.0](https://github.com/globalbrain/sefirot/compare/v2.48.0...v2.49.0) (2023-10-30)
+
+### Bug Fixes
+
+* **table:** fix wrong count of avatars in the `STableCellAvatars` ([#363](https://github.com/globalbrain/sefirot/issues/363)) ([60f2ef6](https://github.com/globalbrain/sefirot/commit/60f2ef60e2eef1d7f1b8ba26f82583ee020f13cd))
+
+### Features
+
+* **input-segments:** add `<SInputSegments>` ([#357](https://github.com/globalbrain/sefirot/issues/357)) ([#362](https://github.com/globalbrain/sefirot/issues/362)) ([7225967](https://github.com/globalbrain/sefirot/commit/722596721d2196c420c6491750a8e6e12089c5b1))
+
 # [2.48.0](https://github.com/globalbrain/sefirot/compare/v2.47.4...v2.48.0) (2023-10-24)
 
 ### Features
