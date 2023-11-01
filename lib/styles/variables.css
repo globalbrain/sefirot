@@ -97,7 +97,7 @@
   --c-mute-dimm-1: #f1f1f1;
   --c-mute-dimm-2: #e3e3e3;
 
-  /* DEPRECATED: Use `--c-bg-soft`. */
+  /* DEPRECATED: Use `--c-bg-elv-4`. */
   --c-soft: var(--c-white-soft);
 
   --c-bg-elv-1: #ffffff;
@@ -263,7 +263,7 @@
   --c-mute-dimm-1: #222226;
   --c-mute-dimm-2: #2c2c2e;
 
-  /* DEPRECATED: Use `--c-bg-soft`. */
+  /* DEPRECATED: Use `--c-bg-elv-4`. */
   --c-soft: #222226;
 
   --c-bg-elv-1: #000000;
