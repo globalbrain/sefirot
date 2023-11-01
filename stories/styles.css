@@ -39,6 +39,9 @@ body {
 
 .rounded-6 { border-radius: 6px; }
 
+.p-8  { padding: 8px; }
+.p-12 { padding: 12px; }
+
 .flex {
   display: flex;
 }

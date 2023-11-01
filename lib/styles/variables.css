@@ -60,13 +60,13 @@
   --c-neutral-dark-dimm-2: rgba(255, 255, 255, 0.16);
   --c-neutral-dark-dimm-2: rgba(255, 255, 255, 0.24);
 
-  --c-text-light-1: #1f1f1f;
-  --c-text-light-2: rgba(60, 60, 67, 0.72);
-  --c-text-light-3: rgba(60, 60, 67, 0.39);
+  --c-text-light-1: #1c2024;
+  --c-text-light-2: rgba(0, 7, 20, 0.62);
+  --c-text-light-3: rgba(0, 4, 26, 0.51);
 
-  --c-text-dark-1: rgba(235, 235, 245, 0.98);
-  --c-text-dark-2: rgba(235, 235, 245, 0.6);
-  --c-text-dark-3: rgba(235, 235, 245, 0.3);
+  --c-text-dark-1: #edeef0;
+  --c-text-dark-2: rgba(239, 245, 255, 0.69);
+  --c-text-dark-3: rgba(228, 238, 255, 0.49);
 }
 
 /**
@@ -88,6 +88,15 @@
   --c-divider: var(--c-divider-light-1);
   --c-divider-light: var(--c-divider-light-2);
 
+  /* DEPRECATED: Use `--c-bg-mute-X`. */
+  --c-mute: #f1f1f1;
+  --c-mute-light: #f9f9f9;
+  --c-mute-lighter: #ffffff;
+  --c-mute-dark: #e3e3e3;
+  --c-mute-darker: #d1d1d1;
+  --c-mute-dimm-1: #f1f1f1;
+  --c-mute-dimm-2: #e3e3e3;
+
   /* DEPRECATED: Use `--c-bg-soft`. */
   --c-soft: var(--c-white-soft);
 
@@ -95,6 +104,10 @@
   --c-bg-elv-2: #f9f9f9;
   --c-bg-elv-3: #ffffff;
   --c-bg-soft: #f9f9f9;
+
+  --c-bg-mute-1: #ebebef;
+  --c-bg-mute-2: #e4e4e9;
+  --c-bg-mute-3: #dddde3;
 
   --c-divider-1: var(--c-divider-light-1);
   --c-divider-2: var(--c-divider-light-2);
@@ -120,14 +133,6 @@
   --c-text-inverse-1: var(--c-text-dark-1);
   --c-text-inverse-2: var(--c-text-dark-2);
   --c-text-inverse-3: var(--c-text-dark-3);
-
-  --c-mute: #f1f1f1;
-  --c-mute-light: #f9f9f9;
-  --c-mute-lighter: #ffffff;
-  --c-mute-dark: #e3e3e3;
-  --c-mute-darker: #d1d1d1;
-  --c-mute-dimm-1: #f1f1f1;
-  --c-mute-dimm-2: #e3e3e3;
 
   --c-info: #0969da;
   --c-info-light: #218bff;
@@ -249,6 +254,15 @@
   --c-divider: var(--c-divider-dark-1);
   --c-divider-light: var(--c-divider-dark-2);
 
+  /* DEPRECATED: Use `--c-bg-mute-X`. */
+  --c-mute: #2c2c2e;
+  --c-mute-light: #3a3a3c;
+  --c-mute-lighter: #505053;
+  --c-mute-dark: #222226;
+  --c-mute-darker: #1c1c1e;
+  --c-mute-dimm-1: #222226;
+  --c-mute-dimm-2: #2c2c2e;
+
   /* DEPRECATED: Use `--c-bg-soft`. */
   --c-soft: #222226;
 
@@ -256,6 +270,10 @@
   --c-bg-elv-2: #171717;
   --c-bg-elv-3: #1c1c1e;
   --c-bg-soft: #222226;
+
+  --c-bg-mute-1: #2e3035;
+  --c-bg-mute-2: #35373c;
+  --c-bg-mute-3: #3c3f44;
 
   --c-divider-1: var(--c-divider-dark-1);
   --c-divider-2: var(--c-divider-dark-2);
@@ -281,14 +299,6 @@
   --c-text-inverse-1: var(--c-text-light-1);
   --c-text-inverse-2: var(--c-text-light-2);
   --c-text-inverse-3: var(--c-text-light-3);
-
-  --c-mute: #2c2c2e;
-  --c-mute-light: #3a3a3c;
-  --c-mute-lighter: #505053;
-  --c-mute-dark: #222226;
-  --c-mute-darker: #1c1c1e;
-  --c-mute-dimm-1: #222226;
-  --c-mute-dimm-2: #2c2c2e;
 
   --c-info: #1f6feb;
   --c-info-light: #388bfd;
