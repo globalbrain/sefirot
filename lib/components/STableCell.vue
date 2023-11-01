@@ -126,7 +126,7 @@ const computedCell = computed<TableCell | undefined>(() =>
 
 <style scoped lang="postcss">
 .STableCell {
-  background-color: var(--c-bg-elv-up);
+  background-color: var(--c-bg-elv-3);
   transition: background-color 0.1s;
   overflow: hidden;
 

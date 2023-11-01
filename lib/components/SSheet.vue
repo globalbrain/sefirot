@@ -45,7 +45,7 @@ defineEmits<{
     box-shadow: var(--shadow-depth-5);
 
     .dark & {
-      background-color: var(--c-bg-soft);
+      background-color: var(--c-bg-elv-4);
     }
   }
 }
