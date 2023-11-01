@@ -48,6 +48,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: 'Components',
       collapsed: false,
       items: [
+        { text: 'SActionList', link: '/components/action-list' },
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
         { text: 'SButtonGroup', link: '/components/button-group' },
