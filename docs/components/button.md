@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
 
-const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+const modes = ['default', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 </script>
 
 # SButton
@@ -88,7 +88,7 @@ type Size = 'fill' | 'outline' | 'text'
 
 ### `:mode`
 
-Defines the color of the button. The default is `neutral`.
+Defines the color of the button. The default is `default`.
 
 ```ts
 interface Props {
@@ -96,8 +96,9 @@ interface Props {
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'white'
   | 'black'
   | 'info'
@@ -134,8 +135,9 @@ interface Props {
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'white'
   | 'black'
   | 'info'
@@ -180,8 +182,9 @@ interface Props {
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'white'
   | 'black'
   | 'info'
@@ -404,12 +407,48 @@ The component has several different styles based on its type and color combinati
 
 ```css
 :root {
+  --button-fill-default-border-color: var(--c-divider-1);
+  --button-fill-default-text-color: var(--c-text-1);
+  --button-fill-default-content-color: var(--c-text-1);
+  --button-fill-default-bg-color: var(--c-mute);
+  --button-fill-default-loader-color: var(--c-neutral);
+  --button-fill-default-hover-border-color: var(--c-divider-1);
+  --button-fill-default-hover-text-color: var(--c-text-1);
+  --button-fill-default-hover-bg-color: var(--c-mute-dark);
+  --button-fill-default-active-border-color: var(--c-divider-1);
+  --button-fill-default-active-text-color: var(--c-text-1);
+  --button-fill-default-active-bg-color: var(--c-mute-darker);
+  --button-fill-default-disabled-border-color: var(--c-divider-2);
+  --button-fill-default-disabled-text-color: var(--c-text-2);
+  --button-fill-default-disabled-content-color: var(--c-text-2);
+  --button-fill-default-disabled-bg-color: var(--c-mute-dark);
+
+  --button-fill-mute-border-color: var(--c-divider-1);
+  --button-fill-mute-text-color: var(--c-text-2);
+  --button-fill-mute-content-color: var(--c-text-2);
+  --button-fill-mute-bg-color: var(--c-mute);
+  --button-fill-mute-loader-color: var(--c-neutral);
+  --button-fill-mute-hover-border-color: var(--c-divider-1);
+  --button-fill-mute-hover-text-color: var(--c-text-1);
+  --button-fill-mute-hover-bg-color: var(--c-mute-dark);
+  --button-fill-mute-active-border-color: var(--c-divider-1);
+  --button-fill-mute-active-text-color: var(--c-text-2);
+  --button-fill-mute-active-bg-color: var(--c-mute-darker);
+  --button-fill-mute-disabled-border-color: var(--c-divider-2);
+  --button-fill-mute-disabled-text-color: var(--c-text-2);
+  --button-fill-mute-disabled-content-color: var(--c-text-2);
+  --button-fill-mute-disabled-bg-color: var(--c-mute-dark);
+
   --button-fill-neutral-border-color: transparent;
   --button-fill-neutral-text-color: var(--c-text-inverse-1);
   --button-fill-neutral-content-color: var(--c-text-1);
   --button-fill-neutral-bg-color: var(--c-neutral-1);
   --button-fill-neutral-loader-color: var(--c-neutral-inverse-1);
+  --button-fill-neutral-hover-border-color: transparent;
+  --button-fill-neutral-hover-text-color: var(--c-text-inverse-1);
   --button-fill-neutral-hover-bg-color: var(--c-neutral-2);
+  --button-fill-neutral-active-border-color: transparent;
+  --button-fill-neutral-active-text-color: var(--c-text-inverse-1);
   --button-fill-neutral-active-bg-color: var(--c-neutral-3);
   --button-fill-neutral-disabled-border-color: transparent;
   --button-fill-neutral-disabled-text-color: var(--c-text-inverse-2);
@@ -421,7 +460,11 @@ The component has several different styles based on its type and color combinati
   --button-fill-white-content-color: var(--c-text-dark-1);
   --button-fill-white-bg-color: var(--c-neutral-dark-1);
   --button-fill-white-loader-color: var(--c-neutral-light-1);
+  --button-fill-white-hover-border-color: transparent;
+  --button-fill-white-hover-text-color: var(--c-text-light-1);
   --button-fill-white-hover-bg-color: var(--c-neutral-dark-2);
+  --button-fill-white-active-border-color: transparent;
+  --button-fill-white-active-text-color: var(--c-text-light-1);
   --button-fill-white-active-bg-color: var(--c-neutral-dark-3);
   --button-fill-white-disabled-border-color: transparent;
   --button-fill-white-disabled-text-color: var(--c-text-light-2);
@@ -433,31 +476,27 @@ The component has several different styles based on its type and color combinati
   --button-fill-black-content-color: var(--c-text-light-1);
   --button-fill-black-bg-color: var(--c-neutral-light-1);
   --button-fill-black-loader-color: var(--c-neutral-dark-1);
+  --button-fill-black-hover-border-color: transparent;
+  --button-fill-black-hover-text-color: var(--c-text-dark-1);
   --button-fill-black-hover-bg-color: var(--c-neutral-light-2);
+  --button-fill-black-active-border-color: transparent;
+  --button-fill-black-active-text-color:var(--c-text-dark-1);
   --button-fill-black-active-bg-color: var(--c-neutral-light-3);
   --button-fill-black-disabled-border-color: transparent;
   --button-fill-black-disabled-text-color: var(--c-text-dark-2);
   --button-fill-black-disabled-content-color: var(--c-text-light-2);
   --button-fill-black-disabled-bg-color: var(--c-neutral-light-2);
 
-  --button-fill-mute-border-color: var(--c-divider-1);
-  --button-fill-mute-text-color: var(--c-text-1);
-  --button-fill-mute-content-color: var(--c-text-2);
-  --button-fill-mute-bg-color: var(--c-mute);
-  --button-fill-mute-loader-color: var(--c-neutral);
-  --button-fill-mute-hover-bg-color: var(--c-mute-dark);
-  --button-fill-mute-active-bg-color: var(--c-mute-darker);
-  --button-fill-mute-disabled-border-color: var(--c-divider-2);
-  --button-fill-mute-disabled-text-color: var(--c-text-2);
-  --button-fill-mute-disabled-content-color: var(--c-text-3);
-  --button-fill-mute-disabled-bg-color: var(--c-mute-dark);
-
   --button-fill-info-border-color: var(--c-info-light);
   --button-fill-info-text-color: var(--c-text-dark-1);
   --button-fill-info-content-color: var(--c-info-text);
   --button-fill-info-bg-color: var(--c-info-bg);
   --button-fill-info-loader-color: var(--c-white);
+  --button-fill-info-hover-border-color: var(--c-info-light);
+  --button-fill-info-hover-text-color: var(--c-white);
   --button-fill-info-hover-bg-color: var(--c-info-bg-dark);
+  --button-fill-info-active-border-color: var(--c-info-light);
+  --button-fill-info-active-text-color: var(--c-white);
   --button-fill-info-active-bg-color: var(--c-info-bg-darker);
   --button-fill-info-disabled-border-color: var(--c-info);
   --button-fill-info-disabled-text-color: var(--c-text-dark-2);
@@ -469,36 +508,68 @@ The component has several different styles based on its type and color combinati
   --button-fill-success-content-color: var(--c-success-text);
   --button-fill-success-bg-color: var(--c-success-bg);
   --button-fill-success-loader-color: var(--c-white);
+  --button-fill-success-hover-border-color: var(--c-success-light);
+  --button-fill-success-hover-text-color: var(--c-white);
   --button-fill-success-hover-bg-color: var(--c-success-bg-dark);
+  --button-fill-success-active-border-color: var(--c-success-light);
+  --button-fill-success-active-text-color: var(--c-white);
   --button-fill-success-active-bg-color: var(--c-success-bg-darker);
   --button-fill-success-disabled-border-color: var(--c-success);
   --button-fill-success-disabled-text-color: var(--c-text-dark-2);
   --button-fill-success-disabled-content-color: var(--c-success-text-dark);
   --button-fill-success-disabled-bg-color: var(--c-success-bg-dark);
 
-  --button-fill-warning-border-color: var(--c-warning-light);
-  --button-fill-warning-text-color: var(--c-text-dark-1);
+  --button-fill-warning-border-color: var(--c-divider-1);
+  --button-fill-warning-text-color: var(--c-warning-text);
   --button-fill-warning-content-color: var(--c-warning-text);
-  --button-fill-warning-bg-color: var(--c-warning-bg);
+  --button-fill-warning-bg-color: var(--c-mute);
   --button-fill-warning-loader-color: var(--c-white);
+  --button-fill-warning-hover-border-color: var(--c-warning-light);
+  --button-fill-warning-hover-text-color: var(--c-white);
   --button-fill-warning-hover-bg-color: var(--c-warning-bg-dark);
+  --button-fill-warning-active-border-color: var(--c-warning-light);
+  --button-fill-warning-active-text-color: var(--c-white);
   --button-fill-warning-active-bg-color: var(--c-warning-bg-darker);
   --button-fill-warning-disabled-border-color: var(--c-warning);
   --button-fill-warning-disabled-text-color: var(--c-text-dark-2);
   --button-fill-warning-disabled-content-color: var(--c-warning-text-dark);
   --button-fill-warning-disabled-bg-color: var(--c-warning-bg-dark);
 
-  --button-fill-danger-border-color: var(--c-danger-light);
-  --button-fill-danger-text-color: var(--c-text-dark-1);
+  --button-fill-danger-border-color: var(--c-divider-1);
+  --button-fill-danger-text-color: var(--c-danger-text);
   --button-fill-danger-content-color: var(--c-danger-text);
-  --button-fill-danger-bg-color: var(--c-danger-bg);
+  --button-fill-danger-bg-color: var(--c-mute);
   --button-fill-danger-loader-color: var(--c-white);
-  --button-fill-danger-hover-bg-color: var(--c-danger-bg-dark);
-  --button-fill-danger-active-bg-color: var(--c-danger-bg-darker);
-  --button-fill-danger-disabled-border-color: var(--c-danger);
-  --button-fill-danger-disabled-text-color: var(--c-text-dark-2);
+  --button-fill-danger-hover-border-color: var(--c-danger-light);
+  --button-fill-danger-hover-text-color: var(--c-white);
+  --button-fill-danger-hover-bg-color: var(--c-danger-bg);
+  --button-fill-danger-active-border-color: var(--c-danger-light);
+  --button-fill-danger-active-text-color: var(--c-white);
+  --button-fill-danger-active-bg-color: var(--c-danger-bg-dark);
+  --button-fill-danger-disabled-border-color: var(--c-divider-2);
+  --button-fill-danger-disabled-text-color: var(--c-danger-text-dark);
   --button-fill-danger-disabled-content-color: var(--c-danger-text-dark);
-  --button-fill-danger-disabled-bg-color: var(--c-danger-bg-dark);
+  --button-fill-danger-disabled-bg-color: var(--c-mute-dark);
+
+  --button-outline-default-border-color: var(--c-divider-1);
+  --button-outline-default-text-color: var(--c-text-1);
+  --button-outline-default-content-color: var(--c-text-1);
+  --button-outline-default-loader-color: var(--c-neutral-1);
+  --button-outline-default-hover-bg-color: var(--c-mute-dimm-1);
+  --button-outline-default-active-bg-color: var(--c-mute-dimm-2);
+  --button-outline-default-disabled-border-color: var(--c-divider-2);
+  --button-outline-default-disabled-text-color: var(--c-text-3);
+  --button-outline-default-disabled-content-color: var(--c-text-3);
+
+  --button-outline-mute-border-color: var(--c-divider-1);
+  --button-outline-mute-text-color: var(--c-text-2);
+  --button-outline-mute-content-color: var(--c-text-2);
+  --button-outline-mute-loader-color: var(--c-neutral-1);
+  --button-outline-mute-hover-bg-color: var(--c-mute-dimm-1);
+  --button-outline-mute-active-bg-color: var(--c-mute-dimm-2);
+  --button-outline-mute-disabled-border-color: var(--c-divider-2);
+  --button-outline-mute-disabled-text-color: var(--c-text-3);
+  --button-outline-mute-disabled-content-color: var(--c-text-3);
 
   --button-outline-neutral-border-color: var(--c-neutral-1);
   --button-outline-neutral-text-color: var(--c-text-1);
@@ -529,16 +600,6 @@ The component has several different styles based on its type and color combinati
   --button-outline-black-disabled-border-color: var(--c-neutral-light-3);
   --button-outline-black-disabled-text-color: var(--c-text-light-2);
   --button-outline-black-disabled-content-color: var(--c-text-light-2);
-
-  --button-outline-mute-border-color: var(--c-divider-1);
-  --button-outline-mute-text-color: var(--c-text-2);
-  --button-outline-mute-content-color: var(--c-text-2);
-  --button-outline-mute-loader-color: var(--c-neutral-1);
-  --button-outline-mute-hover-bg-color: var(--c-mute-dimm-1);
-  --button-outline-mute-active-bg-color: var(--c-mute-dimm-2);
-  --button-outline-mute-disabled-border-color: var(--c-divider-2);
-  --button-outline-mute-disabled-text-color: var(--c-text-3);
-  --button-outline-mute-disabled-content-color: var(--c-text-3);
 
   --button-outline-info-border-color: var(--c-info-light);
   --button-outline-info-text-color: var(--c-info-text);
@@ -580,6 +641,20 @@ The component has several different styles based on its type and color combinati
   --button-outline-danger-disabled-text-color: var(--c-danger-text-dark);
   --button-outline-danger-disabled-content-color: var(--c-danger-text-dark);
 
+  --button-text-default-text-color: var(--c-text-1);
+  --button-text-default-content-color: var(--c-text-1);
+  --button-text-default-hover-bg-color: var(--c-mute);
+  --button-text-default-active-bg-color: var(--c-mute-light);
+  --button-text-default-disabled-text-color: var(--c-text-3);
+  --button-text-default-disabled-content-color: var(--c-text-3);
+
+  --button-text-mute-text-color: var(--c-text-2);
+  --button-text-mute-content-color: var(--c-text-2);
+  --button-text-mute-hover-bg-color: var(--c-mute);
+  --button-text-mute-active-bg-color: var(--c-mute-light);
+  --button-text-mute-disabled-text-color: var(--c-text-3);
+  --button-text-mute-disabled-content-color: var(--c-text-3);
+
   --button-text-neutral-text-color: var(--c-text-1);
   --button-text-neutral-content-color: var(--c-text-1);
   --button-text-neutral-hover-bg-color: var(--c-neutral-dimm-1);
@@ -600,13 +675,6 @@ The component has several different styles based on its type and color combinati
   --button-text-black-active-bg-color: var(--c-neutral-light-dimm-2);
   --button-text-black-disabled-text-color: var(--c-text-light-2);
   --button-text-black-disabled-content-color: var(--c-text-light-2);
-
-  --button-text-mute-text-color: var(--c-text-2);
-  --button-text-mute-content-color: var(--c-text-2);
-  --button-text-mute-hover-bg-color: var(--c-mute-dimm-1);
-  --button-text-mute-active-bg-color: var(--c-mute-dimm-2);
-  --button-text-mute-disabled-text-color: var(--c-text-3);
-  --button-text-mute-disabled-content-color: var(--c-text-3);
 
   --button-text-info-text-color: var(--c-info-text);
   --button-text-info-content-color: var(--c-info-text);

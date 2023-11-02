@@ -6,8 +6,9 @@ const title = 'Components / SButton / 01. Playground'
 const docs = '/components/button'
 
 const modes = [
-  'neutral',
+  'default',
   'mute',
+  'neutral',
   'white',
   'black',
   'info',
@@ -17,9 +18,10 @@ const modes = [
 ]
 
 const contentModes = [
-  { label: 'null', value: null },
-  { label: 'neutral', value: 'neutral' },
+  { label: 'undefined', value: null },
+  { label: 'default', value: 'default' },
   { label: 'mute', value: 'mute' },
+  { label: 'neutral', value: 'neutral' },
   { label: 'white', value: 'white' },
   { label: 'black', value: 'black' },
   { label: 'info', value: 'info' },
@@ -31,7 +33,7 @@ const contentModes = [
 function state() {
   return {
     type: 'fill',
-    mode: 'neutral',
+    mode: 'default',
     labelMode: null,
     label: 'Button',
     loading: false,

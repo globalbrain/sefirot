@@ -12,9 +12,21 @@ const variants = [
   { title: 'Jumbo', size: 'jumbo' }
 ] as const
 
+const modes = [
+  'default',
+  'mute',
+  'neutral',
+  'white',
+  'black',
+  'info',
+  'success',
+  'warning',
+  'danger'
+]
+
 function state() {
   return {
-    mode: 'neutral',
+    mode: 'default',
     label: 'Button',
     rounded: false
   } as const
@@ -26,10 +38,7 @@ function state() {
     <template #controls="{ state }">
       <HstSelect
         title="mode"
-        :options="{
-          neutral: 'neutral',
-          mute: 'mute'
-        }"
+        :options="modes"
         v-model="state.mode"
       />
       <HstText
