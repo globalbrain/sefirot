@@ -109,15 +109,15 @@ function onClick() {
 
   &:hover {
     .box {
-      border-color: var(--c-info-light);
+      border-color: var(--c-border-info-1);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-info-light);
-    background-color: var(--c-info-light);
+    border-color: var(--c-fg-info-1);
+    background-color: var(--c-fg-info-1);
   }
 
   .check {
@@ -128,7 +128,7 @@ function onClick() {
 
 .box {
   position: relative;
-  border: 1px solid var(--c-divider-1);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 4px;
   width: 16px;
   height: 16px;
@@ -151,7 +151,7 @@ function onClick() {
 .check-icon {
   width: 10px;
   height: 10px;
-  color: var(--c-white);
+  color: var(--c-white-1);
 }
 
 .text {

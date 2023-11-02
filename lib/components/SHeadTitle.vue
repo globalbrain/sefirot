@@ -21,8 +21,8 @@ defineProps<{
 }
 
 .SHeadTitle.neutral { color: var(--c-text-1); }
-.SHeadTitle.info    { color: var(--c-info-text); }
-.SHeadTitle.success { color: var(--c-success-text); }
-.SHeadTitle.warning { color: var(--c-warning-text); }
-.SHeadTitle.danger  { color: var(--c-danger-text); }
+.SHeadTitle.info    { color: var(--c-text-info-1); }
+.SHeadTitle.success { color: var(--c-text-success-1); }
+.SHeadTitle.warning { color: var(--c-text-warning-1); }
+.SHeadTitle.danger  { color: var(--c-text-danger-1); }
 </style>

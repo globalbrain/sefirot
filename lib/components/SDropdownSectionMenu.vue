@@ -38,7 +38,7 @@ defineProps<{
   transition: color 0.25s, background-color 0.25s;
 
   &:hover:not(:disabled) {
-    background-color: var(--c-mute);
+    background-color: var(--c-bg-mute-1);
   }
 
   &:disabled {

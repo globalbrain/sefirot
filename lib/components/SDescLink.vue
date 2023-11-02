@@ -41,11 +41,11 @@ const link = computed(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--c-info-text);
+  color: var(--c-text-info-1);
   transition: color 0.25s;
 
   &:hover {
-    color: var(--c-info-text-dark);
+    color: var(--c-text-info-2);
   }
 }
 </style>

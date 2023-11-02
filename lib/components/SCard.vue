@@ -35,11 +35,11 @@ const classes = computed(() => [
   background-color: var(--c-gutter);
 }
 
-.SCard.neutral { border-color: var(--c-divider-2); }
-.SCard.info    { border-color: var(--c-info-border); }
-.SCard.success { border-color: var(--c-success-border); }
-.SCard.warning { border-color: var(--c-warning-border); }
-.SCard.danger  { border-color: var(--c-danger-border); }
+.SCard.neutral { border-color: var(--c-divider); }
+.SCard.info    { border-color: var(--c-border-info-1); }
+.SCard.success { border-color: var(--c-border-success-1); }
+.SCard.warning { border-color: var(--c-border-warning-1); }
+.SCard.danger  { border-color: var(--c-border-danger-1); }
 
 .SCard.collapsed {
   height: 48px;

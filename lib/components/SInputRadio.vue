@@ -89,14 +89,14 @@ function onClick() {
 
   &:hover {
     .box {
-      border-color: var(--c-info-light);
+      border-color: var(--c-border-info-1);
     }
   }
 }
 
 .input.on {
   .box {
-    border-color: var(--c-info-light);
+    border-color: var(--c-fg-info-1);
   }
 
   .check {
@@ -107,7 +107,7 @@ function onClick() {
 
 .box {
   position: relative;
-  border: 1px solid var(--c-divider-1);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 50%;
   width: 16px;
   height: 16px;
@@ -126,7 +126,7 @@ function onClick() {
   align-items: center;
   border-radius: 50%;
   width: 100%;
-  background-color: var(--c-info-light);
+  background-color: var(--c-fg-info-1);
   opacity: 0;
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;

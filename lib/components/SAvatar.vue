@@ -65,7 +65,7 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
 }
 
 .SAvatar.no-image {
-  border: 1px solid var(--c-divider-2);
+  border: 1px solid var(--c-border-mute-1);
 }
 
 .img {

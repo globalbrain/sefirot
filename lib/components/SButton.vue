@@ -733,7 +733,7 @@ function handleClick(): void {
 .SButton.loading {
   .content {
     opacity: 0;
-    transform: scale(.9);
+    transform: scale(0.9);
   }
 }
 </style>

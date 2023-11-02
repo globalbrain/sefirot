@@ -34,7 +34,7 @@ const computedStory = computed(() => {
 <style scoped>
 .Showcase {
   margin: 0 -12px;
-  border: 1px solid var(--c-divider-2);
+  border: 1px solid var(--c-divider);
   border-radius: 6px;
 }
 
@@ -47,10 +47,10 @@ const computedStory = computed(() => {
 .header {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--c-divider-2);
+  border-bottom: 1px solid var(--c-divider);
   border-radius: 6px 6px 0 0;
   padding: 12px 12px 12px 16px;
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-elv-4);
 }
 
 .path {

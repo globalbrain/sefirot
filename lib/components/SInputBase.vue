@@ -132,7 +132,7 @@ function getErrorMsg(validation: Validatable) {
 
   &:hover, &:focus, &:focus-within {
     .label-info {
-      color: var(--c-info-text);
+      color: var(--c-text-info-1);
     }
   }
 
@@ -191,10 +191,10 @@ function getErrorMsg(validation: Validatable) {
 
   &.neutral { color: var(--c-text-1); }
   &.mute    { color: var(--c-text-2); }
-  &.info    { color: var(--c-info-text); }
-  &.success { color: var(--c-success-text); }
-  &.warning { color: var(--c-warning-text); }
-  &.danger  { color: var(--c-danger-text); }
+  &.info    { color: var(--c-text-info-1); }
+  &.success { color: var(--c-text-success-1); }
+  &.warning { color: var(--c-text-warning-1); }
+  &.danger  { color: var(--c-text-danger-1); }
 }
 
 .check-icon {
