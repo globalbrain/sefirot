@@ -11,8 +11,9 @@ const variants = [
 ] as const
 
 const modes = [
-  'neutral',
+  'default',
   'mute',
+  'neutral',
   'info',
   'success',
   'warning',

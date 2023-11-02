@@ -1,4 +1,5 @@
 import { type Component, type MaybeRef } from 'vue'
+import { type Mode } from '../components/SButton.vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
 
@@ -183,11 +184,11 @@ export interface TableCellActions extends TableCellBase {
 }
 
 export interface TableCellAction {
-  mode?: ColorModes
+  mode?: Mode
   icon?: any
-  iconMode?: ColorModes
+  iconMode?: Mode
   label?: string
-  labelMode?: ColorModes
+  labelMode?: Mode
   onClick(value: any, record: any): void
 }
 
@@ -199,9 +200,9 @@ export interface TableMenu {
 
 export interface TableHeaderAction {
   show?: boolean
-  mode?: ColorModes
+  mode?: Mode
   label: string
-  labelMode?: ColorModes
+  labelMode?: Mode
   onClick(): void
 }
 

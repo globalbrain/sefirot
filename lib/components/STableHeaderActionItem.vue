@@ -4,7 +4,7 @@ import SButton from './SButton.vue'
 
 withDefaults(defineProps<TableHeaderAction>(), {
   show: true,
-  mode: 'mute',
+  mode: 'default',
   labelMode: 'neutral'
 })
 </script>

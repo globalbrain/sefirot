@@ -14,8 +14,9 @@ const variants = [
 ] as const
 
 const modes = [
-  'neutral',
+  'default',
   'mute',
+  'neutral',
   'white',
   'black',
   'info',
@@ -45,7 +46,7 @@ const icons = [
 function state() {
   return {
     size: 'medium',
-    mode: 'neutral',
+    mode: 'default',
     iconMode: null,
     labelMode: null,
     label: 'Button'
