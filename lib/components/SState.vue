@@ -28,11 +28,11 @@ const classes = computed(() => [
 .SState {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--c-divider-2);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 6px;
   font-weight: 500;
   white-space: nowrap;
-  background-color: var(--c-mute);
+  background-color: var(--c-bg-mute-1);
 }
 
 .SState.mini {
@@ -105,23 +105,23 @@ const classes = computed(() => [
 
 .SState.mute  {
   .label     { color: var(--c-text-2); }
-  .indicator { background-color: var(--c-mute-darker); }
+  .indicator { background-color: var(--c-fg-gray-1); }
 }
 
 .SState.info  {
-  .indicator { background-color: var(--c-info-text); }
+  .indicator { background-color: var(--c-fg-info-1); }
 }
 
 .SState.success  {
-  .indicator { background-color: var(--c-success-text); }
+  .indicator { background-color: var(--c-fg-success-1); }
 }
 
 .SState.warning  {
-  .indicator { background-color: var(--c-warning-text); }
+  .indicator { background-color: var(--c-fg-warning-1); }
 }
 
 .SState.danger  {
-  .indicator { background-color: var(--c-danger-text); }
+  .indicator { background-color: var(--c-fg-danger-1); }
 }
 
 .label {

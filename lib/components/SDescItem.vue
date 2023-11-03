@@ -32,7 +32,7 @@ const labelWidth = computed(() => {
 }
 
 .SDesc.divider > .SDescItem {
-  border-bottom: 1px dashed var(--c-divider-1);
+  border-bottom: 1px dashed var(--c-divider);
   padding-bottom: 7px;
 }
 </style>

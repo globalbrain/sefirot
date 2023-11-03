@@ -105,11 +105,10 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   z-index: 10;
   border-bottom: 1px solid var(--c-gutter);
   padding: 8px;
-  background-color: var(--c-bg-elv-up);
 }
 
 .input {
-  border: 1px solid var(--c-divider-1);
+  border: 1px solid var(--c-divider);
   border-radius: 6px;
   padding: 0 8px;
   width: 100%;
@@ -141,7 +140,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 
   &:hover,
   &:focus {
-    background-color: var(--c-mute);
+    background-color: var(--c-bg-mute-1);
   }
 }
 
@@ -155,7 +154,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--c-divider-1);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 4px;
   width: 16px;
   height: 16px;
@@ -163,8 +162,8 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   transition: border-color 0.1s, background-color 0.1s;
 
   .button.active & {
-    border-color: var(--c-info-text);
-    background-color: var(--c-info);
+    border-color: var(--c-fg-info-1);
+    background-color: var(--c-fg-info-1);
   }
 }
 
@@ -184,7 +183,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
 .radio {
   position: relative;
   flex-shrink: 0;
-  border: 1px solid var(--c-divider-1);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 50%;
   margin-top: 8px;
   margin-bottom: 8px;
@@ -194,7 +193,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   transition: border-color 0.25s;
 
   .button.active & {
-    border-color: var(--c-info-light);
+    border-color: var(--c-border-info-1);
   }
 }
 
@@ -209,7 +208,7 @@ function handleClick(option: DropdownSectionFilterOption, value: string | number
   align-items: center;
   border-radius: 50%;
   width: 100%;
-  background-color: var(--c-info-light);
+  background-color: var(--c-fg-info-1);
   opacity: 0;
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;

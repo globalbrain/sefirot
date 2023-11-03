@@ -22,8 +22,8 @@ defineProps<{
 }
 
 .SCardHeaderTitle.neutral { color: var(--c-text-1); }
-.SCardHeaderTitle.info    { color: var(--c-info-text); }
-.SCardHeaderTitle.success { color: var(--c-success-text); }
-.SCardHeaderTitle.warning { color: var(--c-warning-text); }
-.SCardHeaderTitle.danger  { color: var(--c-danger-text); }
+.SCardHeaderTitle.info    { color: var(--c-text-info-1); }
+.SCardHeaderTitle.success { color: var(--c-text-success-1); }
+.SCardHeaderTitle.warning { color: var(--c-text-warning-1); }
+.SCardHeaderTitle.danger  { color: var(--c-text-danger-1); }
 </style>

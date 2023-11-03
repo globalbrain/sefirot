@@ -32,7 +32,7 @@ Customize the font size and family of the generic input value. The font size is 
   --input-mini-font-size: 14px;
   --input-mini-label-font-size: 12px;
 
-  --input-small-font-size: 16px;
+  --input-small-font-size: 14px;
   --input-small-label-font-size: 14px;
   
   --input-medium-font-size: 16px;
@@ -50,7 +50,7 @@ You may use following CSS variables to override text stylings such as styles for
   --input-value-color: var(--c-text-1);
   --input-placeholder-color: var(--c-text-3);
 
-  --input-error-text-color: var(--c-danger-light);
+  --input-error-text-color: var(--c-text-danger-1);
 
   --input-disabled-value-color: var(--c-text-1);
 }
@@ -62,13 +62,13 @@ You may customize how the input box would look like through following CSS variab
 
 ```css
 :root {
-  --input-border-color: var(--c-divider-1);
-  --input-bg-color: var(--c-bg-elv-1);
-  --input-hover-border-color: var(--c-gray);
-  --input-focus-border-color: var(--c-info-light);
+  --input-border-color: var(--c-border-mute-1);
+  --input-bg-color: var(--c-bg-elv-2);
+  --input-hover-border-color: var(--c-border-mute-3);
+  --input-focus-border-color: var(--c-border-info-1);
 
-  --input-error-border-color: var(--c-danger-light);
+  --input-error-border-color: var(--c-border-danger-1);
 
-  --input-disabled-bg-color: var(--c-mute);
+  --input-disabled-bg-color: var(--c-bg-mute-1);
 }
 ```

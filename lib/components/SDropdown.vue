@@ -19,7 +19,7 @@ defineProps<{
 
 <style scoped lang="postcss">
 .SDropdown {
-  border: 1px solid var(--c-divider-2);
+  border: 1px solid var(--c-divider);
   border-radius: 6px;
   min-width: 256px;
   max-height: 384px;
