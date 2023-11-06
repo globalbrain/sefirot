@@ -71,6 +71,8 @@ function onFileSelect(e: Event) {
 }
 
 function onFileDelete() {
+  fileInput.value!.value = ''
+
   emit('update:model-value', null)
   emit('change', null)
 }
