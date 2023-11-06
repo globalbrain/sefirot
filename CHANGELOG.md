@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/globalbrain/sefirot/compare/v2.49.0...v3.0.0) (2023-11-03)
+
+### Features
+
+* **action-list:** add `<ActionList>` ([#358](https://github.com/globalbrain/sefirot/issues/358)) ([#364](https://github.com/globalbrain/sefirot/issues/364)) ([dd89f13](https://github.com/globalbrain/sefirot/commit/dd89f1319f55e93e1769fb9a70ef05ce6a4315cd))
+* **button:** add `default` mode and organize color system (#366) ([6dee6b5](https://github.com/globalbrain/sefirot/commit/6dee6b5db47c2c501dbf2f7fa29919069e5ef51d)), closes [#366](https://github.com/globalbrain/sefirot/issues/366)
+* **styles:** new color system ([#367](https://github.com/globalbrain/sefirot/issues/367)) ([237af1f](https://github.com/globalbrain/sefirot/commit/237af1f92e226c11aaac0b2cbe3642d4806e35b8))
+* **style:** update bg color system ([#365](https://github.com/globalbrain/sefirot/issues/365)) ([74fcea4](https://github.com/globalbrain/sefirot/commit/74fcea4708f38e99b24e988d6c985dcc741815c9))
+
+### BREAKING CHANGES
+
+* The `<SButton>` `mute` mode now looks slightly different. Use the new option `default` to have the same look as before.
+
 # [2.49.0](https://github.com/globalbrain/sefirot/compare/v2.48.0...v2.49.0) (2023-10-30)
 
 ### Bug Fixes
