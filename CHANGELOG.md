@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/globalbrain/sefirot/compare/v3.0.0...v3.1.0) (2023-11-06)
+
+### Features
+
+* **button:** adjust the font size of small size button ([b57e17a](https://github.com/globalbrain/sefirot/commit/b57e17ad1c91d89e654f3bdad92e2be95051155b))
+* **input-image:** add `<SInputImage>` ([#356](https://github.com/globalbrain/sefirot/issues/356)) ([#368](https://github.com/globalbrain/sefirot/issues/368)) ([600946e](https://github.com/globalbrain/sefirot/commit/600946e4c056a4e730b173ace2755abfc34cda57))
+
 # [3.0.0](https://github.com/globalbrain/sefirot/compare/v2.49.0...v3.0.0) (2023-11-03)
 
 ### Features
