@@ -63,6 +63,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
         { text: 'SInputFile', link: '/components/input-file' },
         { text: 'SInputHMS', link: '/components/input-hms' },
+        { text: 'SInputImage', link: '/components/input-image' },
         { text: 'SInputNumber', link: '/components/input-number' },
         { text: 'SInputRadios', link: '/components/input-radios' },
         { text: 'SInputSelect', link: '/components/input-select' },
@@ -81,6 +82,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: 'Composables',
       collapsed: false,
       items: [
+        { text: 'Image', link: '/composables/image' },
         { text: 'Utils', link: '/composables/utils' }
       ]
     },

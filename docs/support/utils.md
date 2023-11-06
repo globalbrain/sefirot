@@ -72,6 +72,20 @@ function isObject(value: unknown): value is Record<string, any>
 import { isObject } from '@globalbrain/sefirot/lib/support/Utils'
 
 isObject({ foo: 'bar' }) // <- true
-isArray([1, 2, 3])       // <- false
-isArray(null)            // <- false
+isObject([1, 2, 3])      // <- false
+isObject(null)           // <- false
+```
+
+## `isFile`
+
+Checks if the given value is `File`.
+
+```ts
+function isFile(value: unknown): value is File
+```
+
+```ts
+import { isFile } from '@globalbrain/sefirot/lib/support/Utils'
+
+isFile(file)
 ```

@@ -17,3 +17,7 @@ export function isArray(value: unknown): value is unknown[] {
 export function isObject(value: unknown): value is Record<string, any> {
   return typeof value === 'object' && value !== null && !isArray(value)
 }
+
+export function isFile(value: unknown): value is File {
+  return value instanceof File
+}
