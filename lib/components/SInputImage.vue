@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
   checkText?: string
   checkColor?: CheckColor
   imageType?: ImageType
-  imageWidth?: number
+  imageWidth?: string
   imageAspectRatio?: string
   selectText?: string
   removeText?: string
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<{
   validation?: Validatable
 }>(), {
   imageType: 'rectangle',
-  imageWidth: 96,
+  imageWidth: '96px',
   imageAspectRatio: '1 / 1',
   selectText: 'Select image',
   removeText: 'Remove image',
@@ -160,7 +160,7 @@ function onFileDelete() {
 .image {
   display: flex;
   flex-shrink: 0;
-  width: var(--input-image-width, v-bind("`${imageWidth}px`"));
+  width: var(--input-image-width, v-bind(imageWidth));
   aspect-ratio: v-bind(imageAspectRatio);
   overflow: hidden;
 }
@@ -214,6 +214,7 @@ function onFileDelete() {
 }
 
 .help {
+  margin: 0;
   line-height: 20px;
   font-size: 12px;
   color: var(--c-text-2);

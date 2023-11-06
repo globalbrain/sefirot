@@ -25,7 +25,7 @@ function state() {
     note: '',
     help: 'JPG or PNG. 500KB max.',
     imageType: 'rectangle',
-    imageWidth: 96,
+    imageWidth: '96px',
     imageAspectRatio: '1 / 1',
     selectText: 'Select image',
     removeText: 'Remove image',
@@ -74,7 +74,7 @@ function state() {
         }"
         v-model="state.imageType"
       />
-      <HstNumber
+      <HstText
         title="image-width"
         v-model="state.imageWidth"
       />
