@@ -383,7 +383,7 @@ Customize the font size of the button's label. The font size is different depend
    * `--button-font-size` is set, these values gets ignored.
    */
   --button-mini-font-size: 12px;
-  --button-small-font-size: 14px;
+  --button-small-font-size: 13px;
   --button-medium-font-size: 14px;
   --button-large-font-size: 14px;
   --button-jumbo-font-size: 16px;
