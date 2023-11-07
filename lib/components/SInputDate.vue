@@ -86,7 +86,7 @@ function emitBlur() {
           autocomplete="off"
           :value="inputValue"
           :disabled="disabled"
-          v-on="disabled || inputEvents"
+          v-on="disabled ? {} : inputEvents"
           @blur="emitBlur"
         >
       </DatePicker>
