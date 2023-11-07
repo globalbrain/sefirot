@@ -1,3 +1,13 @@
+# [3.2.0](https://github.com/globalbrain/sefirot/compare/v3.1.0...v3.2.0) (2023-11-07)
+
+### Bug Fixes
+
+* **input-date:** fix prop types to prevent vue warning ([#371](https://github.com/globalbrain/sefirot/issues/371)) ([1dc9233](https://github.com/globalbrain/sefirot/commit/1dc9233db5e00bdd7271c3631ca56cbc4e4ce3d4))
+
+### Features
+
+* **m:** add `<SM>` (motion) component ([#370](https://github.com/globalbrain/sefirot/issues/370)) ([9782ffc](https://github.com/globalbrain/sefirot/commit/9782ffc4ff4e5f28f51d5691db7111822c02e894))
+
 # [3.1.0](https://github.com/globalbrain/sefirot/compare/v3.0.0...v3.1.0) (2023-11-06)
 
 ### Features
