@@ -39,8 +39,14 @@ body {
 
 .rounded-6 { border-radius: 6px; }
 
-.p-8  { padding: 8px; }
-.p-12 { padding: 12px; }
+.p-8   { padding: 8px; }
+.p-12  { padding: 12px; }
+.p-256 { padding: 256px; }
+
+.py-256 { padding: 256px 0 256px; }
+
+.pt-256 { padding-top: 256px; }
+.pt-512 { padding-top: 512px; }
 
 .flex {
   display: flex;
