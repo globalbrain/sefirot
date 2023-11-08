@@ -236,17 +236,6 @@ const table = useTable({
       }
     },
 
-    createdAt: {
-      label: 'Created at',
-      dropdown: dropdownCreatedAt,
-      cell: {
-        type: 'day',
-        format: 'YYYY-MM-DD',
-        color: 'soft'
-      },
-      resizable: false
-    },
-
     tags: {
       label: 'Tags',
       show: !optionsSelected.value.includes('hide-tags'),
@@ -262,6 +251,17 @@ const table = useTable({
           }))
         }
       }
+    },
+
+    createdAt: {
+      label: 'Created at',
+      dropdown: dropdownCreatedAt,
+      cell: {
+        type: 'day',
+        format: 'YYYY-MM-DD',
+        color: 'soft'
+      },
+      resizable: false
     },
 
     actions: {
@@ -283,7 +283,8 @@ const table = useTable({
           }
         ]
         /* eslint-enable */
-      }
+      },
+      resizable: false
     }
   })),
 

@@ -206,7 +206,11 @@ const resizeObserver = useResizeObserver(head, handleResize)
 
 function stopObserving() {
   const orders = ordersToShow.value
-  colWidths[orders[orders.length - 1]] = 'auto'
+  const lastOrder
+    = orders[orders.length - 1] === 'actions'
+      ? orders[orders.length - 2]
+      : orders[orders.length - 1]
+  colWidths[lastOrder] = 'auto'
   resizeObserver.stop()
 }
 
