@@ -228,9 +228,9 @@
 
 :root {
   --c-bg-elv-1: #ffffff;
-  --c-bg-elv-2: #f9f9f9;
+  --c-bg-elv-2: #f5f5f7;
   --c-bg-elv-3: #ffffff;
-  --c-bg-elv-4: #f9f9f9;
+  --c-bg-elv-4: #fafafa;
 
   --c-bg-mute-1: var(--c-gray-4);
   --c-bg-mute-2: var(--c-gray-5);
