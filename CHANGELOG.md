@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/globalbrain/sefirot/compare/v3.2.0...v3.2.1) (2023-11-10)
+
+### Bug Fixes
+
+* **style:** adjust `bg-elv` color for light mode ([#373](https://github.com/globalbrain/sefirot/issues/373)) ([ee4791e](https://github.com/globalbrain/sefirot/commit/ee4791ea508bb2d504131fca63dd948f501e799e))
+* **table:** don't grow actions column ([#372](https://github.com/globalbrain/sefirot/issues/372)) ([582ae81](https://github.com/globalbrain/sefirot/commit/582ae814dbc004197e47343a82044d32637c59ee))
+
 # [3.2.0](https://github.com/globalbrain/sefirot/compare/v3.1.0...v3.2.0) (2023-11-07)
 
 ### Bug Fixes
