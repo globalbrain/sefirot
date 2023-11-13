@@ -248,8 +248,8 @@ describe('components/SDesc', () => {
 
       const pills = wrapper.findAll('.SDescPill .pill')
       expect(pills.length).toBe(2)
-      expect(pills.at(0).find('.label').text()).toBe('Pill A')
-      expect(pills.at(1).find('.label').text()).toBe('Pill B')
+      expect(pills[0].find('.label').text()).toBe('Pill A')
+      expect(pills[1].find('.label').text()).toBe('Pill B')
     })
 
     test('shows `SDescEmpty` when the value is empty', () => {

@@ -47,7 +47,7 @@ describe('components/STable', () => {
             }]
           }
         ],
-        records: []
+        records: [] as any[]
       })
 
       const wrapper = mount(STable, {
@@ -81,7 +81,7 @@ describe('components/STable', () => {
             }]
           }]
         ],
-        records: []
+        records: [] as any[]
       })
 
       const wrapper = mount(STable, {
@@ -109,7 +109,7 @@ describe('components/STable', () => {
             }]
           }
         ],
-        records: []
+        records: [] as any[]
       })
 
       const wrapper = mount(STable, {
@@ -137,7 +137,7 @@ describe('components/STable', () => {
             }]
           }
         ],
-        records: []
+        records: [] as any[]
       })
 
       const wrapper = mount(STable, {
