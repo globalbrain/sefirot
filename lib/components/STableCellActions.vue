@@ -3,7 +3,6 @@ import { type TableCellAction } from '../composables/Table'
 import SButton from './SButton.vue'
 
 defineProps<{
-  value: any
   record: any
   actions: TableCellAction[]
 }>()
@@ -11,18 +10,19 @@ defineProps<{
 
 <template>
   <div class="STableCellActions">
-    <SButton
-      v-for="(action, i) in actions"
-      :key="i"
-      size="mini"
-      type="text"
-      :mode="action.mode ?? 'mute'"
-      :icon="action.icon"
-      :icon-mode="action.iconMode"
-      :label="action.label"
-      :label-mode="action.labelMode"
-      @click="action.onClick(value, record)"
-    />
+    <template v-for="(action, i) in actions" :key="i">
+      <SButton
+        v-if="action.show == null || action.show(record)"
+        size="mini"
+        type="text"
+        :mode="action.mode ?? 'mute'"
+        :icon="action.icon"
+        :icon-mode="action.iconMode"
+        :label="action.label"
+        :label-mode="action.labelMode"
+        @click="action.onClick(record)"
+      />
+    </template>
   </div>
 </template>
 

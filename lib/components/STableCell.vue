@@ -102,7 +102,6 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellActions
       v-else-if="computedCell.type === 'actions'"
-      :value="value"
       :record="record"
       :actions="computedCell.actions"
     />
