@@ -210,7 +210,7 @@ const font = typeof document !== 'undefined'
   : '500 12px Inter'
 
 const actionsColumnWidth = computed(() => {
-  const { cell } = unref(props.options.columns).actions
+  const { cell } = unref(props.options.columns).actions ?? {}
 
   if (
     typeof document === 'undefined'
