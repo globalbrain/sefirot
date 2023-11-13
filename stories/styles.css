@@ -30,6 +30,8 @@ body {
 .text-c-2 { color: var(--c-text-2); }
 .text-c-3 { color: var(--c-text-3); }
 
+.text-c-info-1 { color: var(--c-text-info-1); }
+
 .font-400 { font-weight: 400; }
 .font-500 { font-weight: 500; }
 .font-600 { font-weight: 600; }

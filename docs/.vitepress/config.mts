@@ -41,7 +41,8 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'Colors', link: '/styles/colors' },
-        { text: 'Shared Input Styles', link: '/styles/input-styles' }
+        { text: 'Shared Input Styles', link: '/styles/input-styles' },
+        { text: 'Utility Classes', link: '/styles/utility-classes' }
       ]
     },
     {
@@ -76,7 +77,8 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SPill', link: '/components/pill' },
         { text: 'SState', link: '/components/state' },
         { text: 'STable', link: '/components/table' },
-        { text: 'STooltip', link: '/components/tooltip' }
+        { text: 'STooltip', link: '/components/tooltip' },
+        { text: 'SW', link: '/components/w' },
       ]
     },
     {
