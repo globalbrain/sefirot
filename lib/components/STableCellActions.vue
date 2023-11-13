@@ -3,7 +3,6 @@ import { type TableCellAction } from '../composables/Table'
 import SButton from './SButton.vue'
 
 defineProps<{
-  value: any
   record: any
   actions: TableCellAction[]
 }>()
@@ -21,7 +20,7 @@ defineProps<{
       :icon-mode="action.iconMode"
       :label="action.label"
       :label-mode="action.labelMode"
-      @click="action.onClick(value, record)"
+      @click="action.onClick(record)"
     />
   </div>
 </template>
