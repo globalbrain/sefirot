@@ -223,20 +223,20 @@ const actionsColumnWidth = computed(() => {
 
   const { actions } = cell
 
-  const widths = actions.map((action) => {
+  const widths = actions.map(({ icon, label }) => {
     // has only icon
-    if (action.icon && !action.label) {
+    if (icon && !label) {
       return 1 /* border */ + 5 /* padding */ + 16 /* icon */ + 5 /* padding */ + 1 /* border */
     }
 
     // has only label
-    if (action.label && !action.icon) {
-      return 1 /* border */ + 12 /* padding */ + getTextWidth(action.label, font) + 12 /* padding */ + 1 /* border */
+    if (label && !icon) {
+      return 1 /* border */ + 12 /* padding */ + getTextWidth(label, font) + 12 /* padding */ + 1 /* border */
     }
 
     // has both icon and label
-    if (action.icon && action.label) {
-      return 1 /* border */ + 8 /* padding */ + 16 /* icon */ + 4 /* padding */ + getTextWidth(action.label, font) + 10 /* padding */ + 1 /* border */
+    if (icon && label) {
+      return 1 /* border */ + 8 /* padding */ + 16 /* icon */ + 4 /* padding */ + getTextWidth(label, font) + 10 /* padding */ + 1 /* border */
     }
 
     return 0
