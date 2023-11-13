@@ -16,7 +16,7 @@ const types = ['dimm', 'fill'] as const
 
 function state() {
   return {
-    mode: 'neutral',
+    mode: 'default',
     label: 'Pill',
     clickable: false
   }
@@ -29,8 +29,9 @@ function state() {
       <HstSelect
         title="mode"
         :options="{
-          neutral: 'neutral',
+          default: 'default',
           mute: 'mute',
+          neutral: 'neutral',
           info: 'info',
           success: 'success',
           warning: 'warning',

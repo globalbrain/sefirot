@@ -19,20 +19,20 @@ describe('components/SPill', () => {
     expect(wrapper.find('.SPill').element.tagName).toBe('BUTTON')
   })
 
-  test('tag is set to given `tag` if it exists', () => {
+  test('tag is set to given `:as` if it exists', () => {
     const wrapper = mount(SPill, {
       props: {
-        tag: 'div'
+        as: 'div'
       }
     })
 
     expect(wrapper.find('.SPill').element.tagName).toBe('DIV')
   })
 
-  test('tag is set to given `tag` if it exists even if `clickable` is set', () => {
+  test('tag is set to given `:as` if it exists even if `clickable` is set', () => {
     const wrapper = mount(SPill, {
       props: {
-        tag: 'div',
+        as: 'div',
         clickable: true
       }
     })

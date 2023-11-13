@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SPill from 'sefirot/components/SPill.vue'
 
-const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+const modes = ['default', 'mute', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 </script>
 
 # SPill
@@ -17,21 +17,11 @@ const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as con
   </div>
 </Showcase>
 
-## Usage
+## Overview
 
-Import `<SPill>` component and it's good to go. All props are optional.
+Use this component to mark some objects. Fpr example. `<SPill>` can be used to tag certain object, such as "Important", "Urgent", "High priority", etc.
 
-```vue
-<script setup lang="ts">
-import SPill from '@globalbrain/sefirot/lib/components/SPill.vue'
-</script>
-
-<template>
-  <SPill label="Pill" />
-</template>
-```
-
-## Difference from SState
+### Difference from SState
 
 The [`<SState>`](state) is different from `<SPill>` where `<SPill>` should be used to list certain types of items for the object, but `<SState>` is used to indicate the "State" of the object.
 
@@ -39,22 +29,35 @@ For example, `<SState>` should be used for things like "Status" (Open, In progre
 
 `<SPill>` on the other hand should be used for things like "Tag" (List of available items, User's roles, etc.)
 
+## Import
+
+```ts
+import SPill from '@globalbrain/sefirot/lib/components/SPill.vue'
+```
+
+## Usage
+
+Import `<SPill>` component and it's good to go. All props are optional.
+
+```vue-html
+<SPill label="Pill" />
+```
+
 ## Props
 
-Here are the list of props you may pass to the component.
+### `:as`
 
-### `:tag`
-
-Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
 
 ```ts
 interface Props {
-  tag?: string
+  // @default 'span' | 'button'
+  as?: string
 }
 ```
 
 ```vue-html
-<SPill tag="div" label="Pill" />
+<SPill as="div" label="Pill" />
 ```
 
 ### `:size`
@@ -73,10 +76,11 @@ interface Props {
 
 ### `:type`
 
-Defines how the pill look. The default is `dimm`.
+Defines how the pill look.
 
 ```ts
 interface Props {
+  // @default 'dimm'
   type?: 'dimm' | 'fill'
 }
 ```
@@ -87,16 +91,18 @@ interface Props {
 
 ### `:mode`
 
-Defines the color of the pill. The default is `neutral`.
+Defines the color of the pill.
 
 ```ts
 interface Props {
+  // @default 'default'
   mode?: Mode
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'
@@ -135,9 +141,25 @@ interface Props {
 <SPill label="Button" clickable />
 ```
 
-## Events
+### `:tag`
 
-Here are the list of events the component may emit.
+::: warning Deprecated
+`:tag` is deprectated. Use `:as` instead.
+:::
+
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
+
+```ts
+interface Props {
+  tag?: string
+}
+```
+
+```vue-html
+<SPill tag="div" label="Pill" />
+```
+
+## Events
 
 ### `@click`
 
@@ -159,41 +181,59 @@ The component has several different styles based on its type and color combinati
 
 ```css
 :root {
-  --pill-dimm-neutral-border-color: var(--c-divider-1);
-  --pill-dimm-neutral-text-color: var(--c-text-1);
-  --pill-dimm-neutral-bg-color: var(--c-mute);
-  --pill-dimm-neutral-hover-bg-color: var(--c-mute-dimm-1);
-  --pill-dimm-neutral-active-bg-color: var(--c-mute-dimm-2);
+  --pill-dimm-default-border-color: var(--c-border-mute-1);
+  --pill-dimm-default-text-color: var(--c-text-1);
+  --pill-dimm-default-bg-color: var(--c-bg-mute-1);
+  --pill-dimm-default-hover-bg-color: var(--c-bg-mute-2);
+  --pill-dimm-default-active-bg-color: var(--c-bg-mute-3);
 
-  --pill-dimm-mute-border-color: var(--c-divider-1);
+  --pill-dimm-mute-border-color: var(--c-border-mute-1);
   --pill-dimm-mute-text-color: var(--c-text-2);
-  --pill-dimm-mute-bg-color: var(--c-mute);
-  --pill-dimm-mute-hover-bg-color: var(--c-mute-dimm-1);
-  --pill-dimm-mute-active-bg-color: var(--c-mute-dimm-2);
+  --pill-dimm-mute-bg-color: var(--c-bg-mute-1);
+  --pill-dimm-mute-hover-bg-color: var(--c-bg-mute-2);
+  --pill-dimm-mute-active-bg-color: var(--c-bg-mute-3);
 
-  --pill-dimm-info-border-color: var(--c-info-light);
-  --pill-dimm-info-text-color: var(--c-info-light);
-  --pill-dimm-info-bg-color: var(--c-info-dimm-1);
-  --pill-dimm-info-hover-bg-color: var(--c-info-dimm-2);
-  --pill-dimm-info-active-bg-color: var(--c-info-dimm-3);
+  --pill-dimm-neutral-border-color: var(--c-neutral-1);
+  --pill-dimm-neutral-text-color: var(--c-text-inverse-1);
+  --pill-dimm-neutral-bg-color: var(--c-neutral-1);
+  --pill-dimm-neutral-hover-bg-color: var(--c-neutral-2);
+  --pill-dimm-neutral-active-bg-color: var(--c-neutral-3);
 
-  --pill-dimm-success-border-color: var(--c-success-light);
-  --pill-dimm-success-text-color: var(--c-success-light);
-  --pill-dimm-success-bg-color: var(--c-success-dimm-1);
-  --pill-dimm-success-hover-bg-color: var(--c-success-dimm-2);
-  --pill-dimm-success-active-bg-color: var(--c-success-dimm-3);
+  --pill-dimm-info-border-color: var(--c-border-info-1);
+  --pill-dimm-info-text-color: var(--c-text-info-1);
+  --pill-dimm-info-bg-color: var(--c-bg-info-dimm-a1);
+  --pill-dimm-info-hover-bg-color: var(--c-bg-info-dimm-a2);
+  --pill-dimm-info-active-bg-color: var(--c-bg-info-dimm-a2);
 
-  --pill-dimm-warning-border-color: var(--c-warning-light);
-  --pill-dimm-warning-text-color: var(--c-warning-light);
-  --pill-dimm-warning-bg-color: var(--c-warning-dimm-1);
-  --pill-dimm-warning-hover-bg-color: var(--c-warning-dimm-2);
-  --pill-dimm-warning-active-bg-color: var(--c-warning-dimm-3);
+  --pill-dimm-success-border-color: var(--c-border-success-1);
+  --pill-dimm-success-text-color: var(--c-text-success-1);
+  --pill-dimm-success-bg-color: var(--c-bg-success-dimm-a1);
+  --pill-dimm-success-hover-bg-color: var(--c-bg-success-dimm-a2);
+  --pill-dimm-success-active-bg-color: var(--c-bg-success-dimm-a2);
 
-  --pill-dimm-danger-border-color: var(--c-danger-light);
-  --pill-dimm-danger-text-color: var(--c-danger-light);
-  --pill-dimm-danger-bg-color: var(--c-danger-dimm-1);
-  --pill-dimm-danger-hover-bg-color: var(--c-danger-dimm-2);
-  --pill-dimm-danger-active-bg-color: var(--c-danger-dimm-3);
+  --pill-dimm-warning-border-color: var(--c-border-warning-1);
+  --pill-dimm-warning-text-color: var(--c-text-warning-1);
+  --pill-dimm-warning-bg-color: var(--c-bg-warning-dimm-a1);
+  --pill-dimm-warning-hover-bg-color: var(--c-bg-warning-dimm-a2);
+  --pill-dimm-warning-active-bg-color: var(--c-bg-warning-dimm-a2);
+
+  --pill-dimm-danger-border-color: var(--c-border-danger-1);
+  --pill-dimm-danger-text-color: var(--c-text-danger-1);
+  --pill-dimm-danger-bg-color: var(--c-bg-danger-dimm-a1);
+  --pill-dimm-danger-hover-bg-color: var(--c-bg-danger-dimm-a2);
+  --pill-dimm-danger-active-bg-color: var(--c-bg-danger-dimm-a2);
+
+  --pill-fill-default-border-color: transparent;
+  --pill-fill-default-text-color: var(--c-text-1);
+  --pill-fill-default-bg-color: var(--c-bg-mute-1);
+  --pill-fill-default-hover-bg-color: var(--c-bg-mute-2);
+  --pill-fill-default-active-bg-color: var(--c-bg-mute-3);
+
+  --pill-fill-mute-border-color: transparent;
+  --pill-fill-mute-text-color: var(--c-text-2);
+  --pill-fill-mute-bg-color: var(--c-bg-mute-1);
+  --pill-fill-mute-hover-bg-color: var(--c-bg-mute-2);
+  --pill-fill-mute-active-bg-color: var(--c-bg-mute-3);
 
   --pill-fill-neutral-border-color: transparent;
   --pill-fill-neutral-text-color: var(--c-text-inverse-1);
@@ -201,34 +241,28 @@ The component has several different styles based on its type and color combinati
   --pill-fill-neutral-hover-bg-color: var(--c-neutral-2);
   --pill-fill-neutral-active-bg-color: var(--c-neutral-3);
 
-  --pill-fill-mute-border-color: transparent;
-  --pill-fill-mute-text-color: var(--c-text-1);
-  --pill-fill-mute-bg-color: var(--c-mute);
-  --pill-fill-mute-hover-bg-color: var(--c-mute-dimm-1);
-  --pill-fill-mute-active-bg-color: var(--c-mute-dimm-2);
-
   --pill-fill-info-border-color: transparent;
-  --pill-fill-info-text-color: var(--c-text-dark-1);
-  --pill-fill-info-bg-color: var(--c-info);
-  --pill-fill-info-hover-bg-color: var(--c-info-dark);
-  --pill-fill-info-active-bg-color: var(--c-info-darker);
+  --pill-fill-info-text-color: var(--c-white-1);
+  --pill-fill-info-bg-color: var(--c-bg-info-1);
+  --pill-fill-info-hover-bg-color: var(--c-bg-info-2);
+  --pill-fill-info-active-bg-color: var(--c-bg-info-3);
 
   --pill-fill-success-border-color: transparent;
-  --pill-fill-success-text-color: var(--c-text-dark-1);
-  --pill-fill-success-bg-color: var(--c-success);
-  --pill-fill-success-hover-bg-color: var(--c-success-dark);
-  --pill-fill-success-active-bg-color: var(--c-success-darker);
+  --pill-fill-success-text-color: var(--c-white-1);
+  --pill-fill-success-bg-color: var(--c-bg-success-1);
+  --pill-fill-success-hover-bg-color: var(--c-bg-success-2);
+  --pill-fill-success-active-bg-color: var(--c-bg-success-3);
 
   --pill-fill-warning-border-color: transparent;
-  --pill-fill-warning-text-color: var(--c-text-dark-1);
-  --pill-fill-warning-bg-color: var(--c-warning);
-  --pill-fill-warning-hover-bg-color: var(--c-warning-dark);
-  --pill-fill-warning-active-bg-color: var(--c-warning-darker);
+  --pill-fill-warning-text-color: var(--c-white-1);
+  --pill-fill-warning-bg-color: var(--c-bg-warning-1);
+  --pill-fill-warning-hover-bg-color: var(--c-bg-warning-2);
+  --pill-fill-warning-active-bg-color: var(--c-bg-warning-3);
 
   --pill-fill-danger-border-color: transparent;
-  --pill-fill-danger-text-color: var(--c-text-dark-1);
-  --pill-fill-danger-bg-color: var(--c-danger);
-  --pill-fill-danger-hover-bg-color: var(--c-danger-dark);
-  --pill-fill-danger-active-bg-color: var(--c-danger-darker);
+  --pill-fill-danger-text-color: var(--c-white-1);
+  --pill-fill-danger-bg-color: var(--c-bg-danger-1);
+  --pill-fill-danger-hover-bg-color: var(--c-bg-danger-2);
+  --pill-fill-danger-active-bg-color: var(--c-bg-danger-3);
 }
 ```

@@ -3,15 +3,18 @@ import { computed } from 'vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large'
 export type Type = 'dimm' | 'fill'
-export type Mode = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
-  tag?: string
+  as?: string
   size?: Size
   type?: Type
   mode?: Mode
   label?: string
   clickable?: boolean
+
+  // @deprecated Use `as` instead.
+  tag?: string
 }>()
 
 const emit = defineEmits<{
@@ -21,14 +24,13 @@ const emit = defineEmits<{
 const classes = computed(() => [
   props.size ?? 'small',
   props.type ?? 'dimm',
-  props.mode ?? 'neutral',
+  props.mode ?? 'default',
   { clickable: props.clickable }
 ])
 
 const computedTag = computed(() => {
-  return props.tag
-    ? props.tag
-    : props.clickable ? 'button' : 'span'
+  const as = props.as ?? props.tag
+  return as || (props.clickable ? 'button' : 'span')
 })
 
 function onClick() {
@@ -82,17 +84,17 @@ function onClick() {
   border-radius: 16px;
   padding: 0 12px;
   line-height: 30px;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .SPill.dimm {
-  &.neutral {
-    border-color: var(--pill-dimm-neutral-border-color);
-    color: var(--pill-dimm-neutral-text-color);
-    background-color: var(--pill-dimm-neutral-bg-color);
+  &.default {
+    border-color: var(--pill-dimm-default-border-color);
+    color: var(--pill-dimm-default-text-color);
+    background-color: var(--pill-dimm-default-bg-color);
 
-    &.clickable:hover { background-color: var(--pill-dimm-neutral-hover-bg-color); }
-    &.clickable:active { background-color: var(--pill-dimm-neutral-active-bg-color); }
+    &.clickable:hover { background-color: var(--pill-dimm-default-hover-bg-color); }
+    &.clickable:active { background-color: var(--pill-dimm-default-active-bg-color); }
   }
 
   &.mute {
@@ -102,6 +104,15 @@ function onClick() {
 
     &.clickable:hover { background-color: var(--pill-dimm-mute-hover-bg-color); }
     &.clickable:active { background-color: var(--pill-dimm-mute-active-bg-color); }
+  }
+
+  &.neutral {
+    border-color: var(--pill-dimm-neutral-border-color);
+    color: var(--pill-dimm-neutral-text-color);
+    background-color: var(--pill-dimm-neutral-bg-color);
+
+    &.clickable:hover { background-color: var(--pill-dimm-neutral-hover-bg-color); }
+    &.clickable:active { background-color: var(--pill-dimm-neutral-active-bg-color); }
   }
 
   &.info {
@@ -142,13 +153,13 @@ function onClick() {
 }
 
 .SPill.fill {
-  &.neutral {
-    border-color: var(--pill-fill-neutral-border-color);
-    color: var(--pill-fill-neutral-text-color);
-    background-color: var(--pill-fill-neutral-bg-color);
+  &.default {
+    border-color: var(--pill-fill-default-border-color);
+    color: var(--pill-fill-default-text-color);
+    background-color: var(--pill-fill-default-bg-color);
 
-    &.clickable:hover { background-color: var(--pill-fill-neutral-hover-bg-color); }
-    &.clickable:active { background-color: var(--pill-fill-neutral-active-bg-color); }
+    &.clickable:hover { background-color: var(--pill-fill-default-hover-bg-color); }
+    &.clickable:active { background-color: var(--pill-fill-default-active-bg-color); }
   }
 
   &.mute {
@@ -158,6 +169,15 @@ function onClick() {
 
     &.clickable:hover { background-color: var(--pill-fill-mute-hover-bg-color); }
     &.clickable:active { background-color: var(--pill-fill-mute-active-bg-color); }
+  }
+
+  &.neutral {
+    border-color: var(--pill-fill-neutral-border-color);
+    color: var(--pill-fill-neutral-text-color);
+    background-color: var(--pill-fill-neutral-bg-color);
+
+    &.clickable:hover { background-color: var(--pill-fill-neutral-hover-bg-color); }
+    &.clickable:active { background-color: var(--pill-fill-neutral-active-bg-color); }
   }
 
   &.info {
