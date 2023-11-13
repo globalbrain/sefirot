@@ -242,7 +242,7 @@ const actionsColumnWidth = computed(() => {
     return 0
   })
 
-  return (widths.reduce((a, b) => a + b, 0) + 16).toFixed(2)
+  return 8 /* padding */ + widths.reduce((a, b) => a + b, 0) + 8 /* padding */
 })
 
 watch(actionsColumnWidth, (newValue) => {
