@@ -7,7 +7,7 @@ const docs = '/components/state'
 function state() {
   return {
     size: 'small',
-    mode: 'neutral',
+    mode: 'default',
     label: 'State'
   }
 }
@@ -29,8 +29,9 @@ function state() {
       <HstSelect
         title="mode"
         :options="{
-          neutral: 'neutral',
+          default: 'default',
           mute: 'mute',
+          neutral: 'neutral',
           info: 'info',
           success: 'success',
           warning: 'warning',

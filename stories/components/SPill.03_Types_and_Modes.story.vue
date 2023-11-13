@@ -10,7 +10,7 @@ const variants = [
   { title: 'Fill', type: 'fill' }
 ] as const
 
-const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+const modes = ['default', 'mute', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 
 function state() {
   return {

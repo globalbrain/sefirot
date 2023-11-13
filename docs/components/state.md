@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SState from 'sefirot/components/SState.vue'
 
-const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+const modes = ['default', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 </script>
 
 # SState
@@ -17,21 +17,11 @@ const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as con
   </div>
 </Showcase>
 
-## Usage
+## Overview
 
-Import `<SState>` component and set `:mode` and `:label`.
+Use this component to indicate the state of the object. For example, `<SState>` can be used to note certain object's status, such as "Open", "In progress", "Completed", etc.
 
-```vue
-<script setup lang="ts">
-import SState from '@globalbrain/sefirot/lib/components/SState.vue'
-</script>
-
-<template>
-  <SState mode="success" label="Completed" />
-</template>
-```
-
-## Difference from SPill
+### Difference from `<SPill>`
 
 The `<SState>` is different from [`<SPill>`](pill) where `<SPill>` should be used to list certain types of items for the object, but `<SState>` is used to indicate the "State" of the object.
 
@@ -39,16 +29,29 @@ For example, `<SState>` should be used for things like "Status" (Open, In progre
 
 `<SPill>` on the other hand should be used for things like "Tag" (List of available items, User's roles, etc.)
 
-## Props
+## Import
 
-Here are the list of props you may pass to the component.
+```ts
+import SState from '@globalbrain/sefirot/lib/components/SState.vue'
+```
+
+## Usage
+
+Import `<SState>` component and set `:mode` and `:label`.
+
+```vue-html
+<SState mode="success" label="Completed" />
+```
+
+## Props
 
 ### `:as`
 
-Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default is `span`.
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`.
 
 ```ts
 interface Props {
+  // @default 'span'
   as?: string
 }
 ```
@@ -59,10 +62,11 @@ interface Props {
 
 ### `:size`
 
-Defines the size of the component. The default is `small`.
+Defines the size of the component.
 
 ```ts
 interface Props {
+  // @default 'small'
   size?: 'mini' | 'small' | 'medium' | 'large'
 }
 ```
@@ -73,16 +77,18 @@ interface Props {
 
 ### `:mode`
 
-Defines the color of the state. The default is `neutral`.
+Defines the color of the state.
 
 ```ts
 interface Props {
+  // @default 'default'
   mode?: Mode
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'
@@ -99,7 +105,7 @@ Defines the label text of the state.
 
 ```ts
 interface Props {
-  label?: string
+  label: string
 }
 ```
 

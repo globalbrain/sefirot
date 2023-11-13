@@ -4,7 +4,7 @@ import SState from 'sefirot/components/SState.vue'
 const title = 'Components / SState / 03. Types'
 const docs = '/components/state'
 
-const modes = ['neutral', 'mute', 'info', 'success', 'warning', 'danger'] as const
+const modes = ['default', 'mute', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 
 function state() {
   return {

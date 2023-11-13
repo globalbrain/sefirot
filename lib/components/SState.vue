@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large'
-export type Mode = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type Mode = 'default' | 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   as?: string
@@ -13,7 +13,7 @@ const props = defineProps<{
 
 const classes = computed(() => [
   props.size ?? 'small',
-  props.mode ?? 'neutral'
+  props.mode ?? 'default'
 ])
 </script>
 
@@ -29,7 +29,6 @@ const classes = computed(() => [
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--c-border-mute-1);
-  border-radius: 6px;
   font-weight: 500;
   white-space: nowrap;
   background-color: var(--c-bg-mute-1);
@@ -37,11 +36,11 @@ const classes = computed(() => [
 
 .SState.mini {
   gap: 6px;
+  border-radius: 10px;
   padding: 0 6px;
   height: 20px;
 
   .indicator {
-    border-radius: 2px;
     width: 8px;
     height: 8px;
   }
@@ -52,12 +51,12 @@ const classes = computed(() => [
 }
 
 .SState.small {
-  gap: 8px;
+  gap: 6px;
+  border-radius: 12px;
   padding: 0 8px;
   height: 24px;
 
   .indicator {
-    border-radius: 3px;
     width: 10px;
     height: 10px;
   }
@@ -68,12 +67,12 @@ const classes = computed(() => [
 }
 
 .SState.medium {
-  gap: 8px;
+  gap: 6px;
+  border-radius: 14px;
   padding: 0 8px;
   height: 28px;
 
   .indicator {
-    border-radius: 3px;
     width: 10px;
     height: 10px;
   }
@@ -84,12 +83,12 @@ const classes = computed(() => [
 }
 
 .SState.large {
-  gap: 10px;
+  gap: 8px;
+  border-radius: 16px;
   padding: 0 10px;
   height: 32px;
 
   .indicator {
-    border-radius: 4px;
     width: 12px;
     height: 12px;
   }
@@ -99,28 +98,38 @@ const classes = computed(() => [
   }
 }
 
-.SState.neutral {
-  .indicator { background-color: var(--c-neutral-1); }
+.SState.default {
+  .label     { color: var(--c-text-1); }
+  .indicator { background-color: var(--c-fg-gray-1); }
 }
 
-.SState.mute  {
+.SState.mute {
   .label     { color: var(--c-text-2); }
   .indicator { background-color: var(--c-fg-gray-1); }
 }
 
-.SState.info  {
+.SState.neutral {
+  .label     { color: var(--c-text-1); }
+  .indicator { background-color: var(--c-neutral-1); }
+}
+
+.SState.info {
+  .label     { color: var(--c-text-1); }
   .indicator { background-color: var(--c-fg-info-1); }
 }
 
-.SState.success  {
+.SState.success {
+  .label     { color: var(--c-text-1); }
   .indicator { background-color: var(--c-fg-success-1); }
 }
 
-.SState.warning  {
+.SState.warning {
+  .label     { color: var(--c-text-1); }
   .indicator { background-color: var(--c-fg-warning-1); }
 }
 
-.SState.danger  {
+.SState.danger {
+  .label     { color: var(--c-text-1); }
   .indicator { background-color: var(--c-fg-danger-1); }
 }
 
@@ -130,6 +139,7 @@ const classes = computed(() => [
 
 .indicator {
   display: block;
+  border-radius: 50%;
   transition: background-color 0.25s;
 }
 </style>
