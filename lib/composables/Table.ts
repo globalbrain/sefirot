@@ -189,8 +189,7 @@ export interface TableCellAction {
   iconMode?: Mode
   label?: string
   labelMode?: Mode
-  onClick(record: any): void
-  show?(record: any): boolean
+  onClick(value: any, record: any): void
 }
 
 export interface TableMenu {
