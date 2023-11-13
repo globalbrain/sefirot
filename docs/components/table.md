@@ -510,7 +510,10 @@ interface TableCellActions {
   labelMode?: ColorModes
 
   // Callback function when the button is clicked.
-  onClick(value: any, record: any): void
+  onClick(record: any): void
+
+  // Whether to show the button for the record.
+  show?(record: any): boolean
 }
 
 type ColorModes =
