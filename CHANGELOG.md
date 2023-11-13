@@ -1,3 +1,15 @@
+# [3.3.0](https://github.com/globalbrain/sefirot/compare/v3.2.1...v3.3.0) (2023-11-13)
+
+### Features
+
+* **pill,state:** add `default` mode ([#375](https://github.com/globalbrain/sefirot/issues/375)) ([4bacfda](https://github.com/globalbrain/sefirot/commit/4bacfda8dffb8d3edccd73af894617cdb5353ea1))
+* **table:** allow conditionally showing action items ([#374](https://github.com/globalbrain/sefirot/issues/374)) ([63aa857](https://github.com/globalbrain/sefirot/commit/63aa857b1fc309cfd16d9c70724c50e4db9531dd))
+* **w:** add `<SW>` (word) component ([#378](https://github.com/globalbrain/sefirot/issues/378)) ([11e570f](https://github.com/globalbrain/sefirot/commit/11e570fb69a64c439a9c24beb593186eb0552fad))
+
+### BREAKING CHANGES
+
+* `TableCellAction.onClick` now only takes one argument - `record`.
+
 ## [3.2.1](https://github.com/globalbrain/sefirot/compare/v3.2.0...v3.2.1) (2023-11-10)
 
 ### Bug Fixes
