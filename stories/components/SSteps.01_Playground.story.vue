@@ -2,7 +2,7 @@
 import SSteps from 'sefirot/components/SSteps.vue'
 import { type Step } from 'sefirot/composables/Step'
 
-const title = 'Components / SPill / 03. Types and Modes'
+const title = 'Components / SSteps / 01. Playground'
 
 const steps: Step[] = [
   { status: 'done', text: 'Create account' },
