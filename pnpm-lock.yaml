@@ -23,8 +23,8 @@ devDependencies:
     specifier: ^4.1.1
     version: 4.1.1(vue@3.3.8)
   '@tanstack/vue-virtual':
-    specifier: 3.0.0-beta.60
-    version: 3.0.0-beta.60(vue@3.3.8)
+    specifier: 3.0.0-beta.62
+    version: 3.0.0-beta.62(vue@3.3.8)
   '@types/body-scroll-lock':
     specifier: ^3.1.2
     version: 3.1.2
@@ -994,16 +994,16 @@ packages:
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
     dev: true
 
-  /@tanstack/virtual-core@3.0.0-beta.60:
-    resolution: {integrity: sha512-QlCdhsV1+JIf0c0U6ge6SQmpwsyAT0oQaOSZk50AtEeAyQl9tQrd6qCHAslxQpgphrfe945abvKG8uYvw3hIGA==}
+  /@tanstack/virtual-core@3.0.0-beta.62:
+    resolution: {integrity: sha512-OgENfgem5QLjfVOJgUrcgw34RG48EXj4+8CYFXwVsTBzgJhiGYFtlscKwWPUWwXssB5zhWTfWEK+hUcM1OoIfg==}
     dev: true
 
-  /@tanstack/vue-virtual@3.0.0-beta.60(vue@3.3.8):
-    resolution: {integrity: sha512-sJdNB4IAHzM8a4rEozQlp7RjXJ/0nFf9tIaJNfJ1mCygORCmoJBBoepvkVSgzPLxJROQNNNm2sSlp+2d+R15rw==}
+  /@tanstack/vue-virtual@3.0.0-beta.62(vue@3.3.8):
+    resolution: {integrity: sha512-VaKmBqHZW6Ak9znF7KvE0mROe9+E6igY3InGIz+61gI7qky4OZNwahauZaupGHcNRUwcQI6vRYS4VCeg48s7eQ==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
     dependencies:
-      '@tanstack/virtual-core': 3.0.0-beta.60
+      '@tanstack/virtual-core': 3.0.0-beta.62
       vue: 3.3.8(typescript@5.2.2)
     dev: true
 
