@@ -441,7 +441,7 @@
   --button-fill-mute-active-border-color: var(--c-border-mute-3);
   --button-fill-mute-active-text-color: var(--c-text-2);
   --button-fill-mute-active-bg-color: var(--c-bg-mute-3);
-  --button-fill-mute-disabled-border-color: var(--c-divider-2);
+  --button-fill-mute-disabled-border-color: var(--c-border-mute-1);
   --button-fill-mute-disabled-text-color: var(--c-text-3);
   --button-fill-mute-disabled-content-color: var(--c-text-3);
   --button-fill-mute-disabled-bg-color: var(--c-bg-mute-1);
@@ -508,11 +508,11 @@
   --button-fill-info-disabled-border-color: var(--c-border-info-1);
   --button-fill-info-disabled-text-color: var(--c-white-a3);
   --button-fill-info-disabled-content-color: var(--c-white-a3);
-  --button-fill-info-disabled-bg-color: var(--c-info-bg-dark);
+  --button-fill-info-disabled-bg-color: var(--c-blue-8);
 
   --button-fill-success-border-color: var(--c-border-success-1);
   --button-fill-success-text-color: var(--c-white-1);
-  --button-fill-success-content-color: var(--c-success-text);
+  --button-fill-success-content-color: var(--c-white-1);
   --button-fill-success-bg-color: var(--c-bg-success-1);
   --button-fill-success-loader-color: var(--c-white);
   --button-fill-success-hover-border-color: var(--c-border-success-2);
@@ -524,7 +524,7 @@
   --button-fill-success-disabled-border-color: var(--c-border-success-1);
   --button-fill-success-disabled-text-color: var(--c-white-a3);
   --button-fill-success-disabled-content-color: var(--c-white-a3);
-  --button-fill-success-disabled-bg-color: var(--c-success-bg-dark);
+  --button-fill-success-disabled-bg-color: var(--c-green-8);
 
   --button-fill-warning-border-color: var(--c-border-mute-1);
   --button-fill-warning-text-color: var(--c-text-warning-1);
@@ -826,7 +826,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --table-border: 1px solid var(--c-gutter);
+  --table-border: 1px solid var(--c-divider);
   --table-border-top: var(--table-border);
   --table-border-right: var(--table-border);
   --table-border-bottom: var(--table-border);
