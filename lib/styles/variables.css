@@ -153,6 +153,7 @@
 /**
  * Color: Divider and Gutter
  * -------------------------------------------------------------------------- */
+
  :root {
   --c-divider: #e0e0e1;
   --c-gutter: #e2e2e3;
@@ -166,6 +167,7 @@
 /**
  * Color: Neutral
  * -------------------------------------------------------------------------- */
+
 :root {
   --c-neutral-1: var(--c-neutral-light-1);
   --c-neutral-2: var(--c-neutral-light-2);
