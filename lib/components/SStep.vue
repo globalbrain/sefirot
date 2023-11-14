@@ -92,7 +92,7 @@ defineProps({
   height: 2px;
 }
 
-.bar.mute   { background-color: var(--c-divider-light); }
+.bar.mute   { background-color: var(--c-divider); }
 .bar.active { background-color: var(--c-success); }
 .bar.failed { background-color: var(--c-danger); }
 

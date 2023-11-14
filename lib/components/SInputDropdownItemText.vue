@@ -29,7 +29,7 @@ defineEmits<{
 <style lang="postcss" scoped>
 .SInputDropdownItemText {
   display: flex;
-  border: 1px solid var(--c-divider-light);
+  border: 1px solid var(--c-divider);
   border-radius: 14px;
   padding: 0 12px;
   background-color: var(--c-bg-mute);
