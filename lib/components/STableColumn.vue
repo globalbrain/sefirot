@@ -151,7 +151,7 @@ function stopDialogPositionListener() {
   background-color: var(--c-bg-elv-4);
 
   &.has-header {
-    border-top: 1px solid var(--c-divider-2);
+    border-top: 1px solid var(--c-gutter);
   }
 
   .STableItem:first-child & {

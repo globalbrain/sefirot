@@ -629,7 +629,7 @@ You may also adjust the border-radius via `--table-border-radius` variable.
 
 ```css
 :root {
-  --table-border: 1px solid var(--c-divider-2);
+  --table-border: 1px solid var(--c-divider);
 
   --table-border-top: var(--table-border);
   --table-border-right: var(--table-border);
