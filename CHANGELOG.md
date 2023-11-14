@@ -1,3 +1,14 @@
+
+
+# [3.4.0](https://github.com/globalbrain/sefirot/compare/v3.3.0...v3.4.0) (2023-11-14)
+
+
+### Features
+
+* **card:** add `xlarge` and `xxlarge` size ([#383](https://github.com/globalbrain/sefirot/issues/383)) ([6cd8364](https://github.com/globalbrain/sefirot/commit/6cd8364e6e15d428f41bd8501fc4d43c393ea777))
+* **table:** allow making right column sticky ([#384](https://github.com/globalbrain/sefirot/issues/384)) ([a9eb7d5](https://github.com/globalbrain/sefirot/commit/a9eb7d5ef1e0c7bc5310b1519162dbc00d679ecb))
+* **table:** auto resize actions column ([#377](https://github.com/globalbrain/sefirot/issues/377)) ([#381](https://github.com/globalbrain/sefirot/issues/381)) ([c37b97c](https://github.com/globalbrain/sefirot/commit/c37b97cca0e0972573d7d3ba50ad611eeb4b3b62))
+
 # [3.3.0](https://github.com/globalbrain/sefirot/compare/v3.2.1...v3.3.0) (2023-11-13)
 
 ### Features
