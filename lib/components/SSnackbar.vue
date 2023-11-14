@@ -44,7 +44,7 @@ function close() {
 <style scoped lang="postcss">
 .SSnackbar {
   position: relative;
-  border: 1px solid var(--c-divider-light);
+  border: 1px solid var(--c-divider);
   border-radius: 6px;
   width: 100%;
   background-color: var(--c-bg-elv-up);

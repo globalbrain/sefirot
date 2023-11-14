@@ -31,7 +31,7 @@ defineEmits<{
 <style scoped lang="postcss">
 .SSheet {
   position: relative;
-  border: 1px solid var(--c-divider-light);
+  border: 1px solid var(--c-divider);
   border-radius: 16px;
   background-color: var(--c-bg);
   transition: opacity 0.25s, transform 0.25s;

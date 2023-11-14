@@ -372,6 +372,14 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
 
+.table :deep(.col-actions) {
+  --table-col-position: sticky;
+  --table-col-z-index: 50;
+  --table-col-left: auto;
+  --table-col-right: 0;
+  --table-col-border-left: 1px;
+}
+
 .table {
   margin-bottom: 16px;
 }
