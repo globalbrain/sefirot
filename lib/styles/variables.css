@@ -826,7 +826,7 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --table-border: 1px solid var(--c-divider-2);
+  --table-border: 1px solid var(--c-gutter);
   --table-border-top: var(--table-border);
   --table-border-right: var(--table-border);
   --table-border-bottom: var(--table-border);

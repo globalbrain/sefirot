@@ -47,6 +47,6 @@ const normalizedMenu = computed(() => {
   margin: 0 8px;
   width: 1px;
   height: 16px;
-  background-color: var(--c-divider-2);
+  background-color: var(--c-gutter);
 }
 </style>

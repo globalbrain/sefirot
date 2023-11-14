@@ -543,7 +543,7 @@ function updateSelected(selected: unknown[]) {
 
 :deep(.row) {
   display: flex;
-  border-bottom: 1px solid var(--c-divider-2);
+  border-bottom: 1px solid var(--c-gutter);
 }
 
 :deep(.row.last),
