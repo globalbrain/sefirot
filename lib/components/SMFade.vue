@@ -2,7 +2,8 @@
 import SM, { type Props } from './SM.vue'
 
 withDefaults(defineProps<Props>(), {
-  opacity: 0
+  opacity: 0,
+  once: true
 })
 </script>
 
