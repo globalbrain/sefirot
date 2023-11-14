@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { provideCardState } from '../composables/Card'
 
-export type Size = 'small' | 'medium' | 'large'
+export type Size = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
 export type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -81,6 +81,20 @@ const classes = computed(() => [
     @media (min-width: 864px) {
       margin: 48px auto 128px;
       max-width: 768px;
+    }
+  }
+
+  &.xlarge {
+    @media (min-width: 1056px) {
+      margin: 48px auto 128px;
+      max-width: 960px;
+    }
+  }
+
+  &.xxlarge {
+    @media (min-width: 1248px) {
+      margin: 48px auto 128px;
+      max-width: 1152px;
     }
   }
 }

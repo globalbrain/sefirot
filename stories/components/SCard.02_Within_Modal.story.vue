@@ -19,6 +19,7 @@ const open = ref(false)
 
 function state() {
   return {
+    cardSize: 'small',
     cardMode: 'neutral',
     titleMode: 'neutral'
   }
@@ -28,6 +29,17 @@ function state() {
 <template>
   <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
+      <HstSelect
+        title="Card size"
+        :options="{
+          small: 'small',
+          medium: 'medium',
+          large: 'large',
+          xlarge: 'xlarge',
+          xxlarge: 'xxlarge'
+        }"
+        v-model="state.cardSize"
+      />
       <HstSelect
         title="Card mode"
         :options="{
@@ -59,7 +71,7 @@ function state() {
         <SButton mode="info" label="Open dialog" @click="open = true" />
 
         <SModal :open="open" @close="open = false">
-          <SCard size="small" :mode="state.cardMode">
+          <SCard :size="state.cardSize" :mode="state.cardMode">
             <SCardHeader>
               <SCardHeaderTitle :mode="state.titleMode">Header title</SCardHeaderTitle>
               <SCardHeaderActions>
@@ -78,7 +90,7 @@ function state() {
 
             <SCardFooter>
               <SCardFooterActions>
-                <SCardFooterAction mode="mute" label="Cancel" @click="open = false" />
+                <SCardFooterAction label="Cancel" @click="open = false" />
                 <SCardFooterAction mode="info" label="Submit" @click="open = false" />
               </SCardFooterActions>
             </SCardFooter>
