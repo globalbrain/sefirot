@@ -371,7 +371,6 @@ function updateTagsFilter(value: string) {
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
 .table :deep(.col-createdAt) { --table-col-width: 192px; }
-.table :deep(.col-actions)   { --table-col-width: 100px; }
 
 .table {
   margin-bottom: 16px;

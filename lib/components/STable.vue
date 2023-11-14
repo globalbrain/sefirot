@@ -12,6 +12,7 @@ import {
   watch
 } from 'vue'
 import { type Table } from '../composables/Table'
+import { getTextWidth } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
@@ -203,6 +204,52 @@ useResizeObserver(block, ([entry]) => {
 })
 
 const resizeObserver = useResizeObserver(head, handleResize)
+
+const font = typeof document !== 'undefined'
+  ? `500 12px ${getComputedStyle(document.body).fontFamily}`
+  : '500 12px Inter'
+
+const actionsColumnWidth = computed(() => {
+  const { cell } = unref(props.options.columns).actions ?? {}
+
+  if (
+    typeof document === 'undefined'
+    || !cell
+    || typeof cell === 'function'
+    || cell.type !== 'actions'
+  ) {
+    return undefined
+  }
+
+  const { actions } = cell
+
+  const widths = actions.map(({ icon, label }) => {
+    // has only icon
+    if (icon && !label) {
+      return 1 /* border */ + 5 /* padding */ + 16 /* icon */ + 5 /* padding */ + 1 /* border */
+    }
+
+    // has only label
+    if (label && !icon) {
+      return 1 /* border */ + 12 /* padding */ + getTextWidth(label, font) + 12 /* padding */ + 1 /* border */
+    }
+
+    // has both icon and label
+    if (icon && label) {
+      return 1 /* border */ + 8 /* padding */ + 16 /* icon */ + 4 /* padding */ + getTextWidth(label, font) + 10 /* padding */ + 1 /* border */
+    }
+
+    return 0
+  })
+
+  return 8 /* padding */ + widths.reduce((a, b) => a + b, 0) + 8 /* padding */
+})
+
+watch(actionsColumnWidth, (newValue) => {
+  if (newValue) {
+    updateColWidth('actions', `${newValue}px`)
+  }
+}, { immediate: true, flush: 'post' })
 
 function stopObserving() {
   const orders = ordersToShow.value

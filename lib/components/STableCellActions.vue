@@ -31,8 +31,8 @@ defineProps<{
   min-height: 40px;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: nowrap;
   flex-direction: row;
+  padding: 0 8px;
 }
 </style>
