@@ -69,7 +69,7 @@ function state() {
 
             <SCardFooter>
               <SCardFooterActions>
-                <SCardFooterAction mode="mute" label="Cancel" />
+                <SCardFooterAction label="Cancel" />
                 <SCardFooterAction mode="info" label="Submit" />
               </SCardFooterActions>
             </SCardFooter>
