@@ -60,11 +60,13 @@ function getErrorMsg(validation: Validatable) {
       <span class="label-text">{{ label }}</span>
 
       <STooltip v-if="hasInfo" :text="info" trigger="focus" @click.prevent>
-        <SIcon class="label-info" :icon="IconQuestion" />
+        <div class="label-info">
+          <SIcon class="label-info-icon" :icon="IconQuestion" />
+        </div>
         <template v-if="$slots.info" #text><slot name="info" /></template>
       </STooltip>
 
-      <span class="label-note">{{ note }}</span>
+      <span class="label-note" :class="{ 'has-info': hasInfo }">{{ note }}</span>
 
       <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
         <SIcon v-if="checkIcon" class="check-icon" :icon="checkIcon" />
@@ -84,18 +86,21 @@ function getErrorMsg(validation: Validatable) {
 
 <style scoped lang="postcss">
 .SInputBase.mini {
-  .label      { padding-bottom: 6px; height: 22px; }
-  .label-text { font-size: var(--input-label-font-size, var(--input-mini-label-font-size)); }
-  .label-info { width: 14px; height: 14px; }
+  .label           { padding-bottom: 4px; min-height: 24px; }
+  .label-text      { font-size: var(--input-label-font-size, var(--input-mini-label-font-size)); }
+  .label-info      { margin-top: 0; margin-bottom: 0; width: 20px; height: 20px; }
+  .label-info-icon { width: 14px; height: 14px; }
+  .label-note      { padding-top: 0; line-height: 20px; }
+  .check           { padding-top: 0; line-height: 20px; }
 }
 
 .SInputBase.small {
-  .label      { padding-bottom: 8px; height: 24px; }
+  .label      { padding-bottom: 6px; min-height: 26px; }
   .label-text { font-size: var(--input-label-font-size, var(--input-small-label-font-size)); }
 }
 
 .SInputBase.medium {
-  .label      { padding-bottom: 8px; height: 24px; }
+  .label      { padding-bottom: 6px; min-height: 26px; }
   .label-text { font-size: var(--input-label-font-size, var(--input-medium-label-font-size)); }
 }
 
@@ -107,9 +112,9 @@ function getErrorMsg(validation: Validatable) {
 
 .label {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   width: 100%;
-  line-height: 16px;
+  line-height: 20px;
   cursor: pointer;
   transition: color 0.25s;
 }
@@ -122,8 +127,18 @@ function getErrorMsg(validation: Validatable) {
 
 :deep(.STooltip) {
   .label-info {
-    display: inline-block;
-    margin-left: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: -2px;
+    margin-left: 2px;
+    margin-bottom: -2px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .label-info-icon {
     width: 16px;
     height: 16px;
     color: var(--c-text-2);
@@ -131,7 +146,7 @@ function getErrorMsg(validation: Validatable) {
   }
 
   &:hover, &:focus, &:focus-within {
-    .label-info {
+    .label-info-icon {
       color: var(--c-text-info-1);
     }
   }
@@ -143,10 +158,17 @@ function getErrorMsg(validation: Validatable) {
 
 .label-note {
   display: inline-block;
+  flex-shrink: 0;
   margin-left: 8px;
+  padding-top: 1px;
+  line-height: 19px;
   font-size: 12px;
   font-weight: 400;
   color: var(--c-text-2);
+
+  &.has-info {
+    margin-left: 4px;
+  }
 }
 
 .help {
@@ -183,10 +205,13 @@ function getErrorMsg(validation: Validatable) {
 
 .check {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 4px;
   margin-left: auto;
-  line-height: 16px;
+  padding-top: 1px;
+  padding-left: 8px;
+  line-height: 19px;
   font-size: 12px;
 
   &.neutral { color: var(--c-text-1); }
