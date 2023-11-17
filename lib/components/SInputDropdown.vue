@@ -195,7 +195,7 @@ function handleArray(value: OptionValue) {
   .box-content {
     padding: 3px 30px 3px 12px;
     line-height: 24px;
-    font-size: 14px;
+    font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
   .box-icon {
@@ -212,7 +212,7 @@ function handleArray(value: OptionValue) {
   .box-content {
     padding: 5px 30px 5px 8px;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
   .box-icon {
@@ -229,7 +229,7 @@ function handleArray(value: OptionValue) {
   .box-content {
     padding: 11px 44px 11px 16px;
     line-height: 24px;
-    font-size: 16px;
+    font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
   .box-icon {
@@ -255,7 +255,7 @@ function handleArray(value: OptionValue) {
 
 .SInputDropdown.has-error {
   .box {
-    border-color: var(--c-danger);
+    border-color: var(--input-error-border-color);
   }
 }
 
@@ -265,37 +265,22 @@ function handleArray(value: OptionValue) {
 
 .box {
   position: relative;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--input-border-color);
   border-radius: 6px;
   width: 100%;
   color: var(--input-text);
-  background-color: var(--c-bg);
+  background-color: var(--input-bg-color);;
   cursor: pointer;
-  transition: border-color .25s, background-color .25s;
+  transition: border-color 0.25s, background-color 0.25s;
 
   &:hover {
-    border-color: var(--c-black);
-  }
-
-  &:focus,
-  &:hover.focus {
-    border-color: var(--c-info);
-  }
-
-  .dark &:hover {
-    border-color: var(--c-gray);
-  }
-
-  .dark &:focus,
-  .dark &:hover:focus {
-    border-color: var(--c-info);
+    border-color: var(--input-hover-border-color);
   }
 }
 
 .box-placeholder {
   padding: 2px 4px;
-  font-weight: 500;
-  color: var(--c-text-3);
+  color: var(--input-placeholder-color);
   overflow: hidden;
   white-space: nowrap;
 }

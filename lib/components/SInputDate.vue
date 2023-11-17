@@ -162,6 +162,14 @@ function emitBlur() {
     color: var(--input-placeholder-color);
   }
 
+  &:hover {
+    border-color: var(--input-hover-border-color);
+  }
+
+  &:focus {
+    border-color: var(--input-focus-border-color);
+  }
+
   &.disabled {
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-bg-color);

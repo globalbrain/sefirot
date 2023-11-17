@@ -307,7 +307,8 @@ function createRequiredTouched(): boolean[] {
 }
 
 .input {
-  font-family: var(--input-value-font-family, var(--font-family-number));
+  font-family: var(--input-value-font-family, var(--font-family-base));
+  font-feature-settings: "tnum";
   line-height: 24px;
   background-color: transparent;
 

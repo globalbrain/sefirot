@@ -130,7 +130,7 @@ function onChange(e: Event) {
   .button {
     padding: 0 8px;
     line-height: 26px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
   }
 
@@ -150,7 +150,7 @@ function onChange(e: Event) {
   .button {
     padding: 0 12px;
     line-height: 30px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
   }
 
@@ -184,6 +184,11 @@ function onChange(e: Event) {
   &:hover {
     border-color: var(--input-hover-border-color);
   }
+
+  &:hover .button {
+    border-color: var(--c-border-mute-2);
+    background-color: var(--c-bg-mute-2);
+  }
 }
 
 .action {
@@ -191,11 +196,11 @@ function onChange(e: Event) {
 }
 
 .button {
-  border: 1px solid var(--c-divider);
-  border-radius: 4px;
+  border: 1px solid var(--c-border-mute-1);
+  border-radius: 3px;
   color: var(--c-text-1);
-  background-color: var(--c-mute);
-  transition: background-color 0.25s;
+  background-color: var(--c-bg-mute-1);
+  transition: border-color 0.25s, background-color 0.25s;
 }
 
 .text {
