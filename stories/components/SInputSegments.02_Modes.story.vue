@@ -6,15 +6,16 @@ const title = 'Components / SInputSegments / 02. Modes'
 const docs = '/components/input-segments'
 
 const options = [
-  { label: 'Neutral', value: 'neutral', mode: 'neutral' } as const,
+  { label: 'Default', value: 'default', mode: 'default' } as const,
   { label: 'Mute', value: 'mute', mode: 'mute' } as const,
+  { label: 'Neutral', value: 'neutral', mode: 'neutral' } as const,
   { label: 'Info', value: 'info', mode: 'info' } as const,
   { label: 'Success', value: 'success', mode: 'success' } as const,
   { label: 'Warning', value: 'warning', mode: 'warning' } as const,
   { label: 'Danger', value: 'danger', mode: 'danger' } as const
 ]
 
-const value = ref('neutral')
+const value = ref('default')
 </script>
 
 <template>

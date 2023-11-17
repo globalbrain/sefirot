@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
 export type Size = 'mini' | 'small' | 'medium'
-export type Mode = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   size: Size
@@ -67,7 +67,7 @@ function onClick() {
     width: 1px;
     height: 16px;
     border-radius: 4px;
-    background-color: var(--c-divider-2);
+    background-color: var(--c-divider);
     content: "";
     transition: opacity 0.25s;
   }
@@ -108,16 +108,22 @@ function onClick() {
   }
 }
 
-.SInputSegmentsOption.neutral.active {
+.SInputSegmentsOption.default.active {
+  border-color: var(--button-fill-default-border-color);
+  color: var(--button-fill-default-text-color);
+  background-color: var(--button-fill-default-bg-color);
+}
+
+.SInputSegmentsOption.mute.active {
   border-color: var(--button-fill-mute-border-color);
   color: var(--button-fill-mute-text-color);
   background-color: var(--button-fill-mute-bg-color);
 }
 
-.SInputSegmentsOption.mute.active {
-  border-color: var(--button-fill-mute-border-color);
-  color: var(--c-text-2);
-  background-color: var(--button-fill-mute-bg-color);
+.SInputSegmentsOption.neutral.active {
+  border-color: var(--button-fill-neutral-border-color);
+  color: var(--button-fill-neutral-text-color);
+  background-color: var(--button-fill-neutral-bg-color);
 }
 
 .SInputSegmentsOption.info.active {

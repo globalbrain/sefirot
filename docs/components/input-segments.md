@@ -165,7 +165,7 @@ interface Props {
 
 type Color =
   | 'neutral' 
-  | 'mute' 
+  | 'mute'
   | 'info' 
   | 'success' 
   | 'warning' 
@@ -197,8 +197,9 @@ interface Option<T extends string | number | boolean> {
 }
 
 type Mode =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'
@@ -388,26 +389,4 @@ You may customize the various styles of the component via global input related C
 
 ### Button styles
 
-Each option styles shares the style of `<SButton>`. Here are the list of all available variables. Note that `neutral` mode of `<SInputSegments>` uses `mute` variant of `<SButton>`.
-
-```css
-  --button-fill-mute-border-color: var(--c-divider-1);
-  --button-fill-mute-text-color: var(--c-text-1);
-  --button-fill-mute-bg-color: var(--c-mute);
-
-  --button-fill-info-border-color: var(--c-info-light);
-  --button-fill-info-text-color: var(--c-text-dark-1);
-  --button-fill-info-bg-color: var(--c-info-bg);
-
-  --button-fill-success-border-color: var(--c-success-light);
-  --button-fill-success-text-color: var(--c-text-dark-1);
-  --button-fill-success-bg-color: var(--c-success-bg);
-
-  --button-fill-warning-border-color: var(--c-warning-light);
-  --button-fill-warning-text-color: var(--c-text-dark-1);
-  --button-fill-warning-bg-color: var(--c-warning-bg);
-
-  --button-fill-danger-border-color: var(--c-danger-light);
-  --button-fill-danger-text-color: var(--c-text-dark-1);
-  --button-fill-danger-bg-color: var(--c-danger-bg);
-```
+Each option styles shares the style of [`<SButton>`](button#styles). Refer to the component docs for available CSS variables.

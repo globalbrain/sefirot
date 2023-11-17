@@ -6,7 +6,8 @@ import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type Color = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option<T extends string | number | boolean> {
   label: string
@@ -24,7 +25,7 @@ const props = defineProps<{
   help?: string
   checkIcon?: IconifyIcon
   checkText?: string
-  checkColor?: Color
+  checkColor?: CheckColor
   options: Option<T>[]
   block?: boolean
   disabled?: boolean
@@ -78,7 +79,7 @@ function onSelect(value: T) {
         :size="size ?? 'small'"
         :label="option.label"
         :value="option.value"
-        :mode="option.mode ?? 'neutral'"
+        :mode="option.mode ?? 'default'"
         :active="_value === option.value"
         :disabled="disabled ? true : option.disabled ?? false"
         @click="onSelect(option.value)"
