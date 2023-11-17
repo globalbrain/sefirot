@@ -31,6 +31,7 @@
     "lint": "eslint --fix .",
     "lint:fail": "eslint .",
     "vitest": "vitest",
+    "vitest:run": "vitest run",
     "coverage": "vitest run --coverage",
     "test": "pnpm run type && pnpm run lint && pnpm run coverage",
     "test:fail": "pnpm run type && pnpm run lint:fail && pnpm run coverage",

@@ -24,10 +24,8 @@ jobs:
       - name: Install deps
         run: pnpm install
 
-      - name: Test
-        run: pnpm test:fail
+      - name: Lint
+        run: pnpm lint:fail
 
-      - name: Upload coverage
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Test
+        run: pnpm vitest:run
