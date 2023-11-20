@@ -13,7 +13,13 @@ export interface ImageSrcFromFile {
 export function useImageSrcFromFile(
   file: MaybeRefOrGetter<File | string | null>
 ): ImageSrcFromFile {
-  const reader = new FileReader()
+  if (typeof document === 'undefined') {
+    return {
+      src: ref(null)
+    }
+  }
+
+  const reader = new window.FileReader()
   const src = ref<string | null>(null)
 
   reader.onload = function () {
