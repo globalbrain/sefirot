@@ -7,13 +7,13 @@ import SButton from './SButton.vue'
 import SDescEmpty from './SDescEmpty.vue'
 import SIcon from './SIcon.vue'
 
-export interface file {
+export interface Item {
   name: string
   onDownload(): void
 }
 
 const props = defineProps<{
-  item?: file | file[] | null
+  item?: Item | Item[] | null
 }>()
 
 const items = computed(() => {
