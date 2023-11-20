@@ -1,7 +1,3 @@
-export function zero(value: string | number): boolean {
-  const _value = typeof value === 'number'
-    ? value.toString()
-    : value
-
-  return _value === '0'
+export function zero(value: number): boolean {
+  return value === 0
 }
