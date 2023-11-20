@@ -15,7 +15,7 @@ export default defineConfig({
     resolve: {
       alias: {
         'sefirot/': new URL('../../lib/', import.meta.url).pathname,
-        punycode: require.resolve('punycode/')
+        'punycode': require.resolve('punycode/')
       }
     },
     ssr: {
