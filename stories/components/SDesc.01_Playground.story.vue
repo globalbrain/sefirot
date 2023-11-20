@@ -67,7 +67,7 @@ function state() {
           <SDescItem span="2">
             <SDescLabel>Attachments</SDescLabel>
             <SDescFile
-              :file="[
+              :item="[
                 { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },
                 { name: 'profile-photo.jpg', onDownload: () => {} }
               ]"

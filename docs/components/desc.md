@@ -72,30 +72,21 @@ mixinDesc(app)
 
 The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use the `<SDesc>`.
 
-```vue
-<script setup lang="ts">
-import SDesc from 'sefirot/components/SDesc.vue'
-import SDescItem from 'sefirot/components/SDescItem.vue'
-import SDescLabel from 'sefirot/components/SDescLabel.vue'
-import SDescText from 'sefirot/components/SDescText.vue'
-</script>
-
-<template>
-  <SDesc cols="2" gap="24">
-    <SDescItem span="1">
-      <SDescLabel>Full name</SDescLabel>
-      <SDescText>Margot Foster</SDescText>
-    </SDescItem>
-    <SDescItem span="1">
-      <SDescLabel>Website</SDescLabel>
-      <SDescLink>https://example.com</SDescLink>
-    </SDescItem>
-    <SDescItem span="2">
-      <SDescLabel>About</SDescLabel>
-      <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
-    </SDescItem>
-  </SDesc>
-</template>
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel>Full name</SDescLabel>
+    <SDescText>Margot Foster</SDescText>
+  </SDescItem>
+  <SDescItem span="1">
+    <SDescLabel>Website</SDescLabel>
+    <SDescLink>https://example.com</SDescLink>
+  </SDescItem>
+  <SDescItem span="2">
+    <SDescLabel>About</SDescLabel>
+    <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
+  </SDescItem>
+</SDesc>
 ```
 
 ## Layout
@@ -443,10 +434,10 @@ Use `<SDescFile>` to display a list of files. Useful when you have a "attachment
 
 ```ts
 interface Props {
-  file?: File | File[] | null
+  item?: Item | Item[] | null
 }
 
-interface File {
+interface Item {
   name: string
   onDownload(): void
 }
@@ -456,7 +447,7 @@ interface File {
 <SDesc cols="2" gap="24">
   <SDescItem span="2">
     <SDescLabel value="Attachements" />
-    <SDescState :file="[
+    <SDescFile :file="[
       { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },
       { name: 'profile-photo.jpg', onDownload: () => {} }
     ]" />

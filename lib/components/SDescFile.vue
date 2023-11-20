@@ -7,29 +7,29 @@ import SButton from './SButton.vue'
 import SDescEmpty from './SDescEmpty.vue'
 import SIcon from './SIcon.vue'
 
-export interface File {
+export interface file {
   name: string
   onDownload(): void
 }
 
 const props = defineProps<{
-  file?: File | File[] | null
+  item?: file | file[] | null
 }>()
 
-const files = computed(() => {
-  return props.file
-    ? isArray(props.file) ? props.file : [props.file]
+const items = computed(() => {
+  return props.item
+    ? isArray(props.item) ? props.item : [props.item]
     : null
 })
 </script>
 
 <template>
-  <div v-if="files && files.length" class="SDescFile">
+  <div v-if="items && items.length" class="SDescFile">
     <div class="value">
-      <div v-for="file, index in files" :key="index" class="item">
+      <div v-for="item, index in items" :key="index" class="item">
         <div class="data">
           <div class="icon"><SIcon class="icon-svg" :icon="IconFileText" /></div>
-          <div class="name">{{ file.name }}</div>
+          <div class="name">{{ item.name }}</div>
         </div>
         <div class="actions">
           <SButton
@@ -38,7 +38,7 @@ const files = computed(() => {
             mode="info"
             :icon="IconDownloadSimple"
             label="Download"
-            @click="file.onDownload"
+            @click="item.onDownload"
           />
         </div>
       </div>
