@@ -25,13 +25,14 @@ const labelWidth = computed(() => {
 <style scoped lang="postcss">
 .SDescItem {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .SDesc.row > .SDescItem {
-  grid-template-columns: var(--desc-label-width, v-bind(labelWidth)) 1fr;
+  grid-template-columns: var(--desc-label-width, v-bind(labelWidth)) minmax(0, 1fr);
 }
 
-.SDesc.divider > .SDescItem {
+.SDesc.divider > .SDescItem:not(:has(> .SDescFile)) {
   border-bottom: 1px dashed var(--c-divider);
   padding-bottom: 7px;
 }

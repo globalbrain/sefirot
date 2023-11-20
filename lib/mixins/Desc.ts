@@ -2,6 +2,7 @@ import { type App } from 'vue'
 import SDesc from '../components/SDesc.vue'
 import SDescDay from '../components/SDescDay.vue'
 import SDescEmpty from '../components/SDescEmpty.vue'
+import SDescFile from '../components/SDescFile.vue'
 import SDescItem from '../components/SDescItem.vue'
 import SDescLabel from '../components/SDescLabel.vue'
 import SDescLink from '../components/SDescLink.vue'
@@ -14,6 +15,7 @@ export function mixin(app: App): void {
   app.component('SDesc', SDesc)
   app.component('SDescDay', SDescDay)
   app.component('SDescEmpty', SDescEmpty)
+  app.component('SDescFile', SDescFile)
   app.component('SDescItem', SDescItem)
   app.component('SDescLabel', SDescLabel)
   app.component('SDescLink', SDescLink)
@@ -28,6 +30,7 @@ declare module 'vue' {
     SDesc: typeof SDesc
     SDescDay: typeof SDescDay
     SDescEmpty: typeof SDescEmpty
+    SDescFile: typeof SDescFile
     SDescItem: typeof SDescItem
     SDescLabel: typeof SDescLabel
     SDescLink: typeof SDescLink

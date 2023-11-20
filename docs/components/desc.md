@@ -42,34 +42,51 @@ import SDescText from 'sefirot/components/SDescText.vue'
   </div>
 </Showcase>
 
+## Import
+
+```ts
+import SDesc from 'sefirot/components/SDesc.vue'
+import SDescDay from 'sefirot/components/SDescDay.vue'
+import SDescFile from 'sefirot/components/SDescFile.vue'
+import SDescItem from 'sefirot/components/SDescItem.vue'
+import SDescLabel from 'sefirot/components/SDescLabel.vue'
+import SDescLink from 'sefirot/components/SDescLink.vue'
+import SDescNumber from 'sefirot/components/SDescNumber.vue'
+import SDescPill from 'sefirot/components/SDescPill.vue'
+import SDescState from 'sefirot/components/SDescState.vue'
+import SDescText from 'sefirot/components/SDescText.vue'
+```
+
+You may also import all related components at once via mixin function.
+
+```ts
+import { mixin as mixinDesc } from 'sefirot/mixins/Desc.vue'
+import { createApp } from 'vue'
+
+const app = createApp(App)
+
+mixinDesc(app)
+```
+
 ## Usage
 
 The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use the `<SDesc>`.
 
-```vue
-<script setup lang="ts">
-import SDesc from 'sefirot/components/SDesc.vue'
-import SDescItem from 'sefirot/components/SDescItem.vue'
-import SDescLabel from 'sefirot/components/SDescLabel.vue'
-import SDescText from 'sefirot/components/SDescText.vue'
-</script>
-
-<template>
-  <SDesc cols="2" gap="24">
-    <SDescItem span="1">
-      <SDescLabel>Full name</SDescLabel>
-      <SDescText>Margot Foster</SDescText>
-    </SDescItem>
-    <SDescItem span="1">
-      <SDescLabel>Website</SDescLabel>
-      <SDescLink>https://example.com</SDescLink>
-    </SDescItem>
-    <SDescItem span="2">
-      <SDescLabel>About</SDescLabel>
-      <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
-    </SDescItem>
-  </SDesc>
-</template>
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel>Full name</SDescLabel>
+    <SDescText>Margot Foster</SDescText>
+  </SDescItem>
+  <SDescItem span="1">
+    <SDescLabel>Website</SDescLabel>
+    <SDescLink>https://example.com</SDescLink>
+  </SDescItem>
+  <SDescItem span="2">
+    <SDescLabel>About</SDescLabel>
+    <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
+  </SDescItem>
+</SDesc>
 ```
 
 ## Layout
@@ -407,6 +424,33 @@ type Mode =
       mode: 'success',
       label: 'Complete'
     }" />
+  </SDescItem>
+</SDesc>
+```
+
+## File value
+
+Use `<SDescFile>` to display a list of files. Useful when you have a "attachment" list in the form.
+
+```ts
+interface Props {
+  item?: Item | Item[] | null
+}
+
+interface Item {
+  name: string
+  onDownload(): void
+}
+```
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="2">
+    <SDescLabel value="Attachements" />
+    <SDescFile :file="[
+      { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },
+      { name: 'profile-photo.jpg', onDownload: () => {} }
+    ]" />
   </SDescItem>
 </SDesc>
 ```
