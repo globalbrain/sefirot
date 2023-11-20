@@ -11,7 +11,7 @@ export default defineConfig({
   vite: {
     resolve: {
       alias: {
-        'sefirot/': new URL('../../lib/', import.meta.url).pathname,
+        'sefirot/': new URL('../../lib/', import.meta.url).pathname
       }
     }
   },
@@ -19,12 +19,12 @@ export default defineConfig({
   themeConfig: {
     outline: [2, 3],
 
-    search: {
-      provider: 'local'
-    },
-
     editLink: {
       pattern: 'https://github.com/globalbrain/sefirot/edit/main/docs/:path'
+    },
+
+    search: {
+      provider: 'local'
     },
 
     socialLinks: [
