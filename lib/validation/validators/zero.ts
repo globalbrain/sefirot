@@ -1,4 +1,4 @@
-export function isZero(value: string | number): boolean {
+export function zero(value: string | number): boolean {
   const _value = typeof value === 'number'
     ? value.toString()
     : value

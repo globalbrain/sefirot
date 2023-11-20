@@ -1,9 +1,9 @@
 import { helpers, or } from '@vuelidate/validators'
-import { isPositiveInteger, isZero } from '../validators'
+import { positiveInteger, zero } from '../validators'
 
 export function zeroOrPositiveInteger(msg?: string) {
   return helpers.withMessage(
     () => msg ?? 'The value must be zero or valid positive integer.',
-    or(isZero, isPositiveInteger)
+    or(zero, positiveInteger)
   )
 }
