@@ -1,8 +1,9 @@
-import { decimal as baseDecimal, helpers } from '@vuelidate/validators'
+import { and, decimal as baseDecimal, helpers, not } from '@vuelidate/validators'
+import { hyphen } from '../validators'
 
 export function decimal(msg?: string) {
   return helpers.withMessage(
     () => msg ?? 'The value must be valid decimal numbers.',
-    baseDecimal
+    and(not(hyphen), baseDecimal)
   )
 }
