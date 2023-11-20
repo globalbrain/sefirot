@@ -1,7 +1,4 @@
-import { createRequire } from 'node:module'
 import { defineConfig, type DefaultTheme } from 'vitepress'
-
-const require = createRequire(import.meta.url)
 
 export default defineConfig({
   lang: 'en-US',
@@ -15,11 +12,7 @@ export default defineConfig({
     resolve: {
       alias: {
         'sefirot/': new URL('../../lib/', import.meta.url).pathname,
-        'punycode': require.resolve('punycode/')
       }
-    },
-    ssr: {
-      noExternal: ['markdown-it']
     }
   },
 
