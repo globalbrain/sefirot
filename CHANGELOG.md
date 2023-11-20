@@ -1,5 +1,19 @@
 
 
+# [3.5.0](https://github.com/globalbrain/sefirot/compare/v3.4.0...v3.5.0) (2023-11-20)
+
+
+### Bug Fixes
+
+* **input:** allow line break on label ([#390](https://github.com/globalbrain/sefirot/issues/390)) ([61cf155](https://github.com/globalbrain/sefirot/commit/61cf155cfaeffe02bc515b38f2056431c4e0aa9f))
+* **input:** update styles to the latest ([#391](https://github.com/globalbrain/sefirot/issues/391)) ([#393](https://github.com/globalbrain/sefirot/issues/393)) ([a56469d](https://github.com/globalbrain/sefirot/commit/a56469d0263d81896cbd09527009844509586877))
+* **m:** make `SMFade` `:once` default to `true` ([#389](https://github.com/globalbrain/sefirot/issues/389)) ([06ed98c](https://github.com/globalbrain/sefirot/commit/06ed98cfe8b3bf5b8d42ef1633bf33e285cd5cca))
+
+
+### Features
+
+* **desc:** add `<SDescFile>` ([#394](https://github.com/globalbrain/sefirot/issues/394)) ([2f1c7d3](https://github.com/globalbrain/sefirot/commit/2f1c7d33f75f03b3657ae1fb3770b8988eef1a53))
+
 # [3.4.0](https://github.com/globalbrain/sefirot/compare/v3.3.0...v3.4.0) (2023-11-14)
 
 
