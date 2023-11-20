@@ -1,3 +1,4 @@
+import { isClient } from '@vueuse/core'
 import { type MaybeRefOrGetter, type Ref, ref, toValue, watchEffect } from 'vue'
 import { isFile, isString } from '../support/Utils'
 
@@ -13,7 +14,13 @@ export interface ImageSrcFromFile {
 export function useImageSrcFromFile(
   file: MaybeRefOrGetter<File | string | null>
 ): ImageSrcFromFile {
-  const reader = new FileReader()
+  if (!isClient) {
+    return {
+      src: ref(null)
+    }
+  }
+
+  const reader = new window.FileReader()
   const src = ref<string | null>(null)
 
   reader.onload = function () {

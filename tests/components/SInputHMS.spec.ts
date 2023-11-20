@@ -52,13 +52,13 @@ describe('components/SInputHMS', async () => {
   test('accepts `:placeholder` partially', async () => {
     const wrapper = mount(SInputHMS)
 
-    await wrapper.setProps({ placeholder: { hour: 10 } })
+    await wrapper.setProps({ placeholder: { hour: '10' } })
     expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.hour'))).toBe('10')
 
-    await wrapper.setProps({ placeholder: { minute: 8 } })
+    await wrapper.setProps({ placeholder: { minute: '8' } })
     expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.minute'))).toBe('08')
 
-    await wrapper.setProps({ placeholder: { second: 6 } })
+    await wrapper.setProps({ placeholder: { second: '6' } })
     expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.second'))).toBe('06')
   })
 

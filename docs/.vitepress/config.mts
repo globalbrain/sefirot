@@ -1,4 +1,4 @@
-import { type DefaultTheme, defineConfig } from 'vitepress'
+import { defineConfig, type DefaultTheme } from 'vitepress'
 
 export default defineConfig({
   lang: 'en-US',
@@ -21,6 +21,10 @@ export default defineConfig({
 
     editLink: {
       pattern: 'https://github.com/globalbrain/sefirot/edit/main/docs/:path'
+    },
+
+    search: {
+      provider: 'local'
     },
 
     socialLinks: [
