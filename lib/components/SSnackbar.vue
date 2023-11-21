@@ -47,7 +47,7 @@ function close() {
   border: 1px solid var(--c-divider);
   border-radius: 6px;
   width: 100%;
-  background-color: var(--c-bg-elv-up);
+  background-color: var(--c-bg-elv-3);
   box-shadow: var(--shadow-depth-3);
   overflow: hidden;
 
@@ -60,10 +60,10 @@ function close() {
     content: "";
   }
 
-  &.neutral::before { background-color: var(--c-gray); }
-  &.info::before    { background-color: var(--c-info); }
-  &.warning::before { background-color: var(--c-warning); }
-  &.danger::before  { background-color: var(--c-danger); }
+  &.neutral::before { background-color: var(--c-fg-gray-1); }
+  &.info::before    { background-color: var(--c-fg-info-1); }
+  &.warning::before { background-color: var(--c-fg-warning-1); }
+  &.danger::before  { background-color: var(--c-fg-danger-1); }
 }
 
 .close {

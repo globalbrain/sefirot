@@ -31,19 +31,19 @@ defineProps({
 
 <style lang="postcss" scoped>
 .SStep.upcoming {
-  .point { border-color: var(--c-divider); }
+  .point { border-color: var(--c-border-mute-1); }
   .text  { color: var(--c-text-2); }
 }
 
 .SStep.active {
-  .point { border-color: var(--c-success); }
-  .text  { color: var(--c-success); }
+  .point { border-color: var(--c-fg-success-1); }
+  .text  { color: var(--c-text-success-1); }
 }
 
 .SStep.done {
   .point {
-    border-color: var(--c-success);
-    background-color: var(--c-success);
+    border-color: var(--c-fg-success-1);
+    background-color: var(--c-fg-success-1);
   }
 
   .text  { color: var(--c-text-1); }
@@ -51,11 +51,11 @@ defineProps({
 
 .SStep.failed {
   .point {
-    border-color: var(--c-danger);
-    background-color: var(--c-danger);
+    border-color: var(--c-fg-danger-1);
+    background-color: var(--c-fg-danger-1);
   }
 
-  .text  { color: var(--c-danger); }
+  .text  { color: var(--c-text-danger-1); }
 }
 
 .indicator {
@@ -78,7 +78,7 @@ defineProps({
   border-radius: 50%;
   width: 6px;
   height: 6px;
-  background-color: var(--c-success);
+  background-color: var(--c-fg-success-1);
 }
 
 .icon {
@@ -92,9 +92,9 @@ defineProps({
   height: 2px;
 }
 
-.bar.mute   { background-color: var(--c-divider); }
-.bar.active { background-color: var(--c-success); }
-.bar.failed { background-color: var(--c-danger); }
+.bar.mute   { background-color: var(--c-border-mute-1); }
+.bar.active { background-color: var(--c-fg-success-1); }
+.bar.failed { background-color: var(--c-fg-danger-1); }
 
 .text {
   margin: 0;
