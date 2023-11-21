@@ -101,9 +101,7 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
   value?: string | null | ((value: V, record: R) => string | null)
   link?: string | null | ((value: V, record: R) => string)
   color?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
-  iconColor?:
-  | TableCellValueColor
-  | ((value: V, record: R) => TableCellValueColor)
+  iconColor?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
   onClick?(value: V, record: R): void
 }
 
@@ -158,9 +156,7 @@ export interface TableCellAvatar<V = any, R = any> extends TableCellBase {
 
 export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
   type: 'avatars'
-  avatars:
-  | TableCellAvatarsOption[]
-  | ((value: V, record: R) => TableCellAvatarsOption[])
+  avatars: TableCellAvatarsOption[] | ((value: V, record: R) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
 }
 
