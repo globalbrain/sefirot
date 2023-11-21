@@ -24,8 +24,11 @@ jobs:
       - name: Install deps
         run: pnpm install
 
+      - name: Type
+        run: pnpm run type
+
       - name: Lint
-        run: pnpm lint:fail
+        run: pnpm run lint:fail
 
       - name: Test
-        run: pnpm vitest:run
+        run: pnpm run vitest:run
