@@ -81,7 +81,7 @@ export type TableCellType =
   | 'component'
   | 'actions'
 
-export type ColorModes = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type ColorModes = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface TableCellBase {
   type: TableCellType
@@ -135,7 +135,7 @@ export interface TableCellPills extends TableCellBase {
 
 export interface TableCellPillItem {
   label: string
-  color: TableCellPillColor
+  color?: TableCellPillColor
 }
 
 export interface TableCellAvatar extends TableCellBase {
