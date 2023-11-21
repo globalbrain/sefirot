@@ -517,8 +517,9 @@ interface TableCellActions {
 }
 
 type ColorModes =
-  | 'neutral'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'

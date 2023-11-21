@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import SPill from './SPill.vue'
-
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+import SPill, { type Mode } from './SPill.vue'
 
 const props = defineProps<{
   value?: any
   record: any
   getter?: string | ((value: any, record: any) => string)
-  color?: Color | ((value: any, record: any) => Color)
+  color?: Mode | ((value: any, record: any) => Mode)
 }>()
 
 const _value = computed(() => {
