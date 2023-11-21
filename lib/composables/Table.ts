@@ -81,7 +81,14 @@ export type TableCellType =
   | 'component'
   | 'actions'
 
-export type ColorModes = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+export type ColorModes =
+  | 'default'
+  | 'mute'
+  | 'neutral'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
 
 export interface TableCellBase {
   type: TableCellType
@@ -94,7 +101,9 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
   value?: string | null | ((value: V, record: R) => string | null)
   link?: string | null | ((value: V, record: R) => string)
   color?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
-  iconColor?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
+  iconColor?:
+  | TableCellValueColor
+  | ((value: V, record: R) => TableCellValueColor)
   onClick?(value: V, record: R): void
 }
 
@@ -149,7 +158,9 @@ export interface TableCellAvatar<V = any, R = any> extends TableCellBase {
 
 export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
   type: 'avatars'
-  avatars: TableCellAvatarsOption[] | ((value: V, record: R) => TableCellAvatarsOption[])
+  avatars:
+  | TableCellAvatarsOption[]
+  | ((value: V, record: R) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
 }
 
@@ -183,7 +194,7 @@ export interface TableCellActions<R = any> extends TableCellBase {
   actions: TableCellAction<R>[]
 }
 
-export interface TableCellAction<R = any > {
+export interface TableCellAction<R = any> {
   mode?: Mode
   icon?: any
   iconMode?: Mode
