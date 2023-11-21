@@ -46,22 +46,22 @@ export interface TableColumn<V, R, SV, SR> {
   dropdown?: DropdownSection[]
   grow?: boolean
   resizable?: boolean
-  cell?: TableCell | TableColumnCellFn<V, R>
-  summaryCell?: TableCell | TableColumnCellFn<SV, SR>
+  cell?: TableCell<V, R> | TableColumnCellFn<V, R>
+  summaryCell?: TableCell<SV, SR> | TableColumnCellFn<SV, SR>
   show?: boolean
 }
 
-export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell
+export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell<V, R>
 
-export type TableCell =
-  | TableCellText
-  | TableCellNumber
+export type TableCell<V = any, R = any> =
+  | TableCellText<V, R>
+  | TableCellNumber<V, R>
   | TableCellDay
-  | TableCellPill
-  | TableCellPills
+  | TableCellPill<V, R>
+  | TableCellPills<V, R>
   | TableCellState
-  | TableCellAvatar
-  | TableCellAvatars
+  | TableCellAvatar<V, R>
+  | TableCellAvatars<V, R>
   | TableCellCustom
   | TableCellEmpty
   | TableCellComponent
@@ -87,18 +87,18 @@ export interface TableCellBase {
   type: TableCellType
 }
 
-export interface TableCellText extends TableCellBase {
+export interface TableCellText<V = any, R = any> extends TableCellBase {
   type: 'text'
   align?: 'left' | 'center' | 'right'
   icon?: any
-  value?: string | null | ((value: any, record: any) => string | null)
-  link?: string | null | ((value: any, record: any) => string)
-  color?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
-  iconColor?: TableCellValueColor | ((value: any, record: any) => TableCellValueColor)
-  onClick?(value: any, record: any): void
+  value?: string | null | ((value: V, record: R) => string | null)
+  link?: string | null | ((value: V, record: R) => string)
+  color?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
+  iconColor?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
+  onClick?(value: V, record: R): void
 }
 
-export interface TableCellNumber extends TableCellBase {
+export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   type: 'number'
   align?: 'left' | 'center' | 'right'
   icon?: any
@@ -107,7 +107,7 @@ export interface TableCellNumber extends TableCellBase {
   link?: string | null
   color?: TableCellValueColor
   iconColor?: TableCellValueColor
-  onClick?(value: any, record: any): void
+  onClick?(value: V, record: R): void
 }
 
 export type TableCellValueColor = ColorModes | 'soft'
@@ -120,17 +120,17 @@ export interface TableCellDay extends TableCellBase {
   color?: 'neutral' | 'soft' | 'mute'
 }
 
-export interface TableCellPill extends TableCellBase {
+export interface TableCellPill<V = any, R = any> extends TableCellBase {
   type: 'pill'
-  value?: string | ((value: any, record: any) => string)
-  color?: TableCellPillColor | ((value: any, record: any) => TableCellPillColor)
+  value?: string | ((value: V, record: R) => string)
+  color?: TableCellPillColor | ((value: V, record: R) => TableCellPillColor)
 }
 
 export type TableCellPillColor = ColorModes
 
-export interface TableCellPills extends TableCellBase {
+export interface TableCellPills<V = any, R = any> extends TableCellBase {
   type: 'pills'
-  pills(value: any, record: any): TableCellPillItem[]
+  pills(value: V, record: R): TableCellPillItem[]
 }
 
 export interface TableCellPillItem {
@@ -138,18 +138,18 @@ export interface TableCellPillItem {
   color?: TableCellPillColor
 }
 
-export interface TableCellAvatar extends TableCellBase {
+export interface TableCellAvatar<V = any, R = any> extends TableCellBase {
   type: 'avatar'
-  image?: string | null | ((value: any, record: any) => string | null | undefined)
-  name?: string | null | ((value: any, record: any) => string | null | undefined)
-  link?: string | null | ((value: any, record: any) => string | null | undefined)
+  image?: string | null | ((value: V, record: R) => string | null | undefined)
+  name?: string | null | ((value: V, record: R) => string | null | undefined)
+  link?: string | null | ((value: V, record: R) => string | null | undefined)
   color?: 'neutral' | 'soft' | 'mute'
-  onClick?(value: any, record: any): void
+  onClick?(value: V, record: R): void
 }
 
-export interface TableCellAvatars extends TableCellBase {
+export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
   type: 'avatars'
-  avatars: TableCellAvatarsOption[] | ((value: any, record: any) => TableCellAvatarsOption[])
+  avatars: TableCellAvatarsOption[] | ((value: V, record: R) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
 }
 
