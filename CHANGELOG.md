@@ -1,5 +1,12 @@
 
 
+# [3.6.0](https://github.com/globalbrain/sefirot/compare/v3.5.0...v3.6.0) (2023-11-21)
+
+
+### Features
+
+* **validation:** add and fix validation rules ([#396](https://github.com/globalbrain/sefirot/issues/396)) ([95edb02](https://github.com/globalbrain/sefirot/commit/95edb02e69d435bd3d8acbc49e0783ced6587bb6))
+
 # [3.5.0](https://github.com/globalbrain/sefirot/compare/v3.4.0...v3.5.0) (2023-11-20)
 
 
