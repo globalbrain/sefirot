@@ -65,7 +65,7 @@ export type TableCell<V = any, R = any> =
   | TableCellCustom
   | TableCellEmpty
   | TableCellComponent
-  | TableCellActions
+  | TableCellActions<R>
 
 export type TableCellType =
   | 'text'
@@ -178,19 +178,19 @@ export interface TableCellState extends TableCellBase {
   mode?: ColorModes
 }
 
-export interface TableCellActions extends TableCellBase {
+export interface TableCellActions<R = any> extends TableCellBase {
   type: 'actions'
-  actions: TableCellAction[]
+  actions: TableCellAction<R>[]
 }
 
-export interface TableCellAction {
+export interface TableCellAction<R = any > {
   mode?: Mode
   icon?: any
   iconMode?: Mode
   label?: string
   labelMode?: Mode
-  onClick(record: any): void
-  show?(record: any): boolean
+  onClick(record: R): void
+  show?(record: R): boolean
 }
 
 export interface TableMenu {
