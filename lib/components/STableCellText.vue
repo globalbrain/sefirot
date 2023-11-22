@@ -4,13 +4,14 @@ import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
 export type Color =
-  | 'neutral'
-  | 'soft'
+  | 'default'
   | 'mute'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'
   | 'danger'
+  | 'soft'
 
 const props = defineProps<{
   value?: any

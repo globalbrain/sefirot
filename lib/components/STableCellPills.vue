@@ -1,17 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type TableCellPillColor } from '../composables/Table'
+import { type TableCellPillItem } from '../composables/Table'
 import STableCellPill from './STableCellPill.vue'
-
-export interface Pill {
-  label: string
-  color: TableCellPillColor
-}
 
 const props = defineProps<{
   value: string[]
   record: any
-  pills(value: string[], record: any): Pill[]
+  pills(value: string[], record: any): TableCellPillItem[]
 }>()
 
 const items = computed(() => props.pills(props.value, props.record))
