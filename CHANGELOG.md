@@ -1,5 +1,18 @@
 
 
+# [3.7.0](https://github.com/globalbrain/sefirot/compare/v3.6.0...v3.7.0) (2023-11-24)
+
+
+### Bug Fixes
+
+* **table:** pass down value and record types to cells ([#401](https://github.com/globalbrain/sefirot/issues/401)) ([2f3ad3c](https://github.com/globalbrain/sefirot/commit/2f3ad3ca36a8e3ea3ac57efa5962f595b8364793))
+* use new styles on `<SSnackbar>` and `<SStep>` ([7d1c6db](https://github.com/globalbrain/sefirot/commit/7d1c6db5a497ea46d2d11ae2a00d64d9e6bf63d1))
+
+
+### Features
+
+* **table:** support default color in pill and state cells ([#392](https://github.com/globalbrain/sefirot/issues/392)) ([#399](https://github.com/globalbrain/sefirot/issues/399)) ([bc4d843](https://github.com/globalbrain/sefirot/commit/bc4d8431b7ac78cb78504e51f2b332e266b00736))
+
 # [3.6.0](https://github.com/globalbrain/sefirot/compare/v3.5.0...v3.6.0) (2023-11-21)
 
 
