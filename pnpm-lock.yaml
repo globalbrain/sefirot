@@ -19,6 +19,9 @@ devDependencies:
   '@iconify-icons/ph':
     specifier: ^1.2.5
     version: 1.2.5
+  '@iconify-icons/ri':
+    specifier: ^1.2.10
+    version: 1.2.10
   '@iconify/vue':
     specifier: ^4.1.1
     version: 4.1.1(vue@3.3.8)
@@ -873,6 +876,12 @@ packages:
 
   /@iconify-icons/ph@1.2.5:
     resolution: {integrity: sha512-Ox2VkJDoFowrf0e74LlLUuLMiN73PsCN28MUx9wCQfyZAFrL8ntfBnMpzukfi/0vN9qpJKAiKYZ3dQ5JjBqt/A==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-icons/ri@1.2.10:
+    resolution: {integrity: sha512-wNaXsQYK55WDUWCbcjvnwnODV4Jtsp+VC0duPanibEVu876TUYf6kdgTGtH7/GErBCNdJuJJbncG7vbOaeQi7w==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

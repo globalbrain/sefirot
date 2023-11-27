@@ -77,6 +77,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SInputTextarea', link: '/components/input-textarea' },
         { text: 'SInputYMD', link: '/components/input-ymd' },
         { text: 'SLink', link: '/components/link' },
+        { text: 'SLoginPage', link: '/components/login-page' },
         { text: 'SM', link: '/components/m' },
         { text: 'SPill', link: '/components/pill' },
         { text: 'SState', link: '/components/state' },
