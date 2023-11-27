@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import SLoginPage from 'sefirot/components/SLoginPage.vue'
-import coverImage from '../_img/login-page-cover.jpg'
 
 const title = 'Components / SLoginPage / 01. Playground'
 const docs = '/components/login-page'
 
 function state() {
   const state: InstanceType<typeof SLoginPage>['$props'] = {
-    cover: coverImage,
+    cover: 'https://images.unsplash.com/photo-1526783166374-1239abde1c20?q=80&w=3008&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     coverTitle: {
       text: 'Golden Gate Bridge',
       link: 'https://unsplash.com/photos/bottom-view-of-orange-building-LjE32XEW01g'
@@ -17,8 +16,7 @@ function state() {
       link: 'https://unsplash.com/@khouser01'
     },
     actions: [
-      { type: 'google', onClick: async () => {} },
-      { type: 'google', label: 'Sign in via G', onClick: async () => {} }
+      { type: 'google', onClick: async () => {} }
     ]
   }
 

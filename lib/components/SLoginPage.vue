@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconGoogle from '@iconify-icons/ri/google-fill'
 import { computed } from 'vue'
 import SButton from './SButton.vue'
 import SLink from './SLink.vue'
 import SIconGbLogoWhite from './icon/SIconGbLogoWhite.vue'
-import SIconGoogle from './icon/SIconGoogle.vue'
 
 export interface CoverTitle {
   text: string
@@ -17,7 +17,6 @@ export interface CoverPhotographer {
 
 export interface Action {
   type: 'google'
-  label?: string
   onClick: () => Promise<void>
 }
 
@@ -28,29 +27,29 @@ const props = defineProps<{
   actions: Action[]
 }>()
 
-const coverBgImageStyle = computed(() => props.cover ? `url(${props.cover})` : '')
+const coverBgImageStyle = computed(() => `url(${props.cover})`)
 
 function getActionLabel(type: Action['type']) {
   switch (type) {
     case 'google':
       return 'Sign in via Google'
     default:
-      throw new Error('Invalid action type')
+      throw new Error('[sefirot] Invalid action type')
   }
 }
 
 function getIconComponent(type: Action['type']) {
   switch (type) {
     case 'google':
-      return SIconGoogle
+      return IconGoogle
     default:
-      throw new Error('Invalid action type')
+      throw new Error('[sefirot] Invalid action type')
   }
 }
 </script>
 
 <template>
-  <div class="SLoginPage">
+  <div class="SLoginPage dark">
     <div class="cover">
       <div class="cover-caption">
         <p class="cover-caption-text">
@@ -82,8 +81,7 @@ function getIconComponent(type: Action['type']) {
             size="large"
             mode="white"
             rounded
-            block
-            :label="action.label || getActionLabel(action.type)"
+            :label="getActionLabel(action.type)"
             :icon="getIconComponent(action.type)"
             @click="action.onClick"
           />
@@ -96,13 +94,12 @@ function getIconComponent(type: Action['type']) {
 <style scoped lang="postcss">
 .SLoginPage {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 480px;
-  gap: 4px;
-  background-color: var(--c-black);
+  background-color: var(--c-bg-elv-1);
 
   @media (min-width: 768px) {
+    display: grid;
     grid-template-columns: 1fr 392px;
+    gap: 4px;
   }
 
   @media (min-width: 1024px) {
@@ -111,6 +108,7 @@ function getIconComponent(type: Action['type']) {
 }
 
 .cover {
+  display: none;
   width: 100%;
   height: 100%;
   background-image: v-bind(coverBgImageStyle);
@@ -154,7 +152,7 @@ function getIconComponent(type: Action['type']) {
 .form {
   padding: 96px 32px 48px;
   min-height: 100vh;
-  background-color: var(--c-black-soft);
+  background-color: var(--c-bg-elv-2);
 
   @media (min-width: 768px) {
     display: flex;
@@ -183,7 +181,7 @@ function getIconComponent(type: Action['type']) {
 .form-title {
   font-size: 20px;
   font-weight: 600;
-  color: var(--c-text-dark-1);
+  color: var(--c-text-1);
 }
 
 .form-lead {
@@ -191,7 +189,7 @@ function getIconComponent(type: Action['type']) {
   padding: 12px;
   max-width: 336px;
   font-size: 14px;
-  color: var(--c-text-dark-2);
+  color: var(--c-text-2);
 }
 
 .form-actions {
@@ -199,7 +197,6 @@ function getIconComponent(type: Action['type']) {
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  max-width: 170px;
   padding-top: 24px;
   text-align: center;
   margin: 0 auto;
