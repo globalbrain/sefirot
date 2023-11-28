@@ -52,19 +52,20 @@ const href = computed(() => {
 
 .b-menu {
   display: grid;
-  grid-template-columns: 1fr min-content;
-  padding: 12px 12px 12px 32px;
+  grid-template-columns: minmax(0, 1fr) min-content;
+  gap: 24px;
+  padding: 12px 16px;
   border-bottom: 4px solid var(--c-bg-elv-1);
   background-color: var(--c-bg-elv-2);
 }
 
 .b-title {
-  display: flex;
-  align-items: center;
-  line-height: 24px;
+  line-height: 28px;
   font-size: 12px;
-  font-weight: 500;
   color: var(--c-text-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   transform: translateY(1px);
 }
 
