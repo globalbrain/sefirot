@@ -1,4 +1,4 @@
-# SLoginPage
+# SLoginPage <Badge text="3.8.0" />
 
 `<SLoginPage>` is the component to render login page used across GB products.
 
