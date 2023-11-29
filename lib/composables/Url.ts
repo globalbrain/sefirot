@@ -3,16 +3,14 @@ import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
-  state: Record<string, any>
-  casts?: Record<string, (value: any) => any>
+  casts?: Record<string, (value: string) => any>
   exclude?: string[]
 }
 
-export function useUrlQuerySync({
-  state,
-  casts = {},
-  exclude
-}: UseUrlQuerySyncOptions) {
+export function useUrlQuerySync(
+  state: Record<string, any>,
+  { casts = {}, exclude }: UseUrlQuerySyncOptions
+) {
   const router = useRouter()
   const route = useRoute()
 
