@@ -54,6 +54,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       collapsed: false,
       items: [
         { text: 'SActionList', link: '/components/action-list' },
+        { text: 'SAlert', link: '/components/alert' },
         { text: 'SAvatar', link: '/components/avatar' },
         { text: 'SButton', link: '/components/button' },
         { text: 'SButtonGroup', link: '/components/button-group' },
