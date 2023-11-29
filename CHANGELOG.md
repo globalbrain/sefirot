@@ -1,5 +1,13 @@
 
 
+# [3.8.0](https://github.com/globalbrain/sefirot/compare/v3.7.0...v3.8.0) (2023-11-29)
+
+
+### Features
+
+* **alert:** Add `<SAlert>` ([#403](https://github.com/globalbrain/sefirot/issues/403)) ([4047bbf](https://github.com/globalbrain/sefirot/commit/4047bbf7e79d6d2c318b9e1d6b367af89f26cca3))
+* **login:** add `<SLoginPage>` component ([b4da060](https://github.com/globalbrain/sefirot/commit/b4da0601a8c644586d487f680c9ec08b9825f1f6))
+
 # [3.7.0](https://github.com/globalbrain/sefirot/compare/v3.6.0...v3.7.0) (2023-11-24)
 
 
