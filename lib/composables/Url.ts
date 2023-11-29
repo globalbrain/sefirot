@@ -20,7 +20,7 @@ export function useUrlQuerySync({
 
   setStateFromQuery()
 
-  watch(() => state, setQueryFromState, { deep: true })
+  watch(() => state, setQueryFromState, { deep: true, immediate: true })
 
   function setStateFromQuery() {
     const flattenState = flattenObject(state)
