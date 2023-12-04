@@ -9,8 +9,8 @@ export interface UseUrlQuerySyncOptions {
 
 export function useUrlQuerySync(
   state: Record<string, any>,
-  { casts = {}, exclude }: UseUrlQuerySyncOptions
-) {
+  { casts = {}, exclude }: UseUrlQuerySyncOptions = {}
+): void {
   const router = useRouter()
   const route = useRoute()
 
