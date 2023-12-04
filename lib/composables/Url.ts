@@ -62,9 +62,9 @@ export function useUrlQuerySync(
       if (flattenQuery[key] === undefined) {
         delete flattenQuery[key]
       }
-
-      router.replace({ query: unflattenObject(flattenQuery) })
     })
+
+    router.replace({ query: unflattenObject(flattenQuery) })
   }
 }
 
