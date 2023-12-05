@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import FileSaver from 'file-saver'
 import { stringify } from 'qs'
 
-type FetchOptions = AxiosRequestConfig
+type FetchOptions = any
 
 export class Http {
-  axios: AxiosInstance
   xsrfUrl: string
 
   constructor(xsrfUrl = '/api/csrf-cookie') {
-    this.axios = axios.create()
     this.xsrfUrl = xsrfUrl
   }
 
@@ -30,7 +27,7 @@ export class Http {
   private async buildRequest(
     url: string,
     _options: FetchOptions = {}
-  ): Promise<[FetchOptions]> {
+  ): Promise<[string, FetchOptions]> {
     const { method, params, ...options } = _options
 
     const xsrfToken
@@ -43,10 +40,10 @@ export class Http {
     })
 
     return [
+      `${url}${queryString ? `?${queryString}` : ''}`,
       {
-        url: `${url}${queryString ? `?${queryString}` : ''}`,
         method,
-        withCredentials: true,
+        credentials: 'include',
         ...options,
         headers: {
           Accept: 'application/json',
@@ -58,13 +55,13 @@ export class Http {
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return (
-      await this.axios.request<T>(...(await this.buildRequest(url, options)))
-    ).data
+    // @ts-expect-error
+    return $fetch<T>(...(await this.buildRequest(url, options)))
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return this.axios.request<T>(...(await this.buildRequest(url, options)))
+    // @ts-expect-error
+    return $fetch.raw<T>(...(await this.buildRequest(url, options)))
   }
 
   private objectToFormData(obj: any, form?: FormData, namespace?: string) {
@@ -139,7 +136,6 @@ export class Http {
     }
 
     const { filename = 'download' }
-      // @ts-expect-error
       = parseContentDisposition(headers.get('Content-Disposition') || '')
         ?.parameters || {}
 
