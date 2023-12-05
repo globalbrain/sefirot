@@ -1,38 +1,68 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
+import { parse as parseCookie } from '@tinyhttp/cookie'
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import FileSaver from 'file-saver'
 import { stringify } from 'qs'
 
-type FetchOptions = AxiosRequestConfig
+type FetchOptions = AxiosRequestConfig & {
+  query?: Record<string, any>
+}
 
 export class Http {
   axios: AxiosInstance
+  xsrfUrl: string
 
-  constructor() {
-    this.axios = axios.create({
-      withCredentials: true,
-      paramsSerializer: (params) =>
-        stringify(params, { arrayFormat: 'brackets', encodeValuesOnly: true })
-    })
+  constructor(xsrfUrl = '/api/csrf-cookie') {
+    this.axios = axios.create()
+    this.xsrfUrl = xsrfUrl
   }
 
-  private buildRequest(url: string, _options: FetchOptions = {}): FetchOptions {
-    const { method, ...options } = _options
+  private async ensureXsrfToken(): Promise<string | undefined> {
+    let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
+
+    if (!xsrfToken) {
+      await this.head(this.xsrfUrl)
+      xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
+    }
+
+    return xsrfToken
+  }
+
+  private async buildRequest(
+    url: string,
+    _options: FetchOptions = {}
+  ): Promise<FetchOptions> {
+    const { method, params, query, ...options } = _options
+
+    const xsrfToken
+      = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
+      && (await this.ensureXsrfToken())
+
+    const queryString = stringify(
+      { ...params, ...query },
+      { arrayFormat: 'brackets', encodeValuesOnly: true }
+    )
 
     return {
-      url,
+      url: `${url}${queryString ? `?${queryString}` : ''}`,
       method,
+      withCredentials: true,
       ...options,
-      headers: { Accept: 'application/json', ...options.headers }
+      headers: {
+        Accept: 'application/json',
+        ...(xsrfToken && { 'X-XSRF-TOKEN': xsrfToken }),
+        ...options.headers
+      }
     }
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return (await this.axios.request<T>(this.buildRequest(url, options))).data
+    return (await this.axios.request<T>(await this.buildRequest(url, options)))
+      .data
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return this.axios.request<T>(this.buildRequest(url, options))
+    return this.axios.request<T>(await this.buildRequest(url, options))
   }
 
   private objectToFormData(obj: any, form?: FormData, namespace?: string) {

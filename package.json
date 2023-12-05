@@ -68,6 +68,7 @@
   },
   "dependencies": {
     "@tinyhttp/content-disposition": "^2.2.0",
+    "@tinyhttp/cookie": "^2.1.0",
     "dayjs": "^1.11.10",
     "file-saver": "^2.0.5",
     "qs": "^6.11.2"
