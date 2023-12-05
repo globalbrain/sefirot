@@ -1,18 +1,15 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
-import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import FileSaver from 'file-saver'
+import { $fetch } from 'ofetch'
 import { stringify } from 'qs'
 
-type FetchOptions = AxiosRequestConfig
+type FetchOptions = Parameters<typeof $fetch>[1]
 
 export class Http {
-  axios: AxiosInstance
   xsrfUrl: string
 
-  constructor(xsrfUrl = '/api/csrf-cookie') {
-    this.axios = axios.create()
+  constructor(xsrfUrl: string) {
     this.xsrfUrl = xsrfUrl
   }
 
@@ -30,23 +27,22 @@ export class Http {
   private async buildRequest(
     url: string,
     _options: FetchOptions = {}
-  ): Promise<[FetchOptions]> {
-    const { method, params, ...options } = _options
+  ): Promise<[string, FetchOptions]> {
+    const { method, params, query, ...options } = _options
 
     const xsrfToken
-      = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
-      && (await this.ensureXsrfToken())
+      = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
-    const queryString = stringify(params, {
-      arrayFormat: 'brackets',
-      encodeValuesOnly: true
-    })
+    const queryString = stringify(
+      { ...params, ...query },
+      { arrayFormat: 'brackets', encodeValuesOnly: true }
+    )
 
     return [
+      `${url}${queryString ? `?${queryString}` : ''}`,
       {
-        url: `${url}${queryString ? `?${queryString}` : ''}`,
         method,
-        withCredentials: true,
+        credentials: 'include',
         ...options,
         headers: {
           Accept: 'application/json',
@@ -58,13 +54,11 @@ export class Http {
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return (
-      await this.axios.request<T>(...(await this.buildRequest(url, options)))
-    ).data
+    return $fetch<T, any>(...(await this.buildRequest(url, options)))
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return this.axios.request<T>(...(await this.buildRequest(url, options)))
+    return $fetch.raw<T, any>(...(await this.buildRequest(url, options)))
   }
 
   private objectToFormData(obj: any, form?: FormData, namespace?: string) {
@@ -83,10 +77,7 @@ export class Http {
           continue
         }
 
-        if (
-          typeof obj[property] === 'object'
-          && !(obj[property] instanceof Blob)
-        ) {
+        if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob)) {
           this.objectToFormData(obj[property], fd, property)
         } else {
           fd.append(formKey, obj[property])
@@ -97,41 +88,45 @@ export class Http {
     return fd
   }
 
-  async get<T = any>(url: string, params?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'GET', params })
+  async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'GET', ...options })
   }
 
-  async head<T = any>(url: string, params?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'HEAD', params })
+  async head<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'HEAD', ...options })
   }
 
-  async post<T = any>(url: string, data?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'POST', data })
+  async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'POST', body, ...options })
   }
 
-  async put<T = any>(url: string, data?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PUT', data })
+  async put<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PUT', body, ...options })
   }
 
-  async patch<T = any>(url: string, data?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PATCH', data })
+  async patch<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PATCH', body, ...options })
   }
 
-  async delete<T = any>(url: string, params?: any): Promise<T> {
-    return this.performRequest<T>(url, { method: 'DELETE', params })
+  async delete<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'DELETE', ...options })
   }
 
-  async upload<T = any>(url: string, data?: any): Promise<T> {
-    const formData = this.objectToFormData(data)
+  async upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    const formData = this.objectToFormData(body)
 
-    return this.performRequest<T>(url, { method: 'POST', data: formData })
+    return this.performRequest<T>(url, {
+      method: 'POST',
+      body: formData,
+      ...options
+    })
   }
 
-  async download(url: string, params?: any): Promise<void> {
-    const { data: blob, headers } = await this.performRequestRaw<Blob>(url, {
+  async download(url: string, options?: FetchOptions): Promise<void> {
+    const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
       method: 'GET',
       responseType: 'blob',
-      params
+      ...options
     })
 
     if (!blob) {
@@ -139,9 +134,7 @@ export class Http {
     }
 
     const { filename = 'download' }
-      // @ts-expect-error
-      = parseContentDisposition(headers.get('Content-Disposition') || '')
-        ?.parameters || {}
+      = parseContentDisposition(headers.get('Content-Disposition') || '')?.parameters || {}
 
     FileSaver.saveAs(blob, filename as string)
   }
