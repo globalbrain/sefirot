@@ -17,6 +17,9 @@ dependencies:
   file-saver:
     specifier: ^2.0.5
     version: 2.0.5
+  ofetch:
+    specifier: ^1.3.3
+    version: 1.3.3
   qs:
     specifier: ^6.11.2
     version: 6.11.2
@@ -79,9 +82,6 @@ devDependencies:
   '@vueuse/core':
     specifier: ^10.6.1
     version: 10.7.0(vue@3.3.10)
-  axios:
-    specifier: ^1.6.2
-    version: 1.6.2
   body-scroll-lock:
     specifier: 4.0.0-beta.0
     version: 4.0.0-beta.0
@@ -132,7 +132,7 @@ devDependencies:
     version: 5.0.5(@types/node@20.10.3)
   vitepress:
     specifier: 1.0.0-rc.31
-    version: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.10.3)(axios@1.6.2)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.11.0)(typescript@5.3.2)
+    version: 1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.10.3)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.11.0)(typescript@5.3.2)
   vitest:
     specifier: ^1.0.1
     version: 1.0.1(@types/node@20.10.3)(happy-dom@12.10.3)
@@ -1891,7 +1891,7 @@ packages:
       - vue
     dev: true
 
-  /@vueuse/integrations@10.7.0(axios@1.6.2)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.3.10):
+  /@vueuse/integrations@10.7.0(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.3.10):
     resolution: {integrity: sha512-rxiMYgS+91n93qXpHZF9NbHhppWY6IJyVTDxt4acyChL0zZVx7P8FAAfpF1qVK8e4wfjerhpEiMJ0IZ1GWUZ2A==}
     peerDependencies:
       async-validator: '*'
@@ -1934,7 +1934,6 @@ packages:
     dependencies:
       '@vueuse/core': 10.7.0(vue@3.3.10)
       '@vueuse/shared': 10.7.0(vue@3.3.10)
-      axios: 1.6.2
       focus-trap: 7.5.4
       fuse.js: 7.0.0
       vue-demi: 0.14.6(vue@3.3.10)
@@ -2179,16 +2178,6 @@ packages:
   /available-typed-arrays@1.0.5:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
-    dev: true
-
-  /axios@1.6.2:
-    resolution: {integrity: sha512-7i24Ri4pmDRfJTR7LDBhsOTtcm+9kjX5WiY1X3wIisx6G9So3pfMkEiU7emUBe46oceVImccTEM3k6C5dbVW8A==}
-    dependencies:
-      follow-redirects: 1.15.3
-      form-data: 4.0.0
-      proxy-from-env: 1.1.0
-    transitivePeerDependencies:
-      - debug
     dev: true
 
   /balanced-match@1.0.2:
@@ -3010,6 +2999,10 @@ packages:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
     dev: true
+
+  /destr@2.0.2:
+    resolution: {integrity: sha512-65AlobnZMiCET00KaFFjUefxDX0khFA/E4myqZ7a6Sq1yZtR8+FVIvilVX66vF2uobSumxooYZChiRPCKNqhmg==}
+    dev: false
 
   /devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -3873,16 +3866,6 @@ packages:
     resolution: {integrity: sha512-N7kHdlgsO/v+iD/dMoJKtsSqs5Dz/dXZVebRgJw23LDk+jMi/974zyiOYDziY2JPp8xivq9BmUGwIJMiuSBi7w==}
     dependencies:
       tabbable: 6.2.0
-    dev: true
-
-  /follow-redirects@1.15.3:
-    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
-    engines: {node: '>=4.0'}
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
     dev: true
 
   /for-each@0.3.3:
@@ -5617,6 +5600,10 @@ packages:
     engines: {node: '>=10.5.0'}
     dev: true
 
+  /node-fetch-native@1.4.1:
+    resolution: {integrity: sha512-NsXBU0UgBxo2rQLOeWNZqS3fvflWePMECr8CoSWoSTqCqGbVVsvl9vZu1HfQicYN0g5piV9Gh8RTEvo/uP752w==}
+    dev: false
+
   /node-fetch@3.3.2:
     resolution: {integrity: sha512-dRB78srN/l6gqWulah9SrxeYnxeddIG30+GOqK/9OlLVyLg3HPnr6SqOWTWOXKRwC2eGYCkZ59NNuSgvSrpgOA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
@@ -5708,6 +5695,14 @@ packages:
       has-symbols: 1.0.3
       object-keys: 1.1.1
     dev: true
+
+  /ofetch@1.3.3:
+    resolution: {integrity: sha512-s1ZCMmQWXy4b5K/TW9i/DtiN8Ku+xCiHcjQ6/J/nDdssirrQNOoB165Zu8EqLMA2lln1JUth9a0aW9Ap2ctrUg==}
+    dependencies:
+      destr: 2.0.2
+      node-fetch-native: 1.4.1
+      ufo: 1.3.2
+    dev: false
 
   /on-finished@2.3.0:
     resolution: {integrity: sha512-ikqdkGAAyf/X/gPhXGvfgAytDZtDbr+bkNUJ0N9h5MI/dmdgCs3l6hoHrcUv41sRKew3jIwrp4qQDXiK99Utww==}
@@ -7123,7 +7118,6 @@ packages:
 
   /ufo@1.3.2:
     resolution: {integrity: sha512-o+ORpgGwaYQXgqGDwd+hkS4PuZ3QnmqMMxRuajK/a38L6fTpcE5GPIfrf+L/KemFzfUpeUQc1rRS1iDBozvnFA==}
-    dev: true
 
   /uglify-js@3.17.4:
     resolution: {integrity: sha512-T9q82TJI9e/C1TAxYvfb16xO120tMVFZrGA3f9/P4424DNu6ypK103y0GPFVa17yotwSyZW5iYXgjYHkGrJW/g==}
@@ -7416,7 +7410,7 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vitepress@1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.10.3)(axios@1.6.2)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.11.0)(typescript@5.3.2):
+  /vitepress@1.0.0-rc.31(@algolia/client-search@4.20.0)(@types/node@20.10.3)(fuse.js@7.0.0)(postcss@8.4.32)(search-insights@2.11.0)(typescript@5.3.2):
     resolution: {integrity: sha512-ikH9pIjOOAbyoYAGBVfTz8TzuXp+UoWaIRMU4bw/oiTg8R65SbAaGKY84xx6TuL+f4VqUJ8lhzW82YyxSLvstA==}
     hasBin: true
     peerDependencies:
@@ -7434,7 +7428,7 @@ packages:
       '@vitejs/plugin-vue': 4.5.1(vite@5.0.5)(vue@3.3.10)
       '@vue/devtools-api': 6.5.1
       '@vueuse/core': 10.7.0(vue@3.3.10)
-      '@vueuse/integrations': 10.7.0(axios@1.6.2)(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.3.10)
+      '@vueuse/integrations': 10.7.0(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.3.10)
       focus-trap: 7.5.4
       mark.js: 8.11.1
       minisearch: 6.3.0
