@@ -27,17 +27,11 @@ export class Http {
     }
   }
 
-  private async performRequest<T>(
-    url: string,
-    options: FetchOptions & { body?: any } = {}
-  ) {
+  private async performRequest<T>(url: string, options: FetchOptions = {}) {
     return (await this.axios.request<T>(this.buildRequest(url, options))).data
   }
 
-  private async performRequestRaw<T>(
-    url: string,
-    options: FetchOptions & { body?: any } = {}
-  ) {
+  private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
     return this.axios.request<T>(this.buildRequest(url, options))
   }
 
@@ -79,28 +73,28 @@ export class Http {
     return this.performRequest<T>(url, { method: 'HEAD', ...options })
   }
 
-  async post<T>(url: string, body?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'POST', body, ...options })
+  async post<T>(url: string, data?: any, options?: FetchOptions) {
+    return this.performRequest<T>(url, { method: 'POST', data, ...options })
   }
 
-  async put<T>(url: string, body?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'PUT', body, ...options })
+  async put<T>(url: string, data?: any, options?: FetchOptions) {
+    return this.performRequest<T>(url, { method: 'PUT', data, ...options })
   }
 
-  async patch<T>(url: string, body?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'PATCH', body, ...options })
+  async patch<T>(url: string, data?: any, options?: FetchOptions) {
+    return this.performRequest<T>(url, { method: 'PATCH', data, ...options })
   }
 
   async delete<T>(url: string, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'DELETE', ...options })
   }
 
-  async upload<T>(url: string, body?: any, options?: FetchOptions) {
-    const formData = this.objectToFormData(body)
+  async upload<T>(url: string, data?: any, options?: FetchOptions) {
+    const formData = this.objectToFormData(data)
 
     return this.performRequest<T>(url, {
       method: 'POST',
-      body: formData,
+      data: formData,
       ...options
     })
   }
