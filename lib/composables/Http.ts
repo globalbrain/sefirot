@@ -31,7 +31,7 @@ export class Http {
   private async buildRequest(
     url: string,
     _options: FetchOptions = {}
-  ): Promise<FetchOptions> {
+  ): Promise<[FetchOptions]> {
     const { method, params, query, ...options } = _options
 
     const xsrfToken
@@ -43,7 +43,7 @@ export class Http {
       { arrayFormat: 'brackets', encodeValuesOnly: true }
     )
 
-    return {
+    return [{
       url: `${url}${queryString ? `?${queryString}` : ''}`,
       method,
       withCredentials: true,
@@ -53,16 +53,16 @@ export class Http {
         ...(xsrfToken && { 'X-XSRF-TOKEN': xsrfToken }),
         ...options.headers
       }
-    }
+    }]
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return (await this.axios.request<T>(await this.buildRequest(url, options)))
+    return (await this.axios.request<T>(...await this.buildRequest(url, options)))
       .data
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return this.axios.request<T>(await this.buildRequest(url, options))
+    return this.axios.request<T>(...await this.buildRequest(url, options))
   }
 
   private objectToFormData(obj: any, form?: FormData, namespace?: string) {
