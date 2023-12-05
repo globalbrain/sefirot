@@ -44,7 +44,7 @@ export function useData<T extends Record<string, any>>(
   }
 
   return {
-    state: reactiveState,
+    state: reactiveState as T,
     init
   }
 }
