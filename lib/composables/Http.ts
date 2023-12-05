@@ -4,9 +4,7 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import FileSaver from 'file-saver'
 import { stringify } from 'qs'
 
-type FetchOptions = AxiosRequestConfig & {
-  query?: Record<string, any>
-}
+type FetchOptions = AxiosRequestConfig
 
 export class Http {
   axios: AxiosInstance
@@ -32,37 +30,40 @@ export class Http {
     url: string,
     _options: FetchOptions = {}
   ): Promise<[FetchOptions]> {
-    const { method, params, query, ...options } = _options
+    const { method, params, ...options } = _options
 
     const xsrfToken
       = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
       && (await this.ensureXsrfToken())
 
-    const queryString = stringify(
-      { ...params, ...query },
-      { arrayFormat: 'brackets', encodeValuesOnly: true }
-    )
+    const queryString = stringify(params, {
+      arrayFormat: 'brackets',
+      encodeValuesOnly: true
+    })
 
-    return [{
-      url: `${url}${queryString ? `?${queryString}` : ''}`,
-      method,
-      withCredentials: true,
-      ...options,
-      headers: {
-        Accept: 'application/json',
-        ...(xsrfToken && { 'X-XSRF-TOKEN': xsrfToken }),
-        ...options.headers
+    return [
+      {
+        url: `${url}${queryString ? `?${queryString}` : ''}`,
+        method,
+        withCredentials: true,
+        ...options,
+        headers: {
+          Accept: 'application/json',
+          ...(xsrfToken && { 'X-XSRF-TOKEN': xsrfToken }),
+          ...options.headers
+        }
       }
-    }]
+    ]
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return (await this.axios.request<T>(...await this.buildRequest(url, options)))
-      .data
+    return (
+      await this.axios.request<T>(...(await this.buildRequest(url, options)))
+    ).data
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return this.axios.request<T>(...await this.buildRequest(url, options))
+    return this.axios.request<T>(...(await this.buildRequest(url, options)))
   }
 
   private objectToFormData(obj: any, form?: FormData, namespace?: string) {
@@ -95,45 +96,41 @@ export class Http {
     return fd
   }
 
-  async get<T = any>(url: string, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'GET', ...options })
+  async get<T = any>(url: string, params?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'GET', params })
   }
 
-  async head<T = any>(url: string, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'HEAD', ...options })
+  async head<T = any>(url: string, params?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'HEAD', params })
   }
 
-  async post<T = any>(url: string, data?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'POST', data, ...options })
+  async post<T = any>(url: string, data?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'POST', data })
   }
 
-  async put<T = any>(url: string, data?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'PUT', data, ...options })
+  async put<T = any>(url: string, data?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PUT', data })
   }
 
-  async patch<T = any>(url: string, data?: any, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'PATCH', data, ...options })
+  async patch<T = any>(url: string, data?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PATCH', data })
   }
 
-  async delete<T = any>(url: string, options?: FetchOptions) {
-    return this.performRequest<T>(url, { method: 'DELETE', ...options })
+  async delete<T = any>(url: string, params?: any): Promise<T> {
+    return this.performRequest<T>(url, { method: 'DELETE', params })
   }
 
-  async upload<T = any>(url: string, data?: any, options?: FetchOptions) {
+  async upload<T = any>(url: string, data?: any): Promise<T> {
     const formData = this.objectToFormData(data)
 
-    return this.performRequest<T>(url, {
-      method: 'POST',
-      data: formData,
-      ...options
-    })
+    return this.performRequest<T>(url, { method: 'POST', data: formData })
   }
 
-  async download(url: string, options?: FetchOptions) {
+  async download(url: string, params?: any): Promise<void> {
     const { data: blob, headers } = await this.performRequestRaw<Blob>(url, {
       method: 'GET',
       responseType: 'blob',
-      ...options
+      params
     })
 
     if (!blob) {
