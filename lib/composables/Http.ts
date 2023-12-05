@@ -65,31 +65,31 @@ export class Http {
     return fd
   }
 
-  async get<T>(url: string, options?: FetchOptions) {
+  async get<T = any>(url: string, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'GET', ...options })
   }
 
-  async head<T>(url: string, options?: FetchOptions) {
+  async head<T = any>(url: string, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'HEAD', ...options })
   }
 
-  async post<T>(url: string, data?: any, options?: FetchOptions) {
+  async post<T = any>(url: string, data?: any, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'POST', data, ...options })
   }
 
-  async put<T>(url: string, data?: any, options?: FetchOptions) {
+  async put<T = any>(url: string, data?: any, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'PUT', data, ...options })
   }
 
-  async patch<T>(url: string, data?: any, options?: FetchOptions) {
+  async patch<T = any>(url: string, data?: any, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'PATCH', data, ...options })
   }
 
-  async delete<T>(url: string, options?: FetchOptions) {
+  async delete<T = any>(url: string, options?: FetchOptions) {
     return this.performRequest<T>(url, { method: 'DELETE', ...options })
   }
 
-  async upload<T>(url: string, data?: any, options?: FetchOptions) {
+  async upload<T = any>(url: string, data?: any, options?: FetchOptions) {
     const formData = this.objectToFormData(data)
 
     return this.performRequest<T>(url, {
