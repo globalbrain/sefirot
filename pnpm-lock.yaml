@@ -15,7 +15,7 @@ devDependencies:
     version: 1.5.2(eslint@8.54.0)(typescript@5.2.2)
   '@histoire/plugin-vue':
     specifier: ^0.17.5
-    version: 0.17.5(histoire@0.17.5)(vite@5.0.0)(vue@3.3.8)
+    version: 0.17.5(histoire@0.17.5)(vite@5.0.5)(vue@3.3.8)
   '@iconify-icons/ph':
     specifier: ^1.2.5
     version: 1.2.5
@@ -45,7 +45,7 @@ devDependencies:
     version: 20.9.2
   '@vitejs/plugin-vue':
     specifier: ^4.5.0
-    version: 4.5.0(vite@5.0.0)(vue@3.3.8)
+    version: 4.5.0(vite@5.0.5)(vue@3.3.8)
   '@vitest/coverage-v8':
     specifier: ^1.0.0-beta.5
     version: 1.0.0-beta.5(vitest@1.0.0-beta.5)
@@ -75,7 +75,7 @@ devDependencies:
     version: 12.10.3
   histoire:
     specifier: ^0.17.5
-    version: 0.17.5(@types/node@20.9.2)(vite@5.0.0)
+    version: 0.17.5(@types/node@20.9.2)(vite@5.0.5)
   lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
@@ -108,7 +108,7 @@ devDependencies:
     version: 3.1.2(@popperjs/core@2.11.8)(vue@3.3.8)
   vite:
     specifier: ^5.0.0
-    version: 5.0.0(@types/node@20.9.2)
+    version: 5.0.5(@types/node@20.9.2)
   vitepress:
     specifier: 1.0.0-rc.29
     version: 1.0.0-rc.29(@algolia/client-search@4.20.0)(@types/node@20.9.2)(fuse.js@7.0.0)(postcss@8.4.31)(search-insights@2.10.0)(typescript@5.2.2)
@@ -779,11 +779,11 @@ packages:
       - typescript
     dev: true
 
-  /@histoire/app@0.17.5(vite@5.0.0):
+  /@histoire/app@0.17.5(vite@5.0.5):
     resolution: {integrity: sha512-R3mn28OqBLAKzNuTuMpRFiBdRMrMGsn9rOgJZUC/Km1aj1KpRpg5ETzeWRMtqR3ZAWrlT3Z3pzvGAesPNoXHDw==}
     dependencies:
-      '@histoire/controls': 0.17.4(vite@5.0.0)
-      '@histoire/shared': 0.17.5(vite@5.0.0)
+      '@histoire/controls': 0.17.4(vite@5.0.5)
+      '@histoire/shared': 0.17.5(vite@5.0.5)
       '@histoire/vendors': 0.17.4
       '@types/flexsearch': 0.7.6
       flexsearch: 0.7.21
@@ -792,7 +792,7 @@ packages:
       - vite
     dev: true
 
-  /@histoire/controls@0.17.4(vite@5.0.0):
+  /@histoire/controls@0.17.4(vite@5.0.5):
     resolution: {integrity: sha512-eHon0NF7NpvQt1azE83laK+rX2elCm5wp45Oijv1viBwD+1KfXuxlU1xQoFqeNHPyD2F2c3NYLuKUOW/tzTKDw==}
     dependencies:
       '@codemirror/commands': 6.3.0
@@ -802,24 +802,24 @@ packages:
       '@codemirror/state': 6.3.1
       '@codemirror/theme-one-dark': 6.1.2
       '@codemirror/view': 6.22.0
-      '@histoire/shared': 0.17.5(vite@5.0.0)
+      '@histoire/shared': 0.17.5(vite@5.0.5)
       '@histoire/vendors': 0.17.4
     transitivePeerDependencies:
       - vite
     dev: true
 
-  /@histoire/plugin-vue@0.17.5(histoire@0.17.5)(vite@5.0.0)(vue@3.3.8):
+  /@histoire/plugin-vue@0.17.5(histoire@0.17.5)(vite@5.0.5)(vue@3.3.8):
     resolution: {integrity: sha512-xP/zQ+N0E83IUaoZgchAKtKJg1OQahih7tEcYgwhrmBxMw9F8TG0TyeGleJYLTbYXcy7THwIANZGfEPdQBuyuA==}
     peerDependencies:
       histoire: ^0.17.5
       vue: ^3.2.47
     dependencies:
-      '@histoire/controls': 0.17.4(vite@5.0.0)
-      '@histoire/shared': 0.17.5(vite@5.0.0)
+      '@histoire/controls': 0.17.4(vite@5.0.5)
+      '@histoire/shared': 0.17.5(vite@5.0.5)
       '@histoire/vendors': 0.17.4
       change-case: 4.1.2
       globby: 13.2.2
-      histoire: 0.17.5(@types/node@20.9.2)(vite@5.0.0)
+      histoire: 0.17.5(@types/node@20.9.2)(vite@5.0.5)
       launch-editor: 2.6.1
       pathe: 0.2.0
       vue: 3.3.8(typescript@5.2.2)
@@ -827,7 +827,7 @@ packages:
       - vite
     dev: true
 
-  /@histoire/shared@0.17.5(vite@5.0.0):
+  /@histoire/shared@0.17.5(vite@5.0.5):
     resolution: {integrity: sha512-sxdbRhYd5puUjM30Je6HpAyU2pCBpltopsZBF+4DhB+GKCWi3unhnwFHC2wCMcsYA+/J/YmYJqI3mVXQJCzmqg==}
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0 || ^4.0.0
@@ -838,7 +838,7 @@ packages:
       chokidar: 3.5.3
       pathe: 0.2.0
       picocolors: 1.0.0
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
     dev: true
 
   /@histoire/vendors@0.17.4:
@@ -1569,14 +1569,14 @@ packages:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
     dev: true
 
-  /@vitejs/plugin-vue@4.5.0(vite@5.0.0)(vue@3.3.8):
+  /@vitejs/plugin-vue@4.5.0(vite@5.0.5)(vue@3.3.8):
     resolution: {integrity: sha512-a2WSpP8X8HTEww/U00bU4mX1QpLINNuz/2KMNpLsdu3BzOpak3AGI1CJYBTXcc4SPhaD0eNRUp7IyQK405L5dQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.0.0 || ^5.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
       vue: 3.3.8(typescript@5.2.2)
     dev: true
 
@@ -1686,7 +1686,7 @@ packages:
       '@vue/shared': 3.3.8
       estree-walker: 2.0.2
       magic-string: 0.30.5
-      postcss: 8.4.31
+      postcss: 8.4.32
       source-map-js: 1.0.2
     dev: true
 
@@ -4156,16 +4156,16 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /histoire@0.17.5(@types/node@20.9.2)(vite@5.0.0):
+  /histoire@0.17.5(@types/node@20.9.2)(vite@5.0.5):
     resolution: {integrity: sha512-1Zr/oQbqpsW8K7X/4UHKR2ycdatOvBsVk3oSJ4IyughtmdfyvAvi6YOch38NEbEElqObB446ZrWzESadLorekQ==}
     hasBin: true
     peerDependencies:
       vite: ^2.9.0 || ^3.0.0 || ^4.0.0
     dependencies:
       '@akryum/tinypool': 0.3.1
-      '@histoire/app': 0.17.5(vite@5.0.0)
-      '@histoire/controls': 0.17.4(vite@5.0.0)
-      '@histoire/shared': 0.17.5(vite@5.0.0)
+      '@histoire/app': 0.17.5(vite@5.0.5)
+      '@histoire/controls': 0.17.4(vite@5.0.5)
+      '@histoire/shared': 0.17.5(vite@5.0.5)
       '@histoire/vendors': 0.17.4
       '@types/flexsearch': 0.7.6
       '@types/markdown-it': 12.2.3
@@ -4192,7 +4192,7 @@ packages:
       sade: 1.8.1
       shiki-es: 0.2.0
       sirv: 2.0.3
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
       vite-node: 0.34.6(@types/node@20.9.2)
     transitivePeerDependencies:
       - '@types/node'
@@ -5849,6 +5849,15 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
+  /postcss@8.4.32:
+    resolution: {integrity: sha512-D/kj5JNu6oo2EIy+XL/26JEDTlIbB8hw85G8StOE6L74RQAVVP5rej6wxCNqyMbR4RkPfqvezVbPw81Ngd6Kcw==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
   /preact@10.19.1:
     resolution: {integrity: sha512-ZSsUr6EFlwWH0btdXMj6+X+hJAZ1v+aUzKlfwBGokKB1ZO6Shz+D16LxQhM8f+E/UgkKbVe2tsWXtGTUMCkGpQ==}
     dev: true
@@ -7010,7 +7019,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7031,7 +7040,7 @@ packages:
       debug: 4.3.4
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -7043,8 +7052,8 @@ packages:
       - terser
     dev: true
 
-  /vite@5.0.0(@types/node@20.9.2):
-    resolution: {integrity: sha512-ESJVM59mdyGpsiNAeHQOR/0fqNoOyWPYesFto8FFZugfmhdHx8Fzd8sF3Q/xkVhZsyOxHfdM7ieiVAorI9RjFw==}
+  /vite@5.0.5(@types/node@20.9.2):
+    resolution: {integrity: sha512-OekeWqR9Ls56f3zd4CaxzbbS11gqYkEiBtnWFFgYR2WV8oPJRRKq0mpskYy/XaoCL3L7VINDhqqOMNDiYdGvGg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -7073,7 +7082,7 @@ packages:
     dependencies:
       '@types/node': 20.9.2
       esbuild: 0.19.6
-      postcss: 8.4.31
+      postcss: 8.4.32
       rollup: 4.5.0
     optionalDependencies:
       fsevents: 2.3.3
@@ -7094,7 +7103,7 @@ packages:
       '@docsearch/css': 3.5.2
       '@docsearch/js': 3.5.2(@algolia/client-search@4.20.0)(search-insights@2.10.0)
       '@types/markdown-it': 13.0.6
-      '@vitejs/plugin-vue': 4.5.0(vite@5.0.0)(vue@3.3.8)
+      '@vitejs/plugin-vue': 4.5.0(vite@5.0.5)(vue@3.3.8)
       '@vue/devtools-api': 6.5.1
       '@vueuse/core': 10.6.1(vue@3.3.8)
       '@vueuse/integrations': 10.6.1(focus-trap@7.5.4)(fuse.js@7.0.0)(vue@3.3.8)
@@ -7104,7 +7113,7 @@ packages:
       mrmime: 1.0.1
       postcss: 8.4.31
       shiki: 0.14.5
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
       vue: 3.3.8(typescript@5.2.2)
     transitivePeerDependencies:
       - '@algolia/client-search'
@@ -7179,7 +7188,7 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.8.1
-      vite: 5.0.0(@types/node@20.9.2)
+      vite: 5.0.5(@types/node@20.9.2)
       vite-node: 1.0.0-beta.5(@types/node@20.9.2)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
