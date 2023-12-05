@@ -1,7 +1,7 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import FileSaver from 'file-saver'
-import qs from 'qs'
+import { stringify } from 'qs'
 
 type FetchOptions = AxiosRequestConfig
 
@@ -11,17 +11,8 @@ export class Http {
   constructor() {
     this.axios = axios.create({
       withCredentials: true,
-      paramsSerializer: {
-        encode(params) {
-          return qs.parse(params)
-        },
-        serialize(params) {
-          return qs.stringify(params, {
-            arrayFormat: 'brackets',
-            encodeValuesOnly: true
-          })
-        }
-      }
+      paramsSerializer: (params) =>
+        stringify(params, { arrayFormat: 'brackets', encodeValuesOnly: true })
     })
   }
 
@@ -38,9 +29,9 @@ export class Http {
 
   private async performRequest<T>(
     url: string,
-    _options: FetchOptions & { body?: any } = {}
+    options: FetchOptions & { body?: any } = {}
   ) {
-    return (await this.axios.request<T>(this.buildRequest(url, _options))).data
+    return (await this.axios.request<T>(this.buildRequest(url, options))).data
   }
 
   private async performRequestRaw<T>(
