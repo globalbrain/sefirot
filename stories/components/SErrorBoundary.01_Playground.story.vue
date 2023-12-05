@@ -15,7 +15,7 @@ const title = 'Components / SErrorBoundary / 01. Playground'
         <template #error="{ error, clearError }">
           <div>Error slot</div>
           <div>{{ error }}</div>
-          <button @click="clearError">Clear error</button>
+          <button @click="clearError()">Clear error</button>
         </template>
       </SErrorBoundary>
     </Board>
