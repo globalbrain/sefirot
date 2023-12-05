@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onErrorCaptured, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 const emit = defineEmits<{
   (e: 'error', value: any): void
@@ -18,7 +19,10 @@ onErrorCaptured((e) => {
   }
 })
 
-function clearError() {
+async function clearError(options: { redirect?: string } = {}) {
+  if (options.redirect) {
+    await useRouter().replace(options.redirect)
+  }
   error.value = null
 }
 </script>
