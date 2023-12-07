@@ -22,7 +22,7 @@ Holds the static URL for the Laravel Sanctum endpoint.
 
 ```ts
 class Http {
-  // @default '/api/sanctum/csrf-cookie'
+  // @default '/api/csrf-cookie'
   static xsrfUrl: string
 }
 ```
