@@ -41,7 +41,7 @@ export function useUrlQuerySync(
     Object.assign(state, unflattenObject(flattenState))
   }
 
-  function setQueryFromState() {
+  async function setQueryFromState() {
     const flattenState = flattenObject(state)
     const flattenQuery = flattenObject(route.query)
 
@@ -64,7 +64,7 @@ export function useUrlQuerySync(
       }
     })
 
-    router.replace({ query: unflattenObject(flattenQuery) })
+    await router.replace({ query: unflattenObject(flattenQuery) })
   }
 }
 
