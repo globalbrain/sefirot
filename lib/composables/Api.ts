@@ -1,4 +1,4 @@
-import { type Ref, ref, shallowRef } from 'vue'
+import { type Ref, ref } from 'vue'
 import { Http } from '../http/Http'
 
 export interface Query<Data = any> {
@@ -28,7 +28,7 @@ export function useQuery<Data = any>(
   options: UseQueryOptions = {}
 ): Query<Data> {
   const loading = ref(false)
-  const data = shallowRef<Data | undefined>()
+  const data = ref<Data | undefined>()
 
   if (options.immediate !== false) {
     execute()
@@ -51,7 +51,7 @@ export function useMutation<Data = any, Args extends any[] = any[]>(
   req: (http: Http, ...args: Args) => Promise<Data>
 ): Mutation<Data, Args> {
   const loading = ref(false)
-  const data = shallowRef<Data | undefined>()
+  const data = ref<Data | undefined>()
 
   async function execute(...args: Args): Promise<Data> {
     loading.value = true
