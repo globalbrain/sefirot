@@ -1,10 +1,8 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import { $fetch } from 'ofetch'
+import { $fetch, type FetchOptions } from 'ofetch'
 import { stringify } from 'qs'
-
-type FetchOptions = Parameters<typeof $fetch>[1]
 
 export class Http {
   static xsrfUrl = '/api/csrf-cookie'
@@ -135,3 +133,5 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 }
+
+export type { FetchOptions }
