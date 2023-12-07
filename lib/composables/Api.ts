@@ -1,9 +1,9 @@
-import { type ComputedRef, type ShallowRef, computed, ref, shallowRef } from 'vue'
+import { type ComputedRef, computed, ref, shallowRef } from 'vue'
 import { Http } from '../http/Http.js'
 
 export interface Query<Data = any> {
   loading: ComputedRef<boolean>
-  data: ShallowRef<Data | undefined>
+  data: ComputedRef<Data | undefined>
   execute(): Promise<Data>
 }
 
@@ -17,7 +17,7 @@ export interface UseQueryOptions {
 
 export interface Mutation<Data = any, Args extends any[] = any[]> {
   loading: ComputedRef<boolean>
-  data: ShallowRef<Data | undefined>
+  data: ComputedRef<Data | undefined>
   execute(...args: Args): Promise<Data>
 }
 
@@ -46,7 +46,7 @@ export function useQuery<Data = any>(
 
   return {
     loading: computed(() => loading.value),
-    data,
+    data: computed(() => data.value),
     execute
   }
 }
@@ -69,7 +69,7 @@ export function useMutation<Data = any, Args extends any[] = any[]>(
 
   return {
     loading: computed(() => loading.value),
-    data,
+    data: computed(() => data.value),
     execute
   }
 }
