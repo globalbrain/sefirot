@@ -1,6 +1,6 @@
 # Api <Badge text="3.9.0" />
 
-`Api` module provides a set of composable functions to work with the network requests. This composable has direct integration with [`Http`](./network-requests/http) module.
+`Api` module provides a set of composable functions to work with the network requests. This composable has direct integration with [`Http`](../network-requests/http) module.
 
 ## `useQuery`
 
