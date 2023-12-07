@@ -1,7 +1,7 @@
 import { type ComputedRef, type ShallowRef, computed, ref, shallowRef } from 'vue'
 import { Http } from '../http/Http.js'
 
-export interface Query<Data = unknown> {
+export interface Query<Data = any> {
   loading: ComputedRef<boolean>
   data: ShallowRef<Data | undefined>
   execute(): Promise<Data>
@@ -15,15 +15,15 @@ export interface UseQueryOptions {
   immediate?: boolean
 }
 
-export interface Mutation<Data = unknown, Args extends unknown[] = unknown[]> {
+export interface Mutation<Data = any, Args extends any[] = any[]> {
   loading: ComputedRef<boolean>
   data: ShallowRef<Data | undefined>
   execute(...args: Args): Promise<Data>
 }
 
-export type Get<Data = unknown, Args extends unknown[] = unknown[]> = Mutation<Data, Args>
+export type Get<Data = any, Args extends any[] = any[]> = Mutation<Data, Args>
 
-export function useQuery<Data = unknown>(
+export function useQuery<Data = any>(
   req: (http: Http) => Promise<Data>,
   options: UseQueryOptions = {}
 ): Query<Data> {
@@ -51,7 +51,7 @@ export function useQuery<Data = unknown>(
   }
 }
 
-export function useMutation<Data = unknown, Args extends unknown[] = unknown[]>(
+export function useMutation<Data = any, Args extends any[] = any[]>(
   req: (http: Http, ...args: Args) => Promise<Data>
 ): Mutation<Data, Args> {
   const loading = ref(false)
@@ -74,6 +74,6 @@ export function useMutation<Data = unknown, Args extends unknown[] = unknown[]>(
   }
 }
 
-export const useGet: <Data = unknown, Args extends unknown[] = unknown[]>(
+export const useGet: <Data = any, Args extends any[] = any[]>(
   req: (http: Http, ...args: Args) => Promise<Data>
 ) => Get<Data, Args> = useMutation
