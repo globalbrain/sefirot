@@ -1,5 +1,5 @@
 import { type ComputedRef, computed, ref, shallowRef } from 'vue'
-import { Http } from '../http/Http.js'
+import { Http } from '../http/Http'
 
 export interface Query<Data = any> {
   loading: ComputedRef<boolean>
