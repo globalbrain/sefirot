@@ -8,8 +8,10 @@ export interface Query<Data = unknown> {
 }
 
 export interface UseQueryOptions {
-  // controls whether the query should execute immediately
-  // @default true
+  /**
+   * controls whether the query should execute immediately
+   * @default true
+   */
   immediate?: boolean
 }
 
