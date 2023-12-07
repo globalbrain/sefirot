@@ -7,17 +7,13 @@ import { stringify } from 'qs'
 type FetchOptions = Parameters<typeof $fetch>[1]
 
 export class Http {
-  xsrfUrl: string
-
-  constructor(xsrfUrl: string) {
-    this.xsrfUrl = xsrfUrl
-  }
+  static xsrfUrl = '/api/csrf-cookie'
 
   private async ensureXsrfToken(): Promise<string | undefined> {
     let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
 
     if (!xsrfToken) {
-      await this.head(this.xsrfUrl)
+      await this.head(Http.xsrfUrl)
       xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
     }
 
