@@ -98,6 +98,13 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       ]
     },
     {
+      text: 'Network Requests',
+      collapsed: false,
+      items: [
+        { text: 'Http', link: '/network-requests/http' },
+      ]
+    },
+    {
       text: 'Validation',
       collapsed: false,
       items: [
