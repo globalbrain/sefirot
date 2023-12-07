@@ -92,6 +92,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: 'Composables',
       collapsed: false,
       items: [
+        { text: 'Api', link: '/composables/api' },
         { text: 'Image', link: '/composables/image' },
         { text: 'Url', link: '/composables/url' },
         { text: 'Utils', link: '/composables/utils' }
