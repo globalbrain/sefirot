@@ -1,5 +1,15 @@
 
 
+# [3.9.0](https://github.com/globalbrain/sefirot/compare/v3.8.0...v3.9.0) (2023-12-8)
+
+
+### Features
+
+* **api:** add `useQuery`, `useMutation`, `useGet` composables ([#409](https://github.com/globalbrain/sefirot/issues/409)) ([a9a77e7](https://github.com/globalbrain/sefirot/commit/a9a77e7b4c2dc9d1681968d92351e2928b47ef25))
+* **error:** add error boundary component ([#406](https://github.com/globalbrain/sefirot/issues/406)) ([8ae0290](https://github.com/globalbrain/sefirot/commit/8ae0290e31cb9a263dee4a0a29b9ff18b25ce3ec))
+* **http:** add `Http` class ([#400](https://github.com/globalbrain/sefirot/issues/400)) ([#407](https://github.com/globalbrain/sefirot/issues/407)) ([93a4508](https://github.com/globalbrain/sefirot/commit/93a4508e985093e26a4ce11942714c9a188e15eb))
+* **url:** add `useUrlQuerySync` function ([#404](https://github.com/globalbrain/sefirot/issues/404)) ([a3be01b](https://github.com/globalbrain/sefirot/commit/a3be01bfa16dfb8ad20480d55093330403ac6325))
+
 # [3.8.0](https://github.com/globalbrain/sefirot/compare/v3.7.0...v3.8.0) (2023-11-29)
 
 
