@@ -1,5 +1,12 @@
 
 
+# [3.10.0](https://github.com/globalbrain/sefirot/compare/v3.9.0...v3.10.0) (2023-12-9)
+
+
+### Features
+
+* **power:** add `usePower` composable ([#411](https://github.com/globalbrain/sefirot/issues/411)) ([b77819a](https://github.com/globalbrain/sefirot/commit/b77819a8696ed3c8ef696aaa7f486d4467fc415a))
+
 # [3.9.0](https://github.com/globalbrain/sefirot/compare/v3.8.0...v3.9.0) (2023-12-8)
 
 
