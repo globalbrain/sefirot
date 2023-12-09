@@ -29,7 +29,7 @@ function useQuery<Data = any>(
 ```
 
 ```ts
-import { useQuery } from '@globalbrain/sefirot/lib/composables/Api.vue'
+import { useQuery } from '@globalbrain/sefirot/lib/composables/Api'
 
 const { data, loading } = useQuery((http) => {
   return http.get('/api/users')

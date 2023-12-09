@@ -94,6 +94,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: 'Api', link: '/composables/api' },
         { text: 'Image', link: '/composables/image' },
+        { text: 'Power', link: '/composables/power' },
         { text: 'Url', link: '/composables/url' },
         { text: 'Utils', link: '/composables/utils' }
       ]
