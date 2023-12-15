@@ -1,5 +1,12 @@
 
 
+## [3.10.1](https://github.com/globalbrain/sefirot/compare/v3.10.0...v3.10.1) (2023-12-15)
+
+
+### Bug Fixes
+
+* **url:** preserve reactivity while assigning state from query ([#412](https://github.com/globalbrain/sefirot/issues/412)) ([38b4ab5](https://github.com/globalbrain/sefirot/commit/38b4ab5addab3883e32d7b28cbfe22e8130c7ec9))
+
 # [3.10.0](https://github.com/globalbrain/sefirot/compare/v3.9.0...v3.10.0) (2023-12-9)
 
 
