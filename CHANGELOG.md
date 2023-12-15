@@ -1,5 +1,12 @@
 
 
+# [3.11.0](https://github.com/globalbrain/sefirot/compare/v3.10.1...v3.11.0) (2023-12-15)
+
+
+### Features
+
+* **doc:** add `<SDoc>` ([#413](https://github.com/globalbrain/sefirot/issues/413)) ([f1b8131](https://github.com/globalbrain/sefirot/commit/f1b8131c3bb5ecfe473170c9f4af7d645390835c))
+
 ## [3.10.1](https://github.com/globalbrain/sefirot/compare/v3.10.0...v3.10.1) (2023-12-15)
 
 
