@@ -1,5 +1,5 @@
 import isPlainObject from 'lodash-es/isPlainObject'
-import { watch } from 'vue'
+import { toRaw, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -38,7 +38,7 @@ export function useUrlQuerySync(
       flattenState[key] = cast ? cast(value) : value
     })
 
-    Object.assign(state, unflattenObject(flattenState))
+    deepAssign(state, unflattenObject(flattenState))
   }
 
   async function setQueryFromState() {
@@ -93,4 +93,30 @@ function unflattenObject(obj: Record<string, any>) {
     }, acc)
     return acc
   }, {} as Record<string, any>)
+}
+
+function deepAssign(target: Record<string, any>, source: Record<string, any>) {
+  const dest = target
+  const src = toRaw(source)
+
+  if (isPlainObject(src)) {
+    Object.keys(src).forEach((key) => {
+      if (typeof src[key] === 'object' && src[key] !== null) {
+        deepAssign(dest[key], src[key])
+      } else {
+        dest[key] = toRaw(src[key])
+      }
+    })
+  } else if (Array.isArray(src)) {
+    dest.length = src.length
+    src.forEach((item, index) => {
+      if (typeof item === 'object' && item !== null) {
+        deepAssign(dest[index], item)
+      } else {
+        dest[index] = toRaw(item)
+      }
+    })
+  } else {
+    throw new TypeError('[deepAssign] src must be an object or array')
+  }
 }
