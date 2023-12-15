@@ -64,8 +64,8 @@ function resolve(
   display: inline-block;
   margin-left: 12px;
   line-height: 24px;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -78,11 +78,11 @@ function resolve(
   .STableCellAvatar.soft.link &    { color: var(--c-text-2); }
   .STableCellAvatar.mute.link &    { color: var(--c-text-3); }
 
-  .STableCellAvatar.link &       { color: var(--c-info); }
-  .STableCellAvatar.link:hover & { color: var(--c-info-dark); }
+  .STableCellAvatar.link &       { color: var(--c-text-info-1); }
+  .STableCellAvatar.link:hover & { color: var(--c-text-info-2); }
 
-  .STableCellAvatar.neutral.link:hover & { color: var(--c-info); }
-  .STableCellAvatar.soft.link:hover &    { color: var(--c-info); }
-  .STableCellAvatar.mute.link:hover &    { color: var(--c-info); }
+  .STableCellAvatar.neutral.link:hover & { color: var(--c-text-info-1); }
+  .STableCellAvatar.soft.link:hover &    { color: var(--c-text-info-1); }
+  .STableCellAvatar.mute.link:hover &    { color: var(--c-text-info-1); }
 }
 </style>

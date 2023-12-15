@@ -100,28 +100,28 @@ const _iconColor = computed(() => {
   &.neutral { color: var(--c-text-1); }
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
-  &.info    { color: var(--c-info-text); }
-  &.success { color: var(--c-success-text); }
-  &.warning { color: var(--c-warning-text); }
-  &.danger  { color: var(--c-danger-text); }
+  &.info    { color: var(--c-text-info-1); }
+  &.success { color: var(--c-text-success-1); }
+  &.warning { color: var(--c-text-warning-1); }
+  &.danger  { color: var(--c-text-danger-1); }
 
-  .STableCellText.link &       { color: var(--c-info-text); }
-  .STableCellText.link:hover & { color: var(--c-info-text-dark); }
+  .STableCellText.link &       { color: var(--c-text-info-1); }
+  .STableCellText.link:hover & { color: var(--c-text-info-2); }
 
   .STableCellText.link &.neutral       { color: var(--c-text-1); }
-  .STableCellText.link:hover &.neutral { color: var(--c-info-text); }
+  .STableCellText.link:hover &.neutral { color: var(--c-text-info-1); }
   .STableCellText.link &.soft          { color: var(--c-text-2); }
-  .STableCellText.link:hover &.soft    { color: var(--c-info-text); }
+  .STableCellText.link:hover &.soft    { color: var(--c-text-info-1); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
   .STableCellText.link:hover &.mute    { color: var(--c-text-3); }
-  .STableCellText.link &.info          { color: var(--c-info-text); }
-  .STableCellText.link:hover &.info    { color: var(--c-info-text-dark); }
-  .STableCellText.link &.success       { color: var(--c-success-text); }
-  .STableCellText.link:hover &.success { color: var(--c-success-text-dark); }
-  .STableCellText.link &.warning       { color: var(--c-warning-text); }
-  .STableCellText.link:hover &.warning { color: var(--c-warning-text-darker); }
-  .STableCellText.link &.danger        { color: var(--c-danger-text); }
-  .STableCellText.link:hover &.danger  { color: var(--c-danger-text-dark); }
+  .STableCellText.link &.info          { color: var(--c-text-info-1); }
+  .STableCellText.link:hover &.info    { color: var(--c-text-info-2); }
+  .STableCellText.link &.success       { color: var(--c-text-success-1); }
+  .STableCellText.link:hover &.success { color: var(--c-text-success-2); }
+  .STableCellText.link &.warning       { color: var(--c-text-warning-1); }
+  .STableCellText.link:hover &.warning { color: var(--c-text-warning-2); }
+  .STableCellText.link &.danger        { color: var(--c-text-danger-1); }
+  .STableCellText.link:hover &.danger  { color: var(--c-text-danger-2); }
 
   .STableCell.summary & {
     font-weight: var(--table-cell-summary-font-weight);
@@ -142,23 +142,23 @@ const _iconColor = computed(() => {
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
 
-  .STableCellText.link &       { color: var(--c-info-text); }
-  .STableCellText.link:hover & { color: var(--c-info-text-dark); }
+  .STableCellText.link &       { color: var(--c-text-info-1); }
+  .STableCellText.link:hover & { color: var(--c-text-info-2); }
 
   .STableCellText.link &.neutral       { color: var(--c-text-1); }
-  .STableCellText.link:hover &.neutral { color: var(--c-info-text); }
+  .STableCellText.link:hover &.neutral { color: var(--c-text-info-1); }
   .STableCellText.link &.soft          { color: var(--c-text-2); }
-  .STableCellText.link:hover &.soft    { color: var(--c-info-text); }
+  .STableCellText.link:hover &.soft    { color: var(--c-text-info-1); }
   .STableCellText.link &.mute          { color: var(--c-text-3); }
-  .STableCellText.link:hover &.mute    { color: var(--c-info-text); }
-  .STableCellText.link &.info          { color: var(--c-info-text); }
-  .STableCellText.link:hover &.info    { color: var(--c-info-dark); }
-  .STableCellText.link &.success       { color: var(--c-success-text); }
-  .STableCellText.link:hover &.success { color: var(--c-success-text-dark); }
-  .STableCellText.link &.warning       { color: var(--c-warning-text); }
-  .STableCellText.link:hover &.warning { color: var(--c-warning-text-dark); }
-  .STableCellText.link &.danger        { color: var(--c-danger-text); }
-  .STableCellText.link:hover &.danger  { color: var(--c-danger-text-dark); }
+  .STableCellText.link:hover &.mute    { color: var(--c-text-3); }
+  .STableCellText.link &.info          { color: var(--c-text-info-1); }
+  .STableCellText.link:hover &.info    { color: var(--c-text-info-2); }
+  .STableCellText.link &.success       { color: var(--c-text-success-1); }
+  .STableCellText.link:hover &.success { color: var(--c-text-success-2); }
+  .STableCellText.link &.warning       { color: var(--c-text-warning-1); }
+  .STableCellText.link:hover &.warning { color: var(--c-text-warning-2); }
+  .STableCellText.link &.danger        { color: var(--c-text-danger-1); }
+  .STableCellText.link:hover &.danger  { color: var(--c-text-danger-2); }
 }
 
 .svg {

@@ -47,7 +47,7 @@ const { container, isOpen, toggle } = useFlyout()
   transition: background-color 0.25s;
 
   &:hover {
-    background-color: var(--c-mute);
+    background-color: var(--c-bg-mute-1);
   }
 }
 
@@ -90,7 +90,7 @@ const { container, isOpen, toggle } = useFlyout()
   border-radius: 6px;
   width: 6px;
   height: 6px;
-  background-color: var(--c-info-text);
+  background-color: var(--c-fg-info-1);
 }
 
 .dialog {

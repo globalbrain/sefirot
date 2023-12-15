@@ -27,11 +27,11 @@
 
 .SSheetMedium :deep(a) {
   font-weight: 500;
-  color: var(--c-info);
+  color: var(--c-text-info-1);
   transition: color .25s;
 
   &:hover {
-    color: var(--c-info-dark);
+    color: var(--c-text-info-2);
   }
 }
 

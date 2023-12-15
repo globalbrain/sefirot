@@ -191,10 +191,10 @@ function onBlur() {
 }
 
 .tip :deep(a) {
-  color: var(--c-info-text);
+  color: var(--c-text-info-1);
 
   &:hover {
-    color: var(--c-info-text-dark);
+    color: var(--c-text-info-2);
   }
 }
 </style>

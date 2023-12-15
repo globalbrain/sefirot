@@ -79,12 +79,12 @@ const names = computed(() => {
 }
 
 .avatar-box {
-  border: 2px solid var(--c-bg-elv-up);
+  border: 2px solid var(--c-bg-elv-3);
   border-radius: 50%;
   width: 28px;
 
   .row:hover & {
-    border: 2px solid var(--c-bg-elv);
+    border: 2px solid var(--c-bg-elv-4);
   }
 }
 

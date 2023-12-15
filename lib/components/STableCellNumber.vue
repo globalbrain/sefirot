@@ -76,28 +76,28 @@ const classes = computed(() => [
   &.neutral { color: var(--c-text-1); }
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
-  &.info    { color: var(--c-info-text); }
-  &.success { color: var(--c-success-text); }
-  &.warning { color: var(--c-warning-text); }
-  &.danger  { color: var(--c-danger-text); }
+  &.info    { color: var(--c-text-info-1); }
+  &.success { color: var(--c-text-success-1); }
+  &.warning { color: var(--c-text-warning-1); }
+  &.danger  { color: var(--c-text-danger-1); }
 
-  .STableCellNumber.link &       { color: var(--c-info-text); }
-  .STableCellNumber.link:hover & { color: var(--c-info-text-dark); }
+  .STableCellNumber.link &       { color: var(--c-text-info-1); }
+  .STableCellNumber.link:hover & { color: var(--c-text-info-2); }
 
   .STableCellNumber.link &.neutral       { color: var(--c-text-1); }
-  .STableCellNumber.link:hover &.neutral { color: var(--c-info-text); }
+  .STableCellNumber.link:hover &.neutral { color: var(--c-text-info-1); }
   .STableCellNumber.link &.soft          { color: var(--c-text-2); }
-  .STableCellNumber.link:hover &.soft    { color: var(--c-info-text); }
+  .STableCellNumber.link:hover &.soft    { color: var(--c-text-info-1); }
   .STableCellNumber.link &.mute          { color: var(--c-text-3); }
   .STableCellNumber.link:hover &.mute    { color: var(--c-text-3); }
-  .STableCellNumber.link &.info          { color: var(--c-info-text); }
-  .STableCellNumber.link:hover &.info    { color: var(--c-info-text-dark); }
-  .STableCellNumber.link &.success       { color: var(--c-success-text); }
-  .STableCellNumber.link:hover &.success { color: var(--c-success-text-dark); }
-  .STableCellNumber.link &.warning       { color: var(--c-warning-text); }
-  .STableCellNumber.link:hover &.warning { color: var(--c-warning-text-darker); }
-  .STableCellNumber.link &.danger        { color: var(--c-danger-text); }
-  .STableCellNumber.link:hover &.danger  { color: var(--c-danger-text-dark); }
+  .STableCellNumber.link &.info          { color: var(--c-text-info-1); }
+  .STableCellNumber.link:hover &.info    { color: var(--c-text-info-2); }
+  .STableCellNumber.link &.success       { color: var(--c-text-success-1); }
+  .STableCellNumber.link:hover &.success { color: var(--c-text-success-2); }
+  .STableCellNumber.link &.warning       { color: var(--c-text-warning-1); }
+  .STableCellNumber.link:hover &.warning { color: var(--c-text-warning-2); }
+  .STableCellNumber.link &.danger        { color: var(--c-text-danger-1); }
+  .STableCellNumber.link:hover &.danger  { color: var(--c-text-danger-2); }
 
   .STableCell.summary & {
     font-weight: var(--table-cell-summary-font-weight);
@@ -118,23 +118,23 @@ const classes = computed(() => [
   &.soft    { color: var(--c-text-2); }
   &.mute    { color: var(--c-text-3); }
 
-  .STableCellNumber.link &       { color: var(--c-info-text); }
-  .STableCellNumber.link:hover & { color: var(--c-info-text-dark); }
+  .STableCellNumber.link &       { color: var(--c-text-info-1); }
+  .STableCellNumber.link:hover & { color: var(--c-text-info-2); }
 
   .STableCellNumber.link &.neutral       { color: var(--c-text-1); }
-  .STableCellNumber.link:hover &.neutral { color: var(--c-info-text); }
+  .STableCellNumber.link:hover &.neutral { color: var(--c-text-info-1); }
   .STableCellNumber.link &.soft          { color: var(--c-text-2); }
-  .STableCellNumber.link:hover &.soft    { color: var(--c-info-text); }
+  .STableCellNumber.link:hover &.soft    { color: var(--c-text-info-1); }
   .STableCellNumber.link &.mute          { color: var(--c-text-3); }
-  .STableCellNumber.link:hover &.mute    { color: var(--c-info-text); }
-  .STableCellNumber.link &.info          { color: var(--c-info-text); }
-  .STableCellNumber.link:hover &.info    { color: var(--c-info-text-dark); }
-  .STableCellNumber.link &.success       { color: var(--c-success-text); }
-  .STableCellNumber.link:hover &.success { color: var(--c-success-text-dark); }
-  .STableCellNumber.link &.warning       { color: var(--c-warning-text); }
-  .STableCellNumber.link:hover &.warning { color: var(--c-warning-text-dark); }
-  .STableCellNumber.link &.danger        { color: var(--c-danger-text); }
-  .STableCellNumber.link:hover &.danger  { color: var(--c-danger-text-dark); }
+  .STableCellNumber.link:hover &.mute    { color: var(--c-text-3); }
+  .STableCellNumber.link &.info          { color: var(--c-text-info-1); }
+  .STableCellNumber.link:hover &.info    { color: var(--c-text-info-2); }
+  .STableCellNumber.link &.success       { color: var(--c-text-success-1); }
+  .STableCellNumber.link:hover &.success { color: var(--c-text-success-2); }
+  .STableCellNumber.link &.warning       { color: var(--c-text-warning-1); }
+  .STableCellNumber.link:hover &.warning { color: var(--c-text-warning-2); }
+  .STableCellNumber.link &.danger        { color: var(--c-text-danger-1); }
+  .STableCellNumber.link:hover &.danger  { color: var(--c-text-danger-2); }
 }
 
 .svg {

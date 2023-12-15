@@ -33,11 +33,11 @@ defineEmits<{
   position: relative;
   border: 1px solid var(--c-divider);
   border-radius: 16px;
-  background-color: var(--c-bg);
+  background-color: var(--c-bg-elv-1);
   transition: opacity 0.25s, transform 0.25s;
 
   .dark & {
-    background-color: var(--c-bg-mute);
+    background-color: var(--c-bg-mute-1);
   }
 
   .SModal & {

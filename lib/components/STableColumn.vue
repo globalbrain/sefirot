@@ -185,7 +185,7 @@ function stopDialogPositionListener() {
   transition: color 0.25s;
 
   .STableColumn.active & {
-    color: var(--c-info);
+    color: var(--c-text-info-1);
   }
 }
 
@@ -208,15 +208,11 @@ function stopDialogPositionListener() {
 
   &:hover {
     color: var(--c-text-1);
-    background-color: var(--c-bg-mute);
+    background-color: var(--c-bg-mute-1);
   }
 
   &.active {
-    color: var(--c-info);
-  }
-
-  .dark &:hover {
-    background-color: var(--c-bg);
+    color: var(--c-text-info-1);
   }
 }
 
@@ -260,7 +256,7 @@ function stopDialogPositionListener() {
   }
 
   &:hover::before {
-    background-color: var(--c-info);
+    background-color: var(--c-border-info-1);
   }
 
   .STableItem:last-child .STableColumn & {

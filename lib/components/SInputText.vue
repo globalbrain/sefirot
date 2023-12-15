@@ -395,10 +395,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   font-family: var(--input-value-font-family);
 
   &.neutral:not(.hide) { color: var(--input-value-color); }
-  &.info:not(.hide)    { color: var(--c-info-text); }
-  &.success:not(.hide) { color: var(--c-success-text); }
-  &.warning:not(.hide) { color: var(--c-warning-text); }
-  &.danger:not(.hide)  { color: var(--c-danger-text); }
+  &.info:not(.hide)    { color: var(--c-text-info-1); }
+  &.success:not(.hide) { color: var(--c-text-success-1); }
+  &.warning:not(.hide) { color: var(--c-text-warning-1); }
+  &.danger:not(.hide)  { color: var(--c-text-danger-1); }
 
   &.hide,
   &.hide::placeholder {
