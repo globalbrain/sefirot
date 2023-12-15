@@ -232,11 +232,11 @@ Use `<SCardBlock>` to display generic block element. This component is usually u
 
 ### Block spacing
 
-The `<SCardBlock>` component provides a convenient way to control the padding of the block using the `:space` prop. You can choose between two values: `compact` or `wide`.
+The `<SCardBlock>` component provides a convenient way to control the padding of the block using the `:space` prop. You can choose between 3 values: `compact`, `wide`, or `xwide`.
 
 ```ts
 interface Props {
-  space?: 'compact' | 'wide'
+  space?: 'compact' | 'wide' | 'xwide'
 }
 ```
 
@@ -248,7 +248,7 @@ interface Props {
 </SCard>
 ```
 
-To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card widths smaller than `640px` and the `wide` class for larger widths.
+To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card width smaller than `640px` and the `wide` class for larger widths. Use `xwide` for the card containing form and placed sorely on the page (not as modal dialog).
 
 ## Footer
 
@@ -290,11 +290,11 @@ export interface Tooltip {
 
 ### Footer spacing
 
-Same as, `<SCardBlock>`, `<SCardFooter>` also comes with `:space` props that lets you control the padding of the block. You may pass either `compact` or `wide` as a value.
+Same as, `<SCardBlock>`, `<SCardFooter>` also comes with `:space` props that lets you control the padding of the block. You may pass either `compact`, `wide` or `xwide` as a value.
 
 ```ts
 interface Props {
-  space?: 'compact' | 'wide'
+  space?: 'compact' | 'wide' | `xwide`
 }
 ```
 
@@ -305,7 +305,5 @@ interface Props {
   </SCardFooter>
 </SCard>
 ```
-
-To ensure consistent spacing across the application, you should adjust the spacing based on the size of the `<SCard>` component. Consider using the `compact` class for card widths smaller than `640px` and the `wide` class for larger widths.
 
 It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions.

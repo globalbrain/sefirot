@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type Space = 'compact' | 'wide'
+export type Space = 'compact' | 'wide' | 'xwide'
 
 defineProps<{
   space?: Space
@@ -19,6 +19,7 @@ defineProps<{
 
   &.compact { padding: 24px; }
   &.wide    { padding: 32px; }
+  &.xwide   { padding: 48px; }
 }
 
 .SCard > .SCardBlock:first-child {

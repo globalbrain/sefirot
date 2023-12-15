@@ -11,8 +11,31 @@
   gap: 12px;
 }
 
+.SContent :deep(h1),
+.SContent :deep(.h1) {
+  margin: 0;
+  max-width: 640px;
+  line-height: 40px;
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--c-text-1);
+}
+
+.SContent :deep(h2),
+.SContent :deep(.h2) {
+  border-top: 0;
+  margin: 0;
+  padding: 0;
+  max-width: 640px;
+  line-height: 28px;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--c-text-1);
+}
+
 .SContent :deep(p) {
   margin: 0;
+  max-width: 640px;
   line-height: 24px;
   font-size: 14px;
   font-weight: 400;
@@ -36,6 +59,7 @@
 .SContent :deep(ol) {
   margin: 0;
   padding-left: 0;
+  max-width: 640px;
   list-style: none;
 }
 

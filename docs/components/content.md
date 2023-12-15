@@ -11,6 +11,7 @@ import SContent from 'sefirot/components/SContent.vue'
   story="/stories-components-scontent-01-playground-story-vue"
 >
   <SContent>
+    <h2>Title of the section</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     <ul>
       <li>Excepteur sint occaecat cupidatat.</li>
@@ -20,17 +21,20 @@ import SContent from 'sefirot/components/SContent.vue'
   </SContent>
 </Showcase>
 
+## Import
+
+```ts
+import SContent from '@globalbrain/sefirot/lib/components/SContent.vue'
+```
+
 ## Usage
 
 Place HTML elements inside `<SContent>` component and it will apply basic styles to the element, including spacing between elements.
 
-```vue
-<script setup lang="ts">
-import SContent from '@globalbrain/sefirot/lib/components/SContent.vue'
-</script>
-
+```vue-html
 <template>
   <SContent>
+    <h2>Title of the section</h2>
     <p>Lorem ipsum dolor sit amet.</p>
     <p>Consectetur adipiscing elit.</p>
     <ul>
@@ -44,9 +48,21 @@ import SContent from '@globalbrain/sefirot/lib/components/SContent.vue'
 
 The supported elements are:
 
+- `<h1>` <Badge text="3.11.0" />
+- `<h2>` <Badge text="3.11.0" />
 - `<p>`
 - `<strong>`
 - `<a>`
 - `<ul>`
 - `<ol>`
 - `<li>`
+
+### Use CSS class to style the headings
+
+You may use css class either `h1` or `h2` to apply the styles to the element.
+
+```vue-html
+<SContent>
+  <p class="h1">Title text</p>
+</SContent>
+```

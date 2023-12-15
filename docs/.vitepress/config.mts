@@ -61,6 +61,8 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SCard', link: '/components/card' },
         { text: 'SContent', link: '/components/content' },
         { text: 'SDesc', link: '/components/desc' },
+        { text: 'SDivider', link: '/components/divider' },
+        { text: 'SDoc', link: '/components/doc' },
         { text: 'SErrorBoundary', link: '/components/error-boundary' },
         { text: 'SFragment', link: '/components/fragment' },
         { text: 'SGrid', link: '/components/grid' },
