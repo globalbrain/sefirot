@@ -1,5 +1,12 @@
 
 
+## [3.11.1](https://github.com/globalbrain/sefirot/compare/v3.11.0...v3.11.1) (2023-12-15)
+
+
+### Bug Fixes
+
+* **url:** change cast callback value type to any ([#414](https://github.com/globalbrain/sefirot/issues/414)) ([2a9d32a](https://github.com/globalbrain/sefirot/commit/2a9d32a61754880397a4eacc7088c8617df24183))
+
 # [3.11.0](https://github.com/globalbrain/sefirot/compare/v3.10.1...v3.11.0) (2023-12-15)
 
 
