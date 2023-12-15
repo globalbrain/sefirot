@@ -100,23 +100,19 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
   const src = source
 
   if (isPlainObject(src)) {
-    Object.entries(src).forEach(([key, value]) => {
-      if (typeof value === 'object' && value !== null) {
-        deepAssign(dest[key], value)
-      } else {
-        dest[key] = value
-      }
-    })
+    Object.keys(src).forEach((key) => deepAssignBase(dest, src, key))
   } else if (Array.isArray(src)) {
     dest.length = src.length
-    src.forEach((value, key) => {
-      if (typeof value === 'object' && value !== null) {
-        deepAssign(dest[key], value)
-      } else {
-        dest[key] = value
-      }
-    })
+    src.forEach((_, key) => deepAssignBase(dest, src, key))
   } else {
     throw new TypeError('[deepAssign] src must be an object or array')
+  }
+}
+
+function deepAssignBase(dest: Record<string, any>, src: Record<string, any>, key: string | number) {
+  if (typeof src[key] === 'object' && src[key] !== null) {
+    deepAssign(dest[key], src[key])
+  } else {
+    dest[key] = src[key]
   }
 }
