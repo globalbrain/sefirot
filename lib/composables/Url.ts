@@ -1,3 +1,4 @@
+import isEqual from 'lodash-es/isEqual'
 import isPlainObject from 'lodash-es/isPlainObject'
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -53,7 +54,7 @@ export function useUrlQuerySync(
       const value = flattenState[key]
       const initialValue = flattenInitialState[key]
 
-      if (value === initialValue) {
+      if (isEqual(value, initialValue)) {
         delete flattenQuery[key]
       } else {
         flattenQuery[key] = value
