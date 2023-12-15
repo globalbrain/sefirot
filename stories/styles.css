@@ -51,6 +51,7 @@ body {
 
 .p-8   { padding: 8px; }
 .p-12  { padding: 12px; }
+.p-48  { padding: 48px; }
 .p-256 { padding: 256px; }
 
 .py-256 { padding: 256px 0 256px; }
@@ -91,5 +92,6 @@ body {
 .max-w-512 { max-width: 512px; }
 .max-w-592 { max-width: 592px; }
 .max-w-640 { max-width: 640px; }
+.max-w-768 { max-width: 768px; }
 
 .h-64 { height: 64px; }

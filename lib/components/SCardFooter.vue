@@ -1,5 +1,5 @@
 <script setup lang="ts">
-export type Space = 'compact' | 'wide'
+export type Space = 'compact' | 'wide' | 'xwide'
 
 defineProps<{
   space?: Space

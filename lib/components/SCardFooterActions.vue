@@ -13,5 +13,6 @@
 
   .SCardFooter.compact > & { padding: 12px 24px; }
   .SCardFooter.wide > &    { padding: 16px 32px; }
+  .SCardFooter.xwide > &   { padding: 24px 48px; }
 }
 </style>
