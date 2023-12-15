@@ -1,3 +1,4 @@
+import isEqual from 'lodash-es/isEqual'
 import isPlainObject from 'lodash-es/isPlainObject'
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -38,7 +39,7 @@ export function useUrlQuerySync(
       flattenState[key] = cast ? cast(value) : value
     })
 
-    Object.assign(state, unflattenObject(flattenState))
+    deepAssign(state, unflattenObject(flattenState))
   }
 
   async function setQueryFromState() {
@@ -53,7 +54,7 @@ export function useUrlQuerySync(
       const value = flattenState[key]
       const initialValue = flattenInitialState[key]
 
-      if (value === initialValue) {
+      if (isEqual(value, initialValue)) {
         delete flattenQuery[key]
       } else {
         flattenQuery[key] = value
@@ -93,4 +94,26 @@ function unflattenObject(obj: Record<string, any>) {
     }, acc)
     return acc
   }, {} as Record<string, any>)
+}
+
+function deepAssign(target: Record<string, any>, source: Record<string, any>) {
+  const dest = target
+  const src = source
+
+  if (isPlainObject(src)) {
+    Object.keys(src).forEach((key) => deepAssignBase(dest, src, key))
+  } else if (Array.isArray(src)) {
+    dest.length = src.length
+    src.forEach((_, key) => deepAssignBase(dest, src, key))
+  } else {
+    throw new TypeError('[deepAssign] src must be an object or array')
+  }
+}
+
+function deepAssignBase(dest: Record<string, any>, src: Record<string, any>, key: string | number) {
+  if (typeof src[key] === 'object' && src[key] !== null) {
+    deepAssign(dest[key], src[key])
+  } else {
+    dest[key] = src[key]
+  }
 }
