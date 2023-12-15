@@ -4,7 +4,7 @@ import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
-  casts?: Record<string, (value: string) => any>
+  casts?: Record<string, (value: any) => any>
   exclude?: string[]
 }
 
