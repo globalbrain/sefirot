@@ -1,5 +1,5 @@
 import isPlainObject from 'lodash-es/isPlainObject'
-import { toRaw, watch } from 'vue'
+import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -97,23 +97,23 @@ function unflattenObject(obj: Record<string, any>) {
 
 function deepAssign(target: Record<string, any>, source: Record<string, any>) {
   const dest = target
-  const src = toRaw(source)
+  const src = source
 
   if (isPlainObject(src)) {
-    Object.keys(src).forEach((key) => {
-      if (typeof src[key] === 'object' && src[key] !== null) {
-        deepAssign(dest[key], src[key])
+    Object.entries(src).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        deepAssign(dest[key], value)
       } else {
-        dest[key] = toRaw(src[key])
+        dest[key] = value
       }
     })
   } else if (Array.isArray(src)) {
     dest.length = src.length
-    src.forEach((item, index) => {
-      if (typeof item === 'object' && item !== null) {
-        deepAssign(dest[index], item)
+    src.forEach((value, key) => {
+      if (typeof value === 'object' && value !== null) {
+        deepAssign(dest[key], value)
       } else {
-        dest[index] = toRaw(item)
+        dest[key] = value
       }
     })
   } else {
