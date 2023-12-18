@@ -29,10 +29,10 @@ defineEmits<{
 <style lang="postcss" scoped>
 .SInputDropdownItemText {
   display: flex;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 14px;
   padding: 0 12px;
-  background-color: var(--c-bg-mute);
+  background-color: var(--c-bg-mute-1);
 }
 
 .SInputDropdownItemText.removable {
@@ -41,15 +41,6 @@ defineEmits<{
 
 .SInputDropdownItemText.disabled {
   padding: 0 10px;
-  background-color: var(--c-gray-light-4);
-
-  .text {
-    color: var(--c-text-2);
-  }
-}
-
-.dark .SInputDropdownItemText.disabled {
-  background-color: var(--c-gray-dark-2);
 }
 
 .text {
@@ -80,12 +71,7 @@ defineEmits<{
 
   .remove:hover & {
     color: var(--c-text-1);
-    background-color: var(--c-gray-light-3)
-  }
-
-  .dark .remove:hover & {
-    color: var(--c-text-1);
-    background-color: var(--c-gray-dark-3)
+    background-color: var(--c-bg-mute-2);
   }
 }
 

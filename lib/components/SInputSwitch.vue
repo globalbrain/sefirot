@@ -82,6 +82,40 @@ function emitChange(): void {
 </template>
 
 <style scoped lang="postcss">
+.container {
+  display: flex;
+}
+
+.input {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.text {
+  flex-grow: 1;
+  margin: 0;
+  padding-right: 16px;
+}
+
+.box {
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid var(--input-border-color);
+  background-color: var(--input-switch-bg-color);
+  transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
+}
+
+.toggle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: var(--input-switch-toggle-color);
+  transition: background-color 0.25s, transform 0.25s;
+}
+
 .SInputSwitch.mini {
   .input {
     height: 32px;
@@ -168,45 +202,45 @@ function emitChange(): void {
 
 .SInputSwitch.info {
   .box:hover {
-    border-color: var(--c-info-light);
+    border-color: var(--c-border-info-1);
   }
 
   .input.on .box {
-    border-color: var(--c-info-light);
-    background-color: var(--c-info);
+    border-color: var(--c-border-info-1);
+    background-color: var(--c-bg-info-1);
   }
 }
 
 .SInputSwitch.success {
   .box:hover {
-    border-color: var(--c-success-light);
+    border-color: var(--c-border-success-1);
   }
 
   .input.on .box {
-    border-color: var(--c-success-light);
-    background-color: var(--c-success);
+    border-color: var(--c-border-success-1);
+    background-color: var(--c-bg-success-1);
   }
 }
 
 .SInputSwitch.warning {
   .box:hover {
-    border-color: var(--c-warning-light);
+    border-color: var(--c-border-warning-1);
   }
 
   .input.on .box {
-    border-color: var(--c-warning-light);
-    background-color: var(--c-warning);
+    border-color: var(--c-border-warning-1);
+    background-color: var(--c-bg-warning-1);
   }
 }
 
 .SInputSwitch.danger {
   .box:hover {
-    border-color: var(--c-danger-light);
+    border-color: var(--c-border-danger-1);
   }
 
   .input.on .box {
-    border-color: var(--c-danger-light);
-    background-color: var(--c-danger);
+    border-color: var(--c-border-danger-1);
+    background-color: var(--c-bg-danger-1);
   }
 }
 
@@ -220,7 +254,7 @@ function emitChange(): void {
   }
 
   .box:hover {
-    border-color: var(--c-divider-1);
+    border-color: var(--input-border-color);
   }
 
   .toggle {
@@ -233,73 +267,39 @@ function emitChange(): void {
 
   &.info {
     .input.on .box {
-      border-color: var(--c-info);
-      background-color: var(--c-info-dark);
+      border-color: var(--c-border-info-1);
+      background-color: var(--c-blue-8);
     }
   }
 
   &.success {
     .input.on .box {
-      border-color: var(--c-success);
-      background-color: var(--c-success-dark);
+      border-color: var(--c-border-success-1);
+      background-color: var(--c-green-8);
     }
   }
 
   &.warning {
     .input.on .box {
-      border-color: var(--c-warning);
-      background-color: var(--c-warning-dark);
+      border-color: var(--c-border-warning-1);
+      background-color: var(--c-yellow-8);
     }
   }
 
   &.danger {
     .input.on .box {
-      border-color: var(--c-danger);
-      background-color: var(--c-danger-dark);
+      border-color: var(--c-border-danger-1);
+      background-color: var(--c-red-8);
     }
   }
 }
 
-.container {
-  display: flex;
-}
-
-.input {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-}
-
 .input.on .box {
-  border-color: var(--c-info-lighter);
-  background-color: var(--c-info);
+  border-color: var(--c-border-info-1);
+  background-color: var(--c-bg-info-1);
 }
 
 .input.on .toggle {
   background-color: var(--c-white);
-}
-
-.text {
-  flex-grow: 1;
-  margin: 0;
-  padding-right: 16px;
-}
-
-.box {
-  position: relative;
-  flex-shrink: 0;
-  border: 1px solid var(--c-divider-1);
-  background-color: var(--input-switch-bg-color);
-  transition: border-color 0.25s, background-color 0.25s, box-shadow 0.25s;
-}
-
-.toggle {
-  position: absolute;
-  border-radius: 50%;
-  background-color: var(--input-switch-toggle-color);
-  transition: background-color 0.25s, transform 0.25s;
 }
 </style>

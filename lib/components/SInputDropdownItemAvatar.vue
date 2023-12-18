@@ -36,10 +36,10 @@ defineEmits<{
 <style lang="postcss" scoped>
 .SInputDropdownItemAvatar {
   display: flex;
-  border: 1px solid var(--c-divider);
+  border: 1px solid var(--c-border-mute-1);
   border-radius: 14px;
   padding: 0 12px 0 0;
-  background-color: var(--c-bg-mute);
+  background-color: var(--c-bg-mute-1);
 }
 
 .SInputDropdownItemAvatar.removable {
@@ -48,7 +48,6 @@ defineEmits<{
 
 .SInputDropdownItemUserAvatar.disabled {
   padding: 0 10px 0 0;
-  background-color: var(--c-gray-light-4);
 }
 
 .user {
@@ -88,12 +87,7 @@ defineEmits<{
 
   .remove:hover & {
     color: var(--c-text-1);
-    background-color: var(--c-gray-light-3)
-  }
-
-  .dark .remove:hover & {
-    color: var(--c-text-1);
-    background-color: var(--c-gray-dark-3)
+    background-color: var(--c-bg-mute-2)
   }
 }
 
