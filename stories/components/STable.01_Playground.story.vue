@@ -158,12 +158,7 @@ const data = shallowRef([
     authors: [
       { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
       { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
-      { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' },
-      { image: 'https://i.pravatar.cc/64?img=8', name: 'Thomas Wane' },
-      { image: 'https://i.pravatar.cc/64?img=9', name: 'Thomas Wane' },
-      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' },
-      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' },
-      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' }
+      { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
     ],
     createdAt: day('2022-10-02'),
     tags: ['Info', 'News']

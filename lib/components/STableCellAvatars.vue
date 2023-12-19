@@ -21,8 +21,16 @@ const _avatars = computed(() => {
     : props.avatars
 })
 
+const avatarDiff = computed(() => {
+  return _avatars.value.length - props.avatarCount
+})
+
 const displayAvatars = computed(() => {
   return _avatars.value.slice(0, props.avatarCount)
+})
+
+const nameDiff = computed(() => {
+  return _avatars.value.length - props.nameCount
 })
 
 const displayNames = computed(() => {
@@ -35,8 +43,8 @@ const displayNames = computed(() => {
 
   const names = slicedAvatars.map((avatar) => avatar.name).join(', ')
 
-  if (_avatars.value.length > slicedAvatars.length) {
-    return `${names}, +${_avatars.value.length - slicedAvatars.length}`
+  if (nameDiff.value > 0) {
+    return `${names}, ...`
   }
 
   return names
@@ -51,14 +59,15 @@ const displayNames = computed(() => {
           v-for="(avatar, index) in displayAvatars"
           :key="index"
           class="avatar"
-          :style="{ zIndex: 100 - index }"
         >
           <div class="avatar-box">
             <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" />
           </div>
         </div>
-        <div v-if="_avatars.length > avatarCount" class="avatar placeholder">
-          <div class="avatar-box" />
+        <div v-if="avatarDiff > 0" class="avatar">
+          <div class="avatar-box placeholder" :class="{ small: avatarDiff >= 10 }">
+            +{{ avatarDiff }}
+          </div>
         </div>
       </div>
       <div v-if="displayNames" class="names">
@@ -89,14 +98,15 @@ const displayNames = computed(() => {
 }
 
 .avatar.placeholder {
-  margin-left: -8px;
-
-  .avatar-box {
-    background-color: var(--c-bg-mute-1);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 2px solid var(--c-bg-elv-3);
   border-radius: 50%;
   width: 28px;
@@ -104,6 +114,17 @@ const displayNames = computed(() => {
 
   .row:hover & {
     border: 2px solid var(--c-bg-elv-4);
+  }
+
+  &.placeholder {
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--c-text-2);
+    background-color: var(--c-bg-mute-1);
+  }
+
+  &.placeholder.small {
+    font-size: 9px;
   }
 }
 
