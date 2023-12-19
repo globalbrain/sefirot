@@ -1,0 +1,35 @@
+<script setup lang="ts">
+import IconActivity from '@iconify-icons/ph/activity-bold'
+import IconCurrencyCircleDollar from '@iconify-icons/ph/currency-circle-dollar-bold'
+import IconGear from '@iconify-icons/ph/gear-bold'
+import SLocalNav from 'sefirot/components/SLocalNav.vue'
+
+const title = 'Components / SLocalNav / 01. Playground'
+const docs = '/components/local-nav'
+
+const navTitle = [
+  { text: 'ABC Company', link: '#' },
+  { text: 'Series A' }
+]
+
+const navMenu = [
+  [
+    { icon: IconActivity, text: 'Overview', link: '#', active: true },
+    { icon: IconCurrencyCircleDollar, text: 'Payments', link: '#' }
+  ],
+  [
+    { icon: IconGear, text: 'Settings', link: '#' }
+  ]
+]
+</script>
+
+<template>
+  <Story :title="title" source="Not available" auto-props-disabled>
+    <Board :title="title" :docs="docs">
+      <SLocalNav
+        :title="navTitle"
+        :menu="navMenu"
+      />
+    </Board>
+  </Story>
+</template>
