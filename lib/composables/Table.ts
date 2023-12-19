@@ -1,4 +1,4 @@
-import { type Component, type MaybeRef } from 'vue'
+import { type Component, type MaybeRef, type MaybeRefOrGetter } from 'vue'
 import { type Mode } from '../components/SButton.vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
@@ -48,7 +48,7 @@ export interface TableColumn<V, R, SV, SR> {
   resizable?: boolean
   cell?: TableCell<V, R> | TableColumnCellFn<V, R>
   summaryCell?: TableCell<SV, SR> | TableColumnCellFn<SV, SR>
-  show?: boolean
+  show?: MaybeRefOrGetter<boolean>
 }
 
 export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell<V, R>

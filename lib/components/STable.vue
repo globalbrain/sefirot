@@ -8,6 +8,7 @@ import {
   reactive,
   ref,
   shallowRef,
+  toValue,
   unref,
   watch
 } from 'vue'
@@ -37,7 +38,8 @@ const row = shallowRef<HTMLElement | null>(null)
 
 const ordersToShow = computed(() => {
   const orders = unref(props.options.orders).filter((key) => {
-    return unref(props.options.columns)[key]?.show !== false
+    const show = unref(props.options.columns)[key]?.show
+    return toValue(show) !== false
   })
   if (!props.selected) {
     return orders
