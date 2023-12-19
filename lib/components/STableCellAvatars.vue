@@ -3,12 +3,17 @@ import { computed } from 'vue'
 import { type TableCellAvatarsOption } from '../composables/Table'
 import SAvatar from './SAvatar.vue'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   value?: any
   record?: any
   avatars: TableCellAvatarsOption[] | ((value: any, record: any) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
-}>()
+  avatarCount?: number
+  nameCount?: number
+}>(), {
+  avatarCount: 2,
+  nameCount: 2
+})
 
 const _avatars = computed(() => {
   return typeof props.avatars === 'function'
@@ -17,38 +22,47 @@ const _avatars = computed(() => {
 })
 
 const displayAvatars = computed(() => {
-  return _avatars.value.slice(0, 3)
+  return _avatars.value.slice(0, props.avatarCount)
 })
 
-const names = computed(() => {
-  if (_avatars.value.length === 0) {
+const displayNames = computed(() => {
+  // If the count is 0, treat it as "disabling" the name display.
+  if (props.nameCount === 0) {
     return null
   }
 
-  if (_avatars.value.length === 1) {
-    return _avatars.value[0].name
+  const slicedAvatars = _avatars.value.slice(0, props.nameCount)
+
+  const names = slicedAvatars.map((avatar) => avatar.name).join(', ')
+
+  if (_avatars.value.length > slicedAvatars.length) {
+    return `${names}, +${_avatars.value.length - slicedAvatars.length}`
   }
 
-  if (_avatars.value.length === 2) {
-    return `${_avatars.value[0].name}, ${_avatars.value[1].name}`
-  }
-
-  return `${_avatars.value[0].name}, ${_avatars.value[1].name} +${_avatars.value.length - 2}`
+  return names
 })
 </script>
 
 <template>
   <div class="STableCellAvatars" :class="[color]">
     <div class="container">
-      <div class="avatars">
-        <div v-for="(avatar, index) in displayAvatars" :key="index" class="avatar">
+      <div v-if="displayAvatars.length" class="avatars">
+        <div
+          v-for="(avatar, index) in displayAvatars"
+          :key="index"
+          class="avatar"
+          :style="{ zIndex: 100 - index }"
+        >
           <div class="avatar-box">
             <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" />
           </div>
         </div>
+        <div v-if="_avatars.length > avatarCount" class="avatar placeholder">
+          <div class="avatar-box" />
+        </div>
       </div>
-      <div class="names">
-        {{ names }}
+      <div v-if="displayNames" class="names">
+        {{ displayNames }}
       </div>
     </div>
   </div>
@@ -72,16 +86,21 @@ const names = computed(() => {
 .avatar {
   position: relative;
   width: 20px;
+}
 
-  &:nth-child(1) { z-index: 30; }
-  &:nth-child(2) { z-index: 20; }
-  &:nth-child(3) { z-index: 10; }
+.avatar.placeholder {
+  margin-left: -8px;
+
+  .avatar-box {
+    background-color: var(--c-bg-mute-1);
+  }
 }
 
 .avatar-box {
   border: 2px solid var(--c-bg-elv-3);
   border-radius: 50%;
   width: 28px;
+  height: 28px;
 
   .row:hover & {
     border: 2px solid var(--c-bg-elv-4);
@@ -91,9 +110,8 @@ const names = computed(() => {
 .names {
   line-height: 28px;
   font-size: 12px;
-  font-weight: 500;
-
-  .STableCellAvatars.soft & { color: var(--c-text-2); }
-  .STableCellAvatars.mute & { color: var(--c-text-3); }
 }
+
+.STableCellAvatars.soft .names { color: var(--c-text-2); }
+.STableCellAvatars.mute .names { color: var(--c-text-3); }
 </style>

@@ -99,6 +99,8 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record="record"
       :avatars="computedCell.avatars"
       :color="computedCell.color"
+      :avatar-count="computedCell.avatarCount"
+      :name-count="computedCell.nameCount"
     />
     <STableCellActions
       v-else-if="computedCell.type === 'actions'"

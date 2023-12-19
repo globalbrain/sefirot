@@ -130,6 +130,10 @@ const data = shallowRef([
     status: 'Published',
     type: 'Photo',
     width: 1280,
+    authors: [
+      { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
+      { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
+    ],
     createdAt: day('2022-10-10'),
     tags: ['Info', 'News', 'Latest']
   },
@@ -139,6 +143,9 @@ const data = shallowRef([
     status: 'Draft',
     type: 'Icon',
     width: 1280,
+    authors: [
+      { image: 'https://i.pravatar.cc/64?img=3', name: 'John Black' }
+    ],
     createdAt: day('2022-10-09'),
     tags: ['Info']
   },
@@ -148,6 +155,16 @@ const data = shallowRef([
     status: 'Published',
     type: 'Photo',
     width: 1920,
+    authors: [
+      { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
+      { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
+      { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' },
+      { image: 'https://i.pravatar.cc/64?img=8', name: 'Thomas Wane' },
+      { image: 'https://i.pravatar.cc/64?img=9', name: 'Thomas Wane' },
+      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' },
+      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' },
+      { image: 'https://i.pravatar.cc/64?img=10', name: 'Thomas Wane' }
+    ],
     createdAt: day('2022-10-02'),
     tags: ['Info', 'News']
   },
@@ -157,6 +174,10 @@ const data = shallowRef([
     status: 'Published',
     type: 'Illustration',
     width: 768,
+    authors: [
+      { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
+      { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
+    ],
     createdAt: day('2022-09-12'),
     tags: ['Info', 'News']
   },
@@ -166,6 +187,11 @@ const data = shallowRef([
     status: 'Archived',
     type: 'Other',
     width: 512,
+    authors: [
+      { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
+      { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
+      { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
+    ],
     createdAt: day('2022-09-08'),
     tags: ['Info']
   }
@@ -186,6 +212,7 @@ const table = useTable({
   orders: [
     'name',
     'status',
+    'authors',
     'type',
     'width',
     'tags',
@@ -214,6 +241,14 @@ const table = useTable({
         mode: record.status === 'Published'
           ? 'success'
           : record.status === 'Draft' ? 'info' : 'mute'
+      })
+    },
+
+    authors: {
+      label: 'Authors',
+      cell: (authors) => ({
+        type: 'avatars',
+        avatars: authors
       })
     },
 
@@ -367,6 +402,7 @@ function updateTagsFilter(value: string) {
 <style scoped>
 .table :deep(.col-name)      { --table-col-width: 160px; }
 .table :deep(.col-status)    { --table-col-width: 144px; }
+.table :deep(.col-authors)   { --table-col-width: 192px; }
 .table :deep(.col-type)      { --table-col-width: 128px; }
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }

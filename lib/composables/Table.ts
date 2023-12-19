@@ -158,6 +158,8 @@ export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
   type: 'avatars'
   avatars: TableCellAvatarsOption[] | ((value: V, record: R) => TableCellAvatarsOption[])
   color?: 'neutral' | 'soft' | 'mute'
+  avatarCount?: number
+  nameCount?: number
 }
 
 export interface TableCellAvatarsOption {
