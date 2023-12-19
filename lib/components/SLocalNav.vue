@@ -11,7 +11,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="SLocalNav">
+  <div class="SLocalNav" :class="{ 'has-menu': menu }">
     <SLocalNavTitle :title="title" />
     <SLocalNavMenu v-if="menu" :menu="menu" />
   </div>
@@ -29,7 +29,7 @@ defineProps<{
   }
 }
 
-.SLocalNav:has(.SLocalNavMenu) {
+.SLocalNav.has-menu {
   padding-bottom: 0;
 
   @media (min-width: 768px) {
