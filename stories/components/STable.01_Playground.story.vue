@@ -402,7 +402,7 @@ function updateTagsFilter(value: string) {
 <style scoped>
 .table :deep(.col-name)      { --table-col-width: 160px; }
 .table :deep(.col-status)    { --table-col-width: 144px; }
-.table :deep(.col-authors)   { --table-col-width: 192px; }
+.table :deep(.col-authors)   { --table-col-width: 240px; }
 .table :deep(.col-type)      { --table-col-width: 128px; }
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
