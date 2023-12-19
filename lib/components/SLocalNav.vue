@@ -1,19 +1,27 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import SLocalNavMenu, { type MenuItem } from './SLocalNavMenu.vue'
 import SLocalNavTitle, { type Title } from './SLocalNavTitle.vue'
 
 export type { Title, MenuItem }
 
-defineProps<{
+const props = defineProps<{
   title: Title[]
   menu?: MenuItem[][]
 }>()
+
+const normalizedMenu = computed(() => {
+  return props.menu?.reduce<MenuItem[][]>((carry, group) => {
+    group.length && carry.push(group)
+    return carry
+  }, []) ?? null
+})
 </script>
 
 <template>
-  <div class="SLocalNav" :class="{ 'has-menu': menu }">
+  <div class="SLocalNav" :class="{ 'has-menu': normalizedMenu }">
     <SLocalNavTitle :title="title" />
-    <SLocalNavMenu v-if="menu" :menu="menu" />
+    <SLocalNavMenu v-if="normalizedMenu" :menu="normalizedMenu" />
   </div>
 </template>
 
