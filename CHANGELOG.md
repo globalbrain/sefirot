@@ -1,5 +1,13 @@
 
 
+# [3.13.0](https://github.com/globalbrain/sefirot/compare/v3.12.0...v3.13.0) (2023-12-19)
+
+
+### Features
+
+* **table:** accept ref on column show option ([#418](https://github.com/globalbrain/sefirot/issues/418)) ([1912121](https://github.com/globalbrain/sefirot/commit/19121219d5aad7802b3468f3771ff60afbec1017))
+* **table:** add option to control display count of avatars ([#416](https://github.com/globalbrain/sefirot/issues/416)) ([#417](https://github.com/globalbrain/sefirot/issues/417)) ([303f377](https://github.com/globalbrain/sefirot/commit/303f37750dafc2d86f03bd5c7b71e650165aac57))
+
 # [3.12.0](https://github.com/globalbrain/sefirot/compare/v3.11.1...v3.12.0) (2023-12-19)
 
 
