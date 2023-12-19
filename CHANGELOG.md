@@ -1,5 +1,12 @@
 
 
+# [3.12.0](https://github.com/globalbrain/sefirot/compare/v3.11.1...v3.12.0) (2023-12-19)
+
+
+### Features
+
+* **local-nav:** add `<SLocalNav>` ([#415](https://github.com/globalbrain/sefirot/issues/415)) ([d484182](https://github.com/globalbrain/sefirot/commit/d484182741d7002a5a1f6b3909ad854c2822e406))
+
 ## [3.11.1](https://github.com/globalbrain/sefirot/compare/v3.11.0...v3.11.1) (2023-12-15)
 
 
