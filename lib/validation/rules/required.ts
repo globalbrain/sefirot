@@ -1,8 +1,14 @@
-import { required as baseRequired, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { required as baseRequired } from '../validators'
+
+export const message = {
+  en: 'The field is required.',
+  ja: 'この項目は必須です。'
+}
 
 export function required(msg?: string) {
-  return helpers.withMessage(
-    () => msg ?? 'The field is required.',
-    baseRequired
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    validation: (value) => baseRequired(value)
+  })
 }
