@@ -18,7 +18,7 @@ export function provideLang(lang: Lang) {
 }
 
 export function useLang(): Lang {
-  return inject(SefirotLangKey) ?? 'en'
+  return inject(SefirotLangKey, 'en')
 }
 
 export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
