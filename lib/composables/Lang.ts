@@ -18,7 +18,9 @@ export function provideLang(lang: Lang) {
 }
 
 export function useLang(): Lang {
-  return inject(SefirotLangKey, 'en')
+  // Doing `||` check here because for some reason it doesn't return
+  // the default value in tests but becomes `undefined`.
+  return inject(SefirotLangKey, 'en') || 'en'
 }
 
 export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
