@@ -1,5 +1,12 @@
 
 
+## [3.13.1](https://github.com/globalbrain/sefirot/compare/v3.13.0...v3.13.1) (2023-12-20)
+
+
+### Bug Fixes
+
+* **local-nav:** add bg color ([2c8f549](https://github.com/globalbrain/sefirot/commit/2c8f54907ca44202af7d84de7aaf2ed8879090bc))
+
 # [3.13.0](https://github.com/globalbrain/sefirot/compare/v3.12.0...v3.13.0) (2023-12-19)
 
 
