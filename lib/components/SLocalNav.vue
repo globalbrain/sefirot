@@ -31,6 +31,7 @@ const normalizedMenu = computed(() => {
   flex-direction: column;
   gap: 8px;
   padding: 16px 24px;
+  background-color: var(--c-bg-elv-2);
 
   @media (min-width: 768px) {
     padding: 16px 32px;
