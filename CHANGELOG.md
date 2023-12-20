@@ -1,5 +1,12 @@
 
 
+# [3.14.0](https://github.com/globalbrain/sefirot/compare/v3.13.1...v3.14.0) (2023-12-20)
+
+
+### Features
+
+* **lang:** add i18n feature ([#421](https://github.com/globalbrain/sefirot/issues/421)) ([f006fe5](https://github.com/globalbrain/sefirot/commit/f006fe5a6f6b146c7d8f18bb276f06c7257813ae)), closes [#359](https://github.com/globalbrain/sefirot/issues/359)
+
 ## [3.13.1](https://github.com/globalbrain/sefirot/compare/v3.13.0...v3.13.1) (2023-12-20)
 
 
