@@ -1,6 +1,17 @@
-import { type DOMWrapper, type VueWrapper, config } from '@vue/test-utils'
+import { type DOMWrapper, type VueWrapper, config, mount } from '@vue/test-utils'
 import { type Validatable } from 'sefirot/composables/Validation'
+import { type UnwrapRef } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
+
+export function setup<T>(
+  setup: () => T,
+  options?: any
+): UnwrapRef<T> {
+  return mount({
+    setup,
+    template: '<div />'
+  }, options).vm as UnwrapRef<T>
+}
 
 export function setupRouter(): void {
   const router = createRouter({

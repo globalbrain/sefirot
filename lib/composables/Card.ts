@@ -1,4 +1,4 @@
-import { type InjectionKey, type Ref, inject, provide, ref } from 'vue'
+import { type Ref, inject, provide, ref } from 'vue'
 
 export interface CardState {
   isCollapsed: Ref<boolean>
@@ -6,7 +6,7 @@ export interface CardState {
   toggleCollapse(): void
 }
 
-export const cardStateKey = Symbol('card-state') as InjectionKey<CardState>
+export const CardStateKey = 'card-state'
 
 export function provideCardState(): CardState {
   const isCollapsed = ref(false)
@@ -25,13 +25,13 @@ export function provideCardState(): CardState {
     toggleCollapse
   }
 
-  provide(cardStateKey, cardState)
+  provide(CardStateKey, cardState)
 
   return cardState
 }
 
 export function useCardState(): CardState {
-  const cardState = inject(cardStateKey)
+  const cardState = inject<CardState | null>(CardStateKey, null)
 
   if (!cardState) {
     throw new Error(

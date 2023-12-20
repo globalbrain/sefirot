@@ -1,7 +1,8 @@
 import { createPinia, setActivePinia } from 'pinia'
 import { useD } from 'sefirot/composables/D'
 import { useV } from 'sefirot/composables/V'
-import { nextTick, ref } from 'vue'
+import { setup } from 'tests/Utils'
+import { ref } from 'vue'
 
 describe('composables/V', () => {
   beforeEach(() => {
@@ -9,96 +10,128 @@ describe('composables/V', () => {
   })
 
   test('it validates the data', () => {
-    const { data } = useD({
-      name: null as string | null
+    const vm = setup(() => {
+      const { data } = useD({
+        name: null as string | null
+      })
+
+      const { validation } = useV(data, {
+        name: { required: (v: any) => v !== null }
+      })
+
+      return {
+        data,
+        validation
+      }
     })
 
-    const { validation } = useV(data, {
-      name: { required: (v: any) => v !== null }
-    })
+    expect(vm.validation.$invalid).toBe(true)
+    expect(vm.validation.name.$invalid).toBe(true)
 
-    expect(validation.value.$invalid).toBe(true)
-    expect(validation.value.name.$invalid).toBe(true)
+    vm.data.name = 'John Doe'
 
-    data.value.name = 'John Doe'
-
-    expect(validation.value.$invalid).toBe(false)
-    expect(validation.value.name.$invalid).toBe(false)
+    expect(vm.validation.$invalid).toBe(false)
+    expect(vm.validation.name.$invalid).toBe(false)
   })
 
   test('data can be getter', () => {
-    const { data } = useD({
-      v: 1
-    })
+    const vm = setup(() => {
+      const { data } = useD({
+        v: 1
+      })
 
-    function targetData() {
-      return {
-        a: data.value.v + 1
+      function targetData() {
+        return {
+          a: data.value.v + 1
+        }
       }
-    }
 
-    const { validation } = useV(targetData, {
-      a: { maxValue: (v: any) => v < 3 }
+      const { validation } = useV(targetData, {
+        a: { maxValue: (v: any) => v < 3 }
+      })
+
+      return {
+        data,
+        validation
+      }
     })
 
-    expect(validation.value.a.$invalid).toBe(false)
+    expect(vm.validation.a.$invalid).toBe(false)
 
-    data.value.v = 3
+    vm.data.v = 3
 
-    expect(validation.value.a.$invalid).toBe(true)
+    expect(vm.validation.a.$invalid).toBe(true)
   })
 
-  test('rules can be getter', async () => {
-    const { data } = useD({
-      v: 5
+  test('rules can be getter', () => {
+    const vm = setup(() => {
+      const { data } = useD({
+        v: 5
+      })
+
+      const max = ref(6)
+
+      const { validation } = useV(data, () => ({
+        v: { maxValue: (v: any) => v < max.value }
+      }))
+
+      return {
+        validation,
+        max
+      }
     })
 
-    const max = ref(6)
+    expect(vm.validation.v.$invalid).toBe(false)
 
-    const { validation } = useV(data, () => ({
-      v: { maxValue: (v: any) => v < max.value }
-    }))
+    vm.max = 4
 
-    expect(validation.value.v.$invalid).toBe(false)
-
-    max.value = 4
-
-    await nextTick()
-
-    expect(validation.value.v.$invalid).toBe(true)
+    expect(vm.validation.v.$invalid).toBe(true)
   })
 
   test('it can validate all fields in once', async () => {
-    const { data } = useD({
-      a: 1,
-      b: 2
+    const vm = setup(() => {
+      const { data } = useD({
+        a: 1,
+        b: 2
+      })
+
+      const { validate } = useV(data, {
+        a: { maxValue: (v: any) => v < 3 },
+        b: { maxValue: (v: any) => v < 3 }
+      })
+
+      return {
+        validate
+      }
     })
 
-    const { validate } = useV(data, {
-      a: { maxValue: (v: any) => v < 3 },
-      b: { maxValue: (v: any) => v < 3 }
-    })
-
-    expect(await validate()).toBe(true)
+    expect(await vm.validate()).toBe(true)
   })
 
   test('it can set and reset dirty state', () => {
-    const { data } = useD({
-      name: null as string | null
+    const vm = setup(() => {
+      const { data } = useD({
+        name: null as string | null
+      })
+
+      const { validation, reset } = useV(data, {
+        name: { required: (v: any) => v !== null }
+      })
+
+      return {
+        validation,
+        reset
+      }
     })
 
-    const { validation, reset } = useV(data, {
-      name: { required: (v: any) => v !== null }
-    })
+    expect(vm.validation.name.$dirty).toBe(false)
 
-    expect(validation.value.name.$dirty).toBe(false)
+    vm.validation.name.$touch()
 
-    validation.value.name.$touch()
+    expect(vm.validation.name.$dirty).toBe(true)
 
-    expect(validation.value.name.$dirty).toBe(true)
+    vm.reset()
 
-    reset()
-
-    expect(validation.value.name.$dirty).toBe(false)
+    expect(vm.validation.name.$dirty).toBe(false)
   })
 })
