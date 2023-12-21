@@ -1,5 +1,12 @@
 
 
+# [3.15.0](https://github.com/globalbrain/sefirot/compare/v3.14.0...v3.15.0) (2023-12-21)
+
+
+### Features
+
+* new data and validation ([#423](https://github.com/globalbrain/sefirot/issues/423)) ([8b7f4f6](https://github.com/globalbrain/sefirot/commit/8b7f4f6dc95563c1c6b906a99492b9b1fa3b077c))
+
 # [3.14.0](https://github.com/globalbrain/sefirot/compare/v3.13.1...v3.14.0) (2023-12-20)
 
 
