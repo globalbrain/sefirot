@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use `composables/V` module instead.
+ */
+
 import {
   type GlobalConfig,
   type Validation,

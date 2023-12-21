@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use `composables/D` module instead.
+ */
+
 import { watchOnce } from '@vueuse/core'
 import cloneDeep from 'lodash-es/cloneDeep'
 import { type WatchSource, reactive } from 'vue'

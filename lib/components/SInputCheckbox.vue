@@ -3,7 +3,7 @@ import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import IconCheck from '@iconify-icons/ph/check-bold'
 import IconMinus from '@iconify-icons/ph/minus-bold'
 import { computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
+import { type Validatable } from '../composables/V'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 

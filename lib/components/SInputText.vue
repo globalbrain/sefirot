@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import { type DefineComponent, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
+import { type Validatable } from '../composables/V'
 import { isString } from '../support/Utils'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
