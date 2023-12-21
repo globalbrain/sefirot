@@ -1,3 +1,7 @@
+/**
+ * @deprecated Use `composables/D` and `composables/V` modules instead.
+ */
+
 import { type Ref, computed, reactive, toRefs } from 'vue'
 import { type Snackbar, useSnackbars } from '../stores/Snackbars'
 import { type UseDataInput, useData } from './Data'

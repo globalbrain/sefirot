@@ -1,6 +1,6 @@
 # Validators
 
-The `Validators` provides set of functions to validate values. Sefirot encourages to use builtin validatoes provided by [Vuelidate](https://github.com/vuelidate/vuelidate) library. These validators are which is not provided by Vuelidate.
+The `Validators` provides set of functions to validate values.
 
 You may import functions from `validation/validators`.
 
@@ -17,8 +17,6 @@ function checked(value: boolean): boolean
 ```
 
 ```ts
-import { checked } from '@globalbrain/sefirot/lib/validation/validators'
-
 checked(false)
 ```
 
@@ -31,8 +29,6 @@ function fileExtension(file: File, extensions: string[]): boolean
 ```
 
 ```ts
-import { fileExtension } from '@globalbrain/sefirot/lib/validation/validators'
-
 fileExtension(file, ['jpg', 'png'])
 ```
 
@@ -50,8 +46,6 @@ function hms(
 ```
 
 ```ts
-import { hms } from '@globalbrain/sefirot/lib/validation/validators'
-
 const time = {
   hour: '10',
   minute: '61', // Invalid value.
@@ -82,8 +76,6 @@ function maxFileSize(file: File, size: string): boolean
 ```
 
 ```ts
-import { maxFileSize } from '@globalbrain/sefirot/lib/validation/validators'
-
 maxFileSize(file, '100mb')
 ```
 
@@ -96,8 +88,6 @@ function maxTotalFileSize(files: File[], size: string): boolean
 ```
 
 ```ts
-import { maxTotalFileSize } from '@globalbrain/sefirot/lib/validation/validators'
-
 maxTotalFileSize([fileA, fileB], '100mb')
 ```
 
@@ -110,8 +100,6 @@ function month(value: number): boolean
 ```
 
 ```ts
-import { month } from '@globalbrain/sefirot/lib/validation/validators'
-
 month(13) // <- false
 ```
 
@@ -129,8 +117,6 @@ function requiredHms(
 ```
 
 ```ts
-import { requiredHms } from '@globalbrain/sefirot/lib/validation/validators'
-
 const time = {
   hour: '10',
   minute: null, // Value missing.
@@ -166,8 +152,6 @@ function requiredYmd(
 ```
 
 ```ts
-import { requiredYmd } from '@globalbrain/sefirot/lib/validation/validators'
-
 const date = {
   year: 1985,
   month: null, // Value missing.
@@ -203,8 +187,6 @@ function ymd(
 ```
 
 ```ts
-import { ymd } from '@globalbrain/sefirot/lib/validation/validators'
-
 const date = {
   year: 1985,
   month: 15, // Invalid value.
