@@ -1,28 +1,21 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check-bold'
-import IconImageSquare from '@iconify-icons/ph/image-square-bold'
-import IconNotePencil from '@iconify-icons/ph/note-pencil-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
-import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass-bold'
+import IconImageSquare from '@iconify-icons/ph/image-square'
+import IconNotePencil from '@iconify-icons/ph/note-pencil'
+import IconTrash from '@iconify-icons/ph/trash'
 import { orderBy, xor } from 'lodash-es'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
-import SCard from 'sefirot/components/SCard.vue'
-import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SInputText from 'sefirot/components/SInputText.vue'
-import SButton from 'sefirot/components/SButton.vue'
-import SControl from 'sefirot/components/SControl.vue'
-import SControlInputSearch from 'sefirot/components/SControlInputSearch.vue'
 
 interface Sort {
   by: string
   order: 'asc' | 'desc'
 }
 
-const title = 'Components / STable / 01. Playground'
+const title = 'Components / STable / 02. Legacy'
 const docs = '/components/table'
 
 const optionsSelected = ref<string[]>([])
@@ -122,6 +115,14 @@ const dropdownCreatedAt = createDropdown([
   }
 ])
 
+const hasFilters = computed(() => {
+  return [
+    dropdownStatusSelected.value.length,
+    dropdownTypeSelected.value.length,
+    dropdownTagsSelected.value.length
+  ].some((length) => length)
+})
+
 const data = shallowRef([
   {
     name: 'Artwork 001',
@@ -203,11 +204,6 @@ const orderedData = computed(() => {
 })
 
 const table = useTable({
-  records: orderedData as any, // FIXME
-
-  borderless: true,
-  indexField: 'name',
-
   orders: [
     'name',
     'status',
@@ -320,8 +316,47 @@ const table = useTable({
       },
       resizable: false
     }
-  }))
+  })),
+
+  menu: computed(() => [
+    {
+      label: 'Options',
+      state: optionsSelected.value.length ? 'indicate' : 'inactive',
+      dropdown: createDropdown([
+        {
+          type: 'filter',
+          selected: optionsSelected,
+          options: [
+            { label: 'Hide type', value: 'hide-type', onClick: updateOptions },
+            { label: 'Hide width', value: 'hide-width', onClick: updateOptions },
+            { label: 'Hide tags', value: 'hide-tags', onClick: updateOptions }
+          ]
+        }
+      ])
+    }
+  ]),
+
+  actions: computed(() => [
+    {
+      label: 'Reset filters',
+      onClick: resetFilters,
+      type: 'info',
+      show: hasFilters.value
+    }
+  ]),
+
+  indexField: 'name',
+  records: orderedData as any, // FIXME
+  total: computed(() => orderedData.value.length),
+  page: 1,
+  perPage: 5,
+  onPrev: () => {},
+  onNext: () => {}
 })
+
+function updateOptions(value: string) {
+  optionsSelected.value = xor(optionsSelected.value, [value])
+}
 
 function updateSort(by: string, order: 'asc' | 'desc') {
   sort.by = by
@@ -354,41 +389,7 @@ function updateTagsFilter(value: string) {
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
-      <SCard class="s-overflow-hidden" space="small">
-        <SCardBlock size="small">
-          <SControl>
-            <SControlInputSearch :model-value="null" />
-          </SControl>
-        </SCardBlock>
-        <!-- <SCardBlock class="s-flex s-items-center s-gap-8 s-px-12 s-h-56">
-          <div class="s-flex s-gap-8 s-grow">
-            <SInputText
-              class="s-w-256"
-              size="mini"
-              placeholder="Search items"
-              :unit-before="IconMagnifyingGlass"
-              :model-value="null"
-            />
-            <SButton
-              type="outline"
-              size="small"
-              mode="mute"
-              label="Reset filters"
-              @click="resetFilters"
-            />
-          </div>
-          <div class="s-shrink-0">
-            <SButton
-              size="small"
-              mode="info"
-              label="New item"
-            />
-          </div>
-        </SCardBlock> -->
-        <SCardBlock>
-          <STable class="table" :options="table" />
-        </SCardBlock>
-      </SCard>
+      <STable class="table" :options="table" />
     </Board>
   </Story>
 </template>
@@ -408,5 +409,9 @@ function updateTagsFilter(value: string) {
   --table-col-left: auto;
   --table-col-right: 0;
   --table-col-border-left: 1px;
+}
+
+.table {
+  margin-bottom: 16px;
 }
 </style>

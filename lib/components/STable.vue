@@ -491,7 +491,9 @@ function updateSelected(selected: unknown[]) {
   width: 100%;
 
   .STable.borderless & {
+    border-top: 0;
     border-right: 0;
+    border-bottom: 0;
     border-left: 0;
     border-radius: 0;
   }
@@ -523,7 +525,8 @@ function updateSelected(selected: unknown[]) {
     display: none;
   }
 
-  .STable.has-header & {
+  .STable.has-header &,
+  .STable.borderless & {
     border-radius: 0;
   }
 }
@@ -533,7 +536,8 @@ function updateSelected(selected: unknown[]) {
   line-height: 0;
   max-height: var(--table-max-height, 100%);
 
-  .STable.has-footer & {
+  .STable.has-footer &,
+  .STable.borderless & {
     border-radius: 0;
   }
 }

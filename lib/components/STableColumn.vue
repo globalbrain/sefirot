@@ -148,7 +148,7 @@ function stopDialogPositionListener() {
 
 <style scoped lang="postcss">
 .STableColumn {
-  background-color: var(--c-bg-elv-4);
+  background-color: var(--c-bg-elv-3);
 
   &.has-header {
     border-top: 1px solid var(--c-gutter);
