@@ -48,11 +48,16 @@ export class DateRange {
   getTo(): Day | null {
     return this.preset.getTo()
   }
+
+  getLabeltext(): string {
+    return this.preset.getLabeltext()
+  }
 }
 
 export abstract class DateRangePresetBase {
   abstract getFrom(): Day | null
   abstract getTo(): Day | null
+  abstract getLabeltext(): string
 
   protected getYear(year: number | null): Day | null {
     if (!year) {
@@ -84,6 +89,13 @@ export class DateFromTo extends DateRangePresetBase {
     return this.to
   }
 
+  getLabeltext(): string {
+    const f = this.getFrom()?.format('YYYY-MM-DD')
+    const t = this.getTo()?.format('YYYY-MM-DD')
+
+    return (f && t) ? `${f} – ${t}` : 'Error'
+  }
+
   setFrom(from: Day | null): this {
     this.from = from
     return this
@@ -110,6 +122,10 @@ export class Year extends DateRangePresetBase {
 
   getTo(): Day | null {
     return this.getYear(this.year)?.endOf('year') ?? null
+  }
+
+  getLabeltext(): string {
+    return this.getYear(this.year)?.format('YYYY') ?? 'Error'
   }
 
   setYear(year: number | null): this {
@@ -144,6 +160,12 @@ export class YearHalf extends DateRangePresetBase {
     return this.getYear(this.year)
       ?.month(this.monthDict[this.half] + 5)
       .endOf('month') ?? null
+  }
+
+  getLabeltext(): string {
+    const y = this.getYear(this.year)?.format('YYYY')
+
+    return y ? `${y}H${this.half}` : 'Error'
   }
 
   setYear(year: number | null): this {
@@ -185,6 +207,12 @@ export class YearQuarter extends DateRangePresetBase {
     return this.getYear(this.year)
       ?.month(this.monthDict[this.quarter] + 2)
       .endOf('month') ?? null
+  }
+
+  getLabeltext(): string {
+    const y = this.getYear(this.year)?.format('YYYY')
+
+    return y ? `${y}Q${this.quarter}` : 'Error'
   }
 
   setYear(year: number | null): this {
