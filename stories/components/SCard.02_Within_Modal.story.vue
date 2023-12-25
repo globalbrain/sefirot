@@ -1,14 +1,13 @@
 <script setup lang="ts">
+import IconX from '@iconify-icons/ph/x-bold'
 import SButton from 'sefirot/components/SButton.vue'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SCardFooter from 'sefirot/components/SCardFooter.vue'
-import SCardFooterAction from 'sefirot/components/SCardFooterAction.vue'
-import SCardFooterActions from 'sefirot/components/SCardFooterActions.vue'
-import SCardHeader from 'sefirot/components/SCardHeader.vue'
-import SCardHeaderActionClose from 'sefirot/components/SCardHeaderActionClose.vue'
-import SCardHeaderActions from 'sefirot/components/SCardHeaderActions.vue'
-import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
+import SControl from 'sefirot/components/SControl.vue'
+import SControlButton from 'sefirot/components/SControlButton.vue'
+import SControlLeft from 'sefirot/components/SControlLeft.vue'
+import SControlRight from 'sefirot/components/SControlRight.vue'
+import SControlText from 'sefirot/components/SControlText.vue'
 import SModal from 'sefirot/components/SModal.vue'
 import { ref } from 'vue'
 
@@ -51,17 +50,6 @@ function state() {
         }"
         v-model="state.cardMode"
       />
-      <HstSelect
-        title="Title mode"
-        :options="{
-          neutral: 'neutral',
-          info: 'info',
-          success: 'success',
-          warning: 'warning',
-          danger: 'danger'
-        }"
-        v-model="state.titleMode"
-      />
     </template>
 
     <template #default="{ state }">
@@ -72,28 +60,34 @@ function state() {
 
         <SModal :open="open" @close="open = false">
           <SCard :size="state.cardSize" :mode="state.cardMode">
-            <SCardHeader>
-              <SCardHeaderTitle :mode="state.titleMode">Header title</SCardHeaderTitle>
-              <SCardHeaderActions>
-                <SCardHeaderActionClose @click="open = false" />
-              </SCardHeaderActions>
-            </SCardHeader>
-
-            <SCardBlock space="compact">
-              <p class="text-14">
+            <SCardBlock size="small" class="s-pl-24 s-pr-8">
+              <SControl>
+                <SControlLeft>
+                  <SControlText class="s-font-w-500">
+                    Header title
+                  </SControlText>
+                </SControlLeft>
+                <SControlRight>
+                  <SControlButton type="text" mode="mute" :icon="IconX" @click="open = false" />
+                </SControlRight>
+              </SControl>
+            </SCardBlock>
+            <SCardBlock class="s-p-24">
+              <p class="s-text-14">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
                 quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
                 consequat.
               </p>
             </SCardBlock>
-
-            <SCardFooter>
-              <SCardFooterActions>
-                <SCardFooterAction label="Cancel" @click="open = false" />
-                <SCardFooterAction mode="info" label="Submit" @click="open = false" />
-              </SCardFooterActions>
-            </SCardFooter>
+            <SCardBlock size="large" class="s-px-24">
+              <SControl>
+                <SControlRight>
+                  <SControlButton label="Cancel" @click="open = false" />
+                  <SControlButton mode="info" label="Submit" @click="open = false" />
+                </SControlRight>
+              </SControl>
+            </SCardBlock>
           </SCard>
         </SModal>
       </Board>
