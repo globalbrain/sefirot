@@ -20,13 +20,15 @@ const { t } = useTrans({
     p_date_from_to: 'Custom period',
     p_year: 'Year',
     p_year_half: 'Year half',
-    p_year_quarter: 'Year quarter'
+    p_year_quarter: 'Year quarter',
+    a_apply: 'Apply'
   },
   ja: {
     p_date_from_to: '日付指定',
     p_year: '年',
     p_year_half: '半期',
-    p_year_quarter: '四半期'
+    p_year_quarter: '四半期',
+    a_apply: '適用する'
   }
 })
 
@@ -44,7 +46,7 @@ const presetOptions = [
 ]
 
 const actions: DropdownSectionActionsOption[] = [
-  { label: 'Apply', mode: 'info', onClick: onApply }
+  { label: t.a_apply, mode: 'info', onClick: onApply }
 ]
 
 function onPresetChange(value: any) {
