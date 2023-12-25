@@ -45,7 +45,7 @@ describe('components/STable', () => {
               type: 'menu',
               options: [{ label: 'Option A1', onClick: () => {} }]
             }]
-          } as any
+          }
         ],
         records: [] as any[]
       })
@@ -80,7 +80,7 @@ describe('components/STable', () => {
               options: [{ label: 'Option B1', onClick: () => {} }]
             }]
           }]
-        ] as any,
+        ],
         records: [] as any[]
       })
 
@@ -108,7 +108,7 @@ describe('components/STable', () => {
               options: [{ label: 'Option A1', onClick: () => {} }]
             }]
           }
-        ] as any,
+        ],
         records: [] as any[]
       })
 
@@ -136,7 +136,7 @@ describe('components/STable', () => {
               options: [{ label: 'Option A1', onClick: () => {} }]
             }]
           }
-        ] as any,
+        ],
         records: [] as any[]
       })
 

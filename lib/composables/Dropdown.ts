@@ -94,14 +94,7 @@ export function createDropdown(section: DropdownSection[]): DropdownSection[] {
 export function createDropdownMenu(
   section: Omit<DropdownSectionMenu, 'type'>
 ): DropdownSectionMenu {
-  // Map deprecated `label` key to `text`.
-  const options = section.options.map((option) => {
-    return option.label
-      ? { ...option, text: option.label }
-      : option
-  })
-
-  return { type: 'menu', options }
+  return { type: 'menu', ...section }
 }
 
 export function createDropdownFilter(

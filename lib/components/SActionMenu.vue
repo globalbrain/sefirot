@@ -5,6 +5,8 @@ import { useFlyout } from '../composables/Flyout'
 import SButton, { type Mode, type Size, type Tooltip, type Type } from './SButton.vue'
 import SDropdown from './SDropdown.vue'
 
+export type { Mode, Size, Tooltip, Type }
+
 const props = defineProps<{
   tag?: string
   size?: Size
