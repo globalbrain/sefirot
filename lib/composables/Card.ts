@@ -1,4 +1,4 @@
-import { type Ref, inject, provide, ref } from 'vue'
+import { type ComputedRef, type Ref, computed, inject, provide, ref, toValue } from 'vue'
 
 export interface CardState {
   isCollapsed: Ref<boolean>
@@ -6,7 +6,10 @@ export interface CardState {
   toggleCollapse(): void
 }
 
-export const CardStateKey = 'card-state'
+export type CardBlockSize = 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge'
+
+export const CardStateKey = 'sefirot-card-state-key'
+export const CardBlockSizeKey = 'sefirot-card-block-size-key'
 
 export function provideCardState(): CardState {
   const isCollapsed = ref(false)
@@ -30,8 +33,12 @@ export function provideCardState(): CardState {
   return cardState
 }
 
+export function provideCardBlockSize(cardBlockSize: ComputedRef<CardBlockSize | null>): void {
+  provide(CardBlockSizeKey, cardBlockSize)
+}
+
 export function useCardState(): CardState {
-  const cardState = inject<CardState | null>(CardStateKey, null)
+  const cardState = inject<CardState | null>(CardStateKey, null) || null
 
   if (!cardState) {
     throw new Error(
@@ -42,4 +49,9 @@ export function useCardState(): CardState {
   }
 
   return cardState
+}
+
+export function useCardBlockSize(): ComputedRef<CardBlockSize | null> {
+  const cardSize = inject<ComputedRef<CardBlockSize | null> | null>(CardBlockSizeKey, null) || null
+  return computed(() => toValue(cardSize))
 }

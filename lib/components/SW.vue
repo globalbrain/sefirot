@@ -1,3 +1,3 @@
 <template>
-  <wbr><span class="u-nowrap"><slot /></span>
+  <wbr><span class="s-nowrap"><slot /></span>
 </template>
