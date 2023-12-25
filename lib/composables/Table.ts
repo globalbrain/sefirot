@@ -12,7 +12,6 @@ export interface Table<
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
   summary?: MaybeRef<SR | null | undefined>
-  actions?: MaybeRef<TableHeaderAction[]>
   indexField?: keyof R
   loading?: MaybeRef<boolean | undefined>
   rowSize?: MaybeRef<number | undefined>
@@ -20,7 +19,8 @@ export interface Table<
 
   /**
    * @deprecated Use `<SControl>` to add equivalent features.
-   */
+  */
+  actions?: MaybeRef<TableHeaderAction[]>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
