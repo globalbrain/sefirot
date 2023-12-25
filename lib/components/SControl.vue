@@ -1,30 +1,40 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useCardBlockSize } from '../composables/Card'
+import { type ControlSize, provideControlSize } from '../composables/Control'
 
-export type Size = 'small' | 'medium' | 'large' | 'xlarge'
+export type { ControlSize as Size }
 
 const props = defineProps<{
-  size?: Size
+  size?: ControlSize
 }>()
 
 const cardSize = useCardBlockSize()
 
+const sizeDict = {
+  xsmall: 'small',
+  small: 'small',
+  medium: 'small',
+  large: 'medium',
+  xlarge: 'medium',
+  null: null
+} as const
+
+const _size = computed(() => {
+  return props.size ?? sizeDict[cardSize.value ?? 'null'] ?? 'small'
+})
+
 const classes = computed(() => [
-  props.size ?? cardSize.value,
+  _size.value,
   cardSize.value ? `card-size-${cardSize.value}` : null
 ])
+
+provideControlSize(_size)
 </script>
 
 <template>
   <div class="SControl" :class="classes">
-    <div class="left">
-      <slot />
-      <slot name="left" />
-    </div>
-    <div v-if="$slots.right" class="right">
-      <slot name="right" />
-    </div>
+    <slot />
   </div>
 </template>
 
@@ -32,24 +42,9 @@ const classes = computed(() => [
 .SControl {
   display: flex;
   align-items: center;
-}
-
-.left {
   flex-grow: 1;
 }
 
-.right {
-  flex-shrink: 0;
-}
-
-.SControl.xsmall {
-  height: 28px;
-}
-
-.SControl.small {
-  height: 32px;
-}
-
-.SControl.card-size-xsmall { margin: -4px; }
-.SControl.card-size-small  { margin: -4px; }
+.SControl.small  { gap: 8px; height: 32px; }
+.SControl.medium { gap: 12px; height: 40px; }
 </style>

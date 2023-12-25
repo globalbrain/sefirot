@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconMagnifyingGlass from '@iconify-icons/ph/magnifying-glass-bold'
 import { computed } from 'vue'
+import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/V'
 import SInputText, { type Align, type TextColor } from './SInputText.vue'
@@ -29,6 +30,13 @@ const { t } = useTrans({
   ja: { placeholder: '検索する' }
 })
 
+const size = useControlSize()
+
+const sizeDict = {
+  small: 'mini',
+  medium: 'small'
+} as const
+
 const _value = computed(() => {
   return props.modelValue ?? props.value ?? null
 })
@@ -37,7 +45,7 @@ const _value = computed(() => {
 <template>
   <div class="SControlInputSearch">
     <SInputText
-      size="mini"
+      :size="sizeDict[size]"
       type="search"
       :placeholder="placeholder ?? t.placeholder"
       :unit-before="IconMagnifyingGlass"
@@ -51,3 +59,10 @@ const _value = computed(() => {
     />
   </div>
 </template>
+
+<style scoped lang="postcss">
+.SControlInputSearch {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+</style>

@@ -4,32 +4,21 @@ import { type CardBlockSize, provideCardBlockSize } from '../composables/Card'
 
 export type { CardBlockSize as Size }
 
-// @deprecated Use `Size` instead.
+// @deprecated Use CSS utility classes instead.
 export type Space = 'compact' | 'wide' | 'xwide'
 
 const props = defineProps<{
   size?: CardBlockSize
 
-  // @deprecated Use `:size` from instead.
+  // @deprecated Use CSS utility classes instead.
   space?: Space
 }>()
-
-const spaceToSizeDict = {
-  compact: 'medium',
-  wide: 'large',
-  xwide: 'xlarge',
-  null: null
-}
-
-const classes = computed(() => [
-  props.size ?? spaceToSizeDict[props.space ?? 'null'] ?? null
-])
 
 provideCardBlockSize(computed(() => props.size ?? null))
 </script>
 
 <template>
-  <div class="SCardBlock" :class="classes">
+  <div class="SCardBlock" :class="[size, space]">
     <slot />
   </div>
 </template>
@@ -38,11 +27,9 @@ provideCardBlockSize(computed(() => props.size ?? null))
 .SCardBlock {
   background-color: var(--c-bg-elv-3);
 
-  &.xsmall { padding: 12px; }
-  &.small  { padding: 16px; }
-  &.medium { padding: 24px; }
-  &.large  { padding: 32px; }
-  &.xlarge { padding: 48px; }
+  &.compact { padding: 12px; }
+  &.wide    { padding: 16px; }
+  &.xwide   { padding: 24px; }
 }
 
 .SCard > .SCardBlock:first-child {
@@ -54,4 +41,20 @@ provideCardBlockSize(computed(() => props.size ?? null))
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
+
+.SCardBlock.xsmall,
+.SCardBlock.small,
+.SCardBlock.medium,
+.SCardBlock.large,
+.SCardBlock.xlarge {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.SCardBlock.xsmall { height: 40px; }
+.SCardBlock.small  { height: 48px; }
+.SCardBlock.medium { height: 56px; }
+.SCardBlock.large  { height: 64px; }
+.SCardBlock.xlarge { height: 80px; }
 </style>
