@@ -5,8 +5,9 @@ import SLink from './SLink.vue'
 
 export interface ActionListItem {
   leadIcon?: IconifyIcon
-  text: string
+  text?: string
   link?: string
+  disabled?: boolean
   onClick?(): void
 }
 

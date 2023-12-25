@@ -1,5 +1,6 @@
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { type Component, type MaybeRef, type Ref, ref, unref } from 'vue'
+import { type ActionListItem } from '../components/SActionList.vue'
 
 export type DropdownSection =
   | DropdownSectionMenu
@@ -7,7 +8,11 @@ export type DropdownSection =
   | DropdownSectionComponent
   | DropdownSectionActions
 
-export type DropdownSectionType = 'menu' | 'filter' | 'actions' | 'component'
+export type DropdownSectionType =
+  | 'menu'
+  | 'filter'
+  | 'actions'
+  | 'component'
 
 export interface DropdownSectionBase {
   type: DropdownSectionType
@@ -18,10 +23,9 @@ export interface DropdownSectionMenu extends DropdownSectionBase {
   options: DropdownSectionMenuOption[]
 }
 
-export interface DropdownSectionMenuOption {
-  label: string
-  disabled?: boolean
-  onClick(): void
+export interface DropdownSectionMenuOption extends ActionListItem {
+  /** @deprecated Use `text` instead. */
+  label?: string
 }
 
 export interface DropdownSectionFilter extends DropdownSectionBase {
@@ -85,6 +89,37 @@ export interface ManualDropdownPosition {
 
 export function createDropdown(section: DropdownSection[]): DropdownSection[] {
   return section
+}
+
+export function createDropdownMenu(
+  section: Omit<DropdownSectionMenu, 'type'>
+): DropdownSectionMenu {
+  // Map deprecated `label` key to `text`.
+  const options = section.options.map((option) => {
+    return option.label
+      ? { ...option, text: option.label }
+      : option
+  })
+
+  return { type: 'menu', options }
+}
+
+export function createDropdownFilter(
+  section: Omit<DropdownSectionFilter, 'type'>
+): DropdownSectionFilter {
+  return { type: 'filter', ...section }
+}
+
+export function createDropdownActions(
+  section: Omit<DropdownSectionActions, 'type'>
+): DropdownSectionActions {
+  return { type: 'actions', ...section }
+}
+
+export function createDropdownComponent(
+  section: Omit<DropdownSectionComponent, 'type'>
+): DropdownSectionComponent {
+  return { type: 'component', ...section }
 }
 
 export function useManualDropdownPosition(
