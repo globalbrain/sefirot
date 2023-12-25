@@ -1,13 +1,20 @@
 import { useElementBounding, useWindowSize } from '@vueuse/core'
-import { type Component, type MaybeRef, type Ref, ref, unref } from 'vue'
+import { type Component, type MaybeRef, type MaybeRefOrGetter, type Ref, ref, unref } from 'vue'
+import { type DateRange } from '../support/DateRange'
 
 export type DropdownSection =
   | DropdownSectionMenu
   | DropdownSectionFilter
+  | DropdownSectionDateRange
   | DropdownSectionComponent
   | DropdownSectionActions
 
-export type DropdownSectionType = 'menu' | 'filter' | 'actions' | 'component'
+export type DropdownSectionType =
+  | 'menu'
+  | 'filter'
+  | 'date-range'
+  | 'actions'
+  | 'component'
 
 export interface DropdownSectionBase {
   type: DropdownSectionType
@@ -60,6 +67,12 @@ export interface DropdownSectionFilterOptionAvatar extends DropdownSectionFilter
   image?: string | null
 }
 
+export interface DropdownSectionDateRange extends DropdownSectionBase {
+  type: 'date-range'
+  range: MaybeRefOrGetter<DateRange>
+  onApply(range: DateRange): void
+}
+
 export interface DropdownSectionActions extends DropdownSectionBase {
   type: 'actions'
   options: DropdownSectionActionsOption[]
@@ -85,6 +98,12 @@ export interface ManualDropdownPosition {
 
 export function createDropdown(section: DropdownSection[]): DropdownSection[] {
   return section
+}
+
+export function createDropdownDateRange(
+  section: Omit<DropdownSectionDateRange, 'type'>
+): DropdownSectionDateRange {
+  return { type: 'date-range', ...section }
 }
 
 export function useManualDropdownPosition(
