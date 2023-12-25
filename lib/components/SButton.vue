@@ -36,6 +36,8 @@ const props = defineProps<{
   type?: Type
   mode?: Mode
   icon?: any
+  leadIcon?: any
+  trailIcon?: any
   iconMode?: Mode
   label?: string
   labelMode?: Mode
@@ -52,12 +54,15 @@ const emit = defineEmits<{
   (e: 'disabled-click'): void
 }>()
 
+const _leadIcon = computed(() => props.leadIcon ?? props.icon)
+
 const classes = computed(() => [
   props.size ?? 'medium',
   props.type ?? 'fill',
   props.mode ?? 'default',
   { 'has-label': props.label },
-  { 'has-icon': props.icon },
+  { 'has-lead-icon': _leadIcon.value },
+  { 'has-trail-icon': props.trailIcon },
   { loading: props.loading },
   { rounded: props.rounded },
   { block: props.block },
@@ -104,11 +109,14 @@ function handleClick(): void {
       @click="handleClick"
     >
       <span class="content">
-        <span v-if="icon" class="icon" :class="iconMode">
-          <SIcon :icon="icon" class="icon-svg" />
+        <span v-if="_leadIcon" class="icon" :class="iconMode">
+          <SIcon :icon="_leadIcon" class="icon-svg" />
         </span>
         <span v-if="label" class="label" :class="labelMode">
           {{ label }}
+        </span>
+        <span v-if="trailIcon" class="icon" :class="iconMode">
+          <SIcon :icon="trailIcon" class="icon-svg" />
         </span>
       </span>
 
@@ -192,11 +200,12 @@ function handleClick(): void {
   min-height: 28px;
   font-size: var(--button-font-size, var(--button-mini-font-size));
 
-  &.rounded            { border-radius: 16px; }
-  &.has-label          { padding: var(--button-padding, 0 12px); }
-  &.has-label.has-icon { padding: var(--button-padding, 0 10px 0 8px); }
-  .content             { gap: 4px; }
-  .icon-svg            { width: 16px; height: 16px; }
+  &.rounded                  { border-radius: 16px; }
+  &.has-label                { padding: var(--button-padding, 0 12px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
+  .content                   { gap: 4px; }
+  .icon-svg                  { width: 16px; height: 16px; }
 }
 
 .SButton.small {
@@ -204,11 +213,12 @@ function handleClick(): void {
   min-height: 32px;
   font-size: var(--button-font-size, var(--button-small-font-size));
 
-  &.rounded            { border-radius: 16px; }
-  &.has-label          { padding: var(--button-padding, 0 12px); }
-  &.has-label.has-icon { padding: var(--button-padding, 0 10px 0 8px); }
-  .content             { gap: 6px; }
-  .icon-svg            { width: 16px; height: 16px; }
+  &.rounded                  { border-radius: 16px; }
+  &.has-label                { padding: var(--button-padding, 0 12px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
+  .content                   { gap: 6px; }
+  .icon-svg                  { width: 16px; height: 16px; }
 }
 
 .SButton.medium {
@@ -216,11 +226,12 @@ function handleClick(): void {
   min-height: 40px;
   font-size: var(--button-font-size, var(--button-medium-font-size));
 
-  &.rounded            { border-radius: 20px; }
-  &.has-label          { padding: var(--button-padding, 0 16px); }
-  &.has-label.has-icon { padding: var(--button-padding, 0 12px 0 10px); }
-  .content             { gap: 6px; }
-  .icon-svg            { width: 18px; height: 18px; }
+  &.rounded                  { border-radius: 20px; }
+  &.has-label                { padding: var(--button-padding, 0 16px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 12px 0 10px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 10px 0 12px); }
+  .content                   { gap: 6px; }
+  .icon-svg                  { width: 18px; height: 18px; }
 }
 
 .SButton.large {
@@ -228,11 +239,12 @@ function handleClick(): void {
   min-height: 48px;
   font-size: var(--button-font-size, var(--button-large-font-size));
 
-  &.rounded            { border-radius: 24px; }
-  &.has-label          { padding: var(--button-padding, 0 20px); }
-  &.has-label.has-icon { padding: var(--button-padding, 0 14px 0 12px); }
-  .content             { gap: 6px; }
-  .icon-svg            { width: 18px; height: 18px; }
+  &.rounded                  { border-radius: 24px; }
+  &.has-label                { padding: var(--button-padding, 0 20px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 14px 0 12px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 12px 0 14px); }
+  .content                   { gap: 6px; }
+  .icon-svg                  { width: 18px; height: 18px; }
 }
 
 .SButton.jumbo {
@@ -240,11 +252,12 @@ function handleClick(): void {
   min-height: 64px;
   font-size: var(--button-font-size, var(--button-jumbo-font-size));
 
-  &.rounded            { border-radius: 32px; }
-  &.has-label          { padding: var(--button-padding, 0 24px); }
-  &.has-label.has-icon { padding: var(--button-padding, 0 20px 0 18px); }
-  .content             { gap: 8px; }
-  .icon-svg            { width: 20px; height: 20px; }
+  &.rounded                  { border-radius: 32px; }
+  &.has-label                { padding: var(--button-padding, 0 24px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 20px 0 18px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 18px 0 20px); }
+  .content                   { gap: 8px; }
+  .icon-svg                  { width: 20px; height: 20px; }
 }
 
 .SButton.disabled {

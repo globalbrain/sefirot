@@ -1,17 +1,9 @@
 <script setup lang="ts">
 import IconCheck from '@iconify-icons/ph/check-bold'
-import IconImageSquare from '@iconify-icons/ph/image-square-bold'
-import IconNotePencil from '@iconify-icons/ph/note-pencil-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
+import IconImageSquare from '@iconify-icons/ph/image-square'
+import IconNotePencil from '@iconify-icons/ph/note-pencil'
+import IconTrash from '@iconify-icons/ph/trash'
 import { orderBy, xor } from 'lodash-es'
-import SCard from 'sefirot/components/SCard.vue'
-import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SControl from 'sefirot/components/SControl.vue'
-import SControlButton from 'sefirot/components/SControlButton.vue'
-import SControlInputSearch from 'sefirot/components/SControlInputSearch.vue'
-import SControlLeft from 'sefirot/components/SControlLeft.vue'
-import SControlPagination from 'sefirot/components/SControlPagination.vue'
-import SControlRight from 'sefirot/components/SControlRight.vue'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
@@ -23,7 +15,7 @@ interface Sort {
   order: 'asc' | 'desc'
 }
 
-const title = 'Components / STable / 01. Playground'
+const title = 'Components / STable / 02. Legacy'
 const docs = '/components/table'
 
 const optionsSelected = ref<string[]>([])
@@ -123,6 +115,14 @@ const dropdownCreatedAt = createDropdown([
   }
 ])
 
+const hasFilters = computed(() => {
+  return [
+    dropdownStatusSelected.value.length,
+    dropdownTypeSelected.value.length,
+    dropdownTagsSelected.value.length
+  ].some((length) => length)
+})
+
 const data = shallowRef([
   {
     name: 'Artwork 001',
@@ -204,11 +204,6 @@ const orderedData = computed(() => {
 })
 
 const table = useTable({
-  records: orderedData as any, // FIXME
-
-  borderless: true,
-  indexField: 'name',
-
   orders: [
     'name',
     'status',
@@ -321,8 +316,47 @@ const table = useTable({
       },
       resizable: false
     }
-  }))
+  })),
+
+  menu: computed(() => [
+    {
+      label: 'Options',
+      state: optionsSelected.value.length ? 'indicate' : 'inactive',
+      dropdown: createDropdown([
+        {
+          type: 'filter',
+          selected: optionsSelected,
+          options: [
+            { label: 'Hide type', value: 'hide-type', onClick: updateOptions },
+            { label: 'Hide width', value: 'hide-width', onClick: updateOptions },
+            { label: 'Hide tags', value: 'hide-tags', onClick: updateOptions }
+          ]
+        }
+      ])
+    }
+  ]),
+
+  actions: computed(() => [
+    {
+      label: 'Reset filters',
+      onClick: resetFilters,
+      type: 'info',
+      show: hasFilters.value
+    }
+  ]),
+
+  indexField: 'name',
+  records: orderedData as any, // FIXME
+  total: computed(() => orderedData.value.length),
+  page: 1,
+  perPage: 5,
+  onPrev: () => {},
+  onNext: () => {}
 })
+
+function updateOptions(value: string) {
+  optionsSelected.value = xor(optionsSelected.value, [value])
+}
 
 function updateSort(by: string, order: 'asc' | 'desc') {
   sort.by = by
@@ -355,33 +389,7 @@ function updateTagsFilter(value: string) {
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
-      <SCard>
-        <SCardBlock size="medium" class="s-px-12">
-          <SControl>
-            <SControlLeft>
-              <SControlInputSearch class="s-max-w-320" :model-value="null" />
-              <SControlButton type="outline" mode="mute" label="Reset filters" @click="resetFilters" />
-            </SControlLeft>
-            <SControlRight>
-              <SControlButton mode="info" label="New item" />
-            </SControlRight>
-          </SControl>
-        </SCardBlock>
-        <SCardBlock>
-          <STable class="table" :options="table" />
-        </SCardBlock>
-        <SCardBlock size="medium" class="s-px-12">
-          <SControl>
-            <SControlRight>
-              <SControlPagination
-                :total="orderedData.length"
-                :page="1"
-                :per-page="orderedData.length"
-              />
-            </SControlRight>
-          </SControl>
-        </SCardBlock>
-      </SCard>
+      <STable class="table" :options="table" />
     </Board>
   </Story>
 </template>
@@ -401,5 +409,9 @@ function updateTagsFilter(value: string) {
   --table-col-left: auto;
   --table-col-right: 0;
   --table-col-border-left: 1px;
+}
+
+.table {
+  margin-bottom: 16px;
 }
 </style>

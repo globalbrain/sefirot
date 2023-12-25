@@ -6,12 +6,7 @@ import { isString } from '../support/Utils'
 import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Align = 'left' | 'center' | 'right'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-
-const props = defineProps<{
+export interface Props {
   size?: Size
   name?: string
   label?: string
@@ -32,7 +27,14 @@ const props = defineProps<{
   displayValue?: string | null
   hideError?: boolean
   validation?: Validatable
-}>()
+}
+
+export type Size = 'mini' | 'small' | 'medium'
+export type Align = 'left' | 'center' | 'right'
+export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | null): void

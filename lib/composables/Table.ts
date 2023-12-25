@@ -8,27 +8,29 @@ export interface Table<
   R extends Record<string, any> = any,
   SR extends Record<string, any> = any
 > {
+  records?: MaybeRef<R[] | null | undefined>
   orders: MaybeRef<O[]>
   columns: MaybeRef<TableColumns<O, R, SR>>
-  menu?: MaybeRef<TableMenu[] | TableMenu[][]>
+  summary?: MaybeRef<SR | null | undefined>
+  indexField?: keyof R
+  loading?: MaybeRef<boolean | undefined>
+  rowSize?: MaybeRef<number | undefined>
+  borderless?: MaybeRef<boolean>
+
+  /**
+   * @deprecated Use `<SControl>` to add equivalent features.
+  */
   actions?: MaybeRef<TableHeaderAction[]>
-  records?: MaybeRef<R[] | null | undefined>
+  menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
-  summary?: MaybeRef<SR | null | undefined>
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>
-  /** @deprecated use `actions` instead */
   reset?: MaybeRef<boolean | undefined>
-  borderless?: MaybeRef<boolean>
-  loading?: MaybeRef<boolean | undefined>
-  rowSize?: MaybeRef<number | undefined>
   borderSize?: MaybeRef<number | undefined>
-  indexField?: keyof R
   onPrev?(): void
   onNext?(): void
-  /** @deprecated use `actions` instead */
   onReset?(): void
 }
 
