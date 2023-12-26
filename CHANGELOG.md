@@ -1,5 +1,12 @@
 
 
+# [3.16.0](https://github.com/globalbrain/sefirot/compare/v3.15.0...v3.16.0) (2023-12-26)
+
+
+### Features
+
+* many additions for new table structure ([#425](https://github.com/globalbrain/sefirot/issues/425)) ([6fc9c71](https://github.com/globalbrain/sefirot/commit/6fc9c718a16b3c5b04ba848c5deef35368144bbe))
+
 # [3.15.0](https://github.com/globalbrain/sefirot/compare/v3.14.0...v3.15.0) (2023-12-21)
 
 
