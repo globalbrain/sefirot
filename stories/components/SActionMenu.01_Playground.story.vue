@@ -10,9 +10,9 @@ const title = 'Components / SActionMenu / 01. Playground'
 const options = [
   createDropdownMenu({
     options: [
-      { leadIcon: IconActivity, text: 'Show activity' },
-      { leadIcon: IconEye, text: 'Preview' },
-      { leadIcon: IconTrash, text: 'Delete item' }
+      { leadIcon: IconActivity, label: 'Show activity' },
+      { leadIcon: IconEye, label: 'Preview' },
+      { leadIcon: IconTrash, label: 'Delete item' }
     ]
   })
 ]

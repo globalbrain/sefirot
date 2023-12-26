@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { type DropdownSectionMenuOption } from '../composables/Dropdown'
-import SActionList from './SActionList.vue'
+import SActionList, { type ActionList } from './SActionList.vue'
 
-const props = defineProps<{
-  options: DropdownSectionMenuOption[]
+defineProps<{
+  options: ActionList
 }>()
-
-const _options = computed(() => {
-  return props.options.map((option) => {
-    return option.label
-      ? { text: option.label, ...option }
-      : option
-  })
-})
 </script>
 
 <template>
   <div class="SDropdownSectionMenu">
-    <SActionList :list="_options" />
+    <SActionList :list="options" />
   </div>
 </template>
 

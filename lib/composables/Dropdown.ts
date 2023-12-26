@@ -1,6 +1,6 @@
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { type Component, type MaybeRef, type Ref, ref, unref } from 'vue'
-import { type ActionListItem } from '../components/SActionList.vue'
+import { type ActionList } from '../components/SActionList.vue'
 
 export type DropdownSection =
   | DropdownSectionMenu
@@ -20,12 +20,7 @@ export interface DropdownSectionBase {
 
 export interface DropdownSectionMenu extends DropdownSectionBase {
   type: 'menu'
-  options: DropdownSectionMenuOption[]
-}
-
-export interface DropdownSectionMenuOption extends ActionListItem {
-  /** @deprecated Use `text` instead. */
-  label?: string
+  options: ActionList
 }
 
 export interface DropdownSectionFilter extends DropdownSectionBase {

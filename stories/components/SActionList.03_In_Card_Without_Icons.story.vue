@@ -7,9 +7,9 @@ const title = 'Components / SActionList / 03. In Card Without Icons'
 const docs = '/components/action-list'
 
 const list: ActionList = [
-  { text: 'Show activity' },
-  { text: 'Preview' },
-  { text: 'Delete item' }
+  { label: 'Show activity' },
+  { label: 'Preview' },
+  { label: 'Delete item' }
 ]
 </script>
 
