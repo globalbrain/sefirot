@@ -1,5 +1,13 @@
 
 
+# [3.17.0](https://github.com/globalbrain/sefirot/compare/v3.16.0...v3.17.0) (2023-12-27)
+
+
+### Features
+
+* **action-menu:** add `<SActionMenu>` ([#426](https://github.com/globalbrain/sefirot/issues/426)) ([a6a7baf](https://github.com/globalbrain/sefirot/commit/a6a7bafd6e5301e95896e0db51b0406b5b4a82ee))
+* **dropdown:** add date range section ([#427](https://github.com/globalbrain/sefirot/issues/427)) ([e1ef252](https://github.com/globalbrain/sefirot/commit/e1ef252db1da7dba6b272e156c0af0f7fefc4e5c))
+
 # [3.16.0](https://github.com/globalbrain/sefirot/compare/v3.15.0...v3.16.0) (2023-12-26)
 
 
