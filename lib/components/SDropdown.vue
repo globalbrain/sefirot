@@ -21,7 +21,7 @@ defineProps<{
 .SDropdown {
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  min-width: 256px;
+  min-width: 288px;
   max-height: 384px;
   overflow-y: auto;
   white-space: normal;

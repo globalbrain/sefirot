@@ -1,16 +1,25 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
+import { computed } from 'vue'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
 export interface ActionListItem {
   leadIcon?: IconifyIcon
-  text: string
   link?: string
+  label?: string
+  disabled?: boolean
   onClick?(): void
+
+  /** @deprecated Use `:label` instead. */
+  text?: string
 }
 
-defineProps<ActionListItem>()
+const props = defineProps<ActionListItem>()
+
+const _label = computed(() => {
+  return props.label ?? props.text
+})
 </script>
 
 <template>
@@ -23,7 +32,7 @@ defineProps<ActionListItem>()
     <span v-if="leadIcon" class="lead-icon">
       <SIcon class="lead-icon-svg" :icon="leadIcon" />
     </span>
-    <span class="text">{{ text }}</span>
+    <span class="text">{{ _label }}</span>
   </component>
 </template>
 
