@@ -1,5 +1,6 @@
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { type Component, type MaybeRef, type MaybeRefOrGetter, type Ref, ref, unref } from 'vue'
+import { type ActionList } from '../components/SActionList.vue'
 import { type DateRange } from '../support/DateRange'
 
 export type DropdownSection =
@@ -22,13 +23,7 @@ export interface DropdownSectionBase {
 
 export interface DropdownSectionMenu extends DropdownSectionBase {
   type: 'menu'
-  options: DropdownSectionMenuOption[]
-}
-
-export interface DropdownSectionMenuOption {
-  label: string
-  disabled?: boolean
-  onClick(): void
+  options: ActionList
 }
 
 export interface DropdownSectionFilter extends DropdownSectionBase {
@@ -100,10 +95,35 @@ export function createDropdown(section: DropdownSection[]): DropdownSection[] {
   return section
 }
 
+
 export function createDropdownDateRange(
   section: Omit<DropdownSectionDateRange, 'type'>
 ): DropdownSectionDateRange {
   return { type: 'date-range', ...section }
+}
+
+export function createDropdownMenu(
+  section: Omit<DropdownSectionMenu, 'type'>
+): DropdownSectionMenu {
+  return { type: 'menu', ...section }
+}
+
+export function createDropdownFilter(
+  section: Omit<DropdownSectionFilter, 'type'>
+): DropdownSectionFilter {
+  return { type: 'filter', ...section }
+}
+
+export function createDropdownActions(
+  section: Omit<DropdownSectionActions, 'type'>
+): DropdownSectionActions {
+  return { type: 'actions', ...section }
+}
+
+export function createDropdownComponent(
+  section: Omit<DropdownSectionComponent, 'type'>
+): DropdownSectionComponent {
+  return { type: 'component', ...section }
 }
 
 export function useManualDropdownPosition(

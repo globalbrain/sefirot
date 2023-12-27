@@ -1,5 +1,6 @@
 import { type App } from 'vue'
 import SControl from '../components/SControl.vue'
+import SControlActionMenu from '../components/SControlActionMenu.vue'
 import SControlButton from '../components/SControlButton.vue'
 import SControlCenter from '../components/SControlCenter.vue'
 import SControlInputSearch from '../components/SControlInputSearch.vue'
@@ -9,6 +10,7 @@ import SControlText from '../components/SControlText.vue'
 
 export function mixin(app: App): void {
   app.component('SControl', SControl)
+  app.component('SControlActionMenu', SControlActionMenu)
   app.component('SControlButton', SControlButton)
   app.component('SControlCenter', SControlCenter)
   app.component('SControlInputSearch', SControlInputSearch)
@@ -20,6 +22,7 @@ export function mixin(app: App): void {
 declare module 'vue' {
   export interface GlobalComponents {
     SControl: typeof SControl
+    SControlActionMenu: typeof SControlActionMenu
     SControlButton: typeof SControlButton
     SControlCenter: typeof SControlCenter
     SControlInputSearch: typeof SControlInputSearch
