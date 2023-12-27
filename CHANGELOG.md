@@ -1,5 +1,12 @@
 
 
+## [3.17.1](https://github.com/globalbrain/sefirot/compare/v3.17.0...v3.17.1) (2023-12-27)
+
+
+### Bug Fixes
+
+* **control:** add missing emits on pagination and include in mixin ([30b8ccd](https://github.com/globalbrain/sefirot/commit/30b8ccd7eecf656df83f1c87d1e37b59edddea99))
+
 # [3.17.0](https://github.com/globalbrain/sefirot/compare/v3.16.0...v3.17.0) (2023-12-27)
 
 
