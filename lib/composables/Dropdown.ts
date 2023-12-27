@@ -95,7 +95,6 @@ export function createDropdown(section: DropdownSection[]): DropdownSection[] {
   return section
 }
 
-
 export function createDropdownDateRange(
   section: Omit<DropdownSectionDateRange, 'type'>
 ): DropdownSectionDateRange {
