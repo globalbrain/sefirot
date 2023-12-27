@@ -9,6 +9,11 @@ defineProps<{
   perPage: number
 }>()
 
+defineEmits<{
+  (e: 'prev'): void
+  (e: 'next'): void
+}>()
+
 const size = useControlSize()
 const position = useControlPosition()
 </script>
@@ -21,6 +26,8 @@ const position = useControlPosition()
       :total="total"
       :page="page"
       :per-page="perPage"
+      @prev="$emit('prev')"
+      @next="$emit('next')"
     />
   </div>
 </template>
