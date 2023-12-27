@@ -28,8 +28,8 @@ export function useV<
   Data extends { [key in keyof Rules]: any },
   Rules extends ValidationArgs = ValidationArgs
 >(
-  data: MaybeRefOrGetter<Data>,
-  rules: MaybeRefOrGetter<Rules>
+  data?: MaybeRefOrGetter<Data>,
+  rules?: MaybeRefOrGetter<Rules>
 ): V<Data, Rules> {
   const { t } = useTrans({
     en: { notify: 'Form contains errors. Please correct them and try again.' },
@@ -38,10 +38,10 @@ export function useV<
 
   const snackbars = useSnackbars()
 
-  const d = computed(() => toValue(data))
-  const r = computed(() => toValue(rules))
+  const d = computed(() => toValue(data) ?? {})
+  const r = computed(() => toValue(rules) ?? {})
 
-  const validation = useVuelidate(r, d)
+  const validation = useVuelidate(r, d) as any
 
   function reset(): void {
     validation.value.$reset()

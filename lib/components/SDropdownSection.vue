@@ -2,6 +2,7 @@
 import { type DropdownSection } from '../composables/Dropdown'
 import SDropdownSectionActions from './SDropdownSectionActions.vue'
 import SDropdownSectionComponent from './SDropdownSectionComponent.vue'
+import SDropdownSectionDateRange from './SDropdownSectionDateRange.vue'
 import SDropdownSectionFilter from './SDropdownSectionFilter.vue'
 import SDropdownSectionMenu from './SDropdownSectionMenu.vue'
 
@@ -22,8 +23,13 @@ defineProps<{
     :options="section.options"
     :on-click="section.onClick"
   />
+  <SDropdownSectionDateRange
+    v-else-if="section.type === 'date-range'"
+    :range="section.range"
+    :on-apply="section.onApply"
+  />
   <SDropdownSectionActions
-    v-if="section.type === 'actions'"
+    v-else-if="section.type === 'actions'"
     :options="section.options"
   />
   <SDropdownSectionComponent
