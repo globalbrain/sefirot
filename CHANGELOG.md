@@ -1,5 +1,12 @@
 
 
+## [3.19.1](https://github.com/globalbrain/sefirot/compare/v3.19.0...v3.19.1) (2023-12-28)
+
+
+### Bug Fixes
+
+* **style:** add missing s prefix ([48560ec](https://github.com/globalbrain/sefirot/commit/48560ec86456d6171c52d9c92d248c9e320f4cfd))
+
 # [3.19.0](https://github.com/globalbrain/sefirot/compare/v3.18.0...v3.19.0) (2023-12-28)
 
 
