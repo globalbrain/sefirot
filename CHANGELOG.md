@@ -1,5 +1,21 @@
 
 
+# [3.19.0](https://github.com/globalbrain/sefirot/compare/v3.18.0...v3.19.0) (2023-12-28)
+
+
+### Bug Fixes
+
+* **type:** add prod dep types to prod dep ([8e9554f](https://github.com/globalbrain/sefirot/commit/8e9554fb875b0326da2669933307aa4b32db940c))
+
+
+### Features
+
+* **card:** add option to change block bg color ([115fc27](https://github.com/globalbrain/sefirot/commit/115fc276546e849a520e1469332935ffd4a484fc))
+* **mixin:** add doc mixin ([7663ebd](https://github.com/globalbrain/sefirot/commit/7663ebdd917278f502a077b22cb706fd2aa3439e))
+* **mixin:** add fundamental mixin ([c7ddeef](https://github.com/globalbrain/sefirot/commit/c7ddeefef20f78ec9ddecff9f6e0e53b13ccade7))
+* **style:** add flex utilities ([ede2388](https://github.com/globalbrain/sefirot/commit/ede2388d004e2cc84c866f17970d0c65ca094eb9))
+* **style:** add more width utilities ([d2dd737](https://github.com/globalbrain/sefirot/commit/d2dd73737bbc3a2e7dbb1a95cbabfca1ecc5e959))
+
 # [3.18.0](https://github.com/globalbrain/sefirot/compare/v3.17.1...v3.18.0) (2023-12-28)
 
 
