@@ -3,6 +3,8 @@
 .s-bg-elv-3 { background-color: var(--c-bg-elv-3); }
 .s-bg-elv-4 { background-color: var(--c-bg-elv-4); }
 
+.s-block { display: block; }
+
 .s-flex { display: flex; }
 
 .s-font-12 { font-size: 12px; }
@@ -27,8 +29,17 @@
 .s-gap-12 { gap: 12px; }
 .s-gap-16 { gap: 16px; }
 
+.s-grid { display: grid; }
+
 .s-grow   { flex-grow: 1; }
 .s-grow-0 { flex-grow: 0; }
+
+.s-hidden { display: none; }
+
+.s-inline       { display: inline; }
+.s-inline-block { display: inline-block; }
+.s-inline-flex  { display: inline-flex; }
+.s-inline-grid  { display: inline-grid; }
 
 .s-nowrap { white-space: nowrap; }
 
