@@ -67,9 +67,9 @@
  * Spacing
  * -------------------------------------------------------------------------- */
 
-.m-auto  { margin: auto; }
-.my-auto { margin-top: auto; margin-bottom: auto; }
-.mx-auto { margin-right: auto; margin-left: auto; }
+.s-m-auto  { margin: auto; }
+.s-my-auto { margin-top: auto; margin-bottom: auto; }
+.s-mx-auto { margin-right: auto; margin-left: auto; }
 
 .s-p-8  { padding: 8px; }
 .s-p-12 { padding: 12px; }
