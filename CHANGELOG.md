@@ -1,5 +1,18 @@
 
 
+# [3.18.0](https://github.com/globalbrain/sefirot/compare/v3.17.1...v3.18.0) (2023-12-28)
+
+
+### Bug Fixes
+
+* **control:** do not grow right part when it is following left part ([69f6547](https://github.com/globalbrain/sefirot/commit/69f654743c22ea122b0baa68fc32ba6d1a4ce83c))
+* **style:** add missing `s` prefix ([83cf9f4](https://github.com/globalbrain/sefirot/commit/83cf9f45d32498d044ba89f2d62f5681b77e6a9e))
+
+
+### Features
+
+* **style:** add display utilities ([2902d44](https://github.com/globalbrain/sefirot/commit/2902d44f9d2a885d9bd2d547fbfcc771d65dc5ca))
+
 ## [3.17.1](https://github.com/globalbrain/sefirot/compare/v3.17.0...v3.17.1) (2023-12-27)
 
 
