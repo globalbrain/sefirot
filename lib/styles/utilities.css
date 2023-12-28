@@ -1,7 +1,7 @@
-.bg-elv-1 { background-color: var(--c-bg-elv-1); }
-.bg-elv-2 { background-color: var(--c-bg-elv-2); }
-.bg-elv-3 { background-color: var(--c-bg-elv-3); }
-.bg-elv-4 { background-color: var(--c-bg-elv-4); }
+.s-bg-elv-1 { background-color: var(--c-bg-elv-1); }
+.s-bg-elv-2 { background-color: var(--c-bg-elv-2); }
+.s-bg-elv-3 { background-color: var(--c-bg-elv-3); }
+.s-bg-elv-4 { background-color: var(--c-bg-elv-4); }
 
 .s-flex { display: flex; }
 
