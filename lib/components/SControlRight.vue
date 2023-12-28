@@ -21,4 +21,8 @@ provideControlPosition('right')
 
 .SControl.small .SControlRight  { gap: 8px; }
 .SControl.medium .SControlRight { gap: 12px; }
+
+.SControlLeft + .SControlRight {
+  flex-grow: 0;
+}
 </style>
