@@ -1,6 +1,6 @@
 import isEqual from 'lodash-es/isEqual'
 import isPlainObject from 'lodash-es/isPlainObject'
-import { type MaybeRef, isRef, toValue, watch } from 'vue'
+import { type MaybeRef, toValue, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -44,10 +44,7 @@ export function useUrlQuerySync(
       flattenState[key] = cast ? cast(value) : value
     })
 
-    deepAssign(
-      isRef<Record<string, any>>(state) ? state.value : state,
-      unflattenObject(flattenState)
-    )
+    deepAssign(toValue(state), unflattenObject(flattenState))
   }
 
   async function setQueryFromState() {
