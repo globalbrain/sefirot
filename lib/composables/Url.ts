@@ -1,6 +1,6 @@
 import isEqual from 'lodash-es/isEqual'
 import isPlainObject from 'lodash-es/isPlainObject'
-import { watch } from 'vue'
+import { type MaybeRef, isRef, toValue, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -9,20 +9,25 @@ export interface UseUrlQuerySyncOptions {
 }
 
 export function useUrlQuerySync(
-  state: Record<string, any>,
+  state: MaybeRef<Record<string, any>>,
   { casts = {}, exclude }: UseUrlQuerySyncOptions = {}
 ): void {
   const router = useRouter()
   const route = useRoute()
 
-  const flattenInitialState = flattenObject(JSON.parse(JSON.stringify(state)))
+  const flattenInitialState = flattenObject(
+    JSON.parse(JSON.stringify(toValue(state)))
+  )
 
   setStateFromQuery()
 
-  watch(() => state, setQueryFromState, { deep: true, immediate: true })
+  watch(() => toValue(state), setQueryFromState, {
+    deep: true,
+    immediate: true
+  })
 
   function setStateFromQuery() {
-    const flattenState = flattenObject(state)
+    const flattenState = flattenObject(toValue(state))
     const flattenQuery = flattenObject(route.query)
 
     Object.keys(flattenQuery).forEach((key) => {
@@ -39,11 +44,14 @@ export function useUrlQuerySync(
       flattenState[key] = cast ? cast(value) : value
     })
 
-    deepAssign(state, unflattenObject(flattenState))
+    deepAssign(
+      isRef<Record<string, any>>(state) ? state.value : state,
+      unflattenObject(flattenState)
+    )
   }
 
   async function setQueryFromState() {
-    const flattenState = flattenObject(state)
+    const flattenState = flattenObject(toValue(state))
     const flattenQuery = flattenObject(route.query)
 
     Object.keys(flattenState).forEach((key) => {
@@ -110,7 +118,11 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
   }
 }
 
-function deepAssignBase(dest: Record<string, any>, src: Record<string, any>, key: string | number) {
+function deepAssignBase(
+  dest: Record<string, any>,
+  src: Record<string, any>,
+  key: string | number
+) {
   if (typeof src[key] === 'object' && src[key] !== null) {
     deepAssign(dest[key], src[key])
   } else {
