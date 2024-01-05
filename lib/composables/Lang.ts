@@ -33,7 +33,7 @@ export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
   }
 }
 
-export function useBrowserLang() {
+export function useBrowserLang(): Lang {
   const lang = navigator.language
 
   return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
