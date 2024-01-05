@@ -1,6 +1,6 @@
 import isEqual from 'lodash-es/isEqual'
 import isPlainObject from 'lodash-es/isPlainObject'
-import { type MaybeRef, toValue, watch } from 'vue'
+import { type MaybeRef, unref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -16,18 +16,18 @@ export function useUrlQuerySync(
   const route = useRoute()
 
   const flattenInitialState = flattenObject(
-    JSON.parse(JSON.stringify(toValue(state)))
+    JSON.parse(JSON.stringify(unref(state)))
   )
 
   setStateFromQuery()
 
-  watch(() => toValue(state), setQueryFromState, {
+  watch(() => unref(state), setQueryFromState, {
     deep: true,
     immediate: true
   })
 
   function setStateFromQuery() {
-    const flattenState = flattenObject(toValue(state))
+    const flattenState = flattenObject(unref(state))
     const flattenQuery = flattenObject(route.query)
 
     Object.keys(flattenQuery).forEach((key) => {
@@ -44,11 +44,11 @@ export function useUrlQuerySync(
       flattenState[key] = cast ? cast(value) : value
     })
 
-    deepAssign(toValue(state), unflattenObject(flattenState))
+    deepAssign(unref(state), unflattenObject(flattenState))
   }
 
   async function setQueryFromState() {
-    const flattenState = flattenObject(toValue(state))
+    const flattenState = flattenObject(unref(state))
     const flattenQuery = flattenObject(route.query)
 
     Object.keys(flattenState).forEach((key) => {
