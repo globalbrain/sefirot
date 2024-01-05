@@ -1,5 +1,17 @@
 
 
+# [3.20.0](https://github.com/globalbrain/sefirot/compare/v3.19.1...v3.20.0) (2024-1-5)
+
+
+### Bug Fixes
+
+* **d:** make init work multiple times ([#428](https://github.com/globalbrain/sefirot/issues/428)) ([71e341b](https://github.com/globalbrain/sefirot/commit/71e341bc9ddab397149014b24f62c8f619c87bf0))
+
+
+### Features
+
+* **url:** support using ref as state ([#430](https://github.com/globalbrain/sefirot/issues/430)) ([57ef0af](https://github.com/globalbrain/sefirot/commit/57ef0afe06b6d6f529711ac07a79c68feedb3c75))
+
 ## [3.19.1](https://github.com/globalbrain/sefirot/compare/v3.19.0...v3.19.1) (2023-12-28)
 
 
