@@ -1,5 +1,13 @@
 
 
+# [3.21.0](https://github.com/globalbrain/sefirot/compare/v3.20.0...v3.21.0) (2024-01-09)
+
+
+### Features
+
+* **http:** allow specifying base url ([#433](https://github.com/globalbrain/sefirot/issues/433)) ([d322fa5](https://github.com/globalbrain/sefirot/commit/d322fa544421d45425977b929f5f0b289fc49785))
+* **lang:** add useBrowserLang function ([#422](https://github.com/globalbrain/sefirot/issues/422)) ([#432](https://github.com/globalbrain/sefirot/issues/432)) ([4af35d0](https://github.com/globalbrain/sefirot/commit/4af35d0021f5f01f51542137200cd0db3e4b16e0))
+
 # [3.20.0](https://github.com/globalbrain/sefirot/compare/v3.19.1...v3.20.0) (2024-1-5)
 
 
