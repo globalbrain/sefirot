@@ -38,10 +38,12 @@ function resolve(
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >
-      <div v-if="_image" class="avatar">
+      <div v-if="_image || _name" class="avatar">
         <SAvatar size="mini" :avatar="_image" :name="_name" />
       </div>
-      <span v-if="_name" class="name">{{ _name }}</span>
+      <span v-if="_name" class="name">
+        {{ _name }}
+      </span>
     </SLink>
   </div>
 </template>
@@ -62,7 +64,7 @@ function resolve(
 
 .name {
   display: inline-block;
-  margin-left: 12px;
+  margin-left: 8px;
   line-height: 24px;
   font-size: 14px;
   font-weight: 400;
