@@ -1,22 +1,41 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import { $fetch, type FetchOptions } from 'ofetch'
+import { type $Fetch, type FetchOptions, ofetch } from 'ofetch'
 import { stringify } from 'qs'
 
+interface HttpOptions {
+  baseURL?: string
+  xsrfURL?: string | false
+  client?: $Fetch
+}
+
 export class Http {
-  static base: string | undefined = undefined
-  static xsrfUrl: string | false = '/api/csrf-cookie'
+  private static baseURL: string | undefined = undefined
+  private static xsrfURL: string | false = '/api/csrf-cookie'
+  private static client: $Fetch = ofetch
+
+  static config(options: HttpOptions) {
+    if (options.baseURL) {
+      Http.baseURL = options.baseURL
+    }
+    if (options.xsrfURL !== undefined) {
+      Http.xsrfURL = options.xsrfURL
+    }
+    if (options.client) {
+      Http.client = options.client
+    }
+  }
 
   private async ensureXsrfToken(): Promise<string | undefined> {
-    if (!Http.xsrfUrl) {
+    if (!Http.xsrfURL) {
       return undefined
     }
 
     let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
 
     if (!xsrfToken) {
-      await this.head(Http.xsrfUrl)
+      await this.head(Http.xsrfURL)
       xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
     }
 
@@ -40,7 +59,7 @@ export class Http {
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
       {
-        baseURL: Http.base,
+        baseURL: Http.baseURL,
         method,
         credentials: 'include',
         ...options,
@@ -54,11 +73,11 @@ export class Http {
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return $fetch<T, any>(...(await this.buildRequest(url, options)))
+    return Http.client<T, any>(...(await this.buildRequest(url, options)))
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return $fetch.raw<T, any>(...(await this.buildRequest(url, options)))
+    return Http.client.raw<T, any>(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
