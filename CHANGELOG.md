@@ -1,5 +1,12 @@
 
 
+# [3.22.0](https://github.com/globalbrain/sefirot/compare/v3.21.0...v3.22.0) (2024-01-10)
+
+
+### Features
+
+* **http:** add option to disable csrf token handling ([#434](https://github.com/globalbrain/sefirot/issues/434)) ([97cb8f5](https://github.com/globalbrain/sefirot/commit/97cb8f5518530cbd3c4eef953a50efc874ccda0d))
+
 # [3.21.0](https://github.com/globalbrain/sefirot/compare/v3.20.0...v3.21.0) (2024-01-09)
 
 
