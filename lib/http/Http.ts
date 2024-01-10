@@ -6,9 +6,13 @@ import { stringify } from 'qs'
 
 export class Http {
   static base: string | undefined = undefined
-  static xsrfUrl = '/api/csrf-cookie'
+  static xsrfUrl: string | false = '/api/csrf-cookie'
 
   private async ensureXsrfToken(): Promise<string | undefined> {
+    if (!Http.xsrfUrl) {
+      return undefined
+    }
+
     let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
 
     if (!xsrfToken) {
