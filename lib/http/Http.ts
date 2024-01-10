@@ -1,19 +1,24 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import { type $Fetch, type FetchOptions, ofetch } from 'ofetch'
+import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
+
+interface HttpClient {
+  <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
+  raw<T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<T>>
+}
 
 interface HttpOptions {
   baseURL?: string
   xsrfURL?: string | false
-  client?: $Fetch
+  client?: HttpClient
 }
 
 export class Http {
   private static baseURL: string | undefined = undefined
   private static xsrfURL: string | false = '/api/csrf-cookie'
-  private static client: $Fetch = ofetch
+  private static client: HttpClient = ofetch
 
   static config(options: HttpOptions) {
     if (options.baseURL) {
@@ -73,11 +78,11 @@ export class Http {
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return Http.client<T, any>(...(await this.buildRequest(url, options)))
+    return Http.client<T>(...(await this.buildRequest(url, options)))
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return Http.client.raw<T, any>(...(await this.buildRequest(url, options)))
+    return Http.client.raw<T>(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
