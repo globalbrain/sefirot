@@ -1,5 +1,12 @@
 
 
+## [3.22.1](https://github.com/globalbrain/sefirot/compare/v3.22.0...v3.22.1) (2024-01-10)
+
+
+### Bug Fixes
+
+* **table:** display avatar using name initial if image is not present ([f707713](https://github.com/globalbrain/sefirot/commit/f70771347a51f54631fc857a0bcee09e4e8589fc))
+
 # [3.22.0](https://github.com/globalbrain/sefirot/compare/v3.21.0...v3.22.0) (2024-01-10)
 
 
