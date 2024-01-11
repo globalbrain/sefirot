@@ -4,12 +4,12 @@ import FileSaver from 'file-saver'
 import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
 
-interface HttpClient {
+export interface HttpClient {
   <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
   raw<T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<T>>
 }
 
-interface HttpOptions {
+export interface HttpOptions {
   baseURL?: string
   xsrfURL?: string | false
   client?: HttpClient
