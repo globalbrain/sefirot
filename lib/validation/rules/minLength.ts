@@ -1,10 +1,14 @@
-import { minLength as baseMinLength, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { minLength as baseMinLength } from '../validators'
+
+export const message = {
+  en: (min: number) => `The value must be greater than or equal to ${min} characters.`,
+  ja: (min: number) => `この値は最小${min}文字です。`
+}
 
 export function minLength(length: number, msg?: string) {
-  return helpers.withMessage(
-    ({ $params }) => {
-      return msg ?? `The value must be greater or equal to ${($params as any).min} characters.`
-    },
-    baseMinLength(length)
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang](length),
+    validation: (value: string) => baseMinLength(value, length)
+  })
 }

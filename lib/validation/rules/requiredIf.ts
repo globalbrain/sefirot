@@ -1,11 +1,17 @@
-import { requiredIf as baseRequiredIf, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { type RequiredIfCondition, requiredIf as baseRequiredIf } from '../validators'
+
+export const message = {
+  en: 'The field is required.',
+  ja: 'この項目は必須です。'
+}
 
 export function requiredIf(
-  prop: boolean | string | (() => boolean | Promise<boolean>),
+  condition: RequiredIfCondition,
   msg?: string
 ) {
-  return helpers.withMessage(
-    () => msg ?? 'The field is required.',
-    baseRequiredIf(prop)
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    validation: (value) => baseRequiredIf(value, condition)
+  })
 }

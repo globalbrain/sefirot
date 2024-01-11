@@ -1,10 +1,14 @@
-import { maxLength as baseMaxLength, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { maxLength as baseMaxLength } from '../validators'
+
+export const message = {
+  en: (length: number) => `The value must be less than or equal to ${length} characters.`,
+  ja: (length: number) => `この値は、最大${length}文字までです。`
+}
 
 export function maxLength(length: number, msg?: string) {
-  return helpers.withMessage(
-    ({ $params }) => {
-      return msg ?? `The value must be less or equal to ${($params as any).max} characters.`
-    },
-    baseMaxLength(length)
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang](length),
+    validation: (value: string) => baseMaxLength(value, length)
+  })
 }

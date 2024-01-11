@@ -1,10 +1,14 @@
-import { minValue as baseMinValue, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { minValue as baseMinValue } from '../validators'
 
-export function minValue(value: number, msg?: string) {
-  return helpers.withMessage(
-    ({ $params }) => {
-      return msg ?? `The value must be greater or equal to ${($params as any).min}.`
-    },
-    baseMinValue(value)
-  )
+export const message = {
+  en: (min: number) => `The value must be greater than or equal to ${min}.`,
+  ja: (min: number) => `この値は最大${min}です。`
+}
+
+export function minValue(min: number, msg?: string) {
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang](min),
+    validation: (value: unknown) => baseMinValue(value, min)
+  })
 }

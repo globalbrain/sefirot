@@ -5,7 +5,7 @@ import { type Lang, useLang } from '../composables/Lang'
 export interface RuleOptions {
   optional?: boolean
   message(params: MessageProps): string
-  validation(value: unknown): boolean
+  validation(value: unknown): boolean | Promise<boolean>
 }
 
 export interface MessageProps extends VMessageProps {

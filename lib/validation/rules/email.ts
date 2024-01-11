@@ -1,8 +1,14 @@
-import { email as baseEmail, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { email as baseEmail } from '../validators'
+
+export const message = {
+  en: 'The Email is invalid.',
+  ja: 'メールアドレスが正しくありません。'
+}
 
 export function email(msg?: string) {
-  return helpers.withMessage(
-    () => msg ?? 'The Email is invalid.',
-    baseEmail
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    validation: (value: string) => baseEmail(value)
+  })
 }
