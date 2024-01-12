@@ -30,7 +30,7 @@ export function useQuery<Data = any>(
   const loading = ref(false)
   const data = ref<Data | undefined>()
 
-  if (options.immediate !== false) {
+  if (options.immediate !== false && !import.meta.env.SSR) {
     execute()
   }
 
