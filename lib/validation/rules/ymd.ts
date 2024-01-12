@@ -1,4 +1,3 @@
-import { helpers } from '@vuelidate/validators'
 import { type Ymd } from '../../support/Day'
 import { createRule } from '../Rule'
 import { ymd as baseYmd } from '../validators/ymd'
@@ -13,6 +12,7 @@ export const message = {
 export function ymd(required?: YmdType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: Ymd) => !helpers.req(value) || baseYmd(value, required)
+    optional: true,
+    validation: (value: Ymd) => baseYmd(value, required)
   })
 }

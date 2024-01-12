@@ -1,4 +1,3 @@
-import { helpers } from '@vuelidate/validators'
 import { createRule } from '../Rule'
 import { maxFileSize as baseMaxFileSize } from '../validators/maxFileSize'
 
@@ -10,6 +9,7 @@ export const message = {
 export function maxFileSize(size: string, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](size),
-    validation: (value: File) => !helpers.req(value) || baseMaxFileSize(value, size)
+    optional: true,
+    validation: (value: File) => baseMaxFileSize(value, size)
   })
 }

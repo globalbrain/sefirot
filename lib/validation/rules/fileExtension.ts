@@ -1,4 +1,3 @@
-import { helpers } from '@vuelidate/validators'
 import { createRule } from '../Rule'
 import { fileExtension as baseFileExtension } from '../validators/fileExtension'
 
@@ -10,6 +9,7 @@ export const message = {
 export function fileExtension(extensions: string[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: File) => !helpers.req(value) || baseFileExtension(value, extensions)
+    optional: true,
+    validation: (value: File) => baseFileExtension(value, extensions)
   })
 }

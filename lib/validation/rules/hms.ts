@@ -1,4 +1,3 @@
-import { helpers } from '@vuelidate/validators'
 import { type Hms } from '../../support/Day'
 import { createRule } from '../Rule'
 import { hms as baseHms } from '../validators/hms'
@@ -13,6 +12,7 @@ export const message = {
 export function hms(required?: HmsType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: Hms) => !helpers.req(value) || baseHms(value, required)
+    optional: true,
+    validation: (value: Hms) => baseHms(value, required)
   })
 }
