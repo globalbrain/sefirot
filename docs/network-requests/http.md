@@ -35,7 +35,7 @@ interface HttpOptions {
   baseUrl?: string
   /**
    * The URL for the Laravel Sanctum endpoint.
-   * Set to `false` to disable fetching the CSRF token.
+   * Set to `false` to skip fetching the CSRF token.
    *
    * @default '/api/csrf-cookie'
    */
