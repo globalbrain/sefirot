@@ -10,22 +10,22 @@ export interface HttpClient {
 }
 
 export interface HttpOptions {
-  baseURL?: string
-  xsrfURL?: string | false
+  baseUrl?: string
+  xsrfUrl?: string | false
   client?: HttpClient
 }
 
 export class Http {
-  private static baseURL: string | undefined = undefined
-  private static xsrfURL: string | false = '/api/csrf-cookie'
+  private static baseUrl: string | undefined = undefined
+  private static xsrfUrl: string | false = '/api/csrf-cookie'
   private static client: HttpClient = ofetch
 
   static config(options: HttpOptions) {
-    if (options.baseURL) {
-      Http.baseURL = options.baseURL
+    if (options.baseUrl) {
+      Http.baseUrl = options.baseUrl
     }
-    if (options.xsrfURL !== undefined) {
-      Http.xsrfURL = options.xsrfURL
+    if (options.xsrfUrl !== undefined) {
+      Http.xsrfUrl = options.xsrfUrl
     }
     if (options.client) {
       Http.client = options.client
@@ -33,14 +33,14 @@ export class Http {
   }
 
   private async ensureXsrfToken(): Promise<string | undefined> {
-    if (!Http.xsrfURL) {
+    if (!Http.xsrfUrl) {
       return undefined
     }
 
     let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
 
     if (!xsrfToken) {
-      await this.head(Http.xsrfURL)
+      await this.head(Http.xsrfUrl)
       xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
     }
 
@@ -64,7 +64,7 @@ export class Http {
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
       {
-        baseURL: Http.baseURL,
+        baseURL: Http.baseUrl,
         method,
         credentials: 'include',
         ...options,

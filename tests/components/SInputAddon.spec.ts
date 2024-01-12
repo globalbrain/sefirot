@@ -2,6 +2,9 @@ import { mount } from '@vue/test-utils'
 import SInputAddon from 'sefirot/components/SInputAddon.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
+// @ts-expect-error - not properly implemented in happy-dom
+delete window.MutationObserver
+
 describe('components/SInputAddon', () => {
   test('it displays given label', () => {
     const wrapper = mount(SInputAddon, {

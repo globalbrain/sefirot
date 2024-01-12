@@ -16,14 +16,43 @@ const http = new Http()
 const res = http.get('https://example.com')
 ```
 
-### `static xsrfUrl`
+### `static config`
 
-Holds the static URL for the Laravel Sanctum endpoint.
+Sets the default configuration for all requests.
 
 ```ts
+import { type FetchOptions } from 'ofetch'
+
 class Http {
-  // @default '/api/csrf-cookie'
-  static xsrfUrl: string
+  static config(options: HttpOptions): void
+}
+
+interface HttpOptions {
+  /**
+   * The base URL for all requests.
+   * @default '/'
+   */
+  baseUrl?: string
+  /**
+   * The URL for the Laravel Sanctum endpoint.
+   * Set to `false` to disable fetching the CSRF token.
+   *
+   * @default '/api/csrf-cookie'
+   */
+  xsrfUrl?: string | false
+  /**
+   * The HTTP client to use.
+   * For example, you can set it to `useRequestFetch()` in Nuxt,
+   * or `ofetch.create()` for more customization.
+   *
+   * @default ofetch
+   */
+  client?: HttpClient
+}
+
+interface HttpClient {
+  <T = any>(request: FetchRequest, options?: FetchOptions): Promise<T>
+  raw<T = any>(request: FetchRequest, options?: FetchOptions): Promise<FetchResponse<T>>
 }
 ```
 
@@ -59,13 +88,10 @@ Performs a `POST` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  post<T = any>(
-    url: string,
-    body?: any,
-    options?: FetchOptions
-  ): Promise<T>
+  post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
 }
 ```
+
 ### `put`
 
 Performs a `PUT` request.
@@ -74,11 +100,7 @@ Performs a `PUT` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  put<T = any>(
-    url: string,
-    body?: any,
-    options?: FetchOptions
-  ): Promise<T>
+  put<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
 }
 ```
 
@@ -90,11 +112,7 @@ Performs a `PATCH` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  patch<T = any>(
-    url: string,
-    body?: any,
-    options?: FetchOptions
-  ): Promise<T>
+  patch<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
 }
 ```
 
@@ -118,11 +136,7 @@ Performs a `POST` request with `multipart/form-data` content type. Useful for up
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  upload<T = any>(
-    url: string,
-    body?: any,
-    options?: FetchOptions
-  ): Promise<T>
+  upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
 }
 ```
 
