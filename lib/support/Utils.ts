@@ -25,7 +25,7 @@ export function isFile(value: unknown): value is File {
 }
 
 export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
-  if (value === null || typeof value !== 'object') {
+  if (!isObject(value)) {
     return false
   }
 
@@ -34,11 +34,11 @@ export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): va
       keys.push(YmdMap[type])
       return keys
     }, [])
-    .every((v) => Object.hasOwn(value, v))
+    .every((key) => value[key] === null || isString(value[key]) || isNumber(value[key]))
 }
 
 export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
-  if (value === null || typeof value !== 'object') {
+  if (!isObject(value)) {
     return false
   }
 
@@ -47,5 +47,5 @@ export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): va
       keys.push(HmsMap[type])
       return keys
     }, [])
-    .every((v) => Object.hasOwn(value, v))
+    .every((key) => value[key] === null || isString(value[key]) || isNumber(value[key]))
 }
