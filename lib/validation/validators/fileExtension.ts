@@ -1,5 +1,5 @@
-import { isFile } from 'sefirot/support/Utils'
 import { getExtension } from '../../support/File'
+import { isFile } from '../../support/Utils'
 
 export function fileExtension(value: unknown, extensions: string[]): boolean {
   if (!isFile(value)) {
