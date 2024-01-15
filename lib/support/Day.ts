@@ -2,6 +2,7 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'
+import { isNumber, isObject, isString } from './Utils'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
@@ -84,4 +85,30 @@ export function createHms(
     minute,
     second
   }
+}
+
+export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
+  if (!isObject(value)) {
+    return false
+  }
+
+  return required
+    .reduce<string[]>((keys, type) => {
+      keys.push(YmdMap[type])
+      return keys
+    }, [])
+    .every((key) => value[key] === null || isNumber(value[key]))
+}
+
+export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
+  if (!isObject(value)) {
+    return false
+  }
+
+  return required
+    .reduce<string[]>((keys, type) => {
+      keys.push(HmsMap[type])
+      return keys
+    }, [])
+    .every((key) => value[key] === null || isString(value[key]))
 }

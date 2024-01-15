@@ -1,5 +1,4 @@
-import { HmsMap, type HmsType } from '../../support/Day'
-import { isHms } from '../../support/Utils'
+import { HmsMap, type HmsType, isHms } from '../../support/Day'
 
 export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's']): boolean {
   if (!isHms(value, required)) {

@@ -1,6 +1,5 @@
 import day from 'dayjs'
-import { isYmd } from 'sefirot/support/Utils'
-import { YmdMap, type YmdType } from '../../support/Day'
+import { YmdMap, type YmdType, isYmd } from '../../support/Day'
 
 export function ymd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): boolean {
   if (!isYmd(value, required)) {
