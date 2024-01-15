@@ -1,4 +1,3 @@
-import { type Hms } from '../../support/Day'
 import { createRule } from '../Rule'
 import { requiredHms as baseRequiredHms } from '../validators/requiredHms'
 

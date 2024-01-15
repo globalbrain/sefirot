@@ -1,4 +1,3 @@
-import { type Ymd } from '../../support/Day'
 import { createRule } from '../Rule'
 import { ymd as baseYmd } from '../validators/ymd'
 
