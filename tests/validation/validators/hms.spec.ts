@@ -8,10 +8,19 @@ describe('validation/validators/hms', () => {
     expect(hms({ hour: '24', minute: '59', second: '59' })).toBe(false)
     expect(hms({ hour: '23', minute: '60', second: '59' })).toBe(false)
     expect(hms({ hour: '23', minute: '59', second: '60' })).toBe(false)
+
+    expect(hms({})).toBe(false)
+    expect(hms({ hour: '23' })).toBe(false)
+    expect(hms({ hour: '23', minute: '59' })).toBe(false)
   })
 
   it('should validate only the given types', () => {
     expect(hms({ hour: '23', minute: '59', second: '60' }, ['h', 'm'])).toBe(true)
     expect(hms({ hour: '23', minute: '60', second: '60' }, ['h', 'm'])).toBe(false)
+    expect(hms({ hour: '23', minute: '59' }, ['h', 'm'])).toBe(true)
+    expect(hms({ hour: '23', minute: null }, ['h', 'm'])).toBe(true)
+
+    expect(hms({ hour: '23' }, ['h', 'm'])).toBe(false)
+    expect(hms({ hour: '23', minute: undefined }, ['h', 'm'])).toBe(false)
   })
 })

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { format } from 'sefirot/support/Num'
 import { computed } from 'vue'
 import { type TableCellValueColor } from '../composables/Table'
+import { format } from '../support/Num'
 import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 

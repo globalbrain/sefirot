@@ -1,13 +1,9 @@
-import { type Hms } from '../../support/Day'
+import { HmsMap, type HmsType, isHms } from '../../support/Day'
 
-type HmsType = 'h' | 'm' | 's'
+export function requiredHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): boolean {
+  if (!isHms(value, required)) {
+    return false
+  }
 
-const HmsMap = {
-  h: 'hour',
-  m: 'minute',
-  s: 'second'
-} as const
-
-export function requiredHms(hms: Hms, required: HmsType[] = ['h', 'm', 's']): boolean {
-  return required.every((r) => hms[HmsMap[r]] != null)
+  return required.every((r) => value[HmsMap[r]] != null)
 }

@@ -10,6 +10,6 @@ export function fileExtension(extensions: string[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
     optional: true,
-    validation: (value: File) => baseFileExtension(value, extensions)
+    validation: (value) => baseFileExtension(value, extensions)
   })
 }

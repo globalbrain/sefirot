@@ -1,4 +1,3 @@
-import { type Hms } from '../../support/Day'
 import { createRule } from '../Rule'
 import { requiredHms as baseRequiredHms } from '../validators/requiredHms'
 
@@ -12,6 +11,6 @@ export const message = {
 export function requiredHms(required?: HmsType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: Hms) => baseRequiredHms(value, required)
+    validation: (value) => baseRequiredHms(value, required)
   })
 }

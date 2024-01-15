@@ -10,6 +10,6 @@ export function checked(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
     optional: true,
-    validation: (value: boolean) => baseChecked(value)
+    validation: baseChecked
   })
 }

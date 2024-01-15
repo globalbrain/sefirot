@@ -10,6 +10,6 @@ export function month(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
     optional: true,
-    validation: (value: number) => baseMonth(value)
+    validation: baseMonth
   })
 }

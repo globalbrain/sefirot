@@ -1,3 +1,3 @@
-export function hyphen(value: string): boolean {
+export function hyphen(value: unknown): boolean {
   return value === '-'
 }

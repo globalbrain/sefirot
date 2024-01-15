@@ -10,6 +10,6 @@ export function maxLength(length: number, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](length),
     optional: true,
-    validation: (value: string) => baseMaxLength(value, length)
+    validation: (value) => baseMaxLength(value, length)
   })
 }

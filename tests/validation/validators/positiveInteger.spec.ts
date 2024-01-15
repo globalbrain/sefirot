@@ -15,5 +15,7 @@ describe('validation/validators/positiveInteger', () => {
     expect(positiveInteger(-1)).toBe(false)
     expect(positiveInteger(1.1)).toBe(false)
     expect(positiveInteger(-1.1)).toBe(false)
+
+    expect(positiveInteger('1')).toBe(false)
   })
 })

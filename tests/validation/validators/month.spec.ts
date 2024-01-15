@@ -7,5 +7,6 @@ describe('validation/validators/month', () => {
     expect(month(6)).toBe(true)
     expect(month(12)).toBe(true)
     expect(month(13)).toBe(false)
+    expect(month('1')).toBe(false)
   })
 })

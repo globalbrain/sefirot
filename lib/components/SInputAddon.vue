@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
+import { computed, ref } from 'vue'
 import {
   type DropdownSection,
   getSelectedOption,
   useManualDropdownPosition
-} from 'sefirot/composables/Dropdown'
-import { useFlyout } from 'sefirot/composables/Flyout'
-import { computed, ref } from 'vue'
+} from '../composables/Dropdown'
+import { useFlyout } from '../composables/Flyout'
 import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 import SIcon from './SIcon.vue'

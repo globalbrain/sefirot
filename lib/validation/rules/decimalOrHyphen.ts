@@ -9,6 +9,6 @@ export const message = {
 export function decimalOrHyphen(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: string) => hyphen(value) || baseDecimal(value)
+    validation: (value) => hyphen(value) || baseDecimal(value)
   })
 }

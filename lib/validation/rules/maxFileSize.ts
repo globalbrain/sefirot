@@ -10,6 +10,6 @@ export function maxFileSize(size: string, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](size),
     optional: true,
-    validation: (value: File) => baseMaxFileSize(value, size)
+    validation: (value) => baseMaxFileSize(value, size)
   })
 }

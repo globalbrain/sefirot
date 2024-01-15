@@ -1,3 +1,3 @@
-export function checked(value: boolean): boolean {
+export function checked(value: unknown): boolean {
   return value === true
 }

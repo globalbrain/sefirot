@@ -8,6 +8,7 @@ describe('vaidation/validators/maxFileSize', () => {
     expect(maxFileSize(file, '1 MB')).toBe(true)
     expect(maxFileSize(file, '1 KB')).toBe(false)
     expect(maxFileSize(file, '10 B')).toBe(false)
+    expect(maxFileSize('file', '10 B')).toBe(false)
   })
 
   it('assumes size in bytes if no unit is provided', () => {
@@ -17,5 +18,6 @@ describe('vaidation/validators/maxFileSize', () => {
     expect(maxFileSize(file, '10000')).toBe(true)
     expect(maxFileSize(file, '1 KB')).toBe(false)
     expect(maxFileSize(file, '1000')).toBe(false)
+    expect(maxFileSize('file', '1000')).toBe(false)
   })
 })
