@@ -10,6 +10,6 @@ export function minLength(length: number, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](length),
     optional: true,
-    validation: (value: string) => baseMinLength(value, length)
+    validation: (value) => baseMinLength(value, length)
   })
 }

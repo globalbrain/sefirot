@@ -1,33 +1,30 @@
 import day from 'dayjs'
-import { type Ymd } from '../../support/Day'
+import { isYmd } from 'sefirot/support/Utils'
+import { YmdMap, type YmdType } from '../../support/Day'
 
-type YmdType = 'y' | 'm' | 'd'
+export function ymd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): boolean {
+  if (!isYmd(value)) {
+    return false
+  }
 
-const YmdMap = {
-  y: 'year',
-  m: 'month',
-  d: 'date'
-} as const
-
-export function ymd(ymd: Ymd, required: YmdType[] = ['y', 'm', 'd']): boolean {
   return required.every((r) => {
-    const value = ymd[YmdMap[r]]
+    const _value = value[YmdMap[r]]
 
-    if (value === null) {
+    if (_value === null) {
       return true
     }
 
     if (r === 'y') {
-      return value > 0 && value <= 9999
+      return _value > 0 && _value <= 9999
     }
 
     if (r === 'm') {
-      return value > 0 && value <= 12
+      return _value > 0 && _value <= 12
     }
 
-    const d = day(new Date(2020, ymd.month ? ymd.month - 1 : 1, value))
+    const d = day(new Date(2020, value.month ? value.month - 1 : 1, _value))
 
-    if (d.month() + 1 !== (ymd.month ?? 1)) {
+    if (d.month() + 1 !== (value.month ?? 1)) {
       return false
     }
 

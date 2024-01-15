@@ -19,6 +19,14 @@ export interface Ymd {
   date: number | null
 }
 
+export type YmdType = 'y' | 'm' | 'd'
+
+export const YmdMap = {
+  y: 'year',
+  m: 'month',
+  d: 'date'
+} as const
+
 /**
  * The hour, minute, and second object interface.
  */
@@ -27,6 +35,14 @@ export interface Hms {
   minute: string | null
   second: string | null
 }
+
+export type HmsType = 'h' | 'm' | 's'
+
+export const HmsMap = {
+  h: 'hour',
+  m: 'minute',
+  s: 'second'
+} as const
 
 export function day(input?: Input): Day {
   return dayjs(input)

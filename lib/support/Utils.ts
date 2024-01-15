@@ -1,3 +1,5 @@
+import { type Hms, HmsMap, type Ymd, YmdMap } from './Day'
+
 export function isNullish(value: unknown): value is undefined | null {
   return value === null || value === undefined
 }
@@ -20,4 +22,20 @@ export function isObject(value: unknown): value is Record<string, any> {
 
 export function isFile(value: unknown): value is File {
   return value instanceof File
+}
+
+export function isYmd(value: unknown): value is Ymd {
+  return (
+    value !== null
+    && typeof value === 'object'
+    && Object.values(YmdMap).every((v) => Object.hasOwn(value, v))
+  )
+}
+
+export function isHms(value: unknown): value is Hms {
+  return (
+    value !== null
+    && typeof value === 'object'
+    && Object.values(HmsMap).every((v) => Object.hasOwn(value, v))
+  )
 }

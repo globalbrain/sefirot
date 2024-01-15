@@ -12,7 +12,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
 
-    "lib": ["es2020", "dom", "dom.iterable"],
+    "lib": ["es2022", "dom", "dom.iterable"],
 
     "paths": {
       "sefirot/*": ["lib/*"]

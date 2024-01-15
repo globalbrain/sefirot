@@ -9,6 +9,6 @@ export const message = {
 export function email(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value: string) => baseEmail(value)
+    validation: baseEmail
   })
 }

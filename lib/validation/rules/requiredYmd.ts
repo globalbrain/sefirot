@@ -13,6 +13,6 @@ export function requiredYmd(required?: YmdType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
     optional: true,
-    validation: (value: Ymd) => baseRequiredYmd(value, required)
+    validation: (value) => baseRequiredYmd(value, required)
   })
 }

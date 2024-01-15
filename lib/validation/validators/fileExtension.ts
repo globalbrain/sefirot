@@ -1,7 +1,12 @@
+import { isFile } from 'sefirot/support/Utils'
 import { getExtension } from '../../support/File'
 
-export function fileExtension(file: File, extensions: string[]): boolean {
-  const fileExtension = getExtension(file)
+export function fileExtension(value: unknown, extensions: string[]): boolean {
+  if (!isFile(value)) {
+    return false
+  }
+
+  const fileExtension = getExtension(value)
 
   return extensions.some((extension) => {
     // If the extention option is `jpg`, we'll consider other variants such as

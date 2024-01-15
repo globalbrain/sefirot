@@ -1,13 +1,10 @@
-import { type Ymd } from '../../support/Day'
+import { YmdMap, type YmdType } from '../../support/Day'
+import { isYmd } from '../../support/Utils'
 
-type YmdType = 'y' | 'm' | 'd'
+export function requiredYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): boolean {
+  if (!isYmd(value)) {
+    return false
+  }
 
-const YmdMap = {
-  y: 'year',
-  m: 'month',
-  d: 'date'
-} as const
-
-export function requiredYmd(ymd: Ymd, required: YmdType[] = ['y', 'm', 'd']): boolean {
-  return required.every((r) => ymd[YmdMap[r]] != null)
+  return required.every((r) => value[YmdMap[r]] != null)
 }
