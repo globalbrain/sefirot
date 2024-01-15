@@ -27,7 +27,8 @@ defineEmits<{
 
 const { t } = useTrans({
   en: { placeholder: 'Search items' },
-  ja: { placeholder: '検索する' }
+  ja: { placeholder: '検索する' },
+  vi: { placeholder: 'Tìm kiếm' }
 })
 
 const size = useControlSize()

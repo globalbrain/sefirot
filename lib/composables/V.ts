@@ -33,7 +33,8 @@ export function useV<
 ): V<Data, Rules> {
   const { t } = useTrans({
     en: { notify: 'Form contains errors. Please correct them and try again.' },
-    ja: { notify: 'フォームにエラーがあります。内容を確認し、再度お試しください。' }
+    ja: { notify: 'フォームにエラーがあります。内容を確認し、再度お試しください。' },
+    vi: { notify: 'Biểu mẫu có lỗi. Vui lòng làm đúng và thử lại lần nữa.' }
   })
 
   const snackbars = useSnackbars()

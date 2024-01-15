@@ -27,7 +27,8 @@ const emit = defineEmits<{
 
 const { t } = useTrans({
   en: { prev: 'Prev', next: 'Next' },
-  ja: { prev: '前へ', next: '次へ' }
+  ja: { prev: '前へ', next: '次へ' },
+  vi: { prev: 'Trước', next: 'Tiếp theo' }
 })
 
 const from = computed(() => {

@@ -1,6 +1,6 @@
 import { inject, provide } from 'vue'
 
-export type Lang = 'en' | 'ja'
+export type Lang = 'en' | 'ja' | 'vi'
 
 export interface Trans<T> {
   t: T
@@ -9,6 +9,7 @@ export interface Trans<T> {
 export interface TransMessages<T> {
   en: T
   ja: T
+  vi: T
 }
 
 export const SefirotLangKey = 'sefirot-lang-key'
@@ -33,8 +34,10 @@ export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
   }
 }
 
+const supportLanguagesCode = ['ja', 'vi'] as const
 export function useBrowserLang(): Lang {
   const lang = navigator.language
+  const langCode = lang.split('-')[0] as typeof supportLanguagesCode[0]
 
-  return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
+  return supportLanguagesCode.includes(langCode) ? langCode : 'en'
 }

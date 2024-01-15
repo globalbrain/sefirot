@@ -31,7 +31,8 @@ describe('composables/Lang', () => {
       const vm = setup(() => ({
         trans: useTrans({
           en: { msg: 'English' },
-          ja: { msg: 'Japanese' }
+          ja: { msg: 'Japanese' },
+          vi: { msg: 'Vietnamese' }
         })
       }), {
         global: {

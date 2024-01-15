@@ -30,6 +30,13 @@ const { t } = useTrans({
     p_year_half: '半期',
     p_year_quarter: '四半期',
     a_apply: '適用する'
+  },
+  vi: {
+    p_date_from_to: 'Thời gian tùy chỉnh',
+    p_year: 'Năm',
+    p_year_half: 'Nửa năm',
+    p_year_quarter: 'Năm quý',
+    a_apply: 'Áp dụng'
   }
 })
 
