@@ -34,7 +34,7 @@ export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): va
       keys.push(YmdMap[type])
       return keys
     }, [])
-    .every((key) => value[key] === null || isString(value[key]) || isNumber(value[key]))
+    .every((key) => value[key] === null || isNumber(value[key]))
 }
 
 export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
@@ -47,5 +47,5 @@ export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): va
       keys.push(HmsMap[type])
       return keys
     }, [])
-    .every((key) => value[key] === null || isString(value[key]) || isNumber(value[key]))
+    .every((key) => value[key] === null || isString(value[key]))
 }
