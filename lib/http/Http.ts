@@ -140,25 +140,23 @@ export class Http {
     const fd = form || new FormData()
     let formKey: string
 
-    for (const property in obj) {
-      if (Reflect.has(obj, property)) {
-        if (namespace) {
-          formKey = `${namespace}[${property}]`
-        } else {
-          formKey = property
-        }
-
-        if (obj[property] === undefined) {
-          continue
-        }
-
-        if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob)) {
-          this.objectToFormData(obj[property], fd, property)
-        } else {
-          fd.append(formKey, obj[property])
-        }
+    Object.keys(obj).forEach((property) => {
+      if (namespace) {
+        formKey = `${namespace}[${property}]`
+      } else {
+        formKey = property
       }
-    }
+
+      if (obj[property] === undefined) {
+        return
+      }
+
+      if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob)) {
+        this.objectToFormData(obj[property], fd, property)
+      } else {
+        fd.append(formKey, obj[property])
+      }
+    })
 
     return fd
   }
