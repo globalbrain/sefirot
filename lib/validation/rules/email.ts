@@ -3,7 +3,8 @@ import { email as baseEmail } from '../validators'
 
 export const message = {
   en: 'The Email is invalid.',
-  ja: 'Emailの形式が正しくありません。'
+  ja: 'Emailの形式が正しくありません。',
+  vi: 'Email không hợp lệ.'
 }
 
 export function email(msg?: string) {

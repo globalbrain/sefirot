@@ -3,7 +3,8 @@ import { checked as baseChecked } from '../validators/checked'
 
 export const message = {
   en: 'You must check the field.',
-  ja: 'この項目は選択が必須です。'
+  ja: 'この項目は選択が必須です。',
+  vi: 'Bạn phải đánh dấu trường này.'
 }
 
 export function checked(msg?: string) {

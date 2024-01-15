@@ -3,7 +3,8 @@ import { maxFileSize as baseMaxFileSize } from '../validators/maxFileSize'
 
 export const message = {
   en: (size: string) => `The file must be smaller than or equal to ${size}.`,
-  ja: (size: string) => `ファイルは${size}よりも小さい必要があります。`
+  ja: (size: string) => `ファイルは${size}よりも小さい必要があります。`,
+  vi: (size: string) => `Kích thước tệp phải nhỏ hơn hoặc bằng ${size}.`
 }
 
 export function maxFileSize(size: string, msg?: string) {

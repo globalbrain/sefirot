@@ -3,7 +3,8 @@ import { minLength as baseMinLength } from '../validators'
 
 export const message = {
   en: (min: number) => `The value must be greater than or equal to ${min} characters.`,
-  ja: (min: number) => `この値は最小${min}文字です。`
+  ja: (min: number) => `この値は最小${min}文字です。`,
+  vi: (min: number) => `Giá trị phải lớn hơn hoặc bằng ${min} ký tự.`
 }
 
 export function minLength(length: number, msg?: string) {

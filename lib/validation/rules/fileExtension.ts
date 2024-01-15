@@ -3,7 +3,8 @@ import { fileExtension as baseFileExtension } from '../validators/fileExtension'
 
 export const message = {
   en: 'The file extension is invalid.',
-  ja: 'ファイル拡張子が正しくありません。'
+  ja: 'ファイル拡張子が正しくありません。',
+  vi: 'Phần mở rộng tập tin không hợp lệ.'
 }
 
 export function fileExtension(extensions: string[], msg?: string) {
