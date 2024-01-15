@@ -1,4 +1,4 @@
-import { type Hms, HmsMap, type Ymd, YmdMap } from './Day'
+import { type Hms, HmsMap, type HmsType, type Ymd, YmdMap, type YmdType } from './Day'
 
 export function isNullish(value: unknown): value is undefined | null {
   return value === null || value === undefined
@@ -24,18 +24,28 @@ export function isFile(value: unknown): value is File {
   return value instanceof File
 }
 
-export function isYmd(value: unknown): value is Ymd {
-  return (
-    value !== null
-    && typeof value === 'object'
-    && Object.values(YmdMap).every((v) => Object.hasOwn(value, v))
-  )
+export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
+  if (value === null || typeof value !== 'object') {
+    return false
+  }
+
+  return required
+    .reduce<string[]>((keys, type) => {
+      keys.push(YmdMap[type])
+      return keys
+    }, [])
+    .every((v) => Object.hasOwn(value, v))
 }
 
-export function isHms(value: unknown): value is Hms {
-  return (
-    value !== null
-    && typeof value === 'object'
-    && Object.values(HmsMap).every((v) => Object.hasOwn(value, v))
-  )
+export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
+  if (value === null || typeof value !== 'object') {
+    return false
+  }
+
+  return required
+    .reduce<string[]>((keys, type) => {
+      keys.push(HmsMap[type])
+      return keys
+    }, [])
+    .every((v) => Object.hasOwn(value, v))
 }

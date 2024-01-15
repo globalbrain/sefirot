@@ -2,7 +2,7 @@ import { HmsMap, type HmsType } from '../../support/Day'
 import { isHms } from '../../support/Utils'
 
 export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's']): boolean {
-  if (!isHms(value)) {
+  if (!isHms(value, required)) {
     return false
   }
 

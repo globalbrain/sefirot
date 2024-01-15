@@ -7,6 +7,7 @@ describe('vaidation/validators/fileExtension', () => {
     expect(fileExtension(file, ['txt'])).toBe(true)
     expect(fileExtension(file, ['txt', 'png'])).toBe(true)
     expect(fileExtension(file, ['png'])).toBe(false)
+    expect(fileExtension('file', ['png'])).toBe(false)
   })
 
   it('should treat `jpg` extension with extra care', () => {

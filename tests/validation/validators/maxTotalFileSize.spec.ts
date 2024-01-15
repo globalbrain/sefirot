@@ -10,5 +10,6 @@ describe('vaidation/validators/maxTotalFileSize', () => {
     expect(maxTotalFileSize([file1mb], '2mb')).toBe(true)
     expect(maxTotalFileSize([file1mb], '5kb')).toBe(false)
     expect(maxTotalFileSize([file1mb], '1')).toBe(false)
+    expect(maxTotalFileSize([file1mb, 'file1mb'], '1')).toBe(false)
   })
 })
