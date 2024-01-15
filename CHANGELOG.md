@@ -1,5 +1,12 @@
 
 
+# [3.23.0](https://github.com/globalbrain/sefirot/compare/v3.22.1...v3.23.0) (2024-01-12)
+
+
+### Features
+
+* **http:** allow overriding fetch handler ([#435](https://github.com/globalbrain/sefirot/issues/435)) ([74fe7f9](https://github.com/globalbrain/sefirot/commit/74fe7f95a186ff64f534a6b6d7ca62d1256963bf))
+
 ## [3.22.1](https://github.com/globalbrain/sefirot/compare/v3.22.0...v3.22.1) (2024-01-10)
 
 
