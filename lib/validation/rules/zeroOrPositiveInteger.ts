@@ -1,9 +1,14 @@
-import { helpers, or } from '@vuelidate/validators'
-import { positiveInteger, zero } from '../validators'
+import { createRule } from '../Rule'
+import { positiveInteger as basePositiveInteger, zero } from '../validators'
+
+export const message = {
+  en: 'The value must be zero or valid positive integer.',
+  ja: 'この値はゼロまたは正の整数である必要があります。'
+}
 
 export function zeroOrPositiveInteger(msg?: string) {
-  return helpers.withMessage(
-    () => msg ?? 'The value must be zero or valid positive integer.',
-    or(zero, positiveInteger)
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    validation: (value: number) => zero(value) || basePositiveInteger(value)
+  })
 }

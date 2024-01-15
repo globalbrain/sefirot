@@ -1,9 +1,14 @@
-import { and, decimal as baseDecimal, helpers, not } from '@vuelidate/validators'
-import { hyphen } from '../validators'
+import { createRule } from '../Rule'
+import { decimal as baseDecimal, hyphen } from '../validators'
+
+export const message = {
+  en: 'The value must be valid decimal numbers.',
+  ja: 'この値は小数または10進数である必要があります。'
+}
 
 export function decimal(msg?: string) {
-  return helpers.withMessage(
-    () => msg ?? 'The value must be valid decimal numbers.',
-    and(not(hyphen), baseDecimal)
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    validation: (value: string) => !hyphen(value) && baseDecimal(value)
+  })
 }

@@ -1,11 +1,15 @@
-import { helpers } from '@vuelidate/validators'
-import { month as baseMonth } from '../validators/month'
+import { createRule } from '../Rule'
+import { month as baseMonth } from '../validators'
+
+export const message = {
+  en: 'The month is invalid.',
+  ja: '月が正しくありません。'
+}
 
 export function month(msg?: string) {
-  return helpers.withMessage(
-    () => msg ?? 'The month is invalid.',
-    (value: number) => {
-      return !helpers.req(value) || baseMonth(value)
-    }
-  )
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang],
+    optional: true,
+    validation: (value: number) => baseMonth(value)
+  })
 }

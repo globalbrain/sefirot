@@ -1,10 +1,14 @@
-import { maxValue as baseMaxValue, helpers } from '@vuelidate/validators'
+import { createRule } from '../Rule'
+import { maxValue as baseMaxValue } from '../validators'
 
-export function maxValue(value: number, msg?: string) {
-  return helpers.withMessage(
-    ({ $params }) => {
-      return msg ?? `The value must be less or equal to ${($params as any).max}.`
-    },
-    baseMaxValue(value)
-  )
+export const message = {
+  en: (max: number) => `The value must be less than or equal to ${max}.`,
+  ja: (max: number) => `この値は最大${max}です。`
+}
+
+export function maxValue(max: number, msg?: string) {
+  return createRule({
+    message: ({ lang }) => msg ?? message[lang](max),
+    validation: (value: unknown) => baseMaxValue(value, max)
+  })
 }

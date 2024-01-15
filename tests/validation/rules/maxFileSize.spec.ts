@@ -10,7 +10,7 @@ describe('validation/rules/maxFileSize', () => {
 
   test('default error message', () => {
     const rule = maxFileSize('5 MB')
-    expect(rule.$message({ $params: { size: '5 MB' } })).toBe('The file must be smaller than 5 MB.')
+    expect(rule.$message({ $params: { size: '5 MB' } })).toBe('The file must be smaller than or equal to 5 MB.')
   })
 
   test('custom error message', () => {
