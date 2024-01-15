@@ -14,5 +14,9 @@ describe('validation/validators/requiredHms', () => {
   test('validates only given types', () => {
     expect(requiredHms({ hour: '01', minute: '02', second: null }, ['h', 'm'])).toBe(true)
     expect(requiredHms({ hour: '01', minute: '02' }, ['h', 'm'])).toBe(true)
+
+    expect(requiredHms({ hour: '01' }, ['h', 'm'])).toBe(false)
+    expect(requiredHms({ hour: '01', minute: undefined }, ['h', 'm'])).toBe(false)
+    expect(requiredHms({ hour: '01', minute: null }, ['h', 'm'])).toBe(false)
   })
 })

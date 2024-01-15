@@ -14,5 +14,9 @@ describe('validation/validators/requiredYmd', () => {
   test('validates only given types', () => {
     expect(requiredYmd({ year: 2000, month: 12, date: null }, ['y', 'm'])).toBe(true)
     expect(requiredYmd({ year: 2000, month: 12 }, ['y', 'm'])).toBe(true)
+
+    expect(requiredYmd({ year: 2000 }, ['y', 'm'])).toBe(false)
+    expect(requiredYmd({ year: 2000, month: undefined }, ['y', 'm'])).toBe(false)
+    expect(requiredYmd({ year: 2000, month: null }, ['y', 'm'])).toBe(false)
   })
 })

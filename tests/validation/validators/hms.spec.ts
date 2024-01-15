@@ -18,5 +18,9 @@ describe('validation/validators/hms', () => {
     expect(hms({ hour: '23', minute: '59', second: '60' }, ['h', 'm'])).toBe(true)
     expect(hms({ hour: '23', minute: '60', second: '60' }, ['h', 'm'])).toBe(false)
     expect(hms({ hour: '23', minute: '59' }, ['h', 'm'])).toBe(true)
+    expect(hms({ hour: '23', minute: null }, ['h', 'm'])).toBe(true)
+
+    expect(hms({ hour: '23' }, ['h', 'm'])).toBe(false)
+    expect(hms({ hour: '23', minute: undefined }, ['h', 'm'])).toBe(false)
   })
 })
