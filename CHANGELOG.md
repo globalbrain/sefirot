@@ -1,5 +1,12 @@
 
 
+# [3.24.0](https://github.com/globalbrain/sefirot/compare/v3.23.0...v3.24.0) (2024-01-17)
+
+
+### Features
+
+* **validation:** add Japanese error messages ([#437](https://github.com/globalbrain/sefirot/issues/437)) ([4436557](https://github.com/globalbrain/sefirot/commit/44365573aa0c73c5f4d63da4d54e1a59d081b00b))
+
 # [3.23.0](https://github.com/globalbrain/sefirot/compare/v3.22.1...v3.23.0) (2024-01-12)
 
 
