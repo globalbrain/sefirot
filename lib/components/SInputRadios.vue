@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="ValueType extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import { type DefineComponent, computed } from 'vue'
 import { type Validatable } from '../composables/V'
@@ -8,9 +8,13 @@ import SInputRadio from './SInputRadio.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-export interface Option {
+type VT = Nullable extends true ? ValueType : ValueType
+type VN = Nullable extends true ? ValueType | null : ValueType
+type N = Nullable extends true ? null : never
+
+interface Option {
   label: string
-  value: any
+  value: VT
   disabled?: boolean
 }
 
@@ -25,10 +29,10 @@ const props = withDefaults(defineProps<{
   checkText?: string
   checkColor?: Color
   options: Option[]
-  nullable?: boolean
+  nullable?: Nullable
   disabled?: boolean
-  value?: any
-  modelValue?: any
+  value?: VT | null
+  modelValue?: VT | null
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -37,8 +41,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: any): void
-  (e: 'change', value: any): void
+  (e: 'update:model-value', value: VN): void
+  (e: 'change', value: VN): void
 }>()
 
 const _value = computed(() => {
@@ -47,29 +51,29 @@ const _value = computed(() => {
     : props.value !== undefined ? props.value : null
 })
 
-function isChecked(value: any) {
+function isChecked(value: VT) {
   return value === _value.value
 }
 
-function onUpdate(value: any) {
+function onUpdate(value: VT) {
   if (value !== _value.value) {
     emit('update:model-value', value)
     return
   }
 
   if (props.nullable) {
-    emit('update:model-value', null)
+    emit('update:model-value', null as N)
   }
 }
 
-function onChange(value: any) {
+function onChange(value: VT) {
   if (value !== _value.value) {
     emit('change', value)
     return
   }
 
   if (props.nullable) {
-    emit('change', null)
+    emit('change', null as N)
   }
 }
 </script>
