@@ -1,5 +1,12 @@
 
 
+## [3.24.1](https://github.com/globalbrain/sefirot/compare/v3.24.0...v3.24.1) (2024-1-18)
+
+
+### Bug Fixes
+
+* **types:** reduce type safety for checkboxes, dropdown, radio values ([#441](https://github.com/globalbrain/sefirot/issues/441)) ([754efa1](https://github.com/globalbrain/sefirot/commit/754efa1dd6c71f61bbe009539e85caa7ad529101))
+
 # [3.24.0](https://github.com/globalbrain/sefirot/compare/v3.23.0...v3.24.0) (2024-01-17)
 
 
