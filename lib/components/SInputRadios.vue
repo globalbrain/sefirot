@@ -15,15 +15,18 @@ import SInputRadio from './SInputRadio.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
+export interface Option<
+  T extends string | number | boolean = string | number | boolean,
+  Nullable extends boolean = false
+> {
+  label: string
+  value: Nullable extends true ? T : T
+  disabled?: boolean
+}
+
 type ValueType = Nullable extends true ? T : T
 type ValueOrNull = Nullable extends true ? T | null : T
 type NullValue = Nullable extends true ? null : never
-
-interface Option {
-  label: string
-  value: ValueType
-  disabled?: boolean
-}
 
 const props = withDefaults(defineProps<{
   size?: Size
@@ -35,7 +38,7 @@ const props = withDefaults(defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
-  options: Option[]
+  options: Option<T, Nullable>[]
   nullable?: Nullable
   disabled?: boolean
   value?: ValueType | null
@@ -55,7 +58,9 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 function isChecked(value: ValueType) {
