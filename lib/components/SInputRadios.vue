@@ -10,7 +10,7 @@ export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'dange
 
 export interface Option {
   label: string
-  value: string | number | boolean
+  value: any
   disabled?: boolean
 }
 
@@ -27,8 +27,8 @@ const props = withDefaults(defineProps<{
   options: Option[]
   nullable?: boolean
   disabled?: boolean
-  value?: string | number | boolean | null
-  modelValue?: string | number | boolean | null
+  value?: any
+  modelValue?: any
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -37,8 +37,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: string | number | boolean | null): void
-  (e: 'change', value: string | number | boolean | null): void
+  (e: 'update:model-value', value: any): void
+  (e: 'change', value: any): void
 }>()
 
 const _value = computed(() => {
@@ -47,11 +47,11 @@ const _value = computed(() => {
     : props.value !== undefined ? props.value : null
 })
 
-function isChecked(value: string | number | boolean) {
+function isChecked(value: any) {
   return value === _value.value
 }
 
-function onUpdate(value: string | number | boolean) {
+function onUpdate(value: any) {
   if (value !== _value.value) {
     emit('update:model-value', value)
     return
@@ -62,7 +62,7 @@ function onUpdate(value: string | number | boolean) {
   }
 }
 
-function onChange(value: string | number | boolean) {
+function onChange(value: any) {
   if (value !== _value.value) {
     emit('change', value)
     return

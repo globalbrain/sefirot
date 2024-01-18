@@ -16,9 +16,9 @@ import SInputDropdownItem from './SInputDropdownItem.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-export type PrimitiveValue = string | number | boolean | null
-export type ArrayValue = (string | number | boolean)[]
-export type OptionValue = string | number | boolean
+export type PrimitiveValue = any
+export type ArrayValue = any[]
+export type OptionValue = any
 
 export type Option = OptionText | OptionAvatar
 
