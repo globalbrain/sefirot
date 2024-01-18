@@ -1,4 +1,11 @@
-<script setup lang="ts" generic="ValueType extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
+<script
+  setup
+  lang="ts"
+  generic="
+    ValueType extends string | number | boolean = string | number | boolean,
+    Nullable extends boolean = false
+  "
+>
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import { type DefineComponent, computed } from 'vue'
 import { type Validatable } from '../composables/V'
