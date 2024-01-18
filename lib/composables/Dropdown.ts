@@ -34,12 +34,7 @@ export interface DropdownSectionFilter extends DropdownSectionBase {
   onClick?(value: any): void
 }
 
-export type DropdownSectionFilterSelectedValue =
-  | string
-  | number
-  | boolean
-  | null
-  | any[]
+export type DropdownSectionFilterSelectedValue = any
 
 export type DropdownSectionFilterOption =
   | DropdownSectionFilterOptionText
