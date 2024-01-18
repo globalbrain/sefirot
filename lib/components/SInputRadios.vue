@@ -2,7 +2,7 @@
   setup
   lang="ts"
   generic="
-    ValueType extends string | number | boolean = string | number | boolean,
+    T extends string | number | boolean = string | number | boolean,
     Nullable extends boolean = false
   "
 >
@@ -15,13 +15,13 @@ import SInputRadio from './SInputRadio.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-type VT = Nullable extends true ? ValueType : ValueType
-type VN = Nullable extends true ? ValueType | null : ValueType
-type N = Nullable extends true ? null : never
+type ValueType = Nullable extends true ? T : T
+type ValueOrNull = Nullable extends true ? T | null : T
+type NullValue = Nullable extends true ? null : never
 
 interface Option {
   label: string
-  value: VT
+  value: ValueType
   disabled?: boolean
 }
 
@@ -38,8 +38,8 @@ const props = withDefaults(defineProps<{
   options: Option[]
   nullable?: Nullable
   disabled?: boolean
-  value?: VT | null
-  modelValue?: VT | null
+  value?: ValueType | null
+  modelValue?: ValueType | null
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -48,8 +48,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: VN): void
-  (e: 'change', value: VN): void
+  (e: 'update:model-value', value: ValueOrNull): void
+  (e: 'change', value: ValueOrNull): void
 }>()
 
 const _value = computed(() => {
@@ -58,29 +58,29 @@ const _value = computed(() => {
     : props.value !== undefined ? props.value : null
 })
 
-function isChecked(value: VT) {
+function isChecked(value: ValueType) {
   return value === _value.value
 }
 
-function onUpdate(value: VT) {
+function onUpdate(value: ValueType) {
   if (value !== _value.value) {
     emit('update:model-value', value)
     return
   }
 
   if (props.nullable) {
-    emit('update:model-value', null as N)
+    emit('update:model-value', null as NullValue)
   }
 }
 
-function onChange(value: VT) {
+function onChange(value: ValueType) {
   if (value !== _value.value) {
     emit('change', value)
     return
   }
 
   if (props.nullable) {
-    emit('change', null as N)
+    emit('change', null as NullValue)
   }
 }
 </script>
