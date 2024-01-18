@@ -6,7 +6,7 @@ export type Item = ItemText | ItemAvatar
 
 export interface ItemBase {
   type?: 'text' | 'avatar'
-  value: string | number | boolean
+  value: any
 }
 
 export interface ItemText extends ItemBase {
@@ -27,7 +27,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'remove', value: string | number | boolean): void
+  (e: 'remove', value: any): void
 }>()
 </script>
 

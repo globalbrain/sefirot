@@ -4,13 +4,13 @@ import SIcon from './SIcon.vue'
 
 defineProps<{
   label: string
-  value: string | number | boolean
+  value: any
   removable: boolean
   disabled: boolean
 }>()
 
 defineEmits<{
-  (e: 'remove', value: string | number | boolean): void
+  (e: 'remove', value: any): void
 }>()
 </script>
 

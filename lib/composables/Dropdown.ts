@@ -31,15 +31,10 @@ export interface DropdownSectionFilter extends DropdownSectionBase {
   search?: boolean
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
-  onClick?(value: string | number | boolean): void
+  onClick?(value: any): void
 }
 
-export type DropdownSectionFilterSelectedValue =
-  | string
-  | number
-  | boolean
-  | null
-  | (string | number | boolean)[]
+export type DropdownSectionFilterSelectedValue = any
 
 export type DropdownSectionFilterOption =
   | DropdownSectionFilterOptionText
@@ -48,9 +43,9 @@ export type DropdownSectionFilterOption =
 export interface DropdownSectionFilterOptionBase {
   type?: 'text' | 'avatar'
   label: string
-  value: string | number | boolean
+  value: any
   disabled?: boolean
-  onClick?(value: string | number | boolean): void
+  onClick?(value: any): void
 }
 
 export interface DropdownSectionFilterOptionText extends DropdownSectionFilterOptionBase {

@@ -10,7 +10,7 @@ export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | '
 
 export interface Option {
   label: string
-  value: string | number | boolean
+  value: any
 }
 
 const props = defineProps<{
@@ -25,24 +25,24 @@ const props = defineProps<{
   checkColor?: CheckColor
   options: Option[]
   disabled?: boolean
-  modelValue: (string | number | boolean)[]
+  modelValue: any[]
   hideError?: boolean
   validation?: Validatable
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: (string | number | boolean)[]): void
+  (e: 'update:modelValue', value: any[]): void
 }>()
 
 const classes = computed(() => [
   props.size ?? 'small'
 ])
 
-function isChecked(value: string | number | boolean): boolean {
+function isChecked(value: any): boolean {
   return props.modelValue.includes(value)
 }
 
-function handleChange(value: string | number | boolean): void {
+function handleChange(value: any): void {
   const difference = props.modelValue
     .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])

@@ -11,7 +11,7 @@ const props = defineProps<{
   search?: boolean
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
-  onClick?(value: string | number | boolean): void
+  onClick?(value: any): void
 }>()
 
 const input = ref<HTMLElement | null>(null)
@@ -35,7 +35,7 @@ onMounted(() => {
   input.value?.focus()
 })
 
-function isActive(value: string | number | boolean) {
+function isActive(value: any) {
   const selected = unref(props.selected)
 
   return isArray(selected)
@@ -51,7 +51,7 @@ function focusNext(event: any) {
   event.target.parentNode.nextElementSibling?.firstElementChild?.focus()
 }
 
-function handleClick(option: DropdownSectionFilterOption, value: string | number | boolean) {
+function handleClick(option: DropdownSectionFilterOption, value: any) {
   option.onClick && option.onClick(value)
   props.onClick && props.onClick(value)
 }

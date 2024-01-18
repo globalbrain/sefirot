@@ -9,11 +9,11 @@ import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-export type Value = string | number | boolean | null
+export type Value = any
 
 export interface Option {
   label: string
-  value: string | number | boolean
+  value: any
   disabled?: boolean
 }
 

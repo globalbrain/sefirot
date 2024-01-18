@@ -8,7 +8,7 @@ import SInputCheckbox from './SInputCheckbox.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-export type Value = string | number | boolean
+export type Value = any
 
 export interface Option {
   label: string
