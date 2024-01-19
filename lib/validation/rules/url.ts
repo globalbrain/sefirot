@@ -9,6 +9,7 @@ export const message = {
 export function url(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
+    optional: true,
     validation: baseUrl
   })
 }

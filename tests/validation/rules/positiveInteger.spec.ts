@@ -1,11 +1,10 @@
-import { zeroOrPositiveInteger } from 'sefirot/validation/rules'
+import { positiveInteger } from 'sefirot/validation/rules'
 
-describe('validation/rules/zeroOrPositiveInteger', () => {
-  test('it validates whether the value is zeroOrPositiveInteger', () => {
-    const rule = zeroOrPositiveInteger()
+describe('validation/rules/positiveInteger', () => {
+  test('it validates whether the value is positiveInteger', () => {
+    const rule = positiveInteger()
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
-    expect(rule.$validator(0, null, null)).toBe(true)
     expect(rule.$validator(1, null, null)).toBe(true)
     expect(rule.$validator(+1, null, null)).toBe(true)
     expect(rule.$validator(1.0, null, null)).toBe(true)
@@ -19,12 +18,12 @@ describe('validation/rules/zeroOrPositiveInteger', () => {
   })
 
   test('default error message', () => {
-    const rule = zeroOrPositiveInteger()
-    expect(rule.$message({ $params: {} })).toBe('The value must be zero or valid positive integer.')
+    const rule = positiveInteger()
+    expect(rule.$message({ $params: {} })).toBe('The value must be valid positive integer.')
   })
 
   test('custom error message', () => {
-    const rule = zeroOrPositiveInteger('Custom message.')
+    const rule = positiveInteger('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })
 })

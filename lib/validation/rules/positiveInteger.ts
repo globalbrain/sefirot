@@ -9,6 +9,7 @@ export const message = {
 export function positiveInteger(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
+    optional: true,
     validation: basePositiveInteger
   })
 }
