@@ -2,6 +2,12 @@ import day from 'dayjs'
 import { YmdMap, type YmdType, isYmd } from '../../support/Day'
 
 export function ymd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): boolean {
+  // Vuelidate's `helpers.req()` returns `false` for an empty plain object,
+  // so such value has to be handled here instead of setting `optional: true` of `createRule` function.
+  if (value === undefined || value === null) {
+    return true
+  }
+
   if (!isYmd(value, required)) {
     return false
   }
