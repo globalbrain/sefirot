@@ -11,7 +11,6 @@ export const message = {
 export function hms(required?: HmsType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    optional: true,
     validation: (value) => baseHms(value, required)
   })
 }

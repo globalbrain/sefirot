@@ -4,11 +4,11 @@ describe('validation/rules/ymd', () => {
   it('should validate if the year, month, and date is valid value', () => {
     const rule = ymd()
 
-    expect(rule.$validator(undefined, null, null)).toBe(true)
-    expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator({ year: 1, month: 1, date: 1 }, null, null)).toBe(true)
     expect(rule.$validator({ year: 9999, month: 12, date: null }, null, null)).toBe(true)
 
+    expect(rule.$validator(undefined, null, null)).toBe(false)
+    expect(rule.$validator(null, null, null)).toBe(false)
     expect(rule.$validator({ year: 2000, month: null, date: 1 }, null, null)).toBe(false)
     expect(rule.$validator({ year: 0, month: 12, date: 1 }, null, null)).toBe(false)
     expect(rule.$validator({ year: 10000, month: 12, date: 1 }, null, null)).toBe(false)
@@ -25,11 +25,11 @@ describe('validation/rules/ymd', () => {
   it('should validate only the given types', () => {
     const rule = ymd(['y', 'm'])
 
-    expect(rule.$validator(undefined, null, null)).toBe(true)
-    expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator({ year: 2000, month: 12, date: 32 }, null, null)).toBe(true)
     expect(rule.$validator({ year: 2000, month: null }, null, null)).toBe(true)
 
+    expect(rule.$validator(undefined, null, null)).toBe(false)
+    expect(rule.$validator(null, null, null)).toBe(false)
     expect(rule.$validator({}, null, null)).toBe(false)
     expect(rule.$validator({ year: 2000, month: 13, date: 13 }, null, null)).toBe(false)
     expect(rule.$validator({ year: 2000, month: 13 }, null, null)).toBe(false)
