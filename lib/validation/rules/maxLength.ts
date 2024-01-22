@@ -3,7 +3,7 @@ import { maxLength as baseMaxLength } from '../validators'
 
 export const message = {
   en: (length: number) => `The value must be less than or equal to ${length} characters.`,
-  ja: (length: number) => `この値は、最大${length}文字までです。`
+  ja: (length: number) => `この値は最大${length}文字までです。`
 }
 
 export function maxLength(length: number, msg?: string) {
