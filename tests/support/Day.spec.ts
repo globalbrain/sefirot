@@ -27,7 +27,7 @@ describe('support/Day', () => {
   })
 
   describe('createYmd', () => {
-    test('creates a new ymd instance', () => {
+    test('creates a new ymd object', () => {
       const expected = {
         year: 1985,
         month: 10,
@@ -35,6 +35,16 @@ describe('support/Day', () => {
       }
 
       expect(Day.createYmd(1985, 10, 10)).toEqual(expected)
+    })
+
+    test('creates a new ymd object from a day instance', () => {
+      const expected = {
+        year: 1985,
+        month: 10,
+        date: 10
+      }
+
+      expect(Day.createYmd(Day.day('1985-10-10'))).toEqual(expected)
     })
 
     test('all fields are `null` by default', () => {
@@ -49,7 +59,7 @@ describe('support/Day', () => {
   })
 
   describe('createHms', () => {
-    test('creates a new hms instance', () => {
+    test('creates a new hms object', () => {
       const expected = {
         hour: '10',
         minute: '20',
@@ -57,6 +67,16 @@ describe('support/Day', () => {
       }
 
       expect(Day.createHms('10', '20', '30')).toEqual(expected)
+    })
+
+    test('creates a new hms object from a day instance', () => {
+      const expected = {
+        hour: '10',
+        minute: '20',
+        second: '30'
+      }
+
+      expect(Day.createHms(Day.day('1985-10-10 10:20:30'))).toEqual(expected)
     })
 
     test('all fields are `null` by default', () => {
