@@ -60,7 +60,7 @@ export function tz(input?: Input, timezone?: string): Day {
 /**
  * Creates a new `Ymd` object.
  */
-export function createYmd(year: number, month: number, date: number): Ymd
+export function createYmd(year?: number | null, month?: number | null, date?: number | null): Ymd
 export function createYmd(day: Day): Ymd
 export function createYmd(
   yearOrDay: number | Day | null = null,
@@ -85,7 +85,7 @@ export function createYmd(
 /**
  * Creates a new `Hms` object.
  */
-export function createHms(hour: string, minute: string, second: string): Hms
+export function createHms(hour?: string | null, minute?: string | null, second?: string | null): Hms
 export function createHms(day: Day): Hms
 export function createHms(
   hourOrDay: string | Day | null = null,
