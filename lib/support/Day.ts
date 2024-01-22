@@ -77,7 +77,7 @@ export function createYmd(
 
   return {
     year: yearOrDay.year(),
-    month: yearOrDay.month(),
+    month: yearOrDay.month() + 1,
     date: yearOrDay.date()
   }
 }
