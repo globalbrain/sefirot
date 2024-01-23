@@ -1,6 +1,14 @@
 import { isArray, isNullish, isString } from '../../support/Utils'
 
 export function required(value: unknown): boolean {
+  if (isString(value)) {
+    value = value.trim()
+  }
+
+  return _required(value)
+}
+
+export function _required(value: unknown): boolean {
   if (isArray(value)) {
     return !!value.length
   }
@@ -15,10 +23,6 @@ export function required(value: unknown): boolean {
 
   if (value instanceof Date) {
     return !Number.isNaN(value.getTime())
-  }
-
-  if (isString(value)) {
-    value = value.trim()
   }
 
   return !!String(value).length

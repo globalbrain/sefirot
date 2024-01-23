@@ -11,6 +11,7 @@ export const message = {
 export function ymd(required?: YmdType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
+    optional: true,
     validation: (value) => baseYmd(value, required)
   })
 }
