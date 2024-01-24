@@ -46,6 +46,7 @@
 .s-shrink   { flex-shrink: 1; }
 .s-shrink-0 { flex-shrink: 0; }
 
+.s-gap-1  { gap: 1px; }
 .s-gap-4  { gap: 4px; }
 .s-gap-8  { gap: 8px; }
 .s-gap-12 { gap: 12px; }

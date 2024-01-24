@@ -1,5 +1,5 @@
 export function isNullish(value: unknown): value is undefined | null {
-  return value === null || value === undefined
+  return value == null
 }
 
 export function isString(value: unknown): value is string {

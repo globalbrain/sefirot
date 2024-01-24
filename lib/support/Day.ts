@@ -2,7 +2,7 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'
-import { isNumber, isObject, isString } from './Utils'
+import { isNullish, isNumber, isObject, isString } from './Utils'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
@@ -60,30 +60,50 @@ export function tz(input?: Input, timezone?: string): Day {
 /**
  * Creates a new `Ymd` object.
  */
+export function createYmd(year?: number | null, month?: number | null, date?: number | null): Ymd
+export function createYmd(day?: Day | null): Ymd
 export function createYmd(
-  year: number | null = null,
+  yearOrDay: number | Day | null = null,
   month: number | null = null,
   date: number | null = null
 ): Ymd {
+  if (isNumber(yearOrDay) || isNullish(yearOrDay)) {
+    return {
+      year: yearOrDay,
+      month,
+      date
+    }
+  }
+
   return {
-    year,
-    month,
-    date
+    year: yearOrDay.year(),
+    month: yearOrDay.month() + 1,
+    date: yearOrDay.date()
   }
 }
 
 /**
  * Creates a new `Hms` object.
  */
+export function createHms(hour?: string | null, minute?: string | null, second?: string | null): Hms
+export function createHms(day?: Day | null): Hms
 export function createHms(
-  hour: string | null = null,
+  hourOrDay: string | Day | null = null,
   minute: string | null = null,
   second: string | null = null
 ): Hms {
+  if (isString(hourOrDay) || isNullish(hourOrDay)) {
+    return {
+      hour: hourOrDay,
+      minute,
+      second
+    }
+  }
+
   return {
-    hour,
-    minute,
-    second
+    hour: hourOrDay.format('HH'),
+    minute: hourOrDay.format('mm'),
+    second: hourOrDay.format('ss')
   }
 }
 

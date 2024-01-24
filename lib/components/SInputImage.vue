@@ -34,6 +34,7 @@ const props = withDefaults(defineProps<{
   hideError?: boolean
   validation?: Validatable
 }>(), {
+  size: 'small',
   imageType: 'rectangle',
   imageWidth: '96px',
   imageAspectRatio: '1 / 1',
