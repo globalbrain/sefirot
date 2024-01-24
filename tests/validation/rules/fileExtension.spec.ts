@@ -6,10 +6,16 @@ describe('vaidation/rules/fileExtension', () => {
 
     expect(fileExtension(['txt']).$validator(undefined, null, null)).toBe(true)
     expect(fileExtension(['txt']).$validator(null, null, null)).toBe(true)
+    expect(fileExtension(['txt']).$validator([], null, null)).toBe(true)
     expect(fileExtension(['txt']).$validator(file, null, null)).toBe(true)
     expect(fileExtension(['txt', 'png']).$validator(file, null, null)).toBe(true)
+
+    expect(fileExtension(['txt']).$validator(true, null, null)).toBe(false)
+    expect(fileExtension(['txt']).$validator(false, null, null)).toBe(false)
+    expect(fileExtension(['txt']).$validator(1, null, null)).toBe(false)
+    expect(fileExtension(['txt']).$validator('abc', null, null)).toBe(false)
+    expect(fileExtension(['txt']).$validator({}, null, null)).toBe(false)
     expect(fileExtension(['png']).$validator(file, null, null)).toBe(false)
-    expect(fileExtension(['png']).$validator('file', null, null)).toBe(false)
   })
 
   it('should treat `jpg` extension with extra care', () => {
@@ -20,6 +26,7 @@ describe('vaidation/rules/fileExtension', () => {
 
     expect(fileExtension(['jpg']).$validator(undefined, null, null)).toBe(true)
     expect(fileExtension(['jpg']).$validator(null, null, null)).toBe(true)
+    expect(fileExtension(['jpg']).$validator([], null, null)).toBe(true)
     expect(fileExtension(['jpg']).$validator(jpg, null, null)).toBe(true)
     expect(fileExtension(['jpg']).$validator(jpeg, null, null)).toBe(true)
     expect(fileExtension(['jpg']).$validator(JPG, null, null)).toBe(true)

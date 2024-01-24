@@ -6,13 +6,17 @@ describe('validation/rules/month', () => {
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
+    expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator(1, null, null)).toBe(true)
     expect(rule.$validator(6, null, null)).toBe(true)
     expect(rule.$validator(12, null, null)).toBe(true)
 
+    expect(rule.$validator(true, null, null)).toBe(false)
+    expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(0, null, null)).toBe(false)
     expect(rule.$validator(13, null, null)).toBe(false)
     expect(rule.$validator('1', null, null)).toBe(false)
+    expect(rule.$validator({}, null, null)).toBe(false)
   })
 
   test('default error message', () => {

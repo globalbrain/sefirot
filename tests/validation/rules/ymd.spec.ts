@@ -6,6 +6,7 @@ describe('validation/rules/ymd', () => {
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
+    expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator({ year: 1, month: 1, date: 1 }, null, null)).toBe(true)
     expect(rule.$validator({ year: 9999, month: 12, date: null }, null, null)).toBe(true)
 
@@ -27,6 +28,7 @@ describe('validation/rules/ymd', () => {
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
+    expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator({ year: 2000, month: 12, date: 32 }, null, null)).toBe(true)
     expect(rule.$validator({ year: 2000, month: null }, null, null)).toBe(true)
 
