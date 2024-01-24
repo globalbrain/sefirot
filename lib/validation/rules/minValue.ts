@@ -9,6 +9,7 @@ export const message = {
 export function minValue(min: number, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](min),
+    optional: true,
     validation: (value) => baseMinValue(value, min)
   })
 }

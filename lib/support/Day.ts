@@ -108,7 +108,7 @@ export function createHms(
 }
 
 export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
-  if (!isObject(value)) {
+  if (isNullish(value) || !isObject(value)) {
     return false
   }
 
@@ -121,7 +121,7 @@ export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): va
 }
 
 export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
-  if (!isObject(value)) {
+  if (isNullish(value) || !isObject(value)) {
     return false
   }
 

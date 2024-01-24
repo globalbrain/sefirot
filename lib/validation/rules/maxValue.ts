@@ -9,6 +9,7 @@ export const message = {
 export function maxValue(max: number, msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang](max),
+    optional: true,
     validation: (value) => baseMaxValue(value, max)
   })
 }

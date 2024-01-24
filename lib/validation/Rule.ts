@@ -1,6 +1,7 @@
 import { type ValidationRuleWithParams } from '@vuelidate/core'
 import { type MessageProps as VMessageProps, helpers } from '@vuelidate/validators'
 import { type Lang, useLang } from '../composables/Lang'
+import { _required } from './validators'
 
 export interface RuleOptions {
   optional?: boolean
@@ -22,7 +23,7 @@ export function createRule(
       return options.message({ ...params, lang })
     },
     (value) => {
-      return options.optional && !helpers.req(value)
+      return options.optional && !_required(value)
         ? true
         : options.validation(value)
     }

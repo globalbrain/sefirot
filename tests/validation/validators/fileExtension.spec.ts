@@ -6,8 +6,16 @@ describe('vaidation/validators/fileExtension', () => {
 
     expect(fileExtension(file, ['txt'])).toBe(true)
     expect(fileExtension(file, ['txt', 'png'])).toBe(true)
+
+    expect(fileExtension(undefined, ['txt'])).toBe(false)
+    expect(fileExtension(null, ['txt'])).toBe(false)
+    expect(fileExtension(true, ['txt'])).toBe(false)
+    expect(fileExtension(false, ['txt'])).toBe(false)
+    expect(fileExtension(1, ['txt'])).toBe(false)
+    expect(fileExtension('abc', ['txt'])).toBe(false)
+    expect(fileExtension({}, ['txt'])).toBe(false)
+    expect(fileExtension([], ['txt'])).toBe(false)
     expect(fileExtension(file, ['png'])).toBe(false)
-    expect(fileExtension('file', ['png'])).toBe(false)
   })
 
   it('should treat `jpg` extension with extra care', () => {
@@ -20,5 +28,8 @@ describe('vaidation/validators/fileExtension', () => {
     expect(fileExtension(jpeg, ['jpg'])).toBe(true)
     expect(fileExtension(JPG, ['jpg'])).toBe(true)
     expect(fileExtension(JPEG, ['jpg'])).toBe(true)
+
+    expect(fileExtension(undefined, ['jpg'])).toBe(false)
+    expect(fileExtension(null, ['jpg'])).toBe(false)
   })
 })

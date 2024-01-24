@@ -9,6 +9,10 @@ export function maxTotalFileSize(value: unknown, size: string): boolean {
     return false
   }
 
+  if (value.length === 0) {
+    return true
+  }
+
   const factor = /gb/i.test(size)
     ? 1e9
     : /mb/i.test(size)
