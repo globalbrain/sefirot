@@ -1,3 +1,5 @@
+/// <reference lib="esnext" />
+
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vitest/config'
 
@@ -33,12 +35,17 @@ export default defineConfig({
         'lib/support/Day/Constant.ts',
         'lib/types'
       ],
-      reporter: [
-        'html',
-        'json',
-        'lcov',
-        'text-summary'
-      ]
+      reporter: ['html', 'json', 'lcov', 'text-summary']
+    },
+
+    onConsoleLog(log, type) {
+      if (type !== 'stderr') return
+      ignore.forEach((s) => (log = log.replaceAll(s, '')))
+      if (log.trim() === '') return false
     }
   }
 })
+
+const ignore = [
+  '[Vue warn]: inject() can only be used inside setup() or functional components.'
+]
