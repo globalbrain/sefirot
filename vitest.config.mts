@@ -39,9 +39,9 @@ export default defineConfig({
     },
 
     onConsoleLog(log, type) {
-      if (type !== 'stderr') return
+      if (type !== 'stderr') { return }
       ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      if (log.trim() === '') return false
+      if (log.trim() === '') { return false }
     }
   }
 })
