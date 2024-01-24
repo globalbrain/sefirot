@@ -1,5 +1,19 @@
 
 
+# [3.25.0](https://github.com/globalbrain/sefirot/compare/v3.24.1...v3.25.0) (2024-1-24)
+
+
+### Bug Fixes
+
+* **input-image:** add missing default value for `:size` ([3b32ec1](https://github.com/globalbrain/sefirot/commit/3b32ec1982abb4cafde8e77a0c5e2507f0581a93))
+
+
+### Features
+
+* **day:** allow passing dayjs object to createYmd and createHms ([#445](https://github.com/globalbrain/sefirot/issues/445)) ([#446](https://github.com/globalbrain/sefirot/issues/446)) ([07b57d2](https://github.com/globalbrain/sefirot/commit/07b57d260c8570ef9cde734e8d36f3c5980f5ec2))
+* **input-radio:** allow generics for value type ([#442](https://github.com/globalbrain/sefirot/issues/442)) ([c1b48cd](https://github.com/globalbrain/sefirot/commit/c1b48cdd1463b36968f9591847a38c92217036bc))
+* **style:** add `s-gap-1` utility class ([28a675b](https://github.com/globalbrain/sefirot/commit/28a675b5e6e85dd3f9d7518de1db3ea7978e3984))
+
 ## [3.24.1](https://github.com/globalbrain/sefirot/compare/v3.24.0...v3.24.1) (2024-1-18)
 
 
