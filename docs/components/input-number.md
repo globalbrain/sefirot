@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import SInputNumber from 'sefirot/components/SInputNumber.vue'
 
-const input = ref<string | null>(null)
+const input = ref<number | null>(null)
 </script>
 
-# SInputTextarea
+# SInputNumber
 
-`<SInputTextarea>` is a input component for `textarea`.
+`<SInputNumber>` is a input component for `number`.
 
 <Showcase
-  path="/components/SInputTextarea.vue"
-  story="/stories-components-sinputtextarea-01-playground-story-vue"
+  path="/components/SInputNumber.vue"
+  story="/stories-components-sinputnumber-01-playground-story-vue"
 >
-  <SInputTextarea placeholder="Placeholder text" v-model="input" />
+  <SInputNumber placeholder="123,456,789" v-model="input" />
 </Showcase>
 
 ## Usage
