@@ -1,5 +1,12 @@
 
 
+## [3.25.1](https://github.com/globalbrain/sefirot/compare/v3.25.0...v3.25.1) (2024-1-25)
+
+
+### Bug Fixes
+
+* **validation:** add number support `minValue` and `maxValue` ([#452](https://github.com/globalbrain/sefirot/issues/452)) ([e6df3f5](https://github.com/globalbrain/sefirot/commit/e6df3f58a6e35773cd399ba48a298ab563e7b2ba))
+
 # [3.25.0](https://github.com/globalbrain/sefirot/compare/v3.24.1...v3.25.0) (2024-1-24)
 
 
