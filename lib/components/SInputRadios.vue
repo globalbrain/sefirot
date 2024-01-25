@@ -2,7 +2,7 @@
   setup
   lang="ts"
   generic="
-    T extends string | number | boolean = string | number | boolean,
+    ValueType extends string | number | boolean = string | number | boolean,
     Nullable extends boolean = false
   "
 >
@@ -16,16 +16,13 @@ export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option<
-  T extends string | number | boolean = string | number | boolean,
-  Nullable extends boolean = false
+  ValueType extends string | number | boolean = string | number | boolean
 > {
   label: string
-  value: Nullable extends true ? T : T
+  value: ValueType
   disabled?: boolean
 }
 
-type ValueType = Nullable extends true ? T : T
-type ValueOrNull = Nullable extends true ? T | null : T
 type NullValue = Nullable extends true ? null : never
 
 const props = withDefaults(defineProps<{
@@ -38,7 +35,7 @@ const props = withDefaults(defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
-  options: Option<T, Nullable>[]
+  options: Option<ValueType>[]
   nullable?: Nullable
   disabled?: boolean
   value?: ValueType | null
@@ -51,8 +48,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: ValueOrNull): void
-  (e: 'change', value: ValueOrNull): void
+  (e: 'update:model-value', value: ValueType | NullValue): void
+  (e: 'change', value: ValueType | NullValue): void
 }>()
 
 const _value = computed(() => {
