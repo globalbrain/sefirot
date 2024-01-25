@@ -1,9 +1,11 @@
 import { maxValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/maxValue', () => {
-  test('it validates whether the value is valid string', () => {
+  test('it validates whether the value is valid number or string', () => {
     const max = 10
 
+    expect(maxValue(0, max)).toBe(true)
+    expect(maxValue(10, max)).toBe(true)
     expect(maxValue('0', max)).toBe(true)
     expect(maxValue('10', max)).toBe(true)
 
@@ -11,7 +13,7 @@ describe('validation/validators/maxValue', () => {
     expect(maxValue(null, max)).toBe(false)
     expect(maxValue(true, max)).toBe(false)
     expect(maxValue(false, max)).toBe(false)
-    expect(maxValue(10, max)).toBe(false)
+    expect(maxValue(11, max)).toBe(false)
     expect(maxValue('11', max)).toBe(false)
     expect(maxValue({}, max)).toBe(false)
     expect(maxValue([], max)).toBe(false)
