@@ -1,16 +1,18 @@
 import { minValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/minValue', () => {
-  test('it validates whether the value is valid string', () => {
+  test('it validates whether the value is valid number or string', () => {
     const min = 10
 
+    expect(minValue(10, min)).toBe(true)
     expect(minValue('10', min)).toBe(true)
 
     expect(minValue(undefined, min)).toBe(false)
     expect(minValue(null, min)).toBe(false)
     expect(minValue(true, min)).toBe(false)
     expect(minValue(false, min)).toBe(false)
-    expect(minValue(10, min)).toBe(false)
+    expect(minValue(0, min)).toBe(false)
+    expect(minValue(9, min)).toBe(false)
     expect(minValue('0', min)).toBe(false)
     expect(minValue('9', min)).toBe(false)
     expect(minValue({}, min)).toBe(false)

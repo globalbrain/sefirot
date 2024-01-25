@@ -1,5 +1,7 @@
+import { isNumber, isString } from '../../support/Utils'
+
 export function minValue(value: unknown, min: number) {
-  if (typeof value === 'string' || value instanceof Date) {
+  if (isNumber(value) || isString(value) || value instanceof Date) {
     return +value >= min
   }
 
