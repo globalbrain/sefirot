@@ -3,7 +3,6 @@ import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
-import { type MaybeRefOrGetter, toValue } from 'vue'
 import { type Lang } from '../composables/Lang'
 
 export interface HttpClient {
@@ -15,14 +14,14 @@ export interface HttpOptions {
   baseUrl?: string
   xsrfUrl?: string | false
   client?: HttpClient
-  lang?: MaybeRefOrGetter<Lang>
+  lang?: Lang
 }
 
 export class Http {
   private static baseUrl: string | undefined = undefined
   private static xsrfUrl: string | false = '/api/csrf-cookie'
   private static client: HttpClient = ofetch
-  private static lang: MaybeRefOrGetter<Lang> | undefined = undefined
+  private static lang: Lang | undefined = undefined
 
   static config(options: HttpOptions) {
     if (options.baseUrl) {
@@ -68,8 +67,6 @@ export class Http {
       { arrayFormat: 'brackets', encodeValuesOnly: true }
     )
 
-    const lang = toValue(Http.lang)
-
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
       {
@@ -80,7 +77,7 @@ export class Http {
         headers: {
           Accept: 'application/json',
           ...(xsrfToken && { 'X-Xsrf-Token': xsrfToken }),
-          ...(lang && { 'Accept-Language': lang }),
+          ...(Http.lang && { 'Accept-Language': Http.lang }),
           ...options.headers
         }
       }
