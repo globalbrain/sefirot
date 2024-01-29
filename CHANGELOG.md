@@ -1,5 +1,12 @@
 
 
+# [3.26.0](https://github.com/globalbrain/sefirot/compare/v3.25.1...v3.26.0) (2024-1-29)
+
+
+### Features
+
+* **http:** allow passing Accept-Language header ([#454](https://github.com/globalbrain/sefirot/issues/454)) ([ce9b1e3](https://github.com/globalbrain/sefirot/commit/ce9b1e3e1a494de59189e2d62b772eda71e6fd37))
+
 ## [3.25.1](https://github.com/globalbrain/sefirot/compare/v3.25.0...v3.25.1) (2024-1-25)
 
 
