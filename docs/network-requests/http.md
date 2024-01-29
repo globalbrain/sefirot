@@ -48,6 +48,12 @@ interface HttpOptions {
    * @default ofetch
    */
   client?: HttpClient
+  /**
+   * The language to use for Accept-Language header.
+   * 
+   * @default undefined
+   */
+  lang?: 'en' | 'ja'
 }
 
 interface HttpClient {
