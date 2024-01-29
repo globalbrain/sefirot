@@ -3,6 +3,7 @@ import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
+import { type Lang } from '../composables/Lang'
 
 export interface HttpClient {
   <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
@@ -13,12 +14,14 @@ export interface HttpOptions {
   baseUrl?: string
   xsrfUrl?: string | false
   client?: HttpClient
+  lang?: Lang
 }
 
 export class Http {
   private static baseUrl: string | undefined = undefined
   private static xsrfUrl: string | false = '/api/csrf-cookie'
   private static client: HttpClient = ofetch
+  private static lang: Lang | undefined = undefined
 
   static config(options: HttpOptions) {
     if (options.baseUrl) {
@@ -29,6 +32,9 @@ export class Http {
     }
     if (options.client) {
       Http.client = options.client
+    }
+    if (options.lang) {
+      Http.lang = options.lang
     }
   }
 
@@ -70,7 +76,8 @@ export class Http {
         ...options,
         headers: {
           Accept: 'application/json',
-          ...(xsrfToken && { 'X-XSRF-TOKEN': xsrfToken }),
+          ...(xsrfToken && { 'X-Xsrf-Token': xsrfToken }),
+          ...(Http.lang && { 'Accept-Language': Http.lang }),
           ...options.headers
         }
       }
