@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SDesc from 'sefirot/components/SDesc.vue'
+import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
 import SDescDay from 'sefirot/components/SDescDay.vue'
 import SDescFile from 'sefirot/components/SDescFile.vue'
 import SDescItem from 'sefirot/components/SDescItem.vue'
@@ -36,6 +37,15 @@ function state() {
           gap="24"
           :divider="state.divider"
         >
+          <SDescItem span="2">
+            <SDescLabel>Account</SDescLabel>
+            <SDescAvatar
+              :avatar="{
+                avatar: 'https://i.pravatar.cc/64?img=1',
+                name: 'margot.foster'
+              }"
+            />
+          </SDescItem>
           <SDescItem span="1">
             <SDescLabel>Full name</SDescLabel>
             <SDescText>Margot Foster</SDescText>

@@ -428,6 +428,33 @@ type Mode =
 </SDesc>
 ```
 
+## Avatar value <Badge text="3.2.7" />
+
+Use `<SDescAvatar>` component to display a value using [`<SAvatar>`](./avatar).
+
+```ts
+interface Props {
+  avatar?: Avatar | null
+}
+
+interface Avatar {
+  avatar?: string | null
+  name?: string | null
+}
+```
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel value="Status" />
+    <SDescAvatar :avatar="{
+      avatar: "/path/to/avatar.jpg",
+      name: "John Doe"
+    }" />
+  </SDescItem>
+</SDesc>
+```
+
 ## File value
 
 Use `<SDescFile>` to display a list of files. Useful when you have a "attachment" list in the form.
