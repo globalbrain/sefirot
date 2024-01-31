@@ -1,5 +1,12 @@
 
 
+# [3.27.0](https://github.com/globalbrain/sefirot/compare/v3.26.0...v3.27.0) (2024-01-31)
+
+
+### Features
+
+* **desc:** add `<SDescAvatar>` ([#455](https://github.com/globalbrain/sefirot/issues/455)) ([#458](https://github.com/globalbrain/sefirot/issues/458)) ([ab662e6](https://github.com/globalbrain/sefirot/commit/ab662e62fff505d4feb0199e9465cd4e822a5f24))
+
 # [3.26.0](https://github.com/globalbrain/sefirot/compare/v3.25.1...v3.26.0) (2024-1-29)
 
 
