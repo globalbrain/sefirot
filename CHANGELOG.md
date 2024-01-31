@@ -1,5 +1,12 @@
 
 
+## [3.27.2](https://github.com/globalbrain/sefirot/compare/v3.27.1...v3.27.2) (2024-01-31)
+
+
+### Bug Fixes
+
+* **desc:** show non-image avatar correctly ([#460](https://github.com/globalbrain/sefirot/issues/460)) ([cbe30e1](https://github.com/globalbrain/sefirot/commit/cbe30e1a16470c2d98b95f2a43db24ababb39b88))
+
 ## [3.27.1](https://github.com/globalbrain/sefirot/compare/v3.27.0...v3.27.1) (2024-01-31)
 
 
