@@ -16,7 +16,6 @@ defineProps<{
   <div v-if="avatar" class="SDescAvatar">
     <div class="value">
       <SAvatar
-        v-if="avatar.avatar"
         size="nano"
         :avatar="avatar.avatar"
         :name="avatar.name"
