@@ -1,5 +1,12 @@
 
 
+## [3.27.1](https://github.com/globalbrain/sefirot/compare/v3.27.0...v3.27.1) (2024-01-31)
+
+
+### Bug Fixes
+
+* **desc:** add `<SDescAvatar>` to mixin ([#459](https://github.com/globalbrain/sefirot/issues/459)) ([d008928](https://github.com/globalbrain/sefirot/commit/d008928de972c8298640d83eb8df4af5a6818623))
+
 # [3.27.0](https://github.com/globalbrain/sefirot/compare/v3.26.0...v3.27.0) (2024-01-31)
 
 
