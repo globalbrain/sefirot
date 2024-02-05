@@ -1,5 +1,6 @@
 import { type Ref, ref } from 'vue'
 import { Http } from '../http/Http'
+import { tryOnMounted } from './Utils'
 
 export interface Query<Data = any> {
   loading: Ref<boolean>
@@ -30,8 +31,8 @@ export function useQuery<Data = any>(
   const loading = ref(false)
   const data = ref<Data | undefined>()
 
-  if (options.immediate !== false && !import.meta.env.SSR) {
-    execute()
+  if (options.immediate !== false) {
+    tryOnMounted(execute)
   }
 
   async function execute(): Promise<Data> {
