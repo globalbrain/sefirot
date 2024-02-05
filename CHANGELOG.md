@@ -1,5 +1,18 @@
 
 
+# [3.28.0](https://github.com/globalbrain/sefirot/compare/v3.27.2...v3.28.0) (2024-02-05)
+
+
+### Bug Fixes
+
+* **desc:** specify font size for avatar name ([adc0bad](https://github.com/globalbrain/sefirot/commit/adc0bad7250e274b8a9a847b1339fa37131e5ed1))
+
+
+### Features
+
+* **control:** add "Action Bar" type support ([#464](https://github.com/globalbrain/sefirot/issues/464)) ([cb7c95d](https://github.com/globalbrain/sefirot/commit/cb7c95d5c2ac26003a6e424dba43f3724905ea6b))
+* **desc:** add lead/trail nit option to `<SDescNumber>` ([#461](https://github.com/globalbrain/sefirot/issues/461)) ([#463](https://github.com/globalbrain/sefirot/issues/463)) ([45b8116](https://github.com/globalbrain/sefirot/commit/45b811671772ce61d073484fce8b81f8d8f766c9))
+
 ## [3.27.2](https://github.com/globalbrain/sefirot/compare/v3.27.1...v3.27.2) (2024-01-31)
 
 
