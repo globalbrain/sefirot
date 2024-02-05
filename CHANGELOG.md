@@ -1,5 +1,12 @@
 
 
+## [3.28.1](https://github.com/globalbrain/sefirot/compare/v3.28.0...v3.28.1) (2024-02-05)
+
+
+### Bug Fixes
+
+* **control:** add missing component to mixin ([22d429d](https://github.com/globalbrain/sefirot/commit/22d429d421353743962e0f5ff3a82dd48d704d5c))
+
 # [3.28.0](https://github.com/globalbrain/sefirot/compare/v3.27.2...v3.28.0) (2024-02-05)
 
 
