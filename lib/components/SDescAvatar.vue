@@ -35,4 +35,9 @@ defineProps<{
   gap: 8px;
   height: 24px;
 }
+
+.name {
+  line-height: 24px;
+  font-size: 14px;
+}
 </style>
