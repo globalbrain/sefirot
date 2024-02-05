@@ -1,4 +1,5 @@
-import { type ComputedRef, type MaybeRefOrGetter, computed, toValue, useSlots } from 'vue'
+import { getLifeCycleTarget } from '@vueuse/core'
+import { type ComputedRef, type MaybeRefOrGetter, computed, onMounted, toValue, useSlots } from 'vue'
 import { isArray, isString } from '../support/Utils'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
@@ -60,4 +61,12 @@ export function useSlotValue(name = 'default'): ComputedRef<string | null> {
     const v = isString(c) ? c.trim() : null
     return v !== '' ? v : null
   })
+}
+
+export function tryOnMounted(fn: () => void): void {
+  if (getLifeCycleTarget()) {
+    onMounted(fn)
+  } else if (!import.meta.env.SSR) {
+    fn()
+  }
 }
