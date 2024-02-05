@@ -35,6 +35,7 @@ declare module 'vue' {
     SControlActionBar: typeof SControlActionBar
     SControlActionBarButton: typeof SControlActionBarButton
     SControlActionBarClose: typeof SControlActionBarClose
+    SControlActionBarCollapse: typeof SControlActionBarCollapse
     SControlActionMenu: typeof SControlActionMenu
     SControlButton: typeof SControlButton
     SControlCenter: typeof SControlCenter
