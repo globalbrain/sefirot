@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SCardHeader from 'sefirot/components/SCardHeader.vue'
-import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
 import SDesc from 'sefirot/components/SDesc.vue'
 import SDescDay from 'sefirot/components/SDescDay.vue'
 import SDescFile from 'sefirot/components/SDescFile.vue'
@@ -23,10 +21,12 @@ const docs = '/components/desc'
     <Board :title="title" :docs="docs">
       <div class="max-w-640">
         <SCard>
-          <SCardHeader>
-            <SCardHeaderTitle>Applicant Information</SCardHeaderTitle>
-          </SCardHeader>
-          <SCardBlock space="compact">
+          <SCardBlock size="small" class="s-px-24">
+            <div class="s-font-14 s-font-w-600">
+              Applicant Information
+            </div>
+          </SCardBlock>
+          <SCardBlock class="s-p-24">
             <SDesc cols="2" gap="24">
               <SDescItem span="1">
                 <SDescLabel>Full name</SDescLabel>
