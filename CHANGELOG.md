@@ -1,5 +1,12 @@
 
 
+## [3.28.2](https://github.com/globalbrain/sefirot/compare/v3.28.1...v3.28.2) (2024-2-5)
+
+
+### Bug Fixes
+
+* **api:** execute query inside onMounted to avoid SSR hydration issues ([#465](https://github.com/globalbrain/sefirot/issues/465)) ([db3cc44](https://github.com/globalbrain/sefirot/commit/db3cc449d99a516edd25bc14767d990798f68374))
+
 ## [3.28.1](https://github.com/globalbrain/sefirot/compare/v3.28.0...v3.28.1) (2024-02-05)
 
 
