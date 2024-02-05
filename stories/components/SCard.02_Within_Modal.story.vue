@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x-bold'
 import SButton from 'sefirot/components/SButton.vue'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
+import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
+import SControlActionBarClose from 'sefirot/components/SControlActionBarClose.vue'
 import SControlButton from 'sefirot/components/SControlButton.vue'
 import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
@@ -63,12 +64,14 @@ function state() {
             <SCardBlock size="small" class="s-pl-24 s-pr-8">
               <SControl>
                 <SControlLeft>
-                  <SControlText class="s-font-w-500">
+                  <SControlText class="s-font-w-600">
                     Header title
                   </SControlText>
                 </SControlLeft>
                 <SControlRight>
-                  <SControlButton type="text" mode="mute" :icon="IconX" @click="open = false" />
+                  <SControlActionBar>
+                    <SControlActionBarClose @click="open = false" />
+                  </SControlActionBar>
                 </SControlRight>
               </SControl>
             </SCardBlock>
