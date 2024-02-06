@@ -1,5 +1,12 @@
 
 
+# [3.29.0](https://github.com/globalbrain/sefirot/compare/v3.28.2...v3.29.0) (2024-2-6)
+
+
+### Features
+
+* **api:** allow watching options in useQuery ([#466](https://github.com/globalbrain/sefirot/issues/466)) ([3a5e808](https://github.com/globalbrain/sefirot/commit/3a5e808e927eeff035e0e35f608ce2b11b258325))
+
 ## [3.28.2](https://github.com/globalbrain/sefirot/compare/v3.28.1...v3.28.2) (2024-2-5)
 
 
