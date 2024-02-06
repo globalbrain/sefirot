@@ -1,4 +1,4 @@
-import { type Ref, ref } from 'vue'
+import { type Ref, type WatchSource, ref, watch } from 'vue'
 import { Http } from '../http/Http'
 import { tryOnMounted } from './Utils'
 
@@ -14,6 +14,10 @@ export interface UseQueryOptions {
    * @default true
    */
   immediate?: boolean
+  /**
+   * watch the given source(s) and re-execute the query
+   */
+  watch?: WatchSource | WatchSource[]
 }
 
 export interface Mutation<Data = any, Args extends any[] = any[]> {
@@ -33,6 +37,10 @@ export function useQuery<Data = any>(
 
   if (options.immediate !== false) {
     tryOnMounted(execute)
+  }
+
+  if (options.watch) {
+    watch(options.watch, execute, { deep: true })
   }
 
   async function execute(): Promise<Data> {
