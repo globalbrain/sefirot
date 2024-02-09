@@ -1,5 +1,12 @@
 
 
+## [3.29.1](https://github.com/globalbrain/sefirot/compare/v3.29.0...v3.29.1) (2024-2-9)
+
+
+### Bug Fixes
+
+* **http:** handle null values in objectToFormData ([d775fd9](https://github.com/globalbrain/sefirot/commit/d775fd945578160d26c708e3796ceccce820d73c))
+
 # [3.29.0](https://github.com/globalbrain/sefirot/compare/v3.28.2...v3.29.0) (2024-2-6)
 
 
