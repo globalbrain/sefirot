@@ -158,7 +158,11 @@ export class Http {
         return
       }
 
-      if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob)) {
+      if (
+        typeof obj[property] === 'object'
+        && !(obj[property] instanceof Blob)
+        && obj[property] !== null
+      ) {
         this.objectToFormData(obj[property], fd, property)
       } else {
         fd.append(formKey, obj[property])
