@@ -165,7 +165,8 @@ export class Http {
       ) {
         this.objectToFormData(obj[property], fd, property)
       } else {
-        fd.append(formKey, obj[property])
+        const value = obj[property] === null ? '' : obj[property]
+        fd.append(formKey, value)
       }
     })
 
