@@ -1,5 +1,12 @@
 
 
+## [3.29.2](https://github.com/globalbrain/sefirot/compare/v3.29.1...v3.29.2) (2024-2-9)
+
+
+### Bug Fixes
+
+* **http:** send null values as empty string in upload requests ([8b7eb78](https://github.com/globalbrain/sefirot/commit/8b7eb78b03bc595af91ad4f730451ffdfde641ed))
+
 ## [3.29.1](https://github.com/globalbrain/sefirot/compare/v3.29.0...v3.29.1) (2024-2-9)
 
 
