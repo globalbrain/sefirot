@@ -1,7 +1,5 @@
-import isEqual from 'lodash-es/isEqual'
-import isPlainObject from 'lodash-es/isPlainObject'
-import { type MaybeRef, unref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { type MaybeRef, nextTick, unref, watch } from 'vue'
+import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
   casts?: Record<string, (value: any) => any>
@@ -10,119 +8,190 @@ export interface UseUrlQuerySyncOptions {
 
 export function useUrlQuerySync(
   state: MaybeRef<Record<string, any>>,
-  { casts = {}, exclude }: UseUrlQuerySyncOptions = {}
+  options: UseUrlQuerySyncOptions = {}
 ): void {
-  const router = useRouter()
   const route = useRoute()
 
-  const flattenInitialState = flattenObject(
-    JSON.parse(JSON.stringify(unref(state)))
+  const flattenedDefaultState = flattenObject(unref(state))
+
+  let isSyncing = false
+
+  watch(
+    () => route.query,
+    async (query) => {
+      if (isSyncing) {
+        return
+      }
+
+      isSyncing = true
+      await setStateFromQuery(query, options)
+      isSyncing = false
+    },
+    { deep: true, immediate: true }
   )
 
-  setStateFromQuery()
-
-  watch(() => unref(state), setQueryFromState, {
-    deep: true,
-    immediate: true
-  })
-
-  function setStateFromQuery() {
-    const flattenState = flattenObject(unref(state))
-    const flattenQuery = flattenObject(route.query)
-
-    Object.keys(flattenQuery).forEach((key) => {
-      if (exclude?.includes(key)) {
+  watch(
+    () => unref(state),
+    async (state) => {
+      if (isSyncing) {
         return
       }
 
-      const value = flattenQuery[key]
-      if (value === undefined) {
-        return
+      isSyncing = true
+      await setQueryFromState(state, options)
+      isSyncing = false
+    },
+    { deep: true }
+  )
+
+  async function setStateFromQuery(
+    query: LocationQuery,
+    { casts = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
+  ) {
+    const flattenedQuery = flattenObject(query)
+
+    const result: Record<string, any> = {}
+
+    for (const key in flattenedQuery) {
+      if (exclude.includes(key)) {
+        continue
       }
 
+      const value = flattenedQuery[key]
       const cast = casts[key]
-      flattenState[key] = cast ? cast(value) : value
-    })
 
-    deepAssign(unref(state), unflattenObject(flattenState))
-  }
-
-  async function setQueryFromState() {
-    const flattenState = flattenObject(unref(state))
-    const flattenQuery = flattenObject(route.query)
-
-    Object.keys(flattenState).forEach((key) => {
-      if (exclude?.includes(key)) {
-        return
-      }
-
-      const value = flattenState[key]
-      const initialValue = flattenInitialState[key]
-
-      if (isEqual(value, initialValue)) {
-        delete flattenQuery[key]
+      if (cast) {
+        result[key] = cast(value)
       } else {
-        flattenQuery[key] = value
+        result[key] = value
       }
-
-      if (flattenQuery[key] === undefined) {
-        delete flattenQuery[key]
-      }
-    })
-
-    await router.replace({ query: unflattenObject(flattenQuery) })
-  }
-}
-
-function flattenObject(obj: Record<string, any>, prefix = '') {
-  return Object.keys(obj).reduce((acc, k) => {
-    const pre = prefix.length ? `${prefix}.` : ''
-    if (isPlainObject(obj[k])) {
-      Object.assign(acc, flattenObject(obj[k], pre + k))
-    } else {
-      acc[pre + k] = obj[k]
     }
-    return acc
-  }, {} as Record<string, any>)
+
+    const newState = unflattenObject({ ...flattenedDefaultState, ...result })
+
+    deepAssign(unref(state), newState)
+
+    await nextTick()
+
+    const newQuery: Record<string, any> = {}
+
+    for (const key in newState) {
+      if (flattenedDefaultState[key] !== newState[key]) {
+        newQuery[key] = newState[key]
+      }
+    }
+
+    const currentQuery = flattenObject(route.query)
+
+    let isSame = true
+    for (const key in newQuery) {
+      if (newQuery[key] !== currentQuery[key]) {
+        isSame = false
+        break
+      }
+    }
+
+    if (isSame) {
+      return
+    }
+
+    await useRouter().replace({ query: unflattenObject(newQuery) })
+  }
+
+  async function setQueryFromState(
+    state: Record<string, any>,
+    { casts = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
+  ) {
+    const flattenedState = flattenObject(state)
+
+    const newQuery: Record<string, any> = {}
+
+    for (const key in flattenedState) {
+      if (exclude.includes(key)) {
+        continue
+      }
+
+      const value = flattenedState[key]
+      const cast = casts[key]
+
+      if (cast) {
+        newQuery[key] = cast(value)
+      } else {
+        newQuery[key] = value
+      }
+
+      if (flattenedDefaultState[key] === value) {
+        delete newQuery[key]
+      }
+    }
+
+    const currentQuery = flattenObject(route.query)
+
+    let isSame = true
+    for (const key in newQuery) {
+      if (newQuery[key] !== currentQuery[key]) {
+        isSame = false
+        break
+      }
+    }
+
+    if (isSame) {
+      return
+    }
+
+    await useRouter().replace({ query: unflattenObject(newQuery) })
+  }
 }
 
-function unflattenObject(obj: Record<string, any>) {
-  return Object.keys(obj).reduce((acc, k) => {
-    const keys = k.split('.')
-    keys.reduce((a, c, i) => {
-      if (i === keys.length - 1) {
-        a[c] = obj[k]
-      } else {
-        a[c] = a[c] || {}
-      }
-      return a[c]
-    }, acc)
-    return acc
-  }, {} as Record<string, any>)
+function flattenObject(
+  obj: Record<string, any>,
+  path: string[] = []
+): Record<string, any> {
+  const result: Record<string, any> = {}
+
+  for (const key in obj) {
+    const value = obj[key]
+
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      Object.assign(result, flattenObject(value, [...path, key]))
+    } else {
+      result[path.concat(key).join('.')] = value
+    }
+  }
+
+  return result
+}
+
+function unflattenObject(obj: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {}
+
+  for (const key in obj) {
+    const value = obj[key]
+
+    let target = result
+    const keys = key.split('.')
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i]
+      target = target[k] = target[k] || {}
+    }
+
+    target[keys[keys.length - 1]] = value
+  }
+
+  return result
 }
 
 function deepAssign(target: Record<string, any>, source: Record<string, any>) {
-  const dest = target
-  const src = source
+  for (const key in source) {
+    const value = source[key]
 
-  if (isPlainObject(src)) {
-    Object.keys(src).forEach((key) => deepAssignBase(dest, src, key))
-  } else if (Array.isArray(src)) {
-    dest.length = src.length
-    src.forEach((_, key) => deepAssignBase(dest, src, key))
-  } else {
-    throw new TypeError('[deepAssign] src must be an object or array')
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      target[key] = deepAssign(target[key] || {}, value)
+    } else {
+      target[key] = value
+    }
   }
-}
 
-function deepAssignBase(
-  dest: Record<string, any>,
-  src: Record<string, any>,
-  key: string | number
-) {
-  if (typeof src[key] === 'object' && src[key] !== null) {
-    deepAssign(dest[key], src[key])
-  } else {
-    dest[key] = src[key]
-  }
+  return target
 }
