@@ -11,6 +11,7 @@ export function useUrlQuerySync(
   options: UseUrlQuerySyncOptions = {}
 ): void {
   const route = useRoute()
+  const router = useRouter()
 
   const flattenedDefaultState = flattenObject(unref(state))
 
@@ -67,9 +68,9 @@ export function useUrlQuerySync(
       }
     }
 
-    const newState = unflattenObject({ ...flattenedDefaultState, ...result })
+    const newState = { ...flattenedDefaultState, ...result }
 
-    deepAssign(unref(state), newState)
+    deepAssign(unref(state), unflattenObject(newState))
 
     await nextTick()
 
@@ -84,7 +85,7 @@ export function useUrlQuerySync(
     const currentQuery = flattenObject(route.query)
 
     let isSame = true
-    for (const key in newQuery) {
+    for (const key in currentQuery) {
       if (newQuery[key] !== currentQuery[key]) {
         isSame = false
         break
@@ -95,7 +96,7 @@ export function useUrlQuerySync(
       return
     }
 
-    await useRouter().replace({ query: unflattenObject(newQuery) })
+    await router.replace({ query: unflattenObject(newQuery) })
   }
 
   async function setQueryFromState(
@@ -139,7 +140,7 @@ export function useUrlQuerySync(
       return
     }
 
-    await useRouter().replace({ query: unflattenObject(newQuery) })
+    await router.replace({ query: unflattenObject(newQuery) })
   }
 }
 
