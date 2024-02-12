@@ -187,7 +187,9 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
   for (const key in source) {
     const value = source[key]
 
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if (Array.isArray(value)) {
+      target[key].splice(0, target[key].length, ...value)
+    } else if (value && typeof value === 'object') {
       target[key] = deepAssign(target[key] || {}, value)
     } else {
       target[key] = value
@@ -196,3 +198,8 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
 
   return target
 }
+
+/* Caveats:
+  - Vulnerable to prototype pollution
+  - Does not support objects inside arrays
+*/
