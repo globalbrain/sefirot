@@ -7,6 +7,13 @@ export interface UseUrlQuerySyncOptions {
   exclude?: string[]
 }
 
+/**
+ * Sync between the given state and the URL query params.
+ *
+ * Caveats:
+ * - Vulnerable to prototype pollution.
+ * - Does not support objects inside arrays.
+ */
 export function useUrlQuerySync(
   state: MaybeRef<Record<string, any>>,
   { casts = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
@@ -132,8 +139,3 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
 
   return target
 }
-
-/* Caveats:
-  - Vulnerable to prototype pollution
-  - Does not support objects inside arrays
-*/
