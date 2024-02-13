@@ -1,128 +1,141 @@
 import isEqual from 'lodash-es/isEqual'
-import isPlainObject from 'lodash-es/isPlainObject'
-import { type MaybeRef, unref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { type MaybeRef, nextTick, unref, watch } from 'vue'
+import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
   casts?: Record<string, (value: any) => any>
   exclude?: string[]
 }
 
+/**
+ * Sync between the given state and the URL query params.
+ *
+ * Caveats:
+ * - Vulnerable to prototype pollution.
+ * - Does not support objects inside arrays.
+ */
 export function useUrlQuerySync(
   state: MaybeRef<Record<string, any>>,
-  { casts = {}, exclude }: UseUrlQuerySyncOptions = {}
+  { casts = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
 ): void {
-  const router = useRouter()
   const route = useRoute()
+  const router = useRouter()
 
-  const flattenInitialState = flattenObject(
-    JSON.parse(JSON.stringify(unref(state)))
+  const flattenedDefaultState = flattenObject(unref(state))
+
+  let isSyncing = false
+
+  watch(
+    () => route.query,
+    async () => {
+      if (!isSyncing) {
+        isSyncing = true
+        await setState()
+        isSyncing = false
+      }
+    },
+    { deep: true, immediate: true }
   )
 
-  setStateFromQuery()
-
-  watch(() => unref(state), setQueryFromState, {
-    deep: true,
-    immediate: true
-  })
-
-  function setStateFromQuery() {
-    const flattenState = flattenObject(unref(state))
-    const flattenQuery = flattenObject(route.query)
-
-    Object.keys(flattenQuery).forEach((key) => {
-      if (exclude?.includes(key)) {
-        return
+  watch(
+    () => unref(state),
+    async () => {
+      if (!isSyncing) {
+        isSyncing = true
+        await setQuery()
+        isSyncing = false
       }
+    },
+    { deep: true }
+  )
 
-      const value = flattenQuery[key]
-      if (value === undefined) {
-        return
-      }
+  async function setState() {
+    const newState = unflattenObject({ ...flattenedDefaultState, ...normalizeQuery(route.query) })
+    deepAssign(unref(state), newState)
 
-      const cast = casts[key]
-      flattenState[key] = cast ? cast(value) : value
-    })
-
-    deepAssign(unref(state), unflattenObject(flattenState))
+    await nextTick()
+    await setQuery()
   }
 
-  async function setQueryFromState() {
-    const flattenState = flattenObject(unref(state))
-    const flattenQuery = flattenObject(route.query)
+  async function setQuery() {
+    const flattenedState = flattenObject(unref(state))
+    const newQuery: Record<string, any> = {}
 
-    Object.keys(flattenState).forEach((key) => {
-      if (exclude?.includes(key)) {
-        return
+    for (const key in flattenedState) {
+      if (!exclude.includes(key) && flattenedDefaultState[key] !== flattenedState[key]) {
+        newQuery[key] = flattenedState[key]
       }
-
-      const value = flattenState[key]
-      const initialValue = flattenInitialState[key]
-
-      if (isEqual(value, initialValue)) {
-        delete flattenQuery[key]
-      } else {
-        flattenQuery[key] = value
-      }
-
-      if (flattenQuery[key] === undefined) {
-        delete flattenQuery[key]
-      }
-    })
-
-    await router.replace({ query: unflattenObject(flattenQuery) })
-  }
-}
-
-function flattenObject(obj: Record<string, any>, prefix = '') {
-  return Object.keys(obj).reduce((acc, k) => {
-    const pre = prefix.length ? `${prefix}.` : ''
-    if (isPlainObject(obj[k])) {
-      Object.assign(acc, flattenObject(obj[k], pre + k))
-    } else {
-      acc[pre + k] = obj[k]
     }
-    return acc
-  }, {} as Record<string, any>)
+
+    const currentQuery = normalizeQuery(route.query)
+
+    if (!isEqual(newQuery, currentQuery)) {
+      await router.replace({ query: unflattenObject(newQuery) })
+    }
+  }
+
+  function normalizeQuery(query: LocationQuery): Record<string, any> {
+    const flattenedQuery = flattenObject(query)
+    const result: Record<string, any> = {}
+
+    for (const key in flattenedQuery) {
+      if (!exclude.includes(key)) {
+        result[key] = casts[key] ? casts[key](flattenedQuery[key]) : flattenedQuery[key]
+      }
+    }
+
+    return result
+  }
 }
 
-function unflattenObject(obj: Record<string, any>) {
-  return Object.keys(obj).reduce((acc, k) => {
-    const keys = k.split('.')
-    keys.reduce((a, c, i) => {
-      if (i === keys.length - 1) {
-        a[c] = obj[k]
-      } else {
-        a[c] = a[c] || {}
-      }
-      return a[c]
-    }, acc)
-    return acc
-  }, {} as Record<string, any>)
+function flattenObject(obj: Record<string, any>, path: string[] = []): Record<string, any> {
+  const result: Record<string, any> = {}
+
+  for (const key in obj) {
+    const value = obj[key]
+
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      Object.assign(result, flattenObject(value, [...path, key]))
+    } else {
+      result[path.concat(key).join('.')] = value
+    }
+  }
+
+  return result
+}
+
+function unflattenObject(obj: Record<string, any>): Record<string, any> {
+  const result: Record<string, any> = {}
+
+  for (const key in obj) {
+    const value = obj[key]
+
+    let target = result
+    const keys = key.split('.')
+
+    for (let i = 0; i < keys.length - 1; i++) {
+      const k = keys[i]
+      target = target[k] = target[k] || {}
+    }
+
+    target[keys[keys.length - 1]] = value
+  }
+
+  return result
 }
 
 function deepAssign(target: Record<string, any>, source: Record<string, any>) {
-  const dest = target
-  const src = source
+  for (const key in source) {
+    const value = source[key]
 
-  if (isPlainObject(src)) {
-    Object.keys(src).forEach((key) => deepAssignBase(dest, src, key))
-  } else if (Array.isArray(src)) {
-    dest.length = src.length
-    src.forEach((_, key) => deepAssignBase(dest, src, key))
-  } else {
-    throw new TypeError('[deepAssign] src must be an object or array')
+    if (Array.isArray(value)) {
+      target[key].splice(0, target[key].length, ...value)
+    } else if (value && typeof value === 'object') {
+      target[key] = deepAssign(target[key] || {}, value)
+    } else {
+      target[key] = value
+    }
   }
-}
 
-function deepAssignBase(
-  dest: Record<string, any>,
-  src: Record<string, any>,
-  key: string | number
-) {
-  if (typeof src[key] === 'object' && src[key] !== null) {
-    deepAssign(dest[key], src[key])
-  } else {
-    dest[key] = src[key]
-  }
+  return target
 }
