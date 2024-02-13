@@ -1,5 +1,12 @@
 
 
+# [3.30.0](https://github.com/globalbrain/sefirot/compare/v3.29.2...v3.30.0) (2024-2-13)
+
+
+### Bug Fixes
+
+* **url:** many bugs with useUrlQuerySync ([#467](https://github.com/globalbrain/sefirot/issues/467)) ([50e34e8](https://github.com/globalbrain/sefirot/commit/50e34e8a51bb5ff31cb4ef64a7451bd7eb73a521))
+
 ## [3.29.2](https://github.com/globalbrain/sefirot/compare/v3.29.1...v3.29.2) (2024-2-9)
 
 
