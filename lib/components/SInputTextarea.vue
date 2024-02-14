@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { type Validatable } from '../composables/V'
 import SInputBase from './SInputBase.vue'
+import SInputSegments from './SInputSegments.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
@@ -24,6 +25,9 @@ const props = defineProps<{
   modelValue?: string | null
   hideError?: boolean
   validation?: Validatable
+  preview?: (value: string | null) => string
+  previewLabel?: string
+  writeLabel?: string
 }>()
 
 const emit = defineEmits<{
@@ -57,6 +61,8 @@ function emitBlur(e: FocusEvent): void {
   emit('update:model-value', v)
   emit('blur', v)
 }
+
+const isPreview = ref(false)
 </script>
 
 <template>
@@ -74,7 +80,18 @@ function emitBlur(e: FocusEvent): void {
     :hide-error="hideError"
     :validation="validation"
   >
+    <SInputSegments
+      v-if="preview !== undefined"
+      :options="[
+        { label: writeLabel ?? 'Write', value: false },
+        { label: previewLabel ?? 'Preview', value: true }
+      ]"
+      v-model="isPreview"
+      size="mini"
+      class="preview-toggle s-pb-8"
+    />
     <textarea
+      v-show="!isPreview"
       :id="name"
       class="input"
       :class="{ fill: rows === 'fill' }"
@@ -85,13 +102,19 @@ function emitBlur(e: FocusEvent): void {
       @input="emitInput"
       @blur="emitBlur"
     />
+    <div
+      v-if="preview !== undefined && isPreview"
+      class="prose"
+      :class="!_value && 'empty s-text-3'"
+      v-html="preview(_value)"
+    />
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
 
 <style scoped lang="postcss">
 .SInputTextarea.mini {
-  .input {
+  .input, .prose {
     padding: 6px 10px;
     width: 100%;
     min-height: 80px;
@@ -101,7 +124,7 @@ function emitBlur(e: FocusEvent): void {
 }
 
 .SInputTextarea.small {
-  .input {
+  .input, .prose {
     padding: 7px 12px;
     width: 100%;
     min-height: 96px;
@@ -111,7 +134,7 @@ function emitBlur(e: FocusEvent): void {
 }
 
 .SInputTextarea.medium {
-  .input {
+  .input, .prose {
     padding: 11px 16px;
     width: 100%;
     min-height: 96px;
@@ -141,7 +164,7 @@ function emitBlur(e: FocusEvent): void {
   }
 }
 
-.input {
+.input, .prose {
   display: block;
   flex-grow: 1;
   border: 1px solid var(--input-border-color);
@@ -151,7 +174,9 @@ function emitBlur(e: FocusEvent): void {
   font-weight: 400;
   background-color: var(--input-bg-color);
   transition: border-color 0.25s, background-color 0.25s;
+}
 
+.input {
   &::placeholder {
     color: var(--input-placeholder-color);
   }

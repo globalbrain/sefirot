@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import { useMarkdown } from 'sefirot/composables/Markdown'
 import { ref } from 'vue'
 
 const title = 'Components / SInputTextarea / 01. Playground'
@@ -19,6 +20,13 @@ function state() {
     disabled: false,
     error: false
   }
+}
+
+const render = useMarkdown()
+
+function preview() {
+  if (!text.value) { return 'Nothing to preview' }
+  return render(text.value, false)
 }
 </script>
 
@@ -81,6 +89,7 @@ function state() {
           :rows="state.rows"
           :disabled="state.disabled"
           v-model="text"
+          :preview="preview"
         />
       </Board>
     </template>

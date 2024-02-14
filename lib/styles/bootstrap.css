@@ -1,6 +1,6 @@
 @import "normalize.css";
 @import "v-calendar/dist/style.css";
-@import "./variables-deprecated";
-@import "./variables";
-@import "./base";
-@import "./utilities";
+@import "./variables-deprecated.css";
+@import "./variables.css";
+@import "./base.css";
+@import "./utilities.css";
