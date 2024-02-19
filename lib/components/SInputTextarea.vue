@@ -213,9 +213,11 @@ const isPreview = ref(false)
 }
 
 .SInputTextarea.disabled {
-  .input,
-  .input:hover {
+  .box {
     border-color: var(--input-disabled-border-color);
+  }
+
+  .input {
     color: var(--input-disabled-value-color);
     background-color: var(--input-disabled-bg-color);
     cursor: not-allowed;
@@ -223,13 +225,8 @@ const isPreview = ref(false)
 }
 
 .SInputTextarea.has-error {
-  .input {
+  .box {
     border-color: var(--input-error-border-color);
-
-    &:hover,
-    &:focus {
-      border-color: var(--input-error-border-color);
-    }
   }
 }
 </style>
