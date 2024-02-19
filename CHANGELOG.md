@@ -1,5 +1,12 @@
 
 
+# [3.31.0](https://github.com/globalbrain/sefirot/compare/v3.30.0...v3.31.0) (2024-2-19)
+
+
+### Features
+
+* **input-textarea:** add preview functionality ([#471](https://github.com/globalbrain/sefirot/issues/471)) ([1510d12](https://github.com/globalbrain/sefirot/commit/1510d12b9fd7eb15d4b25941bd251ca0ed944f49))
+
 # [3.30.0](https://github.com/globalbrain/sefirot/compare/v3.29.2...v3.30.0) (2024-2-13)
 
 
