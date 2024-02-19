@@ -12,6 +12,7 @@ export interface UseMarkdownOptions extends MarkdownIt.Options {
 
 export function useMarkdown(options: UseMarkdownOptions = {}): UseMarkdown {
   const md = new MarkdownIt({
+    html: true,
     linkify: true,
     ...options
   })
