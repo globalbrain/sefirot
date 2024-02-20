@@ -1,7 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large'
+export type Size =
+  | 'nano'
+  | 'mini'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'jumbo'
+  | 'mega'
+  | 'fill'
 
 const props = defineProps<{
   size?: Size
@@ -34,6 +42,14 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   overflow: hidden;
 }
 
+.img {
+  object-fit: cover;
+}
+
+.initial {
+  font-weight: 500;
+}
+
 .SAvatar.nano {
   width: 20px;
   height: 20px;
@@ -64,15 +80,19 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   .initial { font-size: 16px; }
 }
 
+.SAvatar.jumbo {
+  width: 48px;
+  height: 48px;
+  .initial { font-size: 16px; }
+}
+
+.SAvatar.fill {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  .initial { font-size: 20px; }
+}
+
 .SAvatar.no-image {
   border: 1px solid var(--c-border-mute-1);
-}
-
-.img {
-  object-fit: cover;
-}
-
-.initial {
-  font-weight: 500;
 }
 </style>
