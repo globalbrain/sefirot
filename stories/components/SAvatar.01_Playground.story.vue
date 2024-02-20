@@ -9,7 +9,8 @@ const variants = [
   { title: 'Mini', size: 'mini' },
   { title: 'Small', size: 'small' },
   { title: 'Medium', size: 'medium' },
-  { title: 'Large', size: 'large' }
+  { title: 'Large', size: 'large' },
+  { title: 'Jumbo', size: 'jumbo' }
 ] as const
 </script>
 
