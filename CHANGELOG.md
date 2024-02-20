@@ -1,5 +1,12 @@
 
 
+# [3.32.0](https://github.com/globalbrain/sefirot/compare/v3.31.0...v3.32.0) (2024-02-20)
+
+
+### Features
+
+* **avatar:** add more size option ([#475](https://github.com/globalbrain/sefirot/issues/475)) ([b118e27](https://github.com/globalbrain/sefirot/commit/b118e27c998314d94d5b6261b6f59ce5889f3d05))
+
 # [3.31.0](https://github.com/globalbrain/sefirot/compare/v3.30.0...v3.31.0) (2024-2-19)
 
 
