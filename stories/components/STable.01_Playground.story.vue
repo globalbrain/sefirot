@@ -16,7 +16,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
+import { computed, markRaw, reactive, ref, shallowRef, watchEffect } from 'vue'
 
 interface Sort {
   by: string
@@ -350,6 +350,13 @@ function updateTypeFilter(value: string) {
 function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
+
+const selected = ref<string | null>(null)
+
+watchEffect(() => {
+  // eslint-disable-next-line no-console
+  console.log('selected', selected.value)
+})
 </script>
 
 <template>
@@ -368,7 +375,7 @@ function updateTagsFilter(value: string) {
           </SControl>
         </SCardBlock>
         <SCardBlock>
-          <STable class="table" :options="table" />
+          <STable class="table" :options="table" v-model:selected="selected" />
         </SCardBlock>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>

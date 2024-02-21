@@ -17,7 +17,7 @@ const props = defineProps<{
   checkIcon?: IconifyIcon | DefineComponent
   checkText?: string
   checkColor?: Color
-  text: string
+  text?: string
   disabled?: boolean
   modelValue: boolean
   validation?: Validatable
@@ -68,7 +68,7 @@ function onClick() {
           <div class="check" />
         </div>
 
-        <p class="text">{{ text }}</p>
+        <p class="text" v-if="text">{{ text }}</p>
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>

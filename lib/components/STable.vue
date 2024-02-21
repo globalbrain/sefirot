@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="S extends any[] | any | undefined = undefined">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
@@ -15,6 +15,7 @@ import {
 import { type Table } from '../composables/Table'
 import { getTextWidth } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
+import SInputRadio from './SInputRadio.vue'
 import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
@@ -24,11 +25,11 @@ import STableItem from './STableItem.vue'
 
 const props = defineProps<{
   options: Table
-  selected?: unknown[]
+  selected?: S
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:selected', value: unknown[]): void
+  (e: 'update:selected', value: S): void
 }>()
 
 const head = shallowRef<HTMLElement | null>(null)
@@ -41,7 +42,7 @@ const ordersToShow = computed(() => {
     const show = unref(props.options.columns)[key]?.show
     return toValue(show) !== false
   })
-  if (!props.selected) {
+  if (props.selected === undefined) {
     return orders
   }
   return ['__select', ...orders]
@@ -126,7 +127,7 @@ const recordsWithSummary = computed(() => {
 })
 
 const indexes = computed(() => {
-  if (!props.selected) {
+  if (props.selected === undefined) {
     return []
   }
   const records = unref(props.options.records) ?? []
@@ -139,9 +140,6 @@ const selectedIndexes = reactive(new Set())
 
 const control = computed({
   get() {
-    if (!props.selected) {
-      return false
-    }
     const selected = indexes.value.filter((index) => {
       return selectedIndexes.has(index)
     })
@@ -165,12 +163,11 @@ const control = computed({
 })
 
 watch(indexes, (newValue, oldValue) => {
-  if (!props.selected) {
-    return
+  if (Array.isArray(props.selected)) {
+    xor(newValue, oldValue).forEach((index) => {
+      selectedIndexes.delete(index)
+    })
   }
-  xor(newValue, oldValue).forEach((index) => {
-    selectedIndexes.delete(index)
-  })
 })
 
 const virtualizerOptions = computed(() => ({
@@ -343,8 +340,12 @@ function getCell(key: string, index: number) {
   return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
 }
 
-function updateSelected(selected: unknown[]) {
-  if (xor(selected, props.selected ?? []).length) {
+function updateSelected(selected: any) {
+  if (Array.isArray(props.selected)) {
+    if (xor(selected, props.selected ?? []).length) {
+      emit('update:selected', selected)
+    }
+  } else {
     emit('update:selected', selected)
   }
 }
@@ -361,7 +362,7 @@ function updateSelected(selected: unknown[]) {
         :actions="unref(options.actions)"
         :borderless="unref(options.borderless)"
         :on-reset="options.onReset"
-        :selected="selected"
+        :selected="Array.isArray(selected) ? selected : undefined"
       />
 
       <div class="table" role="grid">
@@ -389,7 +390,7 @@ function updateSelected(selected: unknown[]) {
                   @resize="(value) => updateColWidth(key, value, true)"
                 >
                   <SInputCheckbox
-                    v-if="key === '__select' && unref(options.records)?.length"
+                    v-if="Array.isArray(selected) && key === '__select' && unref(options.records)?.length"
                     v-model="control"
                   />
                 </STableColumn>
@@ -444,11 +445,18 @@ function updateSelected(selected: unknown[]) {
                     :record="recordsWithSummary[index]"
                     :records="unref(options.records)!"
                   >
-                    <SInputCheckbox
-                      v-if="key === '__select' && !isSummary(index)"
-                      :value="selectedIndexes.has(indexes[index])"
-                      @change="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
-                    />
+                    <template v-if="key === '__select' && !isSummary(index)">
+                      <SInputCheckbox
+                        v-if="Array.isArray(selected)"
+                        :model-value="selectedIndexes.has(indexes[index])"
+                        @update:model-value="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                      />
+                      <SInputRadio
+                        v-else
+                        :model-value="selected === indexes[index]"
+                        @update:model-value="c => updateSelected(c ? indexes[index] : null)"
+                      />
+                    </template>
                   </STableCell>
                 </STableItem>
               </div>
@@ -598,6 +606,7 @@ function updateSelected(selected: unknown[]) {
     align-items: center;
     padding: 0 16px;
     min-height: 40px;
+    user-select: none;
   }
 
   :deep(.container) {
