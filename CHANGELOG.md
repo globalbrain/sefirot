@@ -1,5 +1,12 @@
 
 
+# [3.33.0](https://github.com/globalbrain/sefirot/compare/v3.32.0...v3.33.0) (2024-02-22)
+
+
+### Features
+
+* **table:** support selecting single row ([#477](https://github.com/globalbrain/sefirot/issues/477)) ([e54cbae](https://github.com/globalbrain/sefirot/commit/e54cbae2d5d8794e125c533855b55c2436886103))
+
 # [3.32.0](https://github.com/globalbrain/sefirot/compare/v3.31.0...v3.32.0) (2024-02-20)
 
 
