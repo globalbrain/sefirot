@@ -1,5 +1,12 @@
 
 
+## [3.33.1](https://github.com/globalbrain/sefirot/compare/v3.33.0...v3.33.1) (2024-2-26)
+
+
+### Bug Fixes
+
+* **base:** wrap text content to avoid breaking layout ([#480](https://github.com/globalbrain/sefirot/issues/480)) ([0d7d56c](https://github.com/globalbrain/sefirot/commit/0d7d56c81c0c7f0744f20cff6b5fcd381e620f35))
+
 # [3.33.0](https://github.com/globalbrain/sefirot/compare/v3.32.0...v3.33.0) (2024-02-22)
 
 
