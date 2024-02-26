@@ -42,6 +42,17 @@ h6 {
   font-weight: inherit;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+p {
+  overflow-wrap: break-word;
+}
+
 /**
  * Avoid 300ms click delay on touch devices that support the `touch-action`
  * CSS property.
