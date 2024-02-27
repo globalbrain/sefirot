@@ -54,7 +54,7 @@ const _avatar = computed(() => {
 
 .SDescAvatar.row {
   flex-direction: row;
-  gap: 12px;
+  gap: 4px 12px;
 }
 
 .value {
