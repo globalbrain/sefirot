@@ -1,5 +1,12 @@
 
 
+# [3.34.0](https://github.com/globalbrain/sefirot/compare/v3.33.1...v3.34.0) (2024-02-28)
+
+
+### Features
+
+* **desc:** enable passing multiple avatars to `<SDescAvatar>` ([#482](https://github.com/globalbrain/sefirot/issues/482)) ([199160c](https://github.com/globalbrain/sefirot/commit/199160c79b1a0ad3ab5f613d3d28290fa925733f))
+
 ## [3.33.1](https://github.com/globalbrain/sefirot/compare/v3.33.0...v3.33.1) (2024-2-26)
 
 
