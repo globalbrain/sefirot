@@ -435,6 +435,7 @@ Use `<SDescAvatar>` component to display a value using [`<SAvatar>`](./avatar).
 ```ts
 interface Props {
   avatar?: Avatar | null
+  dir?: 'column' | 'row'
 }
 
 interface Avatar {
@@ -451,6 +452,31 @@ interface Avatar {
       avatar: "/path/to/avatar.jpg",
       name: "John Doe"
     }" />
+  </SDescItem>
+</SDesc>
+```
+
+You may also pass in multiple avatars as an array.
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel value="Status" />
+    <SDescAvatar :avatar="[
+      { avatar: "/path/to/avatar.jpg", name: "John Doe" },
+      { avatar: "/path/to/avatar.jpg", name: "Jane Doe" }
+    ]" />
+  </SDescItem>
+</SDesc>
+```
+
+When passing in multiple avatars, you may also define `:dir` to control the direction of the avatar stack. The default is set to `column` which stacks the avatars vertically. You may set it to `row` to stack them horizontally.
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel value="Status" />
+    <SDescAvatar dir="row" :avatar="avatars" />
   </SDescItem>
 </SDesc>
 ```

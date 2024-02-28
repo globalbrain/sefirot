@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { isArray } from '../support/Utils'
 import SAvatar from './SAvatar.vue'
 import SDescEmpty from './SDescEmpty.vue'
 
@@ -7,21 +9,32 @@ export interface Avatar {
   name?: string | null
 }
 
-defineProps<{
-  avatar?: Avatar | null
-}>()
+const props = withDefaults(defineProps<{
+  avatar?: Avatar | Avatar[] | null
+  dir?: 'column' | 'row'
+}>(), {
+  dir: 'column'
+})
+
+const _avatar = computed(() => {
+  if (!props.avatar) {
+    return null
+  }
+
+  return isArray(props.avatar) ? props.avatar : [props.avatar]
+})
 </script>
 
 <template>
-  <div v-if="avatar" class="SDescAvatar">
-    <div class="value">
+  <div v-if="_avatar?.length" class="SDescAvatar" :class="[dir]">
+    <div v-for="a, i in _avatar" :key="i" class="value">
       <SAvatar
         size="nano"
-        :avatar="avatar.avatar"
-        :name="avatar.name"
+        :avatar="a.avatar"
+        :name="a.name"
       />
-      <span v-if="avatar.name" class="name">
-        {{ avatar.name }}
+      <span v-if="a.name" class="name">
+        {{ a.name }}
       </span>
     </div>
   </div>
@@ -29,6 +42,21 @@ defineProps<{
 </template>
 
 <style scoped lang="postcss">
+.SDescAvatar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.SDescAvatar.column {
+  flex-direction: column;
+  gap: 4px;
+}
+
+.SDescAvatar.row {
+  flex-direction: row;
+  gap: 4px 12px;
+}
+
 .value {
   display: flex;
   align-items: center;
