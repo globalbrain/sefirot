@@ -3,6 +3,7 @@ import IconCheck from '@iconify-icons/ph/check'
 import Fuse from 'fuse.js'
 import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
 import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
+import { useTrans } from '../composables/Lang'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SIcon from './SIcon.vue'
@@ -13,6 +14,17 @@ const props = defineProps<{
   options: MaybeRef<DropdownSectionFilterOption[]>
   onClick?(value: any): void
 }>()
+
+const { t } = useTrans({
+  en: {
+    i_ph: 'Filter options',
+    not_found: 'No options found.'
+  },
+  ja: {
+    i_ph: 'オプションを検索',
+    not_found: 'オプションが見つかりません。'
+  }
+})
 
 const input = ref<HTMLElement | null>(null)
 const query = ref('')
@@ -60,7 +72,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
 <template>
   <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
-      <input class="input" placeholder="Filter options" ref="input" v-model="query">
+      <input class="input" :placeholder="t.i_ph" ref="input" v-model="query">
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
@@ -89,7 +101,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
     </ul>
 
     <p v-else class="empty">
-      No options found.
+      {{ t.not_found }}
     </p>
   </div>
 </template>
@@ -105,6 +117,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   z-index: 10;
   border-bottom: 1px solid var(--c-gutter);
   padding: 8px;
+  background-color: var(--c-bg-elv-3);
 }
 
 .input {
@@ -138,8 +151,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   text-align: left;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover,
-  &:focus {
+  &:hover {
     background-color: var(--c-bg-mute-1);
   }
 }

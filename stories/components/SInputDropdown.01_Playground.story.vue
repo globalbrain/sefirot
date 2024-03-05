@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
+import SInputDropdown, { type OptionText } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 01. Playground'
 
 const value = ref<string[]>([])
 
-const options = [
+const options: OptionText[] = [
   { label: 'Vue.js', value: 'vuejs' },
   { label: 'Vite', value: 'vite' },
   { label: 'Adonis', value: 'adonis' },
@@ -22,8 +22,7 @@ const options = [
     <Board :title="title">
       <SInputDropdown
         label="Dropdown input"
-        info="Some helpful information."
-        placeholder="Please select items"
+        placeholder="Select items"
         :options="options"
         nullable
         v-model="value"

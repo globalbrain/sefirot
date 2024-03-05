@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x'
+import IconX from '@iconify-icons/ph/x-bold'
 import SIcon from './SIcon.vue'
 
 defineProps<{
