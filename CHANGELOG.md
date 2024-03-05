@@ -1,5 +1,12 @@
 
 
+## [3.35.1](https://github.com/globalbrain/sefirot/compare/v3.35.0...v3.35.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* **input-dropdown:** various fixes ([#487](https://github.com/globalbrain/sefirot/issues/487)) ([48783ae](https://github.com/globalbrain/sefirot/commit/48783aefcf1189aeb1dfda58d50b41f4e87d96c1))
+
 # [3.35.0](https://github.com/globalbrain/sefirot/compare/v3.34.0...v3.35.0) (2024-03-05)
 
 
