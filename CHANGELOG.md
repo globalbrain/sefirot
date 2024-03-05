@@ -1,5 +1,17 @@
 
 
+# [3.35.0](https://github.com/globalbrain/sefirot/compare/v3.34.0...v3.35.0) (2024-03-05)
+
+
+### Bug Fixes
+
+* **table:** use `mini` size for state cell ([#486](https://github.com/globalbrain/sefirot/issues/486)) ([90974b5](https://github.com/globalbrain/sefirot/commit/90974b5059164c7bdcb0b1501181f8d6b274b95c))
+
+
+### Features
+
+* **style:** add text color utility classes ([#485](https://github.com/globalbrain/sefirot/issues/485)) ([7fa79da](https://github.com/globalbrain/sefirot/commit/7fa79da10a05e64bce1e895331810aa695037ae0))
+
 # [3.34.0](https://github.com/globalbrain/sefirot/compare/v3.33.1...v3.34.0) (2024-02-28)
 
 
