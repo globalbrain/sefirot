@@ -62,7 +62,7 @@ export function useUrlQuerySync(
     const newQuery: Record<string, any> = {}
 
     for (const key in flattenedState) {
-      if (!exclude.includes(key) && flattenedDefaultState[key] !== flattenedState[key]) {
+      if (!exclude.includes(key) && !isEqual(flattenedState[key], flattenedDefaultState[key])) {
         newQuery[key] = flattenedState[key]
       }
     }
