@@ -94,7 +94,7 @@ function flattenObject(obj: Record<string, any>, path: string[] = []): Record<st
   for (const key in obj) {
     const value = obj[key]
 
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if (value && typeof value === 'object') {
       Object.assign(result, flattenObject(value, [...path, key]))
     } else {
       result[path.concat(key).join('.')] = value
