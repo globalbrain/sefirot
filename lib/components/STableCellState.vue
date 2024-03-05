@@ -11,6 +11,7 @@ defineProps<{
   <div class="STableCellState" :class="[mode ?? 'neutral']">
     <SState
       v-if="value"
+      size="mini"
       :mode="mode"
       :label="value"
     />
