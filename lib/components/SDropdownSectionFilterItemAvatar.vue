@@ -31,6 +31,7 @@ defineProps<{
 .name {
   display: inline-block;
   padding-left: 8px;
+  line-height: 20px;
   font-size: 14px;
   font-weight: 400;
   white-space: nowrap;
