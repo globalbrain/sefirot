@@ -1,6 +1,6 @@
 import { isString } from '../../support/Utils'
 
-export const SLACK_CHANNEL_NAME_MAX_LENGTH = 80 as const
+const SLACK_CHANNEL_NAME_MAX_LENGTH = 80 as const
 const SLACK_CHANNEL_NAME_INVALID_SUMBOLS = /[ ,.!@#$%^&*?(){}<>=+|・'`~/\\\[\]\"]/
 
 export interface SlackChannelNameOptions {
