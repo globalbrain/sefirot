@@ -1,5 +1,31 @@
 
 
+## [3.35.1](https://github.com/globalbrain/sefirot/compare/v3.35.0...v3.35.1) (2024-03-05)
+
+
+### Bug Fixes
+
+* **input-dropdown:** various fixes ([#487](https://github.com/globalbrain/sefirot/issues/487)) ([48783ae](https://github.com/globalbrain/sefirot/commit/48783aefcf1189aeb1dfda58d50b41f4e87d96c1))
+
+# [3.35.0](https://github.com/globalbrain/sefirot/compare/v3.34.0...v3.35.0) (2024-03-05)
+
+
+### Bug Fixes
+
+* **table:** use `mini` size for state cell ([#486](https://github.com/globalbrain/sefirot/issues/486)) ([90974b5](https://github.com/globalbrain/sefirot/commit/90974b5059164c7bdcb0b1501181f8d6b274b95c))
+
+
+### Features
+
+* **style:** add text color utility classes ([#485](https://github.com/globalbrain/sefirot/issues/485)) ([7fa79da](https://github.com/globalbrain/sefirot/commit/7fa79da10a05e64bce1e895331810aa695037ae0))
+
+# [3.34.0](https://github.com/globalbrain/sefirot/compare/v3.33.1...v3.34.0) (2024-02-28)
+
+
+### Features
+
+* **desc:** enable passing multiple avatars to `<SDescAvatar>` ([#482](https://github.com/globalbrain/sefirot/issues/482)) ([199160c](https://github.com/globalbrain/sefirot/commit/199160c79b1a0ad3ab5f613d3d28290fa925733f))
+
 ## [3.33.1](https://github.com/globalbrain/sefirot/compare/v3.33.0...v3.33.1) (2024-2-26)
 
 

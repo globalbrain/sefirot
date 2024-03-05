@@ -22,7 +22,7 @@ defineProps<{
   border: 1px solid var(--c-divider);
   border-radius: 6px;
   min-width: 288px;
-  max-height: 384px;
+  max-height: 364px;
   overflow-y: auto;
   white-space: normal;
 

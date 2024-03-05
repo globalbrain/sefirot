@@ -1,3 +1,5 @@
 [build.environment]
-  NODE_VERSION = "18"
-  NPM_FLAGS = "--version"
+  NODE_VERSION = "20"
+
+[images]
+  remote_images = ["https:\\/\\/(?:[^\\/]*\\.)?globalbrains\\.com\\/.*"]
