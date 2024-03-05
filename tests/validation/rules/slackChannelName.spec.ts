@@ -12,6 +12,38 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator([], null, null)).toBe(true)
 
     expect(rule.$validator('1'.repeat(81), null, null)).toBe(false)
+    expect(rule.$validator(' ', null, null)).toBe(false)
+    expect(rule.$validator(',', null, null)).toBe(false)
+    expect(rule.$validator('.', null, null)).toBe(false)
+    expect(rule.$validator('!', null, null)).toBe(false)
+    expect(rule.$validator('@', null, null)).toBe(false)
+    expect(rule.$validator('#', null, null)).toBe(false)
+    expect(rule.$validator('$', null, null)).toBe(false)
+    expect(rule.$validator('%', null, null)).toBe(false)
+    expect(rule.$validator('^', null, null)).toBe(false)
+    expect(rule.$validator('&', null, null)).toBe(false)
+    expect(rule.$validator('*', null, null)).toBe(false)
+    expect(rule.$validator('?', null, null)).toBe(false)
+    expect(rule.$validator('(', null, null)).toBe(false)
+    expect(rule.$validator(')', null, null)).toBe(false)
+    expect(rule.$validator('{', null, null)).toBe(false)
+    expect(rule.$validator('}', null, null)).toBe(false)
+    expect(rule.$validator('<', null, null)).toBe(false)
+    expect(rule.$validator('>', null, null)).toBe(false)
+    expect(rule.$validator('=', null, null)).toBe(false)
+    expect(rule.$validator('+', null, null)).toBe(false)
+    expect(rule.$validator('|', null, null)).toBe(false)
+    expect(rule.$validator('・', null, null)).toBe(false)
+    // eslint-disable-next-line @typescript-eslint/quotes
+    expect(rule.$validator("'", null, null)).toBe(false)
+    expect(rule.$validator('`', null, null)).toBe(false)
+    expect(rule.$validator('~', null, null)).toBe(false)
+    expect(rule.$validator('/', null, null)).toBe(false)
+    // Single back slash can't be tested because it's an escape character
+    expect(rule.$validator('\\', null, null)).toBe(false)
+    expect(rule.$validator('[', null, null)).toBe(false)
+    expect(rule.$validator(']', null, null)).toBe(false)
+    expect(rule.$validator('"', null, null)).toBe(false)
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(1, null, null)).toBe(false)
@@ -78,7 +110,7 @@ describe('validation/rules/slackChannelName', () => {
 
   test('default error message', () => {
     const rule = slackChannelName()
-    expect(rule.$message({ $params: {} })).toBe('The value must be less than or equal to 80 characters.')
+    expect(rule.$message({ $params: {} })).toBe('The slack channel name is invalid.')
   })
 
   test('it can set custom error message', () => {

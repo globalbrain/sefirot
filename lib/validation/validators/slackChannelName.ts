@@ -1,6 +1,7 @@
 import { isString } from '../../support/Utils'
 
 export const SLACK_CHANNEL_NAME_MAX_LENGTH = 80 as const
+const SLACK_CHANNEL_NAME_INVALID_SUMBOLS = /[ ,.!@#$%^&*?(){}<>=+|・'`~/\\\[\]\"]/
 
 export interface SlackChannelNameOptions {
   prefix?: string
@@ -12,14 +13,13 @@ export function slackChannelName(value: unknown, options: SlackChannelNameOption
     return false
   }
 
-  return value.length <= getSlackChannelNameMaxLength(options)
-}
-
-export function getSlackChannelNameMaxLength(options: SlackChannelNameOptions) {
   const {
     prefix = '',
     suffix = ''
   } = options
 
-  return SLACK_CHANNEL_NAME_MAX_LENGTH - prefix.length - suffix.length
+  return (
+    !SLACK_CHANNEL_NAME_INVALID_SUMBOLS.exec(value)
+    && value.length <= SLACK_CHANNEL_NAME_MAX_LENGTH - prefix.length - suffix.length
+  )
 }

@@ -20,7 +20,7 @@ describe('validation/rules/slackXChannelName', () => {
 
   test('default error message', () => {
     const rule = slackXChannelName()
-    expect(rule.$message({ $params: {} })).toBe('The value must be less than or equal to 78 characters.')
+    expect(rule.$message({ $params: {} })).toBe('The slack channel name is invalid.')
   })
 
   test('it can set custom error message', () => {
