@@ -176,9 +176,21 @@
 .s-font-w-800 { font-weight: 800; }
 .s-font-w-900 { font-weight: 900; }
 
-.s-text-1 { color: var(--c-text-1); }
-.s-text-2 { color: var(--c-text-2); }
-.s-text-3 { color: var(--c-text-3); }
+.s-text-1         { color: var(--c-text-1); }
+.s-text-2         { color: var(--c-text-2); }
+.s-text-3         { color: var(--c-text-3); }
+.s-text-info-1    { color: var(--c-text-info-1); }
+.s-text-info-2    { color: var(--c-text-info-2); }
+.s-text-info-3    { color: var(--c-text-info-3); }
+.s-text-success-1 { color: var(--c-text-success-1); }
+.s-text-success-2 { color: var(--c-text-success-2); }
+.s-text-success-3 { color: var(--c-text-success-3); }
+.s-text-warning-1 { color: var(--c-text-warning-1); }
+.s-text-warning-2 { color: var(--c-text-warning-2); }
+.s-text-warning-3 { color: var(--c-text-warning-3); }
+.s-text-danger-1  { color: var(--c-text-danger-1); }
+.s-text-danger-2  { color: var(--c-text-danger-2); }
+.s-text-danger-3  { color: var(--c-text-danger-3); }
 
 .s-nowrap { white-space: nowrap; }
 
