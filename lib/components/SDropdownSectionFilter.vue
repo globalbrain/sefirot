@@ -151,7 +151,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   text-align: left;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover{
+  &:hover {
     background-color: var(--c-bg-mute-1);
   }
 }
