@@ -4,7 +4,6 @@ describe('validation/rules/slackChannelName', () => {
   test('it validates whether the value is valid', () => {
     const rule = slackChannelName()
 
-    expect(rule.$validator('', null, null)).toBe(true)
     expect(rule.$validator('1'.repeat(80), null, null)).toBe(true)
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
@@ -54,14 +53,13 @@ describe('validation/rules/slackChannelName', () => {
       prefix: 'prefix_'
     })
 
-    expect(rule.$validator('', null, null)).toBe(true)
-    expect(rule.$validator('1'.repeat(73), null, null)).toBe(true)
+    expect(rule.$validator(`prefix_${'1'.repeat(73)}`, null, null)).toBe(true)
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator('', null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
 
-    expect(rule.$validator('1'.repeat(74), null, null)).toBe(false)
+    expect(rule.$validator(`prefix_${'1'.repeat(74)}`, null, null)).toBe(false)
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(1, null, null)).toBe(false)
@@ -70,17 +68,16 @@ describe('validation/rules/slackChannelName', () => {
 
   test('it validates whether the value is valid with suffix', () => {
     const rule = slackChannelName({
-      suffix: 'suffix_'
+      suffix: '_suffix'
     })
 
-    expect(rule.$validator('', null, null)).toBe(true)
-    expect(rule.$validator('1'.repeat(73), null, null)).toBe(true)
+    expect(rule.$validator(`${'1'.repeat(73)}_suffix`, null, null)).toBe(true)
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator('', null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
 
-    expect(rule.$validator('1'.repeat(74), null, null)).toBe(false)
+    expect(rule.$validator(`${'1'.repeat(74)}_suffix`, null, null)).toBe(false)
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(1, null, null)).toBe(false)
@@ -90,17 +87,16 @@ describe('validation/rules/slackChannelName', () => {
   test('it validates whether the value is valid with prefix and suffix', () => {
     const rule = slackChannelName({
       prefix: 'prefix_',
-      suffix: 'suffix_'
+      suffix: '_suffix'
     })
 
-    expect(rule.$validator('', null, null)).toBe(true)
-    expect(rule.$validator('1'.repeat(66), null, null)).toBe(true)
+    expect(rule.$validator(`prefix_${'1'.repeat(66)}_suffix`, null, null)).toBe(true)
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator('', null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
 
-    expect(rule.$validator('1'.repeat(67), null, null)).toBe(false)
+    expect(rule.$validator(`prefix_${'1'.repeat(67)}_suffix`, null, null)).toBe(false)
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(1, null, null)).toBe(false)
