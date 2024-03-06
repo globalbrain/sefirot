@@ -1,5 +1,12 @@
 
 
+# [3.36.0](https://github.com/globalbrain/sefirot/compare/v3.35.3...v3.36.0) (2024-3-6)
+
+
+### Features
+
+* **validation:** add slack channel name validation ([#488](https://github.com/globalbrain/sefirot/issues/488)) ([a74e820](https://github.com/globalbrain/sefirot/commit/a74e820442245585f8ee493d8f7ca164f817a0e4))
+
 ## [3.35.3](https://github.com/globalbrain/sefirot/compare/v3.35.2...v3.35.3) (2024-03-06)
 
 
