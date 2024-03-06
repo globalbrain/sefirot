@@ -1,5 +1,12 @@
 
 
+## [3.35.3](https://github.com/globalbrain/sefirot/compare/v3.35.2...v3.35.3) (2024-03-06)
+
+
+### Bug Fixes
+
+* **input-dropdown:** support `mini` and `medium` size ([#490](https://github.com/globalbrain/sefirot/issues/490)) ([cf674e7](https://github.com/globalbrain/sefirot/commit/cf674e735036988876e0895c198415d06d0e4697))
+
 ## [3.35.2](https://github.com/globalbrain/sefirot/compare/v3.35.1...v3.35.2) (2024-03-06)
 
 
