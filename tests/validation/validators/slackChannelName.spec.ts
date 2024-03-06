@@ -33,7 +33,6 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName('`')).toBe(false)
     expect(slackChannelName('~')).toBe(false)
     expect(slackChannelName('/')).toBe(false)
-    // Single back slash can't be tested because it's an escape character
     expect(slackChannelName('\\')).toBe(false)
     expect(slackChannelName('[')).toBe(false)
     expect(slackChannelName(']')).toBe(false)

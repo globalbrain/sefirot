@@ -39,7 +39,6 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator('`', null, null)).toBe(false)
     expect(rule.$validator('~', null, null)).toBe(false)
     expect(rule.$validator('/', null, null)).toBe(false)
-    // Single back slash can't be tested because it's an escape character
     expect(rule.$validator('\\', null, null)).toBe(false)
     expect(rule.$validator('[', null, null)).toBe(false)
     expect(rule.$validator(']', null, null)).toBe(false)
