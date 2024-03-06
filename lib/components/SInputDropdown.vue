@@ -164,6 +164,7 @@ function handleArray(value: OptionValue) {
           <SInputDropdownItem
             v-if="hasSelected"
             :items="selected"
+            :size="size ?? 'small'"
             :removable="removable"
             :disabled="disabled ?? false"
             @remove="handleSelect"
@@ -187,13 +188,72 @@ function handleArray(value: OptionValue) {
 </template>
 
 <style scoped lang="postcss">
+.container {
+  position: relative;
+}
+
+.box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--input-border-color);
+  border-radius: 6px;
+  width: 100%;
+  color: var(--input-text);
+  background-color: var(--input-bg-color);;
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+
+  &:hover {
+    border-color: var(--input-hover-border-color);
+  }
+}
+
+.box-content {
+  display: flex;
+  align-items: center;
+}
+
+.box-placeholder {
+  line-height: 24px;
+  color: var(--input-placeholder-color);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.box-icon {
+  position: absolute;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.box-icon-svg {
+  display: block;
+  width: 14px;
+  height: 14px;
+  color: var(--c-text-2);
+}
+
+.box-icon-svg.up {
+  margin-bottom: -4px;
+}
+
+.dropdown {
+  position: absolute;
+  left: 0;
+  z-index: var(--z-index-dropdown);
+
+  &.top    { bottom: calc(100% + 8px); }
+  &.bottom { top: calc(100% + 8px); }
+}
+
 .SInputDropdown.mini {
   .box {
     min-height: 32px;
   }
 
   .box-content {
-    padding: 3px 30px 3px 12px;
+    padding: 3px 30px 3px 8px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
@@ -210,7 +270,7 @@ function handleArray(value: OptionValue) {
   }
 
   .box-content {
-    padding: 5px 30px 5px 8px;
+    padding: 5px 30px 5px 12px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
@@ -257,57 +317,5 @@ function handleArray(value: OptionValue) {
   .box {
     border-color: var(--input-error-border-color);
   }
-}
-
-.container {
-  position: relative;
-}
-
-.box {
-  position: relative;
-  border: 1px solid var(--input-border-color);
-  border-radius: 6px;
-  width: 100%;
-  color: var(--input-text);
-  background-color: var(--input-bg-color);;
-  cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s;
-
-  &:hover {
-    border-color: var(--input-hover-border-color);
-  }
-}
-
-.box-placeholder {
-  padding: 2px 4px;
-  color: var(--input-placeholder-color);
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.box-icon {
-  position: absolute;
-  z-index: 10;
-  cursor: pointer;
-}
-
-.box-icon-svg {
-  display: block;
-  width: 14px;
-  height: 14px;
-  color: var(--c-text-2);
-}
-
-.box-icon-svg.up {
-  margin-bottom: -4px;
-}
-
-.dropdown {
-  position: absolute;
-  left: 0;
-  z-index: var(--z-index-dropdown);
-
-  &.top    { bottom: calc(100% + 8px); }
-  &.bottom { top: calc(100% + 8px); }
 }
 </style>
