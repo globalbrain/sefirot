@@ -1,22 +1,16 @@
 import { isString } from '../../support/Utils'
 
 export interface SlackChannelNameOptions {
-  prefix?: string
-  suffix?: string
+  offset?: number
 }
-
-const SLACK_CHANNEL_NAME_MAX_LENGTH = 80 as const
 
 export function slackChannelName(value: unknown, options: SlackChannelNameOptions = {}): boolean {
   if (!isString(value)) {
     return false
   }
 
-  const {
-    prefix = '',
-    suffix = ''
-  } = options
-  const maxLength = SLACK_CHANNEL_NAME_MAX_LENGTH - prefix.length - suffix.length
+  const { offset = 0 } = options
+  const maxLength = /* Slack channel name max length */ 80 - offset
 
-  return new RegExp(`^${prefix}\[\\p\{L\}\\p\{M\}\\p\{N\}_-\]\{1,${maxLength}\}${suffix}\$`, 'u').test(value)
+  return new RegExp(`^\[\\p\{L\}\\p\{M\}\\p\{N\}_-\]\{1,${maxLength}\}\$`, 'u').test(value)
 }
