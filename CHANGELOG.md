@@ -1,5 +1,12 @@
 
 
+## [3.35.2](https://github.com/globalbrain/sefirot/compare/v3.35.1...v3.35.2) (2024-03-06)
+
+
+### Bug Fixes
+
+* **url:** handle array comparison and proxied arrays properly ([#489](https://github.com/globalbrain/sefirot/issues/489)) ([2f3842f](https://github.com/globalbrain/sefirot/commit/2f3842fb5937e52d417a2090fa20042a25758ef0))
+
 ## [3.35.1](https://github.com/globalbrain/sefirot/compare/v3.35.0...v3.35.1) (2024-03-05)
 
 
