@@ -62,7 +62,7 @@ export function useUrlQuerySync(
     const newQuery: Record<string, any> = {}
 
     for (const key in flattenedState) {
-      if (!exclude.includes(key) && flattenedDefaultState[key] !== flattenedState[key]) {
+      if (!exclude.includes(key) && !isEqual(flattenedState[key], flattenedDefaultState[key])) {
         newQuery[key] = flattenedState[key]
       }
     }
@@ -94,7 +94,9 @@ function flattenObject(obj: Record<string, any>, path: string[] = []): Record<st
   for (const key in obj) {
     const value = obj[key]
 
-    if (value && typeof value === 'object' && !Array.isArray(value)) {
+    if (Array.isArray(value)) {
+      result[path.concat(key).join('.')] = value.slice()
+    } else if (value && typeof value === 'object') {
       Object.assign(result, flattenObject(value, [...path, key]))
     } else {
       result[path.concat(key).join('.')] = value
