@@ -20,8 +20,11 @@ export interface ItemAvatar extends ItemBase {
   image?: string | null
 }
 
+export type Size = 'mini' | 'small' | 'medium'
+
 defineProps<{
   items: Item[]
+  size: Size
   removable: boolean
   disabled: boolean
 }>()
@@ -36,6 +39,7 @@ defineEmits<{
     <div v-for="(item, index) in items" :key="index" class="item">
       <SInputDropdownItemText
         v-if="item.type === 'text' || item.type === undefined"
+        :size="size"
         :label="item.label"
         :value="item.value"
         :removable="removable"
@@ -44,6 +48,7 @@ defineEmits<{
       />
       <SInputDropdownItemAvatar
         v-if="item.type === 'avatar'"
+        :size="size"
         :label="item.label"
         :image="item.image"
         :value="item.value"
