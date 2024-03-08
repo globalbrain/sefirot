@@ -44,6 +44,9 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName(1)).toBe(false)
     expect(slackChannelName([])).toBe(false)
     expect(slackChannelName({})).toBe(false)
+
+    expect(slackChannelName('A')).toBe(false)
+    expect(slackChannelName('a-z09ぁんァヶー一龯_')).toBe(true)
   })
 
   test('it validates whether the value is valid with offset', () => {
