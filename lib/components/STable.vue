@@ -140,15 +140,13 @@ const selectedIndexes = reactive(new Set())
 
 const control = computed({
   get() {
-    const selected = indexes.value.filter((index) => {
-      return selectedIndexes.has(index)
-    })
+    if (Array.isArray(props.selected)) {
+      return props.selected.length === indexes.value.length
+        ? true
+        : props.selected.length ? 'indeterminate' : false
+    }
 
-    updateSelected(selected)
-
-    return selected.length === indexes.value.length
-      ? true
-      : selected.length ? 'indeterminate' : false
+    return 'indeterminate' // doesn't matter
   },
 
   set(newValue) {
@@ -167,6 +165,12 @@ watch(indexes, (newValue, oldValue) => {
     xor(newValue, oldValue).forEach((index) => {
       selectedIndexes.delete(index)
     })
+  }
+})
+
+watch(selectedIndexes, (newValue) => {
+  if (Array.isArray(props.selected)) {
+    updateSelected(Array.from(newValue))
   }
 })
 
