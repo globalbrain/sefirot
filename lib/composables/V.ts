@@ -1,4 +1,9 @@
-import { type Validation, type ValidationArgs, useVuelidate } from '@vuelidate/core'
+import {
+  type Validation,
+  type ValidationArgs,
+  type GlobalConfig as VuelidateConfig,
+  useVuelidate
+} from '@vuelidate/core'
 import { type MaybeRefOrGetter, type Ref, computed, toValue } from 'vue'
 import { type Snackbar, useSnackbars } from '../stores/Snackbars'
 import { useTrans } from './Lang'
@@ -10,6 +15,7 @@ export interface V<
   validation: Ref<Validation<Rules, Data>>
   validate(): Promise<boolean>
   validateAndNotify(message?: Snackbar): Promise<boolean>
+  notify(message?: Snackbar): void
   reset(): void
 }
 
@@ -24,24 +30,24 @@ export interface ValidatableError {
   readonly $message: string | Ref<string>
 }
 
+export interface VNotification {
+  notify(message?: Snackbar): void
+}
+
 export function useV<
   Data extends { [key in keyof Rules]: any },
   Rules extends ValidationArgs = ValidationArgs
 >(
   data?: MaybeRefOrGetter<Data>,
-  rules?: MaybeRefOrGetter<Rules>
+  rules?: MaybeRefOrGetter<Rules>,
+  config?: VuelidateConfig
 ): V<Data, Rules> {
-  const { t } = useTrans({
-    en: { notify: 'Form contains errors. Please correct them and try again.' },
-    ja: { notify: 'フォームにエラーがあります。内容を確認し、再度お試しください。' }
-  })
-
-  const snackbars = useSnackbars()
+  const { notify } = useVNotification()
 
   const d = computed(() => toValue(data) ?? {})
   const r = computed(() => toValue(rules) ?? {})
 
-  const validation = useVuelidate(r, d) as any
+  const validation = useVuelidate(r, d, config) as any
 
   function reset(): void {
     validation.value.$reset()
@@ -55,10 +61,7 @@ export function useV<
     const valid = await validate()
 
     if (!valid) {
-      snackbars.push(message ?? {
-        mode: 'danger',
-        text: t.notify
-      })
+      notify(message)
     }
 
     return valid
@@ -68,6 +71,27 @@ export function useV<
     validation,
     validate,
     validateAndNotify,
+    notify,
     reset
+  }
+}
+
+export function useVNotification(): VNotification {
+  const { t } = useTrans({
+    en: { notify: 'Form contains errors. Please correct them and try again.' },
+    ja: { notify: 'フォームにエラーがあります。内容を確認し、再度お試しください。' }
+  })
+
+  const snackbars = useSnackbars()
+
+  function notify(message?: Snackbar): void {
+    snackbars.push(message ?? {
+      mode: 'danger',
+      text: t.notify
+    })
+  }
+
+  return {
+    notify
   }
 }
