@@ -136,7 +136,7 @@ const indexes = computed(() => {
   return records.map((record, i) => indexField ? record[indexField] : i)
 })
 
-const selectedIndexes = reactive(new Set())
+const selectedIndexes = reactive(new Set(Array.isArray(props.selected) ? props.selected : []))
 
 const control = computed({
   get() {
