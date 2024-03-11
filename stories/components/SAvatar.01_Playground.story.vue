@@ -23,9 +23,9 @@ const variants = [
             {{ v.title }}
           </div>
           <div class="flex flex-wrap gap-16">
-            <SAvatar :size="v.size" avatar="https://avatars.githubusercontent.com/u/3753672?v=4" />
-            <SAvatar :size="v.size" avatar="https://avatars.githubusercontent.com/u/62658104?v=4" />
-            <SAvatar :size="v.size" avatar="https://avatars.githubusercontent.com/u/16436160?v=4" />
+            <SAvatar :size="v.size" avatar="https://github.com/kiaking.png" />
+            <SAvatar :size="v.size" avatar="https://github.com/ryo-gk.png" />
+            <SAvatar :size="v.size" avatar="https://github.com/NozomuIkuta.png" />
             <SAvatar :size="v.size" name="John Doe" />
             <SAvatar :size="v.size" name="Anna Green" />
             <SAvatar :size="v.size" name="George Walsh" />
