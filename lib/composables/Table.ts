@@ -19,7 +19,7 @@ export interface Table<
 
   /**
    * @deprecated Use `<SControl>` to add equivalent features.
-  */
+   */
   actions?: MaybeRef<TableHeaderAction[]>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   header?: MaybeRef<boolean | undefined>
@@ -32,6 +32,8 @@ export interface Table<
   onPrev?(): void
   onNext?(): void
   onReset?(): void
+
+  disableSelection?: (record: R) => boolean
 }
 
 export type TableColumns<

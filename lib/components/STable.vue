@@ -390,7 +390,12 @@ function updateSelected(selected: any) {
                   @resize="(value) => updateColWidth(key, value, true)"
                 >
                   <SInputCheckbox
-                    v-if="Array.isArray(selected) && key === '__select' && unref(options.records)?.length"
+                    v-if="
+                      Array.isArray(selected)
+                        && key === '__select'
+                        && unref(options.records)?.length
+                        && options.disableSelection == null
+                    "
                     v-model="control"
                   />
                 </STableColumn>
@@ -450,11 +455,13 @@ function updateSelected(selected: any) {
                         v-if="Array.isArray(selected)"
                         :model-value="selectedIndexes.has(indexes[index])"
                         @update:model-value="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
                         v-else
                         :model-value="selected === indexes[index]"
                         @update:model-value="c => updateSelected(c ? indexes[index] : null)"
+                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                     </template>
                   </STableCell>
