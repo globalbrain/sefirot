@@ -44,8 +44,8 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
 
 .img {
   object-fit: cover;
-  min-height: 100%;
-  min-width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .initial {
