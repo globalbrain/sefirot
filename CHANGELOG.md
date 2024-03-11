@@ -1,5 +1,18 @@
 
 
+# [3.37.0](https://github.com/globalbrain/sefirot/compare/v3.36.0...v3.37.0) (2024-03-11)
+
+
+### Bug Fixes
+
+* **validation:** disallow uppercase letters from slack channel name ([#492](https://github.com/globalbrain/sefirot/issues/492)) ([#493](https://github.com/globalbrain/sefirot/issues/493)) ([c582c55](https://github.com/globalbrain/sefirot/commit/c582c55af2dac25cd71c57739f9461b7cbb6575b))
+
+
+### Features
+
+* **policy:** add policy composable ([#491](https://github.com/globalbrain/sefirot/issues/491)) ([a26b9b3](https://github.com/globalbrain/sefirot/commit/a26b9b3e795997d1ef74ea5a9ed13715653af2ea))
+* **validation:** enable vuelidate config and extract notification ([#494](https://github.com/globalbrain/sefirot/issues/494)) ([aaeefbe](https://github.com/globalbrain/sefirot/commit/aaeefbe67af4a6bf70eaf52b7e3c406ed5cb36d5))
+
 # [3.36.0](https://github.com/globalbrain/sefirot/compare/v3.35.3...v3.36.0) (2024-3-6)
 
 
