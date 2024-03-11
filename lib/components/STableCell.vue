@@ -131,6 +131,10 @@ const computedCell = computed<TableCell | undefined>(() =>
   transition: background-color 0.1s;
   overflow: hidden;
 
+  :where(.row:has(.input.on)) & {
+    background-color: var(--c-bg-elv-4);
+  }
+
   .row:hover & {
     background-color: var(--c-bg-elv-4);
   }
