@@ -141,7 +141,11 @@ function onClick() {
 }
 
 .SInputRadio.disabled {
-  .box {
+  .input {
+    cursor: not-allowed;
+  }
+
+  .input .box {
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-bg-color);
 
@@ -149,6 +153,12 @@ function onClick() {
     &:focus:not(:focus-visible) { border-color: var(--input-disabled-border-color); }
   }
 
-  .input { cursor: not-allowed; }
+  .input.on .box {
+    border-color: var(--c-border-info-1);
+  }
+
+  .check {
+    background-color: var(--c-blue-9);
+  }
 }
 </style>
