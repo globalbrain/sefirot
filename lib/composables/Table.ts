@@ -16,6 +16,7 @@ export interface Table<
   loading?: MaybeRef<boolean | undefined>
   rowSize?: MaybeRef<number | undefined>
   borderless?: MaybeRef<boolean>
+  disableSelection?: (record: R) => boolean
 
   /**
    * @deprecated Use `<SControl>` to add equivalent features.
@@ -32,8 +33,6 @@ export interface Table<
   onPrev?(): void
   onNext?(): void
   onReset?(): void
-
-  disableSelection?: (record: R) => boolean
 }
 
 export type TableColumns<

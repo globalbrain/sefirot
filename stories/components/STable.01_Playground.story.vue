@@ -16,7 +16,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, markRaw, reactive, ref, shallowRef, watchEffect } from 'vue'
+import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
 
 interface Sort {
   by: string
@@ -209,10 +209,6 @@ const table = useTable({
   borderless: true,
   indexField: 'name',
 
-  disableSelection(record) {
-    return record.status === 'Archived'
-  },
-
   orders: [
     'name',
     'status',
@@ -355,12 +351,7 @@ function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
 
-const selected = ref<string[]>(['Artwork 001'])
-
-watchEffect(() => {
-  // eslint-disable-next-line no-console
-  console.log('here', ...selected.value)
-})
+const selected = ref<string[]>([])
 </script>
 
 <template>
