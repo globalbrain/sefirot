@@ -5,6 +5,7 @@ import { _required } from './validators'
 
 export interface RuleOptions {
   optional?: boolean
+  async?: boolean
   message(params: MessageProps): string
   validation(value: unknown): boolean | Promise<boolean>
 }
@@ -18,14 +19,14 @@ export function createRule(
 ): ValidationRuleWithParams {
   const lang = useLang()
 
+  function validation(value: unknown) {
+    return options.optional && !_required(value)
+      ? true
+      : options.validation(value)
+  }
+
   return helpers.withMessage(
-    (params) => {
-      return options.message({ ...params, lang })
-    },
-    (value) => {
-      return options.optional && !_required(value)
-        ? true
-        : options.validation(value)
-    }
+    (params) => options.message({ ...params, lang }),
+    options.async ? helpers.withAsync(validation) : validation
   )
 }
