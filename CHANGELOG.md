@@ -1,5 +1,19 @@
 
 
+# [3.38.0](https://github.com/globalbrain/sefirot/compare/v3.37.0...v3.38.0) (2024-03-12)
+
+
+### Bug Fixes
+
+* **avatar:** fill image when its not square ([#479](https://github.com/globalbrain/sefirot/issues/479)) ([#498](https://github.com/globalbrain/sefirot/issues/498)) ([ee99078](https://github.com/globalbrain/sefirot/commit/ee990784fabbcdab8dc6f4e0170d70f877e3715d))
+* **input:** make active checkbox/radio disable state more visible ([#495](https://github.com/globalbrain/sefirot/issues/495)) ([ad21b8c](https://github.com/globalbrain/sefirot/commit/ad21b8cce1d116efbdaecee0aae2ad69a5226b77))
+
+
+### Features
+
+* **table:** allow disabling selection by user for certain rows ([#496](https://github.com/globalbrain/sefirot/issues/496)) ([#497](https://github.com/globalbrain/sefirot/issues/497)) ([4891f28](https://github.com/globalbrain/sefirot/commit/4891f28080af93c4e83ff0968b101b9ed6679d9f))
+* **table:** highlight selected row ([#483](https://github.com/globalbrain/sefirot/issues/483)) ([#499](https://github.com/globalbrain/sefirot/issues/499)) ([e0c7db8](https://github.com/globalbrain/sefirot/commit/e0c7db84a44c875458a51473effdf9d1383e923b))
+
 # [3.37.0](https://github.com/globalbrain/sefirot/compare/v3.36.0...v3.37.0) (2024-03-11)
 
 
