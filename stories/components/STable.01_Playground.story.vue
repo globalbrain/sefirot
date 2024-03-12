@@ -350,6 +350,8 @@ function updateTypeFilter(value: string) {
 function updateTagsFilter(value: string) {
   dropdownTagsSelected.value = xor(dropdownTagsSelected.value, [value])
 }
+
+const selected = ref<string[]>([])
 </script>
 
 <template>
@@ -368,7 +370,7 @@ function updateTagsFilter(value: string) {
           </SControl>
         </SCardBlock>
         <SCardBlock>
-          <STable class="table" :options="table" />
+          <STable class="table" :options="table" v-model:selected="selected" />
         </SCardBlock>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>
