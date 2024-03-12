@@ -136,19 +136,17 @@ const indexes = computed(() => {
   return records.map((record, i) => indexField ? record[indexField] : i)
 })
 
-const selectedIndexes = reactive(new Set())
+const selectedIndexes = reactive(new Set(Array.isArray(props.selected) ? props.selected : []))
 
 const control = computed({
   get() {
-    const selected = indexes.value.filter((index) => {
-      return selectedIndexes.has(index)
-    })
+    if (Array.isArray(props.selected)) {
+      return props.selected.length === indexes.value.length
+        ? true
+        : props.selected.length ? 'indeterminate' : false
+    }
 
-    updateSelected(selected)
-
-    return selected.length === indexes.value.length
-      ? true
-      : selected.length ? 'indeterminate' : false
+    return 'indeterminate' // doesn't matter
   },
 
   set(newValue) {
@@ -167,6 +165,12 @@ watch(indexes, (newValue, oldValue) => {
     xor(newValue, oldValue).forEach((index) => {
       selectedIndexes.delete(index)
     })
+  }
+})
+
+watch(selectedIndexes, (newValue) => {
+  if (Array.isArray(props.selected)) {
+    updateSelected(Array.from(newValue))
   }
 })
 
@@ -390,7 +394,12 @@ function updateSelected(selected: any) {
                   @resize="(value) => updateColWidth(key, value, true)"
                 >
                   <SInputCheckbox
-                    v-if="Array.isArray(selected) && key === '__select' && unref(options.records)?.length"
+                    v-if="
+                      Array.isArray(selected)
+                        && key === '__select'
+                        && unref(options.records)?.length
+                        && options.disableSelection == null
+                    "
                     v-model="control"
                   />
                 </STableColumn>
@@ -450,11 +459,13 @@ function updateSelected(selected: any) {
                         v-if="Array.isArray(selected)"
                         :model-value="selectedIndexes.has(indexes[index])"
                         @update:model-value="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
                         v-else
                         :model-value="selected === indexes[index]"
                         @update:model-value="c => updateSelected(c ? indexes[index] : null)"
+                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                     </template>
                   </STableCell>
