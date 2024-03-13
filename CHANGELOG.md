@@ -1,5 +1,12 @@
 
 
+## [3.38.1](https://github.com/globalbrain/sefirot/compare/v3.38.0...v3.38.1) (2024-03-13)
+
+
+### Bug Fixes
+
+* **validation:** use `withAsync` for async rule ([#500](https://github.com/globalbrain/sefirot/issues/500)) ([c309efe](https://github.com/globalbrain/sefirot/commit/c309efe55c1385ad046ab4c783787cc8f0c92a00))
+
 # [3.38.0](https://github.com/globalbrain/sefirot/compare/v3.37.0...v3.38.0) (2024-03-12)
 
 
