@@ -11,6 +11,7 @@ export function requiredIf(
   msg?: string
 ) {
   return createRule({
+    async: true,
     message: ({ lang }) => msg ?? message[lang],
     validation: (value) => baseRequiredIf(value, condition)
   })
