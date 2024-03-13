@@ -21,7 +21,8 @@
     "lib"
   ],
   "scripts": {
-    "docs": "vitepress dev docs --port 4000",
+    "docs": "pnpm docs:dev",
+    "docs:dev": "vitepress dev docs --port 4000",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress serve docs --port 3000",
     "story": "histoire dev --port 3000",

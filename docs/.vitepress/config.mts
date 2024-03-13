@@ -31,10 +31,7 @@ export default defineConfig({
       { icon: 'github', link: 'https://github.com/globalbrain/sefirot' }
     ],
 
-    sidebar: {
-      '/': sidebar(),
-      'components': sidebar()
-    }
+    sidebar: sidebar()
   }
 })
 
@@ -56,6 +53,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SActionList', link: '/components/action-list' },
         { text: 'SAlert', link: '/components/alert' },
         { text: 'SAvatar', link: '/components/avatar' },
+        { text: 'SAvatarStack', link: '/components/avatar-stack' },
         { text: 'SButton', link: '/components/button' },
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SCard', link: '/components/card' },

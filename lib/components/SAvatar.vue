@@ -8,7 +8,6 @@ export type Size =
   | 'medium'
   | 'large'
   | 'jumbo'
-  | 'mega'
   | 'fill'
 
 const props = defineProps<{
