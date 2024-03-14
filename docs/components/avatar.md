@@ -11,9 +11,9 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
   story="/stories-components-savatar-01-playground-story-vue"
 >
   <div class="flex flex-wrap gap-16">
-    <SAvatar avatar="https://avatars.githubusercontent.com/u/3753672?v=4" />
-    <SAvatar avatar="https://avatars.githubusercontent.com/u/62658104?v=4" />
-    <SAvatar avatar="https://avatars.githubusercontent.com/u/16436160?v=4" />
+    <SAvatar avatar="https://github.com/kiaking.png" />
+    <SAvatar avatar="https://github.com/ryo-gk.png" />
+    <SAvatar avatar="https://github.com/NozomuIkuta.png" />
     <SAvatar name="John Doe" />
     <SAvatar name="Anna Green" />
     <SAvatar name="George Walsh" />
