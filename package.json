@@ -1,6 +1,6 @@
 {
   "name": "@globalbrain/sefirot",
-  "version": "3.38.1",
+  "version": "3.39.2",
   "packageManager": "pnpm@8.15.4",
   "description": "Vue Components for Global Brain Design System.",
   "author": "Kia Ishii <ka.ishii@globalbrains.com>",

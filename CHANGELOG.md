@@ -1,5 +1,12 @@
 
 
+## [3.39.2](https://github.com/globalbrain/sefirot/compare/v3.38.1...v3.39.2) (2024-03-14)
+
+
+### Features
+
+* **avatar-stack:** new component to display stacked avatars ([#484](https://github.com/globalbrain/sefirot/issues/484)) ([#501](https://github.com/globalbrain/sefirot/issues/501)) ([23a02bf](https://github.com/globalbrain/sefirot/commit/23a02bf3303afdb9e3f94bd9c1cfb1e5638e37bb))
+
 ## [3.38.1](https://github.com/globalbrain/sefirot/compare/v3.38.0...v3.38.1) (2024-03-13)
 
 
