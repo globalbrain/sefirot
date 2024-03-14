@@ -45,10 +45,10 @@ const count = computed(() => {
   }
 
   &.mini > *:not(:last-child)   { margin-right: -6px }
-  &.small > *:not(:last-child)  { margin-right: -7px }
+  &.small > *:not(:last-child)  { margin-right: -8px }
   &.medium > *:not(:last-child) { margin-right: -8px }
-  &.large > *:not(:last-child)  { margin-right: -10px }
-  &.jumbo > *:not(:last-child)  { margin-right: -12px }
+  &.large > *:not(:last-child)  { margin-right: -12px }
+  &.jumbo > *:not(:last-child)  { margin-right: -16px }
 }
 
 .more {
@@ -60,11 +60,12 @@ const count = computed(() => {
   background-color: var(--c-bg-mute-1);
   border-radius: 50%;
   line-height: 1;
+  color: var(--c-text-2);
 
   .mini &   { font-size: 10px }
-  .small &  { font-size: 11px }
+  .small &  { font-size: 10px }
   .medium & { font-size: 12px }
-  .large &  { font-size: 14px }
-  .jumbo &  { font-size: 16px }
+  .large &  { font-size: 12px }
+  .jumbo &  { font-size: 14px }
 }
 </style>

@@ -57,13 +57,23 @@ interface Props {
 ```
 
 ```vue-html
-<SAvatarStack :avatars="[{ image: '/path/to/image-1.jpg' }, { image: '/path/to/image-2.jpg' }]" />
+<SAvatarStack
+  :avatars="[
+    { image: '/path/to/image-1.jpg' },
+    { image: '/path/to/image-2.jpg' }
+  ]"
+/>
 ```
 
 If you want to display initials instead of images, you can pass an array of objects with the `name` property.
 
 ```vue-html
-<SAvatarStack :avatars="[{ name: 'Jane Doe' }, { name: 'Richard Roe' }]" />
+<SAvatarStack
+  :avatars="[
+    { name: 'Jane Doe' },
+    { name: 'Richard Roe' }
+  ]"
+/>
 ```
 
 ### `:size`
@@ -77,7 +87,13 @@ interface Props {
 ```
 
 ```vue-html
-<SAvatarStack size="medium" :avatars="[{ image: '/path/to/image-1.jpg' }, { image: '/path/to/image-2.jpg' }]" />
+<SAvatarStack
+  size="medium"
+  :avatars="[
+    { image: '/path/to/image-1.jpg' },
+    { image: '/path/to/image-2.jpg' }
+  ]"
+/>
 ```
 
 ### `:avatar-count`
@@ -91,5 +107,11 @@ interface Props {
 ```
 
 ```vue-html
-<SAvatarStack :avatar-count="2" :avatars="[{ image: '/path/to/image-1.jpg' }, { image: '/path/to/image-2.jpg' }]" />
+<SAvatarStack
+  :avatar-count="2"
+  :avatars="[
+    { image: '/path/to/image-1.jpg' },
+    { image: '/path/to/image-2.jpg' }
+  ]"
+/>
 ```
