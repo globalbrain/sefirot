@@ -4,37 +4,55 @@ import SGridItem from 'sefirot/components/SGridItem.vue'
 
 const title = 'Components / SGrid / 01. Playground'
 const docs = '/components/grid'
+
+function state() {
+  return {
+    cols: 4,
+    gap: 24,
+    gapRow: undefined,
+    gapCol: undefined
+  }
+}
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SGrid cols="4" gap="24">
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-        <SGridItem>
-          <div class="h-64 rounded-6 bg-info" />
-        </SGridItem>
-      </SGrid>
-    </Board>
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+    <template #controls="{ state }">
+      <HstText title="cols" v-model="state.cols" />
+      <HstText title="gap" v-model="state.gap" />
+      <HstText title="gapRow" v-model="state.gapRow" />
+      <HstText title="gapCol" v-model="state.gapCol" />
+    </template>
+
+    <template #default="{ state }">
+      <Board :title="title" :docs="docs">
+        <SGrid :cols="state.cols" :gap="state.gap" :gap-row="state.gapRow" :gap-col="state.gapCol">
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+          <SGridItem>
+            <div class="h-64 rounded-6 bg-info" />
+          </SGridItem>
+        </SGrid>
+      </Board>
+    </template>
   </Story>
 </template>
