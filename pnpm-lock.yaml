@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@sentry/browser':
+    specifier: 8.0.0-alpha.4
+    version: 8.0.0-alpha.4
+  '@sentry/utils':
+    specifier: 8.0.0-alpha.4
+    version: 8.0.0-alpha.4
   '@tanstack/vue-virtual':
     specifier: 3.0.0-beta.62
     version: 3.0.0-beta.62(vue@3.4.20)
@@ -1487,6 +1493,78 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@sentry-internal/feedback@8.0.0-alpha.4:
+    resolution: {integrity: sha512-/Nl6mX8qa84AI6AWvKtzMzKVVUaLUq6bd9uAqEu/N2HlX1WiX3/W/g+Ef//oUM9u/eLgWW22OU4fGy4u0ExP/Q==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry/core': 8.0.0-alpha.4
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+      preact: 10.19.6
+    dev: false
+
+  /@sentry-internal/replay-canvas@8.0.0-alpha.4:
+    resolution: {integrity: sha512-BfdHhBww7W75q03wI/1gvzW9J3Bf9WfG8QSkJY+DLmDdiyC1S1u9BGt8cXznQWqHBOWhAh9Nr5D337j9tmc4fQ==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry/core': 8.0.0-alpha.4
+      '@sentry/replay': 8.0.0-alpha.4
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+    dev: false
+
+  /@sentry-internal/tracing@8.0.0-alpha.4:
+    resolution: {integrity: sha512-tvetJP8TvYmSf/iFVlHSkTaolg/eFtu+EkaIE8JjP0jKsq6oPAGGCeASNHD/wTP/xZ4/JRLvpKg5C51RDh7Hvg==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry/core': 8.0.0-alpha.4
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+    dev: false
+
+  /@sentry/browser@8.0.0-alpha.4:
+    resolution: {integrity: sha512-b9USsjKYKWRDk1ePxBUVRzrrK9Td3tpr0sZtHFe+u0WhVxu0FnxIMycqmhVnz/A2mgZt0qKC2sny/iz0isCyDg==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry-internal/feedback': 8.0.0-alpha.4
+      '@sentry-internal/replay-canvas': 8.0.0-alpha.4
+      '@sentry-internal/tracing': 8.0.0-alpha.4
+      '@sentry/core': 8.0.0-alpha.4
+      '@sentry/replay': 8.0.0-alpha.4
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+    dev: false
+
+  /@sentry/core@8.0.0-alpha.4:
+    resolution: {integrity: sha512-eMPDAWHrdaaQJriHZrpDSL4sjdlAgxEZhkkxrBYDMnS5OKCocL4dXAHYzYfgj9Kx1Id01I1C6KYaL65X3I+cuQ==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+    dev: false
+
+  /@sentry/replay@8.0.0-alpha.4:
+    resolution: {integrity: sha512-lMy1jcGhM8am0mtnhKxIm0zRxicRdt/uMroR6TngUqiTZ1mUavqH1I5G9JeJoESsCbf1I2s++3ci1M5NTOmw7w==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry-internal/tracing': 8.0.0-alpha.4
+      '@sentry/core': 8.0.0-alpha.4
+      '@sentry/types': 8.0.0-alpha.4
+      '@sentry/utils': 8.0.0-alpha.4
+    dev: false
+
+  /@sentry/types@8.0.0-alpha.4:
+    resolution: {integrity: sha512-lx/LpoZZ1nwWQOmBPJwgcgHnSBsfRyPTk7Cp3AANSFm2DTdQm3IIVK9qz9nTNqf3qQ+WHLXf/a+QWNd4MRXKCg==}
+    engines: {node: '>=14.18'}
+    dev: false
+
+  /@sentry/utils@8.0.0-alpha.4:
+    resolution: {integrity: sha512-whSMyV/hdymcCRJlxdvNqD9ue6Dyby1lbC+MFHo8OWgSY0nTst4trKCDDDr3+2Twi6bJi1OSOYE88BC2aDowQQ==}
+    engines: {node: '>=14.18'}
+    dependencies:
+      '@sentry/types': 8.0.0-alpha.4
+    dev: false
 
   /@shikijs/core@1.1.7:
     resolution: {integrity: sha512-gTYLUIuD1UbZp/11qozD3fWpUTuMqPSf3svDMMrL0UmlGU7D9dPw/V1FonwAorCUJBltaaESxq90jrSjQyGixg==}
@@ -6212,7 +6290,6 @@ packages:
 
   /preact@10.19.6:
     resolution: {integrity: sha512-gympg+T2Z1fG1unB8NH29yHJwnEaCH37Z32diPDku316OTnRPeMbiRV9kTrfZpocXjdfnWuFUl/Mj4BHaf6gnw==}
-    dev: true
 
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
