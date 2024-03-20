@@ -137,13 +137,23 @@ function formatProp(key: string, value: unknown, raw?: boolean): unknown {
     return raw ? value : `${key}=${value}`
   } else if (isRef(value)) {
     value = formatProp(key, toRaw(value.value), true)
-    return raw ? value : `${key}=Ref<${value}>`
+    return raw ? value : `${key}=Ref<${tryStringify(value)}>`
   } else if (isFunction(value)) {
     return `${key}=fn${value.name ? `<${value.name}>` : ''}`
   } else {
     value = toRaw(value)
-    return raw ? value : `${key}=${value}`
+    return raw ? value : `${key}=${tryStringify(value)}`
   }
+}
+
+function tryStringify(value: unknown): string {
+  try {
+    return JSON.stringify(value)
+  } catch {}
+  try {
+    return String(value)
+  } catch {}
+  return ''
 }
 
 export function useErrorHandler({
