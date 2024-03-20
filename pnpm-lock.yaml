@@ -79,6 +79,9 @@ devDependencies:
   '@vitest/coverage-v8':
     specifier: ^1.4.0
     version: 1.4.0(vitest@1.4.0)
+  '@vue/reactivity':
+    specifier: ^3.4.21
+    version: 3.4.21
   '@vue/test-utils':
     specifier: ^2.4.5
     version: 2.4.5

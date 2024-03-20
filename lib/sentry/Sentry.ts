@@ -13,20 +13,22 @@
  * @license MIT
  */
 
+import * as Sentry from '@sentry/browser'
+import { type User } from '@sentry/types'
 import { consoleSandbox } from '@sentry/utils'
+import { pauseTracking, resetTracking } from '@vue/reactivity'
 import {
   type ComponentInternalInstance,
   type ComponentOptions,
   type ComponentPublicInstance,
   type ConcreteComponent,
+  type MaybeRefOrGetter,
   type VNode,
   isRef,
-  toRaw
+  toRaw,
+  toValue
 } from 'vue'
 import { isFunction, isString } from '../support/Utils'
-import { Sentry } from './loader'
-
-export * from './loader'
 
 type Data = Record<string, unknown>
 
@@ -144,31 +146,57 @@ function formatProp(key: string, value: unknown, raw?: boolean): unknown {
   }
 }
 
-export function errorHandler(
-  error: any,
-  instance: ComponentPublicInstance | null = null,
-  info: string = ''
-) {
-  if (![403, 404].includes(error?.cause?.statusCode)) {
-    const $ = instance && instance.$
-    const metadata = {
-      componentName: formatComponentName($),
-      lifecycleHook: info,
-      trace: formatTrace($),
-      propsData: $ && $.props
+export function useErrorHandler({
+  dsn,
+  environment,
+  user
+}: {
+  dsn: string
+  environment: string
+  user?: MaybeRefOrGetter<User | null>
+}) {
+  Sentry.init({
+    dsn,
+    environment,
+    ignoreErrors: [
+      'ResizeObserver loop limit exceeded',
+      'ResizeObserver loop completed with undelivered notifications'
+    ]
+  })
+
+  return function errorHandler(
+    error: any,
+    instance: ComponentPublicInstance | null = null,
+    info: string = ''
+  ) {
+    pauseTracking()
+
+    const userValue = toValue(user) || null
+
+    if (![403, 404].includes(error?.cause?.statusCode)) {
+      const $ = instance && instance.$
+      const metadata = $ && {
+        componentName: formatComponentName($),
+        lifecycleHook: info,
+        trace: formatTrace($),
+        propsData: $ && $.props
+      }
+
+      setTimeout(() => {
+        Sentry.withScope((scope) => {
+          scope.setUser(userValue)
+          scope.setContext('vue', metadata)
+          Sentry.captureException(error)
+        })
+      })
     }
 
-    setTimeout(() => {
-      Sentry.captureException(error, {
-        captureContext: { contexts: { vue: metadata } },
-        mechanism: { handled: false }
+    if (typeof console !== 'undefined') {
+      consoleSandbox(() => {
+        console.error(error)
       })
-    })
-  }
+    }
 
-  if (typeof console !== 'undefined') {
-    consoleSandbox(() => {
-      console.error(error)
-    })
+    resetTracking()
   }
 }
