@@ -145,28 +145,30 @@ function formatProp(key: string, value: unknown, raw?: boolean): unknown {
 }
 
 export function errorHandler(
-  err: unknown,
+  error: any,
   instance: ComponentPublicInstance | null = null,
   info: string = ''
 ) {
-  const $ = instance && instance.$
-  const metadata = {
-    componentName: formatComponentName($),
-    lifecycleHook: info,
-    trace: formatTrace($),
-    propsData: $ && $.props
-  }
+  if (![403, 404].includes(error?.cause?.statusCode)) {
+    const $ = instance && instance.$
+    const metadata = {
+      componentName: formatComponentName($),
+      lifecycleHook: info,
+      trace: formatTrace($),
+      propsData: $ && $.props
+    }
 
-  setTimeout(() => {
-    Sentry.captureException(err, {
-      captureContext: { contexts: { vue: metadata } },
-      mechanism: { handled: false }
+    setTimeout(() => {
+      Sentry.captureException(error, {
+        captureContext: { contexts: { vue: metadata } },
+        mechanism: { handled: false }
+      })
     })
-  })
+  }
 
   if (typeof console !== 'undefined') {
     consoleSandbox(() => {
-      console.error(err)
+      console.error(error)
     })
   }
 }
