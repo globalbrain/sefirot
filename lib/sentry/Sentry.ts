@@ -8,7 +8,6 @@
  * @license MIT
  **/
 
-import { captureException } from '@sentry/browser'
 import { consoleSandbox } from '@sentry/utils'
 import {
   type ComponentInternalInstance,
@@ -20,6 +19,9 @@ import {
   toRaw
 } from 'vue'
 import { isFunction, isString } from '../support/Utils'
+import { Sentry } from './loader'
+
+export * from './loader'
 
 type Data = Record<string, unknown>
 
@@ -152,7 +154,7 @@ export function errorHandler(
   }
 
   setTimeout(() => {
-    captureException(err, {
+    Sentry.captureException(err, {
       captureContext: { contexts: { vue: metadata } },
       mechanism: { handled: false }
     })
