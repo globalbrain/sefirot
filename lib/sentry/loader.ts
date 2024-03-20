@@ -1,3 +1,20 @@
+/**
+ * Adapted from
+ * @see https://github.com/getsentry/sentry-javascript/blob/2014d6a9f51c9e5ef57577bf5701ddae2cbc02af/packages/browser/src/loader.js
+ * @see https://github.com/getsentry/sentry/blob/48da227c4c6f3c551f6104fc3eec209f4431d73a/src/sentry/templates/sentry/js-sdk-loader.ts
+ *
+ * Original licenses:
+ *
+ * (c) 2019 Sentry (https://sentry.io) and individual contributors.
+ * @license MIT
+ *
+ * (c) 2008-2024 Functional Software, Inc. dba Sentry
+ * @license FSL-1.1-Apache-2.0
+ */
+
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { type Scope } from '@sentry/types'
+
 const _window = /* #__PURE__ */ typeof document !== 'undefined' ? window : undefined
 
 const defer = [
@@ -9,6 +26,9 @@ const defer = [
   'withScope',
   'showReportDialog'
 ] as const
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Simplify<T> = { [K in keyof T]: T[K] } & {}
 
 type MakeVoid<T> = {
   [K in keyof T]: T[K] extends (...args: infer A) => any ? (...args: A) => void : T[K]
@@ -45,7 +65,14 @@ function sdkIsLoaded() {
 }
 
 let started = false
-let sentry: MakeVoid<Pick<typeof import('@sentry/browser'), (typeof defer)[number]>> = {} as any
+
+let sentry: MakeVoid<
+  Pick<typeof import('@sentry/browser'), Exclude<(typeof defer)[number], 'withScope'>>
+> & {
+  withScope(callback: (scope: Scope) => any): void
+  withScope(scope: Scope | undefined, callback: (scope: Scope) => any): void
+} = {} as any
+
 const queue: QueueItem[] = []
 
 function enqueue(item: QueueItem) {
@@ -87,6 +114,7 @@ function enqueue(item: QueueItem) {
           for (const item of queue) {
             if (queueIsFunction(item)) {
               if (item.f !== 'init') {
+                // @ts-expect-error
                 sentry[item.f](...item.a)
               }
             } else if (queueIsError(item) && sentryPatchedErrorHandler) {
@@ -107,7 +135,7 @@ function enqueue(item: QueueItem) {
 }
 
 for (const f of defer) {
-  sentry[f] = (...args: any[]) => {
+  sentry[f] = (...args) => {
     enqueue({ a: args, f })
   }
 }
@@ -115,12 +143,12 @@ for (const f of defer) {
 _window?.addEventListener('error', onError)
 _window?.addEventListener('unhandledrejection', onUnhandledRejection)
 
-export const Sentry = {
-  init: (...args: Parameters<typeof sentry.init>) => sentry.init(...args),
-  addBreadcrumb: (...args: Parameters<typeof sentry.addBreadcrumb>) => sentry.addBreadcrumb(...args),
-  captureMessage: (...args: Parameters<typeof sentry.captureMessage>) => sentry.captureMessage(...args),
-  captureException: (...args: Parameters<typeof sentry.captureException>) => sentry.captureException(...args),
-  captureEvent: (...args: Parameters<typeof sentry.captureEvent>) => sentry.captureEvent(...args),
-  withScope: (...args: Parameters<typeof sentry.withScope>) => sentry.withScope(...args),
-  showReportDialog: (...args: Parameters<typeof sentry.showReportDialog>) => sentry.showReportDialog(...args)
+export const Sentry: Simplify<typeof sentry> = {
+  init: (...args) => sentry.init(...args),
+  addBreadcrumb: (...args) => sentry.addBreadcrumb(...args),
+  captureMessage: (...args) => sentry.captureMessage(...args),
+  captureException: (...args) => sentry.captureException(...args),
+  captureEvent: (...args) => sentry.captureEvent(...args), // @ts-expect-error
+  withScope: (...args) => sentry.withScope(...args),
+  showReportDialog: (...args) => sentry.showReportDialog(...args)
 }

@@ -1,12 +1,17 @@
 /**
- * Adapted from @vue/runtime-core v3.4.21
- * @see https://github.com/vuejs/core/blob/ab59bedae4e5e40b28804d88a51305b236d4a873/packages/runtime-core/src/component.ts
- * @see https://github.com/vuejs/core/blob/ab59bedae4e5e40b28804d88a51305b236d4a873/packages/runtime-core/src/warning.ts
+ * Adapted from
+ * @see https://github.com/vuejs/core/blob/76c9c742e9b045d1342f5952866972498e59f00b/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/bc37258caa2f6f67f4554ab8587aca3798d92124/packages/runtime-core/src/warning.ts
+ * @see https://github.com/getsentry/sentry-javascript/blob/2cfb0ef3fa5c40f90c317267a4d10b969994d021/packages/vue/src/errorhandler.ts
  *
- * Original license:
+ * Original licenses:
+ *
  * (c) 2018-present Yuxi (Evan) You and Vue contributors
  * @license MIT
- **/
+ *
+ * (c) 2019 Sentry (https://sentry.io) and individual contributors
+ * @license MIT
+ */
 
 import { consoleSandbox } from '@sentry/utils'
 import {
@@ -139,7 +144,6 @@ function formatProp(key: string, value: unknown, raw?: boolean): unknown {
   }
 }
 
-// Adapted from https://github.com/getsentry/sentry-javascript/blob/0b8540fd0f9dbd436aba4ec705570d21c09c4cdd/packages/vue/src/errorhandler.ts
 export function errorHandler(
   err: unknown,
   instance: ComponentPublicInstance | null = null,
