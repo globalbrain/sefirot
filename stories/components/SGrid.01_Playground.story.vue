@@ -9,8 +9,8 @@ function state() {
   return {
     cols: 4,
     gap: 24,
-    gapRow: undefined,
-    gapCol: undefined
+    gapCol: undefined,
+    gapRow: undefined
   }
 }
 </script>
@@ -20,8 +20,8 @@ function state() {
     <template #controls="{ state }">
       <HstText title="cols" v-model="state.cols" />
       <HstText title="gap" v-model="state.gap" />
-      <HstText title="gapRow" v-model="state.gapRow" />
-      <HstText title="gapCol" v-model="state.gapCol" />
+      <HstText title="gap-col" v-model="state.gapCol" />
+      <HstText title="gap-row" v-model="state.gapRow" />
     </template>
 
     <template #default="{ state }">
