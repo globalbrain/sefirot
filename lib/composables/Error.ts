@@ -24,6 +24,7 @@ import {
   type ConcreteComponent,
   type MaybeRefOrGetter,
   type VNode,
+  shallowRef,
   toValue
 } from 'vue'
 import { isFunction } from '../support/Utils'
@@ -106,6 +107,8 @@ function formatTrace(instance: ComponentInternalInstance | null): string {
     .join('\n')
 }
 
+const error = shallowRef()
+
 export function useErrorHandler({
   dsn,
   environment,
@@ -115,14 +118,37 @@ export function useErrorHandler({
   environment: string
   user?: MaybeRefOrGetter<User | null>
 }) {
-  Sentry.init({
-    dsn,
-    environment,
-    ignoreErrors: [
-      'ResizeObserver loop limit exceeded',
-      'ResizeObserver loop completed with undelivered notifications'
-    ]
-  })
+  if (dsn) {
+    Sentry.init({
+      dsn,
+      environment,
+      ignoreErrors: [
+        'ResizeObserver loop limit exceeded',
+        'ResizeObserver loop completed with undelivered notifications'
+      ]
+    })
+
+    const captureException = Sentry.captureException.bind(Sentry)
+    // @ts-expect-error ignore readonly type
+    Sentry.captureException = (...args: [exception: any, hint?: any]) => {
+      error.value = args[0]
+      return captureException(...args)
+    }
+  } else {
+    // manually configure global error handlers
+    // in case Sentry is not available
+
+    // skip in SSR, can't use onMounted because
+    // it's not available outside component lifecycle
+    if (typeof document !== 'undefined') {
+      addEventListener('error', (event) => {
+        error.value = event.error
+      })
+      addEventListener('unhandledrejection', (event) => {
+        error.value = event.reason
+      })
+    }
+  }
 
   return function errorHandler(
     error: any,
@@ -131,24 +157,26 @@ export function useErrorHandler({
   ) {
     pauseTracking()
 
-    const userValue = toValue(user) || null
+    if (dsn) {
+      const userValue = toValue(user) || null
 
-    if (![403, 404].includes(error?.cause?.statusCode)) {
-      const $ = instance && instance.$
-      const metadata = $ && {
-        componentName: formatComponentName($),
-        lifecycleHook: info,
-        trace: formatTrace($),
-        propsData: $ && $.props
-      }
+      if (![403, 404].includes(error?.cause?.statusCode)) {
+        const $ = instance && instance.$
+        const metadata = $ && {
+          componentName: formatComponentName($),
+          lifecycleHook: info,
+          trace: formatTrace($),
+          propsData: $ && $.props
+        }
 
-      setTimeout(() => {
-        Sentry.withScope((scope) => {
-          scope.setUser(userValue)
-          scope.setContext('vue', metadata)
-          Sentry.captureException(error)
+        setTimeout(() => {
+          Sentry.withScope((scope) => {
+            scope.setUser(userValue)
+            scope.setContext('vue', metadata)
+            Sentry.captureException(error)
+          })
         })
-      })
+      }
     }
 
     if (typeof console !== 'undefined') {
@@ -158,5 +186,14 @@ export function useErrorHandler({
     }
 
     resetTracking()
+  }
+}
+
+export function useError() {
+  return {
+    error,
+    clear() {
+      error.value = null
+    }
   }
 }
