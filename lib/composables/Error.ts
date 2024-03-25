@@ -24,10 +24,12 @@ import {
   type ConcreteComponent,
   type MaybeRefOrGetter,
   type VNode,
-  shallowRef,
   toValue
 } from 'vue'
+import { useError } from '../stores/Error'
 import { isFunction } from '../support/Utils'
+
+export { useError } from '../stores/Error'
 
 type TraceEntry = { vnode: VNode; recurseCount: number }
 
@@ -107,8 +109,6 @@ function formatTrace(instance: ComponentInternalInstance | null): string {
     .join('\n')
 }
 
-const error = shallowRef()
-
 export function useErrorHandler({
   dsn,
   environment,
@@ -118,6 +118,8 @@ export function useErrorHandler({
   environment: string
   user?: MaybeRefOrGetter<User | null>
 }) {
+  const { setError } = useError()
+
   if (dsn) {
     Sentry.init({
       dsn,
@@ -131,7 +133,7 @@ export function useErrorHandler({
     const captureException = Sentry.captureException.bind(Sentry)
     // @ts-expect-error ignore readonly type
     Sentry.captureException = (...args: [exception: any, hint?: any]) => {
-      error.value = args[0]
+      setError(args[0])
       return captureException(...args)
     }
   } else {
@@ -142,10 +144,10 @@ export function useErrorHandler({
     // it's not available outside component lifecycle
     if (typeof document !== 'undefined') {
       addEventListener('error', (event) => {
-        error.value = event.error
+        setError(event.error)
       })
       addEventListener('unhandledrejection', (event) => {
-        error.value = event.reason
+        setError(event.reason)
       })
     }
   }
@@ -186,14 +188,5 @@ export function useErrorHandler({
     }
 
     resetTracking()
-  }
-}
-
-export function useError() {
-  return {
-    error,
-    clear() {
-      error.value = null
-    }
   }
 }
