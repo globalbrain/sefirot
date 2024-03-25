@@ -79,6 +79,6 @@ textarea {
 
 .text-14 { font-size: 14px !important; }
 
-.bg-info { background-color: var(--c-info); }
+.bg-info { background-color: var(--c-bg-info-1); }
 
 .rounded-6 { border-radius: 6px; }

@@ -4,12 +4,14 @@ import { computed } from 'vue'
 const props = defineProps<{
   cols?: string | number
   gap?: string | number
+  gapRow?: string | number
+  gapCol?: string | number
 }>()
 
 const styles = computed(() => {
   return {
-    '--grid-template-columns': `repeat(${props.cols ?? 1}, minmax(0, 1fr))`,
-    '--gap': `${props.gap ?? 0}px`
+    '--grid-template-columns': `repeat(${props.cols || 1}, minmax(0, 1fr))`,
+    '--gap': `${props.gapRow || props.gap || 0}px ${props.gapCol || props.gap || 0}px`
   }
 })
 </script>

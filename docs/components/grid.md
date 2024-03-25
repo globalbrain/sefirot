@@ -95,7 +95,7 @@ interface Props {
 </SGrid>
 ```
 
-## Responsive design
+### Responsive design
 
 If you need to adjust the overall grid layout based on different screen sizes or other conditions, it is recommended to use CSS instead of props. The props are provided for convenience, but for more complex layout structures, CSS should be used.
 
