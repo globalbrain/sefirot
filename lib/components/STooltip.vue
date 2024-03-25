@@ -2,7 +2,6 @@
 import { onKeyStroke } from '@vueuse/core'
 import { computed, ref, shallowRef } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
-import SMarkdown from './SMarkdown.vue'
 
 const props = withDefaults(defineProps<{
   tag?: string
@@ -107,7 +106,7 @@ function onBlur() {
     <transition name="fade">
       <span v-show="on" class="container" :class="containerClasses" ref="tip">
         <span v-if="$slots.text" class="tip"><slot name="text" /></span>
-        <SMarkdown v-else-if="text" tag="span" class="tip" :content="text" inline />
+        <span v-else-if="text" class="tip" v-html="text" />
       </span>
     </transition>
   </component>

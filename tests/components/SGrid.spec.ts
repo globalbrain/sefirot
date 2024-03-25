@@ -17,7 +17,7 @@ describe('components/SGrid', () => {
         }
       })
       expect(wrapper.html()).toContain('--grid-template-columns: repeat(3, minmax(0, 1fr));')
-      expect(wrapper.html()).toContain('--gap: 10px;')
+      expect(wrapper.html()).toContain('--gap: 10px 10px;')
     })
   })
 
