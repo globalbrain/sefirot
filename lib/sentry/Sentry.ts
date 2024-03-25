@@ -24,13 +24,9 @@ import {
   type ConcreteComponent,
   type MaybeRefOrGetter,
   type VNode,
-  isRef,
-  toRaw,
   toValue
 } from 'vue'
-import { isFunction, isString } from '../support/Utils'
-
-type Data = Record<string, unknown>
+import { isFunction } from '../support/Utils'
 
 type TraceEntry = { vnode: VNode; recurseCount: number }
 
@@ -103,57 +99,11 @@ function getComponentTrace(currentVNode: VNode | null): ComponentTraceStack {
   return normalizedStack
 }
 
+// prettier-ignore
 function formatTrace(instance: ComponentInternalInstance | null): string {
   return getComponentTrace(instance && instance.vnode)
-    .map(formatTraceEntry)
+    .map(({ vnode, recurseCount }) => `at <${formatComponentName(vnode.component)}>${recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''}`)
     .join('\n')
-}
-
-function formatTraceEntry({ vnode, recurseCount }: TraceEntry): string {
-  return `at <${formatComponentName(vnode.component)}${
-    vnode.props ? ` ${formatProps(vnode.props)}` : ''
-  }>${recurseCount > 0 ? `... (${recurseCount} recursive calls)` : ''}`
-}
-
-function formatProps(props: Data): string {
-  const res: string[] = []
-  const keys = Object.keys(props)
-  keys.slice(0, 3).forEach((key) => {
-    res.push(formatProp(key, props[key]))
-  })
-  if (keys.length > 3) {
-    res.push(' ...')
-  }
-  return res.join(' ')
-}
-
-function formatProp(key: string, value: unknown): string
-function formatProp(key: string, value: unknown, raw: true): unknown
-function formatProp(key: string, value: unknown, raw?: boolean): unknown {
-  if (isString(value)) {
-    value = JSON.stringify(value)
-    return raw ? value : `${key}=${value}`
-  } else if (typeof value === 'number' || typeof value === 'boolean' || value == null) {
-    return raw ? value : `${key}=${value}`
-  } else if (isRef(value)) {
-    value = formatProp(key, toRaw(value.value), true)
-    return raw ? value : `${key}=Ref<${tryStringify(value)}>`
-  } else if (isFunction(value)) {
-    return `${key}=fn${value.name ? `<${value.name}>` : ''}`
-  } else {
-    value = toRaw(value)
-    return raw ? value : `${key}=${tryStringify(value)}`
-  }
-}
-
-function tryStringify(value: unknown): string {
-  try {
-    return JSON.stringify(value)
-  } catch {}
-  try {
-    return String(value)
-  } catch {}
-  return ''
 }
 
 export function useErrorHandler({

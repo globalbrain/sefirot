@@ -11,6 +11,6 @@ export default defineConfig({
   },
 
   ssr: {
-    noExternal: ['@sentry/utils']
+    noExternal: [/sentry/]
   }
 })
