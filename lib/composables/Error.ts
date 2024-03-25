@@ -120,7 +120,21 @@ export function useErrorHandler({
 }) {
   const { setError } = useError()
 
-  if (dsn) {
+  const enabled = !!dsn && import.meta.env.PROD
+
+  // No need to manually report these errors as they are automatically
+  // captured by Sentry. And skip registering these in SSR. We can't use
+  // onMounted because it's not available outside component lifecycle.
+  if (typeof document !== 'undefined') {
+    addEventListener('error', (event) => {
+      setError(event.error)
+    })
+    addEventListener('unhandledrejection', (event) => {
+      setError(event.reason)
+    })
+  }
+
+  if (enabled) {
     Sentry.init({
       dsn,
       environment,
@@ -129,27 +143,6 @@ export function useErrorHandler({
         'ResizeObserver loop completed with undelivered notifications'
       ]
     })
-
-    const captureException = Sentry.captureException.bind(Sentry)
-    // @ts-expect-error ignore readonly type
-    Sentry.captureException = (...args: [exception: any, hint?: any]) => {
-      setError(args[0])
-      return captureException(...args)
-    }
-  } else {
-    // manually configure global error handlers
-    // in case Sentry is not available
-
-    // skip in SSR, can't use onMounted because
-    // it's not available outside component lifecycle
-    if (typeof document !== 'undefined') {
-      addEventListener('error', (event) => {
-        setError(event.error)
-      })
-      addEventListener('unhandledrejection', (event) => {
-        setError(event.reason)
-      })
-    }
   }
 
   return function errorHandler(
@@ -157,9 +150,11 @@ export function useErrorHandler({
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
+    setError(error)
+
     pauseTracking()
 
-    if (dsn) {
+    if (enabled) {
       const userValue = toValue(user) || null
 
       if (![403, 404].includes(error?.cause?.statusCode)) {
@@ -181,11 +176,9 @@ export function useErrorHandler({
       }
     }
 
-    if (typeof console !== 'undefined') {
-      consoleSandbox(() => {
-        console.error(error)
-      })
-    }
+    consoleSandbox(() => {
+      console.error(error)
+    })
 
     resetTracking()
   }
