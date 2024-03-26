@@ -29,8 +29,6 @@ import {
 import { useError } from '../stores/Error'
 import { isFunction } from '../support/Utils'
 
-export { useError } from '../stores/Error'
-
 type TraceEntry = { vnode: VNode; recurseCount: number }
 
 type ComponentTraceStack = TraceEntry[]
