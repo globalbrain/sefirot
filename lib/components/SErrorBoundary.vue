@@ -10,7 +10,7 @@ const error = shallowRef<Error>()
 
 onErrorCaptured((e) => {
   if (import.meta.env.DEV) {
-    console.error(e)
+    console.error(e, { '[cause]': e?.cause })
   }
   if (!import.meta.env.SSR) {
     error.value = e
