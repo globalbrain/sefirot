@@ -63,8 +63,6 @@
   },
   "dependencies": {
     "@sentry/browser": "8.0.0-alpha.4",
-    "@sentry/types": "8.0.0-alpha.4",
-    "@sentry/utils": "8.0.0-alpha.4",
     "@tanstack/vue-virtual": "3.0.0-beta.62",
     "@tinyhttp/content-disposition": "^2.2.0",
     "@tinyhttp/cookie": "^2.1.0",

@@ -14,8 +14,6 @@
  */
 
 import * as Sentry from '@sentry/browser'
-import { type User } from '@sentry/types'
-import { consoleSandbox } from '@sentry/utils'
 import { pauseTracking, resetTracking } from '@vue/reactivity'
 import {
   type ComponentInternalInstance,
@@ -28,6 +26,14 @@ import {
 } from 'vue'
 import { useError } from '../stores/Error'
 import { isFunction } from '../support/Utils'
+
+export interface User {
+  [key: string]: any
+  id?: string | number
+  ip_address?: string
+  email?: string
+  username?: string
+}
 
 type TraceEntry = { vnode: VNode; recurseCount: number }
 
@@ -173,10 +179,6 @@ export function useErrorHandler({
         })
       }
     }
-
-    consoleSandbox(() => {
-      console.error(error)
-    })
 
     resetTracking()
   }
