@@ -1,5 +1,5 @@
 export class PageNotFoundError extends Error {
   constructor() {
-    super('Page Not Found', { cause: { statusCode: 404 } })
+    super('Page not found', { cause: { statusCode: 404 } })
   }
 }
