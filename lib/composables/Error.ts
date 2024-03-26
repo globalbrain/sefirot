@@ -106,11 +106,36 @@ function getComponentTrace(currentVNode: VNode | null): ComponentTraceStack {
   return normalizedStack
 }
 
-// prettier-ignore
 function formatTrace(instance: ComponentInternalInstance | null): string {
   return getComponentTrace(instance && instance.vnode)
-    .map(({ vnode, recurseCount }) => `at <${formatComponentName(vnode.component)}>${recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''}`)
+    .map(formatTraceEntry)
     .join('\n')
+}
+
+function formatTraceEntry({ vnode, recurseCount }: TraceEntry): string {
+  return `at <${formatComponentName(vnode.component)}${
+    vnode.props ? ` ${formatProps(vnode.props)}` : ''
+  }>${
+    recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''
+  }`
+}
+
+function formatProps(props: Record<string, unknown>): string {
+  return Object.keys(props)
+    .map((key) => {
+      let value = props[key]
+      if (typeof value === 'string') {
+        value = JSON.stringify(value)
+        return `${key}=${value}`
+      } else if (typeof value === 'function') {
+        return `:${key}="fn${value.name ? `<${value.name}>` : ''}"`
+      } else if (typeof value !== 'object' || value === null) {
+        return `:${key}="${String(value)}"`
+      } else {
+        return `${key}="..."`
+      }
+    })
+    .join(' ')
 }
 
 export function useErrorHandler({
