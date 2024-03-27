@@ -8,5 +8,9 @@ export default defineConfig({
     alias: {
       'sefirot/': new URL('./lib/', import.meta.url).pathname
     }
+  },
+
+  ssr: {
+    noExternal: [/sentry/]
   }
 })

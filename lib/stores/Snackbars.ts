@@ -17,7 +17,7 @@ export interface SnackbarAction {
   onClick(): void
 }
 
-export const useSnackbars = defineStore('snackbars', () => {
+export const useSnackbars = defineStore('sefirot-snackbars', () => {
   const maxItemSize = 4
 
   let nextId = 0

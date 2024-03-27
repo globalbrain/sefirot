@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
+import { UnexpectedError } from 'sefirot/errors'
 
 function throwErr() {
-  throw new Error('Error message')
+  throw new UnexpectedError()
 }
 </script>
 
