@@ -179,9 +179,9 @@ export function useErrorHandler({
   ) {
     setError(error)
 
-    pauseTracking()
-
     if (enabled) {
+      pauseTracking()
+
       let userValue = toValue(user) || null
       if (!userValue?.id && !userValue?.email && !userValue?.username) {
         userValue = null
@@ -204,8 +204,8 @@ export function useErrorHandler({
           })
         })
       }
-    }
 
-    resetTracking()
+      resetTracking()
+    }
   }
 }
