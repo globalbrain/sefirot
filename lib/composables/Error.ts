@@ -28,9 +28,7 @@ import { useError } from '../stores/Error'
 import { isFunction } from '../support/Utils'
 
 export interface User {
-  [key: string]: any
   id?: string | number
-  ip_address?: string
   email?: string
   username?: string
 }
@@ -184,7 +182,10 @@ export function useErrorHandler({
     pauseTracking()
 
     if (enabled) {
-      const userValue = toValue(user) || null
+      let userValue = toValue(user) || null
+      if (!userValue?.id && !userValue?.email && !userValue?.username) {
+        userValue = null
+      }
 
       if (![403, 404].includes(error?.cause?.statusCode)) {
         const $ = instance && instance.$
