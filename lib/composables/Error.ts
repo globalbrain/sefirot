@@ -141,8 +141,8 @@ export function useErrorHandler({
   environment,
   user
 }: {
-  dsn: string
-  environment: string
+  dsn?: string
+  environment?: string
   user?: MaybeRefOrGetter<User | null>
 }) {
   const { setError } = useError()
