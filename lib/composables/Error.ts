@@ -145,7 +145,7 @@ export function useErrorHandler({
   environment?: string
   user?: MaybeRefOrGetter<User | null>
 }) {
-  const { setError } = useError()
+  const error = useError()
 
   const enabled = !!dsn && import.meta.env.PROD
 
@@ -154,10 +154,10 @@ export function useErrorHandler({
   // onMounted because it's not available outside component lifecycle.
   if (typeof document !== 'undefined') {
     addEventListener('error', (event) => {
-      setError(event.error)
+      error.set(event.error)
     })
     addEventListener('unhandledrejection', (event) => {
-      setError(event.reason)
+      error.set(event.reason)
     })
   }
 
@@ -177,7 +177,7 @@ export function useErrorHandler({
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
-    setError(error)
+    error.set(error)
 
     if (enabled) {
       pauseTracking()
