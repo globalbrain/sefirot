@@ -62,7 +62,7 @@
     "vue-router": "^4.3.0"
   },
   "dependencies": {
-    "@sentry/browser": "8.0.0-alpha.4",
+    "@sentry/browser": "8.0.0-alpha.5",
     "@tanstack/vue-virtual": "3.0.0-beta.62",
     "@tinyhttp/content-disposition": "^2.2.0",
     "@tinyhttp/cookie": "^2.1.0",
@@ -94,7 +94,7 @@
     "body-scroll-lock": "4.0.0-beta.0",
     "eslint": "^8.57.0",
     "fuse.js": "^7.0.0",
-    "happy-dom": "^14.3.6",
+    "happy-dom": "^14.3.9",
     "histoire": "^0.17.14",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
