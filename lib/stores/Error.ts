@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
-import { shallowRef } from 'vue'
+import { shallowRef, toRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-export const useError = defineStore('sefirot-error', () => {
+const _useError = defineStore('sefirot-error', () => {
   const error = shallowRef()
 
   function setError(err: unknown): void {
@@ -22,3 +22,12 @@ export const useError = defineStore('sefirot-error', () => {
     clearError
   }
 })
+
+export function useError() {
+  const errorStore = _useError()
+  return {
+    error: toRef(() => errorStore.error),
+    setError: errorStore.setError,
+    clearError: errorStore.clearError
+  }
+}
