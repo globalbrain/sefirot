@@ -1,5 +1,7 @@
 
 
+## [3.40.1](https://github.com/globalbrain/sefirot/compare/v3.40.0...v3.40.1) (2024-03-27)
+
 # [3.40.0](https://github.com/globalbrain/sefirot/compare/v3.39.2...v3.40.0) (2024-03-27)
 
 
