@@ -1,5 +1,18 @@
 
 
+# [3.40.0](https://github.com/globalbrain/sefirot/compare/v3.39.2...v3.40.0) (2024-03-27)
+
+
+### Bug Fixes
+
+* **tooltip:** don't render markdown by default ([#468](https://github.com/globalbrain/sefirot/issues/468)) ([#502](https://github.com/globalbrain/sefirot/issues/502)) ([a0dc8dc](https://github.com/globalbrain/sefirot/commit/a0dc8dcdea36e922c33186b226392eaa99f9aa7a))
+
+
+### Features
+
+* **grid:** add support for row and column-specific gap ([#462](https://github.com/globalbrain/sefirot/issues/462)) ([#503](https://github.com/globalbrain/sefirot/issues/503)) ([1297dc6](https://github.com/globalbrain/sefirot/commit/1297dc623754799d2051bd6e82a9ffd12573ee0b))
+* unify error handling and add sentry integration ([#504](https://github.com/globalbrain/sefirot/issues/504)) ([ee92bb3](https://github.com/globalbrain/sefirot/commit/ee92bb35bb13401ae2ecca326876df18ce8bef17))
+
 ## [3.39.2](https://github.com/globalbrain/sefirot/compare/v3.38.1...v3.39.2) (2024-03-14)
 
 
