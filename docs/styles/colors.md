@@ -6,7 +6,7 @@ Sefirot has various fundamental colors. These colors are used through out the co
 
 The color scheme comes with 2 types of definitions. One is the "Base Colors", pure base colors which will not change depending on light and dark theme. The other is "Theme Colors", which will change depending on light and dark mode.
 
-Usually when usging or customizing the colors, you would want to use "Theme Colors", however, some colors only exists in "Base Colors" when a single color covers both light and dark mode.
+Usually when using or customizing the colors, you would want to use "Theme Colors", however, some colors only exists in "Base Colors" when a single color covers both light and dark mode.
 
 In this doc, we wouldn't separate them but rather list the colors that are safe to use, and customize to avoid any confusion. If you're curious, you may find all list of colors at [`styles/variables.css`](https://github.com/globalbrain/sefirot/blob/main/lib/styles/variables.css) file.
 
