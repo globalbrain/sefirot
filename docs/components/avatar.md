@@ -45,7 +45,7 @@ Defines the size of the component. The default is `medium`.
 
 ```ts
 interface Props {
-  size?: 'nano' | 'mini' | 'small' | 'medium' | 'large'
+  size?: 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 }
 ```
 

@@ -1,12 +1,12 @@
 # Colors
 
-Sefirot has varias fundamental colors. These colors are used through out the components to set basic visual branding for whole design system.
+Sefirot has various fundamental colors. These colors are used through out the components to set basic visual branding for whole design system.
 
 ## Basics
 
 The color scheme comes with 2 types of definitions. One is the "Base Colors", pure base colors which will not change depending on light and dark theme. The other is "Theme Colors", which will change depending on light and dark mode.
 
-Usually when usgin or customizing the colors, you would want to use "Theme Colors", however, some colors only exists in "Base Colors" when a single color covers both light and dark mode.
+Usually when usging or customizing the colors, you would want to use "Theme Colors", however, some colors only exists in "Base Colors" when a single color covers both light and dark mode.
 
 In this doc, we wouldn't separate them but rather list the colors that are safe to use, and customize to avoid any confusion. If you're curious, you may find all list of colors at [`styles/variables.css`](https://github.com/globalbrain/sefirot/blob/main/lib/styles/variables.css) file.
 
@@ -23,7 +23,7 @@ Sefirot comes with 4 accent colors which is:
 - `warning` - Yellow color used for warning, attention needed info, etc.
 - `danger` - Red color used for error, deletion, dangerous info, etc.
 
-These colors also comes with 2 basic types `text`, `border`, `fg`, and `bg`. The colors should change slightly on how it is being use. For example, when using `info` (blue) color on text, it should be a bit brighter than when it is being used as background color (for example, background color of a button).
+These colors also comes with 2 basic types `text`, `border`, `fg`, and `bg`. The colors should change slightly on how it is being used. For example, when using `info` (blue) color on text, it should be a bit brighter than when it is being used as background color (for example, background color of a button).
 
 It's recommended to use one of `text`, `border`, `fg`, and `bg`. version of the color unless you're defining these colors for other purpose such as border colors or custom graphics.
 
