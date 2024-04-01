@@ -173,11 +173,11 @@ export function useErrorHandler({
   }
 
   return function errorHandler(
-    error: any,
+    e: any,
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
-    error.set(error)
+    error.set(e)
 
     if (enabled) {
       pauseTracking()
@@ -187,7 +187,7 @@ export function useErrorHandler({
         userValue = null
       }
 
-      if (![403, 404].includes(error?.cause?.statusCode)) {
+      if (![403, 404].includes(e?.cause?.statusCode)) {
         const $ = instance && instance.$
         const metadata = $ && {
           componentName: formatComponentName($),
@@ -200,7 +200,7 @@ export function useErrorHandler({
           Sentry.withScope((scope) => {
             scope.setUser(userValue)
             scope.setContext('vue', metadata)
-            Sentry.captureException(error)
+            Sentry.captureException(e)
           })
         })
       }
