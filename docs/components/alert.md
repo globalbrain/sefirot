@@ -4,7 +4,7 @@ import SAlert from 'sefirot/components/SAlert.vue'
 
 # SAlert <Badge text="3.8.0" />
 
-`<SAlert>` is used to diaplay informative messages to the user.
+`<SAlert>` is used to display informative messages to the user.
 
 <Showcase
   path="/components/SAlert.vue"
@@ -39,7 +39,7 @@ import SAlert from '@globalbrain/sefirot/lib/components/SAlert.vue'
 
 ### Modes
 
-`<SAlert>` has 4 modes: `info`, `success`, `warning` and `error`. Each mode has different color and icon.
+`<SAlert>` has 4 modes: `info`, `success`, `warning` and `danger`. Each mode has different color and icon.
 
 - `info` - Use this mode to display informative messages or tips.
 - `success` - Use this mode to display that something has succeeded.
