@@ -1,5 +1,14 @@
 
 
+## [3.40.2](https://github.com/globalbrain/sefirot/compare/v3.40.1...v3.40.2) (2024-04-01)
+
+
+### Bug Fixes
+
+* **error:** current error shadowing error store ([#510](https://github.com/globalbrain/sefirot/issues/510)) ([440ca8f](https://github.com/globalbrain/sefirot/commit/440ca8ff7704404e1b1bd0dfa29b85925654677b))
+* **table:** correct wrong types and make pills accept array ([#508](https://github.com/globalbrain/sefirot/issues/508)) ([9e8a7af](https://github.com/globalbrain/sefirot/commit/9e8a7afd96824850237aed048ec28791f3cd0d71))
+* **url:** handle array value when corresponding target is non-array ([#505](https://github.com/globalbrain/sefirot/issues/505)) ([7a5727e](https://github.com/globalbrain/sefirot/commit/7a5727e4583f63b69df77a7be7ae5b9529075fa6))
+
 ## [3.40.1](https://github.com/globalbrain/sefirot/compare/v3.40.0...v3.40.1) (2024-03-27)
 
 # [3.40.0](https://github.com/globalbrain/sefirot/compare/v3.39.2...v3.40.0) (2024-03-27)
