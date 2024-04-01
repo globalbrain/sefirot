@@ -140,7 +140,7 @@ export type TableCellPillColor = ColorModes
 
 export interface TableCellPills<V = any, R = any> extends TableCellBase {
   type: 'pills'
-  pills(value: V, record: R): TableCellPillItem[]
+  pills: TableCellPillItem[] | ((value: V, record: R) => TableCellPillItem[])
 }
 
 export interface TableCellPillItem {

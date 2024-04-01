@@ -7,7 +7,7 @@ import SLink from './SLink.vue'
 
 const props = defineProps<{
   value?: any
-  record: any
+  record?: any
   align?: 'left' | 'center' | 'right'
   icon?: any
   getter?: number | null

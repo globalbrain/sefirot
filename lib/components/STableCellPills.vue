@@ -4,12 +4,16 @@ import { type TableCellPillItem } from '../composables/Table'
 import STableCellPill from './STableCellPill.vue'
 
 const props = defineProps<{
-  value: string[]
-  record: any
-  pills(value: string[], record: any): TableCellPillItem[]
+  value?: any
+  record?: any
+  pills: TableCellPillItem[] | ((value: any, record: any) => TableCellPillItem[])
 }>()
 
-const items = computed(() => props.pills(props.value, props.record))
+const items = computed(() => {
+  return Array.isArray(props.pills)
+    ? props.pills
+    : props.pills(props.value, props.record)
+})
 </script>
 
 <template>

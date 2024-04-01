@@ -4,7 +4,7 @@ import { type Day } from '../support/Day'
 
 const props = defineProps<{
   value?: Day | null
-  record: any
+  record?: any
   align?: 'left' | 'center' | 'right'
   getter?: Day | null
   format?: string

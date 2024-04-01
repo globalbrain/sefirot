@@ -4,7 +4,7 @@ import SPill, { type Mode } from './SPill.vue'
 
 const props = defineProps<{
   value?: any
-  record: any
+  record?: any
   getter?: string | ((value: any, record: any) => string)
   color?: Mode | ((value: any, record: any) => Mode)
 }>()
