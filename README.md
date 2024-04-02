@@ -27,10 +27,16 @@ Sefirot follows the official [Vue Style Guide](https://v3.vuejs.org/style-guide/
 ### Development
 
 ```bash
-$ pnpm run serve
+$ pnpm run story
 ```
 
-Serve documentation website at http://localhost:3000.
+Serve Histoire website at http://localhost:4010.
+
+```bash
+$ pnpm run docs
+```
+
+Serve documentation website at http://localhost:4011.
 
 ```bash
 $ pnpm run lint
