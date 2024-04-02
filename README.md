@@ -30,7 +30,7 @@ Sefirot follows the official [Vue Style Guide](https://v3.vuejs.org/style-guide/
 $ pnpm run story
 ```
 
-Serve Histoire website at http://localhost:4010.
+Serve Histoire at http://localhost:4010.
 
 ```bash
 $ pnpm run docs
