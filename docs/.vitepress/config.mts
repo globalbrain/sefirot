@@ -32,6 +32,14 @@ export default defineConfig({
     ],
 
     sidebar: sidebar()
+  },
+
+  postRender(context) {
+    const html = context.teleports?.['#sefirot-modals'] || ''
+    context.teleports = {
+      ...context.teleports,
+      body: (context.teleports?.['body'] || '') + `<div id="sefirot-modals">${html}</div>`
+    }
   }
 })
 
@@ -86,7 +94,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SState', link: '/components/state' },
         { text: 'STable', link: '/components/table' },
         { text: 'STooltip', link: '/components/tooltip' },
-        { text: 'SW', link: '/components/w' },
+        { text: 'SW', link: '/components/w' }
       ]
     },
     {
@@ -104,7 +112,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: 'Network Requests',
       collapsed: false,
       items: [
-        { text: 'Http', link: '/network-requests/http' },
+        { text: 'Http', link: '/network-requests/http' }
       ]
     },
     {
