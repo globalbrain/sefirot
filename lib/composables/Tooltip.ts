@@ -29,6 +29,7 @@ export function useTooltip(
     setPosition()
     setTimeout(() => { on.value = true })
     globalHide.value = hide
+    window.addEventListener('scroll', hide, { once: true })
   }
 
   function hide(): void {

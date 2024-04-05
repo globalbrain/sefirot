@@ -12,6 +12,7 @@ body {
   height: 100vh;
   min-height: 100vh;
   background-color: var(--c-bg-elv-1);
+  overflow: unset !important;
 }
 
 .__histoire-render-story.__histoire-render-custom-controls {
