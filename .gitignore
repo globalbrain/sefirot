@@ -8,3 +8,5 @@
 *.tgz
 .vscode
 .prettierrc*
+.temp
+.cache
