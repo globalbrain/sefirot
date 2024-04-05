@@ -103,12 +103,14 @@ function onBlur() {
       <slot />
     </span>
 
-    <transition name="fade">
-      <span v-show="on" class="container" :class="containerClasses" ref="tip">
-        <span v-if="$slots.text" class="tip"><slot name="text" /></span>
-        <span v-else-if="text" class="tip" v-html="text" />
-      </span>
-    </transition>
+    <Teleport to="#sefirot-modals">
+      <Transition name="fade">
+        <span v-show="on" class="container" :class="containerClasses" ref="tip">
+          <span v-if="$slots.text" class="tip"><slot name="text" /></span>
+          <span v-else-if="text" class="tip" v-html="text" />
+        </span>
+      </Transition>
+    </Teleport>
   </component>
 </template>
 
@@ -134,7 +136,7 @@ function onBlur() {
 }
 
 .container {
-  position: absolute;
+  position: fixed;
   z-index: var(--z-index-tooltip);
   display: block;
   transition: opacity 0.25s;
@@ -147,32 +149,6 @@ function onBlur() {
   &.right .tip  { transform: translateX(-8px); }
   &.bottom .tip { transform: translateY(-8px); }
   &.left .tip   { transform: translateX(8px); }
-}
-
-.container.top {
-  top: 0;
-  left: 50%;
-  padding-bottom: 8px;
-  transform: translate(-50%, -100%);
-}
-
-.container.right {
-  top: 50%;
-  left: 100%;
-  transform: translate(8px, -50%);
-}
-
-.container.bottom {
-  bottom: 0;
-  left: 50%;
-  padding-top: 8px;
-  transform: translate(-50%, 100%);
-}
-
-.container.left {
-  top: 50%;
-  right: 100%;
-  transform: translate(-8px, -50%);
 }
 
 .tip {

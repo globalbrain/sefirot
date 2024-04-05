@@ -47,62 +47,77 @@ export function useTooltip(
   }
 
   function setPosition(): void {
-    if (shouldPosition()) {
-      doSetPosition()
+    if (typeof document === 'undefined' || !tip.value || !content.value) { return }
+
+    const contentRect = content.value.getBoundingClientRect()
+
+    tip.value.style.display = 'block'
+    const tipRect = tip.value.getBoundingClientRect()
+    tip.value.style.display = 'none'
+
+    const padding = 8
+    const screenPadding = document.documentElement.clientWidth >= 512 ? 24 : 8
+
+    const minX = screenPadding
+    const minY = screenPadding
+    const maxX = document.documentElement.clientWidth - screenPadding
+    const maxY = document.documentElement.clientHeight - screenPadding
+
+    let top = minY
+    let left = minX
+
+    if (position.value === 'top') {
+      top = contentRect.top - tipRect.height - padding
+      if (top < minY) {
+        top = contentRect.top + contentRect.height + padding
+      }
+      left = contentRect.left + contentRect.width / 2 - tipRect.width / 2
+      if (left + tipRect.width > maxX) {
+        left = maxX - tipRect.width
+      }
+      if (left < minX) {
+        left = minX
+      }
+    } else if (position.value === 'right') {
+      top = contentRect.top + contentRect.height / 2 - tipRect.height / 2
+      if (top + tipRect.height > maxY) {
+        top = maxY - tipRect.height
+      }
+      if (top < minY) {
+        top = minY
+      }
+      left = contentRect.right + padding
+      if (left + tipRect.width > maxX) {
+        left = contentRect.left - tipRect.width - padding
+      }
+    } else if (position.value === 'bottom') {
+      top = contentRect.top + contentRect.height + padding
+      if (top + tipRect.height > maxY) {
+        top = contentRect.top - tipRect.height - padding
+      }
+      left = contentRect.left + contentRect.width / 2 - tipRect.width / 2
+      if (left + tipRect.width > maxX) {
+        left = maxX - tipRect.width
+      }
+      if (left < minX) {
+        left = minX
+      }
+    } else if (position.value === 'left') {
+      top = contentRect.top + contentRect.height / 2 - tipRect.height / 2
+      if (top + tipRect.height > maxY) {
+        top = maxY - tipRect.height
+      }
+      if (top < minY) {
+        top = minY
+      }
+      left = contentRect.left - tipRect.width - padding
+      if (left < minX) {
+        left = contentRect.right + padding
+      }
     }
-  }
 
-  function doSetPosition(): void {
-    // Reset position first so that we can get the original position.
-    resetPosition()
-
-    // Temporally show tip to get its size.
-    tip.value!.style.display = 'block'
-
-    const screenPadding = document.body.clientWidth >= 512 ? 24 : 8
-    const contentRect = content.value!.getBoundingClientRect()
-    const tipRect = tip.value!.getBoundingClientRect()
-
-    const contentRightX = contentRect.x + contentRect.width
-    const tipRightX = tipRect.x + tipRect.width
-
-    if (tipRect.x < screenPadding) {
-      adjustLeftPosition(screenPadding, contentRect.x)
-    } else if (tipRightX > (document.body.clientWidth - screenPadding)) {
-      adjustRightPosition(screenPadding, contentRightX)
-    }
-
-    tip.value!.style.display = 'none'
-  }
-
-  function adjustLeftPosition(screenPadding: number, contentRectX: number): void {
-    tip.value!.style.left = '0'
-    tip.value!.style.right = 'auto'
-    setTransform(-contentRectX + screenPadding)
-  }
-
-  function adjustRightPosition(screenPadding: number, contentRightX: number): void {
-    tip.value!.style.left = 'auto'
-    tip.value!.style.right = '0'
-    setTransform((document.body.clientWidth - contentRightX) - screenPadding)
-  }
-
-  function resetPosition(): void {
-    tip.value!.style.left = ''
-    tip.value!.style.right = ''
-    tip.value!.style.transform = ''
-  }
-
-  function setTransform(x: number): void {
-    tip.value!.style.transform = `translate(${x}px, ${position.value === 'top' ? -100 : 100}%)`
-  }
-
-  function shouldPosition(): boolean {
-    if (!tip.value || !content.value) {
-      return false
-    }
-
-    return position.value === 'top' || position.value === 'bottom'
+    tip.value.style.top = `${top}px`
+    tip.value.style.left = `${left}px`
   }
 
   return {
