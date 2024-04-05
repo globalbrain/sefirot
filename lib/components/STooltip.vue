@@ -136,7 +136,7 @@ function onBlur() {
 }
 
 .container {
-  position: fixed;
+  position: absolute;
   z-index: var(--z-index-tooltip);
   display: block;
   transition: opacity 0.25s;
