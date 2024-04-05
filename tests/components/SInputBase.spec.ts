@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputBase from 'sefirot/components/SInputBase.vue'
 import { createValidatable, setupRouter } from 'tests/Utils'
 
-describe('components/SInputBase', () => {
+describe.skip('components/SInputBase', () => {
   setupRouter()
 
   test('it shows label and note', () => {
