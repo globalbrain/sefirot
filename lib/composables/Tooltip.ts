@@ -51,9 +51,10 @@ export function useTooltip(
 
     const contentRect = content.value.getBoundingClientRect()
 
+    const initialDisplay = tip.value.style.display
     tip.value.style.display = 'block'
     const tipRect = tip.value.getBoundingClientRect()
-    tip.value.style.display = 'none'
+    tip.value.style.display = initialDisplay
 
     const padding = 8
 
