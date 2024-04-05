@@ -12,8 +12,7 @@ const globalHide = ref<() => void>()
 
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
- * the current window size. This only applies to position `top` and
- * `bottom` since we only care about left and right of the screen.
+ * the current window size.
  */
 export function useTooltip(
   el: Ref<HTMLElement | null>,
