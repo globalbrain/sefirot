@@ -32,8 +32,6 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div id="sefirot-modals" />
-
       <Board :title="title" :docs="docs">
         <STooltip class="top-left" :text="state.text" :position="state.position">
           Hover this text.

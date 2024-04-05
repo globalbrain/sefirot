@@ -54,8 +54,6 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <div id="sefirot-modals" />
-
       <Board :title="title" :docs="docs">
         <SButton mode="info" label="Open dialog" @click="open = true" />
 

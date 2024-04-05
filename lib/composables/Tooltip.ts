@@ -56,12 +56,11 @@ export function useTooltip(
     tip.value.style.display = 'none'
 
     const padding = 8
-    const screenPadding = document.documentElement.clientWidth >= 512 ? 24 : 8
 
-    const minX = screenPadding
-    const minY = screenPadding
-    const maxX = document.documentElement.clientWidth - screenPadding
-    const maxY = document.documentElement.clientHeight - screenPadding
+    const minX = padding
+    const minY = padding
+    const maxX = document.documentElement.clientWidth - padding
+    const maxY = document.documentElement.clientHeight - padding
 
     let top = minY
     let left = minX
