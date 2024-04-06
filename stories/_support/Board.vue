@@ -13,7 +13,7 @@ const href = computed(() => {
   }
 
   if (props.docs.startsWith('/')) {
-    return `https://sefirot.globalbrains.com${props.docs}`
+    return `https://${__DOCS_HOST__}${props.docs}`
   }
 
   return props.docs
