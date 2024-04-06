@@ -5,3 +5,5 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare const __STORY_HOST__: string

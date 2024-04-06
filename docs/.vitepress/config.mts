@@ -1,5 +1,12 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
 
+function getStoryHost(): string {
+  if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
+    return new URL(process.env.DEPLOY_PRIME_URL).host.replace('-docs', '-story')
+  }
+  return 'story.sefirot.globalbrains.com'
+}
+
 export default defineConfig({
   lang: 'en-US',
   title: 'Sefirot',
@@ -13,6 +20,9 @@ export default defineConfig({
       alias: {
         'sefirot/': new URL('../../lib/', import.meta.url).pathname
       }
+    },
+    define: {
+      __STORY_HOST__: JSON.stringify(getStoryHost())
     }
   },
 

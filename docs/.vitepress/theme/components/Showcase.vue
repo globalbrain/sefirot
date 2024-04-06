@@ -12,7 +12,7 @@ const computedPath = computed(() => {
 })
 
 const computedStory = computed(() => {
-  return `https://story.sefirot.globalbrains.com/story${props.story}`
+  return `https://${__STORY_HOST__}/story${props.story}`
 })
 </script>
 
