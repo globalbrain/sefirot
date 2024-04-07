@@ -1,7 +1,5 @@
 import { type Ref, ref } from 'vue'
 
-const padding = 8
-
 export interface Tooltip {
   on: Ref<boolean>
   show: () => void
@@ -69,9 +67,9 @@ function setPosition(
   let left = pos.minX
 
   if (placement === 'top') {
-    top = pos.triggerTop - pos.contentHeight - padding
+    top = pos.triggerTop - pos.contentHeight
     if (top < pos.minY) {
-      top = pos.triggerTop + pos.triggerHeight + padding
+      top = pos.triggerTop + pos.triggerHeight
     }
     left = pos.triggerLeft + pos.triggerWidth / 2 - pos.contentWidth / 2
     if (left + pos.contentWidth > pos.maxX) {
@@ -88,14 +86,14 @@ function setPosition(
     if (top < pos.minY) {
       top = pos.minY
     }
-    left = pos.triggerLeft + pos.triggerWidth + padding
+    left = pos.triggerLeft + pos.triggerWidth
     if (left + pos.contentWidth > pos.maxX) {
-      left = pos.triggerLeft - pos.contentWidth - padding
+      left = pos.triggerLeft - pos.contentWidth
     }
   } else if (placement === 'bottom') {
-    top = pos.triggerTop + pos.triggerHeight + padding
+    top = pos.triggerTop + pos.triggerHeight
     if (top + pos.contentHeight > pos.maxY) {
-      top = pos.triggerTop - pos.contentHeight - padding
+      top = pos.triggerTop - pos.contentHeight
     }
     left = pos.triggerLeft + pos.triggerWidth / 2 - pos.contentWidth / 2
     if (left + pos.contentWidth > pos.maxX) {
@@ -112,9 +110,9 @@ function setPosition(
     if (top < pos.minY) {
       top = pos.minY
     }
-    left = pos.triggerLeft - pos.contentWidth - padding
+    left = pos.triggerLeft - pos.contentWidth
     if (left < pos.minX) {
-      left = pos.triggerLeft + pos.triggerWidth + padding
+      left = pos.triggerLeft + pos.triggerWidth
     }
   }
 
@@ -131,10 +129,10 @@ function getCurrentPositions(trigger: HTMLElement, content: HTMLElement) {
   content.style.display = contentDisplay
 
   return {
-    minX: padding - bodyRect.left,
-    minY: padding - bodyRect.top,
-    maxX: bodyRect.width - padding - bodyRect.left,
-    maxY: bodyRect.height - padding - bodyRect.top,
+    minX: -bodyRect.left,
+    minY: -bodyRect.top,
+    maxX: bodyRect.width - bodyRect.left,
+    maxY: bodyRect.height - bodyRect.top,
 
     triggerTop: triggerRect.top - bodyRect.top,
     triggerLeft: triggerRect.left - bodyRect.left,
