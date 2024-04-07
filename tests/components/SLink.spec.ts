@@ -19,13 +19,14 @@ describe('components/SLink', () => {
     expect(wrapper.findComponent(RouterLink).exists()).toBe(true)
   })
 
-  test('creates `a` tag when link is external', () => {
+  test('creates `a` tag without RouterLink when link is external', () => {
     const wrapper = mount(SLink, {
       props: {
         href: 'https://example.com'
       }
     })
 
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(false)
     expect(wrapper.find('a').exists()).toBe(true)
   })
 
@@ -40,7 +41,7 @@ describe('components/SLink', () => {
     expect(wrapper.findComponent(RouterLink).exists()).toBe(true)
   })
 
-  test('creates `a` tag when `:external` is `true`', () => {
+  test('creates `a` tag without RouterLink when `:external` is `true`', () => {
     const wrapper = mount(SLink, {
       props: {
         href: 'about',
@@ -48,6 +49,7 @@ describe('components/SLink', () => {
       }
     })
 
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(false)
     expect(wrapper.find('a').exists()).toBe(true)
   })
 })
