@@ -10,3 +10,4 @@
 .prettierrc*
 .temp
 .cache
+*.timestamp-*.mjs

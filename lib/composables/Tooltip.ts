@@ -22,24 +22,32 @@ export function useTooltip(
   timeoutId: Ref<number | null>
 ): Tooltip {
   const on = ref(false)
+  const showTimeout = ref<number | null>(null)
 
   function show(): void {
     if (on.value) { return }
     globalHide.value?.()
     setPosition(trigger.value, content.value, position.value)
-    setTimeout(() => { on.value = true })
+    showTimeout.value = window.setTimeout(() => {
+      showTimeout.value = null
+      on.value = true
+    }, 200)
     globalHide.value = hide
     window.addEventListener('resize', hide, { once: true })
     window.addEventListener('scroll', hide, { once: true })
   }
 
   function hide(): void {
+    if (showTimeout.value !== null) {
+      clearTimeout(showTimeout.value)
+      showTimeout.value = null
+    }
+    if (timeoutId.value !== null) {
+      clearTimeout(timeoutId.value)
+      timeoutId.value = null
+    }
     if (!on.value) { return }
     setTimeout(() => {
-      if (timeoutId.value) {
-        clearTimeout(timeoutId.value)
-        timeoutId.value = null
-      }
       on.value = false
       if (root.value?.matches(':focus-within')) {
         ;(document.activeElement as HTMLElement)?.blur?.()
