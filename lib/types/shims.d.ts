@@ -1,4 +1,5 @@
 /// <reference types="vite/client" />
+/// <reference types="@histoire/plugin-vue/components.d.ts" />
 
 declare module '*.vue' {
   import { DefineComponent } from 'vue'
