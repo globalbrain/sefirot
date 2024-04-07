@@ -1,10 +1,8 @@
 import { mount } from '@vue/test-utils'
 import SInputBase from 'sefirot/components/SInputBase.vue'
-import { createValidatable, setupRouter } from 'tests/Utils'
+import { createValidatable } from 'tests/Utils'
 
 describe('components/SInputBase', () => {
-  setupRouter()
-
   test('it shows label and note', () => {
     const wrapper = mount(SInputBase, {
       props: {
