@@ -38,11 +38,11 @@ export function useTooltip(
   }
 
   function hide(): void {
-    if (showTimeout.value !== null) {
+    if (showTimeout.value != null) {
       clearTimeout(showTimeout.value)
       showTimeout.value = null
     }
-    if (timeoutId.value !== null) {
+    if (timeoutId.value != null) {
       clearTimeout(timeoutId.value)
       timeoutId.value = null
     }
