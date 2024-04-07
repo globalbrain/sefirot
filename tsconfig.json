@@ -28,7 +28,8 @@
     "stories",
     "tests",
     "*.config.ts",
-    "*.config.mts"
+    "*.config.mts",
+    "shims.d.ts"
   ],
 
   "exclude": ["node_modules", "**/dist/**"]
