@@ -67,6 +67,10 @@ watch(
       || (props.trigger === 'both' && (rootHover || contentHover || rootFocus || contentFocus))
     ) {
       show()
+
+      if (rootFocus && props.timeout) {
+        timeoutId.value = window.setTimeout(hide, props.timeout)
+      }
     } else {
       hide()
     }

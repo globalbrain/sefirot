@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputBase from 'sefirot/components/SInputBase.vue'
 import { createValidatable, setupRouter } from 'tests/Utils'
 
-describe.skip('components/SInputBase', () => {
+describe('components/SInputBase', () => {
   setupRouter()
 
   test('it shows label and note', () => {
@@ -19,7 +19,7 @@ describe.skip('components/SInputBase', () => {
   })
 
   test('it prefers info slot over prop', () => {
-    const wrapper = mount(SInputBase, {
+    mount(SInputBase, {
       props: {
         label: 'Label for input.',
         info: 'Helpful message.'
@@ -29,7 +29,7 @@ describe.skip('components/SInputBase', () => {
       }
     })
 
-    expect(wrapper.find('.tip').text()).toBe('Info in slot.')
+    expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Info in slot.')
   })
 
   test('it shows error message and help text if validation fails', () => {
@@ -68,13 +68,13 @@ describe.skip('components/SInputBase', () => {
   })
 
   test('it shows info', () => {
-    const wrapper = mount(SInputBase, {
+    mount(SInputBase, {
       props: {
         label: 'Label for input.',
         info: 'Helpful message.'
       }
     })
 
-    expect(wrapper.find('.tip').text()).toBe('Helpful message.')
+    expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Helpful message.')
   })
 })
