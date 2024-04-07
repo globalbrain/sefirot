@@ -1,9 +1,6 @@
 import * as Dropdown from 'sefirot/composables/Dropdown'
 import { ref } from 'vue'
 
-// @ts-expect-error - not properly implemented in happy-dom
-delete window.MutationObserver
-
 describe('composables/Dropdown', () => {
   describe('useManualDropdownPosition', () => {
     test('it should set the position to bottom by default', () => {
