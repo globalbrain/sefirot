@@ -58,7 +58,7 @@ const cleanup2 = onClickOutside(root, hide, { ignore: [content] })
 onBeforeUnmount(() => {
   cleanup1()
   cleanup2()
-  timeoutId.value && window.clearTimeout(timeoutId.value)
+  timeoutId.value != null && window.clearTimeout(timeoutId.value)
 })
 
 const isRootHovered = useElementHover(root, { delayLeave: 100 })
