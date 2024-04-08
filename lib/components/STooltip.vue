@@ -145,7 +145,7 @@ watch(
   display: block;
   border: 1px solid var(--tooltip-border-color);
   border-radius: 6px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   width: max-content;
   max-width: var(--tooltip-max-width);
   line-height: 20px;
