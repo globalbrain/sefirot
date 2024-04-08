@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onClickOutside, onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
-import { computed, ref, shallowRef, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
@@ -45,7 +45,7 @@ const { on, show, hide } = useTooltip(
   timeoutId
 )
 
-onKeyStroke('Escape', (e) => {
+const cleanup1 = onKeyStroke('Escape', (e) => {
   if (on.value && root.value?.matches(':focus-within')) {
     e.preventDefault()
     e.stopPropagation()
@@ -53,7 +53,13 @@ onKeyStroke('Escape', (e) => {
   }
 })
 
-onClickOutside(root, hide, { ignore: [content] })
+const cleanup2 = onClickOutside(root, hide, { ignore: [content] })
+
+onBeforeUnmount(() => {
+  cleanup1()
+  cleanup2()
+  timeoutId.value && clearTimeout(timeoutId.value)
+})
 
 const isRootHovered = useElementHover(root, { delayLeave: 100 })
 const isContentHovered = useElementHover(content, { delayLeave: 100 })
