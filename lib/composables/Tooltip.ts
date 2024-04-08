@@ -8,6 +8,8 @@ export interface Tooltip {
 
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 
+const globalHide = ref<() => void>()
+
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
  * the current window size.
@@ -24,10 +26,12 @@ export function useTooltip(
 
   function show(): void {
     if (on.value) { return }
+    globalHide.value?.()
     setPosition(trigger.value, content.value, position.value)
     showTimeout.value = window.setTimeout(() => {
       showTimeout.value = null
       on.value = true
+      globalHide.value = hide
     }, 200)
   }
 
@@ -41,6 +45,7 @@ export function useTooltip(
       timeoutId.value = null
     }
     if (!on.value) { return }
+    globalHide.value = undefined
     setTimeout(() => {
       on.value = false
       if (root.value?.matches(':focus-within')) {
