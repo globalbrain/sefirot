@@ -36,8 +36,8 @@ export function useTooltip(
     showTimeout.value = window.setTimeout(() => {
       showTimeout.value = null
       on.value = true
+      globalHide.value = hide
     }, 200)
-    globalHide.value = hide
   }
 
   function hide(): void {
