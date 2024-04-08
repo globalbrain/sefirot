@@ -61,6 +61,7 @@ const count = computed(() => {
   border-radius: 50%;
   line-height: 1;
   color: var(--c-text-2);
+  z-index: 1;
 
   .mini &   { font-size: 10px }
   .small &  { font-size: 10px }

@@ -19,10 +19,10 @@ function state() {
 }
 
 const avatars = [
-  { image: 'https://i.pravatar.cc/144?img=1' },
-  { image: 'https://i.pravatar.cc/144?img=2' },
-  { image: 'https://i.pravatar.cc/144?img=3' },
-  { image: 'https://i.pravatar.cc/144?img=4' }
+  { image: 'https://github.com/kiaking.png', name: 'Kia Ishii' },
+  { image: 'https://github.com/ryo-gk.png', name: 'Ryosuke Kogure' },
+  { image: 'https://github.com/NozomuIkuta.png', name: 'Nozomu Ikuta' },
+  { image: 'https://github.com/brc-dd.png', name: 'Divyansh Singh' }
 ]
 </script>
 

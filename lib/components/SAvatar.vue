@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import STooltip from './STooltip.vue'
 
 export type Size =
   | 'nano'
@@ -25,10 +26,10 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
 </script>
 
 <template>
-  <div class="SAvatar" :class="classes">
+  <STooltip :text="name || ''" tag="div" class="SAvatar" :class="classes">
     <img v-if="avatar" class="img" :src="avatar">
     <p v-else-if="initial" class="initial">{{ initial }}</p>
-  </div>
+  </STooltip>
 </template>
 
 <style lang="postcss" scoped>
@@ -38,6 +39,10 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   align-items: center;
   border-radius: 50%;
   background-color: var(--c-bg-elv-1);
+}
+
+.SAvatar :deep(.trigger) {
+  border-radius: 50%;
   overflow: hidden;
 }
 
