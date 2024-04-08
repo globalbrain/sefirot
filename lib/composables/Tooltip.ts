@@ -22,25 +22,25 @@ export function useTooltip(
   timeoutId: Ref<number | null>
 ): Tooltip {
   const on = ref(false)
-  let showTimeout: number | null = null
+  const showTimeout = ref<number | null>()
 
   function show(): void {
     if (on.value) { return }
     globalHide.value?.()
     setPosition(trigger.value, content.value, position.value)
-    showTimeout = window.setTimeout(() => {
-      showTimeout = null
+    showTimeout.value = window.setTimeout(() => {
+      showTimeout.value = null
       on.value = true
+      window.addEventListener('resize', hide, { once: true, passive: true })
+      window.addEventListener('scroll', hide, { once: true, passive: true })
     }, 200)
     globalHide.value = hide
-    window.addEventListener('resize', hide, { once: true })
-    window.addEventListener('scroll', hide, { once: true })
   }
 
   function hide(): void {
-    if (showTimeout != null) {
-      clearTimeout(showTimeout)
-      showTimeout = null
+    if (showTimeout.value != null) {
+      clearTimeout(showTimeout.value)
+      showTimeout.value = null
     }
     if (timeoutId.value != null) {
       clearTimeout(timeoutId.value)
