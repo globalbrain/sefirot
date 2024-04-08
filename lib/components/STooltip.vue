@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
+import { onClickOutside, onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
 import { computed, ref, shallowRef, watch } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
 
@@ -52,6 +52,8 @@ onKeyStroke('Escape', (e) => {
     hide()
   }
 })
+
+onClickOutside(root, hide, { ignore: [content] })
 
 const isRootHovered = useElementHover(root, { delayLeave: 100 })
 const isContentHovered = useElementHover(content, { delayLeave: 100 })
