@@ -37,16 +37,16 @@ export function useTooltip(
 
   function hide(): void {
     if (showTimeout.value != null) {
-      clearTimeout(showTimeout.value)
+      window.clearTimeout(showTimeout.value)
       showTimeout.value = null
     }
     if (timeoutId.value != null) {
-      clearTimeout(timeoutId.value)
+      window.clearTimeout(timeoutId.value)
       timeoutId.value = null
     }
     if (!on.value) { return }
     globalHide.value = undefined
-    setTimeout(() => {
+    window.setTimeout(() => {
       on.value = false
       if (root.value?.matches(':focus-within')) {
         ;(document.activeElement as HTMLElement)?.blur?.()
