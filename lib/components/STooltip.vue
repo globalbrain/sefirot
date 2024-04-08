@@ -45,30 +45,16 @@ const { on, show, hide } = useTooltip(
   timeoutId
 )
 
-const cleanup1 = onKeyStroke('Escape', (e) => {
-  if (on.value && root.value?.matches(':focus-within')) {
-    e.preventDefault()
-    e.stopPropagation()
-    hide()
-  }
-})
-
-const cleanup2 = onClickOutside(root, hide, { ignore: [content] })
-
-onBeforeUnmount(() => {
-  cleanup1()
-  cleanup2()
-  timeoutId.value != null && window.clearTimeout(timeoutId.value)
-})
-
 const isRootHovered = useElementHover(root, { delayLeave: 100 })
 const isContentHovered = useElementHover(content, { delayLeave: 100 })
 const { focused: isRootFocused } = useFocusWithin(root)
 const { focused: isContentFocused } = useFocusWithin(content)
+const ignore = ref(false)
 
 watch(
   [isRootHovered, isContentHovered, isRootFocused, isContentFocused],
   ([rootHover, contentHover, rootFocus, contentFocus]) => {
+    if (ignore.value) { return }
     if (
       (props.trigger === 'hover' && (rootHover || contentHover))
       || (props.trigger === 'focus' && (rootFocus || contentHover || contentFocus))
@@ -84,6 +70,28 @@ watch(
     }
   }
 )
+
+const cleanups = [
+  onKeyStroke('Escape', (e) => {
+    if (
+      on.value
+      && props.trigger !== 'hover'
+      && (isRootFocused.value || isContentHovered.value || isContentFocused.value)
+    ) {
+      e.preventDefault()
+      e.stopPropagation()
+      ignore.value = true
+      hide()
+      setTimeout(() => { ignore.value = false })
+    }
+  }),
+  onClickOutside(root, hide, { ignore: [content] }),
+  () => timeoutId.value != null && window.clearTimeout(timeoutId.value)
+]
+
+onBeforeUnmount(() => {
+  cleanups.forEach((cleanup) => cleanup())
+})
 </script>
 
 <template>
