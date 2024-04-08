@@ -10,11 +10,6 @@ export type Position = 'top' | 'right' | 'bottom' | 'left'
 
 const globalHide = ref<() => void>()
 
-if (typeof document !== 'undefined') {
-  window.addEventListener('resize', () => { globalHide.value?.() }, { passive: true })
-  window.addEventListener('scroll', () => { globalHide.value?.() }, { passive: true })
-}
-
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
  * the current window size.
