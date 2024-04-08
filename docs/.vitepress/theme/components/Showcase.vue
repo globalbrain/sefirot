@@ -25,7 +25,7 @@ const computedStory = computed(() => {
       </a>
     </div>
 
-    <div class="main">
+    <div class="main vp-raw">
       <slot />
     </div>
   </div>
