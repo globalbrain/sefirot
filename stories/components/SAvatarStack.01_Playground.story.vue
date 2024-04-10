@@ -22,7 +22,8 @@ const avatars = [
   { image: 'https://i.pravatar.cc/144?img=1' },
   { image: 'https://i.pravatar.cc/144?img=2' },
   { image: 'https://i.pravatar.cc/144?img=3' },
-  { image: 'https://i.pravatar.cc/144?img=4' }]
+  { image: 'https://i.pravatar.cc/144?img=4' }
+]
 </script>
 
 <template>
