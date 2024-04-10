@@ -24,8 +24,10 @@ export type Mode =
 
 export interface Tooltip {
   tag?: string
+  triggerTag?: string
   text?: MaybeRef<string | null>
   position?: Position
+  display?: 'inline' | 'inline-block' | 'block'
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
 }
@@ -94,7 +96,7 @@ function handleClick(): void {
     :tag="props.tooltip?.tag"
     :text="unref(props.tooltip?.text)"
     :position="props.tooltip?.position"
-    display="inline-block"
+    :display="props.tooltip?.display ?? 'inline-block'"
     :trigger="props.tooltip?.trigger ?? 'both'"
     :timeout="props.tooltip?.timeout"
     :tabindex="-1"
