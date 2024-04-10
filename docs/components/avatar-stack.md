@@ -115,3 +115,23 @@ interface Props {
   ]"
 />
 ```
+
+### `:tooltip`
+
+Whether to display a tooltip when hovering over the component. You can also pass an object with the `position` property to define the position of the tooltip. The default position is `top`. The tooltip will display the name of the user if provided.
+
+```ts
+interface Props {
+  tooltip?: boolean | { position?: 'top' | 'right' | 'bottom' | 'left' }
+}
+```
+
+```vue-html
+<SAvatarStack
+  tooltip
+  :avatars="[
+    { image: '/path/to/image-1.jpg', name: 'Jane Doe' },
+    { image: '/path/to/image-2.jpg', name: 'Richard Roe' }
+  ]"
+/>
+```
