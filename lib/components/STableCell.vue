@@ -101,6 +101,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :color="computedCell.color"
       :avatar-count="computedCell.avatarCount"
       :name-count="computedCell.nameCount"
+      :tooltip="computedCell.tooltip"
     />
     <STableCellActions
       v-else-if="computedCell.type === 'actions'"

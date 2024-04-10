@@ -60,6 +60,8 @@ function state() {
 
 :deep(.b-page) {
   position: relative;
+  min-height: 2000px;
+  min-width: 1000px;
 
   .top-left {
     position: absolute;

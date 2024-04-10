@@ -23,12 +23,12 @@ const variants = [
             {{ v.title }}
           </div>
           <div class="flex flex-wrap gap-16">
-            <SAvatar :size="v.size" avatar="https://github.com/kiaking.png" />
-            <SAvatar :size="v.size" avatar="https://github.com/ryo-gk.png" />
+            <SAvatar :size="v.size" avatar="https://github.com/kiaking.png" name="John Doe" tooltip />
+            <SAvatar :size="v.size" avatar="https://github.com/ryo-gk.png" tooltip />
             <SAvatar :size="v.size" avatar="https://github.com/NozomuIkuta.png" />
-            <SAvatar :size="v.size" name="John Doe" />
-            <SAvatar :size="v.size" name="Anna Green" />
-            <SAvatar :size="v.size" name="George Walsh" />
+            <SAvatar :size="v.size" name="John Doe" tooltip />
+            <SAvatar :size="v.size" name="Anna Green" tooltip />
+            <SAvatar :size="v.size" name="George Walsh" tooltip />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
   tag?: string
+  triggerTag?: string
   text?: string
   position?: Position
   display?: 'inline' | 'inline-block' | 'block'
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<{
   tabindex?: number
 }>(), {
   tag: 'span',
+  triggerTag: 'span',
   position: 'top',
   trigger: 'hover'
 })
@@ -96,9 +98,9 @@ onBeforeUnmount(() => {
 
 <template>
   <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex="tabindex">
-    <span class="trigger" ref="trigger">
+    <component :is="triggerTag" class="trigger" ref="trigger">
       <slot />
-    </span>
+    </component>
 
     <Teleport to="#sefirot-modals">
       <Transition name="fade">

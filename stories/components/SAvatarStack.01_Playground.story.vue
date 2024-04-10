@@ -19,11 +19,10 @@ function state() {
 }
 
 const avatars = [
-  { image: 'https://github.com/kiaking.png', name: 'Kia Ishii' },
-  { image: 'https://github.com/ryo-gk.png', name: 'Ryosuke Kogure' },
-  { image: 'https://github.com/NozomuIkuta.png', name: 'Nozomu Ikuta' },
-  { image: 'https://github.com/brc-dd.png', name: 'Divyansh Singh' }
-]
+  { image: 'https://i.pravatar.cc/144?img=1' },
+  { image: 'https://i.pravatar.cc/144?img=2', name: 'ETIFLZ' },
+  { image: 'https://i.pravatar.cc/144?img=3' },
+  { image: 'https://i.pravatar.cc/144?img=4' }]
 </script>
 
 <template>
@@ -40,7 +39,7 @@ const avatars = [
               {{ v.title }}
             </div>
             <div class="flex flex-wrap gap-16">
-              <SAvatarStack :size="v.size" :avatars="avatars" :avatar-count="state.avatarCount" />
+              <SAvatarStack :size="v.size" :avatars="avatars" :avatar-count="state.avatarCount" tooltip />
             </div>
           </div>
         </div>
