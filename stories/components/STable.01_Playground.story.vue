@@ -249,6 +249,7 @@ const table = useTable({
       cell: (authors) => ({
         type: 'avatars',
         avatars: authors,
+        nameCount: 0,
         tooltip: true
       })
     },

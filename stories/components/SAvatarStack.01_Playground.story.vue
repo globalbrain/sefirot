@@ -20,7 +20,7 @@ function state() {
 
 const avatars = [
   { image: 'https://i.pravatar.cc/144?img=1' },
-  { image: 'https://i.pravatar.cc/144?img=2', name: 'ETIFLZ' },
+  { image: 'https://i.pravatar.cc/144?img=2' },
   { image: 'https://i.pravatar.cc/144?img=3' },
   { image: 'https://i.pravatar.cc/144?img=4' }]
 </script>
@@ -39,7 +39,7 @@ const avatars = [
               {{ v.title }}
             </div>
             <div class="flex flex-wrap gap-16">
-              <SAvatarStack :size="v.size" :avatars="avatars" :avatar-count="state.avatarCount" tooltip />
+              <SAvatarStack :size="v.size" :avatars="avatars" :avatar-count="state.avatarCount" />
             </div>
           </div>
         </div>
