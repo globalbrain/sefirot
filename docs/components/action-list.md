@@ -71,8 +71,29 @@ interface ActionListItem {
   // prop is set, the item is rendered via `<SLink>`.
   link?: string
 
+  // Whether the item is disabled.
+  disabled?: boolean
+
+  // The tooltip to be displayed when the item is hovered or focused.
+  tooltip?: Tooltip
+
   // The callback to be called when the item is clicked.
   onClick?(): void
+}
+
+interface Tooltip {
+  // The text to be displayed in the tooltip.
+  text?: MaybeRef<string | null>
+
+  // The position of the tooltip.
+  position?: 'top' | 'right' | 'bottom' | 'left'
+
+  // The trigger of the tooltip.
+  trigger?: 'hover' | 'focus' | 'both'
+
+  // The timeout after which the tooltip is hidden if triggered because of
+  // `focus` (in milliseconds).
+  timeout?: number
 }
 ```
 
