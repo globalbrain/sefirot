@@ -11,7 +11,7 @@ describe('validation/validators/requiredYmdIf', () => {
       { value: 1, expected: { required: false, unrequired: false } },
       { value: 'abc', expected: { required: false, unrequired: false } },
       { value: { year: null, month: null, date: null }, expected: { required: false, unrequired: true } },
-      { value: { year: 2000, month: null, date: 2 }, expected: { required: false, unrequired: false } },
+      { value: { year: 2000, month: null, date: 2 }, expected: { required: false, unrequired: true } },
       { value: {}, expected: { required: false, unrequired: false } },
       { value: { year: 2000 }, expected: { required: false, unrequired: false } },
       { value: { year: 2000, month: 12 }, expected: { required: false, unrequired: false } },

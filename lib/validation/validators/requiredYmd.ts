@@ -1,6 +1,9 @@
-import { type Ymd, YmdMap, type YmdType } from '../../support/Day'
-import { ymd } from './ymd'
+import { YmdMap, type YmdType, isYmd } from '../../support/Day'
 
 export function requiredYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): boolean {
-  return ymd(value, required) && required.every((r) => (value as Ymd)[YmdMap[r]] != null)
+  if (!isYmd(value, required)) {
+    return false
+  }
+
+  return required.every((r) => value[YmdMap[r]] != null)
 }

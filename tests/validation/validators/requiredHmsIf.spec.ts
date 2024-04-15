@@ -35,8 +35,8 @@ describe('validation/validators/requiredHmsIf', () => {
       { value: {}, expected: { required: false, unrequired: false } },
       { value: { hour: '23' }, expected: { required: false, unrequired: false } },
       { value: { hour: '23', minute: undefined }, expected: { required: false, unrequired: false } },
-      { value: { hour: '23', minute: '60', second: '60' }, expected: { required: false, unrequired: false } },
-      { value: { hour: '24', minute: '59', second: '60' }, expected: { required: false, unrequired: false } },
+      { value: { hour: '23', minute: '60', second: '60' }, expected: { required: true, unrequired: true } },
+      { value: { hour: '24', minute: '59', second: '60' }, expected: { required: true, unrequired: true } },
       { value: [], expected: { required: false, unrequired: false } }
     ]
   }

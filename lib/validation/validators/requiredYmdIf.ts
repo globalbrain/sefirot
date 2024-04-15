@@ -1,7 +1,6 @@
-import { type YmdType } from '../../support/Day'
+import { type YmdType, isYmd } from '../../support/Day'
 import { type RequiredIfCondition } from './requiredIf'
 import { requiredYmd } from './requiredYmd'
-import { ymd } from './ymd'
 
 export async function requiredYmdIf(value: unknown, condition: RequiredIfCondition, required: YmdType[] = ['y', 'm', 'd']): Promise<boolean> {
   if (typeof condition === 'boolean' && condition) {
@@ -16,5 +15,5 @@ export async function requiredYmdIf(value: unknown, condition: RequiredIfConditi
     return requiredYmd(value, required)
   }
 
-  return ymd(value, required)
+  return isYmd(value, required)
 }
