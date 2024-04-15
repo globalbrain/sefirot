@@ -1,7 +1,6 @@
+import { type YmdType } from '../../support/Day'
 import { createRule } from '../Rule'
 import { requiredYmd as baseRequiredYmd } from '../validators/requiredYmd'
-
-type YmdType = 'y' | 'm' | 'd'
 
 export const message = {
   en: 'The field is required.',
