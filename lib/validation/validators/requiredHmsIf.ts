@@ -1,4 +1,4 @@
-import { type HmsType, isHms } from '../../support/Day'
+import { type HmsType } from '../../support/Day'
 import { requiredHms } from './requiredHms'
 import { type RequiredIfCondition } from './requiredIf'
 
@@ -15,5 +15,5 @@ export async function requiredHmsIf(value: unknown, condition: RequiredIfConditi
     return requiredHms(value, required)
   }
 
-  return isHms(value, required)
+  return true
 }

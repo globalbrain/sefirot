@@ -1,4 +1,4 @@
-import { type YmdType, isYmd } from '../../support/Day'
+import { type YmdType } from '../../support/Day'
 import { type RequiredIfCondition } from './requiredIf'
 import { requiredYmd } from './requiredYmd'
 
@@ -15,5 +15,5 @@ export async function requiredYmdIf(value: unknown, condition: RequiredIfConditi
     return requiredYmd(value, required)
   }
 
-  return isYmd(value, required)
+  return true
 }
