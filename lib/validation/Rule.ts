@@ -1,6 +1,5 @@
 import { type ValidationRuleWithParams } from '@vuelidate/core'
 import { type MessageProps as VMessageProps, helpers } from '@vuelidate/validators'
-import { computed } from 'vue'
 import { type Lang, useLang } from '../composables/Lang'
 import { _required } from './validators'
 
