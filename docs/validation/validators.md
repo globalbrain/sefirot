@@ -132,10 +132,49 @@ You may pass 2nd argument to specify which fields to validate. For example,if yo
 const time = {
   hour: '10',
   minute: '30',
-  second: null // Valud missing, but this will be ignored.
+  second: null // Value missing, but this will be ignored.
 }
 
-hms(time, ['h', 'm']) // <- true
+requiredHms(time, ['h', 'm']) // <- true
+```
+
+## `requiredHmsIf`
+
+Checks if the given hour, minute and second is present when the condition passed is truthy. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`hms`](#hms) validator.
+
+```ts
+import { type Hms } from '@globalbrain/sefirot/lib/support/Day'
+import { type RequiredIfCondition } from '@globalbrain/sefirot/lib/validation/validators'
+
+function requiredHms(
+  hms: Hms,
+  condition: RequiredIfCondition
+  required: ('h' | 'm' | 's')[] = ['h', 'm', 's']
+): boolean
+```
+
+```ts
+const time = {
+  hour: '10',
+  minute: null, // Value missing.
+  second: '00'
+}
+
+requiredHmsIf(time, true) // <- false
+requiredHmsIf(time, false) // <- true
+```
+
+You may pass 3rd argument to specify which fields to validate. For example, if you pass `['h', 'm']`, it will validate only hour and minute.
+
+```ts
+const time = {
+  hour: '10',
+  minute: '30',
+  second: null // Value missing, but this will be ignored.
+}
+
+requiredHmsIf(time, true, ['h', 'm']) // <- true
+requiredHmsIf(time, false, ['h', 'm']) // <- true
 ```
 
 ## `requiredYmd`
@@ -158,7 +197,7 @@ const date = {
   date: 10
 }
 
-requiredHms(date) // <- false
+requiredYmd(date) // <- false
 ```
 
 You may pass 2nd argument to specify which fields to validate. For example,if you pass `['y', 'm']`, it will validate only year and month.
@@ -167,11 +206,51 @@ You may pass 2nd argument to specify which fields to validate. For example,if yo
 const date = {
   year: 1985,
   month: 10,
-  date: null // Valud missing, but this will be ignored.
+  date: null // Value missing, but this will be ignored.
 }
 
-hms(date, ['y', 'm']) // <- true
+requiredYmd(date, ['y', 'm']) // <- true
 ```
+
+## `requiredYmdIf`
+
+Checks if the given year, month and date is present when the condition passed is truthy. This validator will not validate if the values are valid numbers. To check the validity of the value, use [`ymd`](#ymd) validator.
+
+```ts
+import { type Ymd } from '@globalbrain/sefirot/lib/support/Day'
+import { type RequiredIfCondition } from '@globalbrain/sefirot/lib/validation/validators'
+
+function requiredYmd(
+  ymd: Ymd,
+  condition: RequiredIfCondition
+  required: ('y' | 'm' | 'd')[] = ['y', 'm', 'd']
+): boolean
+```
+
+```ts
+const date = {
+  year: 1985,
+  month: null, // Value missing.
+  date: 10
+}
+
+requiredYmdIf(date, true) // <- false
+requiredYmdIf(date, false) // <- true
+```
+
+You may pass 3rd argument to specify which fields to validate. For example, if you pass `['y', 'm']`, it will validate only year and month.
+
+```ts
+const date = {
+  year: 1985,
+  month: 10,
+  date: null // Value missing, but this will be ignored.
+}
+
+requiredYmdIf(date, true, ['y', 'm']) // <- true
+requiredYmdIf(date, false, ['y', 'm']) // <- true
+```
+
 
 ## `ymd`
 

@@ -1,7 +1,6 @@
+import { type HmsType } from '../../support/Day'
 import { createRule } from '../Rule'
 import { requiredHms as baseRequiredHms } from '../validators/requiredHms'
-
-type HmsType = 'h' | 'm' | 's'
 
 export const message = {
   en: 'The field is required.',
