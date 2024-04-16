@@ -132,7 +132,7 @@ You may pass 2nd argument to specify which fields to validate. For example,if yo
 const time = {
   hour: '10',
   minute: '30',
-  second: null // Valud missing, but this will be ignored.
+  second: null // Value missing, but this will be ignored.
 }
 
 requiredHms(time, ['h', 'm']) // <- true
@@ -164,13 +164,13 @@ requiredHmsIf(time, true) // <- false
 requiredHmsIf(time, false) // <- true
 ```
 
-You may pass 3rd argument to specify which fields to validate. For example,if you pass `['h', 'm']`, it will validate only hour and minute.
+You may pass 3rd argument to specify which fields to validate. For example, if you pass `['h', 'm']`, it will validate only hour and minute.
 
 ```ts
 const time = {
   hour: '10',
   minute: '30',
-  second: null // Valud missing, but this will be ignored.
+  second: null // Value missing, but this will be ignored.
 }
 
 requiredHmsIf(time, true, ['h', 'm']) // <- true
@@ -206,7 +206,7 @@ You may pass 2nd argument to specify which fields to validate. For example,if yo
 const date = {
   year: 1985,
   month: 10,
-  date: null // Valud missing, but this will be ignored.
+  date: null // Value missing, but this will be ignored.
 }
 
 requiredYmd(date, ['y', 'm']) // <- true
@@ -238,13 +238,13 @@ requiredYmdIf(date, true) // <- false
 requiredYmdIf(date, false) // <- true
 ```
 
-You may pass 3rd argument to specify which fields to validate. For example,if you pass `['y', 'm']`, it will validate only year and month.
+You may pass 3rd argument to specify which fields to validate. For example, if you pass `['y', 'm']`, it will validate only year and month.
 
 ```ts
 const date = {
   year: 1985,
   month: 10,
-  date: null // Valud missing, but this will be ignored.
+  date: null // Value missing, but this will be ignored.
 }
 
 requiredYmdIf(date, true, ['y', 'm']) // <- true
