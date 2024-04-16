@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { onKeyStroke } from '@vueuse/core'
-import { computed, ref, shallowRef } from 'vue'
+import { onClickOutside, onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
+import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
@@ -17,13 +17,13 @@ const props = withDefaults(defineProps<{
   trigger: 'hover'
 })
 
-const el = shallowRef<HTMLElement | null>(null)
-const tip = shallowRef<HTMLElement | null>(null)
+const root = shallowRef<HTMLElement | null>(null)
 const content = shallowRef<HTMLElement | null>(null)
+const trigger = shallowRef<HTMLElement | null>(null)
 
 const rootClasses = computed(() => [
   props.display,
-  props.tabindex && (props.tabindex > -1) && 'focusable'
+  props.tabindex && props.tabindex > -1 && 'focusable'
 ])
 
 const containerClasses = computed(() => [props.position])
@@ -38,77 +38,76 @@ const tabindex = computed(() => {
 })
 
 const { on, show, hide } = useTooltip(
-  el,
+  root,
+  trigger,
   content,
-  tip,
   computed(() => props.position),
   timeoutId
 )
 
-onKeyStroke('Escape', (e) => {
-  if (on.value && el.value?.matches(':focus-within')) {
-    e.preventDefault()
-    e.stopPropagation()
-    hide()
-  }
-})
+const isRootHovered = useElementHover(root, { delayLeave: 100 })
+const isContentHovered = useElementHover(content, { delayLeave: 100 })
+const { focused: isRootFocused } = useFocusWithin(root)
+const { focused: isContentFocused } = useFocusWithin(content)
+const ignore = ref(false)
 
-function onMouseEnter() {
-  if (props.trigger === 'hover' || props.trigger === 'both') {
-    show()
-  }
-}
+watch(
+  [isRootHovered, isContentHovered, isRootFocused, isContentFocused],
+  ([rootHover, contentHover, rootFocus, contentFocus]) => {
+    if (ignore.value) { return }
+    if (
+      (props.trigger === 'hover' && (rootHover || contentHover))
+      || (props.trigger === 'focus' && (rootFocus || contentHover || contentFocus))
+      || (props.trigger === 'both' && (rootHover || contentHover || rootFocus || contentFocus))
+    ) {
+      show()
 
-function onMouseLeave() {
-  if (
-    props.trigger === 'hover'
-    || (props.trigger === 'both' && !el.value?.matches(':focus-within'))
-  ) {
-    hide()
-  }
-}
-
-function onFocus() {
-  if (props.trigger === 'focus' || props.trigger === 'both') {
-    show()
-    if (props.timeout) {
-      timeoutId.value = setTimeout(hide, props.timeout) as any
+      if (rootFocus && props.timeout) {
+        timeoutId.value = window.setTimeout(hide, props.timeout)
+      }
+    } else {
+      hide()
     }
   }
-}
+)
 
-function onBlur() {
-  if (
-    props.trigger === 'focus'
-    || (props.trigger === 'both' && !el.value?.matches(':hover'))
-  ) {
-    hide()
-  }
-}
+const cleanups = [
+  onKeyStroke('Escape', (e) => {
+    if (
+      on.value
+      && props.trigger !== 'hover'
+      && (isRootFocused.value || isContentHovered.value || isContentFocused.value)
+    ) {
+      e.preventDefault()
+      e.stopPropagation()
+      ignore.value = true
+      hide()
+      setTimeout(() => { ignore.value = false })
+    }
+  }),
+  onClickOutside(root, hide, { ignore: [content] }),
+  () => timeoutId.value != null && window.clearTimeout(timeoutId.value)
+]
+
+onBeforeUnmount(() => {
+  cleanups.forEach((cleanup) => cleanup())
+})
 </script>
 
 <template>
-  <component
-    ref="el"
-    :is="tag"
-    class="STooltip"
-    :class="rootClasses"
-    :tabindex="tabindex"
-    @mouseenter="onMouseEnter"
-    @mouseleave="onMouseLeave"
-    @focusin="onFocus"
-    @focusout="onBlur"
-  >
-    <span class="content" ref="content">
+  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex="tabindex">
+    <span class="trigger" ref="trigger">
       <slot />
     </span>
 
-    <transition name="fade">
-      <span v-show="on" class="container" :class="containerClasses" ref="tip">
-        <span v-if="$slots.text" class="tip"><slot name="text" /></span>
-        <span v-else-if="text" class="tip" v-html="text" />
-      </span>
-    </transition>
+    <Teleport to="#sefirot-modals">
+      <Transition name="fade">
+        <span v-show="on" class="container" :class="containerClasses" ref="content">
+          <span v-if="$slots.text" class="tip"><slot name="text" /></span>
+          <span v-else-if="text" class="tip" v-html="text" />
+        </span>
+      </Transition>
+    </Teleport>
   </component>
 </template>
 
@@ -129,7 +128,7 @@ function onBlur() {
   &.block        { display: block; }
 }
 
-.content {
+.trigger {
   white-space: nowrap;
 }
 
@@ -138,6 +137,7 @@ function onBlur() {
   z-index: var(--z-index-tooltip);
   display: block;
   transition: opacity 0.25s;
+  padding: 8px;
 }
 
 .container.fade-enter-from,
@@ -149,37 +149,11 @@ function onBlur() {
   &.left .tip   { transform: translateX(8px); }
 }
 
-.container.top {
-  top: 0;
-  left: 50%;
-  padding-bottom: 8px;
-  transform: translate(-50%, -100%);
-}
-
-.container.right {
-  top: 50%;
-  left: 100%;
-  transform: translate(8px, -50%);
-}
-
-.container.bottom {
-  bottom: 0;
-  left: 50%;
-  padding-top: 8px;
-  transform: translate(-50%, 100%);
-}
-
-.container.left {
-  top: 50%;
-  right: 100%;
-  transform: translate(-8px, -50%);
-}
-
 .tip {
   display: block;
   border: 1px solid var(--tooltip-border-color);
   border-radius: 6px;
-  padding: 10px 12px;
+  padding: 8px 12px;
   width: max-content;
   max-width: var(--tooltip-max-width);
   line-height: 20px;

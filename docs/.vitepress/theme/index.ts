@@ -1,16 +1,16 @@
-import { Theme } from 'vitepress'
-import VitePressTheme from 'vitepress/theme'
+import { type Theme } from 'vitepress'
+import DefaultTheme from 'vitepress/theme'
 
 import 'sefirot/styles/variables.css'
 import './styles.css'
 
+import Layout from './components/Layout.vue'
 import Showcase from './components/Showcase.vue'
 
-export default <Theme>{
-  ...VitePressTheme,
-  enhanceApp(ctx) {
-    VitePressTheme.enhanceApp(ctx)
-
-    ctx.app.component('Showcase', Showcase)
+export default {
+  extends: DefaultTheme,
+  Layout,
+  enhanceApp({ app }) {
+    app.component('Showcase', Showcase)
   }
-}
+} satisfies Theme

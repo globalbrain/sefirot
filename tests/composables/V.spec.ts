@@ -1,14 +1,9 @@
-import { createPinia, setActivePinia } from 'pinia'
 import { useD } from 'sefirot/composables/D'
 import { useV } from 'sefirot/composables/V'
 import { setup } from 'tests/Utils'
 import { ref } from 'vue'
 
 describe('composables/V', () => {
-  beforeEach(() => {
-    setActivePinia(createPinia())
-  })
-
   test('it validates the data', () => {
     const vm = setup(() => {
       const { data } = useD({

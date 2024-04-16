@@ -17,6 +17,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     testTimeout: 2000,
+    setupFiles: ['./tests/vitest.setup.ts'],
 
     coverage: {
       provider: 'v8',
@@ -34,5 +35,7 @@ export default defineConfig({
 })
 
 const ignore = [
-  '[Vue warn]: inject() can only be used inside setup() or functional components.'
+  '[Vue warn]: inject() can only be used inside setup() or functional components.',
+  '[Vue Router warn]: No match found for location with path "about"',
+  '[Vue Router warn]: No match found for location with path "https://example.com"'
 ]

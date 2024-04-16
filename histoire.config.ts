@@ -1,6 +1,13 @@
 import { HstVue } from '@histoire/plugin-vue'
 import { defaultColors, defineConfig } from 'histoire'
 
+function getDocsHost(): string {
+  if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
+    return new URL(process.env.DEPLOY_PRIME_URL).host.replace('-story', '-docs')
+  }
+  return 'sefirot.globalbrains.com'
+}
+
 export default defineConfig({
   plugins: [
     HstVue()
@@ -23,5 +30,11 @@ export default defineConfig({
 
   defaultStoryProps: {
     autoPropsDisabled: true
+  },
+
+  vite: {
+    define: {
+      __DOCS_HOST__: JSON.stringify(getDocsHost())
+    }
   }
 })

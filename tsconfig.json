@@ -28,7 +28,8 @@
     "stories",
     "tests",
     "*.config.ts",
-    "*.config.mts"
+    "*.config.mts",
+    "env.d.ts"
   ],
 
   "exclude": ["node_modules", "**/dist/**"]

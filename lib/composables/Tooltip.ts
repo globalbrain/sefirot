@@ -1,113 +1,148 @@
 import { type Ref, ref } from 'vue'
 
-export interface Tooltip {
-  on: Ref<boolean>
-  show: () => void
-  hide: () => void
-}
-
 export type Position = 'top' | 'right' | 'bottom' | 'left'
 
 const globalHide = ref<() => void>()
 
 /**
  * Prevent tooltip going off-screen by adjusting the position depending on
- * the current window size. This only applies to position `top` and
- * `bottom` since we only care about left and right of the screen.
+ * the current window size.
  */
 export function useTooltip(
-  el: Ref<HTMLElement | null>,
+  root: Ref<HTMLElement | null>,
+  trigger: Ref<HTMLElement | null>,
   content: Ref<HTMLElement | null>,
-  tip: Ref<HTMLElement | null>,
   position: Ref<Position>,
   timeoutId: Ref<number | null>
-): Tooltip {
+) {
   const on = ref(false)
+  const showTimeout = ref<number | null>()
 
   function show(): void {
     if (on.value) { return }
     globalHide.value?.()
-    setPosition()
-    setTimeout(() => { on.value = true })
+    setPosition(trigger.value, content.value, position.value)
+    showTimeout.value = window.setTimeout(() => {
+      showTimeout.value = null
+      on.value = true
+    }, 200)
     globalHide.value = hide
   }
 
   function hide(): void {
+    if (showTimeout.value != null) {
+      window.clearTimeout(showTimeout.value)
+      showTimeout.value = null
+    }
+    if (timeoutId.value != null) {
+      window.clearTimeout(timeoutId.value)
+      timeoutId.value = null
+    }
     if (!on.value) { return }
-    setTimeout(() => {
-      if (timeoutId.value) {
-        clearTimeout(timeoutId.value)
-        timeoutId.value = null
-      }
+    globalHide.value = undefined
+    window.setTimeout(() => {
       on.value = false
-      if (el.value?.matches(':focus-within')) {
-        (document.activeElement as HTMLElement)?.blur?.()
+      if (root.value?.matches(':focus-within')) {
+        ;(document.activeElement as HTMLElement)?.blur?.()
       }
     })
-  }
-
-  function setPosition(): void {
-    if (shouldPosition()) {
-      doSetPosition()
-    }
-  }
-
-  function doSetPosition(): void {
-    // Reset position first so that we can get the original position.
-    resetPosition()
-
-    // Temporally show tip to get its size.
-    tip.value!.style.display = 'block'
-
-    const screenPadding = document.body.clientWidth >= 512 ? 24 : 8
-    const contentRect = content.value!.getBoundingClientRect()
-    const tipRect = tip.value!.getBoundingClientRect()
-
-    const contentRightX = contentRect.x + contentRect.width
-    const tipRightX = tipRect.x + tipRect.width
-
-    if (tipRect.x < screenPadding) {
-      adjustLeftPosition(screenPadding, contentRect.x)
-    } else if (tipRightX > (document.body.clientWidth - screenPadding)) {
-      adjustRightPosition(screenPadding, contentRightX)
-    }
-
-    tip.value!.style.display = 'none'
-  }
-
-  function adjustLeftPosition(screenPadding: number, contentRectX: number): void {
-    tip.value!.style.left = '0'
-    tip.value!.style.right = 'auto'
-    setTransform(-contentRectX + screenPadding)
-  }
-
-  function adjustRightPosition(screenPadding: number, contentRightX: number): void {
-    tip.value!.style.left = 'auto'
-    tip.value!.style.right = '0'
-    setTransform((document.body.clientWidth - contentRightX) - screenPadding)
-  }
-
-  function resetPosition(): void {
-    tip.value!.style.left = ''
-    tip.value!.style.right = ''
-    tip.value!.style.transform = ''
-  }
-
-  function setTransform(x: number): void {
-    tip.value!.style.transform = `translate(${x}px, ${position.value === 'top' ? -100 : 100}%)`
-  }
-
-  function shouldPosition(): boolean {
-    if (!tip.value || !content.value) {
-      return false
-    }
-
-    return position.value === 'top' || position.value === 'bottom'
   }
 
   return {
     on,
     show,
     hide
+  }
+}
+
+function setPosition(
+  trigger: HTMLElement | null,
+  content: HTMLElement | null,
+  placement: Position
+): void {
+  if (typeof document === 'undefined' || !trigger || !content) { return }
+
+  const pos = getCurrentPositions(trigger, content)
+
+  let top = pos.minY
+  let left = pos.minX
+
+  if (placement === 'top') {
+    top = pos.triggerTop - pos.contentHeight
+    if (top < pos.minY) {
+      top = pos.triggerTop + pos.triggerHeight
+    }
+    left = pos.triggerLeft + pos.triggerWidth / 2 - pos.contentWidth / 2
+    if (left + pos.contentWidth > pos.maxX) {
+      left = pos.maxX - pos.contentWidth
+    }
+    if (left < pos.minX) {
+      left = pos.minX
+    }
+  } else if (placement === 'right') {
+    top = pos.triggerTop + pos.triggerHeight / 2 - pos.contentHeight / 2
+    if (top + pos.contentHeight > pos.maxY) {
+      top = pos.maxY - pos.contentHeight
+    }
+    if (top < pos.minY) {
+      top = pos.minY
+    }
+    left = pos.triggerLeft + pos.triggerWidth
+    if (left + pos.contentWidth > pos.maxX) {
+      left = pos.triggerLeft - pos.contentWidth
+    }
+  } else if (placement === 'bottom') {
+    top = pos.triggerTop + pos.triggerHeight
+    if (top + pos.contentHeight > pos.maxY) {
+      top = pos.triggerTop - pos.contentHeight
+    }
+    left = pos.triggerLeft + pos.triggerWidth / 2 - pos.contentWidth / 2
+    if (left + pos.contentWidth > pos.maxX) {
+      left = pos.maxX - pos.contentWidth
+    }
+    if (left < pos.minX) {
+      left = pos.minX
+    }
+  } else if (placement === 'left') {
+    top = pos.triggerTop + pos.triggerHeight / 2 - pos.contentHeight / 2
+    if (top + pos.contentHeight > pos.maxY) {
+      top = pos.maxY - pos.contentHeight
+    }
+    if (top < pos.minY) {
+      top = pos.minY
+    }
+    left = pos.triggerLeft - pos.contentWidth
+    if (left < pos.minX) {
+      left = pos.triggerLeft + pos.triggerWidth
+    }
+  }
+
+  content.style.top = `${top}px`
+  content.style.left = `${left}px`
+}
+
+function getCurrentPositions(trigger: HTMLElement, content: HTMLElement) {
+  const bodyRect = document.body.getBoundingClientRect()
+  const triggerRect = trigger.getBoundingClientRect()
+  const contentDisplay = content.style.display
+  content.style.display = 'block'
+  const contentRect = content.getBoundingClientRect()
+  content.style.display = contentDisplay
+
+  return {
+    minX: -bodyRect.left,
+    minY: -bodyRect.top,
+    maxX: bodyRect.width - bodyRect.left,
+    maxY: bodyRect.height - bodyRect.top,
+
+    triggerTop: triggerRect.top - bodyRect.top,
+    triggerLeft: triggerRect.left - bodyRect.left,
+    triggerWidth: triggerRect.width,
+    triggerHeight: triggerRect.height,
+
+    contentTop: contentRect.top - bodyRect.top,
+    contentLeft: contentRect.left - bodyRect.left,
+    contentWidth: contentRect.width,
+    contentHeight: contentRect.height
   }
 }

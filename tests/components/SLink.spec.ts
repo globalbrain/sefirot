@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SLink from 'sefirot/components/SLink.vue'
+import { RouterLink } from 'vue-router'
 
 describe('components/SLink', () => {
   test('creates `span` tag when no link is passed', () => {
@@ -15,16 +16,17 @@ describe('components/SLink', () => {
       }
     })
 
-    expect(wrapper.find('router-link').exists()).toBe(true)
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(true)
   })
 
-  test('creates `a` tag when link is external', () => {
+  test('creates `a` tag without RouterLink when link is external', () => {
     const wrapper = mount(SLink, {
       props: {
         href: 'https://example.com'
       }
     })
 
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(false)
     expect(wrapper.find('a').exists()).toBe(true)
   })
 
@@ -36,10 +38,10 @@ describe('components/SLink', () => {
       }
     })
 
-    expect(wrapper.find('router-link').exists()).toBe(true)
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(true)
   })
 
-  test('creates `a` tag when `:external` is `true`', () => {
+  test('creates `a` tag without RouterLink when `:external` is `true`', () => {
     const wrapper = mount(SLink, {
       props: {
         href: 'about',
@@ -47,6 +49,7 @@ describe('components/SLink', () => {
       }
     })
 
+    expect(wrapper.findComponent(RouterLink).exists()).toBe(false)
     expect(wrapper.find('a').exists()).toBe(true)
   })
 })

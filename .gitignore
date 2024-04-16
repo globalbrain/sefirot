@@ -8,3 +8,6 @@
 *.tgz
 .vscode
 .prettierrc*
+.temp
+.cache
+*.timestamp-*.mjs
