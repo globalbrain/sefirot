@@ -1,5 +1,12 @@
 
 
+# [3.41.0](https://github.com/globalbrain/sefirot/compare/v3.40.2...v3.41.0) (2024-04-16)
+
+
+### Features
+
+* **validation:** add `requiredYmdIf` and `requiredHmsIf` validators and rules ([#517](https://github.com/globalbrain/sefirot/issues/517)) ([5e184a4](https://github.com/globalbrain/sefirot/commit/5e184a4f1994b7d059c9df42a1a20c554717c501))
+
 ## [3.40.2](https://github.com/globalbrain/sefirot/compare/v3.40.1...v3.40.2) (2024-04-01)
 
 
