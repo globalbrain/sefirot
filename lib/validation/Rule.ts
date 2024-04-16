@@ -42,6 +42,6 @@ export function createRule(
 
 function createParamsForAsyncValidator(params: Record<string, any>) {
   return Object.keys(params).map((key) => {
-    return computed(() => params[key]())
+    return params[key]
   })
 }
