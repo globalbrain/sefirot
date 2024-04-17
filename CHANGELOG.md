@@ -1,5 +1,17 @@
 
 
+# [3.42.0](https://github.com/globalbrain/sefirot/compare/v3.41.0...v3.42.0) (2024-04-17)
+
+
+### Bug Fixes
+
+* **validation:** support reactivity for properties ([#518](https://github.com/globalbrain/sefirot/issues/518)) ([75fe5f6](https://github.com/globalbrain/sefirot/commit/75fe5f66650fbb4b0cc96ffc6b528c6948dc5311))
+
+
+### Features
+
+* **tooltip:** teleport content to avoid stacking issues ([#513](https://github.com/globalbrain/sefirot/issues/513)) ([5ccd66a](https://github.com/globalbrain/sefirot/commit/5ccd66a4a7a4ece364eafe74bfffbbedeba59fe5))
+
 # [3.41.0](https://github.com/globalbrain/sefirot/compare/v3.40.2...v3.41.0) (2024-04-16)
 
 
