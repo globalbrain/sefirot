@@ -48,7 +48,7 @@ describe('validation/rules/requiredIf', () => {
     })
 
     const { validation } = useV(data, {
-      v: { requiredIf: requiredIf(() => condition.value) }
+      v: { required: requiredIf(() => condition.value) }
     })
 
     expect(validation.value.$invalid).toBe(false)

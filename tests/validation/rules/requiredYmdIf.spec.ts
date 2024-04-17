@@ -1,5 +1,10 @@
+import { flushPromises } from '@vue/test-utils'
+import { useD } from 'sefirot/composables/D'
+import { useV } from 'sefirot/composables/V'
+import { type Ymd } from 'sefirot/support/Day'
 import { requiredYmdIf } from 'sefirot/validation/rules'
 import { type RequiredIfCondition } from 'sefirot/validation/validators'
+import { ref } from 'vue'
 
 describe('validation/rules/requiredYmdIf', () => {
   function getTestCasesForAllTypes() {
@@ -74,6 +79,27 @@ describe('validation/rules/requiredYmdIf', () => {
   )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredYmdIf(condition, ['y', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(true)
+  })
+
+  test('condition can be reactive', async () => {
+    const condition = ref(false)
+
+    const { data } = useD({
+      v: {} as Ymd
+    })
+
+    const { validation } = useV(data, {
+      v: { required: requiredYmdIf(() => condition.value) }
+    })
+
+    expect(validation.value.$invalid).toBe(false)
+
+    condition.value = true
+
+    // Await since this is async validator.
+    await flushPromises()
+
+    expect(validation.value.$invalid).toBe(true)
   })
 
   test('default error message', () => {
