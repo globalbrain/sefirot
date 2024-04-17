@@ -1,6 +1,6 @@
+import { flushPromises } from '@vue/test-utils'
 import { useD } from 'sefirot/composables/D'
 import { useV } from 'sefirot/composables/V'
-import { sleep } from 'sefirot/support/Time'
 import { requiredIf } from 'sefirot/validation/rules'
 import { ref } from 'vue'
 
@@ -56,7 +56,7 @@ describe('validation/rules/requiredIf', () => {
     condition.value = true
 
     // Await since this is async validator.
-    await sleep(0)
+    await flushPromises()
 
     expect(validation.value.$invalid).toBe(true)
   })
