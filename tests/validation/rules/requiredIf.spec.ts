@@ -1,4 +1,8 @@
+import { flushPromises } from '@vue/test-utils'
+import { useD } from 'sefirot/composables/D'
+import { useV } from 'sefirot/composables/V'
 import { requiredIf } from 'sefirot/validation/rules'
+import { ref } from 'vue'
 
 describe('validation/rules/requiredIf', () => {
   test('validates if the value is valid', () => {
@@ -34,6 +38,27 @@ describe('validation/rules/requiredIf', () => {
       expect(rule.$validator('  ', null, null)).toStrictEqual(expected)
       expect(rule.$validator(new Date('a'), null, null)).toStrictEqual(expected)
     })
+  })
+
+  test('condition can be reactive', async () => {
+    const condition = ref(false)
+
+    const { data } = useD({
+      v: null as string | null
+    })
+
+    const { validation } = useV(data, {
+      v: { required: requiredIf(() => condition.value) }
+    })
+
+    expect(validation.value.$invalid).toBe(false)
+
+    condition.value = true
+
+    // Await since this is async validator.
+    await flushPromises()
+
+    expect(validation.value.$invalid).toBe(true)
   })
 
   test('default error message', () => {

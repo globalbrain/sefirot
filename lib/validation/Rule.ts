@@ -6,6 +6,7 @@ import { _required } from './validators'
 export interface RuleOptions {
   optional?: boolean
   async?: boolean
+  params?: Record<string, any>
   message(params: MessageProps): string
   validation(value: unknown): boolean | Promise<boolean>
 }
@@ -19,14 +20,27 @@ export function createRule(
 ): ValidationRuleWithParams {
   const lang = useLang()
 
-  function validation(value: unknown) {
-    return options.optional && !_required(value)
-      ? true
-      : options.validation(value)
-  }
+  const params = options.params ?? {}
+
+  const validator = helpers.withParams(
+    params,
+    (value: unknown) => {
+      return options.optional && !_required(value)
+        ? true
+        : options.validation(value)
+    }
+  )
 
   return helpers.withMessage(
     (params) => options.message({ ...params, lang }),
-    options.async ? helpers.withAsync(validation) : validation
+    options.async
+      ? helpers.withAsync(validator, createParamsForAsyncValidator(params))
+      : validator
   )
+}
+
+function createParamsForAsyncValidator(params: Record<string, any>) {
+  return Object.keys(params).map((key) => {
+    return params[key]
+  })
 }

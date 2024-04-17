@@ -10,6 +10,7 @@ export const message = {
 export function requiredHmsIf(condition: RequiredIfCondition, required?: HmsType[], msg?: string) {
   return createRule({
     async: true,
+    params: { condition },
     message: ({ lang }) => msg ?? message[lang],
     validation: (value) => baseRequiredHmsIf(value, condition, required)
   })
