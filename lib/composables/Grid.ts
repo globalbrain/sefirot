@@ -60,7 +60,7 @@ export function useGrid(options: UseGridOptions = {}): Grid {
 
     const fragment = createSpacers(lack, spacerTag, spacerClass, type)
 
-    container.value?.appendChild(fragment!)
+    container.value?.appendChild(fragment)
   }
 
   return {

@@ -26,11 +26,11 @@ export function setupRouter(): void {
 }
 
 export function getInputValue(wrapper: DOMWrapper<any>): string {
-  return (wrapper.element as any).value
+  return (wrapper.element).value
 }
 
 export function getInputPlaceholder(wrapper: DOMWrapper<any>): string {
-  return (wrapper.element as any).placeholder
+  return (wrapper.element).placeholder
 }
 
 export function createValidatable(params: Partial<Validatable> = {}): Validatable {
