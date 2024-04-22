@@ -44,10 +44,9 @@ export function useQuery<Data = any>(
   }
 
   async function execute({ assign = true } = {}): Promise<Data> {
-    loading.value = true
+    if (assign) { loading.value = true }
 
     const res: Data = await req(new Http())
-
     if (assign) { data.value = res }
 
     loading.value = false
