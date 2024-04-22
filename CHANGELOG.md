@@ -1,5 +1,12 @@
 
 
+# [3.43.0](https://github.com/globalbrain/sefirot/compare/v3.42.0...v3.43.0) (2024-04-22)
+
+
+### Features
+
+* **api:** allow executing queries without assigning result to data ([#519](https://github.com/globalbrain/sefirot/issues/519)) ([e968867](https://github.com/globalbrain/sefirot/commit/e9688679860c2ccd0b625535e3b388de225b9129))
+
 # [3.42.0](https://github.com/globalbrain/sefirot/compare/v3.41.0...v3.42.0) (2024-04-17)
 
 
