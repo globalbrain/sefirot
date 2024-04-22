@@ -10,16 +10,19 @@ Executes given promise function immediately and set the result to `data` ref.
 interface Query<Data = any> {
   loading: Ref<boolean>
   data: Ref<Data | undefined>
-  execute(): Promise<Data>
+  execute(options?: { assign?: boolean }): Promise<Data>
 }
 
 interface UseQueryOptions {
   /**
-   * controls whether the query should execute immediately.
-   * 
+   * controls whether the query should execute immediately
    * @default true
    */
   immediate?: boolean
+  /**
+   * watch the given source(s) and re-execute the query
+   */
+  watch?: WatchSource | WatchSource[]
 }
 
 function useQuery<Data = any>(
