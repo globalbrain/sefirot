@@ -10,7 +10,18 @@ Executes given promise function immediately and set the result to `data` ref.
 interface Query<Data = any> {
   loading: Ref<boolean>
   data: Ref<Data | undefined>
-  execute(options?: { assign?: boolean }): Promise<Data>
+  execute(options?: {
+    /**
+     * controls whether the response should be assigned to the data ref
+     * @default true
+     */
+    assign?: boolean
+    /**
+     * controls whether the loading state should not be set before fetching
+     * @default false
+     */
+    silent?: boolean
+  }): Promise<Data>
 }
 
 interface UseQueryOptions {
