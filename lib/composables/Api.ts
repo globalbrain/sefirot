@@ -5,7 +5,18 @@ import { tryOnMounted } from './Utils'
 export interface Query<Data = any> {
   loading: Ref<boolean>
   data: Ref<Data | undefined>
-  execute(): Promise<Data>
+  execute(options?: {
+    /**
+     * controls whether the response should be assigned to the data ref
+     * @default true
+     */
+    assign?: boolean
+    /**
+     * controls whether the loading state should not be set before fetching
+     * @default false
+     */
+    silent?: boolean
+  }): Promise<Data>
 }
 
 export interface UseQueryOptions {
@@ -40,14 +51,14 @@ export function useQuery<Data = any>(
   }
 
   if (options.watch) {
-    watch(options.watch, execute, { deep: true })
+    watch(options.watch, () => { execute() }, { deep: true })
   }
 
-  async function execute(): Promise<Data> {
-    loading.value = true
+  async function execute({ assign = true, silent = false } = {}): Promise<Data> {
+    if (!silent) { loading.value = true }
 
     const res: Data = await req(new Http())
-    data.value = res
+    if (assign) { data.value = res }
 
     loading.value = false
     return res
