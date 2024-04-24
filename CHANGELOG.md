@@ -1,5 +1,12 @@
 
 
+# [3.44.0](https://github.com/globalbrain/sefirot/compare/v3.43.0...v3.44.0) (2024-04-24)
+
+
+### Features
+
+* **control:** support action bar button as link ([#521](https://github.com/globalbrain/sefirot/issues/521)) ([4f1fce1](https://github.com/globalbrain/sefirot/commit/4f1fce1f9ec72485347205b81b7e57ff2dcefc8d))
+
 # [3.43.0](https://github.com/globalbrain/sefirot/compare/v3.42.0...v3.43.0) (2024-04-22)
 
 
