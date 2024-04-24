@@ -11,7 +11,7 @@ export function useD<T extends Record<string, any>>(data: T): D<T> {
   const refData = ref(data) as Ref<T>
 
   function init(): void {
-    refData.value = JSON.parse(initialData)
+    refData.value = JSON.parse(initialData) as T
   }
 
   return {
