@@ -15,6 +15,7 @@ export interface HttpOptions {
   xsrfUrl?: string | false
   client?: HttpClient
   lang?: Lang
+  payloadKey?: string
 }
 
 export class Http {
@@ -22,6 +23,7 @@ export class Http {
   private static xsrfUrl: string | false = '/api/csrf-cookie'
   private static client: HttpClient = ofetch
   private static lang: Lang | undefined = undefined
+  private static payloadKey = '__payload__'
 
   static config(options: HttpOptions) {
     if (options.baseUrl) {
@@ -35,6 +37,9 @@ export class Http {
     }
     if (options.lang) {
       Http.lang = options.lang
+    }
+    if (options.payloadKey) {
+      Http.payloadKey = options.payloadKey
     }
   }
 
@@ -101,6 +106,26 @@ export class Http {
   }
 
   async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    if (body && !(body instanceof FormData)) {
+      let hasFile = false
+
+      const payload = JSON.stringify(body, (_, value) => {
+        if (value instanceof Blob) {
+          hasFile = true
+          return undefined
+        }
+        return value
+      })
+
+      if (hasFile) {
+        const formData = this.objectToFormData(body, undefined, undefined, true)
+        formData.append(Http.payloadKey, payload)
+        body = formData
+      } else {
+        body = payload
+      }
+    }
+
     return this.performRequest<T>(url, { method: 'POST', body, ...options })
   }
 
@@ -117,13 +142,7 @@ export class Http {
   }
 
   async upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    const formData = this.objectToFormData(body)
-
-    return this.performRequest<T>(url, {
-      method: 'POST',
-      body: formData,
-      ...options
-    })
+    return this.post<T>(url, this.objectToFormData(body), options)
   }
 
   async download(url: string, options?: FetchOptions): Promise<void> {
@@ -143,7 +162,7 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(obj: any, form?: FormData, namespace?: string) {
+  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false) {
     const fd = form || new FormData()
     let formKey: string
 
@@ -163,9 +182,12 @@ export class Http {
         && !(obj[property] instanceof Blob)
         && obj[property] !== null
       ) {
-        this.objectToFormData(obj[property], fd, property)
+        this.objectToFormData(obj[property], fd, property, onlyFiles)
       } else {
         const value = obj[property] === null ? '' : obj[property]
+        if (onlyFiles && !(value instanceof Blob)) {
+          return
+        }
         fd.append(formKey, value)
       }
     })
