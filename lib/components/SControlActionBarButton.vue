@@ -5,6 +5,7 @@ import SButton from './SButton.vue'
 defineProps<{
   as?: string
   icon?: any
+  href?: string
 }>()
 
 defineEmits<{
@@ -22,6 +23,7 @@ const size = useControlSize()
       mode="mute"
       :size="size"
       :icon="icon"
+      :href="href"
       block
       @click="$emit('click')"
     />
