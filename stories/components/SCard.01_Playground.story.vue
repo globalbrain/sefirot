@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import IconLink from '@iconify-icons/ph/arrow-square-out-bold'
+import IconPlus from '@iconify-icons/ph/plus-bold'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
 import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
+import SControlActionBarButton from 'sefirot/components/SControlActionBarButton.vue'
 import SControlActionBarCollapse from 'sefirot/components/SControlActionBarCollapse.vue'
 import SControlButton from 'sefirot/components/SControlButton.vue'
 import SControlLeft from 'sefirot/components/SControlLeft.vue'
@@ -49,6 +52,8 @@ function state() {
                 </SControlLeft>
                 <SControlRight>
                   <SControlActionBar>
+                    <SControlActionBarButton :icon="IconPlus" />
+                    <SControlActionBarButton :icon="IconLink" href="https://sefirot.globalbrains.com/" />
                     <SControlActionBarCollapse />
                   </SControlActionBar>
                 </SControlRight>
