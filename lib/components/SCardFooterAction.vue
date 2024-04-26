@@ -7,7 +7,7 @@ defineProps<{
   labelMode?: Mode
   loading?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 defineEmits<{

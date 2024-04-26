@@ -7,7 +7,7 @@ defineProps<{
   icon?: any
   href?: string
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 defineEmits<{

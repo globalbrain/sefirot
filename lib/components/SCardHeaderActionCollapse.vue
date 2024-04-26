@@ -8,7 +8,7 @@ import SButton, { type Tooltip } from './SButton.vue'
 const props = defineProps<{
   collapsed?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 defineEmits<{

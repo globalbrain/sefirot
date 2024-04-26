@@ -46,7 +46,7 @@ const props = defineProps<{
   block?: boolean
   loading?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 const emit = defineEmits<{
@@ -78,7 +78,10 @@ const computedTag = computed(() => {
 const slots = useSlots()
 
 const hasTooltip = computed(() => {
-  return slots['tooltip-text'] || unref(props.tooltip?.text)
+  return !!(
+    slots['tooltip-text']
+    || (typeof props.tooltip === 'object' ? unref(props.tooltip.text) : props.tooltip)
+  )
 })
 
 function handleClick(): void {
@@ -91,12 +94,12 @@ function handleClick(): void {
 <template>
   <SFragment
     :is="hasTooltip && STooltip"
-    :tag="props.tooltip?.tag"
-    :text="unref(props.tooltip?.text)"
-    :position="props.tooltip?.position"
+    :tag="typeof tooltip === 'object' ? tooltip.tag : undefined"
+    :text="typeof tooltip === 'object' ? unref(tooltip.text) : tooltip"
+    :position="typeof tooltip === 'object' ? tooltip.position : undefined"
     display="inline-block"
-    :trigger="props.tooltip?.trigger ?? 'both'"
-    :timeout="props.tooltip?.timeout"
+    :trigger="typeof tooltip === 'object' ? tooltip.trigger ?? 'both' : 'both'"
+    :timeout="typeof tooltip === 'object' ? tooltip.timeout : undefined"
     :tabindex="-1"
   >
     <template v-if="$slots['tooltip-text']" #text><slot name="tooltip-text" /></template>

@@ -162,7 +162,7 @@ import { type IconifyIcon } from '@iconify/vue/dist/offline'
 interface Props {
   icon: IconifyIcon
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }
 
 export interface Tooltip {
@@ -276,7 +276,7 @@ interface Props {
   labelMode?: Mode
   loading?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }
 
 export interface Tooltip {
