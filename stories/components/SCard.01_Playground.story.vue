@@ -8,6 +8,7 @@ import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
 import SControlActionBarButton from 'sefirot/components/SControlActionBarButton.vue'
 import SControlActionBarCollapse from 'sefirot/components/SControlActionBarCollapse.vue'
 import SControlButton from 'sefirot/components/SControlButton.vue'
+import SControlButtonGroup from 'sefirot/components/SControlButtonGroup.vue'
 import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import SControlText from 'sefirot/components/SControlText.vue'
@@ -70,6 +71,10 @@ function state() {
             <SCardBlock size="large" class="s-px-24">
               <SControl>
                 <SControlRight>
+                  <SControlButtonGroup>
+                    <SControlButton label="Prev" />
+                    <SControlButton label="Next" />
+                  </SControlButtonGroup>
                   <SControlButton label="Cancel" />
                   <SControlButton mode="info" label="Submit" />
                 </SControlRight>
