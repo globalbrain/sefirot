@@ -59,7 +59,7 @@ function state() {
 
             <div class="grid">
               <SButton
-                v-for="t in ['fill', 'outline', 'text'] as const"
+                v-for="t in (['fill', 'outline', 'text'] as const)"
                 :key="t"
                 :size="v.size"
                 :type="t"
