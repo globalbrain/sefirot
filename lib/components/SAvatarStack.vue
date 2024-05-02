@@ -42,10 +42,6 @@ const count = computed(() => {
 .SAvatarStack {
   display: flex;
 
-  :deep(.trigger) {
-    display: block !important;
-  }
-
   :slotted(.SAvatar), :deep(.SAvatar), .more {
     flex-shrink: 0;
     border: 2px solid var(--c-bg-elv-2);

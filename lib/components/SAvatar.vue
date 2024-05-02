@@ -39,7 +39,7 @@ const tooltipPosition = computed(() => {
     :is="tooltip && name && STooltip"
     :text="name"
     :position="tooltipPosition"
-    display="inline-block"
+    display="block"
     tag="div"
     trigger-tag="div"
   >
