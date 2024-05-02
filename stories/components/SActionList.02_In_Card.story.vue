@@ -10,15 +10,9 @@ const title = 'Components / SActionList / 02. In Card'
 const docs = '/components/action-list'
 
 const list: ActionList = [
-  { leadIcon: IconActivity, label: 'Show activity', tooltip: { text: 'hey there' } },
+  { leadIcon: IconActivity, label: 'Show activity' },
   { leadIcon: IconEye, label: 'Preview' },
-  {
-    leadIcon: IconTrash,
-    label: 'Delete item',
-    disabled: true,
-    onClick: () => alert('Delete item'),
-    tooltip: { text: 'Disabled action' }
-  }
+  { leadIcon: IconTrash, label: 'Delete item' }
 ]
 </script>
 

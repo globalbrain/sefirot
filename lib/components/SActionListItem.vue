@@ -44,9 +44,12 @@ const _tooltip = computed<Tooltip | undefined>(() => {
 
 <style scoped lang="postcss">
 .SActionListItem {
+  --button-font-size: 14px;
+
   :deep(.SButton),
   :slotted(.SButton) {
     justify-content: flex-start;
+    font-weight: 400;
   }
 }
 </style>
