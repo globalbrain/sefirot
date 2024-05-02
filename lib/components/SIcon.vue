@@ -8,6 +8,6 @@ defineProps<{
 </script>
 
 <template>
-  <Icon v-if="typeof icon.body === 'string'" :icon="icon as IconifyIcon" />
+  <Icon v-if="typeof icon.body === 'string'" :icon="(icon as IconifyIcon)" />
   <component v-else :is="icon" />
 </template>

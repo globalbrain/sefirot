@@ -14,7 +14,7 @@ defineProps<{
   href?: string
   loading?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
   options: DropdownSection[]
 }>()
 

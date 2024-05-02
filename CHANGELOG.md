@@ -1,5 +1,38 @@
 
 
+# [3.45.0](https://github.com/globalbrain/sefirot/compare/v3.44.0...v3.45.0) (2024-04-26)
+
+
+### Features
+
+* **control:** add `:disabled` and `:tooltip` support on action bar button ([#523](https://github.com/globalbrain/sefirot/issues/523)) ([ff124a6](https://github.com/globalbrain/sefirot/commit/ff124a6addc72a0fbd8c8270eee7ac0da5b8fe99))
+
+# [3.44.0](https://github.com/globalbrain/sefirot/compare/v3.43.0...v3.44.0) (2024-04-24)
+
+
+### Features
+
+* **control:** support action bar button as link ([#521](https://github.com/globalbrain/sefirot/issues/521)) ([4f1fce1](https://github.com/globalbrain/sefirot/commit/4f1fce1f9ec72485347205b81b7e57ff2dcefc8d))
+
+# [3.43.0](https://github.com/globalbrain/sefirot/compare/v3.42.0...v3.43.0) (2024-04-22)
+
+
+### Features
+
+* **api:** allow executing queries without assigning result to data ([#519](https://github.com/globalbrain/sefirot/issues/519)) ([e968867](https://github.com/globalbrain/sefirot/commit/e9688679860c2ccd0b625535e3b388de225b9129))
+
+# [3.42.0](https://github.com/globalbrain/sefirot/compare/v3.41.0...v3.42.0) (2024-04-17)
+
+
+### Bug Fixes
+
+* **validation:** support reactivity for properties ([#518](https://github.com/globalbrain/sefirot/issues/518)) ([75fe5f6](https://github.com/globalbrain/sefirot/commit/75fe5f66650fbb4b0cc96ffc6b528c6948dc5311))
+
+
+### Features
+
+* **tooltip:** teleport content to avoid stacking issues ([#513](https://github.com/globalbrain/sefirot/issues/513)) ([5ccd66a](https://github.com/globalbrain/sefirot/commit/5ccd66a4a7a4ece364eafe74bfffbbedeba59fe5))
+
 # [3.41.0](https://github.com/globalbrain/sefirot/compare/v3.40.2...v3.41.0) (2024-04-16)
 
 

@@ -10,6 +10,7 @@ export const message = {
 export function requiredYmdIf(condition: RequiredIfCondition, required?: YmdType[], msg?: string) {
   return createRule({
     async: true,
+    params: { condition },
     message: ({ lang }) => msg ?? message[lang],
     validation: (value) => baseRequiredYmdIf(value, condition, required)
   })

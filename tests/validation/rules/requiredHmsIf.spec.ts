@@ -1,5 +1,10 @@
+import { flushPromises } from '@vue/test-utils'
+import { useD } from 'sefirot/composables/D'
+import { useV } from 'sefirot/composables/V'
+import { type Hms } from 'sefirot/support/Day'
 import { requiredHmsIf } from 'sefirot/validation/rules'
 import { type RequiredIfCondition } from 'sefirot/validation/validators'
+import { ref } from 'vue'
 
 describe('validation/rules/requiredHmsIf', () => {
   function getTestCasesForAllTypes() {
@@ -77,6 +82,27 @@ describe('validation/rules/requiredHmsIf', () => {
   )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredHmsIf(condition, ['h', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(true)
+  })
+
+  test('condition can be reactive', async () => {
+    const condition = ref(false)
+
+    const { data } = useD({
+      v: {} as Hms
+    })
+
+    const { validation } = useV(data, {
+      v: { required: requiredHmsIf(() => condition.value) }
+    })
+
+    expect(validation.value.$invalid).toBe(false)
+
+    condition.value = true
+
+    // Await since this is async validator.
+    await flushPromises()
+
+    expect(validation.value.$invalid).toBe(true)
   })
 
   test('default error message', () => {

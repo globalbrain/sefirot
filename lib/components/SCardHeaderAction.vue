@@ -5,7 +5,7 @@ import SButton, { type Tooltip } from './SButton.vue'
 defineProps<{
   icon: IconifyIcon
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 defineEmits<{
