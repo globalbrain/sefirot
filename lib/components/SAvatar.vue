@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { type Position } from '../composables/Tooltip'
+import SFragment from './SFragment.vue'
+import STooltip from './STooltip.vue'
 
 export type Size =
   | 'nano'
@@ -14,6 +17,7 @@ const props = defineProps<{
   size?: Size
   avatar?: string | null
   name?: string | null
+  tooltip?: boolean | { position?: Position }
 }>()
 
 const classes = computed(() => [
@@ -22,13 +26,28 @@ const classes = computed(() => [
 ])
 
 const initial = computed(() => props.name?.charAt(0).toUpperCase())
+
+const tooltipPosition = computed(() => {
+  return (props.tooltip && typeof props.tooltip === 'object')
+    ? props.tooltip.position || 'top'
+    : 'top'
+})
 </script>
 
 <template>
-  <div class="SAvatar" :class="classes">
-    <img v-if="avatar" class="img" :src="avatar">
-    <p v-else-if="initial" class="initial">{{ initial }}</p>
-  </div>
+  <SFragment
+    :is="tooltip && name && STooltip"
+    :text="name"
+    :position="tooltipPosition"
+    display="block"
+    tag="div"
+    trigger-tag="div"
+  >
+    <div class="SAvatar" :class="classes">
+      <img v-if="avatar" class="img" :src="avatar">
+      <p v-else-if="initial" class="initial">{{ initial }}</p>
+    </div>
+  </SFragment>
 </template>
 
 <style lang="postcss" scoped>
@@ -36,8 +55,8 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 50%;
   background-color: var(--c-bg-elv-1);
+  border-radius: 50%;
   overflow: hidden;
 }
 
@@ -45,6 +64,8 @@ const initial = computed(() => props.name?.charAt(0).toUpperCase())
   object-fit: cover;
   height: 100%;
   width: 100%;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .initial {

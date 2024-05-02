@@ -18,6 +18,8 @@ defineProps<{
       :label="item.label"
       :text="item.text"
       :link="item.link"
+      :disabled="item.disabled"
+      :tooltip="item.tooltip"
       :on-click="item.onClick"
     />
   </div>

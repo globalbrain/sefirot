@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { type Position } from '../composables/Tooltip'
 import SAvatar from './SAvatar.vue'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
@@ -8,6 +9,7 @@ const props = withDefaults(defineProps<{
   size?: Size
   avatars: { image?: string; name?: string }[]
   avatarCount?: number
+  tooltip?: boolean | { position?: Position }
 }>(), {
   size: 'medium',
   avatarCount: 2
@@ -30,6 +32,7 @@ const count = computed(() => {
       :size="size"
       :avatar="avatar.image"
       :name="avatar.name"
+      :tooltip="tooltip"
     />
     <div v-if="count" class="more">+{{ count }}</div>
   </div>
@@ -39,16 +42,18 @@ const count = computed(() => {
 .SAvatarStack {
   display: flex;
 
-  > * {
-    border: 2px solid var(--c-bg-elv-2);
+  :slotted(.SAvatar), :deep(.SAvatar), .more {
     flex-shrink: 0;
+    border: 2px solid var(--c-bg-elv-2);
+    border-radius: 50%;
+    overflow: hidden;
   }
 
-  &.mini > *:not(:last-child)   { margin-right: -6px }
-  &.small > *:not(:last-child)  { margin-right: -8px }
-  &.medium > *:not(:last-child) { margin-right: -8px }
-  &.large > *:not(:last-child)  { margin-right: -12px }
-  &.jumbo > *:not(:last-child)  { margin-right: -16px }
+  &.mini > :deep(*):not(:last-child)   { margin-right: -6px }
+  &.small > :deep(*):not(:last-child)  { margin-right: -8px }
+  &.medium > :deep(*):not(:last-child) { margin-right: -8px }
+  &.large > :deep(*):not(:last-child)  { margin-right: -12px }
+  &.jumbo > :deep(*):not(:last-child)  { margin-right: -16px }
 }
 
 .more {
@@ -61,6 +66,8 @@ const count = computed(() => {
   border-radius: 50%;
   line-height: 1;
   color: var(--c-text-2);
+  z-index: 1;
+  height: 100%;
 
   .mini &   { font-size: 10px }
   .small &  { font-size: 10px }

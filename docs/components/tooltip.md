@@ -70,6 +70,24 @@ interface Props {
 </STooltip>
 ```
 
+### `:triggerTag`
+
+Defines the HTML tag for the trigger element. Any value passed to this prop will used as `<component :is="triggerTag">`. The default tag for the trigger element is `span`.
+
+```ts
+interface Props {
+  triggerTag?: string
+}
+```
+
+```vue-html
+<STooltip triggerTag="div" text="...">
+  ...
+</STooltip>
+```
+
+Note that setting this to something other than `span` is required when you want to put block elements within the trigger element.
+
 ### `:text`
 
 Defines the content of tooltip.

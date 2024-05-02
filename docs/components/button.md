@@ -302,8 +302,8 @@ interface Props {
     // Defaults to `both`
     trigger?: 'hover' | 'focus' | 'both'
 
-    // Defines the timeout in milliseconds to hide the tooltip.
-    // Used only when `trigger` is set to `'focus'` or `'both'`.
+    // The time after which the tooltip is hidden if triggered
+    // because of focussing the trigger element (in milliseconds).
     // Defaults to `undefined` (the tooltip will not hide
     // automatically).
     timeout?: number

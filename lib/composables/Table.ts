@@ -2,6 +2,7 @@ import { type Component, type MaybeRef, type MaybeRefOrGetter } from 'vue'
 import { type Mode } from '../components/SButton.vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
+import { type Position } from './Tooltip'
 
 export interface Table<
   O extends string = string,
@@ -163,6 +164,7 @@ export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
   color?: 'neutral' | 'soft' | 'mute'
   avatarCount?: number
   nameCount?: number
+  tooltip?: boolean | { position?: Position }
 }
 
 export interface TableCellAvatarsOption {

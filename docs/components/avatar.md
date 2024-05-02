@@ -80,3 +80,17 @@ interface Props {
 ```vue-html
 <SAvatar name="John Doe" />
 ```
+
+### `:tooltip`
+
+When set to `true`, a tooltip showing the name will be displayed when hovering over the avatar. You can also pass an object to define the position of the tooltip.
+
+```ts
+interface Props {
+  tooltip?: boolean | { position?: 'top' | 'right' | 'bottom' | 'left' }
+}
+```
+
+```vue-html
+<SAvatar tooltip name="John Doe" />
+```
