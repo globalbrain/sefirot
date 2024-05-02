@@ -125,9 +125,20 @@ onBeforeUnmount(() => {
     cursor: pointer;
   }
 
-  &.inline       { display: inline; }
-  &.inline-block { display: inline-block; }
-  &.block        { display: block; }
+  &.inline {
+    &        { display: inline; }
+    .trigger { display: inline; }
+  }
+
+  &.inline-block {
+    &        { display: inline-block; }
+    .trigger { display: inline-block; }
+  }
+
+  &.block {
+    &        { display: block; }
+    .trigger { display: block; }
+  }
 }
 
 .trigger {
