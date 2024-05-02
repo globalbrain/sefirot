@@ -42,6 +42,10 @@ const count = computed(() => {
 .SAvatarStack {
   display: flex;
 
+  :deep(.trigger) {
+    display: block !important;
+  }
+
   :slotted(.SAvatar), :deep(.SAvatar), .more {
     flex-shrink: 0;
     border: 2px solid var(--c-bg-elv-2);
@@ -67,6 +71,7 @@ const count = computed(() => {
   line-height: 1;
   color: var(--c-text-2);
   z-index: 1;
+  height: 100%;
 
   .mini &   { font-size: 10px }
   .small &  { font-size: 10px }
