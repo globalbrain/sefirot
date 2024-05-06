@@ -54,6 +54,17 @@ interface HttpOptions {
    * @default undefined
    */
   lang?: 'en' | 'ja'
+  /**
+   * If you call `http.post` with a file, it will be send as `multipart/form-data`.
+   * The rest of the body will be send as JSON string. This option allows you to
+   * specify the key for the JSON part. This key should match the key in backend
+   * middleware which parses the JSON part. Don't set this option to some common
+   * key to avoid conflicts with other parts of the body. (Sending JSON part as
+   * string is needed to preserve data types.)
+   * 
+   * @default '__payload__'
+   */
+  payloadKey?: string
 }
 
 interface HttpClient {
