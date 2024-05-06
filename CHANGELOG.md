@@ -1,5 +1,12 @@
 
 
+# [3.45.0](https://github.com/globalbrain/sefirot/compare/v3.44.0...v3.45.0) (2024-04-26)
+
+
+### Features
+
+* **control:** add `:disabled` and `:tooltip` support on action bar button ([#523](https://github.com/globalbrain/sefirot/issues/523)) ([ff124a6](https://github.com/globalbrain/sefirot/commit/ff124a6addc72a0fbd8c8270eee7ac0da5b8fe99))
+
 # [3.44.0](https://github.com/globalbrain/sefirot/compare/v3.43.0...v3.44.0) (2024-04-24)
 
 

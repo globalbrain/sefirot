@@ -248,7 +248,9 @@ const table = useTable({
       label: 'Authors',
       cell: (authors) => ({
         type: 'avatars',
-        avatars: authors
+        avatars: authors,
+        nameCount: 0,
+        tooltip: true
       })
     },
 
@@ -389,13 +391,13 @@ const selected = ref<string[]>([])
 </template>
 
 <style scoped>
-.table :deep(.col-name)      { --table-col-width: 160px; }
-.table :deep(.col-status)    { --table-col-width: 144px; }
-.table :deep(.col-authors)   { --table-col-width: 240px; }
+.table :deep(.col-name)      { --table-col-width: 144px; }
+.table :deep(.col-status)    { --table-col-width: 128px; }
+.table :deep(.col-authors)   { --table-col-width: 128px; }
 .table :deep(.col-type)      { --table-col-width: 128px; }
 .table :deep(.col-width)     { --table-col-width: 128px; }
 .table :deep(.col-tags)      { --table-col-width: 192px; }
-.table :deep(.col-createdAt) { --table-col-width: 192px; }
+.table :deep(.col-createdAt) { --table-col-width: 128px; }
 
 .table :deep(.col-actions) {
   --table-col-position: sticky;

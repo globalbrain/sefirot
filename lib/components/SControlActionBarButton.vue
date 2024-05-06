@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useControlSize } from '../composables/Control'
-import SButton from './SButton.vue'
+import SButton, { type Tooltip } from './SButton.vue'
 
 defineProps<{
   as?: string
   icon?: any
   href?: string
+  disabled?: boolean
+  tooltip?: string | Tooltip
 }>()
 
 defineEmits<{
@@ -25,6 +27,8 @@ const size = useControlSize()
       :icon="icon"
       :href="href"
       block
+      :disabled="disabled"
+      :tooltip="tooltip"
       @click="$emit('click')"
     />
   </div>

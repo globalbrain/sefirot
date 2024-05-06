@@ -24,8 +24,10 @@ export type Mode =
 
 export interface Tooltip {
   tag?: string
+  triggerTag?: string
   text?: MaybeRef<string | null>
   position?: Position
+  display?: 'inline' | 'inline-block' | 'block'
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
 }
@@ -46,7 +48,7 @@ const props = defineProps<{
   block?: boolean
   loading?: boolean
   disabled?: boolean
-  tooltip?: Tooltip
+  tooltip?: string | Tooltip
 }>()
 
 const emit = defineEmits<{
@@ -78,7 +80,10 @@ const computedTag = computed(() => {
 const slots = useSlots()
 
 const hasTooltip = computed(() => {
-  return slots['tooltip-text'] || unref(props.tooltip?.text)
+  return !!(
+    slots['tooltip-text']
+    || (typeof props.tooltip === 'object' ? unref(props.tooltip.text) : props.tooltip)
+  )
 })
 
 function handleClick(): void {
@@ -91,12 +96,12 @@ function handleClick(): void {
 <template>
   <SFragment
     :is="hasTooltip && STooltip"
-    :tag="props.tooltip?.tag"
-    :text="unref(props.tooltip?.text)"
-    :position="props.tooltip?.position"
-    display="inline-block"
-    :trigger="props.tooltip?.trigger ?? 'both'"
-    :timeout="props.tooltip?.timeout"
+    :tag="typeof tooltip === 'object' ? tooltip.tag : undefined"
+    :text="typeof tooltip === 'object' ? unref(tooltip.text) : tooltip"
+    :position="typeof tooltip === 'object' ? tooltip.position : undefined"
+    :display="typeof tooltip === 'object' ? tooltip.display ?? 'inline-block' : 'inline-block'"
+    :trigger="typeof tooltip === 'object' ? tooltip.trigger ?? 'both' : 'both'"
+    :timeout="typeof tooltip === 'object' ? tooltip.timeout : undefined"
     :tabindex="-1"
   >
     <template v-if="$slots['tooltip-text']" #text><slot name="tooltip-text" /></template>
@@ -217,7 +222,7 @@ function handleClick(): void {
   &.has-label                { padding: var(--button-padding, 0 12px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
-  .content                   { gap: 6px; }
+  .content                   { gap: 8px; }
   .icon-svg                  { width: 16px; height: 16px; }
 }
 
@@ -230,7 +235,7 @@ function handleClick(): void {
   &.has-label                { padding: var(--button-padding, 0 16px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 12px 0 10px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 10px 0 12px); }
-  .content                   { gap: 6px; }
+  .content                   { gap: 8px; }
   .icon-svg                  { width: 18px; height: 18px; }
 }
 
@@ -243,7 +248,7 @@ function handleClick(): void {
   &.has-label                { padding: var(--button-padding, 0 20px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 14px 0 12px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 12px 0 14px); }
-  .content                   { gap: 6px; }
+  .content                   { gap: 8px; }
   .icon-svg                  { width: 18px; height: 18px; }
 }
 

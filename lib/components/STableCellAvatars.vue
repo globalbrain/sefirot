@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type TableCellAvatarsOption } from '../composables/Table'
+import { type Position } from '../composables/Tooltip'
 import SAvatar from './SAvatar.vue'
 
 const props = withDefaults(defineProps<{
@@ -10,6 +11,7 @@ const props = withDefaults(defineProps<{
   color?: 'neutral' | 'soft' | 'mute'
   avatarCount?: number
   nameCount?: number
+  tooltip?: boolean | { position?: Position }
 }>(), {
   avatarCount: 2,
   nameCount: 2
@@ -61,7 +63,7 @@ const displayNames = computed(() => {
           class="avatar"
         >
           <div class="avatar-box">
-            <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" />
+            <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" :tooltip="tooltip" />
           </div>
         </div>
         <div v-if="avatarDiff > 0" class="avatar">

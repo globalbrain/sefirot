@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { type IconifyIcon } from '@iconify/vue/dist/offline'
 import { computed } from 'vue'
-import SIcon from './SIcon.vue'
-import SLink from './SLink.vue'
+import SButton, { type Tooltip } from './SButton.vue'
 
 export interface ActionListItem {
   leadIcon?: IconifyIcon
   link?: string
   label?: string
   disabled?: boolean
-  onClick?(): void
+  tooltip?: Tooltip
+  onClick?: () => void
 
   /** @deprecated Use `:label` instead. */
   text?: string
@@ -20,54 +20,36 @@ const props = defineProps<ActionListItem>()
 const _label = computed(() => {
   return props.label ?? props.text
 })
+
+const _tooltip = computed<Tooltip | undefined>(() => {
+  return props.tooltip ? { display: 'block', ...props.tooltip } : undefined
+})
 </script>
 
 <template>
-  <component
-    :is="link ? SLink : 'button'"
-    class="SActionList"
-    :href="link"
-    @click="() => onClick?.()"
-  >
-    <span v-if="leadIcon" class="lead-icon">
-      <SIcon class="lead-icon-svg" :icon="leadIcon" />
-    </span>
-    <span class="text">{{ _label }}</span>
-  </component>
+  <div class="SActionListItem">
+    <SButton
+      block
+      size="small"
+      type="text"
+      :icon="leadIcon"
+      :label="_label"
+      :href="link"
+      :disabled="disabled"
+      :tooltip="_tooltip"
+      @click="onClick"
+    />
+  </div>
 </template>
 
 <style scoped lang="postcss">
-.SActionList {
-  display: flex;
-  gap: 8px;
-  border-radius: 6px;
-  padding: 4px 8px;
-  width: 100%;
-  text-align: left;
-  line-height: 24px;
-  font-size: 14px;
-  transition: background-color 0.25s;
+.SActionListItem {
+  --button-font-size: 14px;
 
-  &:hover {
-    background-color: var(--c-bg-mute-1);
+  :deep(.SButton),
+  :slotted(.SButton) {
+    justify-content: flex-start;
+    font-weight: 400;
   }
-
-  &:active {
-    background-color: var(--c-bg-mute-2);
-    transition: background-color 0.1s;
-  }
-}
-
-.lead-icon {
-  display: flex;
-  align-items: center;
-  height: 24px;
-  flex-shrink: 0;
-  color: var(--c-text-2);
-}
-
-.lead-icon-svg {
-  width: 16px;
-  height: 16px;
 }
 </style>
