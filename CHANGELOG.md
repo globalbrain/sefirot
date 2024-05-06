@@ -1,5 +1,14 @@
 
 
+# [3.46.0](https://github.com/globalbrain/sefirot/compare/v3.45.0...v3.46.0) (2024-05-06)
+
+
+### Features
+
+* **action-list:** support showing tooltip and implement disabled prop ([#516](https://github.com/globalbrain/sefirot/issues/516)) ([7f2abd1](https://github.com/globalbrain/sefirot/commit/7f2abd15326321a55ad925a8efd49782100d2ae8)), closes [#514](https://github.com/globalbrain/sefirot/issues/514) [#515](https://github.com/globalbrain/sefirot/issues/515)
+* **button:** support passing only string as tooltip ([#524](https://github.com/globalbrain/sefirot/issues/524)) ([22e7e16](https://github.com/globalbrain/sefirot/commit/22e7e168acddbcc3fce8270f3fac9da1c6f71df3))
+* **http:** support sending files along with json ([#522](https://github.com/globalbrain/sefirot/issues/522)) ([dd75beb](https://github.com/globalbrain/sefirot/commit/dd75beb8ad3c54424625eacef3c0d416626d8f66))
+
 # [3.45.0](https://github.com/globalbrain/sefirot/compare/v3.44.0...v3.45.0) (2024-04-26)
 
 
