@@ -1,12 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import SLocalNavAvatar from './SLocalNavAvatar.vue'
+import SLocalNavDescription from './SLocalNavDescription.vue'
 import SLocalNavMenu, { type MenuItem } from './SLocalNavMenu.vue'
 import SLocalNavTitle, { type Title } from './SLocalNavTitle.vue'
 
 export type { Title, MenuItem }
 
+export interface Avatar {
+  image?: string | null
+  name?: string | null
+}
+
 const props = defineProps<{
+  avatar?: Avatar
   title: Title[]
+  description?: string
   menu?: MenuItem[][]
 }>()
 
@@ -20,7 +29,18 @@ const normalizedMenu = computed(() => {
 
 <template>
   <div class="SLocalNav" :class="{ 'has-menu': normalizedMenu }">
-    <SLocalNavTitle :title="title" />
+    <div class="title-bar">
+      <div v-if="avatar" class="title-bar-avatar">
+        <SLocalNavAvatar
+          :image="avatar.image"
+          :name="avatar.name"
+        />
+      </div>
+      <div class="title-bar-body">
+        <SLocalNavTitle :title="title" />
+        <SLocalNavDescription v-if="description" :text="description" />
+      </div>
+    </div>
     <SLocalNavMenu v-if="normalizedMenu" :menu="normalizedMenu" />
   </div>
 </template>
@@ -29,7 +49,7 @@ const normalizedMenu = computed(() => {
 .SLocalNav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   padding: 16px 24px;
   background-color: var(--c-bg-elv-2);
 
@@ -44,5 +64,11 @@ const normalizedMenu = computed(() => {
   @media (min-width: 768px) {
     padding-bottom: 0;
   }
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 </style>
