@@ -72,6 +72,17 @@ const menu = [
 
 ## Types
 
+### `Avatar`
+
+The type of the `:avatar` prop.
+
+```ts
+interface Avatar {
+  image?: string | null
+  name?: string | null
+}
+```
+
 ### `Title`
 
 The type of the `:title` prop.
@@ -102,9 +113,25 @@ interface MenuItem {
 
 ```ts
 interface Props {
+  avatar?: Avatar
   title: Title[]
+  description?: string
   menu?: MenuItem[][]
 }
+```
+
+### `:avatar`
+
+Add avatar image to the local nav.
+
+```ts
+interface Props {
+  avatar?: Avatar
+}
+```
+
+```vue-html
+<SLocalNav :title="[{ text: 'Page title' }]" />
 ```
 
 ### `:title`
@@ -118,7 +145,27 @@ interface Props {
 ```
 
 ```vue-html
-<SLocalNav :title="[{ text: 'Page title' }]" />
+<SLocalNav
+  :avatar="{ image: 'path/to/image.jpg', name: 'John Doe' }"
+  :title="[{ text: 'Page title' }]"
+/>
+```
+
+### `description`
+
+Add description text under the title.
+
+```ts
+interface Props {
+  description?: string
+}
+```
+
+```vue-html
+<SLocalNav
+  :title="[{ text: 'Page title' }]"
+  description="Lorem ipsum..."
+/>
 ```
 
 ### `:menu`
@@ -132,5 +179,11 @@ interface Props {
 ```
 
 ```vue-html
-<SLocalNav :title="[{ text: 'Page title' }]" />
+<SLocalNav
+  :title="[{ text: 'Page title' }]"
+  :menu="[
+    { text: 'Menu item 1', link: '/menu1' },
+    { text: 'Menu item 2', link: '/menu2' }
+  ]"
+/>
 ```
