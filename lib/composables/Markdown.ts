@@ -1,11 +1,11 @@
-import MarkdownIt from 'markdown-it'
+import MarkdownIt, { type Options as MarkdownItOptions } from 'markdown-it'
 import { type Ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { type LinkAttrs, isCallbackUrl, isExternalUrl, linkPlugin } from './markdown/LinkPlugin'
 
 export type UseMarkdown = (source: string, inline: boolean) => string
 
-export interface UseMarkdownOptions extends MarkdownIt.Options {
+export interface UseMarkdownOptions extends MarkdownItOptions {
   linkAttrs?: LinkAttrs
   config?: (md: MarkdownIt) => void
 }
