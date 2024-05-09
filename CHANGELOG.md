@@ -1,5 +1,17 @@
 
 
+# [3.47.0](https://github.com/globalbrain/sefirot/compare/v3.46.0...v3.47.0) (2024-05-09)
+
+
+### Bug Fixes
+
+* **types:** fix broken markdown-it import with ESM resolution ([#529](https://github.com/globalbrain/sefirot/issues/529)) ([6f11f7c](https://github.com/globalbrain/sefirot/commit/6f11f7cc8f6db4c1e159e37c83ab225e404b4343))
+
+
+### Features
+
+* **local-nav:** add `:avatar` and `:description` ([#526](https://github.com/globalbrain/sefirot/issues/526)) ([#527](https://github.com/globalbrain/sefirot/issues/527)) ([44be8d3](https://github.com/globalbrain/sefirot/commit/44be8d34d6cdec4a26110ea1276acc5322cfab13))
+
 # [3.46.0](https://github.com/globalbrain/sefirot/compare/v3.45.0...v3.46.0) (2024-05-06)
 
 
