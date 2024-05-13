@@ -206,6 +206,8 @@ export function useErrorHandler({
       }
 
       resetTracking()
+    } else {
+      console.error(e)
     }
   }
 }
