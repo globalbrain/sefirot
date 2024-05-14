@@ -1,7 +1,7 @@
 {
   "name": "@globalbrain/sefirot",
   "version": "3.47.0",
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@9.1.1",
   "description": "Vue Components for Global Brain Design System.",
   "author": "Kia Ishii <ka.ishii@globalbrains.com>",
   "license": "MIT",
@@ -64,7 +64,7 @@
     "vue-router": "^4.3.2"
   },
   "dependencies": {
-    "@sentry/browser": "^8.0.0-rc.2",
+    "@sentry/browser": "^8.0.0",
     "@tanstack/vue-virtual": "3.0.0-beta.62",
     "@tinyhttp/content-disposition": "^2.2.0",
     "@tinyhttp/cookie": "^2.1.0",
@@ -97,7 +97,7 @@
     "body-scroll-lock": "4.0.0-beta.0",
     "eslint": "^8.57.0",
     "fuse.js": "^7.0.0",
-    "happy-dom": "^14.10.1",
+    "happy-dom": "^14.10.2",
     "histoire": "0.16.5",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
