@@ -1,5 +1,12 @@
 
 
+## [3.47.1](https://github.com/globalbrain/sefirot/compare/v3.47.0...v3.47.1) (2024-05-14)
+
+
+### Bug Fixes
+
+* **error:** manually log error when sentry is disabled ([#530](https://github.com/globalbrain/sefirot/issues/530)) ([7220745](https://github.com/globalbrain/sefirot/commit/72207453cfc56f5757512b4f8b40cbfb968a0813))
+
 # [3.47.0](https://github.com/globalbrain/sefirot/compare/v3.46.0...v3.47.0) (2024-05-09)
 
 
