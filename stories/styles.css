@@ -28,6 +28,10 @@ body {
   font-feature-settings: "tnum";
 }
 
+div.htw-h-fit:has(> div.bind-preview-bg) {
+  height: fit-content !important;
+}
+
 .leading-20 { line-height: 20px; }
 .leading-24 { line-height: 24px; }
 
