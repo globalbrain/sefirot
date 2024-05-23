@@ -185,7 +185,9 @@ type Color =
 
 ### `:rows`
 
-Defines the height of the input. The default is `3`. If you pass `'fill'`, the input will fill the available space defined by the parent container.
+Defines the height of the input. The default is `3`.
+
+If you pass `'fill'`, the input will fill the available space defined by the parent container. Setting this to `'fill'` needs `display: flex` on the parent container.
 
 ```ts
 interface Props {
@@ -195,6 +197,22 @@ interface Props {
 
 ```vue-html
 <SInputTextarea :rows="8" v-model="..." />
+```
+
+### `:auto-resize`
+
+Automatically resize the height of the input based on the content. The default is `false`. `:rows` option will be ignored when this prop is set.
+
+If you pass a number, it will be the maximum number of rows before it starts to scroll. If you pass `true`, no maximum height will be set. [Can I Use?](https://caniuse.com/mdn-css_properties_field-sizing_content)
+
+```ts
+interface Props {
+  autoResize?: boolean | number
+}
+```
+
+```vue-html
+<SInputTextarea :auto-resize="10" v-model="..." />
 ```
 
 ### `:disabled`

@@ -51,7 +51,7 @@ const classes = computed(() => [
 
 const style = computed(() => {
   return props.autoResize
-    ? `field-sizing: content; max-height: ${props.autoResize === true ? 10 : props.autoResize}lh;`
+    ? `field-sizing:content;${props.autoResize === true ? '' : `max-height:${props.autoResize}lh;`}`
     : undefined
 })
 
@@ -104,7 +104,7 @@ const isPreview = ref(false)
         class="input"
         :style="style"
         :placeholder="placeholder"
-        :rows="rows ?? 3"
+        :rows="(!rows || rows === 'fill') ? 3 : rows"
         :disabled="disabled"
         :value="_value ?? undefined"
         @input="emitInput"
@@ -212,12 +212,6 @@ const isPreview = ref(false)
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 100%;
-
-  .input,
-  .prose {
-    height: 100%;
-  }
 }
 
 .SInputTextarea.disabled {
