@@ -21,6 +21,7 @@ const props = defineProps<{
   placeholder?: string
   disabled?: boolean
   rows?: number | 'fill'
+  autoResize?: boolean | number
   value?: string | null
   modelValue?: string | null
   hideError?: boolean
@@ -47,6 +48,12 @@ const classes = computed(() => [
   { disabled: props.disabled },
   { fill: props.rows === 'fill' }
 ])
+
+const style = computed(() => {
+  return props.autoResize
+    ? `field-sizing: content; max-height: ${props.autoResize === true ? 10 : props.autoResize}lh;`
+    : undefined
+})
 
 function emitInput(e: Event): void {
   const v = (e.target as HTMLInputElement).value || null
@@ -95,6 +102,7 @@ const isPreview = ref(false)
         v-show="!isPreview"
         :id="name"
         class="input"
+        :style="style"
         :placeholder="placeholder"
         :rows="rows ?? 3"
         :disabled="disabled"
