@@ -8,7 +8,7 @@ import SInputSegments from './SInputSegments.vue'
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: Size
   name?: string
   label?: string
@@ -21,6 +21,7 @@ const props = defineProps<{
   placeholder?: string
   disabled?: boolean
   rows?: number | 'fill'
+  autoResize?: boolean | number
   value?: string | null
   modelValue?: string | null
   hideError?: boolean
@@ -28,13 +29,22 @@ const props = defineProps<{
   preview?: (value: string | null) => string
   previewLabel?: string
   writeLabel?: string
-}>()
+}>(), {
+  size: 'small',
+  rows: 3
+})
 
 const emit = defineEmits<{
   (e: 'update:model-value', value: string | null): void
   (e: 'input', value: string | null): void
   (e: 'blur', value: string | null): void
 }>()
+
+const sizePaddingYDict = {
+  mini: 12,
+  small: 14,
+  medium: 22
+}
 
 const _value = computed(() => {
   return props.modelValue !== undefined
@@ -43,10 +53,25 @@ const _value = computed(() => {
 })
 
 const classes = computed(() => [
-  props.size ?? 'small',
+  props.size,
   { disabled: props.disabled },
   { fill: props.rows === 'fill' }
 ])
+
+const style = computed(() => {
+  if (!props.autoResize) {
+    return undefined
+  }
+
+  const rows = props.rows === 'fill' ? 3 : props.rows
+  const padding = sizePaddingYDict[props.size]
+  const fontSize = 24
+
+  const minHeight = `min-height: ${rows * fontSize + padding}px;`
+  const maxHeight = props.autoResize === true ? '' : `max-height: calc(${props.autoResize}lh + ${padding}px);`
+
+  return `field-sizing:content;${minHeight}${maxHeight}`
+})
 
 function emitInput(e: Event): void {
   const v = (e.target as HTMLInputElement).value || null
@@ -95,8 +120,9 @@ const isPreview = ref(false)
         v-show="!isPreview"
         :id="name"
         class="input"
+        :style="style"
         :placeholder="placeholder"
-        :rows="rows ?? 3"
+        :rows="rows === 'fill' ? 3 : rows"
         :disabled="disabled"
         :value="_value ?? undefined"
         @input="emitInput"
@@ -172,7 +198,7 @@ const isPreview = ref(false)
   .prose {
     padding: 6px 10px;
     width: 100%;
-    min-height: 80px;
+    min-height: 30px;
     line-height: 20px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
@@ -183,7 +209,7 @@ const isPreview = ref(false)
   .prose {
     padding: 7px 12px;
     width: 100%;
-    min-height: 96px;
+    min-height: 38px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
@@ -194,7 +220,7 @@ const isPreview = ref(false)
   .prose {
     padding: 11px 16px;
     width: 100%;
-    min-height: 96px;
+    min-height: 46px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
@@ -204,12 +230,6 @@ const isPreview = ref(false)
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 100%;
-
-  .input,
-  .prose {
-    height: 100%;
-  }
 }
 
 .SInputTextarea.disabled {

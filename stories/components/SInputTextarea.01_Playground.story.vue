@@ -17,7 +17,8 @@ function state() {
     help: 'This is a help text.',
     rows: 5,
     disabled: false,
-    error: false
+    error: false,
+    autoResize: 0
   }
 }
 </script>
@@ -58,6 +59,10 @@ function state() {
         title="rows"
         v-model="state.rows"
       />
+      <HstNumber
+        title="autoResize"
+        v-model="state.autoResize"
+      />
       <HstCheckbox
         title="disabled"
         v-model="state.disabled"
@@ -79,6 +84,7 @@ function state() {
           :help="state.help"
           :placeholder="state.placeholder"
           :rows="state.rows"
+          :auto-resize="state.autoResize"
           :disabled="state.disabled"
           v-model="text"
         />
