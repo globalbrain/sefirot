@@ -201,9 +201,11 @@ interface Props {
 
 ### `:auto-resize`
 
-Automatically resize the height of the input based on the content. The default is `false`. `:rows` option will be ignored when this prop is set.
+Automatically resize the height of the input based on the content. The default is `false`.
 
-If you pass a number, it will be the maximum number of rows before it starts to scroll. If you pass `true`, no maximum height will be set. [Can I Use?](https://caniuse.com/mdn-css_properties_field-sizing_content)
+When this props is set, the `:rows` will be treated as `min-height`. For example, `:rows="5"` will set the minimum height of the input to 5 rows, and auto resize from there based on the content.
+
+If you pass a number, it will be the maximum number of rows before it starts to scroll. If you pass `true`, no maximum height will be set. This feature uses [`field-sizing`](https://caniuse.com/mdn-css_properties_field-sizing_content) CSS property.
 
 ```ts
 interface Props {
