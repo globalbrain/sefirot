@@ -67,11 +67,11 @@ const stateIconDict = {
 .SIndicator.jumbo  { width: 48px; height: 48px; }
 
 .SIndicator.queued {
-  animation: indicator-blink 1s linear infinite;
+  animation: indicator-blink 1.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
 }
 
 .SIndicator.running {
-  animation: indicator-spin 1s linear infinite;
+  animation: indicator-spin 1.5s linear infinite;
 }
 
 .SIndicator.colored {
