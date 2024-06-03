@@ -11,7 +11,7 @@ const states = [
   'running',
   'completed',
   'failed'
-]
+] as const
 
 function state() {
   return {
