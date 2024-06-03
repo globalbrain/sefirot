@@ -83,6 +83,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SFragment', link: '/components/fragment' },
         { text: 'SGrid', link: '/components/grid' },
         { text: 'SHead', link: '/components/head' },
+        { text: 'SIndicator', link: '/components/indicator' },
         { text: 'SInputAddon', link: '/components/input-addon' },
         { text: 'SInputCheckbox', link: '/components/input-checkbox' },
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
