@@ -1,8 +1,9 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/76c9c742e9b045d1342f5952866972498e59f00b/packages/runtime-core/src/component.ts
- * @see https://github.com/vuejs/core/blob/bc37258caa2f6f67f4554ab8587aca3798d92124/packages/runtime-core/src/warning.ts
+ * @see https://github.com/vuejs/core/blob/8d606c44ece5a9940ede05513f844f698d082589/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/cdb1d1795d21591659e2560e201ee4fbf1ea4aca/packages/runtime-core/src/warning.ts
  * @see https://github.com/getsentry/sentry-javascript/blob/2cfb0ef3fa5c40f90c317267a4d10b969994d021/packages/vue/src/errorhandler.ts
+ * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts#L12
  *
  * Original licenses:
  *
@@ -11,6 +12,9 @@
  *
  * (c) 2019 Sentry (https://sentry.io) and individual contributors
  * @license MIT
+ *
+ * (c) 2023 Vercel, Inc.
+ * @license Apache-2.0
  */
 
 import * as Sentry from '@sentry/browser'
@@ -136,6 +140,12 @@ function formatProps(props: Record<string, unknown>): string {
     .join(' ')
 }
 
+const ignoreErrors = [
+  /Network Error/,
+  /Non-Error (?:exception|promise rejection) captured/,
+  /ResizeObserver loop/
+]
+
 export function useErrorHandler({
   dsn,
   environment,
@@ -147,6 +157,14 @@ export function useErrorHandler({
 }) {
   const error = useError()
 
+  function set(value: any) {
+    const message = getErrorMessage(value)
+    if (ignoreErrors.some((ignore) => ignore.test(message))) {
+      return
+    }
+    error.set(value)
+  }
+
   const enabled = !!dsn && import.meta.env.PROD
 
   // No need to manually report these errors as they are automatically
@@ -154,22 +172,15 @@ export function useErrorHandler({
   // onMounted because it's not available outside component lifecycle.
   if (typeof document !== 'undefined') {
     addEventListener('error', (event) => {
-      error.set(event.error)
+      set(event.error)
     })
     addEventListener('unhandledrejection', (event) => {
-      error.set(event.reason)
+      set(event.reason)
     })
   }
 
   if (enabled) {
-    Sentry.init({
-      dsn,
-      environment,
-      ignoreErrors: [
-        'ResizeObserver loop limit exceeded',
-        'ResizeObserver loop completed with undelivered notifications'
-      ]
-    })
+    Sentry.init({ dsn, environment, ignoreErrors })
   }
 
   return function errorHandler(
@@ -177,7 +188,7 @@ export function useErrorHandler({
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
-    error.set(e)
+    set(e)
 
     if (enabled) {
       pauseTracking()
@@ -210,4 +221,20 @@ export function useErrorHandler({
       console.error(e)
     }
   }
+}
+
+function getErrorMessage(error: unknown | undefined) {
+  if (error == null) {
+    return 'unknown error'
+  }
+
+  if (typeof error === 'string') {
+    return error
+  }
+
+  if (error instanceof Error) {
+    return error.message
+  }
+
+  return JSON.stringify(error)
 }
