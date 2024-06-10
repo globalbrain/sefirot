@@ -1,5 +1,18 @@
 
 
+# [3.48.0](https://github.com/globalbrain/sefirot/compare/v3.47.1...v3.48.0) (2024-06-10)
+
+
+### Bug Fixes
+
+* **error:** don't set error in store if it's ignored ([#535](https://github.com/globalbrain/sefirot/issues/535)) ([91bc2d9](https://github.com/globalbrain/sefirot/commit/91bc2d9a7fcf5198fb9c165406ca2a2eb4168e46))
+
+
+### Features
+
+* **indicator:** add `<SIndicator>` component ([#533](https://github.com/globalbrain/sefirot/issues/533)) ([#534](https://github.com/globalbrain/sefirot/issues/534)) ([48d8626](https://github.com/globalbrain/sefirot/commit/48d8626a71159159b70e2010b6fcdd3174136138))
+* **input-textarea:** allow enabling auto resizing of textarea on supported browsers ([#531](https://github.com/globalbrain/sefirot/issues/531)) ([8551a86](https://github.com/globalbrain/sefirot/commit/8551a86050ea58fb4a36484df88ddbe07df45e3a))
+
 ## [3.47.1](https://github.com/globalbrain/sefirot/compare/v3.47.0...v3.47.1) (2024-05-14)
 
 
