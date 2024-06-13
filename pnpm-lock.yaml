@@ -26,9 +26,6 @@ importers:
       '@types/qs':
         specifier: ^6.9.15
         version: 6.9.15
-      dayjs:
-        specifier: ^1.11.11
-        version: 1.11.11
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -96,6 +93,9 @@ importers:
       body-scroll-lock:
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0
+      dayjs:
+        specifier: ^1.11.11
+        version: 1.11.11
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -8400,7 +8400,7 @@ snapshots:
 
   semver-diff@4.0.0:
     dependencies:
-      semver: 7.6.0
+      semver: 7.6.2
 
   semver@5.7.2: {}
 
