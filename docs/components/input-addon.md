@@ -63,10 +63,8 @@ Here are the list of props you may pass to the component.
 Defines the label of the addon button.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  label?: string | IconifyIcon
+  label?: string | Icon
 }
 ```
 

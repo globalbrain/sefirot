@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import SIcon from './SIcon.vue'
+import { type Component, computed } from 'vue'
 import SLink from './SLink.vue'
 
 export type Color =
@@ -17,7 +16,7 @@ const props = defineProps<{
   value?: any
   record: any
   align?: 'left' | 'center' | 'right'
-  icon?: any
+  icon?: Component
   getter?: string | null | ((value: any, record: any) => string | null)
   color?: Color | ((value: any, record: any) => Color)
   iconColor?: Color | ((value: any, record: any) => Color)
@@ -64,7 +63,7 @@ const _iconColor = computed(() => {
       @click="() => onClick?.(value, record)"
     >
       <div v-if="icon" class="icon" :class="[_iconColor ?? _color]">
-        <SIcon :icon="icon" class="svg" />
+        <component :is="icon" class="svg" />
       </div>
       <div class="text" :class="[_color]">
         {{ _value }}

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
+import { type Component } from 'vue'
 import SButton, { type Tooltip } from './SButton.vue'
 
 defineProps<{
-  icon: IconifyIcon
+  icon: Component
   disabled?: boolean
   tooltip?: string | Tooltip
 }>()

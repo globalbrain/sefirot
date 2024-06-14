@@ -1,4 +1,3 @@
-import IconX from '@iconify-icons/ph/x-bold'
 import { mount } from '@vue/test-utils'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
@@ -13,6 +12,7 @@ import SCardHeaderActions from 'sefirot/components/SCardHeaderActions.vue'
 import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
 import { assertEmitted } from 'tests/Utils'
 import { h } from 'vue'
+import IconX from '~icons/ph/x-bold'
 
 describe('components/SCard', () => {
   describe('SCard', () => {

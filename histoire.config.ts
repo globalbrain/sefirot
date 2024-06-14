@@ -1,5 +1,6 @@
 import { HstVue } from '@histoire/plugin-vue'
 import { defaultColors, defineConfig } from 'histoire'
+import Icons from 'unplugin-icons/vite'
 
 function getDocsHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -10,7 +11,8 @@ function getDocsHost(): string {
 
 export default defineConfig({
   plugins: [
-    HstVue()
+    HstVue() as any, // broken types
+    Icons()
   ],
 
   setupFile: 'stories/histoire.setup.ts',

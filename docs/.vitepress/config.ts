@@ -1,3 +1,4 @@
+import Icons from 'unplugin-icons/vite'
 import { defineConfig, type DefaultTheme } from 'vitepress'
 
 function getStoryHost(): string {
@@ -16,6 +17,7 @@ export default defineConfig({
   lastUpdated: true,
 
   vite: {
+    plugins: [Icons()],
     resolve: {
       alias: {
         'sefirot/': new URL('../../lib/', import.meta.url).pathname

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import SButton, { type Tooltip } from './SButton.vue'
 
 export interface ActionListItem {
-  leadIcon?: IconifyIcon
+  leadIcon?: Component
   link?: string
   label?: string
   disabled?: boolean

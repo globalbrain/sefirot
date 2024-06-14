@@ -6,8 +6,7 @@
     Nullable extends boolean = false
   "
 >
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/V'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -32,7 +31,7 @@ const props = withDefaults(defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   options: Option<ValueType>[]

@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import IconCheck from '@iconify-icons/ph/check'
 import Fuse from 'fuse.js'
 import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
 import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
 import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
-import SIcon from './SIcon.vue'
+import IconCheck from '~icons/ph/check'
 
 const props = defineProps<{
   search?: boolean
@@ -87,7 +86,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
         >
           <span v-if="isArray(unref(selected))" class="checkbox">
             <span class="checkbox-box">
-              <SIcon :icon="IconCheck" class="checkbox-icon" />
+              <IconCheck class="checkbox-icon" />
             </span>
           </span>
           <span v-else class="radio">

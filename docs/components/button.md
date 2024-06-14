@@ -152,19 +152,17 @@ type Mode =
 
 ### `:icon`
 
-Prepend the given icon to the button. You may pass any `@iconify-icons` icons.
+Prepend the given icon to the button. You may pass any Iconify icons.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  icon?: IconifyIcon
+  icon?: Component
 }
 ```
 
 ```vue
 <script setup lang="ts">
-import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
+import IconCheckCircle from '~icons/ph/check-circle-bold'
 </script>
 
 <template>
@@ -195,7 +193,7 @@ type Mode =
 
 ```vue
 <script setup lang="ts">
-import IconCheckCircle from '@iconify-icons/ph/check-circle-bold'
+import IconCheckCircle from '~icons/ph/check-circle-bold'
 </script>
 
 <template>

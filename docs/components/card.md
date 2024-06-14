@@ -157,10 +157,8 @@ You may use `<SCardHeaderActions>` with nested `<SCardHeaderAction>` to add head
 It uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  icon: IconifyIcon
+  icon: Component
   disabled?: boolean
   tooltip?: string | Tooltip
 }

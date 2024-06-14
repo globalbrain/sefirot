@@ -1,16 +1,22 @@
 /// <reference lib="esnext" />
+/// <reference types="vitest" />
 
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vitest/config'
+import Vue from '@vitejs/plugin-vue'
+import Icons from 'unplugin-icons/vite'
+import { defineConfig } from 'vite'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [Vue(), Icons()],
 
   resolve: {
     alias: {
       'sefirot/': new URL('./lib/', import.meta.url).pathname,
       'tests/': new URL('./tests/', import.meta.url).pathname
     }
+  },
+
+  ssr: {
+    noExternal: [/sentry/]
   },
 
   test: {

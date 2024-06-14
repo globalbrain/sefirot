@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
-import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
-import { type DefineComponent, computed, ref } from 'vue'
+import { type Component, computed, ref } from 'vue'
 import { type Validatable } from '../composables/V'
-import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
+import IconCaretDown from '~icons/ph/caret-down-bold'
+import IconCaretUp from '~icons/ph/caret-up-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
@@ -24,7 +22,7 @@ const props = withDefaults(defineProps<{
   note?: string
   help?: string
   placeholder?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   options: Option[]
@@ -124,8 +122,8 @@ function emitChange(e: any): void {
       </select>
 
       <div class="icon" role="button">
-        <SIcon :icon="IconCaretUp" class="icon-svg up" />
-        <SIcon :icon="IconCaretDown" class="icon-svg down" />
+        <IconCaretUp class="icon-svg up" />
+        <IconCaretDown class="icon-svg down" />
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>

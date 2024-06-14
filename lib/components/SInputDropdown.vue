@@ -1,17 +1,15 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
-import IconCaretUp from '@iconify-icons/ph/caret-up-bold'
 import xor from 'lodash-es/xor'
-import { type DefineComponent, computed, ref } from 'vue'
+import { type Component, computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { type Validatable } from '../composables/V'
 import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
-import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
+import IconCaretDown from '~icons/ph/caret-down-bold'
+import IconCaretUp from '~icons/ph/caret-up-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
@@ -46,7 +44,7 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   options: Option[]
@@ -174,8 +172,8 @@ function handleArray(value: OptionValue) {
         </div>
 
         <div class="box-icon">
-          <SIcon :icon="IconCaretUp" class="box-icon-svg up" />
-          <SIcon :icon="IconCaretDown" class="box-icon-svg down" />
+          <IconCaretUp class="box-icon-svg up" />
+          <IconCaretDown class="box-icon-svg down" />
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/V'
 import SInputBase from './SInputBase.vue'
 
@@ -17,7 +16,7 @@ const props = withDefaults(defineProps<{
   text?: string
   color?: ActiveColor
   help?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   disabled?: boolean

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x-bold'
 import SButton, { type Tooltip } from './SButton.vue'
+import IconX from '~icons/ph/x-bold'
 
 defineProps<{
   disabled?: boolean

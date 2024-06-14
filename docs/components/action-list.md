@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import IconActivity from '@iconify-icons/ph/activity-bold'
-import IconEye from '@iconify-icons/ph/eye-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
+import IconActivity from '~icons/ph/activity-bold'
+import IconEye from '~icons/ph/eye-bold'
+import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
 
 const list: ActionList = [
@@ -28,9 +28,9 @@ const list: ActionList = [
 
 ```vue
 <script setup lang="ts">
-import IconActivity from '@iconify-icons/ph/activity-bold'
-import IconEye from '@iconify-icons/ph/eye-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
+import IconActivity from '~icons/ph/activity-bold'
+import IconEye from '~icons/ph/eye-bold'
+import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from '@globalbrain/sefirot/lib/components/SActionList.vue'
 
 const list: ActionList = [
@@ -52,8 +52,6 @@ const list: ActionList = [
 The options to be listed.
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
   list?: ActionList
 }
@@ -62,7 +60,7 @@ type ActionList = ActionListItem[]
 
 interface ActionListItem {
   // The icon to be displayed on the left side of the text.
-  leadIcon?: IconifyIcon
+  leadIcon?: Component
 
   // The text to be displayed.
   text: string
@@ -125,10 +123,8 @@ type ActionList = ActionListItem[]
 The type of action list item. See `:list` for the details.
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface ActionListItem {
-  leadIcon?: IconifyIcon
+  leadIcon?: Component
   text: string
   link?: string
   onClick?(): void

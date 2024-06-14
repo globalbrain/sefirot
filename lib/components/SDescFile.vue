@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import IconDownloadSimple from '@iconify-icons/ph/download-simple-bold'
-import IconFileText from '@iconify-icons/ph/file-text-bold'
 import { computed } from 'vue'
 import { isArray } from '../support/Utils'
 import SButton from './SButton.vue'
 import SDescEmpty from './SDescEmpty.vue'
-import SIcon from './SIcon.vue'
+import IconDownloadSimple from '~icons/ph/download-simple-bold'
+import IconFileText from '~icons/ph/file-text-bold'
 
 export interface Item {
   name: string
@@ -28,7 +27,7 @@ const items = computed(() => {
     <div class="value">
       <div v-for="item, index in items" :key="index" class="item">
         <div class="data">
-          <div class="icon"><SIcon class="icon-svg" :icon="IconFileText" /></div>
+          <div class="icon"><IconFileText class="icon-svg" /></div>
           <div class="name">{{ item.name }}</div>
         </div>
         <div class="actions">

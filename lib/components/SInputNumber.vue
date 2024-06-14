@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/V'
 import { isNullish, isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
@@ -20,7 +19,7 @@ const props = defineProps<{
   placeholder?: string
   unitBefore?: any
   unitAfter?: any
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   textColor?: TextColor | ((value: number | null) => TextColor)

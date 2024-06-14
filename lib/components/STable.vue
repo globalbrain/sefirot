@@ -98,7 +98,7 @@ const showFooter = computed(() => {
     return footer
   }
 
-  return (
+  return !!(
     unref(props.options.page)
     && unref(props.options.perPage)
     && unref(props.options.total)

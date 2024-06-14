@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed, ref } from 'vue'
+import { type Component, computed, ref } from 'vue'
 import { type Validatable } from '../composables/V'
 import { isString } from '../support/Utils'
-import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
 
 export interface Props {
@@ -15,9 +13,9 @@ export interface Props {
   help?: string
   type?: string
   placeholder?: string
-  unitBefore?: any
-  unitAfter?: any
-  checkIcon?: IconifyIcon | DefineComponent
+  unitBefore?: Component | string
+  unitAfter?: Component | string
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   textColor?: TextColor | ((value: string | null) => TextColor)
@@ -137,7 +135,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
       <div class="value">
         <div v-if="unitBefore" class="unit before">
           <span v-if="isString(unitBefore)" class="unit-text">{{ unitBefore }}</span>
-          <SIcon v-else class="unit-icon" :icon="unitBefore" />
+          <component v-else :is="unitBefore" class="unit-icon" />
         </div>
 
         <div class="area">
@@ -162,7 +160,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
         <div v-if="unitAfter" class="unit after">
           <span v-if="isString(unitAfter)" class="unit-text">{{ unitAfter }}</span>
-          <SIcon v-else class="unit-icon" :icon="unitAfter" />
+          <component v-else :is="unitAfter" class="unit-icon" />
         </div>
       </div>
 

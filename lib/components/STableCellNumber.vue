@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type TableCellValueColor } from '../composables/Table'
 import { format } from '../support/Num'
-import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
 const props = defineProps<{
   value?: any
   record?: any
   align?: 'left' | 'center' | 'right'
-  icon?: any
+  icon?: Component
   getter?: number | null
   separator?: boolean
   color?: TableCellValueColor
@@ -25,7 +24,7 @@ const _iconColor = computed(() => props.iconColor ?? _color.value)
 const classes = computed(() => [
   props.align ?? 'left',
   _color,
-  { link: props.link || props.onClick }
+  { link: !!(props.link || props.onClick) }
 ])
 </script>
 
@@ -39,7 +38,7 @@ const classes = computed(() => [
       @click="() => onClick?.(value, record)"
     >
       <div v-if="icon" class="icon" :class="[_iconColor]">
-        <SIcon :icon="icon" class="svg" />
+        <component :is="icon" class="svg" />
       </div>
       <div class="value" :class="[_color ?? 'neutral']">
         {{ separator ? format(_value) : _value }}

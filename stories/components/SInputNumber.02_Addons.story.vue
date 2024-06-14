@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IconDotsThree from '@iconify-icons/ph/dots-three-bold'
-import IconLightbulb from '@iconify-icons/ph/lightbulb-bold'
 import SInputAddon from 'sefirot/components/SInputAddon.vue'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { reactive, ref } from 'vue'
+import IconDotsThree from '~icons/ph/dots-three-bold'
+import IconLightbulb from '~icons/ph/lightbulb-bold'
 
 const title = 'Components / SInputNumber / 02. Addons'
 const docs = '/components/input-number'
