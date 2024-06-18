@@ -9,16 +9,9 @@ export interface ActionListItem {
   disabled?: boolean
   tooltip?: Tooltip
   onClick?: () => void
-
-  /** @deprecated Use `:label` instead. */
-  text?: string
 }
 
 const props = defineProps<ActionListItem>()
-
-const _label = computed(() => {
-  return props.label ?? props.text
-})
 
 const _tooltip = computed<Tooltip | undefined>(() => {
   return props.tooltip ? { display: 'block', ...props.tooltip } : undefined
@@ -32,7 +25,7 @@ const _tooltip = computed<Tooltip | undefined>(() => {
       size="small"
       type="text"
       :icon="leadIcon"
-      :label="_label"
+      :label="label"
       :href="link"
       :disabled="disabled"
       :tooltip="_tooltip"

@@ -12,9 +12,6 @@ const props = defineProps<{
   mode?: Mode
   label?: string
   clickable?: boolean
-
-  // @deprecated Use `as` instead.
-  tag?: string
 }>()
 
 const emit = defineEmits<{
@@ -29,8 +26,7 @@ const classes = computed(() => [
 ])
 
 const computedTag = computed(() => {
-  const as = props.as ?? props.tag
-  return as || (props.clickable ? 'button' : 'span')
+  return props.as || (props.clickable ? 'button' : 'span')
 })
 
 function onClick() {

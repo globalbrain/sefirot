@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SCardFooter from 'sefirot/components/SCardFooter.vue'
@@ -26,8 +26,8 @@ import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
           <SCardHeaderActionClose />
         </SCardHeaderActions>
       </SCardHeader>
-      <SCardBlock space="compact">
-        <p class="m-0 text-14">
+      <SCardBlock>
+        <p class="py-8 px-24 text-14">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -36,8 +36,8 @@ import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
       </SCardBlock>
       <SCardFooter>
         <SCardFooterActions>
-          <SCardFooterAction label="Cancel" />
-          <SCardFooterAction mode="info" label="Submit" />
+          <SCardFooterAction label="Cancel" size="small" />
+          <SCardFooterAction mode="info" label="Submit" size="small" />
         </SCardFooterActions>
       </SCardFooter>
     </SCard>
@@ -304,4 +304,4 @@ interface Props {
 </SCard>
 ```
 
-It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions.
+It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions. -->

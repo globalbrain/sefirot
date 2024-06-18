@@ -18,11 +18,6 @@ export interface Table<
   rowSize?: MaybeRef<number | undefined>
   borderless?: MaybeRef<boolean>
   disableSelection?: (record: R) => boolean
-
-  /**
-   * @deprecated Use `<SControl>` to add equivalent features.
-   */
-  actions?: MaybeRef<TableHeaderAction[]>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>

@@ -1,6 +1,6 @@
 import { HstVue } from '@histoire/plugin-vue'
 import { defaultColors, defineConfig } from 'histoire'
-import Icons from 'unplugin-icons/vite'
+import baseConfig from './config'
 
 function getDocsHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -10,33 +10,16 @@ function getDocsHost(): string {
 }
 
 export default defineConfig({
-  plugins: [
-    HstVue() as any, // broken types
-    Icons()
-  ],
-
+  plugins: [HstVue()],
   setupFile: 'stories/histoire.setup.ts',
 
-  theme: {
-    title: 'Sefirot',
-    colors: {
-      primary: defaultColors.neutral
-    }
-  },
-
+  theme: { title: 'Sefirot', colors: { primary: defaultColors.neutral } },
   backgroundPresets: [
     { label: 'Transparent', color: 'transparent' },
     { label: 'Light', color: '#fafafa' },
     { label: 'Dark', color: '#191919' }
   ],
 
-  defaultStoryProps: {
-    autoPropsDisabled: true
-  },
-
-  vite: {
-    define: {
-      __DOCS_HOST__: JSON.stringify(getDocsHost())
-    }
-  }
+  defaultStoryProps: { autoPropsDisabled: true },
+  vite: { ...baseConfig, define: { __DOCS_HOST__: JSON.stringify(getDocsHost()) } }
 })

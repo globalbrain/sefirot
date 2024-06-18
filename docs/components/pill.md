@@ -141,20 +141,6 @@ interface Props {
 <SPill label="Button" clickable />
 ```
 
-### `:tag`
-
-::: warning Deprecated
-`:tag` is deprectated. Use `:as` instead.
-:::
-
-Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
-
-```ts
-interface Props {
-  tag?: string
-}
-```
-
 ```vue-html
 <SPill tag="div" label="Pill" />
 ```

@@ -2,7 +2,8 @@
 import SButton from 'sefirot/components/SButton.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
 import SSpinner from 'sefirot/components/SSpinner.vue'
-import { useForm } from 'sefirot/composables/Form'
+import { useD } from 'sefirot/composables/D'
+import { useV } from 'sefirot/composables/V'
 import { required } from 'sefirot/validation/rules'
 import { type DefineComponent, computed, ref } from 'vue'
 import IconCheckCircle from '~icons/ph/check-circle-bold'
@@ -10,18 +11,13 @@ import IconXCircle from '~icons/ph/x-circle-bold'
 
 const title = 'Components / SInputText / 01. Playground'
 
-interface Data {
-  name: string | null
-}
+const { data, init } = useD({
+  name: null as string | null
+})
 
-const { data, validation, init, validateAndNotify } = useForm<Data>({
-  data: {
-    name: null
-  },
-  rules: {
-    name: {
-      required: required()
-    }
+const { validation, validateAndNotify } = useV(data, {
+  name: {
+    required: required()
   }
 })
 

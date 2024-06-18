@@ -363,7 +363,6 @@ function updateSelected(selected: any) {
         :total="unref(options.total)"
         :reset="unref(options.reset)"
         :menu="unref(options.menu)"
-        :actions="unref(options.actions)"
         :borderless="unref(options.borderless)"
         :on-reset="options.onReset"
         :selected="Array.isArray(selected) ? selected : undefined"

@@ -1,44 +1,39 @@
 /// <reference lib="esnext" />
-/// <reference types="vitest" />
 
 import Vue from '@vitejs/plugin-vue'
-import Icons from 'unplugin-icons/vite'
-import { defineConfig } from 'vite'
+import { defineConfig, mergeConfig } from 'vitest/config'
+import baseConfig from './config'
 
-export default defineConfig({
-  plugins: [Vue(), Icons()],
+export default mergeConfig(
+  baseConfig,
+  defineConfig({
+    plugins: [Vue()],
 
-  resolve: {
-    alias: {
-      'sefirot/': new URL('./lib/', import.meta.url).pathname,
-      'tests/': new URL('./tests/', import.meta.url).pathname
-    }
-  },
-
-  ssr: {
-    noExternal: [/sentry/]
-  },
-
-  test: {
-    globals: true,
-    environment: 'happy-dom',
-    testTimeout: 2000,
-    setupFiles: ['./tests/vitest.setup.ts'],
-
-    coverage: {
-      provider: 'v8',
-      all: true,
-      include: ['lib'],
-      reporter: ['html', 'json', 'lcov', 'text-summary']
+    resolve: {
+      alias: { 'tests/': new URL('./tests/', import.meta.url).pathname }
     },
 
-    onConsoleLog(log, type) {
-      if (type !== 'stderr') { return }
-      ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      if (log.trim() === '') { return false }
+    test: {
+      globals: true,
+      environment: 'happy-dom',
+      testTimeout: 2000,
+      setupFiles: ['./tests/vitest.setup.ts'],
+
+      coverage: {
+        provider: 'v8',
+        all: true,
+        include: ['lib'],
+        reporter: ['html', 'json', 'lcov', 'text-summary']
+      },
+
+      onConsoleLog(log, type) {
+        if (type !== 'stderr') { return }
+        ignore.forEach((s) => (log = log.replaceAll(s, '')))
+        if (log.trim() === '') { return false }
+      }
     }
-  }
-})
+  })
+)
 
 const ignore = [
   '[Vue warn]: inject() can only be used inside setup() or functional components.',

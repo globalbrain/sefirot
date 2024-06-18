@@ -1,16 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { type TableHeaderAction, type TableMenu } from '../composables/Table'
+import { type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
 import { isNullish } from '../support/Utils'
-import STableHeaderActions from './STableHeaderActions.vue'
 import STableHeaderMenu from './STableHeaderMenu.vue'
 
 const props = defineProps<{
   total?: number | null
-  reset?: boolean
   menu?: TableMenu[] | TableMenu[][]
-  actions?: TableHeaderAction[]
   borderless?: boolean
   onReset?(): void
   selected?: unknown[]
@@ -25,13 +22,6 @@ const stats = computed(() => {
     ? `${format(props.selected.length)} of ${props.total} selected`
     : `${format(props.total)} ${props.total > 1 ? 'records' : 'record'}`
 })
-
-// deprecated `reset` prop in favor of `actions`, remove this in next major version
-const resetAction = computed(() => {
-  return props.reset
-    ? [{ label: 'Reset filters', onClick: props.onReset!, type: 'info' }] // onReset is required when reset is true
-    : []
-})
 </script>
 
 <template>
@@ -40,12 +30,6 @@ const resetAction = computed(() => {
       <div class="primary">
         <div v-if="stats" class="stats">
           {{ stats }}
-        </div>
-        <div v-if="actions?.length" class="actions">
-          <STableHeaderActions :actions="actions" />
-        </div>
-        <div v-else-if="resetAction.length">
-          <STableHeaderActions :actions="resetAction" />
         </div>
       </div>
       <div v-if="menu && menu.length" class="menu">
