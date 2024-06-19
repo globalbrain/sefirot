@@ -4,6 +4,7 @@ import FileSaver from 'file-saver'
 import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
+import { isBlob, isFormData } from '../support/Utils'
 
 export interface HttpClient {
   <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
@@ -106,11 +107,11 @@ export class Http {
   }
 
   async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    if (body && !(body instanceof FormData)) {
+    if (body && !isFormData(body)) {
       let hasFile = false
 
       const payload = JSON.stringify(body, (_, value) => {
-        if (value instanceof Blob) {
+        if (isBlob(value)) {
           hasFile = true
           return undefined
         }
@@ -179,13 +180,13 @@ export class Http {
 
       if (
         typeof obj[property] === 'object'
-        && !(obj[property] instanceof Blob)
+        && !isBlob(obj[property])
         && obj[property] !== null
       ) {
         this.objectToFormData(obj[property], fd, property, onlyFiles)
       } else {
         const value = obj[property] === null ? '' : obj[property]
-        if (onlyFiles && !(value instanceof Blob)) {
+        if (onlyFiles && !isBlob(value)) {
           return
         }
         fd.append(formKey, value)

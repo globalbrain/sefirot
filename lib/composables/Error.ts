@@ -29,7 +29,7 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
-import { isFunction } from '../support/Utils'
+import { isError, isFunction } from '../support/Utils'
 
 export interface User {
   id?: string | number
@@ -232,7 +232,7 @@ function getErrorMessage(error: unknown | undefined) {
     return error
   }
 
-  if (error instanceof Error) {
+  if (isError(error)) {
     return error.message
   }
 

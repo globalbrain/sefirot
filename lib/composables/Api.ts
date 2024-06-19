@@ -1,5 +1,7 @@
+import { FetchError } from 'ofetch'
 import { type Ref, type WatchSource, ref, watch } from 'vue'
 import { Http } from '../http/Http'
+import { isError } from '../support/Utils'
 import { tryOnMounted } from './Utils'
 
 export interface Query<Data = any> {
@@ -89,3 +91,9 @@ export function useMutation<Data = any, Args extends any[] = any[]>(
 export const useGet: <Data = any, Args extends any[] = any[]>(
   req: (http: Http, ...args: Args) => Promise<Data>
 ) => Get<Data, Args> = useMutation
+
+export function isFetchError(e: unknown): e is FetchError {
+  return e instanceof FetchError || (isError(e) && (e as FetchError).request != null)
+}
+
+export { FetchError } from 'ofetch'

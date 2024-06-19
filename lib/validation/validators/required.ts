@@ -1,4 +1,4 @@
-import { isArray, isNullish, isString } from '../../support/Utils'
+import { isArray, isDate, isNullish, isString } from '../../support/Utils'
 
 export function required(value: unknown): boolean {
   if (isString(value)) {
@@ -21,7 +21,7 @@ export function _required(value: unknown): boolean {
     return true
   }
 
-  if (value instanceof Date) {
+  if (isDate(value)) {
     return !Number.isNaN(value.getTime())
   }
 
