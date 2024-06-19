@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/V'
-import { isNullish, isString } from '../support/Utils'
+import { isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -57,17 +57,17 @@ const _textColor = computed(() => {
 })
 
 const valueWithSeparator = computed(() => {
-  if (isNullish(_value.value)) {
+  if (_value.value == null) {
     return null
   }
 
-  return _value.value >= 100000000000000000000
+  return _value.value >= Number.MAX_SAFE_INTEGER
     ? 'The number is too big'
     : _value.value.toLocaleString('en-US', { maximumSignificantDigits: 20 })
 })
 
 const displayValue = computed(() => {
-  if (!isNullish(props.displayValue)) {
+  if (props.displayValue != null) {
     return props.displayValue
   }
 
@@ -77,7 +77,7 @@ const displayValue = computed(() => {
 })
 
 function emitUpdate(value: string | null) {
-  const v = isNullish(value) ? null : Number(value)
+  const v = value == null ? null : Number(value)
   emit('update:model-value', v)
   emit('input', v)
 }

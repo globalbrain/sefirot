@@ -1,4 +1,4 @@
-import { isArray, isDate, isNullish, isString } from '../../support/Utils'
+import { isDate, isString } from '../../support/Utils'
 
 export function required(value: unknown): boolean {
   if (isString(value)) {
@@ -9,11 +9,11 @@ export function required(value: unknown): boolean {
 }
 
 export function _required(value: unknown): boolean {
-  if (isArray(value)) {
+  if (Array.isArray(value)) {
     return !!value.length
   }
 
-  if (isNullish(value)) {
+  if (value == null) {
     return false
   }
 

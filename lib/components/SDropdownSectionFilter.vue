@@ -3,7 +3,6 @@ import Fuse from 'fuse.js'
 import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
 import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
-import { isArray } from '../support/Utils'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import IconCheck from '~icons/ph/check'
 
@@ -49,7 +48,7 @@ onMounted(() => {
 function isActive(value: any) {
   const selected = unref(props.selected)
 
-  return isArray(selected)
+  return Array.isArray(selected)
     ? selected.includes(value)
     : selected === value
 }
@@ -84,7 +83,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
           @keyup.down.prevent="focusNext"
           @click="handleClick(option, option.value)"
         >
-          <span v-if="isArray(unref(selected))" class="checkbox">
+          <span v-if="Array.isArray(unref(selected))" class="checkbox">
             <span class="checkbox-box">
               <IconCheck class="checkbox-icon" />
             </span>

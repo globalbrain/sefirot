@@ -4,7 +4,6 @@ import { type Component, computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { type Validatable } from '../composables/V'
-import { isArray } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
@@ -80,7 +79,7 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
 }])
 
 const selected = computed(() => {
-  if (isArray(props.modelValue)) {
+  if (Array.isArray(props.modelValue)) {
     return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
   }
 
@@ -94,7 +93,7 @@ const hasSelected = computed(() => {
 })
 
 const removable = computed(() => {
-  if (isArray(props.modelValue)) {
+  if (Array.isArray(props.modelValue)) {
     return props.nullable || selected.value.length > 1
   }
 
@@ -111,7 +110,7 @@ async function handleOpen() {
 function handleSelect(value: OptionValue) {
   props.validation?.$touch()
 
-  isArray(props.modelValue) ? handleArray(value) : handlePrimitive(value)
+  Array.isArray(props.modelValue) ? handleArray(value) : handlePrimitive(value)
 }
 
 function handlePrimitive(value: OptionValue) {

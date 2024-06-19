@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isArray } from '../support/Utils'
 import SButton from './SButton.vue'
 import SDescEmpty from './SDescEmpty.vue'
 import IconDownloadSimple from '~icons/ph/download-simple-bold'
@@ -17,7 +16,7 @@ const props = defineProps<{
 
 const items = computed(() => {
   return props.item
-    ? isArray(props.item) ? props.item : [props.item]
+    ? Array.isArray(props.item) ? props.item : [props.item]
     : null
 })
 </script>

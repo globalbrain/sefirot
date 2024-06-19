@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { type TableMenu } from '../composables/Table'
 import { format } from '../support/Num'
-import { isNullish } from '../support/Utils'
 import STableHeaderMenu from './STableHeaderMenu.vue'
 
 const props = defineProps<{
@@ -14,7 +13,7 @@ const props = defineProps<{
 }>()
 
 const stats = computed(() => {
-  if (isNullish(props.total)) {
+  if (props.total == null) {
     return null
   }
 

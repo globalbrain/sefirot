@@ -29,7 +29,7 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
-import { isError, isFunction } from '../support/Utils'
+import { isError } from '../support/Utils'
 
 export interface User {
   id?: string | number
@@ -47,7 +47,7 @@ function classify(str: string): string {
 }
 
 function getComponentName(Component: ConcreteComponent): string | undefined {
-  return isFunction(Component)
+  return typeof Component === 'function'
     ? Component.displayName || Component.name
     : Component.name || Component.__name
 }
