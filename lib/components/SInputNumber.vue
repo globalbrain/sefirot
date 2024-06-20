@@ -71,7 +71,7 @@ const displayValue = computed(() => {
     return props.displayValue
   }
 
-  return (!props.separator || valueWithSeparator.value === null)
+  return (!props.separator || valueWithSeparator.value == null)
     ? null
     : valueWithSeparator.value
 })
@@ -104,7 +104,7 @@ function emitUpdate(value: string | null) {
     :disabled="disabled"
     :hide-error="hideError"
     :display-value="displayValue"
-    :model-value="_value === null ? null : String(_value)"
+    :model-value="_value == null ? null : String(_value)"
     :validation="validation"
     @update:model-value="emitUpdate"
     @input="emitUpdate"

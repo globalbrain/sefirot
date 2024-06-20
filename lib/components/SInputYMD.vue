@@ -97,7 +97,7 @@ function updateDate(e: FocusEvent) {
 }
 
 function update(type: ValueType, value: string) {
-  if (_value.value === null) {
+  if (_value.value == null) {
     return
   }
 

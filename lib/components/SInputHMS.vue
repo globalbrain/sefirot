@@ -96,7 +96,7 @@ function updateSecond(e: FocusEvent): void {
 }
 
 function update(type: ValueType, value: string | null) {
-  if (_value.value === null) {
+  if (_value.value == null) {
     return
   }
 

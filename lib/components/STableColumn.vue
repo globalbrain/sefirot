@@ -39,7 +39,7 @@ const active = computed(() => {
     const selected = unref(item.selected)
 
     if (!Array.isArray(selected)) {
-      return selected !== null
+      return selected != null
     }
 
     if (!selected.length) {
