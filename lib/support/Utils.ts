@@ -35,6 +35,14 @@ export function isObject(value: unknown): value is Record<string, unknown> {
   return _isPlainObject(value)
 }
 
+export function isRequest(value: unknown): value is Request {
+  return value instanceof Request || baseGetTag(value) === '[object Request]'
+}
+
+export function isResponse(value: unknown): value is Response {
+  return value instanceof Response || baseGetTag(value) === '[object Response]'
+}
+
 export function isString(value: unknown): value is string {
   return _isString(value)
 }
