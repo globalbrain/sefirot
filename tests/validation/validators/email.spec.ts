@@ -4,6 +4,7 @@ describe('validation/validators/email', () => {
   test('it validates whether the value is email', () => {
     expect(email('someone@gmail.com')).toBe(true)
     expect(email('someone@g-mail.com')).toBe(true)
+    expect(email('someone@g_mail.com')).toBe(true)
     expect(email('some!one@gmail.com')).toBe(true)
     expect(email('soMe12_one@gmail.com')).toBe(true)
     expect(email('someone@gmail.co')).toBe(true)
