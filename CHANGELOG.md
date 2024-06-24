@@ -1,5 +1,17 @@
 
 
+# [3.49.0](https://github.com/globalbrain/sefirot/compare/v3.48.0...v3.49.0) (2024-06-24)
+
+
+### Bug Fixes
+
+* set `dayjs` as peer-dependency ([#537](https://github.com/globalbrain/sefirot/issues/537)) ([2a8dfb7](https://github.com/globalbrain/sefirot/commit/2a8dfb736e0c90d1d76e61fa06a9906f373d3a6f))
+
+
+### Features
+
+* **validation:** allow undersocre in domain name when validating email ([#542](https://github.com/globalbrain/sefirot/issues/542)) ([9b37326](https://github.com/globalbrain/sefirot/commit/9b373265e235c52b1f3482e9c327fa7b7bf9a12c))
+
 # [3.48.0](https://github.com/globalbrain/sefirot/compare/v3.47.1...v3.48.0) (2024-06-10)
 
 
