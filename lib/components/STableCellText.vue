@@ -1,71 +1,44 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
+import { type TableCellValueColor } from '../composables/Table'
 import SLink from './SLink.vue'
-
-export type Color =
-  | 'default'
-  | 'mute'
-  | 'neutral'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'soft'
 
 const props = defineProps<{
   value?: any
-  record: any
+  record?: any
   align?: 'left' | 'center' | 'right'
   icon?: Component
-  getter?: string | null | ((value: any, record: any) => string | null)
-  color?: Color | ((value: any, record: any) => Color)
-  iconColor?: Color | ((value: any, record: any) => Color)
-  link?: string | null | ((value: any, record: any) => string)
+  text?: string | null
+  color?: TableCellValueColor
+  iconColor?: TableCellValueColor
+  link?: string | null
   onClick?(value: any, record: any): void
 }>()
 
-const _value = computed(() => {
-  if (props.getter === undefined) {
-    return props.value
-  }
+const _value = computed(() => props.text ?? props.value)
+const _color = computed(() => props.color ?? 'neutral')
+const _iconColor = computed(() => props.iconColor ?? _color.value)
 
-  return typeof props.getter === 'function'
-    ? props.getter(props.value, props.record)
-    : props.getter
-})
-
-const _link = computed(() => {
-  return typeof props.link === 'function'
-    ? props.link(props.value, props.record)
-    : props.link
-})
-
-const _color = computed(() => {
-  return typeof props.color === 'function'
-    ? props.color(props.value, props.record)
-    : props.color ?? 'neutral'
-})
-
-const _iconColor = computed(() => {
-  return typeof props.iconColor === 'function'
-    ? props.iconColor(props.value, props.record)
-    : props.iconColor ?? _color.value
-})
+const classes = computed(() => [
+  props.align ?? 'left',
+  _color,
+  { link: !!(props.link || props.onClick) }
+])
 </script>
 
 <template>
-  <div class="STableCellText" :class="[align ?? 'left', { link: link || onClick }, _color]">
+  <div class="STableCellText" :class="classes">
     <SLink
-      v-if="_value"
+      v-if="_value != null"
       class="container"
-      :href="_link"
+      :href="link"
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >
-      <div v-if="icon" class="icon" :class="[_iconColor ?? _color]">
+      <div v-if="icon" class="icon" :class="_iconColor">
         <component :is="icon" class="svg" />
       </div>
-      <div class="text" :class="[_color]">
+      <div class="text" :class="_color">
         {{ _value }}
       </div>
     </SLink>

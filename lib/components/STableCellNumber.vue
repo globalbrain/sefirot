@@ -9,7 +9,7 @@ const props = defineProps<{
   record?: any
   align?: 'left' | 'center' | 'right'
   icon?: Component
-  getter?: number | null
+  number?: number | null
   separator?: boolean
   color?: TableCellValueColor
   iconColor?: TableCellValueColor
@@ -17,7 +17,7 @@ const props = defineProps<{
   onClick?(value: any, record: any): void
 }>()
 
-const _value = computed(() => props.getter ?? props.value)
+const _value = computed(() => props.number ?? props.value)
 const _color = computed(() => props.color ?? 'neutral')
 const _iconColor = computed(() => props.iconColor ?? _color.value)
 
@@ -37,10 +37,10 @@ const classes = computed(() => [
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >
-      <div v-if="icon" class="icon" :class="[_iconColor]">
+      <div v-if="icon" class="icon" :class="_iconColor">
         <component :is="icon" class="svg" />
       </div>
-      <div class="value" :class="[_color ?? 'neutral']">
+      <div class="value" :class="_color">
         {{ separator ? format(_value) : _value }}
       </div>
     </SLink>
