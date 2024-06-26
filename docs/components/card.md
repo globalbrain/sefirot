@@ -26,8 +26,8 @@ import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
           <SCardHeaderActionClose />
         </SCardHeaderActions>
       </SCardHeader>
-      <SCardBlock>
-        <p class="py-8 px-24 text-14">
+      <SCardBlock space="compact">
+        <p class="m-0 text-14">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
@@ -36,8 +36,8 @@ import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
       </SCardBlock>
       <SCardFooter>
         <SCardFooterActions>
-          <SCardFooterAction label="Cancel" size="small" />
-          <SCardFooterAction mode="info" label="Submit" size="small" />
+          <SCardFooterAction label="Cancel" />
+          <SCardFooterAction mode="info" label="Submit" />
         </SCardFooterActions>
       </SCardFooter>
     </SCard>
@@ -157,8 +157,10 @@ You may use `<SCardHeaderActions>` with nested `<SCardHeaderAction>` to add head
 It uses [`<SButton>`](./button) component internally. Refer to the documentation of `<SButton>` for how the props work.
 
 ```ts
+import { type IconifyIcon } from '@iconify/vue/dist/offline'
+
 interface Props {
-  icon: Component
+  icon: IconifyIcon
   disabled?: boolean
   tooltip?: string | Tooltip
 }
