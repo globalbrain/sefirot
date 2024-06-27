@@ -28,6 +28,7 @@ describe('components/STooltip', () => {
     expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Example text.')
   })
 
+  // FIXME: .
   test.skip('shows tooltip on hover', async () => {
     vi.useFakeTimers()
 
@@ -53,6 +54,7 @@ describe('components/STooltip', () => {
     vi.useRealTimers()
   })
 
+  // FIXME: .
   test.skip('shows tooltip on focus', async () => {
     vi.useFakeTimers()
 
