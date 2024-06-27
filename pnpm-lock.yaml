@@ -12,8 +12,8 @@ importers:
         specifier: ^8.13.0
         version: 8.13.0
       '@tanstack/vue-virtual':
-        specifier: ^3.7.0
-        version: 3.7.0(vue@3.4.30(typescript@5.5.2))
+        specifier: 3.0.0-beta.62
+        version: 3.0.0-beta.62(vue@3.4.30(typescript@5.5.2))
       '@tinyhttp/content-disposition':
         specifier: ^2.2.1
         version: 2.2.1
@@ -962,11 +962,11 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
-  '@tanstack/virtual-core@3.7.0':
-    resolution: {integrity: sha512-p0CWuqn+n8iZmsL7/l0Xg7kbyIKnHNqkEJkMDOkg4x3Ni3LohszmnJY8FPhTgG7Ad9ZFGcdKmn1R1mKUGEh9Xg==}
+  '@tanstack/virtual-core@3.0.0-beta.62':
+    resolution: {integrity: sha512-OgENfgem5QLjfVOJgUrcgw34RG48EXj4+8CYFXwVsTBzgJhiGYFtlscKwWPUWwXssB5zhWTfWEK+hUcM1OoIfg==}
 
-  '@tanstack/vue-virtual@3.7.0':
-    resolution: {integrity: sha512-RkSrajvJpV1RdJKgZnPgzyzVVx76QjPAu+spgdAms+SZRcSbYMUKlcjusnHjhszck5ngHXSXbSBp45ycF1nlDw==}
+  '@tanstack/vue-virtual@3.0.0-beta.62':
+    resolution: {integrity: sha512-VaKmBqHZW6Ak9znF7KvE0mROe9+E6igY3InGIz+61gI7qky4OZNwahauZaupGHcNRUwcQI6vRYS4VCeg48s7eQ==}
     peerDependencies:
       vue: ^2.7.0 || ^3.0.0
 
@@ -5306,11 +5306,11 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tanstack/virtual-core@3.7.0': {}
+  '@tanstack/virtual-core@3.0.0-beta.62': {}
 
-  '@tanstack/vue-virtual@3.7.0(vue@3.4.30(typescript@5.5.2))':
+  '@tanstack/vue-virtual@3.0.0-beta.62(vue@3.4.30(typescript@5.5.2))':
     dependencies:
-      '@tanstack/virtual-core': 3.7.0
+      '@tanstack/virtual-core': 3.0.0-beta.62
       vue: 3.4.30(typescript@5.5.2)
 
   '@tinyhttp/content-disposition@2.2.1': {}

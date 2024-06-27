@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@sentry/browser": "^8.13.0",
-    "@tanstack/vue-virtual": "^3.7.0",
+    "@tanstack/vue-virtual": "3.0.0-beta.62",
     "@tinyhttp/content-disposition": "^2.2.1",
     "@tinyhttp/cookie": "^2.1.1",
     "@types/file-saver": "^2.0.7",

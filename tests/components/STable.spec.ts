@@ -153,8 +153,7 @@ describe('components/STable', () => {
   })
 
   describe('cell number', () => {
-    // FIXME: .
-    test.skip('it displays `0` value', () => {
+    test('it displays `0` value', () => {
       const table = useTable({
         orders: ['num'],
         columns: {
@@ -181,8 +180,7 @@ describe('components/STable', () => {
   })
 
   describe('summary', () => {
-    // FIXME: .
-    test.skip('it displays summary row at bottom', () => {
+    test('it displays summary row at bottom', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {
