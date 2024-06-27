@@ -53,6 +53,18 @@
   --vp-c-text-3: var(--c-text-3);
 }
 
+/* FIXME: remove in next version of vitepress */
+.vp-doc h4 {
+  margin: 24px 0 0;
+  letter-spacing: -0.01em;
+  line-height: 24px;
+  font-size: 18px;
+
+  > code {
+    font-size: 0.9em;
+  }
+}
+
 textarea {
   font-family: inherit;
 }
@@ -69,6 +81,9 @@ textarea {
 .gap-12 { gap: 12px; }
 .gap-16 { gap: 16px; }
 
+.pl-24 { padding-left: 24px; }
+.pr-16 { padding-right: 16px; }
+
 .py-8  { padding-top: 8px; padding-bottom: 8px; }
 .px-24 { padding-right: 24px; padding-left: 24px; }
 
@@ -79,6 +94,7 @@ textarea {
 .h-64 { height: 64px; }
 
 .text-14 { font-size: 14px !important; }
+.font-w-600 { font-weight: 600; }
 
 .bg-info { background-color: var(--c-bg-info-1); }
 
