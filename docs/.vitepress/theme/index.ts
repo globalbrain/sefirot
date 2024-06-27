@@ -2,6 +2,7 @@ import { type Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 
 import 'sefirot/styles/variables.css'
+import 'sefirot/styles/utilities.css'
 import './styles.css'
 
 import Layout from './components/Layout.vue'

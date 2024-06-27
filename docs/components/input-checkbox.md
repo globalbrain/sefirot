@@ -106,10 +106,8 @@ interface Props {
 Icon to display at corner right of label. Useful to show the status of a particular input.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  checkIcon?: IconifyIcon
+  checkIcon?: Component
 }
 ```
 

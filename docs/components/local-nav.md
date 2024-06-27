@@ -99,10 +99,8 @@ interface Title {
 The type of menu item.
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface MenuItem {
-  icon?: IconifyIcon
+  icon?: Component
   text: string
   link: string
   active?: boolean

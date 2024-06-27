@@ -1,28 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { type TableCellPillItem } from '../composables/Table'
 import STableCellPill from './STableCellPill.vue'
 
-const props = defineProps<{
-  value?: any
-  record?: any
-  pills: TableCellPillItem[] | ((value: any, record: any) => TableCellPillItem[])
+defineProps<{
+  pills: TableCellPillItem[]
 }>()
-
-const items = computed(() => {
-  return Array.isArray(props.pills)
-    ? props.pills
-    : props.pills(props.value, props.record)
-})
 </script>
 
 <template>
   <div class="STableCellPills">
     <STableCellPill
-      v-for="item in items"
+      v-for="item in pills"
       :key="item.label"
-      :value="item.label"
-      :record="record"
+      :pill="item.label"
       :color="item.color"
     />
   </div>

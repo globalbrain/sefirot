@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import IconImage from '@iconify-icons/ph/image-bold'
-import { computed, ref } from 'vue'
+import { type Component, computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
 import { type Validatable } from '../composables/V'
 import SButton from './SButton.vue'
-import SIcon from './SIcon.vue'
 import SInputBase from './SInputBase.vue'
+import IconImage from '~icons/ph/image-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
@@ -18,7 +16,7 @@ const props = withDefaults(defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   imageType?: ImageType
@@ -108,7 +106,7 @@ function onFileDelete() {
           </div>
           <div v-else class="image-empty">
             <div class="image-empty-inner">
-              <SIcon class="image-empty-icon" :icon="IconImage" />
+              <IconImage class="image-empty-icon" />
             </div>
           </div>
         </div>

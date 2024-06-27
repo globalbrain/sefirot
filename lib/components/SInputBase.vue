@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import IconQuestion from '@iconify-icons/ph/question'
-import { type DefineComponent, computed, unref, useSlots } from 'vue'
+import { type Component, computed, unref, useSlots } from 'vue'
 import { type Validatable } from '../composables/V'
-import SIcon from './SIcon.vue'
 import STooltip from './STooltip.vue'
+import IconQuestion from '~icons/ph/question'
 
 type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
@@ -14,7 +12,7 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   validation?: Validatable
@@ -61,7 +59,7 @@ function getErrorMsg(validation: Validatable) {
 
       <STooltip v-if="hasInfo" :text="info" trigger="focus" @click.prevent>
         <div class="label-info">
-          <SIcon class="label-info-icon" :icon="IconQuestion" />
+          <IconQuestion class="label-info-icon" />
         </div>
         <template v-if="$slots.info" #text><slot name="info" /></template>
       </STooltip>
@@ -69,7 +67,7 @@ function getErrorMsg(validation: Validatable) {
       <span class="label-note" :class="{ 'has-info': hasInfo }">{{ note }}</span>
 
       <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
-        <SIcon v-if="checkIcon" class="check-icon" :icon="checkIcon" />
+        <component v-if="checkIcon" :is="checkIcon" class="check-icon" />
         <span v-if="checkText" class="check-text">{{ checkText }}</span>
       </span>
     </label>

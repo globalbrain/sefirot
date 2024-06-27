@@ -18,7 +18,7 @@ const list: ActionList = [
     <Board :title="title" :docs="docs">
       <SCard class="max-w-256">
         <SCardBlock>
-          <div class="p-12">
+          <div class="s-p-12">
             <SActionList :list="list" />
           </div>
         </SCardBlock>

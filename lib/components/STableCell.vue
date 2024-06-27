@@ -37,7 +37,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record="record"
       :align="computedCell?.align"
       :icon="computedCell?.icon"
-      :getter="computedCell?.value"
+      :text="computedCell?.value"
       :link="computedCell?.link"
       :color="computedCell?.color"
       :icon-color="computedCell?.iconColor"
@@ -49,7 +49,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record="record"
       :align="computedCell.align"
       :icon="computedCell.icon"
-      :getter="computedCell.value"
+      :number="computedCell.value"
       :separator="computedCell.separator"
       :link="computedCell.link"
       :color="computedCell.color"
@@ -58,29 +58,23 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellDay
       v-else-if="computedCell.type === 'day'"
-      :value="value"
-      :record="record"
       :align="computedCell.align"
-      :getter="computedCell.value"
+      :day="computedCell.value"
       :format="computedCell.format"
       :color="computedCell.color"
     />
     <STableCellPill
       v-else-if="computedCell.type === 'pill'"
-      :value="value"
-      :record="record"
-      :getter="computedCell.value"
+      :pill="computedCell.value"
       :color="computedCell.color"
     />
     <STableCellPills
       v-else-if="computedCell.type === 'pills'"
-      :value="value"
-      :record="record"
       :pills="computedCell.pills"
     />
     <STableCellState
       v-else-if="computedCell.type === 'state'"
-      :value="computedCell.label"
+      :state="computedCell.label"
       :mode="computedCell.mode"
     />
     <STableCellAvatar
@@ -95,8 +89,6 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellAvatars
       v-else-if="computedCell.type === 'avatars'"
-      :value="value"
-      :record="record"
       :avatars="computedCell.avatars"
       :color="computedCell.color"
       :avatar-count="computedCell.avatarCount"

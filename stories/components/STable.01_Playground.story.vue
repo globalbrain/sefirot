@@ -1,8 +1,4 @@
 <script setup lang="ts">
-import IconCheck from '@iconify-icons/ph/check-bold'
-import IconImageSquare from '@iconify-icons/ph/image-square-bold'
-import IconNotePencil from '@iconify-icons/ph/note-pencil-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
 import { orderBy, xor } from 'lodash-es'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
@@ -17,6 +13,10 @@ import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
+import IconCheck from '~icons/ph/check-bold'
+import IconImageSquare from '~icons/ph/image-square-bold'
+import IconNotePencil from '~icons/ph/note-pencil-bold'
+import IconTrash from '~icons/ph/trash-bold'
 
 interface Sort {
   by: string
@@ -235,7 +235,7 @@ const table = useTable({
     status: {
       label: 'Status',
       dropdown: dropdownStatus,
-      cell: (_value, record) => ({
+      cell: (_, record) => ({
         type: 'state',
         label: record.status,
         mode: record.status === 'Published'
@@ -277,17 +277,15 @@ const table = useTable({
       label: 'Tags',
       show: !optionsSelected.value.includes('hide-tags'),
       dropdown: dropdownTags,
-      cell: {
+      cell: (_, record) => ({
         type: 'pills',
-        pills(items: string[]) {
-          return items.map((item) => ({
-            label: item,
-            color: item === 'Info'
-              ? 'info'
-              : item === 'Latest' ? 'success' : 'mute'
-          }))
-        }
-      }
+        pills: record.tags.map((tag: string) => ({
+          label: tag,
+          color: tag === 'Info'
+            ? 'info'
+            : tag === 'Latest' ? 'success' : 'mute'
+        }))
+      })
     },
 
     createdAt: {

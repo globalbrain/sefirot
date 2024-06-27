@@ -11,7 +11,7 @@ describe('composables/V', () => {
       })
 
       const { validation } = useV(data, {
-        name: { required: (v: any) => v !== null }
+        name: { required: (v: any) => v != null }
       })
 
       return {
@@ -110,7 +110,7 @@ describe('composables/V', () => {
       })
 
       const { validation, reset } = useV(data, {
-        name: { required: (v: any) => v !== null }
+        name: { required: (v: any) => v != null }
       })
 
       return {

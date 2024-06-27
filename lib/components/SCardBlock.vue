@@ -11,15 +11,9 @@ export type Bg =
   | 'elv-4'
   | 'none'
 
-// @deprecated Use CSS utility classes instead.
-export type Space = 'compact' | 'wide' | 'xwide'
-
 const props = withDefaults(defineProps<{
   size?: CardBlockSize
   bg?: Bg
-
-  // @deprecated Use CSS utility classes instead.
-  space?: Space
 }>(), {
   bg: 'elv-3'
 })

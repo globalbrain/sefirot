@@ -472,8 +472,8 @@ export type TableCellValueColor =
 Actions type cell displays any number of actions as a clickable button in the cell by defining `type: 'actions'`. Usually, place actions at the end of the column.
 
 ```ts
-import IconNotePencil from '@iconify-icons/ph/note-pencil'
-import IconTrash from '@iconify-icons/ph/trash'
+import IconNotePencil from '~icons/ph/note-pencil'
+import IconTrash from '~icons/ph/trash'
 
 const options = useTable({
   orders: ['actions'],
@@ -494,8 +494,6 @@ const options = useTable({
 Below are the complete list of options you may pass to the actions type cell. Each action is a `<SButton :type="text">` instances. You may pass options such as `mode` or `label` to them. 
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface TableCellActions {
   // Type of the cell. Must be `actions`.
   type: 'number'
@@ -504,7 +502,7 @@ interface TableCellActions {
   // for more details. Note that for actions, `type` is fixed
   // to `text`, and `mode` defaults to `mute`.
   mode?: ColorModes
-  icon?: IconifyIcon
+  icon?: Component
   iconMode?: ColorModes
   label?: string
   labelMode?: ColorModes

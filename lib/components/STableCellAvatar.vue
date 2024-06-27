@@ -1,48 +1,31 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import SAvatar from './SAvatar.vue'
 import SLink from './SLink.vue'
 
-const props = defineProps<{
+defineProps<{
   value?: any
   record?: any
-  image?: string | null | ((value: any, record: any) => string | null | undefined)
-  name?: string | null | ((value: any, record: any) => string | null | undefined)
-  link?: string | null | ((value: any, record: any) => string | null | undefined)
+  image?: string | null
+  name?: string | null
+  link?: string | null
   color?: 'neutral' | 'soft' | 'mute'
   onClick?(value: any, record: any): void
 }>()
-
-const _image = computed(() => resolve(props.image))
-const _name = computed(() => resolve(props.name))
-const _link = computed(() => resolve(props.link))
-
-function resolve(
-  value?: string | null | ((value: any, record: any) => string | null | undefined)
-) {
-  if (value == null || value === '') {
-    return null
-  }
-
-  return typeof value === 'function'
-    ? value(props.value, props.record)
-    : value
-}
 </script>
 
 <template>
-  <div class="STableCellAvatar" :class="[{ link: link || onClick }, color]">
+  <div class="STableCellAvatar" :class="[{ link: !!(link || onClick) }, color]">
     <SLink
       class="container"
-      :href="_link ?? undefined"
+      :href="link || undefined"
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >
-      <div v-if="_image || _name" class="avatar">
-        <SAvatar size="mini" :avatar="_image" :name="_name" />
+      <div v-if="image || name" class="avatar">
+        <SAvatar size="mini" :avatar="image" :name="name" />
       </div>
-      <span v-if="_name" class="name">
-        {{ _name }}
+      <span v-if="name" class="name">
+        {{ name }}
       </span>
     </SLink>
   </div>

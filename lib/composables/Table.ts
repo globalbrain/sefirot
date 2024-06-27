@@ -18,11 +18,6 @@ export interface Table<
   rowSize?: MaybeRef<number | undefined>
   borderless?: MaybeRef<boolean>
   disableSelection?: (record: R) => boolean
-
-  /**
-   * @deprecated Use `<SControl>` to add equivalent features.
-   */
-  actions?: MaybeRef<TableHeaderAction[]>
   menu?: MaybeRef<TableMenu[] | TableMenu[][]>
   header?: MaybeRef<boolean | undefined>
   footer?: MaybeRef<boolean | undefined>
@@ -61,11 +56,11 @@ export type TableCell<V = any, R = any> =
   | TableCellText<V, R>
   | TableCellNumber<V, R>
   | TableCellDay
-  | TableCellPill<V, R>
-  | TableCellPills<V, R>
+  | TableCellPill
+  | TableCellPills
   | TableCellState
   | TableCellAvatar<V, R>
-  | TableCellAvatars<V, R>
+  | TableCellAvatars
   | TableCellCustom
   | TableCellEmpty
   | TableCellComponent
@@ -102,10 +97,10 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
   type: 'text'
   align?: 'left' | 'center' | 'right'
   icon?: any
-  value?: string | null | ((value: V, record: R) => string | null)
-  link?: string | null | ((value: V, record: R) => string)
-  color?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
-  iconColor?: TableCellValueColor | ((value: V, record: R) => TableCellValueColor)
+  value?: string | null
+  link?: string | null
+  color?: TableCellValueColor
+  iconColor?: TableCellValueColor
   onClick?(value: V, record: R): void
 }
 
@@ -131,17 +126,17 @@ export interface TableCellDay extends TableCellBase {
   color?: 'neutral' | 'soft' | 'mute'
 }
 
-export interface TableCellPill<V = any, R = any> extends TableCellBase {
+export interface TableCellPill extends TableCellBase {
   type: 'pill'
-  value?: string | ((value: V, record: R) => string)
-  color?: TableCellPillColor | ((value: V, record: R) => TableCellPillColor)
+  value?: string
+  color?: TableCellPillColor
 }
 
 export type TableCellPillColor = ColorModes
 
-export interface TableCellPills<V = any, R = any> extends TableCellBase {
+export interface TableCellPills extends TableCellBase {
   type: 'pills'
-  pills: TableCellPillItem[] | ((value: V, record: R) => TableCellPillItem[])
+  pills: TableCellPillItem[]
 }
 
 export interface TableCellPillItem {
@@ -151,16 +146,16 @@ export interface TableCellPillItem {
 
 export interface TableCellAvatar<V = any, R = any> extends TableCellBase {
   type: 'avatar'
-  image?: string | null | ((value: V, record: R) => string | null | undefined)
-  name?: string | null | ((value: V, record: R) => string | null | undefined)
-  link?: string | null | ((value: V, record: R) => string | null | undefined)
+  image?: string | null
+  name?: string | null
+  link?: string | null
   color?: 'neutral' | 'soft' | 'mute'
   onClick?(value: V, record: R): void
 }
 
-export interface TableCellAvatars<V = any, R = any> extends TableCellBase {
+export interface TableCellAvatars extends TableCellBase {
   type: 'avatars'
-  avatars: TableCellAvatarsOption[] | ((value: V, record: R) => TableCellAvatarsOption[])
+  avatars: TableCellAvatarsOption[]
   color?: 'neutral' | 'soft' | 'mute'
   avatarCount?: number
   nameCount?: number

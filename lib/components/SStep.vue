@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import IconCheck from '@iconify-icons/ph/check'
-import IconX from '@iconify-icons/ph/x'
 import { type PropType } from 'vue'
 import { type BarMode, type StepStatus } from '../composables/Step'
-import SIcon from './SIcon.vue'
+import IconCheck from '~icons/ph/check'
+import IconX from '~icons/ph/x'
 
 defineProps({
   status: { type: String as PropType<StepStatus>, required: true },
@@ -19,8 +18,8 @@ defineProps({
       <div class="bar" :class="[barLeft]" />
       <div class="point">
         <div v-if="status === 'active'" class="inner-dot" />
-        <SIcon v-else-if="status === 'done'" :icon="IconCheck" class="icon" />
-        <SIcon v-else-if="status === 'failed'" :icon="IconX" class="icon" />
+        <IconCheck v-else-if="status === 'done'" class="icon" />
+        <IconX v-else-if="status === 'failed'" class="icon" />
       </div>
       <div class="bar" :class="[barRight]" />
     </div>

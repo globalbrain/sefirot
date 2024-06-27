@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import IconCaretLeft from '@iconify-icons/ph/caret-left-bold'
-import IconCaretRight from '@iconify-icons/ph/caret-right-bold'
 import { computed } from 'vue'
 import { useTrans } from '../composables/Lang'
 import { format } from '../support/Num'
 import SButton from './SButton.vue'
+import IconCaretLeft from '~icons/ph/caret-left-bold'
+import IconCaretRight from '~icons/ph/caret-right-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'

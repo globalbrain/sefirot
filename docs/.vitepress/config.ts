@@ -1,4 +1,5 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
+import baseConfig from '../../config'
 
 function getStoryHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -16,11 +17,7 @@ export default defineConfig({
   lastUpdated: true,
 
   vite: {
-    resolve: {
-      alias: {
-        'sefirot/': new URL('../../lib/', import.meta.url).pathname
-      }
-    },
+    ...baseConfig,
     define: {
       __STORY_HOST__: JSON.stringify(getStoryHost())
     }

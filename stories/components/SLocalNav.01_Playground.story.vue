@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import IconActivity from '@iconify-icons/ph/activity-bold'
-import IconCurrencyCircleDollar from '@iconify-icons/ph/currency-circle-dollar-bold'
-import IconGear from '@iconify-icons/ph/gear-bold'
 import SLocalNav from 'sefirot/components/SLocalNav.vue'
+import IconActivity from '~icons/ph/activity-bold'
+import IconCurrencyCircleDollar from '~icons/ph/currency-circle-dollar-bold'
+import IconGear from '~icons/ph/gear-bold'
 
 const title = 'Components / SLocalNav / 01. Playground'
 const docs = '/components/local-nav'

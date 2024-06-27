@@ -1,28 +1,23 @@
 <script setup lang="ts">
-import IconSuccess from '@iconify-icons/ph/check-bold'
-import IconInfo from '@iconify-icons/ph/info-bold'
-import IconWarning from '@iconify-icons/ph/warning-bold'
-import IconDanger from '@iconify-icons/ph/warning-octagon-bold'
-import SIcon from './SIcon.vue'
+import IconCheck from '~icons/ph/check-bold'
+import IconInfo from '~icons/ph/info-bold'
+import IconWarning from '~icons/ph/warning-bold'
+import IconWarningOctagon from '~icons/ph/warning-octagon-bold'
 
 withDefaults(defineProps<{
   mode?: 'info' | 'success' | 'warning' | 'danger'
 }>(), {
   mode: 'info'
 })
-
-const iconDict = {
-  info: IconInfo,
-  success: IconSuccess,
-  warning: IconWarning,
-  danger: IconDanger
-} as const
 </script>
 
 <template>
   <div class="SAlert" :class="[mode]">
     <div class="icon">
-      <SIcon :icon="iconDict[mode]" class="icon-svg" />
+      <IconInfo v-if="mode === 'info'" class="icon-svg" />
+      <IconCheck v-if="mode === 'success'" class="icon-svg" />
+      <IconWarning v-if="mode === 'warning'" class="icon-svg" />
+      <IconWarningOctagon v-if="mode === 'danger'" class="icon-svg" />
     </div>
     <div class="content">
       <slot />

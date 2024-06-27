@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import IconCaretLeft from '@iconify-icons/ph/caret-left-bold'
-import IconCaretRight from '@iconify-icons/ph/caret-right-bold'
 import { computed } from 'vue'
 import { format } from '../support/Num'
-import SIcon from './SIcon.vue'
+import IconCaretLeft from '~icons/ph/caret-left-bold'
+import IconCaretRight from '~icons/ph/caret-right-bold'
 
 const props = defineProps<{
   total?: number | null
@@ -44,10 +43,10 @@ const hasNext = computed(() => {
 
       <div v-if="onPrev && onNext" class="actions">
         <button class="button prev" :class="{ active: hasPrev }" @click="() => hasPrev && onPrev?.()">
-          <SIcon :icon="IconCaretLeft" class="icon" />
+          <IconCaretLeft class="icon" />
         </button>
         <button class="button next" :class="{ active: hasNext }" @click="() => hasNext && onNext?.()">
-          <SIcon :icon="IconCaretRight" class="icon" />
+          <IconCaretRight class="icon" />
         </button>
       </div>
     </div>

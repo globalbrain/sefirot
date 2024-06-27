@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import IconGoogle from '@iconify-icons/ri/google-fill'
 import { computed } from 'vue'
 import SButton from './SButton.vue'
 import SLink from './SLink.vue'
 import SIconGbLogoWhite from './icon/SIconGbLogoWhite.vue'
+import IconGoogle from '~icons/ri/google-fill'
 
 export interface CoverTitle {
   text: string

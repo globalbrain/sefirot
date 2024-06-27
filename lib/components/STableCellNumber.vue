@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type TableCellValueColor } from '../composables/Table'
 import { format } from '../support/Num'
-import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 
 const props = defineProps<{
   value?: any
   record?: any
   align?: 'left' | 'center' | 'right'
-  icon?: any
-  getter?: number | null
+  icon?: Component
+  number?: number | null
   separator?: boolean
   color?: TableCellValueColor
   iconColor?: TableCellValueColor
@@ -18,14 +17,14 @@ const props = defineProps<{
   onClick?(value: any, record: any): void
 }>()
 
-const _value = computed(() => props.getter ?? props.value)
+const _value = computed(() => props.number ?? props.value)
 const _color = computed(() => props.color ?? 'neutral')
 const _iconColor = computed(() => props.iconColor ?? _color.value)
 
 const classes = computed(() => [
   props.align ?? 'left',
   _color,
-  { link: props.link || props.onClick }
+  { link: !!(props.link || props.onClick) }
 ])
 </script>
 
@@ -38,10 +37,10 @@ const classes = computed(() => [
       :role="onClick ? 'button' : null"
       @click="() => onClick?.(value, record)"
     >
-      <div v-if="icon" class="icon" :class="[_iconColor]">
-        <SIcon :icon="icon" class="svg" />
+      <div v-if="icon" class="icon" :class="_iconColor">
+        <component :is="icon" class="svg" />
       </div>
-      <div class="value" :class="[_color ?? 'neutral']">
+      <div class="value" :class="_color">
         {{ separator ? format(_value) : _value }}
       </div>
     </SLink>

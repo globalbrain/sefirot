@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
-import { computed, ref } from 'vue'
+import { type Component, computed, ref } from 'vue'
 import {
   type DropdownSection,
   getSelectedOption,
@@ -9,10 +8,10 @@ import {
 import { useFlyout } from '../composables/Flyout'
 import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
-import SIcon from './SIcon.vue'
+import IconCaretDown from '~icons/ph/caret-down-bold'
 
 const props = withDefaults(defineProps<{
-  label?: any
+  label?: Component | string
   clickable?: boolean
   dropdown?: DropdownSection[]
   dropdownCaret?: boolean
@@ -80,20 +79,19 @@ function handleClickButton() {
       @click="handleClickButton"
     >
       <span class="action-label">
-        <SIcon
+        <component
           v-if="props.label && !isString(props.label)"
+          :is="props.label"
           class="action-icon"
-          :icon="props.label"
         />
         <span v-else>
           {{ props.label ?? selectedOptionLabel }}
         </span>
       </span>
 
-      <SIcon
+      <IconCaretDown
         v-if="props.dropdown.length && props.dropdownCaret"
         class="caret"
-        :icon="IconCaretDown"
       />
     </component>
 

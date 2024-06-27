@@ -1,5 +1,5 @@
 import { type ComputedRef, type MaybeRefOrGetter, computed, getCurrentInstance, onMounted, toValue, useSlots } from 'vue'
-import { isArray, isString } from '../support/Utils'
+import { isString } from '../support/Utils'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
 
@@ -42,7 +42,7 @@ export function useHasSlotContent(name = 'default'): ComputedRef<boolean> {
 
   return computed(() => {
     return !!slots[name]?.().some((s) => {
-      return isArray(s.children) ? true : !!(s.children as string).trim()
+      return Array.isArray(s.children) ? true : !!(s.children as string).trim()
     })
   })
 }

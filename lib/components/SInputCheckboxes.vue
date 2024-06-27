@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/V'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
@@ -23,7 +22,7 @@ const props = withDefaults(defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   options: Option[]

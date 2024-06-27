@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type TableMenu } from '../composables/Table'
-import { isArray } from '../support/Utils'
 import STableHeaderMenuItem from './STableHeaderMenuItem.vue'
 
 const props = defineProps<{
@@ -9,7 +8,7 @@ const props = defineProps<{
 }>()
 
 const normalizedMenu = computed(() => {
-  return isArray(props.menu[0])
+  return Array.isArray(props.menu[0])
     ? props.menu as TableMenu[][]
     : [props.menu] as TableMenu[][]
 })

@@ -1,9 +1,16 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import { type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
+import {
+  FetchError,
+  type FetchOptions,
+  type FetchRequest,
+  type FetchResponse,
+  ofetch
+} from 'ofetch'
 import { stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
+import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
 export interface HttpClient {
   <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
@@ -106,11 +113,11 @@ export class Http {
   }
 
   async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    if (body && !(body instanceof FormData)) {
+    if (body && !isFormData(body)) {
       let hasFile = false
 
       const payload = JSON.stringify(body, (_, value) => {
-        if (value instanceof Blob) {
+        if (isBlob(value)) {
           hasFile = true
           return undefined
         }
@@ -177,15 +184,11 @@ export class Http {
         return
       }
 
-      if (
-        typeof obj[property] === 'object'
-        && !(obj[property] instanceof Blob)
-        && obj[property] !== null
-      ) {
+      if (typeof obj[property] === 'object' && !isBlob(obj[property]) && obj[property] !== null) {
         this.objectToFormData(obj[property], fd, property, onlyFiles)
       } else {
         const value = obj[property] === null ? '' : obj[property]
-        if (onlyFiles && !(value instanceof Blob)) {
+        if (onlyFiles && !isBlob(value)) {
           return
         }
         fd.append(formKey, value)
@@ -196,4 +199,18 @@ export class Http {
   }
 }
 
-export type { FetchOptions }
+export function isFetchError(e: unknown): e is FetchError {
+  return (
+    e instanceof FetchError
+    || (isError(e)
+      && (isString((e as FetchError).request) || isRequest((e as FetchError).request))
+      && ((e as FetchError).response === undefined || isResponse((e as FetchError).response))
+      && e.message.startsWith(
+        `[${((e as FetchError).request as Request | undefined)?.method || (e as FetchError).options?.method || 'GET'}] ${
+          JSON.stringify(((e as FetchError).request as Request | undefined)?.url || String((e as FetchError).request) || '/')
+        }: `
+      ))
+  )
+}
+
+export { FetchError, type FetchOptions, type FetchRequest, type FetchResponse } from 'ofetch'

@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import IconCheckCircleFill from '@iconify-icons/ph/check-circle-fill'
-import IconCircle from '@iconify-icons/ph/circle-bold'
-import IconCircleDashed from '@iconify-icons/ph/circle-dashed-bold'
-import IconCircleNotch from '@iconify-icons/ph/circle-notch-bold'
-import IconXCircle from '@iconify-icons/ph/x-circle-bold'
 import { computed } from 'vue'
-import SIcon from './SIcon.vue'
+import IconCheckCircleFill from '~icons/ph/check-circle-fill'
+import IconCircle from '~icons/ph/circle-bold'
+import IconCircleDashed from '~icons/ph/circle-dashed-bold'
+import IconCircleNotch from '~icons/ph/circle-notch-bold'
+import IconXCircle from '~icons/ph/x-circle-bold'
 
 export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 export type State = 'pending' | 'ready' | 'queued' | 'running' | 'completed' | 'failed'
@@ -25,20 +24,15 @@ const classes = computed(() => [
   props.state,
   props.mode
 ])
-
-const stateIconDict = {
-  pending: IconCircle,
-  ready: IconCircle,
-  queued: IconCircleDashed,
-  running: IconCircleNotch,
-  completed: IconCheckCircleFill,
-  failed: IconXCircle
-}
 </script>
 
 <template>
   <div class="SIndicator" :class="classes">
-    <SIcon class="icon" :icon="stateIconDict[state]" />
+    <IconCircle v-if="props.state === 'pending' || props.state === 'ready'" class="icon" />
+    <IconCircleDashed v-if="props.state === 'queued'" class="icon" />
+    <IconCircleNotch v-if="props.state === 'running'" class="icon" />
+    <IconCheckCircleFill v-if="props.state === 'completed'" class="icon" />
+    <IconXCircle v-if="props.state === 'failed'" class="icon" />
   </div>
 </template>
 

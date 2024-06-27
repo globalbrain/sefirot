@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SIndicator from 'sefirot/components/SIndicator.vue'
 
-const states = ['pending', 'ready', 'queued', 'running', 'completed', 'failed']
+const states = ['pending', 'ready', 'queued', 'running', 'completed', 'failed'] as const
 </script>
 
 # SIndicator

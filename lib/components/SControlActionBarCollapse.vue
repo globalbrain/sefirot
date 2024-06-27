@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import IconArrowsInLineVertical from '@iconify-icons/ph/arrows-in-line-vertical-bold'
-import IconArrowsOutLineVertical from '@iconify-icons/ph/arrows-out-line-vertical-bold'
 import { computed, shallowRef } from 'vue'
 import { useCardState } from '../composables/Card'
 import SControlActionBarButton from './SControlActionBarButton.vue'
+import IconArrowsInLineVertical from '~icons/ph/arrows-in-line-vertical-bold'
+import IconArrowsOutLineVertical from '~icons/ph/arrows-out-line-vertical-bold'
 
 const props = defineProps<{
   as?: string

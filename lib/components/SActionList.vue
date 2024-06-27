@@ -16,7 +16,6 @@ defineProps<{
       :key="index"
       :lead-icon="item.leadIcon"
       :label="item.label"
-      :text="item.text"
       :link="item.link"
       :disabled="item.disabled"
       :tooltip="item.tooltip"

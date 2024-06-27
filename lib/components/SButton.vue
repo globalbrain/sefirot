@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { type MaybeRef, computed, unref, useSlots } from 'vue'
+import { type Component, type MaybeRef, computed, unref, useSlots } from 'vue'
 import { type Position } from '../composables/Tooltip'
 import SFragment from './SFragment.vue'
-import SIcon from './SIcon.vue'
 import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
 import STooltip from './STooltip.vue'
@@ -37,9 +36,9 @@ const props = defineProps<{
   size?: Size
   type?: Type
   mode?: Mode
-  icon?: any
-  leadIcon?: any
-  trailIcon?: any
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
   iconMode?: Mode
   label?: string
   labelMode?: Mode
@@ -62,9 +61,9 @@ const classes = computed(() => [
   props.size ?? 'medium',
   props.type ?? 'fill',
   props.mode ?? 'default',
-  { 'has-label': props.label },
-  { 'has-lead-icon': _leadIcon.value },
-  { 'has-trail-icon': props.trailIcon },
+  { 'has-label': !!props.label },
+  { 'has-lead-icon': !!_leadIcon.value },
+  { 'has-trail-icon': !!props.trailIcon },
   { loading: props.loading },
   { rounded: props.rounded },
   { block: props.block },
@@ -115,13 +114,13 @@ function handleClick(): void {
     >
       <span class="content">
         <span v-if="_leadIcon" class="icon" :class="iconMode">
-          <SIcon :icon="_leadIcon" class="icon-svg" />
+          <component :is="_leadIcon" class="icon-svg" />
         </span>
         <span v-if="label" class="label" :class="labelMode">
           {{ label }}
         </span>
         <span v-if="trailIcon" class="icon" :class="iconMode">
-          <SIcon :icon="trailIcon" class="icon-svg" />
+          <component :is="trailIcon" class="icon-svg" />
         </span>
       </span>
 
