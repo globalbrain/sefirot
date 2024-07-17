@@ -20,7 +20,8 @@
   ],
   "files": [
     "lib",
-    "config.ts"
+    "config.js",
+    "config.d.ts"
   ],
   "scripts": {
     "docs": "pnpm docs:dev",

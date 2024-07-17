@@ -1,3 +1,5 @@
+// @ts-check
+
 /**
  * Adapted from
  * @see https://github.com/unplugin/unplugin-icons/blob/67fd9b7791dc1754cb8dc46b854b22c8bb4cf380/src/core/compilers/vue3.ts
@@ -15,9 +17,14 @@ import { compileTemplate } from 'vue/compiler-sfc'
 
 const randIdFn = 'const __randId = () => Math.random().toString(36).substr(2, 10);'
 
-function handleSVGId(svg: string) {
+/**
+ * @param {string} svg
+ * @returns {{ hasID: boolean, svg: string, injectScripts: string }}
+ */
+function handleSVGId(svg) {
   const hasID = /="url\(#/.test(svg)
-  const idMap: Record<string, string> = {}
+  /** @type {Record<string, string>} */
+  const idMap = {}
   let injectScripts = ''
 
   if (hasID) {
@@ -37,7 +44,13 @@ function handleSVGId(svg: string) {
   return { hasID, svg, injectScripts }
 }
 
-function compiler(svg: string, collection: string, icon: string) {
+/**
+ * @param {string} svg
+ * @param {string} collection
+ * @param {string} icon
+ * @returns {string}
+ */
+function compiler(svg, collection, icon) {
   const { injectScripts, svg: handled } = handleSVGId(svg)
 
   let { code } = compileTemplate({
