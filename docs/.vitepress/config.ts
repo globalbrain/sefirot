@@ -73,6 +73,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SCard', link: '/components/card' },
         { text: 'SContent', link: '/components/content' },
+        { text: 'SControl', link: '/components/control' },
         { text: 'SDesc', link: '/components/desc' },
         { text: 'SDivider', link: '/components/divider' },
         { text: 'SDoc', link: '/components/doc' },
