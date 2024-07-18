@@ -1,14 +1,16 @@
 /// <reference lib="esnext" />
 /// <reference types="vitest" />
 
-import Vue from '@vitejs/plugin-vue'
+import vue from '@vitejs/plugin-vue'
 import { defineConfig } from './config/vite'
 
 export default defineConfig({
-  plugins: [Vue()],
+  plugins: [vue()],
 
   resolve: {
-    alias: { 'tests/': new URL('./tests/', import.meta.url).pathname }
+    alias: {
+      'tests/': new URL('./tests/', import.meta.url).pathname
+    }
   },
 
   test: {

@@ -11,7 +11,7 @@
  * @license MIT
  */
 
-import Icons from 'unplugin-icons/vite'
+import icons from 'unplugin-icons/vite'
 import { mergeConfig } from 'vite'
 import { compileTemplate } from 'vue/compiler-sfc'
 
@@ -72,7 +72,7 @@ function compiler(svg, collection, icon) {
 /** @type {import('vite').UserConfig} */
 export const baseConfig = {
   // TODO:: remove custom compiler when unplugin-icons is updated
-  plugins: [Icons({ scale: 1, compiler: { compiler } })],
+  plugins: [icons({ scale: 1, compiler: { compiler } })],
 
   resolve: {
     alias: { 'sefirot/': new URL('../lib/', import.meta.url).pathname },
