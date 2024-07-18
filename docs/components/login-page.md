@@ -124,7 +124,9 @@ interface ActionSocial {
 }
 ```
 
-When selecting `type: 'password'`, it will open a email/password form modal when a user clicks the action button, and `onSubmit` will be called when the user submits the form. You can await for a promise to show a loading spinner while the form is being submitted.
+When selecting `type: 'password'`, it will open a email/password form modal when a user clicks the action button, and `onSubmit` will be called when the user submits the form.
+
+You can await for a promise to show a loading spinner while the form is being submitted. If you return `false`, the form will not close and the error message will be shown.
 
 ```ts
 const actions = [
@@ -133,7 +135,11 @@ const actions = [
     async onSubmit(email, password) {
       // The email/password dialog will show loading spinner
       // while this promise is being awaited
-      await login(email, password)
+      const result = await login(email, password)
+
+      // If the promise returns false, the dialog will not close
+      // and the error message will be shown.
+      return result
     }
   }
 ]

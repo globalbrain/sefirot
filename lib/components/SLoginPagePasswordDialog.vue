@@ -2,6 +2,7 @@
 import { useD } from '../composables/D'
 import { useV } from '../composables/V'
 import { email, maxLength, required } from '../validation/rules'
+import SAlert from './SAlert.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
 import SContent from './SContent.vue'
@@ -13,6 +14,7 @@ import SInputText from './SInputText.vue'
 
 defineProps<{
   loading: boolean
+  error: boolean
 }>()
 
 const emit = defineEmits<{
@@ -51,6 +53,9 @@ async function onSubmit() {
         <SContent>
           <h2>Sign in to account</h2>
         </SContent>
+        <SAlert v-if="error" mode="danger">
+          <p>Invalid email or password.</p>
+        </SAlert>
         <SInputText
           name="email"
           type="email"

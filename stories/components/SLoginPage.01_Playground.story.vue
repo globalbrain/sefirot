@@ -18,7 +18,7 @@ const coverPhotographer = {
 }
 
 const actions: Action[] = [
-  { type: 'password', onSubmit: async () => { await sleep(1000) } },
+  { type: 'password', onSubmit: async () => { await sleep(1000); return true } },
   { type: 'google', onClick: async () => {} }
 ]
 </script>

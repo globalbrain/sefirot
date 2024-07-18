@@ -23,7 +23,7 @@ export type Action = ActionPassword | ActionSocial
 
 export interface ActionPassword {
   type: 'password'
-  onSubmit(email: string, password: string): Promise<void>
+  onSubmit(email: string, password: string): Promise<boolean>
 }
 
 export interface ActionSocial {
@@ -44,6 +44,7 @@ const passwordDialog = usePower()
 
 const selectedPasswordAction = ref<ActionPassword | null>(null)
 const actionInProgress = ref(false)
+const actionError = ref(false)
 
 const coverBgImageStyle = computed(() => `url(${props.cover})`)
 
@@ -77,9 +78,14 @@ function onAction(action: Action) {
 
 async function onSubmit(email: string, password: string) {
   actionInProgress.value = true
-  await selectedPasswordAction.value!.onSubmit(email, password)
+
+  actionError.value = !(await selectedPasswordAction.value!.onSubmit(email, password))
+
   actionInProgress.value = false
-  passwordDialog.off()
+
+  if (!actionError.value) {
+    passwordDialog.off()
+  }
 }
 </script>
 
@@ -128,6 +134,7 @@ async function onSubmit(email: string, password: string) {
     <SModal :open="passwordDialog.state.value" @close="passwordDialog.off">
       <SLoginPagePasswordDialog
         :loading="actionInProgress"
+        :error="actionError"
         @cancel="passwordDialog.off"
         @submit="onSubmit"
       />
