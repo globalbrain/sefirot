@@ -49,9 +49,16 @@ interface CoverPhotographer {
   link: string
 }
 
-interface Action {
+type Action = ActionPassword | ActionSocial
+
+interface ActionPassword {
+  type: 'password'
+  onSubmit(email: string, password: string): Promise<void>
+}
+
+interface ActionSocial {
   type: 'google'
-  onClick: () => Promise<void>
+  onClick(): Promise<void>
 }
 ```
 
@@ -97,15 +104,37 @@ interface CoverPhotographer {
 
 ### `:actions`
 
-This prop is an array of login buttons, where `type` is auth provider, and `onClick` is a function to log in.
+This prop is an array of login buttons, where `type` is auth provider.
 
 ```ts
 interface Props {
   actions: Action[]
 }
 
-interface Action {
-  type: 'google'
-  onClick: () => Promise<void>
+type Action = ActionPassword | ActionSocial
+
+interface ActionPassword {
+  type: 'password'
+  onSubmit(email: string, password: string): Promise<void>
 }
+
+interface ActionSocial {
+  type: 'google'
+  onClick(): Promise<void>
+}
+```
+
+When selecting `type: 'password'`, it will open a email/password form modal when a user clicks the action button, and `onSubmit` will be called when the user submits the form. You can await for a promise to show a loading spinner while the form is being submitted.
+
+```ts
+const actions = [
+  {
+    type: 'password',
+    async onSubmit(email, password) {
+      // The email/password dialog will show loading spinner
+      // while this promise is being awaited
+      await login(email, password)
+    }
+  }
+]
 ```
