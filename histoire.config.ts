@@ -1,6 +1,6 @@
 import { HstVue } from '@histoire/plugin-vue'
 import { defaultColors, defineConfig } from 'histoire'
-import baseConfig from './config'
+import { baseConfig } from './config/vite'
 
 function getDocsHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {

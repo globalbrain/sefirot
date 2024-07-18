@@ -12,7 +12,7 @@
  */
 
 import Icons from 'unplugin-icons/vite'
-import { defineConfig } from 'vite'
+import { mergeConfig } from 'vite'
 import { compileTemplate } from 'vue/compiler-sfc'
 
 const randIdFn = 'const __randId = () => Math.random().toString(36).substr(2, 10);'
@@ -69,11 +69,13 @@ function compiler(svg, collection, icon) {
   return code
 }
 
-export default defineConfig({
+/** @type {import('vite').UserConfig} */
+export const baseConfig = {
+  // TODO:: remove custom compiler when unplugin-icons is updated
   plugins: [Icons({ scale: 1, compiler: { compiler } })],
 
   resolve: {
-    alias: { 'sefirot/': new URL('./lib/', import.meta.url).pathname },
+    alias: { 'sefirot/': new URL('../lib/', import.meta.url).pathname },
 
     dedupe: [
       '@sentry/browser',
@@ -111,4 +113,12 @@ export default defineConfig({
       'markdown-it'
     ]
   }
-})
+}
+
+/**
+ * @param {import('vite').UserConfigExport} config
+ */
+export function defineConfig(config = {}) {
+  return async (/** @type {import("vite").ConfigEnv} */ configEnv) =>
+    mergeConfig(baseConfig, await (typeof config === 'function' ? config(configEnv) : config))
+}
