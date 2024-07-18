@@ -53,18 +53,6 @@
   --vp-c-text-3: var(--c-text-3);
 }
 
-/* FIXME: remove in next version of vitepress */
-.vp-doc h4 {
-  margin: 24px 0 0;
-  letter-spacing: -0.01em;
-  line-height: 24px;
-  font-size: 18px;
-
-  > code {
-    font-size: 0.9em;
-  }
-}
-
 textarea {
   font-family: inherit;
 }
