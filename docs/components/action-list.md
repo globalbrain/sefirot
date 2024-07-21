@@ -34,9 +34,9 @@ import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from '@globalbrain/sefirot/lib/components/SActionList.vue'
 
 const list: ActionList = [
-  { leadIcon: IconActivity, text: 'Show activity' },
-  { leadIcon: IconEye, text: 'Preview' },
-  { leadIcon: IconTrash, text: 'Delete item' }
+  { leadIcon: IconActivity, label: 'Show activity' },
+  { leadIcon: IconEye, label: 'Preview' },
+  { leadIcon: IconTrash, label: 'Delete item' }
 ]
 </script>
 
@@ -62,12 +62,12 @@ interface ActionListItem {
   // The icon to be displayed on the left side of the text.
   leadIcon?: Component
 
-  // The text to be displayed.
-  text: string
-
   // The link to be navigated to when the item is clicked. When this
   // prop is set, the item is rendered via `<SLink>`.
   link?: string
+
+  // The text to be displayed.
+  label: string
 
   // Whether the item is disabled.
   disabled?: boolean
@@ -121,12 +121,3 @@ type ActionList = ActionListItem[]
 ### `ActionListItem`
 
 The type of action list item. See `:list` for the details.
-
-```ts
-interface ActionListItem {
-  leadIcon?: Component
-  text: string
-  link?: string
-  onClick?(): void
-}
-```
