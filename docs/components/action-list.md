@@ -5,9 +5,9 @@ import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
 
 const list: ActionList = [
-  { leadIcon: IconActivity, text: 'Show activity' },
-  { leadIcon: IconEye, text: 'Preview' },
-  { leadIcon: IconTrash, text: 'Delete item' }
+  { leadIcon: IconActivity, label: 'Show activity' },
+  { leadIcon: IconEye, label: 'Preview' },
+  { leadIcon: IconTrash, label: 'Delete item' }
 ]
 </script>
 
