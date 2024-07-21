@@ -1,5 +1,12 @@
 
 
+# [3.50.0](https://github.com/globalbrain/sefirot/compare/v3.49.0...v3.50.0) (2024-07-18)
+
+
+### Features
+
+* **login-page:** add password action ([#543](https://github.com/globalbrain/sefirot/issues/543)) ([481ed2a](https://github.com/globalbrain/sefirot/commit/481ed2a4286365945974a787756edb2755e39143))
+
 # [3.49.0](https://github.com/globalbrain/sefirot/compare/v3.48.0...v3.49.0) (2024-06-24)
 
 

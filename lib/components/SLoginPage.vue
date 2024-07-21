@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+import { usePower } from '../composables/Power'
 import SButton from './SButton.vue'
 import SLink from './SLink.vue'
+import SLoginPagePasswordDialog from './SLoginPagePasswordDialog.vue'
+import SModal from './SModal.vue'
 import SIconGbLogoWhite from './icon/SIconGbLogoWhite.vue'
+import IconLockKey from '~icons/ph/lock-key-fill'
 import IconGoogle from '~icons/ri/google-fill'
 
 export interface CoverTitle {
@@ -15,10 +19,19 @@ export interface CoverPhotographer {
   link: string
 }
 
-export interface Action {
-  type: 'google'
-  onClick: () => Promise<void>
+export type Action = ActionPassword | ActionSocial
+
+export interface ActionPassword {
+  type: 'password'
+  onSubmit(email: string, password: string): Promise<boolean>
 }
+
+export interface ActionSocial {
+  type: 'google'
+  onClick(): Promise<void>
+}
+
+export type ActionType = 'password' | 'google'
 
 const props = defineProps<{
   cover: string
@@ -27,23 +40,51 @@ const props = defineProps<{
   actions: Action[]
 }>()
 
+const passwordDialog = usePower()
+
+const selectedPasswordAction = ref<ActionPassword | null>(null)
+const actionInProgress = ref(false)
+const actionError = ref(false)
+
 const coverBgImageStyle = computed(() => `url(${props.cover})`)
 
-function getActionLabel(type: Action['type']) {
+function getActionLabel(type: ActionType) {
   switch (type) {
+    case 'password':
+      return 'Sign in via Password'
     case 'google':
       return 'Sign in via Google'
-    default:
-      throw new Error('[sefirot] Invalid action type')
   }
 }
 
-function getIconComponent(type: Action['type']) {
+function getIconComponent(type: ActionType) {
   switch (type) {
+    case 'password':
+      return IconLockKey
     case 'google':
       return IconGoogle
-    default:
-      throw new Error('[sefirot] Invalid action type')
+  }
+}
+
+function onAction(action: Action) {
+  switch (action.type) {
+    case 'password':
+      selectedPasswordAction.value = action
+      return passwordDialog.on()
+    case 'google':
+      return action.onClick()
+  }
+}
+
+async function onSubmit(email: string, password: string) {
+  actionInProgress.value = true
+
+  actionError.value = !(await selectedPasswordAction.value!.onSubmit(email, password))
+
+  actionInProgress.value = false
+
+  if (!actionError.value) {
+    passwordDialog.off()
   }
 }
 </script>
@@ -74,20 +115,30 @@ function getIconComponent(type: Action['type']) {
           <p class="form-lead">This is a very closed login form meant for specific audiences only. If you can’t login, well, you know who to ask.</p>
         </div>
 
-        <div class="form-actions">
-          <SButton
-            v-for="action in actions"
-            :key="action.type"
-            size="large"
-            mode="white"
-            rounded
-            :label="getActionLabel(action.type)"
-            :icon="getIconComponent(action.type)"
-            @click="action.onClick"
-          />
+        <div class="form-actions" :class="{ multi: actions.length > 1 }">
+          <div v-for="action in actions" :key="action.type" class="form-action">
+            <SButton
+              size="large"
+              mode="white"
+              block
+              rounded
+              :label="getActionLabel(action.type)"
+              :icon="getIconComponent(action.type)"
+              @click="onAction(action)"
+            />
+          </div>
         </div>
       </div>
     </div>
+
+    <SModal :open="passwordDialog.state.value" @close="passwordDialog.off">
+      <SLoginPagePasswordDialog
+        :loading="actionInProgress"
+        :error="actionError"
+        @cancel="passwordDialog.off"
+        @submit="onSubmit"
+      />
+    </SModal>
   </div>
 </template>
 
@@ -196,9 +247,15 @@ function getIconComponent(type: Action['type']) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   padding-top: 24px;
   text-align: center;
   margin: 0 auto;
+}
+
+.form-actions.multi .form-action {
+  display: block;
+  width: 100%;
+  max-width: 256px;
 }
 </style>
