@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
-import { useD } from 'sefirot/composables/D'
-import { useV } from 'sefirot/composables/V'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { type Hms } from 'sefirot/support/Day'
 import { requiredHmsIf } from 'sefirot/validation/rules'
 import { type RequiredIfCondition } from 'sefirot/validation/validators'
@@ -87,11 +87,11 @@ describe('validation/rules/requiredHmsIf', () => {
   test('condition can be reactive', async () => {
     const condition = ref(false)
 
-    const { data } = useD({
+    const { data } = useData({
       v: {} as Hms
     })
 
-    const { validation } = useV(data, {
+    const { validation } = useValidation(data, {
       v: { required: requiredHmsIf(() => condition.value) }
     })
 

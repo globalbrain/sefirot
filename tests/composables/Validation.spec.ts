@@ -1,16 +1,16 @@
-import { useD } from 'sefirot/composables/D'
-import { useV } from 'sefirot/composables/V'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { setup } from 'tests/Utils'
 import { ref } from 'vue'
 
 describe('composables/V', () => {
   test('it validates the data', () => {
     const vm = setup(() => {
-      const { data } = useD({
+      const { data } = useData({
         name: null as string | null
       })
 
-      const { validation } = useV(data, {
+      const { validation } = useValidation(data, {
         name: { required: (v: any) => v != null }
       })
 
@@ -31,7 +31,7 @@ describe('composables/V', () => {
 
   test('data can be getter', () => {
     const vm = setup(() => {
-      const { data } = useD({
+      const { data } = useData({
         v: 1
       })
 
@@ -41,7 +41,7 @@ describe('composables/V', () => {
         }
       }
 
-      const { validation } = useV(targetData, {
+      const { validation } = useValidation(targetData, {
         a: { maxValue: (v: any) => v < 3 }
       })
 
@@ -60,13 +60,13 @@ describe('composables/V', () => {
 
   test('rules can be getter', () => {
     const vm = setup(() => {
-      const { data } = useD({
+      const { data } = useData({
         v: 5
       })
 
       const max = ref(6)
 
-      const { validation } = useV(data, () => ({
+      const { validation } = useValidation(data, () => ({
         v: { maxValue: (v: any) => v < max.value }
       }))
 
@@ -85,12 +85,12 @@ describe('composables/V', () => {
 
   test('it can validate all fields in once', async () => {
     const vm = setup(() => {
-      const { data } = useD({
+      const { data } = useData({
         a: 1,
         b: 2
       })
 
-      const { validate } = useV(data, {
+      const { validate } = useValidation(data, {
         a: { maxValue: (v: any) => v < 3 },
         b: { maxValue: (v: any) => v < 3 }
       })
@@ -105,11 +105,11 @@ describe('composables/V', () => {
 
   test('it can set and reset dirty state', () => {
     const vm = setup(() => {
-      const { data } = useD({
+      const { data } = useData({
         name: null as string | null
       })
 
-      const { validation, reset } = useV(data, {
+      const { validation, reset } = useValidation(data, {
         name: { required: (v: any) => v != null }
       })
 
