@@ -11,6 +11,7 @@
  * @license MIT
  */
 
+import { fileURLToPath } from 'node:url'
 import icons from 'unplugin-icons/vite'
 import { mergeConfig } from 'vite'
 
@@ -19,7 +20,7 @@ export const baseConfig = {
   plugins: [icons({ scale: 1 })],
 
   resolve: {
-    alias: { 'sefirot/': new URL('../lib/', import.meta.url).pathname },
+    alias: { 'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url)) },
 
     dedupe: [
       '@sentry/browser',
