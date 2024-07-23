@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DatePicker } from 'v-calendar'
 import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import { type Day, day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 

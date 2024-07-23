@@ -34,7 +34,7 @@ export interface VNotification {
   notify(message?: Snackbar): void
 }
 
-export function useV<
+export function useValidation<
   Data extends { [key in keyof Rules]: any },
   Rules extends ValidationArgs = ValidationArgs
 >(

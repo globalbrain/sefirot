@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SInputText, { type Align, type TextColor } from './SInputText.vue'
 import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
 

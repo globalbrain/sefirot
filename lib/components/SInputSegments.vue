@@ -1,6 +1,6 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
 import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 

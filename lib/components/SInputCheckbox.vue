@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import IconCheck from '~icons/ph/check-bold'
 import IconMinus from '~icons/ph/minus-bold'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SButton from './SButton.vue'
 import SInputBase from './SInputBase.vue'
 import IconImage from '~icons/ph/image-bold'

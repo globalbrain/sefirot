@@ -7,7 +7,7 @@
   "
 >
 import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 

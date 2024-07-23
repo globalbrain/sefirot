@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import IconCaretDown from '~icons/ph/caret-down-bold'
 import IconCaretUp from '~icons/ph/caret-up-bold'

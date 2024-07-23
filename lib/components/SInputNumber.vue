@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Validatable } from '../composables/Validation'
 import { isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
 

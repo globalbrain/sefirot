@@ -5,7 +5,7 @@ export interface D<T extends Record<string, any>> {
   init(): void
 }
 
-export function useD<T extends Record<string, any>>(data: T): D<T> {
+export function useData<T extends Record<string, any>>(data: T): D<T> {
   const initialData = JSON.stringify(data)
 
   const refData = ref(data) as Ref<T>

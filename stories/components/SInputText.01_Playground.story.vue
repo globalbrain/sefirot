@@ -2,8 +2,8 @@
 import SButton from 'sefirot/components/SButton.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
 import SSpinner from 'sefirot/components/SSpinner.vue'
-import { useD } from 'sefirot/composables/D'
-import { useV } from 'sefirot/composables/V'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { required } from 'sefirot/validation/rules'
 import { type DefineComponent, computed, ref } from 'vue'
 import IconCheckCircle from '~icons/ph/check-circle-bold'
@@ -11,11 +11,11 @@ import IconXCircle from '~icons/ph/x-circle-bold'
 
 const title = 'Components / SInputText / 01. Playground'
 
-const { data, init } = useD({
+const { data, init } = useData({
   name: null as string | null
 })
 
-const { validation, validateAndNotify } = useV(data, {
+const { validation, validateAndNotify } = useValidation(data, {
   name: {
     required: required()
   }
