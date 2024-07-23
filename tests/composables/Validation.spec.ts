@@ -3,7 +3,7 @@ import { useValidation } from 'sefirot/composables/Validation'
 import { setup } from 'tests/Utils'
 import { ref } from 'vue'
 
-describe('composables/V', () => {
+describe('composables/Validation', () => {
   test('it validates the data', () => {
     const vm = setup(() => {
       const { data } = useData({
