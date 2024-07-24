@@ -29,7 +29,8 @@ export default defineConfig({
     onConsoleLog(log, type) {
       if (type !== 'stderr') { return }
       ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      if (log.trim() === '') { return false }
+      // eslint-disable-next-line no-control-regex
+      if (log.replace(/\u001B\[.*?m/g, '').trim() === '') { return false }
     }
   }
 })
