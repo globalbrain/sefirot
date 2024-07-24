@@ -1,8 +1,4 @@
-declare module '~icons/*' {
-  import type { FunctionalComponent, SVGAttributes } from 'vue'
-
-  const component: FunctionalComponent<SVGAttributes>
-  export default component
-}
+/// <reference types="vite/client" />
+/// <reference types="unplugin-icons/types/vue3" />
 
 // this file contains public types which are exposed to external modules
