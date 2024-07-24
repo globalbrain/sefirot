@@ -35,6 +35,9 @@ importers:
       qs:
         specifier: ^6.12.3
         version: 6.12.3
+      unplugin-icons:
+        specifier: npm:@globalbrain/unplugin-icons@^0.19.1
+        version: '@globalbrain/unplugin-icons@0.19.1(@vue/compiler-sfc@3.4.33)(vue-template-compiler@2.7.16)'
     devDependencies:
       '@globalbrain/eslint-config':
         specifier: ^1.6.0
@@ -129,9 +132,6 @@ importers:
       typescript:
         specifier: ~5.5.3
         version: 5.5.3
-      unplugin-icons:
-        specifier: npm:@globalbrain/unplugin-icons@^0.19.1
-        version: '@globalbrain/unplugin-icons@0.19.1(@vue/compiler-sfc@3.4.33)(vue-template-compiler@2.7.16)'
       v-calendar:
         specifier: ^3.1.2
         version: 3.1.2(@popperjs/core@2.11.8)(vue@3.4.33(typescript@5.5.3))
@@ -7585,7 +7585,7 @@ snapshots:
       ky: 1.4.0
       registry-auth-token: 5.0.2
       registry-url: 6.0.1
-      semver: 7.6.2
+      semver: 7.6.3
 
   param-case@3.0.4:
     dependencies:
@@ -7946,7 +7946,7 @@ snapshots:
 
   semver-diff@4.0.0:
     dependencies:
-      semver: 7.6.2
+      semver: 7.6.3
 
   semver@5.7.2: {}
 
