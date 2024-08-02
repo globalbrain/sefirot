@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import SInputImage from 'sefirot/components/SInputImage.vue'
-import { useForm } from 'sefirot/composables/Form'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { maxFileSize } from 'sefirot/validation/rules'
 
 const title = 'Components / SInputImage / 01. Playground'
 const docs = '/components/input-image'
 
-const { data, validation } = useForm({
-  data: {
-    image: null as File | null
-  },
-  rules: {
-    image: {
-      maxFileSize: maxFileSize('500kb')
-    }
+const { data } = useData({
+  image: null as File | null
+})
+
+const { validation } = useValidation(data, {
+  image: {
+    maxFileSize: maxFileSize('500kb')
   }
 })
 

@@ -69,7 +69,11 @@ textarea {
 .gap-12 { gap: 12px; }
 .gap-16 { gap: 16px; }
 
-.m-0 { margin: 0 !important; }
+.pl-24 { padding-left: 24px; }
+.pr-16 { padding-right: 16px; }
+
+.py-8  { padding-top: 8px; padding-bottom: 8px; }
+.px-24 { padding-right: 24px; padding-left: 24px; }
 
 .max-w-128 { max-width: 128px; }
 .max-w-192 { max-width: 192px; }
@@ -78,6 +82,7 @@ textarea {
 .h-64 { height: 64px; }
 
 .text-14 { font-size: 14px !important; }
+.font-w-600 { font-weight: 600; }
 
 .bg-info { background-color: var(--c-bg-info-1); }
 

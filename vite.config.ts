@@ -1,14 +1,14 @@
 /// <reference lib="esnext" />
+/// <reference types="vitest" />
 
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vitest/config'
+import { defineConfig } from './config/vite'
 
 export default defineConfig({
   plugins: [vue()],
 
   resolve: {
     alias: {
-      'sefirot/': new URL('./lib/', import.meta.url).pathname,
       'tests/': new URL('./tests/', import.meta.url).pathname
     }
   },
@@ -29,7 +29,8 @@ export default defineConfig({
     onConsoleLog(log, type) {
       if (type !== 'stderr') { return }
       ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      if (log.trim() === '') { return false }
+      // eslint-disable-next-line no-control-regex
+      if (log.replace(/\u001B\[.*?m/g, '').trim() === '') { return false }
     }
   }
 })

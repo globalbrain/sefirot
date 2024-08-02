@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed, ref } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Component, computed, ref } from 'vue'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -28,7 +27,7 @@ const props = defineProps<{
   note?: string
   help?: string
   placeholder?: Placeholder
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   noYear?: boolean
@@ -98,7 +97,7 @@ function updateDate(e: FocusEvent) {
 }
 
 function update(type: ValueType, value: string) {
-  if (_value.value === null) {
+  if (_value.value == null) {
     return
   }
 

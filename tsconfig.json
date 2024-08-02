@@ -3,34 +3,39 @@
     "baseUrl": "./",
     "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "bundler",
-    "strict": true,
+    "esModuleInterop": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "sourceMap": true,
     "skipLibCheck": true,
-
-    "lib": ["es2020", "dom", "dom.iterable"],
-
+    "strict": true,
+    "lib": [
+      "es2020",
+      "dom",
+      "dom.iterable"
+    ],
     "paths": {
-      "sefirot/*": ["lib/*"]
+      "sefirot/*": [
+        "lib/*"
+      ]
     },
-
-    "types": ["@types/node", "vitest/globals"]
+    "types": [
+      "@types/node",
+      "vitest/globals"
+    ]
   },
-
   "include": [
+    "*.config.ts",
     "docs",
     "docs/.vitepress/**/*",
+    "env.d.ts",
     "lib",
     "stories",
-    "tests",
-    "*.config.ts",
-    "*.config.mts",
-    "env.d.ts"
+    "tests"
   ],
-
-  "exclude": ["node_modules", "**/dist/**"]
+  "exclude": [
+    "**/dist/**",
+    "node_modules"
+  ]
 }

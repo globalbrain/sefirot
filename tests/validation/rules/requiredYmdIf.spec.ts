@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
-import { useD } from 'sefirot/composables/D'
-import { useV } from 'sefirot/composables/V'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { type Ymd } from 'sefirot/support/Day'
 import { requiredYmdIf } from 'sefirot/validation/rules'
 import { type RequiredIfCondition } from 'sefirot/validation/validators'
@@ -84,11 +84,11 @@ describe('validation/rules/requiredYmdIf', () => {
   test('condition can be reactive', async () => {
     const condition = ref(false)
 
-    const { data } = useD({
+    const { data } = useData({
       v: {} as Ymd
     })
 
-    const { validation } = useV(data, {
+    const { validation } = useValidation(data, {
       v: { required: requiredYmdIf(() => condition.value) }
     })
 

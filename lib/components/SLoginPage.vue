@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import LockKey from '@iconify-icons/ph/lock-key-fill'
-import IconGoogle from '@iconify-icons/ri/google-fill'
 import { computed, ref } from 'vue'
 import { usePower } from '../composables/Power'
 import SButton from './SButton.vue'
@@ -8,6 +6,8 @@ import SLink from './SLink.vue'
 import SLoginPagePasswordDialog from './SLoginPagePasswordDialog.vue'
 import SModal from './SModal.vue'
 import SIconGbLogoWhite from './icon/SIconGbLogoWhite.vue'
+import IconLockKey from '~icons/ph/lock-key-fill'
+import IconGoogle from '~icons/ri/google-fill'
 
 export interface CoverTitle {
   text: string
@@ -60,7 +60,7 @@ function getActionLabel(type: ActionType) {
 function getIconComponent(type: ActionType) {
   switch (type) {
     case 'password':
-      return LockKey
+      return IconLockKey
     case 'google':
       return IconGoogle
   }

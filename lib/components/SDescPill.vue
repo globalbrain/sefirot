@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isArray } from '../support/Utils'
 import SDescEmpty from './SDescEmpty.vue'
 import SPill, { type Mode } from './SPill.vue'
 
@@ -15,7 +14,7 @@ const props = defineProps<{
 
 const pills = computed(() => {
   return props.pill
-    ? isArray(props.pill) ? props.pill : [props.pill]
+    ? Array.isArray(props.pill) ? props.pill : [props.pill]
     : null
 })
 </script>

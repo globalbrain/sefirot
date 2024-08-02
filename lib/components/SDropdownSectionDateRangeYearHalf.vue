@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useV } from '../composables/V'
+import { useValidation } from '../composables/Validation'
 import { YearHalf } from '../support/DateRange'
 import { maxValue, minValue, required } from '../validation/rules'
 import SInputNumber from './SInputNumber.vue'
@@ -13,7 +13,7 @@ const emit = defineEmits<{
   (e: 'change', value: YearHalf): void
 }>()
 
-const { validation } = useV(() => ({
+const { validation } = useValidation(() => ({
   year: props.preset.year
 }), {
   year: {

@@ -1,13 +1,17 @@
+---
+outline: deep
+---
+
 <script setup lang="ts">
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SCardFooter from 'sefirot/components/SCardFooter.vue'
-import SCardFooterAction from 'sefirot/components/SCardFooterAction.vue'
-import SCardFooterActions from 'sefirot/components/SCardFooterActions.vue'
-import SCardHeader from 'sefirot/components/SCardHeader.vue'
-import SCardHeaderActionClose from 'sefirot/components/SCardHeaderActionClose.vue'
-import SCardHeaderActions from 'sefirot/components/SCardHeaderActions.vue'
-import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
+import SControl from 'sefirot/components/SControl.vue'
+import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
+import SControlActionBarCollapse from 'sefirot/components/SControlActionBarCollapse.vue'
+import SControlButton from 'sefirot/components/SControlButton.vue'
+import SControlLeft from 'sefirot/components/SControlLeft.vue'
+import SControlRight from 'sefirot/components/SControlRight.vue'
+import SControlText from 'sefirot/components/SControlText.vue'
 </script>
 
 # SCard
@@ -20,66 +24,84 @@ import SCardHeaderTitle from 'sefirot/components/SCardHeaderTitle.vue'
 >
   <div class="flex flex-wrap gap-12">
     <SCard>
-      <SCardHeader>
-        <SCardHeaderTitle>Header title</SCardHeaderTitle>
-        <SCardHeaderActions>
-          <SCardHeaderActionClose />
-        </SCardHeaderActions>
-      </SCardHeader>
-      <SCardBlock space="compact">
-        <p class="m-0 text-14">
+      <SCardBlock size="small" class="pl-24 pr-16">
+        <SControl>
+          <SControlLeft>
+            <SControlText class="font-w-600">
+              Header title
+            </SControlText>
+          </SControlLeft>
+          <SControlRight>
+            <SControlActionBar>
+              <SControlActionBarCollapse />
+            </SControlActionBar>
+          </SControlRight>
+        </SControl>
+      </SCardBlock>
+      <SCardBlock class="px-24 py-8">
+        <p class="text-14">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
           tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
           quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
           consequat.
         </p>
       </SCardBlock>
-      <SCardFooter>
-        <SCardFooterActions>
-          <SCardFooterAction label="Cancel" />
-          <SCardFooterAction mode="info" label="Submit" />
-        </SCardFooterActions>
-      </SCardFooter>
+      <SCardBlock size="small" class="px-24">
+        <SControl>
+          <SControlRight>
+            <SControlButton label="Cancel" />
+            <SControlButton mode="info" label="Submit" />
+          </SControlRight>
+        </SControl>
+      </SCardBlock>
     </SCard>
   </div>
 </Showcase>
 
 ## Usage
 
-`<SCard>` components comes with various child components that you can use to build your card. For example, basic card with header, body, and footer can be built like this:
+`<SCard>` comes with various `SCard` and `SControl` components that you can use to build your card. For example, basic card with header, body, and footer can be built like this:
 
 ```vue
 <script setup lang="ts">
 import SCard from '@globalbrain/sefirot/lib/components/SCard.vue'
 import SCardBlock from '@globalbrain/sefirot/lib/components/SCardBlock.vue'
-import SCardFooter from '@globalbrain/sefirot/lib/components/SCardFooter.vue'
-import SCardFooterAction from '@globalbrain/sefirot/lib/components/SCardFooterAction.vue'
-import SCardFooterActions from '@globalbrain/sefirot/lib/components/SCardFooterActions.vue'
-import SCardHeader from '@globalbrain/sefirot/lib/components/SCardHeader.vue'
-import SCardHeaderActionClose from '@globalbrain/sefirot/lib/components/SCardHeaderActionClose.vue'
-import SCardHeaderActions from '@globalbrain/sefirot/lib/components/SCardHeaderActions.vue'
-import SCardHeaderTitle from '@globalbrain/sefirot/lib/components/SCardHeaderTitle.vue'
+import SControl from '@globalbrain/sefirot/lib/components/SControl.vue'
+import SControlActionBar from '@globalbrain/sefirot/lib/components/SControlActionBar.vue'
+import SControlActionBarClose from '@globalbrain/sefirot/lib/components/SControlActionBarClose.vue'
+import SControlButton from '@globalbrain/sefirot/lib/components/SControlButton.vue'
+import SControlLeft from '@globalbrain/sefirot/lib/components/SControlLeft.vue'
+import SControlRight from '@globalbrain/sefirot/lib/components/SControlRight.vue'
+import SControlText from '@globalbrain/sefirot/lib/components/SControlText.vue'
 </script>
 
 <template>
   <SCard>
-    <SCardHeader>
-      <SCardHeaderTitle>
-        Header title
-      </SCardHeaderTitle>
-      <SCardHeaderActions>
-        <SCardHeaderActionClose />
-      </SCardHeaderActions>
-    </SCardHeader>
-    <SCardBlock>
-      <p>Lorem ipsum...</p>
+    <SCardBlock size="small" class="s-pl-24 s-pr-16">
+      <SControl>
+        <SControlLeft>
+          <SControlText class="s-font-w-600">
+            Header title
+          </SControlText>
+        </SControlLeft>
+        <SControlRight>
+          <SControlActionBar>
+            <SControlActionBarClose />
+          </SControlActionBar>
+        </SControlRight>
+      </SControl>
     </SCardBlock>
-    <SCardFooter>
-      <SCardFooterActions>
-        <SCardFooterAction mode="mute" label="Cancel" />
-        <SCardFooterAction mode="info" label="Submit" />
-      </SCardFooterActions>
-    </SCardFooter>
+    <SCardBlock class="s-px-24 s-py-8">
+      <p class="s-text-14">Lorem ipsum...</p>
+    </SCardBlock>
+    <SCardBlock size="small" class="s-px-24">
+      <SControl>
+        <SControlRight>
+          <SControlButton label="Cancel" />
+          <SControlButton mode="info" label="Submit" />
+        </SControlRight>
+      </SControl>
+    </SCardBlock>
   </SCard>
 </template>
 ```
@@ -92,18 +114,23 @@ The `<SCard>` is the root component of the card. All child components must be pl
 
 ```vue-html
 <SCard>
-  <SCardHeader>...</SCardHeader>
   <SCardBlock>...</SCardBlock>
-  <SCardFooter>...</SCardFooter>
+  <SCardBlock>...</SCardBlock>
+  <SCardBlock>...</SCardBlock>
 </SCard>
 ```
 
-### Root mode
+### Props
+
+#### `:mode`
 
 You may define `:mode` to change the appearance of the card. Usually, this is most used when creating "dangerous" cards, such as a card that displays a warning message before deleting something.
 
 ```ts
 interface Props {
+  /**
+   * @default 'neutral'
+   */
   mode?: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 }
 ```
@@ -114,6 +141,76 @@ interface Props {
 </SCard>
 ```
 
+#### `:size`
+
+You may define `:size` to change the size of the card. This prop is **required** if you are rendering the card inside a `<SModal>` component. It has no effect when the card is rendered as a standalone component.
+
+```ts
+interface Props {
+  size?: 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+}
+```
+
+```vue-html
+<SCard size="small">
+  ...
+</SCard>
+```
+
+## Block
+
+Use `<SCardBlock>` to display generic block element. This component can be used to create the header, body, or footer of the card.
+
+```vue-html
+<SCard>
+  <SCardBlock>
+    <p>Lorem ipsum...</p>
+  </SCardBlock>
+</SCard>
+```
+
+### Props
+
+#### `:size`
+
+You need to define `:size` to specify the size of the block. This prop is **required**. You might need to add some padding to the block to make it look good.
+
+```ts
+interface Props {
+  size: 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
+}
+```
+
+```vue-html
+<SCard>
+  <SCardBlock size="small" class="s-px-24 s-py-8">
+    <p>Lorem ipsum...</p>
+  </SCardBlock>
+</SCard>
+```
+
+#### `:bg`
+
+You may define `:bg` to change the background color of the block. This prop is useful when you want to emphasize the block.
+
+```ts
+interface Props {
+  /**
+   * @default 'elv-3'
+   */
+  bg?: 'elv-1' | 'elv-2' | 'elv-3' | 'elv-4' | 'none'
+}
+```
+
+```vue-html
+<SCard>
+  <SCardBlock bg="elv-1">
+    <p>Lorem ipsum...</p>
+  </SCardBlock>
+</SCard>
+```
+
+<!-- Learn more about each child component's usage in the following sections.
 ## Header
 
 Use `<SCardHeader>` with `<SCardHeaderTitle>` and `<SCardActions>` to construct the header. 
@@ -306,4 +403,4 @@ interface Props {
 </SCard>
 ```
 
-It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions.
+It's important to align this spacing with the `<SCardBlock>` component to ensure proper alignment between the block contents and the footer contents, such as actions. -->

@@ -8,9 +8,7 @@ import { setupRouter } from './_support/Utils'
 
 export const setupVue3 = defineSetupVue3(({ app }) => {
   app.use(createPinia())
-
   app.component('Board', Board)
-
   setupRouter({ app })
 })
 

@@ -1,7 +1,7 @@
-import { isArray, isString } from '../../support/Utils'
+import { isString } from '../../support/Utils'
 
 export function maxLength(value: unknown, length: number): boolean {
-  if (!(isString(value) || isArray(value))) {
+  if (!(isString(value) || Array.isArray(value))) {
     return false
   }
 

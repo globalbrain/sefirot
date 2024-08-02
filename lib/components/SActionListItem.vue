@@ -1,25 +1,17 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import SButton, { type Tooltip } from './SButton.vue'
 
 export interface ActionListItem {
-  leadIcon?: IconifyIcon
+  leadIcon?: Component
   link?: string
   label?: string
   disabled?: boolean
   tooltip?: Tooltip
   onClick?: () => void
-
-  /** @deprecated Use `:label` instead. */
-  text?: string
 }
 
 const props = defineProps<ActionListItem>()
-
-const _label = computed(() => {
-  return props.label ?? props.text
-})
 
 const _tooltip = computed<Tooltip | undefined>(() => {
   return props.tooltip ? { display: 'block', ...props.tooltip } : undefined
@@ -33,7 +25,7 @@ const _tooltip = computed<Tooltip | undefined>(() => {
       size="small"
       type="text"
       :icon="leadIcon"
-      :label="_label"
+      :label="label"
       :href="link"
       :disabled="disabled"
       :tooltip="_tooltip"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x-bold'
 import SControlActionBarButton from './SControlActionBarButton.vue'
+import IconX from '~icons/ph/x-bold'
 
 defineProps<{
   as?: string

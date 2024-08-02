@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useV } from '../composables/V'
+import { useValidation } from '../composables/Validation'
 import { DateFromTo } from '../support/DateRange'
 import { type Day } from '../support/Day'
 import { required } from '../validation/rules'
@@ -13,7 +13,7 @@ const emit = defineEmits<{
   (e: 'change', value: DateFromTo): void
 }>()
 
-const { validation } = useV(() => ({
+const { validation } = useValidation(() => ({
   from: props.preset.from,
   to: props.preset.to
 }), {

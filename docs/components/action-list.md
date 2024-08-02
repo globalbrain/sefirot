@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import IconActivity from '@iconify-icons/ph/activity-bold'
-import IconEye from '@iconify-icons/ph/eye-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
+import IconActivity from '~icons/ph/activity-bold'
+import IconEye from '~icons/ph/eye-bold'
+import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
 
 const list: ActionList = [
-  { leadIcon: IconActivity, text: 'Show activity' },
-  { leadIcon: IconEye, text: 'Preview' },
-  { leadIcon: IconTrash, text: 'Delete item' }
+  { leadIcon: IconActivity, label: 'Show activity' },
+  { leadIcon: IconEye, label: 'Preview' },
+  { leadIcon: IconTrash, label: 'Delete item' }
 ]
 </script>
 
@@ -28,15 +28,15 @@ const list: ActionList = [
 
 ```vue
 <script setup lang="ts">
-import IconActivity from '@iconify-icons/ph/activity-bold'
-import IconEye from '@iconify-icons/ph/eye-bold'
-import IconTrash from '@iconify-icons/ph/trash-bold'
+import IconActivity from '~icons/ph/activity-bold'
+import IconEye from '~icons/ph/eye-bold'
+import IconTrash from '~icons/ph/trash-bold'
 import SActionList, { type ActionList } from '@globalbrain/sefirot/lib/components/SActionList.vue'
 
 const list: ActionList = [
-  { leadIcon: IconActivity, text: 'Show activity' },
-  { leadIcon: IconEye, text: 'Preview' },
-  { leadIcon: IconTrash, text: 'Delete item' }
+  { leadIcon: IconActivity, label: 'Show activity' },
+  { leadIcon: IconEye, label: 'Preview' },
+  { leadIcon: IconTrash, label: 'Delete item' }
 ]
 </script>
 
@@ -52,8 +52,6 @@ const list: ActionList = [
 The options to be listed.
 
 ```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
   list?: ActionList
 }
@@ -62,14 +60,14 @@ type ActionList = ActionListItem[]
 
 interface ActionListItem {
   // The icon to be displayed on the left side of the text.
-  leadIcon?: IconifyIcon
-
-  // The text to be displayed.
-  text: string
+  leadIcon?: Component
 
   // The link to be navigated to when the item is clicked. When this
   // prop is set, the item is rendered via `<SLink>`.
   link?: string
+
+  // The text to be displayed.
+  label: string
 
   // Whether the item is disabled.
   disabled?: boolean
@@ -123,14 +121,3 @@ type ActionList = ActionListItem[]
 ### `ActionListItem`
 
 The type of action list item. See `:list` for the details.
-
-```ts
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-
-interface ActionListItem {
-  leadIcon?: IconifyIcon
-  text: string
-  link?: string
-  onClick?(): void
-}
-```

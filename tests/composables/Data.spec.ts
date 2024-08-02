@@ -1,8 +1,8 @@
-import { useD } from 'sefirot/composables/D'
+import { useData } from 'sefirot/composables/Data'
 
-describe('composables/D', () => {
+describe('composables/Data', () => {
   test('it resets the state to the initial value', () => {
-    const { data, init } = useD({
+    const { data, init } = useData({
       a: 1,
       b: 2
     })

@@ -1,7 +1,6 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Component, computed } from 'vue'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
@@ -23,7 +22,7 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   options: Option<T>[]

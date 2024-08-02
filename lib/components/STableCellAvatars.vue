@@ -5,9 +5,7 @@ import { type Position } from '../composables/Tooltip'
 import SAvatar from './SAvatar.vue'
 
 const props = withDefaults(defineProps<{
-  value?: any
-  record?: any
-  avatars: TableCellAvatarsOption[] | ((value: any, record: any) => TableCellAvatarsOption[])
+  avatars: TableCellAvatarsOption[]
   color?: 'neutral' | 'soft' | 'mute'
   avatarCount?: number
   nameCount?: number
@@ -17,22 +15,16 @@ const props = withDefaults(defineProps<{
   nameCount: 2
 })
 
-const _avatars = computed(() => {
-  return typeof props.avatars === 'function'
-    ? props.avatars(props.value, props.record)
-    : props.avatars
-})
-
 const avatarDiff = computed(() => {
-  return _avatars.value.length - props.avatarCount
+  return props.avatars.length - props.avatarCount
 })
 
 const displayAvatars = computed(() => {
-  return _avatars.value.slice(0, props.avatarCount)
+  return props.avatars.slice(0, props.avatarCount)
 })
 
 const nameDiff = computed(() => {
-  return _avatars.value.length - props.nameCount
+  return props.avatars.length - props.nameCount
 })
 
 const displayNames = computed(() => {
@@ -41,8 +33,7 @@ const displayNames = computed(() => {
     return null
   }
 
-  const slicedAvatars = _avatars.value.slice(0, props.nameCount)
-
+  const slicedAvatars = props.avatars.slice(0, props.nameCount)
   const names = slicedAvatars.map((avatar) => avatar.name).join(', ')
 
   if (nameDiff.value > 0) {
@@ -57,11 +48,7 @@ const displayNames = computed(() => {
   <div class="STableCellAvatars" :class="[color]">
     <div class="container">
       <div v-if="displayAvatars.length" class="avatars">
-        <div
-          v-for="(avatar, index) in displayAvatars"
-          :key="index"
-          class="avatar"
-        >
+        <div v-for="(avatar, index) in displayAvatars" :key="index" class="avatar">
           <div class="avatar-box">
             <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" :tooltip="tooltip" />
           </div>

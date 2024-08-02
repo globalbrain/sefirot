@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import IconCheck from '@iconify-icons/ph/check-bold'
-import IconMinus from '@iconify-icons/ph/minus-bold'
-import { computed } from 'vue'
-import { type Validatable } from '../composables/V'
-import SIcon from './SIcon.vue'
+import { type Component, computed } from 'vue'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
+import IconCheck from '~icons/ph/check-bold'
+import IconMinus from '~icons/ph/minus-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
@@ -16,7 +14,7 @@ const props = withDefaults(defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   text?: string
@@ -81,10 +79,8 @@ function onClick() {
       >
         <div class="box">
           <div class="check">
-            <SIcon
-              :icon="isIndeterminate ? IconMinus : IconCheck"
-              class="check-icon"
-            />
+            <IconMinus v-if="isIndeterminate" class="check-icon" />
+            <IconCheck v-else class="check-icon" />
           </div>
         </div>
 
