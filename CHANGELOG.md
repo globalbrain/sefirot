@@ -1,5 +1,27 @@
 
 
+# [4.0.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v4.0.0) (2024-08-03)
+
+### BREAKING CHANGES
+
+* `@iconify-icons/` are replaced with unplugin-icons.
+* Package is now ESM only.
+* Trivial utilities like `isNullish` and `isArray` are removed.
+* Deprecated props and components are removed.
+* Old versions of `useData`, `useValidation`, `useForm` are removed.
+
+### Features
+
+* Newer icons available.
+* Better ESM Support.
+* New base config for Vite and Nuxt projects.
+* New utilities like `isFetchError`.
+
+### Migration
+
+* Refer comments on [#539](https://github.com/globalbrain/sefirot/pull/539) for migration guide.
+* Refer [docs](https://sefirot.globalbrains.com) for updated documentation.
+
 # [3.50.0](https://github.com/globalbrain/sefirot/compare/v3.49.0...v3.50.0) (2024-07-18)
 
 
