@@ -86,6 +86,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SInputCheckbox', link: '/components/input-checkbox' },
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
         { text: 'SInputFile', link: '/components/input-file' },
+        { text: 'SInputFileUpload', link: '/components/input-file-upload' },
         { text: 'SInputHMS', link: '/components/input-hms' },
         { text: 'SInputImage', link: '/components/input-image' },
         { text: 'SInputNumber', link: '/components/input-number' },
