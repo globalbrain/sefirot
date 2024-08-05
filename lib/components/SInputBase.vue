@@ -72,7 +72,7 @@ function getErrorMsg(validation: Validatable) {
       </span>
     </label>
 
-    <slot />
+    <slot :has-error="error?.has" />
 
     <div class="help">
       <slot name="before-help" />
