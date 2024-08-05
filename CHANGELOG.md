@@ -1,5 +1,12 @@
 
 
+# [4.1.0](https://github.com/globalbrain/sefirot/compare/v4.0.0...v4.1.0) (2024-08-05)
+
+
+### Features
+
+* **input:** add `<SInputFileUpload>` ([#544](https://github.com/globalbrain/sefirot/issues/544)) ([#546](https://github.com/globalbrain/sefirot/issues/546)) ([442cccb](https://github.com/globalbrain/sefirot/commit/442cccba043befa0a8513e0c70840382fd2d73c6))
+
 # [4.0.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v4.0.0) (2024-08-03)
 
 ### BREAKING CHANGES
