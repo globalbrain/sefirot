@@ -28,10 +28,21 @@ export function computedWhen<T, C, D>(
 
 export function computedArray<T = any>(fn: (arr: T[]) => void): ComputedRef<T[]> {
   return computed(() => {
-    const arr = [] as T[]
+    const arr: T[] = []
     fn(arr)
     return arr
   })
+}
+
+export function computedArrayWhen<T = any, C = any>(
+  condition: WhenCondition<C>,
+  fn: (arr: T[], item: NonNullable<C>) => void
+): ComputedRef<T[]> {
+  return computedWhen<T[], C, T[]>(condition, (c) => {
+    const arr: T[] = []
+    fn(arr, c)
+    return arr
+  }, [])
 }
 
 /**
