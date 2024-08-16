@@ -1,5 +1,12 @@
 
 
+# [4.2.0](https://github.com/globalbrain/sefirot/compare/v4.1.1...v4.2.0) (2024-08-16)
+
+
+### Features
+
+* **composables/Utils:** add `computedArrayWhen` ([01d2a11](https://github.com/globalbrain/sefirot/commit/01d2a113b7ecc00b5e8fb757428f8ecc5fd00a45))
+
 ## [4.1.1](https://github.com/globalbrain/sefirot/compare/v4.1.0...v4.1.1) (2024-08-06)
 
 # [4.1.0](https://github.com/globalbrain/sefirot/compare/v4.0.0...v4.1.0) (2024-08-05)
