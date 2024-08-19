@@ -12,7 +12,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, markRaw, reactive, ref, shallowRef } from 'vue'
+import { computed, reactive, ref, shallowRef } from 'vue'
 import IconCheck from '~icons/ph/check-bold'
 import IconImageSquare from '~icons/ph/image-square-bold'
 import IconNotePencil from '~icons/ph/note-pencil-bold'
@@ -227,7 +227,7 @@ const table = useTable({
       grow: true,
       cell: (_, record) => ({
         type: 'text',
-        icon: markRaw(IconImageSquare),
+        icon: IconImageSquare,
         link: record.link
       })
     },
@@ -305,15 +305,15 @@ const table = useTable({
         /* eslint-disable no-alert */
         actions: [
           {
-            icon: markRaw(IconCheck),
+            icon: IconCheck,
             onClick: () => { alert('Publish') }
           },
           {
-            icon: markRaw(IconNotePencil),
+            icon: IconNotePencil,
             onClick: () => { alert('Edit') }
           },
           {
-            icon: markRaw(IconTrash),
+            icon: IconTrash,
             onClick: () => { alert('Delete') }
           }
         ]
