@@ -12,6 +12,8 @@ import { stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
+type Awaitable<T> = T | PromiseLike<T>
+
 export interface HttpClient {
   <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
   raw<T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<T>>
@@ -23,6 +25,7 @@ export interface HttpOptions {
   client?: HttpClient
   lang?: Lang
   payloadKey?: string
+  headers?: () => Awaitable<Record<string, string>>
 }
 
 export class Http {
@@ -31,6 +34,7 @@ export class Http {
   private static client: HttpClient = ofetch
   private static lang: Lang | undefined = undefined
   private static payloadKey = '__payload__'
+  private static headers: () => Awaitable<Record<string, string>> = async () => ({})
 
   static config(options: HttpOptions) {
     if (options.baseUrl) {
@@ -47,6 +51,9 @@ export class Http {
     }
     if (options.payloadKey) {
       Http.payloadKey = options.payloadKey
+    }
+    if (options.headers) {
+      Http.headers = options.headers
     }
   }
 
@@ -88,6 +95,7 @@ export class Http {
         ...options,
         headers: {
           Accept: 'application/json',
+          ...(await Http.headers()),
           ...(xsrfToken && { 'X-Xsrf-Token': xsrfToken }),
           ...(Http.lang && { 'Accept-Language': Http.lang }),
           ...options.headers
