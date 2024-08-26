@@ -11,7 +11,7 @@ const classes = computed(() => [
   'STableItem',
   props.className,
   `col-${props.name}`,
-  { adjusted: props.width },
+  { adjusted: !!props.width },
   { auto: props.width === 'auto' }
 ])
 </script>

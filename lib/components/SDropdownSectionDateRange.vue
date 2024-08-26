@@ -2,7 +2,7 @@
 import { type MaybeRefOrGetter, computed, shallowRef, toValue } from 'vue'
 import { type DropdownSectionActionsOption } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
-import { useV } from '../composables/V'
+import { useValidation } from '../composables/Validation'
 import { DateRange, type DateRangePreset, type DateRangePresetType } from '../support/DateRange'
 import SDropdownSectionActions from './SDropdownSectionActions.vue'
 import SDropdownSectionDateRangeDateFromTo from './SDropdownSectionDateRangeDateFromTo.vue'
@@ -50,7 +50,7 @@ const actions: DropdownSectionActionsOption[] = [
   { label: t.a_apply, mode: 'info', onClick: onApply }
 ]
 
-const { validate } = useV()
+const { validate } = useValidation()
 
 function onPresetChange(value: any) {
   _range.value = new DateRange().setPreset(value as DateRangePresetType)

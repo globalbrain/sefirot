@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x-bold'
 import SAvatar from './SAvatar.vue'
-import SIcon from './SIcon.vue'
+import IconX from '~icons/ph/x-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 
@@ -36,7 +35,7 @@ const avatarSizeDict = {
 
     <div v-if="!disabled && removable" class="remove" role="button" @click="$emit('remove', value)">
       <div class="remove-box">
-        <SIcon :icon="IconX" class="remove-icon" />
+        <IconX class="remove-icon" />
       </div>
     </div>
   </div>

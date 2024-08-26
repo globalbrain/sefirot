@@ -1,11 +1,42 @@
 
 
-# [3.51.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v3.51.0) (2024-08-26)
+# [4.2.0](https://github.com/globalbrain/sefirot/compare/v4.1.1...v4.2.0) (2024-08-16)
 
 
 ### Features
 
-* **Http:** add headers option ([d925072](https://github.com/globalbrain/sefirot/commit/d92507204dfbe4288428f2087a78c46b3a3217cc))
+* **composables/Utils:** add `computedArrayWhen` ([01d2a11](https://github.com/globalbrain/sefirot/commit/01d2a113b7ecc00b5e8fb757428f8ecc5fd00a45))
+
+## [4.1.1](https://github.com/globalbrain/sefirot/compare/v4.1.0...v4.1.1) (2024-08-06)
+
+# [4.1.0](https://github.com/globalbrain/sefirot/compare/v4.0.0...v4.1.0) (2024-08-05)
+
+
+### Features
+
+* **input:** add `<SInputFileUpload>` ([#544](https://github.com/globalbrain/sefirot/issues/544)) ([#546](https://github.com/globalbrain/sefirot/issues/546)) ([442cccb](https://github.com/globalbrain/sefirot/commit/442cccba043befa0a8513e0c70840382fd2d73c6))
+
+# [4.0.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v4.0.0) (2024-08-03)
+
+### BREAKING CHANGES
+
+* `@iconify-icons/` are replaced with unplugin-icons.
+* Package is now ESM only.
+* Trivial utilities like `isNullish` and `isArray` are removed.
+* Deprecated props and components are removed.
+* Old versions of `useData`, `useValidation`, `useForm` are removed.
+
+### Features
+
+* Newer icons available.
+* Better ESM Support.
+* New base config for Vite and Nuxt projects.
+* New utilities like `isFetchError`.
+
+### Migration
+
+* Refer comments on [#539](https://github.com/globalbrain/sefirot/pull/539) for migration guide.
+* Refer [docs](https://sefirot.globalbrains.com) for updated documentation.
 
 # [3.50.0](https://github.com/globalbrain/sefirot/compare/v3.49.0...v3.50.0) (2024-07-18)
 

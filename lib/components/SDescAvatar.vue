@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isArray } from '../support/Utils'
 import SAvatar from './SAvatar.vue'
 import SDescEmpty from './SDescEmpty.vue'
 
@@ -21,7 +20,7 @@ const _avatar = computed(() => {
     return null
   }
 
-  return isArray(props.avatar) ? props.avatar : [props.avatar]
+  return Array.isArray(props.avatar) ? props.avatar : [props.avatar]
 })
 </script>
 

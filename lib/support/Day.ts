@@ -2,7 +2,7 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'
-import { isNullish, isNumber, isObject, isString } from './Utils'
+import { isNumber, isObject, isString } from './Utils'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
@@ -67,7 +67,7 @@ export function createYmd(
   month: number | null = null,
   date: number | null = null
 ): Ymd {
-  if (isNumber(yearOrDay) || isNullish(yearOrDay)) {
+  if (isNumber(yearOrDay) || yearOrDay == null) {
     return {
       year: yearOrDay,
       month,
@@ -92,7 +92,7 @@ export function createHms(
   minute: string | null = null,
   second: string | null = null
 ): Hms {
-  if (isString(hourOrDay) || isNullish(hourOrDay)) {
+  if (isString(hourOrDay) || hourOrDay == null) {
     return {
       hour: hourOrDay,
       minute,
@@ -108,7 +108,7 @@ export function createHms(
 }
 
 export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
-  if (isNullish(value) || !isObject(value)) {
+  if (value == null || !isObject(value)) {
     return false
   }
 
@@ -121,7 +121,7 @@ export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): va
 }
 
 export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
-  if (isNullish(value) || !isObject(value)) {
+  if (value == null || !isObject(value)) {
     return false
   }
 

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import IconX from '@iconify-icons/ph/x'
 import { type SnackbarAction, useSnackbars } from '../stores/Snackbars'
 import SButton from './SButton.vue'
-import SIcon from './SIcon.vue'
+import IconX from '~icons/ph/x'
 
 const props = defineProps<{
   id: number
@@ -21,7 +20,7 @@ function close() {
 <template>
   <div class="SSnackbar" :class="[mode ?? 'neutral']">
     <button class="close" @click="close">
-      <SIcon :icon="IconX" class="close-icon" />
+      <IconX class="close-icon" />
     </button>
 
     <p class="content">

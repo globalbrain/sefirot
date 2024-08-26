@@ -1,91 +1,270 @@
 # Utils
 
-`Utils` module provides generic helper functions.
+`Utils` module provides generic helper functions. It includes functions to check the type of a value. These functions work cross-realm (e.g., across vm contexts, iframes, etc.).
 
-## `isNullish`
+## `isBlob`
 
-Checks if the given value is `null` or `undefined`.
+Checks if a value is a `Blob`.
 
 ```ts
-function isNullish(value: unknown): value is undefined | null
+function isBlob(value: unknown): value is Blob
 ```
 
-```ts
-import { isNullish } from '@globalbrain/sefirot/lib/support/Utils'
+**Parameters:**
 
-isNullish(undefined) // <- true
-isNullish(null)      // <- true
-isNullish('')        // <- false
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `Blob`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isBlob } from '@globalbrain/sefirot/lib/support/Utils'
+
+const blob = new Blob()
+console.log(isBlob(blob)) // true
+console.log(isBlob({})) // false
 ```
 
-## `isString`
+## `isDate`
 
-Checks if the given value is `string`.
+Checks if a value is a `Date`.
 
 ```ts
-function isString(value: unknown): value is string
+function isDate(value: unknown): value is Date
 ```
 
-```ts
-import { isString } from '@globalbrain/sefirot/lib/support/Utils'
+**Parameters:**
 
-isString('abc') // <- true
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `Date`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isDate } from '@globalbrain/sefirot/lib/support/Utils'
+
+const date = new Date()
+console.log(isDate(date)) // true
+console.log(isDate('2023-01-01')) // false
 ```
 
-## `isNumber`
+## `isError`
 
-Checks if the given value is `number`.
+Checks if a value is an `Error`.
 
 ```ts
-function isNumber(value: unknown): value is number
+function isError(value: unknown): value is Error
 ```
 
-```ts
-import { isNumber } from '@globalbrain/sefirot/lib/support/Utils'
+**Parameters:**
 
-isNumber(123) // <- true
-```
+- `value`: The value to check.
 
-## `isArray`
+**Returns:**
 
-Checks if the given value is `array`.
+- `true` if the value is an `Error`.
+- `false` otherwise.
 
-```ts
-function isArray(value: unknown): value is unknown[]
-```
+**Example:**
 
 ```ts
-import { isArray } from '@globalbrain/sefirot/lib/support/Utils'
+import { isError } from '@globalbrain/sefirot/lib/support/Utils'
 
-isArray([1, 2, 3]) // <- true
-```
-
-## `isObject`
-
-Checks if the given value is `object`. this function will return `false` for `null` and `array`.
-
-```ts
-function isObject(value: unknown): value is Record<string, any>
-```
-
-```ts
-import { isObject } from '@globalbrain/sefirot/lib/support/Utils'
-
-isObject({ foo: 'bar' }) // <- true
-isObject([1, 2, 3])      // <- false
-isObject(null)           // <- false
+const error = new Error('Something went wrong')
+console.log(isError(error)) // true
+console.log(isError({})) // false
 ```
 
 ## `isFile`
 
-Checks if the given value is `File`.
+Checks if a value is a `File`.
 
 ```ts
 function isFile(value: unknown): value is File
 ```
 
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `File`.
+- `false` otherwise.
+
+**Example:**
+
 ```ts
 import { isFile } from '@globalbrain/sefirot/lib/support/Utils'
 
-isFile(file)
+const file = new File(['content'], 'file.txt')
+console.log(isFile(file)) // true
+console.log(isFile({})) // false
+```
+
+## `isFormData`
+
+Checks if a value is `FormData`.
+
+```ts
+function isFormData(value: unknown): value is FormData
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is `FormData`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isFormData } from '@globalbrain/sefirot/lib/support/Utils'
+
+const formData = new FormData()
+console.log(isFormData(formData)) // true
+console.log(isFormData({})) // false
+```
+
+## `isNumber`
+
+Checks if a value is a `number`.
+
+```ts
+function isNumber(value: unknown): value is number
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `number`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isNumber } from '@globalbrain/sefirot/lib/support/Utils'
+
+console.log(isNumber(123)) // true
+console.log(isNumber('123')) // false
+```
+
+## `isObject`
+
+Checks if a value is a plain object.
+
+```ts
+function isObject(value: unknown): value is Record<string, unknown>
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a plain object.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isObject } from '@globalbrain/sefirot/lib/support/Utils'
+
+console.log(isObject({})) // true
+console.log(isObject(new Date())) // false
+```
+
+## `isRequest`
+
+Checks if a value is a `Request`.
+
+```ts
+function isRequest(value: unknown): value is Request
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `Request`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isRequest } from '@globalbrain/sefirot/lib/support/Utils'
+
+const request = new Request('https://example.com')
+console.log(isRequest(request)) // true
+console.log(isRequest({})) // false
+```
+
+## `isResponse`
+
+Checks if a value is a `Response`.
+
+```ts
+function isResponse(value: unknown): value is Response
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `Response`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isResponse } from '@globalbrain/sefirot/lib/support/Utils'
+
+const response = new Response()
+console.log(isResponse(response)) // true
+console.log(isResponse({})) // false
+```
+
+## `isString`
+
+Checks if a value is a `string`.
+
+```ts
+function isString(value: unknown): value is string
+```
+
+**Parameters:**
+
+- `value`: The value to check.
+
+**Returns:**
+
+- `true` if the value is a `string`.
+- `false` otherwise.
+
+**Example:**
+
+```ts
+import { isString } from '@globalbrain/sefirot/lib/support/Utils'
+
+console.log(isString('Hello')) // true
+console.log(isString(123)) // false
 ```

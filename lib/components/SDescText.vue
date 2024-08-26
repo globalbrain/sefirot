@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const classes = computed(() => [
-  { 'line-clamp': props.lineClamp },
+  { 'line-clamp': !!props.lineClamp },
   { 'pre-wrap': props.preWrap }
 ])
 

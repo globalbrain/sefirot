@@ -2,7 +2,7 @@
 import SState, { type Mode } from './SState.vue'
 
 defineProps<{
-  value?: string
+  state?: string
   mode?: Mode
 }>()
 </script>
@@ -10,10 +10,10 @@ defineProps<{
 <template>
   <div class="STableCellState" :class="[mode ?? 'neutral']">
     <SState
-      v-if="value"
+      v-if="state"
       size="mini"
       :mode="mode"
-      :label="value"
+      :label="state"
     />
   </div>
 </template>

@@ -130,10 +130,8 @@ interface Props {
 Add a static text or icon before the input box.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  unitBefore?: string | IconifyIcon
+  unitBefore?: string | Icon
 }
 ```
 
@@ -146,10 +144,8 @@ interface Props {
 Add a static text or icon after the input box.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-
 interface Props {
-  unitAfter?: string | IconifyIcon
+  unitAfter?: string | Icon
 }
 ```
 
@@ -162,11 +158,8 @@ interface Props {
 Icon to display at corner right of label. Useful to show the status of a particular input.
 
 ```ts
-import { IconifyIcon } from '@iconify/vue/dist/offline'
-import { DefineComponent } from 'vue'
-
 interface Props {
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
 }
 ```
 

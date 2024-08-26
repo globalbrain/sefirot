@@ -1,4 +1,5 @@
 import { defineConfig, type DefaultTheme } from 'vitepress'
+import { baseConfig } from '../../config/vite'
 
 function getStoryHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -16,11 +17,7 @@ export default defineConfig({
   lastUpdated: true,
 
   vite: {
-    resolve: {
-      alias: {
-        'sefirot/': new URL('../../lib/', import.meta.url).pathname
-      }
-    },
+    ...baseConfig,
     define: {
       __STORY_HOST__: JSON.stringify(getStoryHost())
     }
@@ -76,6 +73,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SButtonGroup', link: '/components/button-group' },
         { text: 'SCard', link: '/components/card' },
         { text: 'SContent', link: '/components/content' },
+        { text: 'SControl', link: '/components/control' },
         { text: 'SDesc', link: '/components/desc' },
         { text: 'SDivider', link: '/components/divider' },
         { text: 'SDoc', link: '/components/doc' },
@@ -88,6 +86,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SInputCheckbox', link: '/components/input-checkbox' },
         { text: 'SInputCheckboxes', link: '/components/input-checkboxes' },
         { text: 'SInputFile', link: '/components/input-file' },
+        { text: 'SInputFileUpload', link: '/components/input-file-upload' },
         { text: 'SInputHMS', link: '/components/input-hms' },
         { text: 'SInputImage', link: '/components/input-image' },
         { text: 'SInputNumber', link: '/components/input-number' },

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed } from 'vue'
-import { type Validatable } from '../composables/V'
-import { isNullish, isString } from '../support/Utils'
+import { type Component, computed } from 'vue'
+import { type Validatable } from '../composables/Validation'
+import { isString } from '../support/Utils'
 import SInputText from './SInputText.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -20,7 +19,7 @@ const props = defineProps<{
   placeholder?: string
   unitBefore?: any
   unitAfter?: any
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: CheckColor
   textColor?: TextColor | ((value: number | null) => TextColor)
@@ -58,27 +57,27 @@ const _textColor = computed(() => {
 })
 
 const valueWithSeparator = computed(() => {
-  if (isNullish(_value.value)) {
+  if (_value.value == null) {
     return null
   }
 
-  return _value.value >= 100000000000000000000
+  return _value.value >= Number.MAX_SAFE_INTEGER
     ? 'The number is too big'
     : _value.value.toLocaleString('en-US', { maximumSignificantDigits: 20 })
 })
 
 const displayValue = computed(() => {
-  if (!isNullish(props.displayValue)) {
+  if (props.displayValue != null) {
     return props.displayValue
   }
 
-  return (!props.separator || valueWithSeparator.value === null)
+  return (!props.separator || valueWithSeparator.value == null)
     ? null
     : valueWithSeparator.value
 })
 
 function emitUpdate(value: string | null) {
-  const v = isNullish(value) ? null : Number(value)
+  const v = value == null ? null : Number(value)
   emit('update:model-value', v)
   emit('input', v)
 }
@@ -105,7 +104,7 @@ function emitUpdate(value: string | null) {
     :disabled="disabled"
     :hide-error="hideError"
     :display-value="displayValue"
-    :model-value="_value === null ? null : String(_value)"
+    :model-value="_value == null ? null : String(_value)"
     :validation="validation"
     @update:model-value="emitUpdate"
     @input="emitUpdate"

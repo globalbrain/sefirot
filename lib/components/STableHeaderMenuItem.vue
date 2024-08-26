@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import IconCaretDown from '@iconify-icons/ph/caret-down-bold'
 import { type DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
-import SIcon from './SIcon.vue'
+import IconCaretDown from '~icons/ph/caret-down-bold'
 
 defineProps<{
   label: string
@@ -19,7 +18,7 @@ const { container, isOpen, toggle } = useFlyout()
     <button class="button" :class="[state]" @click="toggle">
       <span class="label">{{ label }}</span>
       <span v-if="state !== 'indicate'" class="caret">
-        <SIcon class="caret-svg" :icon="IconCaretDown" />
+        <IconCaretDown class="caret-svg" />
       </span>
       <span v-else class="indicator">
         <span class="indicator-dot" />

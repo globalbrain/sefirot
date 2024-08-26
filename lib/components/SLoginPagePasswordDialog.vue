@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useD } from '../composables/D'
-import { useV } from '../composables/V'
+import { useData } from '../composables/Data'
+import { useValidation } from '../composables/Validation'
 import { email, maxLength, required } from '../validation/rules'
 import SAlert from './SAlert.vue'
 import SCard from './SCard.vue'
@@ -22,12 +22,12 @@ const emit = defineEmits<{
   submit: [email: string, password: string]
 }>()
 
-const { data } = useD({
+const { data } = useData({
   email: null as string | null,
   password: null as string | null
 })
 
-const { validation, validateAndNotify } = useV(data, {
+const { validation, validateAndNotify } = useValidation(data, {
   email: {
     required: required(),
     maxLength: maxLength(255),

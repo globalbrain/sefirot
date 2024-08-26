@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { type IconifyIcon } from '@iconify/vue/dist/offline'
-import { type DefineComponent, computed } from 'vue'
-import { type Validatable } from '../composables/V'
+import { type Component, computed } from 'vue'
+import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
@@ -14,7 +13,7 @@ const props = defineProps<{
   info?: string
   note?: string
   help?: string
-  checkIcon?: IconifyIcon | DefineComponent
+  checkIcon?: Component
   checkText?: string
   checkColor?: Color
   text?: string

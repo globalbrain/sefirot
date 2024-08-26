@@ -1,5 +1,5 @@
 import { type ComputedRef, type MaybeRefOrGetter, computed, getCurrentInstance, onMounted, toValue, useSlots } from 'vue'
-import { isArray, isString } from '../support/Utils'
+import { isString } from '../support/Utils'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
 
@@ -28,10 +28,21 @@ export function computedWhen<T, C, D>(
 
 export function computedArray<T = any>(fn: (arr: T[]) => void): ComputedRef<T[]> {
   return computed(() => {
-    const arr = [] as T[]
+    const arr: T[] = []
     fn(arr)
     return arr
   })
+}
+
+export function computedArrayWhen<T = any, C = any>(
+  condition: WhenCondition<C>,
+  fn: (arr: T[], item: NonNullable<C>) => void
+): ComputedRef<T[]> {
+  return computedWhen<T[], C, T[]>(condition, (c) => {
+    const arr: T[] = []
+    fn(arr, c)
+    return arr
+  }, [])
 }
 
 /**
@@ -42,7 +53,7 @@ export function useHasSlotContent(name = 'default'): ComputedRef<boolean> {
 
   return computed(() => {
     return !!slots[name]?.().some((s) => {
-      return isArray(s.children) ? true : !!(s.children as string).trim()
+      return Array.isArray(s.children) ? true : !!(s.children as string).trim()
     })
   })
 }

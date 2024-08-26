@@ -15,7 +15,7 @@ const isExternal = computed(() => {
     return false
   }
 
-  if (props.external !== null) {
+  if (props.external != null) {
     return props.external
   }
 

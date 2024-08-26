@@ -1,6 +1,6 @@
 import { flushPromises } from '@vue/test-utils'
-import { useD } from 'sefirot/composables/D'
-import { useV } from 'sefirot/composables/V'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
 import { requiredIf } from 'sefirot/validation/rules'
 import { ref } from 'vue'
 
@@ -43,11 +43,11 @@ describe('validation/rules/requiredIf', () => {
   test('condition can be reactive', async () => {
     const condition = ref(false)
 
-    const { data } = useD({
+    const { data } = useData({
       v: null as string | null
     })
 
-    const { validation } = useV(data, {
+    const { validation } = useValidation(data, {
       v: { required: requiredIf(() => condition.value) }
     })
 
