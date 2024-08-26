@@ -1,5 +1,12 @@
 
 
+# [3.51.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v3.51.0) (2024-08-26)
+
+
+### Features
+
+* **Http:** add headers option ([d925072](https://github.com/globalbrain/sefirot/commit/d92507204dfbe4288428f2087a78c46b3a3217cc))
+
 # [3.50.0](https://github.com/globalbrain/sefirot/compare/v3.49.0...v3.50.0) (2024-07-18)
 
 
