@@ -11,3 +11,4 @@
 .temp
 .cache
 *.timestamp-*.mjs
+.idea
