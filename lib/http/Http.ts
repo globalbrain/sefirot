@@ -81,10 +81,7 @@ export class Http {
     const xsrfToken
       = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
-    const queryString = stringify(
-      { ...params, ...query },
-      { arrayFormat: 'brackets', encodeValuesOnly: true }
-    )
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
