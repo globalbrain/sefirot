@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconLink from '~icons/ph/arrow-square-out-bold'
+import IconPlus from '~icons/ph/plus-bold'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
@@ -9,8 +11,6 @@ import SControlButton from 'sefirot/components/SControlButton.vue'
 import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import SControlText from 'sefirot/components/SControlText.vue'
-import IconLink from '~icons/ph/arrow-square-out-bold'
-import IconPlus from '~icons/ph/plus-bold'
 
 const title = 'Components / SCard / 01. Playground'
 const docs = '/components/card'

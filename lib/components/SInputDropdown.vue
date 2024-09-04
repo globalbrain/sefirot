@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconCaretDown from '~icons/ph/caret-down-bold'
+import IconCaretUp from '~icons/ph/caret-up-bold'
 import xor from 'lodash-es/xor'
 import { type Component, computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
@@ -7,8 +9,6 @@ import { type Validatable } from '../composables/Validation'
 import SDropdown from './SDropdown.vue'
 import SInputBase from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
-import IconCaretDown from '~icons/ph/caret-down-bold'
-import IconCaretUp from '~icons/ph/caret-up-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import IconCaretDown from '~icons/ph/caret-down-bold'
 import { type Component, computed, ref } from 'vue'
 import {
   type DropdownSection,
@@ -8,7 +9,6 @@ import {
 import { useFlyout } from '../composables/Flyout'
 import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
-import IconCaretDown from '~icons/ph/caret-down-bold'
 
 const props = withDefaults(defineProps<{
   label?: Component | string

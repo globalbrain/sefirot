@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
 import IconActivity from '~icons/ph/activity-bold'
 import IconEye from '~icons/ph/eye-bold'
 import IconTrash from '~icons/ph/trash-bold'
+import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
 
 const title = 'Components / SActionList / 01. Playground'
 const docs = '/components/action-list'

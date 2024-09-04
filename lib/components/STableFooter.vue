@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { format } from '../support/Num'
 import IconCaretLeft from '~icons/ph/caret-left-bold'
 import IconCaretRight from '~icons/ph/caret-right-bold'
+import { computed } from 'vue'
+import { format } from '../support/Num'
 
 const props = defineProps<{
   total?: number | null

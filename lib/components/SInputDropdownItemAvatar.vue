@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SAvatar from './SAvatar.vue'
 import IconX from '~icons/ph/x-bold'
+import SAvatar from './SAvatar.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 

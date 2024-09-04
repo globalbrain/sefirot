@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
-import SCard from 'sefirot/components/SCard.vue'
-import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import IconActivity from '~icons/ph/activity-bold'
 import IconEye from '~icons/ph/eye-bold'
 import IconTrash from '~icons/ph/trash-bold'
+import SActionList, { type ActionList } from 'sefirot/components/SActionList.vue'
+import SCard from 'sefirot/components/SCard.vue'
+import SCardBlock from 'sefirot/components/SCardBlock.vue'
 
 const title = 'Components / SActionList / 02. In Card'
 const docs = '/components/action-list'

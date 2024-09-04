@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconCheck from '~icons/ph/check-bold'
+import IconMinus from '~icons/ph/minus-bold'
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
-import IconCheck from '~icons/ph/check-bold'
-import IconMinus from '~icons/ph/minus-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

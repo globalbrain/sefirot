@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import IconCheckCircleFill from '~icons/ph/check-circle-fill'
 import IconCircle from '~icons/ph/circle-bold'
 import IconCircleDashed from '~icons/ph/circle-dashed-bold'
 import IconCircleNotch from '~icons/ph/circle-notch-bold'
 import IconXCircle from '~icons/ph/x-circle-bold'
+import { computed } from 'vue'
 
 export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
 export type State = 'pending' | 'ready' | 'queued' | 'running' | 'completed' | 'failed'

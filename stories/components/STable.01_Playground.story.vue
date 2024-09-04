@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import IconCheck from '~icons/ph/check-bold'
+import IconImageSquare from '~icons/ph/image-square-bold'
+import IconNotePencil from '~icons/ph/note-pencil-bold'
+import IconTrash from '~icons/ph/trash-bold'
 import { orderBy, xor } from 'lodash-es'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
@@ -13,10 +17,6 @@ import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, reactive, ref, shallowRef } from 'vue'
-import IconCheck from '~icons/ph/check-bold'
-import IconImageSquare from '~icons/ph/image-square-bold'
-import IconNotePencil from '~icons/ph/note-pencil-bold'
-import IconTrash from '~icons/ph/trash-bold'
 
 interface Sort {
   by: string

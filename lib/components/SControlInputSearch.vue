@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
 import { computed } from 'vue'
 import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import SInputText, { type Align, type TextColor } from './SInputText.vue'
-import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
 
 const props = defineProps<{
   placeholder?: string

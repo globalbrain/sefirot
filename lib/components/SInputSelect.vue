@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconCaretDown from '~icons/ph/caret-down-bold'
+import IconCaretUp from '~icons/ph/caret-up-bold'
 import { type Component, computed, ref } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
-import IconCaretDown from '~icons/ph/caret-down-bold'
-import IconCaretUp from '~icons/ph/caret-up-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

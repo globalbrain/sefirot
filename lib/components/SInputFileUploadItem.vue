@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import IconFileText from '~icons/ph/file-text'
+import IconTrash from '~icons/ph/trash'
 import { computed } from 'vue'
 import { formatSize } from '../support/File'
 import SButton from './SButton.vue'
 import SCardBlock from './SCardBlock.vue'
-import IconFileText from '~icons/ph/file-text'
-import IconTrash from '~icons/ph/trash'
 
 const props = defineProps<{
   file: File

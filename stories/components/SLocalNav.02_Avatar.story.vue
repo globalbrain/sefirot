@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SLocalNav from 'sefirot/components/SLocalNav.vue'
 import IconActivity from '~icons/ph/activity-bold'
 import IconCurrencyCircleDollar from '~icons/ph/currency-circle-dollar-bold'
 import IconGear from '~icons/ph/gear-bold'
+import SLocalNav from 'sefirot/components/SLocalNav.vue'
 
 const title = 'Components / SLocalNav / 02. Avatar'
 const docs = '/components/local-nav'

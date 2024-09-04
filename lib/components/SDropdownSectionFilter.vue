@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import IconCheck from '~icons/ph/check'
 import Fuse from 'fuse.js'
 import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
 import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
-import IconCheck from '~icons/ph/check'
 
 const props = defineProps<{
   search?: boolean

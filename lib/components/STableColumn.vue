@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconDotsThree from '~icons/ph/dots-three'
 import { computed, nextTick, ref, unref, watch } from 'vue'
 import { type DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
-import IconDotsThree from '~icons/ph/dots-three'
 
 const props = withDefaults(defineProps<{
   name: string

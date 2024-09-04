@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import IconImage from '~icons/ph/image-bold'
 import { type Component, computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
 import { type Validatable } from '../composables/Validation'
 import SButton from './SButton.vue'
 import SInputBase from './SInputBase.vue'
-import IconImage from '~icons/ph/image-bold'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'

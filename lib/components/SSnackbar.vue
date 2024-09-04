@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import IconX from '~icons/ph/x'
 import { type SnackbarAction, useSnackbars } from '../stores/Snackbars'
 import SButton from './SButton.vue'
-import IconX from '~icons/ph/x'
 
 const props = defineProps<{
   id: number

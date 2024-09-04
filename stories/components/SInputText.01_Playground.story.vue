@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconCheckCircle from '~icons/ph/check-circle-bold'
+import IconXCircle from '~icons/ph/x-circle-bold'
 import SButton from 'sefirot/components/SButton.vue'
 import SInputText from 'sefirot/components/SInputText.vue'
 import SSpinner from 'sefirot/components/SSpinner.vue'
@@ -6,8 +8,6 @@ import { useData } from 'sefirot/composables/Data'
 import { useValidation } from 'sefirot/composables/Validation'
 import { required } from 'sefirot/validation/rules'
 import { type DefineComponent, computed, ref } from 'vue'
-import IconCheckCircle from '~icons/ph/check-circle-bold'
-import IconXCircle from '~icons/ph/x-circle-bold'
 
 const title = 'Components / SInputText / 01. Playground'
 

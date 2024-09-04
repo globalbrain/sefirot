@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import IconQuestion from '~icons/ph/question'
 import { type Component, computed, unref, useSlots } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import STooltip from './STooltip.vue'
-import IconQuestion from '~icons/ph/question'
 
 type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 

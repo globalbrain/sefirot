@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import SButton from 'sefirot/components/SButton.vue'
 import IconCheckCircle from '~icons/ph/check-circle-bold'
 import IconImageSquare from '~icons/ph/image-square-bold'
 import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
+import SButton from 'sefirot/components/SButton.vue'
 
 const title = 'Components / SButton / 04. Icons'
 const docs = '/components/button'

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import SControlActionBarButton from './SControlActionBarButton.vue'
 import IconX from '~icons/ph/x-bold'
+import SControlActionBarButton from './SControlActionBarButton.vue'
 
 defineProps<{
   as?: string

@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import IconDownloadSimple from '~icons/ph/download-simple-bold'
+import IconFileText from '~icons/ph/file-text-bold'
 import { computed } from 'vue'
 import SButton from './SButton.vue'
 import SDescEmpty from './SDescEmpty.vue'
-import IconDownloadSimple from '~icons/ph/download-simple-bold'
-import IconFileText from '~icons/ph/file-text-bold'
 
 export interface Item {
   name: string

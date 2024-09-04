@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type PropType } from 'vue'
-import { type BarMode, type StepStatus } from '../composables/Step'
 import IconCheck from '~icons/ph/check'
 import IconX from '~icons/ph/x'
+import { type PropType } from 'vue'
+import { type BarMode, type StepStatus } from '../composables/Step'
 
 defineProps({
   status: { type: String as PropType<StepStatus>, required: true },
