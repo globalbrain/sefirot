@@ -1,5 +1,17 @@
 
 
+# [4.3.0](https://github.com/globalbrain/sefirot/compare/v4.2.0...v4.3.0) (2024-09-04)
+
+
+### Bug Fixes
+
+* **http:** bracket format for arrays in qs doesn't work properly with php ([#551](https://github.com/globalbrain/sefirot/issues/551)) ([9a5db93](https://github.com/globalbrain/sefirot/commit/9a5db93eac874adcd6d553ff218817014ca8db9b))
+
+
+### Features
+
+* **Http:** add headers option ([#549](https://github.com/globalbrain/sefirot/issues/549)) ([d9fe2e1](https://github.com/globalbrain/sefirot/commit/d9fe2e178e6e39922e06f13369bdee9668750ea1))
+
 # [4.2.0](https://github.com/globalbrain/sefirot/compare/v4.1.1...v4.2.0) (2024-08-16)
 
 
