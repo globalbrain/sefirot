@@ -1,5 +1,12 @@
 
 
+## [4.3.1](https://github.com/globalbrain/sefirot/compare/v4.3.0...v4.3.1) (2024-09-18)
+
+
+### Bug Fixes
+
+* **input-date:** pin v-calendar to fix vue 3.5 compat issue ([#553](https://github.com/globalbrain/sefirot/issues/553)) ([4b93a05](https://github.com/globalbrain/sefirot/commit/4b93a05c732fa5ba979673fb9548a82152334d62))
+
 # [4.3.0](https://github.com/globalbrain/sefirot/compare/v4.2.0...v4.3.0) (2024-09-04)
 
 
