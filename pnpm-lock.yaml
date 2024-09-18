@@ -133,8 +133,8 @@ importers:
         specifier: ~5.5.4
         version: 5.5.4
       v-calendar:
-        specifier: 3.0.0
-        version: 3.0.0(@popperjs/core@2.11.8)(vue@3.5.1(typescript@5.5.4))
+        specifier: 3.0.1
+        version: 3.0.1(@popperjs/core@2.11.8)(vue@3.5.1(typescript@5.5.4))
       vite:
         specifier: ^5.4.3
         version: 5.4.3(@types/node@22.5.3)
@@ -3943,8 +3943,8 @@ packages:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
 
-  v-calendar@3.0.0:
-    resolution: {integrity: sha512-9r+swG8v2iUvaa2P1BGWEEeutZ+XCttHOzl0uXmzA7JND86GGZbM4QDPm8ZpBXav+NgheRm9MYs/Uz8mgKVZXg==}
+  v-calendar@3.0.1:
+    resolution: {integrity: sha512-basXEXcmBsxHyxqjj/82vjgz5vbIMREiiUC2VOVh0pHCDXEF1birPUZD12lk8u3+5R+909WUnxu7bt0DFxCOLw==}
     peerDependencies:
       '@popperjs/core': ^2.0.0
       vue: ^3.2.0
@@ -8318,7 +8318,7 @@ snapshots:
 
   utils-merge@1.0.1: {}
 
-  v-calendar@3.0.0(@popperjs/core@2.11.8)(vue@3.5.1(typescript@5.5.4)):
+  v-calendar@3.0.1(@popperjs/core@2.11.8)(vue@3.5.1(typescript@5.5.4)):
     dependencies:
       '@popperjs/core': 2.11.8
       '@types/lodash': 4.17.7
