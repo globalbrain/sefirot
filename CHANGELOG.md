@@ -1,5 +1,12 @@
 
 
+## [4.3.2](https://github.com/globalbrain/sefirot/compare/v4.3.1...v4.3.2) (2024-09-19)
+
+
+### Bug Fixes
+
+* move shims to client so other deps don't need to manually declare them ([62cf9d3](https://github.com/globalbrain/sefirot/commit/62cf9d381a697b6205103b9520b45dc9892a64ed))
+
 ## [4.3.1](https://github.com/globalbrain/sefirot/compare/v4.3.0...v4.3.1) (2024-09-18)
 
 
