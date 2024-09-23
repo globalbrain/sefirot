@@ -8,6 +8,8 @@ module.exports = {
   ],
 
   rules: {
-    'vue/no-template-shadow': 'off'
+    'vue/no-template-shadow': 'off',
+    'unused-imports/no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn'
   }
 }

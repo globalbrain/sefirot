@@ -165,6 +165,44 @@ function isFocusable(day: number): boolean {
       </div>
     </div>
   </div>
+  <br>
+  <div class="SDatePicker level-1">
+    <div class="header">
+      <button type="button" @click="prevMonthWithoutTransition"><IconCaretLeft /></button>
+      <button type="button">{{ curr.year }}</button>
+      <button type="button" @click="nextMonthWithoutTransition"><IconCaretRight /></button>
+    </div>
+    <div class="months grid">
+      <div v-for="month in 12" :key="month" class="month">
+        <button
+          type="button"
+          :class="{ selected: month === curr.month }"
+          @click="curr.month = month"
+        >
+          {{ new Date(curr.year, month - 1).toLocaleString('default', { month: 'long' }) }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="SDatePicker level-2">
+    <div class="header">
+      <button type="button" @click="prevMonthWithoutTransition"><IconCaretLeft /></button>
+      <button type="button">{{ `${curr.year}-${curr.year + 19}` }}</button>
+      <button type="button" @click="nextMonthWithoutTransition"><IconCaretRight /></button>
+    </div>
+    <div class="years grid">
+      <div v-for="year in 20" :key="year" class="year">
+        <button
+          type="button"
+          :class="{ selected: year === curr.year }"
+          @click="curr.year = year"
+        >
+          {{ 2023 + year }}
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="postcss">
@@ -189,8 +227,25 @@ function isFocusable(day: number): boolean {
   padding: 8px;
 
   > div {
-    width: 28px;
+    width: auto;
+    aspect-ratio: 1 / 1;
     padding: 4px;
+  }
+
+  .level-1 & {
+    grid-template-columns: repeat(3, 1fr);
+
+    > div {
+      aspect-ratio: unset;
+    }
+  }
+
+  .level-2 & {
+    grid-template-columns: repeat(4, 1fr);
+
+    > div {
+      aspect-ratio: unset;
+    }
   }
 }
 
