@@ -1,13 +1,23 @@
 <script setup lang="ts">
 import IconCaretLeft from '~icons/ph/caret-left-bold'
 import IconCaretRight from '~icons/ph/caret-right-bold'
-import { computed, nextTick, reactive, ref } from 'vue'
+import { computed, nextTick, ref } from 'vue'
+import { type SDate, now } from '../support/Now'
 
-const props = defineProps<{ mode: 'days' | 'months' | 'years' }>()
+const props = defineProps<{
+  mode: 'days' | 'months' | 'years'
+}>()
+
+const emit = defineEmits<{
+  'zoom-in': []
+  'zoom-out': []
+}>()
+
+const selected = defineModel<SDate>('selected', { required: true })
+const curr = defineModel<SDate>('focused', { required: true })
 
 const el = ref<HTMLElement>()
 const keys = ['Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
-const now = new Date()
 
 const lang = undefined
 const format = {
@@ -21,58 +31,53 @@ const format = {
 
 const weekdays = getWeekDays()
 
-const today = { day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear() }
-
-const selected = reactive({ ...today })
-const curr = reactive({ ...selected })
-
 const isSelectedVisible = computed(() => {
   if (props.mode === 'days') {
-    return curr.month === selected.month && curr.year === selected.year
+    return curr.value.month === selected.value.month && curr.value.year === selected.value.year
   }
   if (props.mode === 'months') {
-    return curr.year === selected.year
+    return curr.value.year === selected.value.year
   }
-  return getYearForIndex(1) <= selected.year && selected.year <= getYearForIndex(20)
+  return getYearForIndex(1) <= selected.value.year && selected.value.year <= getYearForIndex(20)
 })
 
 const isPrevDisabled = computed(() => {
   if (props.mode === 'days') {
-    return curr.year <= 1900 && curr.month === 1
+    return curr.value.year <= 1900 && curr.value.month === 1
   }
   if (props.mode === 'months') {
-    return curr.year <= 1900
+    return curr.value.year <= 1900
   }
   return getYearForIndex(1) <= 1900
 })
 
 const isNextDisabled = computed(() => {
   if (props.mode === 'days') {
-    return curr.year >= 2099 && curr.month === 12
+    return curr.value.year >= 2099 && curr.value.month === 12
   }
   if (props.mode === 'months') {
-    return curr.year >= 2099
+    return curr.value.year >= 2099
   }
   return getYearForIndex(20) >= 2099
 })
 
 const description = computed(() => {
   if (props.mode === 'days') {
-    return format.my(new Date(curr.year, curr.month - 1))
+    return format.my(new Date(curr.value.year, curr.value.month - 1))
   }
   if (props.mode === 'months') {
-    return format.y(new Date(curr.year, 0))
+    return format.y(new Date(curr.value.year, 0))
   }
   return format.yy(new Date(getYearForIndex(1), 0), new Date(getYearForIndex(20), 0))
 })
 
 const offset = computed(() =>
-  props.mode === 'days' ? new Date(curr.year, curr.month - 1, 1).getDay() : 0
+  props.mode === 'days' ? new Date(curr.value.year, curr.value.month - 1, 1).getDay() : 0
 )
 
 const total = computed(() => {
   if (props.mode === 'days') {
-    return new Date(curr.year, curr.month, 0).getDate()
+    return new Date(curr.value.year, curr.value.month, 0).getDate()
   }
   if (props.mode === 'months') {
     return 12
@@ -82,24 +87,25 @@ const total = computed(() => {
 
 function onSelected(/** 1-indexed */ i: number): void {
   if (props.mode === 'days') {
-    selected.day = i
-    selected.month = curr.month
-    selected.year = curr.year
+    selected.value.day = i
+    selected.value.month = curr.value.month
+    selected.value.year = curr.value.year
   } else if (props.mode === 'months') {
-    selected.month = i
-    selected.year = curr.year
+    selected.value.month = i
+    selected.value.year = curr.value.year
   } else {
-    selected.year = getYearForIndex(i)
+    selected.value.year = getYearForIndex(i)
   }
+  emit('zoom-in')
 }
 
 function onFocused(/** 1-indexed */ i: number): void {
   if (props.mode === 'days') {
-    curr.day = i
+    curr.value.day = i
   } else if (props.mode === 'months') {
-    curr.month = i
+    curr.value.month = i
   } else {
-    curr.year = getYearForIndex(i)
+    curr.value.year = getYearForIndex(i)
   }
 }
 
@@ -127,7 +133,11 @@ async function onKeydown(e: KeyboardEvent): Promise<void> {
   await nextTick()
 
   const index
-    = props.mode === 'days' ? curr.day : props.mode === 'months' ? curr.month : (curr.year % 20) + 1
+    = props.mode === 'days'
+      ? curr.value.day
+      : props.mode === 'months'
+        ? curr.value.month
+        : (curr.value.year % 20) + 1
 
   const item = el.value?.children[offset.value + index - 1] as HTMLElement | null
   if (item) {
@@ -137,90 +147,90 @@ async function onKeydown(e: KeyboardEvent): Promise<void> {
 
 function prevRow(): void {
   if (props.mode === 'days') {
-    if (curr.day <= 7) {
-      prev(() => (curr.day += total.value - 7))
+    if (curr.value.day <= 7) {
+      prev(() => (curr.value.day += total.value - 7))
     } else {
-      curr.day -= 7
+      curr.value.day -= 7
     }
   } else if (props.mode === 'months') {
-    if (curr.month <= 3) {
-      prev(() => (curr.month += 9))
+    if (curr.value.month <= 3) {
+      prev(() => (curr.value.month += 9))
     } else {
-      curr.month -= 3
+      curr.value.month -= 3
     }
   } else {
-    if (curr.year % 20 <= 3) {
-      prev(() => (curr.year += 16))
+    if (curr.value.year % 20 <= 3) {
+      prev(() => (curr.value.year += 16))
     } else {
-      curr.year -= 4
+      curr.value.year -= 4
     }
   }
 }
 
 function nextRow(): void {
   if (props.mode === 'days') {
-    const remainingDaysInMonth = total.value - curr.day
+    const remainingDaysInMonth = total.value - curr.value.day
 
     if (remainingDaysInMonth <= 6) {
-      next(() => (curr.day = 7 - remainingDaysInMonth))
+      next(() => (curr.value.day = 7 - remainingDaysInMonth))
     } else {
-      curr.day += 7
+      curr.value.day += 7
     }
   } else if (props.mode === 'months') {
-    if (curr.month >= 10) {
-      next(() => (curr.month -= 9))
+    if (curr.value.month >= 10) {
+      next(() => (curr.value.month -= 9))
     } else {
-      curr.month += 3
+      curr.value.month += 3
     }
   } else {
-    if (curr.year % 20 >= 16) {
-      next(() => (curr.year -= 16))
+    if (curr.value.year % 20 >= 16) {
+      next(() => (curr.value.year -= 16))
     } else {
-      curr.year += 4
+      curr.value.year += 4
     }
   }
 }
 
 function prevCol(): void {
   if (props.mode === 'days') {
-    if (curr.day === 1) {
-      prev(() => (curr.day = total.value))
+    if (curr.value.day === 1) {
+      prev(() => (curr.value.day = total.value))
     } else {
-      curr.day--
+      curr.value.day--
     }
   } else if (props.mode === 'months') {
-    if (curr.month === 1) {
-      prev(() => (curr.month = 12))
+    if (curr.value.month === 1) {
+      prev(() => (curr.value.month = 12))
     } else {
-      curr.month--
+      curr.value.month--
     }
   } else {
-    if (curr.year % 20 === 0) {
-      prev(() => (curr.year += 19))
+    if (curr.value.year % 20 === 0) {
+      prev(() => (curr.value.year += 19))
     } else {
-      curr.year--
+      curr.value.year--
     }
   }
 }
 
 function nextCol(): void {
   if (props.mode === 'days') {
-    if (curr.day === total.value) {
-      next(() => (curr.day = 1))
+    if (curr.value.day === total.value) {
+      next(() => (curr.value.day = 1))
     } else {
-      curr.day++
+      curr.value.day++
     }
   } else if (props.mode === 'months') {
-    if (curr.month === 12) {
-      next(() => (curr.month = 1))
+    if (curr.value.month === 12) {
+      next(() => (curr.value.month = 1))
     } else {
-      curr.month++
+      curr.value.month++
     }
   } else {
-    if (curr.year % 20 === 19) {
-      next(() => (curr.year -= 19))
+    if (curr.value.year % 20 === 19) {
+      next(() => (curr.value.year -= 19))
     } else {
-      curr.year++
+      curr.value.year++
     }
   }
 }
@@ -231,15 +241,15 @@ function prev(action?: () => void): void {
   }
   el.value?.classList.add('no-transition')
   if (props.mode === 'days') {
-    curr.month--
-    if (curr.month === 0) {
-      curr.month = 12
-      curr.year--
+    curr.value.month--
+    if (curr.value.month === 0) {
+      curr.value.month = 12
+      curr.value.year--
     }
   } else if (props.mode === 'months') {
-    curr.year--
+    curr.value.year--
   } else {
-    curr.year -= 20
+    curr.value.year -= 20
   }
   action?.()
   requestAnimationFrame(() => el.value?.classList.remove('no-transition'))
@@ -251,15 +261,15 @@ function next(action?: () => void): void {
   }
   el.value?.classList.add('no-transition')
   if (props.mode === 'days') {
-    curr.month++
-    if (curr.month === 13) {
-      curr.month = 1
-      curr.year++
+    curr.value.month++
+    if (curr.value.month === 13) {
+      curr.value.month = 1
+      curr.value.year++
     }
   } else if (props.mode === 'months') {
-    curr.year++
+    curr.value.year++
   } else {
-    curr.year += 20
+    curr.value.year += 20
   }
   action?.()
   requestAnimationFrame(() => el.value?.classList.remove('no-transition'))
@@ -267,11 +277,11 @@ function next(action?: () => void): void {
 
 function isToday(/** 1-indexed */ i: number): boolean {
   if (props.mode === 'days') {
-    return today.day === i && curr.month === today.month && curr.year === today.year
+    return now.day === i && curr.value.month === now.month && curr.value.year === now.year
   }
   return false
   // if (props.mode === 'months') {
-  //   return today.month === i && curr.year === today.year
+  //   return today.month === i && curr.value.year === today.year
   // }
   // return getRange(i) === today.year
 }
@@ -281,12 +291,12 @@ function isSelected(/** 1-indexed */ i: number): boolean {
     return false
   }
   if (props.mode === 'days') {
-    return i === selected.day
+    return i === selected.value.day
   }
   if (props.mode === 'months') {
-    return i === selected.month
+    return i === selected.value.month
   }
-  return getYearForIndex(i) === selected.year
+  return getYearForIndex(i) === selected.value.year
 }
 
 function isFocusable(/** 1-indexed */ i: number): boolean {
@@ -297,30 +307,30 @@ function isFocusable(/** 1-indexed */ i: number): boolean {
     return false
   }
   if (props.mode === 'days') {
-    return i === curr.day
+    return i === curr.value.day
   }
   if (props.mode === 'months') {
-    return i === curr.month
+    return i === curr.value.month
   }
-  return getYearForIndex(i) === curr.year
+  return getYearForIndex(i) === curr.value.year
 }
 
 function getLabelForItem(/** 1-indexed */ i: number): string {
   if (props.mode === 'days') {
-    return format.d(new Date(curr.year, curr.month - 1, i))
+    return format.d(new Date(curr.value.year, curr.value.month - 1, i))
   }
   if (props.mode === 'months') {
-    return format.m(new Date(curr.year, i - 1))
+    return format.m(new Date(curr.value.year, i - 1))
   }
   return format.y(new Date(getYearForIndex(i), 0))
 }
 
 function getYearForIndex(/** 1-indexed */ i: number): number {
-  return curr.year - (curr.year % 20) + i - 1
+  return curr.value.year - (curr.value.year % 20) + i - 1
 }
 
 function getWeekDays(): string[] {
-  return [...Array(7).keys()].map((day) => format.w(+new Date() - (now.getDay() - day) * 8.64e7))
+  return [...Array(7).keys()].map((day) => format.w(+now - ((now as any).getDay() - day) * 8.64e7))
 }
 
 function getFormatter(
@@ -345,7 +355,9 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
       <button type="button" @click="() => prev()" :disabled="isPrevDisabled">
         <IconCaretLeft />
       </button>
-      <button type="button">{{ description }}</button>
+      <button type="button" @click="emit('zoom-out')">
+        {{ description }}
+      </button>
       <button type="button" @click="() => next()" :disabled="isNextDisabled">
         <IconCaretRight />
       </button>

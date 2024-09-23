@@ -1,22 +1,36 @@
 <script setup lang="ts">
-// import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { now } from '../support/Now'
 import SDatePickerBase from './SDatePickerBase.vue'
 
-// const now = new Date()
+const selected = reactive({ ...now })
+const focused = reactive({ ...selected })
 
-// const today = {
-//   day: now.getDate(),
-//   month: now.getMonth() + 1,
-//   year: now.getFullYear()
-// }
+const mode = ref<'days' | 'months' | 'years'>('days')
 
-// const selected = reactive({ ...today })
+function onZoomIn() {
+  if (mode.value === 'years') {
+    mode.value = 'months'
+  } else if (mode.value === 'months') {
+    mode.value = 'days'
+  }
+}
+
+function onZoomOut() {
+  if (mode.value === 'days') {
+    mode.value = 'months'
+  } else if (mode.value === 'months') {
+    mode.value = 'years'
+  }
+}
 </script>
 
 <template>
-  <SDatePickerBase mode="days" />
-  <br>
-  <SDatePickerBase mode="months" />
-  <br>
-  <SDatePickerBase mode="years" />
+  <SDatePickerBase
+    :mode="mode"
+    v-model:selected="selected"
+    v-model:focused="focused"
+    @zoom-in="onZoomIn"
+    @zoom-out="onZoomOut"
+  />
 </template>
