@@ -31,6 +31,16 @@ const format = {
 
 const weekdays = getWeekDays()
 
+const key = computed(() => {
+  if (props.mode === 'days') {
+    return `${curr.value.month}-${curr.value.year}`
+  }
+  if (props.mode === 'months') {
+    return `${curr.value.year}`
+  }
+  return `${getYearForIndex(1)}-${getYearForIndex(20)}`
+})
+
 const isSelectedVisible = computed(() => {
   if (props.mode === 'days') {
     return curr.value.month === selected.value.month && curr.value.year === selected.value.year
@@ -239,7 +249,6 @@ function prev(action?: () => void): void {
   if (isPrevDisabled.value) {
     return
   }
-  el.value?.classList.add('no-transition')
   if (props.mode === 'days') {
     curr.value.month--
     if (curr.value.month === 0) {
@@ -252,14 +261,12 @@ function prev(action?: () => void): void {
     curr.value.year -= 20
   }
   action?.()
-  requestAnimationFrame(() => el.value?.classList.remove('no-transition'))
 }
 
 function next(action?: () => void): void {
   if (isNextDisabled.value) {
     return
   }
-  el.value?.classList.add('no-transition')
   if (props.mode === 'days') {
     curr.value.month++
     if (curr.value.month === 13) {
@@ -272,7 +279,6 @@ function next(action?: () => void): void {
     curr.value.year += 20
   }
   action?.()
-  requestAnimationFrame(() => el.value?.classList.remove('no-transition'))
 }
 
 function isToday(/** 1-indexed */ i: number): boolean {
@@ -366,10 +372,10 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
       <div v-for="name in weekdays" :key="name">{{ name }}</div>
     </div>
     <div class="grid" ref="el">
-      <div v-for="i in offset" :key="i" />
+      <div v-for="i in offset" :key="`${key}-${i}`" />
       <div
         v-for="i in total"
-        :key="i"
+        :key="`${key}-${i + offset}`"
         :class="{ today: isToday(i), selected: isSelected(i) }"
         class="item"
         :tabindex="isFocusable(i) ? 0 : -1"
@@ -408,7 +414,8 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
     transition: background-color 0.25s;
     border-radius: 4px;
 
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled),
+    &:focus-visible:not(:disabled) {
       background-color: var(--c-bg-mute-1);
     }
 
@@ -463,10 +470,6 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
   transition: color 0.25s, background-color 0.25s;
   cursor: pointer;
   border-radius: 4px;
-
-  .no-transition & {
-    transition: none;
-  }
 
   &:hover {
     background-color: var(--c-bg-info-dimm-a2);
