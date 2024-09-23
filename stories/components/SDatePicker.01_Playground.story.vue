@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SDatePicker from 'sefirot/components/SDatePickerNew.vue'
+import SDatePicker from 'sefirot/components/SDatePicker.vue'
 
 const title = 'Components / SDatePicker / 01. Playground'
 </script>
