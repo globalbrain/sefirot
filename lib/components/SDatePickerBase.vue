@@ -361,7 +361,12 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
       <button type="button" @click="() => prev()" :disabled="isPrevDisabled">
         <IconCaretLeft />
       </button>
-      <button type="button" @click="emit('zoom-out')">
+      <button
+        type="button"
+        @click="emit('zoom-out')"
+        :disabled="props.mode === 'years'"
+        class="desc"
+      >
         {{ description }}
       </button>
       <button type="button" @click="() => next()" :disabled="isNextDisabled">
@@ -423,9 +428,13 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
       background-color: var(--c-bg-mute-2);
     }
 
-    &:disabled {
+    &:disabled:not(.desc) {
       cursor: not-allowed;
       color: var(--c-text-3);
+    }
+
+    &.desc:disabled {
+      cursor: default;
     }
   }
 }
