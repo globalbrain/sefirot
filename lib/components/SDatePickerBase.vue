@@ -451,6 +451,7 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
   padding: 8px;
 
   > div {
+    justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
