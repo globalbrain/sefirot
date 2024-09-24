@@ -10,7 +10,6 @@ const selected = reactive(model.value)
 const curr = reactive({ ...selected })
 
 const mode = ref<'days' | 'months' | 'years'>('days')
-
 const el = ref<HTMLElement>()
 const keys = ['Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
 

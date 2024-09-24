@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SDatePickerBase from 'sefirot/components/SDatePicker.vue'
+import SDatePicker from 'sefirot/components/SDatePicker.vue'
 import { now } from 'sefirot/support/Now'
 import { reactive } from 'vue'
 
@@ -12,7 +12,7 @@ const selected = reactive({ ...now })
   <Story :title="title" source="Not available" auto-props-disabled>
     <template #default>
       <Board :title="title">
-        <SDatePickerBase v-model="selected" />
+        <SDatePicker v-model="selected" />
       </Board>
     </template>
   </Story>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { DatePicker } from 'v-calendar'
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import { type Day, day } from '../support/Day'
@@ -66,29 +65,7 @@ function emitBlur() {
     :validation="validation"
   >
     <div class="container">
-      <DatePicker
-        v-slot="{ inputValue, inputEvents }"
-        color="blue"
-        is-dark
-        :masks="{ input: 'YYYY-MM-DD' }"
-        :model-config="{ type: 'string', mask: 'YYYY-MM-DD' }"
-        :popover="{ placement: 'bottom', visibility: 'click' }"
-        :model-value="value"
-        @update:model-value="emitInput"
-      >
-        <input
-          :id="name"
-          class="input"
-          :class="{ block, disabled }"
-          type="text"
-          placeholder="YYYY-MM-DD"
-          autocomplete="off"
-          :value="inputValue"
-          :disabled="disabled"
-          v-on="disabled ? {} : inputEvents"
-          @blur="emitBlur"
-        >
-      </DatePicker>
+      TODO
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
