@@ -2,6 +2,7 @@
 import IconCaretLeft from '~icons/ph/caret-left-bold'
 import IconCaretRight from '~icons/ph/caret-right-bold'
 import { computed, nextTick, ref } from 'vue'
+import { useLang } from '../composables/Lang'
 import { type SDate, now } from '../support/Now'
 
 const props = defineProps<{
@@ -19,7 +20,7 @@ const curr = defineModel<SDate>('focused', { required: true })
 const el = ref<HTMLElement>()
 const keys = ['Enter', ' ', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
 
-const lang = undefined
+const lang = useLang()
 const format = {
   my: getFormatter(new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' })),
   yy: getFormatter(new Intl.DateTimeFormat(lang, { year: 'numeric' }), 'range'),
@@ -397,7 +398,7 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
 .SDatePickerBase {
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 288px;
   background-color: var(--c-bg-elv-3);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
