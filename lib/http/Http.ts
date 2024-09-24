@@ -1,13 +1,7 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import {
-  FetchError,
-  type FetchOptions,
-  type FetchRequest,
-  type FetchResponse,
-  ofetch
-} from 'ofetch'
+import { FetchError, type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
@@ -15,8 +9,8 @@ import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '..
 type Awaitable<T> = T | PromiseLike<T>
 
 export interface HttpClient {
-  <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
-  raw<T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<T>>
+  (request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<any>
+  raw(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<any>>
 }
 
 export interface HttpOptions {
@@ -36,7 +30,7 @@ export class Http {
   private static payloadKey = '__payload__'
   private static headers: () => Awaitable<Record<string, string>> = async () => ({})
 
-  static config(options: HttpOptions) {
+  static config(options: HttpOptions): void {
     if (options.baseUrl) {
       Http.baseUrl = options.baseUrl
     }
@@ -72,15 +66,9 @@ export class Http {
     return xsrfToken
   }
 
-  private async buildRequest(
-    url: string,
-    _options: FetchOptions = {}
-  ): Promise<[string, FetchOptions]> {
+  private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = _options
-
-    const xsrfToken
-      = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
-
+    const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
     const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true })
 
     return [
@@ -101,12 +89,12 @@ export class Http {
     ]
   }
 
-  private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return Http.client<T>(...(await this.buildRequest(url, options)))
+  private async performRequest<T>(url: string, options: FetchOptions = {}): Promise<T> {
+    return Http.client(...(await this.buildRequest(url, options)))
   }
 
-  private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return Http.client.raw<T>(...(await this.buildRequest(url, options)))
+  private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
+    return Http.client.raw(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
@@ -174,7 +162,7 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false) {
+  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false): FormData {
     const fd = form || new FormData()
     let formKey: string
 
@@ -211,9 +199,11 @@ export function isFetchError(e: unknown): e is FetchError {
       && (isString((e as FetchError).request) || isRequest((e as FetchError).request))
       && ((e as FetchError).response === undefined || isResponse((e as FetchError).response))
       && e.message.startsWith(
-        `[${((e as FetchError).request as Request | undefined)?.method || (e as FetchError).options?.method || 'GET'}] ${
-          JSON.stringify(((e as FetchError).request as Request | undefined)?.url || String((e as FetchError).request) || '/')
-        }: `
+        `[${
+          ((e as FetchError).request as Request | undefined)?.method || (e as FetchError).options?.method || 'GET'
+        }] ${JSON.stringify(
+          ((e as FetchError).request as Request | undefined)?.url || String((e as FetchError).request) || '/'
+        )}: `
       ))
   )
 }
