@@ -419,9 +419,14 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
     transition: background-color 0.25s;
     border-radius: 4px;
 
-    &:hover:not(:disabled),
     &:focus-visible:not(:disabled) {
       background-color: var(--c-bg-mute-1);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover:not(:disabled) {
+        background-color: var(--c-bg-mute-1);
+      }
     }
 
     &:active:not(:disabled) {
@@ -480,8 +485,10 @@ function getFormatter(fmt: Intl.DateTimeFormat, type?: string) {
   cursor: pointer;
   border-radius: 4px;
 
-  &:hover {
-    background-color: var(--c-bg-info-dimm-a2);
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: var(--c-bg-info-dimm-a2);
+    }
   }
 
   &.today:not(.selected) {
