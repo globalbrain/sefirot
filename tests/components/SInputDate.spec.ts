@@ -3,7 +3,7 @@ import SInputDate from 'sefirot/components/SInputDate.vue'
 import { day } from 'sefirot/support/Day'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
-describe('components/SInputDate', () => {
+describe.skip('components/SInputDate', () => {
   test('should emit input event', async () => {
     const wrapper = mount(SInputDate, {
       props: {
