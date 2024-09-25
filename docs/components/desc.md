@@ -246,6 +246,20 @@ You may also use `:pre-wrap` to preserve line breaks in the text. This is especi
 </SDesc>
 ```
 
+By specifying `:linkify`, the component will automatically convert URLs and email addresses in the text into clickable links. It will not convert any Markdown syntax or raw HTML tags. Note that this feature only works when passing in text as a prop through `:value`.
+
+```vue-html
+<SDesc cols="2" gap="24">
+  <SDescItem span="1">
+    <SDescLabel value="About" />
+    <SDescText
+      linkify
+      value="Clickable link: https://example.com"
+    />
+  </SDescItem>
+</SDesc>
+```
+
 ## Number value
 
 Use `<SDescNumber>` which is a specialized version of `<SDescText>` that is tailored to display numbers. It provides additional styling and formatting options that are not available in `<SDescText>`.
