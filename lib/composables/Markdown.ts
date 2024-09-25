@@ -43,9 +43,7 @@ export function useLinkifyIt() {
     return self.renderToken(tokens, idx, options)
   }
 
-  return (source: string) => {
-    return md.renderInline(source)
-  }
+  return (source: string) => md.renderInline(source)
 }
 
 export interface UseLink {
