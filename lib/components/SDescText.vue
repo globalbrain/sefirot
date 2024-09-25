@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import MarkdownIt from 'markdown-it'
 import { useLinkifyIt } from 'sefirot/composables/Markdown'
 import { computed } from 'vue'
 import { useHasSlotContent } from '../composables/Utils'
