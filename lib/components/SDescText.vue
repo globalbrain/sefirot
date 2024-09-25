@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MarkdownIt from 'markdown-it'
+import { useLinkifyIt } from 'sefirot/composables/Markdown'
 import { computed } from 'vue'
 import { useHasSlotContent } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
@@ -7,6 +9,7 @@ const props = defineProps<{
   value?: string | null
   lineClamp?: string | number
   preWrap?: boolean
+  linkify?: boolean
 }>()
 
 const classes = computed(() => [
@@ -17,14 +20,23 @@ const classes = computed(() => [
 const hasSlot = useHasSlotContent()
 
 const lineClamp = computed(() => props.lineClamp ?? 'none')
+
+const linkifyIt = useLinkifyIt()
+
+const _value = computed(() => {
+  if (props.linkify) {
+    return linkifyIt(props.value ?? '')
+  }
+  return props.value
+})
 </script>
 
 <template>
-  <div v-if="hasSlot || value" class="SDescText" :class="classes">
-    <div class="value">
-      <slot v-if="hasSlot" />
-      <template v-else>{{ value }}</template>
+  <div v-if="hasSlot || _value" class="SDescText" :class="classes">
+    <div class="value" v-if="hasSlot">
+      <slot />
     </div>
+    <div class="value" v-else v-html="_value" />
   </div>
   <SDescEmpty v-else />
 </template>

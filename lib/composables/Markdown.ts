@@ -32,6 +32,15 @@ export function useMarkdown(options: UseMarkdownOptions = {}): UseMarkdown {
   }
 }
 
+export function useLinkifyIt() {
+  const md = new MarkdownIt('zero', { linkify: true })
+  md.enable('linkify')
+
+  return (source: string) => {
+    return md.renderInline(source)
+  }
+}
+
 export interface UseLink {
   addListeners(): void
   removeListeners(): void
