@@ -36,6 +36,13 @@ export function useLinkifyIt() {
   const md = new MarkdownIt('zero', { linkify: true })
   md.enable('linkify')
 
+  md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
+    const token = tokens[idx]
+    token.attrSet('target', '_blank')
+    token.attrSet('rel', 'noreferrer')
+    return self.renderToken(tokens, idx, options)
+  }
+
   return (source: string) => {
     return md.renderInline(source)
   }
