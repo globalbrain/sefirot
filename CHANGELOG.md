@@ -1,5 +1,12 @@
 
 
+# [4.4.0](https://github.com/globalbrain/sefirot/compare/v4.3.2...v4.4.0) (2024-09-25)
+
+
+### Features
+
+* **desc-text:** add linkify option ([#555](https://github.com/globalbrain/sefirot/issues/555)) ([#556](https://github.com/globalbrain/sefirot/issues/556)) ([2cd0eef](https://github.com/globalbrain/sefirot/commit/2cd0eef5fdb2373eae234dfd97394268e84202e2))
+
 ## [4.3.2](https://github.com/globalbrain/sefirot/compare/v4.3.1...v4.3.2) (2024-09-19)
 
 
