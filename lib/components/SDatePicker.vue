@@ -5,8 +5,14 @@ import { computed, nextTick, reactive, ref } from 'vue'
 import { useLang } from '../composables/Lang'
 import { type SDate, now } from '../support/Now'
 
-const model = defineModel<SDate>({ required: true })
-const selected = reactive(model.value)
+const { selected } = defineProps<{
+  selected: SDate
+}>()
+
+const emit = defineEmits<{
+  'selected': [value: SDate]
+}>()
+
 const curr = reactive({ ...selected })
 
 const mode = ref<'days' | 'months' | 'years'>('days')
@@ -117,6 +123,7 @@ function onSelected(/** 1-indexed */ i: number): void {
     selected.year = getYearForIndex(i)
   }
   onZoomIn()
+  emit('selected', { ...selected })
 }
 
 function onFocused(/** 1-indexed */ i: number): void {
