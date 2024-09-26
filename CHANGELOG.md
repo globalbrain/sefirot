@@ -1,5 +1,12 @@
 
 
+## [4.4.1](https://github.com/globalbrain/sefirot/compare/v4.4.0...v4.4.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* **desc-text:** handle fuzzy email detection with non-ascii symbols ([453f8ba](https://github.com/globalbrain/sefirot/commit/453f8ba4faf53b4b1731b0834fb6730ddc12bbed))
+
 # [4.4.0](https://github.com/globalbrain/sefirot/compare/v4.3.2...v4.4.0) (2024-09-25)
 
 
