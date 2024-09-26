@@ -17,7 +17,21 @@ import { mergeConfig } from 'vite'
 
 /** @type {import('vite').UserConfig} */
 export const baseConfig = {
-  plugins: [icons({ scale: 1 })],
+  plugins: [
+    icons({ scale: 1 }),
+    {
+      enforce: 'pre',
+      name: 'sefirot:patch-linkify-it',
+      transform(code, id) {
+        if (id.includes('markdown-it')) {
+          return code.replace(
+            'const text_separators = "[><\uFF5C]"',
+            'const text_separators = "[><\uFF00-\uFFEF]"' // https://www.fileformat.info/info/unicode/block/halfwidth_and_fullwidth_forms/index.htm
+          )
+        }
+      }
+    }
+  ],
 
   resolve: {
     alias: { 'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url)) },
