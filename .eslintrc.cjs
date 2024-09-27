@@ -8,6 +8,7 @@ module.exports = {
   ],
 
   rules: {
-    'vue/no-template-shadow': 'off'
+    'vue/no-template-shadow': 'off',
+    'no-console': 'warn'
   }
 }
