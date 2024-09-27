@@ -1,5 +1,12 @@
 
 
+## [4.4.2](https://github.com/globalbrain/sefirot/compare/v4.4.1...v4.4.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* **desc-text:** properly patch linkify-it ([e035e7f](https://github.com/globalbrain/sefirot/commit/e035e7f90d0a7d02f73e6ef878515a7f8d423511))
+
 ## [4.4.1](https://github.com/globalbrain/sefirot/compare/v4.4.0...v4.4.1) (2024-09-26)
 
 
