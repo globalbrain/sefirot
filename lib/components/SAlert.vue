@@ -55,14 +55,14 @@ withDefaults(defineProps<{
   gap: 16px;
 }
 
-.content :slotted(p) {
+.content :deep(p) {
   margin: 0;
   max-width: 65ch;
   line-height: 24px;
   font-size: 14px;
 }
 
-.content :slotted(a) {
+.content :deep(a) {
   font-weight: 500;
   text-decoration: underline;
   transition: color 0.25s;
