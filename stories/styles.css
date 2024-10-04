@@ -1,6 +1,9 @@
 body {
   line-height: 20px;
   font-size: 14px;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #app {
