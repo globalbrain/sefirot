@@ -14,6 +14,9 @@ body {
   font-weight: 400;
   color: var(--c-text-1);
   background-color: var(--c-bg-elv-1);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 blockquote,
