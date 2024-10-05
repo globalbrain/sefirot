@@ -529,8 +529,8 @@ The component has several different styles based on its type and color combinati
   --button-fill-warning-active-text-color: var(--c-white);
   --button-fill-warning-active-bg-color: var(--c-bg-warning-2);
   --button-fill-warning-disabled-border-color: var(--c-border-mute-1);
-  --button-fill-warning-disabled-text-color: var(--c-text-warning-3);
-  --button-fill-warning-disabled-content-color: var(--c-text-warning-3);
+  --button-fill-warning-disabled-text-color: var(--c-text-warning-2);
+  --button-fill-warning-disabled-content-color: var(--c-text-warning-2);
   --button-fill-warning-disabled-bg-color: var(--c-bg-mute-1);
 
   --button-fill-danger-border-color: var(--c-border-mute-1);
@@ -545,8 +545,8 @@ The component has several different styles based on its type and color combinati
   --button-fill-danger-active-text-color: var(--c-white);
   --button-fill-danger-active-bg-color: var(--c-bg-danger-2);
   --button-fill-danger-disabled-border-color: var(--c-border-mute-1);
-  --button-fill-danger-disabled-text-color: var(--c-text-danger-3);
-  --button-fill-danger-disabled-content-color: var(--c-text-danger-3);
+  --button-fill-danger-disabled-text-color: var(--c-text-danger-2);
+  --button-fill-danger-disabled-content-color: var(--c-text-danger-2);
   --button-fill-danger-disabled-bg-color: var(--c-bg-mute-1);
 
   --button-outline-default-border-color: var(--c-border-mute-1);
