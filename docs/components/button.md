@@ -496,9 +496,9 @@ The component has several different styles based on its type and color combinati
   --button-fill-info-active-border-color: var(--c-border-info-3);
   --button-fill-info-active-text-color: var(--c-white-1);
   --button-fill-info-active-bg-color: var(--c-bg-info-3);
-  --button-fill-info-disabled-border-color: var(--c-border-info-1);
-  --button-fill-info-disabled-text-color: var(--c-white-a3);
-  --button-fill-info-disabled-content-color: var(--c-white-a3);
+  --button-fill-info-disabled-border-color: var(--c-blue-9);
+  --button-fill-info-disabled-text-color: var(--c-white-a2);
+  --button-fill-info-disabled-content-color: var(--c-white-a2);
   --button-fill-info-disabled-bg-color: var(--c-info-bg-dark);
 
   --button-fill-success-border-color: var(--c-border-success-1);
@@ -512,9 +512,9 @@ The component has several different styles based on its type and color combinati
   --button-fill-success-active-border-color: var(--c-border-success-3);
   --button-fill-success-active-text-color: var(--c-white);
   --button-fill-success-active-bg-color: var(--c-bg-success-3);
-  --button-fill-success-disabled-border-color: var(--c-border-success-1);
-  --button-fill-success-disabled-text-color: var(--c-white-a3);
-  --button-fill-success-disabled-content-color: var(--c-white-a3);
+  --button-fill-success-disabled-border-color: var(--c-green-9);
+  --button-fill-success-disabled-text-color: var(--c-white-a2);
+  --button-fill-success-disabled-content-color: var(--c-white-a2);
   --button-fill-success-disabled-bg-color: var(--c-success-bg-dark);
 
   --button-fill-warning-border-color: var(--c-border-mute-1);
