@@ -1,5 +1,19 @@
 
 
+# [4.5.0](https://github.com/globalbrain/sefirot/compare/v4.4.2...v4.5.0) (2024-10-08)
+
+
+### Bug Fixes
+
+* **alert:** use `:deep` instead of `:slotted` to style elements ([#557](https://github.com/globalbrain/sefirot/issues/557)) ([edfc823](https://github.com/globalbrain/sefirot/commit/edfc823a11ffa116efb4499ee889f800ea6b836d))
+* remove lock on ofetch ([3ad5a7d](https://github.com/globalbrain/sefirot/commit/3ad5a7d324c05e347c5ab21a4ae220c5dee42e72))
+
+
+### Features
+
+* **button:** adjust colors for disabled buttons ([#559](https://github.com/globalbrain/sefirot/issues/559)) ([4effab5](https://github.com/globalbrain/sefirot/commit/4effab529d78dfed0f1a2d795474b2d566dc0e91))
+* **style:** set font antialias ([#558](https://github.com/globalbrain/sefirot/issues/558)) ([0fe3f7f](https://github.com/globalbrain/sefirot/commit/0fe3f7fc4a40630cb3b71e832a2510f175115662))
+
 ## [4.4.2](https://github.com/globalbrain/sefirot/compare/v4.4.1...v4.4.2) (2024-09-27)
 
 
