@@ -90,12 +90,12 @@
 
 .SContent :deep(ul > li::before) {
   position: absolute;
-  top: 8px;
+  top: 9px;
   left: 2px;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: var(--c-text-3);
+  background-color: var(--c-text-1);
   content: "";
 }
 
@@ -106,7 +106,7 @@
 .SContent :deep(ol > li::before) {
   margin-right: 3px;
   margin-left: -20px;
-  color: var(--c-text-2);
+  color: var(--c-text-1);
   font-feature-settings: "tnum";
   content: counter(s-medium-counter)". ";
 }
