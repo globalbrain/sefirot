@@ -24,11 +24,15 @@ export default defineConfig({
   },
 
   themeConfig: {
-    outline: [2, 3],
-
     editLink: {
       pattern: 'https://github.com/globalbrain/sefirot/edit/main/docs/:path'
     },
+
+    nav: [
+      { text: 'Playground', link: `https://${getStoryHost()}` },
+    ],
+
+    outline: [2, 3],
 
     search: {
       provider: 'local'
