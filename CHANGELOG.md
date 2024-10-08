@@ -1,5 +1,12 @@
 
 
+# [4.6.0](https://github.com/globalbrain/sefirot/compare/v4.5.0...v4.6.0) (2024-10-08)
+
+
+### Features
+
+* **content:** add h3 styles ([#560](https://github.com/globalbrain/sefirot/issues/560)) ([7347089](https://github.com/globalbrain/sefirot/commit/7347089ecd132db9e19616a0cdf06ec909a9437f))
+
 # [4.5.0](https://github.com/globalbrain/sefirot/compare/v4.4.2...v4.5.0) (2024-10-08)
 
 
