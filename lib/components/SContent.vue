@@ -110,4 +110,38 @@
   font-feature-settings: "tnum";
   content: counter(s-medium-counter)". ";
 }
+
+.SContent :deep(table) {
+  box-shadow: 0 0 0 1px var(--c-divider);
+  table-layout: fixed;
+  overflow: clip;
+  width: 100%;
+  margin: 4px 0;
+  border-style: hidden;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--c-text-1);
+  text-align: left;
+}
+
+.SContent :deep(table th),
+.SContent :deep(table td) {
+  overflow-wrap: break-word;
+  height: 40px;
+  padding: 8px 16px;
+  background-color: var(--c-bg-elv-3);
+  border: 1px solid var(--c-gutter);
+  text-wrap: pretty;
+}
+
+.SContent :deep(table th) {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--c-text-2);
+  text-wrap: balance;
+}
+
+.SContent :deep(table tr:hover td) {
+  background-color: var(--c-bg-elv-4);
+}
 </style>
