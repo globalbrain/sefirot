@@ -1,3 +1,4 @@
+import { format } from '../../support/Num'
 import { createRule } from '../Rule'
 import { minValue as baseMinValue } from '../validators'
 
@@ -7,10 +8,8 @@ export const message = {
 }
 
 export function minValue(min: number, msg?: string) {
-  const formatted = Intl.NumberFormat().format(min)
-
   return createRule({
-    message: ({ lang }) => msg ?? message[lang](formatted),
+    message: ({ lang }) => msg ?? message[lang](format(min)),
     optional: true,
     validation: (value) => baseMinValue(value, min)
   })

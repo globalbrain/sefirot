@@ -1,3 +1,4 @@
+import { format } from '../../support/Num'
 import { createRule } from '../Rule'
 import { maxLength as baseMaxLength } from '../validators'
 
@@ -7,10 +8,8 @@ export const message = {
 }
 
 export function maxLength(length: number, msg?: string) {
-  const formatted = Intl.NumberFormat().format(length)
-
   return createRule({
-    message: ({ lang }) => msg ?? message[lang](formatted),
+    message: ({ lang }) => msg ?? message[lang](format(length)),
     optional: true,
     validation: (value) => baseMaxLength(value, length)
   })

@@ -1,3 +1,4 @@
+import { format } from '../../support/Num'
 import { createRule } from '../Rule'
 import { maxValue as baseMaxValue } from '../validators'
 
@@ -7,10 +8,8 @@ export const message = {
 }
 
 export function maxValue(max: number, msg?: string) {
-  const formatted = Intl.NumberFormat().format(max)
-
   return createRule({
-    message: ({ lang }) => msg ?? message[lang](formatted),
+    message: ({ lang }) => msg ?? message[lang](format(max)),
     optional: true,
     validation: (value) => baseMaxValue(value, max)
   })
