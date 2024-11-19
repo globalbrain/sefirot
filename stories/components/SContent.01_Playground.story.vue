@@ -41,6 +41,33 @@ const docs = '/components/content'
             <li>Sed ut perspiciatis unde omnis iste natus error.</li>
             <li>Lorem ipsum dolor sit amet.</li>
           </ol>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Header 1</th>
+                <th>Header 2</th>
+                <th>Header 3</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+                <td>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <td>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</td>
+              </tr>
+              <tr>
+                <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</td>
+                <td>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui.</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+              </tr>
+              <tr>
+                <td>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <td>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</td>
+                <td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</td>
+              </tr>
+            </tbody>
+          </table>
         </SContent>
       </div>
     </Board>
