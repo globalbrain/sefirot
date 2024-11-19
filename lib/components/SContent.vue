@@ -14,6 +14,7 @@
 .SContent :deep(h1),
 .SContent :deep(.h1) {
   margin: 0;
+  padding: 0;
   max-width: 640px;
   line-height: 40px;
   font-size: 32px;
@@ -23,12 +24,22 @@
 
 .SContent :deep(h2),
 .SContent :deep(.h2) {
-  border-top: 0;
   margin: 0;
   padding: 0;
   max-width: 640px;
-  line-height: 28px;
+  line-height: 32px;
   font-size: 20px;
+  font-weight: 500;
+  color: var(--c-text-1);
+}
+
+.SContent :deep(h3),
+.SContent :deep(.h3) {
+  margin: 0;
+  padding: 0;
+  max-width: 640px;
+  line-height: 24px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--c-text-1);
 }
@@ -79,12 +90,12 @@
 
 .SContent :deep(ul > li::before) {
   position: absolute;
-  top: 8px;
+  top: 9px;
   left: 2px;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background-color: var(--c-text-3);
+  background-color: var(--c-text-1);
   content: "";
 }
 
@@ -95,7 +106,7 @@
 .SContent :deep(ol > li::before) {
   margin-right: 3px;
   margin-left: -20px;
-  color: var(--c-text-2);
+  color: var(--c-text-1);
   font-feature-settings: "tnum";
   content: counter(s-medium-counter)". ";
 }

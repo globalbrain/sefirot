@@ -12,15 +12,39 @@
  */
 
 import { fileURLToPath } from 'node:url'
+import MagicString from 'magic-string'
 import icons from 'unplugin-icons/vite'
 import { mergeConfig } from 'vite'
 
 /** @type {import('vite').UserConfig} */
 export const baseConfig = {
-  plugins: [icons({ scale: 1 })],
+  plugins: [
+    icons({ scale: 1 }),
+    {
+      enforce: 'pre',
+      name: 'sefirot:patch-linkify-it',
+      transform(code, id) {
+        if (id.includes('linkify-it/lib/re.mjs')) {
+          const s = new MagicString(code)
+
+          const search = 'const text_separators = \'[><\\uff5c]\''
+          const replace = 'const text_separators = \'[><\\uff00-\\uffef]\''
+
+          const index = code.indexOf(search)
+          if (index !== -1) {
+            s.overwrite(index, index + search.length, replace)
+          }
+
+          return { code: s.toString(), map: s.generateMap({ source: id }) }
+        }
+      }
+    }
+  ],
 
   resolve: {
-    alias: { 'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url)) },
+    alias: {
+      'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url))
+    },
 
     dedupe: [
       '@sentry/browser',
@@ -55,6 +79,10 @@ export const baseConfig = {
       'dayjs/plugin/relativeTime',
       'dayjs/plugin/timezone',
       'dayjs/plugin/utc',
+      'markdown-it > argparse',
+      'markdown-it > entities'
+    ],
+    exclude: [
       'markdown-it'
     ]
   }

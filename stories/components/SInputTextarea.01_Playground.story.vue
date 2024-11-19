@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
-import { ref } from 'vue'
+import { useData } from 'sefirot/composables/Data'
+import { useValidation } from 'sefirot/composables/Validation'
+import { maxLength } from 'sefirot/validation/rules'
 
 const title = 'Components / SInputTextarea / 01. Playground'
 const docs = '/components/input-textarea'
 
-const text = ref('')
+const { data } = useData({
+  text: null as string | null
+})
+
+const { validation } = useValidation(data, {
+  text: {
+    maxLength: maxLength(1000)
+  }
+})
 
 function state() {
   return {
@@ -86,7 +96,8 @@ function state() {
           :rows="state.rows"
           :auto-resize="state.autoResize"
           :disabled="state.disabled"
-          v-model="text"
+          v-model="data.text"
+          :validation="validation.text"
         />
       </Board>
     </template>

@@ -4,7 +4,7 @@ import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
 import SDescItem from 'sefirot/components/SDescItem.vue'
 import SDescLabel from 'sefirot/components/SDescLabel.vue'
 
-const title = 'Components / SDesc / 04. Avatar Many'
+const title = 'Components / SDesc / 05. Avatar Many'
 const docs = '/components/desc'
 
 const avatars = [

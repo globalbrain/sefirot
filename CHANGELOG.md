@@ -1,5 +1,47 @@
 
 
+# [4.6.0](https://github.com/globalbrain/sefirot/compare/v4.5.0...v4.6.0) (2024-10-08)
+
+
+### Features
+
+* **content:** add h3 styles ([#560](https://github.com/globalbrain/sefirot/issues/560)) ([7347089](https://github.com/globalbrain/sefirot/commit/7347089ecd132db9e19616a0cdf06ec909a9437f))
+
+# [4.5.0](https://github.com/globalbrain/sefirot/compare/v4.4.2...v4.5.0) (2024-10-08)
+
+
+### Bug Fixes
+
+* **alert:** use `:deep` instead of `:slotted` to style elements ([#557](https://github.com/globalbrain/sefirot/issues/557)) ([edfc823](https://github.com/globalbrain/sefirot/commit/edfc823a11ffa116efb4499ee889f800ea6b836d))
+* remove lock on ofetch ([3ad5a7d](https://github.com/globalbrain/sefirot/commit/3ad5a7d324c05e347c5ab21a4ae220c5dee42e72))
+
+
+### Features
+
+* **button:** adjust colors for disabled buttons ([#559](https://github.com/globalbrain/sefirot/issues/559)) ([4effab5](https://github.com/globalbrain/sefirot/commit/4effab529d78dfed0f1a2d795474b2d566dc0e91))
+* **style:** set font antialias ([#558](https://github.com/globalbrain/sefirot/issues/558)) ([0fe3f7f](https://github.com/globalbrain/sefirot/commit/0fe3f7fc4a40630cb3b71e832a2510f175115662))
+
+## [4.4.2](https://github.com/globalbrain/sefirot/compare/v4.4.1...v4.4.2) (2024-09-27)
+
+
+### Bug Fixes
+
+* **desc-text:** properly patch linkify-it ([e035e7f](https://github.com/globalbrain/sefirot/commit/e035e7f90d0a7d02f73e6ef878515a7f8d423511))
+
+## [4.4.1](https://github.com/globalbrain/sefirot/compare/v4.4.0...v4.4.1) (2024-09-26)
+
+
+### Bug Fixes
+
+* **desc-text:** handle fuzzy email detection with non-ascii symbols ([453f8ba](https://github.com/globalbrain/sefirot/commit/453f8ba4faf53b4b1731b0834fb6730ddc12bbed))
+
+# [4.4.0](https://github.com/globalbrain/sefirot/compare/v4.3.2...v4.4.0) (2024-09-25)
+
+
+### Features
+
+* **desc-text:** add linkify option ([#555](https://github.com/globalbrain/sefirot/issues/555)) ([#556](https://github.com/globalbrain/sefirot/issues/556)) ([2cd0eef](https://github.com/globalbrain/sefirot/commit/2cd0eef5fdb2373eae234dfd97394268e84202e2))
+
 ## [4.3.2](https://github.com/globalbrain/sefirot/compare/v4.3.1...v4.3.2) (2024-09-19)
 
 
