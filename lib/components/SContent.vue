@@ -113,9 +113,7 @@
 
 .SContent :deep(table) {
   box-shadow: 0 0 0 1px var(--c-divider);
-  table-layout: fixed;
   overflow: clip;
-  width: 100%;
   margin: 4px 0;
   border-style: hidden;
   border-radius: 6px;
