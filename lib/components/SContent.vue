@@ -112,24 +112,33 @@
 }
 
 .SContent :deep(table) {
-  box-shadow: 0 0 0 1px var(--c-divider);
-  overflow: clip;
-  margin: 4px 0;
+  margin: 8px 0;
   border-style: hidden;
   border-radius: 6px;
+  text-align: left;
   font-size: 14px;
   color: var(--c-text-1);
-  text-align: left;
+  overflow: clip;
+  box-shadow: 0 0 0 1px var(--c-divider);
+}
+
+.SContent :deep(table tr:hover td) {
+  background-color: var(--c-bg-elv-4);
+}
+
+.SContent :deep(table thead > tr > th) {
+  vertical-align: middle;
 }
 
 .SContent :deep(table th),
 .SContent :deep(table td) {
-  overflow-wrap: break-word;
-  height: 40px;
-  padding: 8px 16px;
-  background-color: var(--c-bg-elv-3);
   border: 1px solid var(--c-gutter);
+  padding: 8px 16px;
+  height: 40px;
+  vertical-align: top;
   text-wrap: pretty;
+  background-color: var(--c-bg-elv-3);
+  overflow-wrap: break-word;
 }
 
 .SContent :deep(table th) {
@@ -137,9 +146,5 @@
   font-weight: 600;
   color: var(--c-text-2);
   text-wrap: balance;
-}
-
-.SContent :deep(table tr:hover td) {
-  background-color: var(--c-bg-elv-4);
 }
 </style>

@@ -48,14 +48,15 @@ Place HTML elements inside `<SContent>` component and it will apply basic styles
 
 The supported elements are:
 
-- `<h1>` <Badge text="3.11.0" />
-- `<h2>` <Badge text="3.11.0" />
+- `<h1>`
+- `<h2>`
+- `<h3>`
 - `<p>`
 - `<strong>`
 - `<a>`
 - `<ul>`
 - `<ol>`
-- `<li>`
+- `<table>`
 
 ### Use CSS class to style the headings
 
