@@ -1,5 +1,14 @@
 
 
+# [4.7.0](https://github.com/globalbrain/sefirot/compare/v4.6.0...v4.7.0) (2024-12-03)
+
+
+### Features
+
+* **content:** support html tables in SContent ([#565](https://github.com/globalbrain/sefirot/issues/565)) ([23c2c86](https://github.com/globalbrain/sefirot/commit/23c2c861348f4099fd58a19cd158500132fe995b))
+* migrate to vite 6 ([#566](https://github.com/globalbrain/sefirot/issues/566)) ([5faf167](https://github.com/globalbrain/sefirot/commit/5faf1670919df64fbaf799f1a7da87e7e1444303))
+* **validation:** format numbers to make them more readable ([#545](https://github.com/globalbrain/sefirot/issues/545)) ([#563](https://github.com/globalbrain/sefirot/issues/563)) ([9ddf973](https://github.com/globalbrain/sefirot/commit/9ddf973c79150141186d364503ad9c387196346e))
+
 # [4.6.0](https://github.com/globalbrain/sefirot/compare/v4.5.0...v4.6.0) (2024-10-08)
 
 
