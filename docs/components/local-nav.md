@@ -43,6 +43,27 @@ const title = [
 </template>
 ```
 
+### Page actions
+
+You may define `:actions` to display page actions (buttons). The `:actions` prop accepts array of [`Action`](#action) object. The action object is the same as props for [`<SButton>`](button) except `:size` since the size is fixed to `small`, and an extra `onClick` function to handle the click event.
+
+```vue
+<script setup lang="ts">
+const title = [
+  { text: 'Page title' },
+]
+
+const actions = [
+  { label: 'Edit title', onClick: () => { /* ... */ } },
+  { label: 'About', onClick: () => { /* ... */ } }
+]
+</script>
+
+<template>
+  <SLocalNav :title="title" :actions="actions" />
+</template>
+```
+
 ### Page navigation
 
 You may define `:menu` to display a page navigation. The `:menu` props accepts "double nested" array, in order to create grouping of menu items.
@@ -94,6 +115,30 @@ interface Title {
 }
 ```
 
+### `Action`
+
+```ts
+import { type Component } from 'vue'
+import { type Mode, type Tooltip, type Type } from '@globalbrain/sefirot/lib/components/SButton.vue'
+
+export interface Action {
+  tag?: string
+  type?: Type
+  mode?: Mode
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
+  iconMode?: Mode
+  label?: string
+  labelMode?: Mode
+  href?: string
+  loading?: boolean
+  disabled?: boolean
+  tooltip?: string | Tooltip
+  onClick?(): void
+}
+```
+
 ### `MenuItem`
 
 The type of menu item.
@@ -114,6 +159,7 @@ interface Props {
   avatar?: Avatar
   title: Title[]
   description?: string
+  actions?: Action[]
   menu?: MenuItem[][]
 }
 ```
@@ -149,7 +195,7 @@ interface Props {
 />
 ```
 
-### `description`
+### `:description`
 
 Add description text under the title.
 
@@ -166,6 +212,26 @@ interface Props {
 />
 ```
 
+### `:actions`
+
+The actions of the page.
+
+```ts
+interface Props {
+  actions: Action[]
+}
+```
+
+```vue-html
+<SLocalNav
+  :title="[{ text: 'Page title' }]"
+  :actions="[
+    { label: 'Edit title' },
+    { label: 'About' }
+  ]"
+/>
+```
+
 ### `:menu`
 
 The menu of the page.
@@ -179,9 +245,9 @@ interface Props {
 ```vue-html
 <SLocalNav
   :title="[{ text: 'Page title' }]"
-  :menu="[
+  :menu="[[
     { text: 'Menu item 1', link: '/menu1' },
     { text: 'Menu item 2', link: '/menu2' }
-  ]"
+  ]]"
 />
 ```

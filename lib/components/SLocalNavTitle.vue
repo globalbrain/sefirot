@@ -24,6 +24,8 @@ defineProps<{
 <style scoped lang="postcss">
 .SLocalNavTitle {
   display: flex;
+  flex-grow: 1;
+  width: 100%;
   overflow: hidden;
 }
 
