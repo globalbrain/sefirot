@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import SLocalNavActions, { type Action } from './SLocalNavActions.vue'
 import SLocalNavAvatar from './SLocalNavAvatar.vue'
 import SLocalNavDescription from './SLocalNavDescription.vue'
 import SLocalNavMenu, { type MenuItem } from './SLocalNavMenu.vue'
 import SLocalNavTitle, { type Title } from './SLocalNavTitle.vue'
 
-export type { Title, MenuItem }
+export type { Title, Action, MenuItem }
 
 export interface Avatar {
   image?: string | null
@@ -16,6 +17,7 @@ const props = defineProps<{
   avatar?: Avatar
   title: Title[]
   description?: string
+  actions?: Action[]
   menu?: MenuItem[][]
 }>()
 
@@ -37,7 +39,10 @@ const normalizedMenu = computed(() => {
         />
       </div>
       <div class="title-bar-body">
-        <SLocalNavTitle :title="title" />
+        <div class="title-bar-title">
+          <SLocalNavTitle :title="title" />
+          <SLocalNavActions v-if="actions?.length" :actions="actions" />
+        </div>
         <SLocalNavDescription v-if="description" :text="description" />
       </div>
     </div>
@@ -70,5 +75,16 @@ const normalizedMenu = computed(() => {
   display: flex;
   align-items: center;
   gap: 16px;
+}
+
+.title-bar-body {
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+.title-bar-title {
+  display: flex;
+  align-items: center;
+  gap: 24px;
 }
 </style>
