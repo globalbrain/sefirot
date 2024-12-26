@@ -51,14 +51,6 @@ const _value = computed(() => {
     : props.value !== undefined ? props.value : null
 })
 
-const padValue = computed(() => {
-  return {
-    hour: _value.value?.hour?.padStart(2, '0') ?? null,
-    minute: _value.value?.minute?.padStart(2, '0') ?? null,
-    second: _value.value?.second?.padStart(2, '0') ?? null
-  }
-})
-
 const padPlaceholder = computed(() => {
   return {
     hour: props.placeholder?.hour?.toString().padStart(2, '0') ?? '00',
@@ -102,7 +94,7 @@ function update(type: ValueType, value: string | null) {
 
   const newValue = {
     ..._value.value,
-    [type]: value ?? null
+    [type]: value?.padStart(2, '0') ?? null
   }
 
   emit('update:model-value', newValue)
@@ -166,7 +158,7 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noHour"
         class="input hour"
-        :value="padValue?.hour"
+        :value="_value?.hour"
         :placeholder="padPlaceholder.hour"
         :maxlength="2"
         :disabled="disabled"
@@ -177,7 +169,7 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noMinute"
         class="input minute"
-        :value="padValue?.minute"
+        :value="_value?.minute"
         :placeholder="padPlaceholder.minute"
         :maxlength="2"
         :disabled="disabled"
@@ -188,7 +180,7 @@ function createRequiredTouched(): boolean[] {
       <input
         v-if="!noSecond"
         class="input second"
-        :value="padValue?.second"
+        :value="_value?.second"
         :placeholder="padPlaceholder.second"
         :maxlength="2"
         :disabled="disabled"

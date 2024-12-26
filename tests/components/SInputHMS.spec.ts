@@ -12,7 +12,7 @@ describe('components/SInputHMS', async () => {
   test('accepts `:value`', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
-        value: { hour: '1', minute: '2', second: '3' }
+        value: { hour: '01', minute: '02', second: '03' }
       }
     })
 
@@ -24,7 +24,7 @@ describe('components/SInputHMS', async () => {
   test('accepts `:model-value`', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
-        modelValue: { hour: '1', minute: '2', second: '3' }
+        modelValue: { hour: '01', minute: '02', second: '03' }
       }
     })
 
@@ -73,24 +73,24 @@ describe('components/SInputHMS', async () => {
   test('emits `@update:model-value` and `@change` on blur', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
-        modelValue: { hour: '1', minute: '2', second: '3' }
+        modelValue: { hour: '01', minute: '02', second: '03' }
       }
     })
 
     await wrapper.find('.SInputHMS .input.hour').setValue('4')
     await wrapper.find('.SInputHMS .input.hour').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 1, { hour: '4', minute: '2', second: '3' })
-    assertEmitted(wrapper, 'change', 1, { hour: '4', minute: '2', second: '3' })
+    assertEmitted(wrapper, 'update:model-value', 1, { hour: '04', minute: '02', second: '03' })
+    assertEmitted(wrapper, 'change', 1, { hour: '04', minute: '02', second: '03' })
 
     await wrapper.find('.SInputHMS .input.minute').setValue('5')
     await wrapper.find('.SInputHMS .input.minute').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 2, { hour: '1', minute: '5', second: '3' })
-    assertEmitted(wrapper, 'change', 2, { hour: '1', minute: '5', second: '3' })
+    assertEmitted(wrapper, 'update:model-value', 2, { hour: '01', minute: '05', second: '03' })
+    assertEmitted(wrapper, 'change', 2, { hour: '01', minute: '05', second: '03' })
 
     await wrapper.find('.SInputHMS .input.second').setValue('6')
     await wrapper.find('.SInputHMS .input.second').trigger('blur')
-    assertEmitted(wrapper, 'update:model-value', 3, { hour: '1', minute: '2', second: '6' })
-    assertEmitted(wrapper, 'change', 3, { hour: '1', minute: '2', second: '6' })
+    assertEmitted(wrapper, 'update:model-value', 3, { hour: '01', minute: '02', second: '06' })
+    assertEmitted(wrapper, 'change', 3, { hour: '01', minute: '02', second: '06' })
   })
 
   test('emits events with `null` when the input is not number', async () => {
