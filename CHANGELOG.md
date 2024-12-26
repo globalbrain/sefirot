@@ -1,5 +1,17 @@
 
 
+## [4.7.1](https://github.com/globalbrain/sefirot/compare/v4.7.0...v4.7.1) (2024-12-26)
+
+
+### Bug Fixes
+
+* **input-hms:** emit padded value ([#568](https://github.com/globalbrain/sefirot/issues/568)) ([4ae5a44](https://github.com/globalbrain/sefirot/commit/4ae5a44fd0cc6618186066f373c1a034a6fb1f76))
+
+
+### Features
+
+* **local-nav:** add `:actions` option ([#567](https://github.com/globalbrain/sefirot/issues/567)) ([35856fb](https://github.com/globalbrain/sefirot/commit/35856fb61837ba7b653de2b0054a5e37ba9851ae))
+
 # [4.7.0](https://github.com/globalbrain/sefirot/compare/v4.6.0...v4.7.0) (2024-12-03)
 
 
