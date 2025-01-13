@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { type Component, ref } from 'vue'
 import { type DropdownSection, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import SButton, { type Mode, type Size, type Tooltip, type Type } from './SButton.vue'
@@ -12,7 +12,9 @@ const props = defineProps<{
   size?: Size
   type?: Type
   mode?: Mode
-  icon?: any
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
   iconMode?: Mode
   label?: string
   labelMode?: Mode
@@ -46,6 +48,8 @@ async function onOpen() {
         :type="type"
         :mode="mode"
         :icon="icon"
+        :lead-icon="leadIcon"
+        :trail-icon="trailIcon"
         :icon-mode="iconMode"
         :label="label"
         :label-mode="labelMode"
