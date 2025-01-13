@@ -96,7 +96,7 @@ export interface TableCellBase {
 export interface TableCellText<V = any, R = any> extends TableCellBase {
   type: 'text'
   align?: 'left' | 'center' | 'right'
-  icon?: any
+  icon?: Component
   value?: string | null
   link?: string | null
   color?: TableCellValueColor
@@ -107,7 +107,7 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
 export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   type: 'number'
   align?: 'left' | 'center' | 'right'
-  icon?: any
+  icon?: Component
   value?: number | null
   separator?: boolean
   link?: string | null
@@ -194,7 +194,7 @@ export interface TableCellActions<R = any> extends TableCellBase {
 
 export interface TableCellAction<R = any> {
   mode?: Mode
-  icon?: any
+  icon?: Component
   iconMode?: Mode
   label?: string
   labelMode?: Mode

@@ -372,7 +372,7 @@ export interface TableCellText {
   align?: 'left' | 'center' | 'right'
 
   // Icon to display in front of the value.
-  icon?: any
+  icon?: Component
 
   // The value for the cell. If omitted, it will use the value
   // from the record.
@@ -432,7 +432,7 @@ export interface TableCellNumber {
   align?: 'left' | 'center' | 'right'
 
   // Icon to display in front of the value.
-  icon?: any
+  icon?: Component
 
   // The value for the cell. If omitted, it will use the value
   // from the record.
