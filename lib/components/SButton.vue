@@ -116,9 +116,7 @@ function handleClick(): void {
         <span v-if="_leadIcon" class="icon" :class="iconMode">
           <component :is="_leadIcon" class="icon-svg" />
         </span>
-        <span v-if="label" class="label" :class="labelMode">
-          {{ label }}
-        </span>
+        <span v-if="label" class="label" :class="labelMode" v-html="label" />
         <span v-if="trailIcon" class="icon" :class="iconMode">
           <component :is="trailIcon" class="icon-svg" />
         </span>

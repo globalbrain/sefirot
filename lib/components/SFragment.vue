@@ -1,9 +1,7 @@
-<script lang="ts">
-export default { inheritAttrs: false }
-</script>
-
 <script setup lang="ts">
 defineProps<{ is?: any }>()
+defineSlots()
+defineOptions({ inheritAttrs: false })
 </script>
 
 <template>

@@ -151,7 +151,7 @@ interface Props {
   tag?: string
   type?: Type
   mode?: Mode
-  icon?: any
+  icon?: Component
   iconMode?: Mode
   label?: string
   labelMode?: Mode
@@ -204,7 +204,7 @@ import SButton, {
 
 interface Props {
   as?: string
-  icon?: any
+  icon?: Component
   href?: string
   disabled?: boolean
   tooltip?: string | Tooltip

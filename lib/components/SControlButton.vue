@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { type Component } from 'vue'
 import { useControlSize } from '../composables/Control'
 import SButton, { type Mode, type Tooltip, type Type } from './SButton.vue'
 
@@ -6,7 +7,9 @@ defineProps<{
   tag?: string
   type?: Type
   mode?: Mode
-  icon?: any
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
   iconMode?: Mode
   label?: string
   labelMode?: Mode
@@ -31,6 +34,8 @@ const size = useControlSize()
       :type="type"
       :mode="mode"
       :icon="icon"
+      :lead-icon="leadIcon"
+      :trail-icon="trailIcon"
       :icon-mode="iconMode"
       :label="label"
       :label-mode="labelMode"
