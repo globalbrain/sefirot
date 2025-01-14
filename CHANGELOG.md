@@ -1,4 +1,11 @@
+# Changelog
 
+# [4.8.0](https://github.com/globalbrain/sefirot/compare/v4.7.1...v4.8.0) (2025-01-14)
+
+
+### Features
+
+* **action-menu,control:** allow specifying leading and trailing icons ([#569](https://github.com/globalbrain/sefirot/issues/569)) ([25613ae](https://github.com/globalbrain/sefirot/commit/25613ae2bfc84955eba461dcb1d5a18c81d391e2))
 
 ## [4.7.1](https://github.com/globalbrain/sefirot/compare/v4.7.0...v4.7.1) (2024-12-26)
 
