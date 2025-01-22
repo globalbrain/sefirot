@@ -59,7 +59,7 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellPath
       v-else-if="computedCell.type === 'path'"
-      :items="computedCell.items"
+      :segments="computedCell.segments"
     />
     <STableCellDay
       v-else-if="computedCell.type === 'day'"

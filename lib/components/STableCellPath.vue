@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { type TableCellPathItem } from '../composables/Table'
+import { type TableCellPathSegment } from '../composables/Table'
 import SLink from './SLink.vue'
 
 defineProps<{
-  items: TableCellPathItem[]
+  segments: TableCellPathSegment[]
 }>()
 
-function classes(item: TableCellPathItem) {
+function classes(item: TableCellPathSegment) {
   return [
     item.color ?? 'neutral',
     { link: !!item.link || !!item.onClick }
@@ -16,15 +16,15 @@ function classes(item: TableCellPathItem) {
 
 <template>
   <div class="STableCellPath">
-    <template v-for="item, index in items" :key="index">
+    <template v-for="segment, index in segments" :key="index">
       <div v-if="index > 0" class="divider">/</div>
       <SLink
         class="text"
-        :class="classes(item)"
-        :href="item.link"
-        @click="item.onClick"
+        :class="classes(segment)"
+        :href="segment.link"
+        @click="segment.onClick"
       >
-        {{ item.text }}
+        {{ segment.text }}
       </SLink>
     </template>
   </div>

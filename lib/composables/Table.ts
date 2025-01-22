@@ -120,10 +120,10 @@ export interface TableCellNumber<V = any, R = any> extends TableCellBase {
 
 export interface TableCellPath extends TableCellBase {
   type: 'path'
-  items: TableCellPathItem[]
+  segments: TableCellPathSegment[]
 }
 
-export interface TableCellPathItem {
+export interface TableCellPathSegment {
   text: string
   link?: string | null
   color?: TableCellValueColor
