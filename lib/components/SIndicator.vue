@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import IconCheckCircleFill from '~icons/ph/check-circle-fill'
-import IconCircle from '~icons/ph/circle-bold'
-import IconCircleDashed from '~icons/ph/circle-dashed-bold'
-import IconCircleNotch from '~icons/ph/circle-notch-bold'
-import IconXCircle from '~icons/ph/x-circle-bold'
+import IconCircle from '~icons/ph/circle'
+import IconCircleDashed from '~icons/ph/circle-dashed'
+import IconCircleNotch from '~icons/ph/circle-notch'
+import IconMinusCircle from '~icons/ph/minus-circle'
+import IconXCircle from '~icons/ph/x-circle'
 import { computed } from 'vue'
 
 export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
-export type State = 'pending' | 'ready' | 'queued' | 'running' | 'completed' | 'failed'
+export type State = 'pending' | 'ready' | 'queued' | 'running' | 'completed' | 'failed' | 'aborted'
 export type Mode = 'colored' | 'monochrome'
 
 const props = withDefaults(defineProps<{
@@ -33,6 +34,7 @@ const classes = computed(() => [
     <IconCircleNotch v-if="props.state === 'running'" class="icon" />
     <IconCheckCircleFill v-if="props.state === 'completed'" class="icon" />
     <IconXCircle v-if="props.state === 'failed'" class="icon" />
+    <IconMinusCircle v-if="props.state === 'aborted'" class="icon aborted" />
   </div>
 </template>
 
@@ -51,6 +53,10 @@ const classes = computed(() => [
 .icon {
   width: 100%;
   height: 100%;
+
+  &.aborted {
+    transform: rotate(-45deg);
+  }
 }
 
 .SIndicator.nano   { width: 20px; height: 20px; }
@@ -75,6 +81,7 @@ const classes = computed(() => [
   &.running   { color: var(--c-fg-info-1); }
   &.completed { color: var(--c-fg-success-1); }
   &.failed    { color: var(--c-fg-danger-1); }
+  &.aborted   { color: var(--c-fg-gray-1); }
 }
 
 .SIndicator.monochrome {
