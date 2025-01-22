@@ -1,5 +1,6 @@
 import { type Component, type MaybeRef, type MaybeRefOrGetter } from 'vue'
-import { type Mode } from '../components/SButton.vue'
+import { type Mode as ButtonMode } from '../components/SButton.vue'
+import { type State as IndicatorState } from '../components/SIndicator.vue'
 import { type Day } from '../support/Day'
 import { type DropdownSection } from './Dropdown'
 import { type Position } from './Tooltip'
@@ -60,6 +61,7 @@ export type TableCell<V = any, R = any> =
   | TableCellPill
   | TableCellPills
   | TableCellState
+  | TableCellIndicator
   | TableCellAvatar<V, R>
   | TableCellAvatars
   | TableCellCustom
@@ -75,6 +77,7 @@ export type TableCellType =
   | 'pill'
   | 'pills'
   | 'state'
+  | 'indicator'
   | 'avatar'
   | 'avatars'
   | 'custom'
@@ -201,17 +204,23 @@ export interface TableCellState extends TableCellBase {
   mode?: ColorModes
 }
 
+export interface TableCellIndicator extends TableCellBase {
+  type: 'indicator'
+  state: IndicatorState
+  label?: string | null
+}
+
 export interface TableCellActions<R = any> extends TableCellBase {
   type: 'actions'
   actions: TableCellAction<R>[]
 }
 
 export interface TableCellAction<R = any> {
-  mode?: Mode
+  mode?: ButtonMode
   icon?: Component
-  iconMode?: Mode
+  iconMode?: ButtonMode
   label?: string
-  labelMode?: Mode
+  labelMode?: ButtonMode
   onClick(record: R): void
   show?(record: R): boolean
 }
@@ -224,9 +233,9 @@ export interface TableMenu {
 
 export interface TableHeaderAction {
   show?: boolean
-  mode?: Mode
+  mode?: ButtonMode
   label: string
-  labelMode?: Mode
+  labelMode?: ButtonMode
   onClick(): void
 }
 

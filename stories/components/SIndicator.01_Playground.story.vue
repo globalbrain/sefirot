@@ -36,7 +36,8 @@ function state() {
           queued: 'queued',
           running: 'running',
           completed: 'completed',
-          failed: 'failed'
+          failed: 'failed',
+          aborted: 'aborted'
         }"
         v-model="state.state"
       />

@@ -7,6 +7,7 @@ import STableCellAvatars from './STableCellAvatars.vue'
 import STableCellCustom from './STableCellCustom.vue'
 import STableCellDay from './STableCellDay.vue'
 import STableCellEmpty from './STableCellEmpty.vue'
+import STableCellIndicator from './STableCellIndicator.vue'
 import STableCellNumber from './STableCellNumber.vue'
 import STableCellPath from './STableCellPath.vue'
 import STableCellPill from './STableCellPill.vue'
@@ -81,6 +82,11 @@ const computedCell = computed<TableCell | undefined>(() =>
       v-else-if="computedCell.type === 'state'"
       :state="computedCell.label"
       :mode="computedCell.mode"
+    />
+    <STableCellIndicator
+      v-else-if="computedCell.type === 'indicator'"
+      :state="computedCell.state"
+      :label="computedCell.label"
     />
     <STableCellAvatar
       v-else-if="computedCell.type === 'avatar'"

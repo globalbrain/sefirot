@@ -10,7 +10,8 @@ const states = [
   'queued',
   'running',
   'completed',
-  'failed'
+  'failed',
+  'aborted'
 ] as const
 
 function state() {
