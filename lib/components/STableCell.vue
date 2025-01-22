@@ -8,6 +8,7 @@ import STableCellCustom from './STableCellCustom.vue'
 import STableCellDay from './STableCellDay.vue'
 import STableCellEmpty from './STableCellEmpty.vue'
 import STableCellNumber from './STableCellNumber.vue'
+import STableCellPath from './STableCellPath.vue'
 import STableCellPill from './STableCellPill.vue'
 import STableCellPills from './STableCellPills.vue'
 import STableCellState from './STableCellState.vue'
@@ -55,6 +56,10 @@ const computedCell = computed<TableCell | undefined>(() =>
       :color="computedCell.color"
       :icon-color="computedCell.iconColor"
       :on-click="computedCell.onClick"
+    />
+    <STableCellPath
+      v-else-if="computedCell.type === 'path'"
+      :segments="computedCell.segments"
     />
     <STableCellDay
       v-else-if="computedCell.type === 'day'"
