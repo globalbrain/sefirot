@@ -55,6 +55,7 @@ export type TableColumnCellFn<V, R> = (value: V, record: R) => TableCell<V, R>
 export type TableCell<V = any, R = any> =
   | TableCellText<V, R>
   | TableCellNumber<V, R>
+  | TableCellPath
   | TableCellDay
   | TableCellPill
   | TableCellPills
@@ -69,6 +70,7 @@ export type TableCell<V = any, R = any> =
 export type TableCellType =
   | 'text'
   | 'number'
+  | 'path'
   | 'day'
   | 'pill'
   | 'pills'
@@ -114,6 +116,18 @@ export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   color?: TableCellValueColor
   iconColor?: TableCellValueColor
   onClick?(value: V, record: R): void
+}
+
+export interface TableCellPath extends TableCellBase {
+  type: 'path'
+  items: TableCellPathItem[]
+}
+
+export interface TableCellPathItem {
+  text: string
+  link?: string | null
+  color?: TableCellValueColor
+  onClick?(): void
 }
 
 export type TableCellValueColor = ColorModes | 'soft'
