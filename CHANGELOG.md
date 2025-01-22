@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.9.0](https://github.com/globalbrain/sefirot/compare/v4.8.0...v4.9.0) (2025-01-22)
+
+
+### Features
+
+* **table:** add cell type "Indicator" ([#573](https://github.com/globalbrain/sefirot/issues/573)) ([20d82bc](https://github.com/globalbrain/sefirot/commit/20d82bcda4a33d3b1ff5f74b3b1dee87f990d0cd))
+* **table:** add cell type "Path" ([#572](https://github.com/globalbrain/sefirot/issues/572)) ([e204d34](https://github.com/globalbrain/sefirot/commit/e204d34c37b5fe699fe32bd81f69e3a8eebb42fb))
+
 # [4.8.0](https://github.com/globalbrain/sefirot/compare/v4.7.1...v4.8.0) (2025-01-14)
 
 
