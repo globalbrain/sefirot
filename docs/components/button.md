@@ -79,7 +79,7 @@ interface Props {
   type?: Type
 }
 
-type Size = 'fill' | 'outline' | 'text'
+type Type = 'fill' | 'outline' | 'text'
 ```
 
 ```vue-html
