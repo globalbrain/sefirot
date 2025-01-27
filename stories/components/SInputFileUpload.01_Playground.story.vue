@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import SInputFileUpload from 'sefirot/components/SInputFileUpload.vue'
 import { useData } from 'sefirot/composables/Data'
-import { useValidation } from 'sefirot/composables/Validation'
-import { maxTotalFileSize } from 'sefirot/validation/rules'
+import { maxFileSize } from 'sefirot/validation/rules'
 
 const title = 'Components / SInputFileUpload / 01. Playground'
 const docs = '/components/input-file-upload'
@@ -11,11 +10,9 @@ const { data } = useData({
   files: [] as File[]
 })
 
-const { validation } = useValidation(data, {
-  files: {
-    maxTotalFileSize: maxTotalFileSize('10MB')
-  }
-})
+const rules = {
+  maxFileSize: maxFileSize('1MB')
+}
 
 function state() {
   return {
@@ -27,7 +24,8 @@ function state() {
     placeholder: 'Total 10MB max.',
     emptyText: null,
     help: null,
-    accept: null
+    accept: null,
+    droppable: true
   } as const
 }
 </script>
@@ -76,6 +74,10 @@ function state() {
         title="accept"
         v-model="state.accept"
       />
+      <HstCheckbox
+        title="droppable"
+        v-model="state.droppable"
+      />
     </template>
 
     <template #default="{ state }">
@@ -90,8 +92,9 @@ function state() {
           :placeholder="state.placeholder"
           :empty-text="state.emptyText"
           :accept="state.accept"
+          :droppable="state.droppable"
           v-model="data.files"
-          :validation="validation.files"
+          :rules="rules"
         />
       </Board>
     </template>
