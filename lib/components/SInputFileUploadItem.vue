@@ -2,10 +2,10 @@
 import IconFileText from '~icons/ph/file-text'
 import IconTrash from '~icons/ph/trash'
 import { type ValidationRuleWithParams } from '@vuelidate/core'
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { useValidation } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton from './SButton.vue'
+import SButton, { type Mode as ButtonMode } from './SButton.vue'
 import SCardBlock from './SCardBlock.vue'
 import SIndicator, { type State as IndicatorState } from './SIndicator.vue'
 
@@ -13,7 +13,17 @@ export interface FileObject {
   file: File
   indicatorState?: IndicatorState | null
   canRemove?: boolean
+  action?: Action | null
   errorMessage?: string | null
+}
+
+export interface Action {
+  mode?: ButtonMode
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
+  label?: string
+  onClick(): void
 }
 
 const props = defineProps<{
@@ -31,6 +41,7 @@ const _file = computed(() => ({
   size: formatSize(props.file instanceof File ? props.file : props.file.file),
   indicatorState: props.file instanceof File ? null : props.file.indicatorState,
   canRemove: props.file instanceof File ? true : props.file.canRemove ?? true,
+  action: props.file instanceof File ? null : props.file.action,
   errorMessage: props.file instanceof File ? null : props.file.errorMessage
 }))
 
@@ -55,6 +66,18 @@ validation.value.$touch()
       </div>
       <p v-if="_file.errorMessage" class="error">{{ _file.errorMessage }}</p>
       <p v-else-if="validation.$errors.length" class="error">{{ validation.$errors[0]?.$message }}</p>
+    </div>
+    <div v-if="_file.action" class="action">
+      <SButton
+        type="text"
+        size="small"
+        :mode="_file.action.mode"
+        :icon="_file.action.icon"
+        :lead-icon="_file.action.leadIcon"
+        :trail-icon="_file.action.trailIcon"
+        :label="_file.action.label"
+        @click="_file.action.onClick"
+      />
     </div>
     <div class="meta">
       <div class="size">
@@ -130,6 +153,10 @@ validation.value.$touch()
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.action {
+  flex-shrink: 0;
 }
 
 .meta {

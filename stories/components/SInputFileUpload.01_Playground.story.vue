@@ -21,7 +21,7 @@ function state() {
     info: null,
     note: null,
     text: undefined,
-    placeholder: 'Total 10MB max.',
+    placeholder: '1MB max per file.',
     emptyText: null,
     help: null,
     accept: null,

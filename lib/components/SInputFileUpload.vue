@@ -5,7 +5,7 @@ import { type Component, computed, ref } from 'vue'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton from './SButton.vue'
+import SButton, { type Mode as ButtonMode } from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
 import { type State as IndicatorState } from './SIndicator.vue'
@@ -23,10 +23,20 @@ export interface FileObject {
   file: File
   indicatorState?: IndicatorState | null
   canRemove?: boolean
+  action?: Action
   errorMessage?: string | null
 }
 
-const props = defineProps<{
+export interface Action {
+  mode?: ButtonMode
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
+  label?: string
+  onClick(): void
+}
+
+const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   info?: string
@@ -47,7 +57,9 @@ const props = defineProps<{
   rules?: Record<string, ValidationRuleWithParams>
   validation?: Validatable
   hideError?: boolean
-}>()
+}>(), {
+  modelType: 'file' as any // `ModelType` doesn't work so stubbing it.
+})
 
 const emit = defineEmits<{
   'update:model-value': [files: ModelValue<T>[]]
@@ -166,7 +178,7 @@ function toFileObjects(files: File[]) {
         @change="onChange"
       >
       <SCard :mode="hasError ? 'danger' : undefined">
-        <SCardBlock v-if="droppable" class="drop-zone" ref="dropZoneEl">
+        <SCardBlock v-if="droppable" class="drop-zone" ref="dropZoneEl" @click="open">
           <div class="drop-zone-box">
             <STrans lang="en">
               <div class="drop-zone-text">
