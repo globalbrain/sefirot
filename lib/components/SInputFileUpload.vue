@@ -89,7 +89,7 @@ const { isOverDropZone } = useDropZone(dropZoneEl, {
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : [] as unknown as ModelValue<T>[]
+    : props.value !== undefined ? props.value : [] as ModelValue<T>[]
 })
 
 const input = ref<HTMLInputElement | null>(null)
