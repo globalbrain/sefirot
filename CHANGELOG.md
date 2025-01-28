@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.10.0](https://github.com/globalbrain/sefirot/compare/v4.9.0...v4.10.0) (2025-01-28)
+
+
+### Features
+
+* **input-file-upload:** add droppable and indicator support ([#574](https://github.com/globalbrain/sefirot/issues/574)) ([026e358](https://github.com/globalbrain/sefirot/commit/026e3589c89a233bd2a817518af854d8843f0184))
+
 # [4.9.0](https://github.com/globalbrain/sefirot/compare/v4.8.0...v4.9.0) (2025-01-22)
 
 
