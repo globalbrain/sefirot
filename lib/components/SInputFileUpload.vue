@@ -182,8 +182,7 @@ function toFileObjects(files: File[]) {
           <div class="drop-zone-box">
             <STrans lang="en">
               <div class="drop-zone-text">
-                <div>Drag & Drop files here</div>
-                <div>Or</div>
+                Drag and drop files here, or
               </div>
               <div class="drop-zone-action">
                 <SButton size="mini" label="Select files" />
@@ -191,11 +190,10 @@ function toFileObjects(files: File[]) {
             </STrans>
             <STrans lang="ja">
               <div class="drop-zone-text">
-                <div>ファイルをドラック＆ドロップ</div>
-                <div>もしくは</div>
+                ファイルをドラック＆ドロップ、または
               </div>
               <div class="drop-zone-action">
-                <SButton size="small" label="ファイルを選択" />
+                <SButton size="mini" label="ファイルを選択" />
               </div>
             </STrans>
           </div>
@@ -267,7 +265,7 @@ function toFileObjects(files: File[]) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   border: 1px dashed var(--c-border-mute-1);
   border-radius: 3px;
   padding: 24px 0;
@@ -277,9 +275,6 @@ function toFileObjects(files: File[]) {
 }
 
 .drop-zone-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
   text-align: center;
   font-size: 14px;
   color: var(--c-text-2);
