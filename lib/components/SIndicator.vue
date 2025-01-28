@@ -7,7 +7,7 @@ import IconMinusCircle from '~icons/ph/minus-circle'
 import IconXCircle from '~icons/ph/x-circle'
 import { computed } from 'vue'
 
-export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
+export type Size = 'nano' | 'mini' | 'small' | 'medium' | 'large' | 'jumbo' | 'fill'
 export type State = 'pending' | 'ready' | 'queued' | 'running' | 'completed' | 'failed' | 'aborted'
 export type Mode = 'colored' | 'monochrome'
 
@@ -65,6 +65,7 @@ const classes = computed(() => [
 .SIndicator.medium { width: 32px; height: 32px; }
 .SIndicator.large  { width: 40px; height: 40px; }
 .SIndicator.jumbo  { width: 48px; height: 48px; }
+.SIndicator.fill   { width: 100%; height: 100%; }
 
 .SIndicator.queued {
   animation: indicator-blink 1.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;

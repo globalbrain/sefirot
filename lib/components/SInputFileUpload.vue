@@ -1,18 +1,42 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends ModelType = 'file'">
+import { type ValidationRuleWithParams } from '@vuelidate/core'
+import { useDropZone } from '@vueuse/core'
 import { type Component, computed, ref } from 'vue'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton from './SButton.vue'
+import SButton, { type Mode as ButtonMode } from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
+import { type State as IndicatorState } from './SIndicator.vue'
 import SInputBase from './SInputBase.vue'
 import SInputFileUploadItem from './SInputFileUploadItem.vue'
+import STrans from './STrans.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps<{
+export type ModelType = 'file' | 'object'
+export type ModelValue<T extends ModelType> = T extends 'file' ? File : FileObject
+
+export interface FileObject {
+  file: File
+  indicatorState?: IndicatorState | null
+  canRemove?: boolean
+  action?: Action
+  errorMessage?: string | null
+}
+
+export interface Action {
+  mode?: ButtonMode
+  icon?: Component
+  leadIcon?: Component
+  trailIcon?: Component
+  label?: string
+  onClick(): void
+}
+
+const props = withDefaults(defineProps<{
   size?: Size
   label?: string
   info?: string
@@ -26,15 +50,20 @@ const props = defineProps<{
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
-  value?: File[]
-  modelValue?: File[]
-  hideError?: boolean
+  droppable?: boolean
+  value?: ModelValue<T>[]
+  modelType?: T
+  modelValue?: ModelValue<T>[]
+  rules?: Record<string, ValidationRuleWithParams>
   validation?: Validatable
-}>()
+  hideError?: boolean
+}>(), {
+  modelType: 'file' as any // `ModelType` doesn't work so stubbing it.
+})
 
 const emit = defineEmits<{
-  'update:model-value': [files: File[]]
-  'change': [files: File[]]
+  'update:model-value': [files: ModelValue<T>[]]
+  'change': [files: ModelValue<T>[]]
 }>()
 
 const { t } = useTrans({
@@ -50,26 +79,44 @@ const { t } = useTrans({
   }
 })
 
+const dropZoneEl = ref<HTMLDivElement | null>(null)
+
+const { isOverDropZone } = useDropZone(dropZoneEl, {
+  multiple: true,
+  onDrop: (files) => onDrop(files)
+})
+
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : []
+    : props.value !== undefined ? props.value : [] as ModelValue<T>[]
 })
 
 const input = ref<HTMLInputElement | null>(null)
 
-const classes = computed(() => [props.size ?? 'small'])
+const classes = computed(() => [
+  props.size ?? 'small',
+  { droppable: props.droppable },
+  { 'is-over-drop-zone': isOverDropZone.value }
+])
 
 const totalFileCountText = computed(() => {
   return t.selected_files(_value.value.length)
 })
 
 const totalFileSizeText = computed(() => {
-  return formatSize(_value.value)
+  const files = _value.value.map((file) => file instanceof File ? file : file.file)
+  return formatSize(files)
 })
 
 function open() {
   input.value!.click()
+}
+
+function onDrop(files: File[] | null) {
+  if (files !== null && files.length > 0) {
+    emitChange(append(files))
+  }
 }
 
 function onChange(e: Event) {
@@ -81,25 +128,35 @@ function onChange(e: Event) {
     return
   }
 
-  const newFiles = [..._value.value, ...files]
-
-  emit('update:model-value', newFiles)
-  emit('change', newFiles)
-
-  props.validation?.$touch()
+  emitChange(append(files))
 }
 
 function onRemove(index: number) {
   const files = _value.value.filter((_, i) => i !== index)
+  emitChange(files)
+}
 
+function emitChange(files: ModelValue<T>[]) {
   emit('update:model-value', files)
   emit('change', files)
+  props.validation?.$touch()
+}
+
+function append(files: File[]) {
+  return [
+    ..._value.value,
+    ...(props.modelType === 'file' ? files : toFileObjects(files))
+  ] as ModelValue<T>[]
+}
+
+function toFileObjects(files: File[]) {
+  return files.map((file) => ({ file } as ModelValue<T>))
 }
 </script>
 
 <template>
   <SInputBase
-    class="SInputFile"
+    class="SInputFileUpload"
     :class="classes"
     :label="label"
     :note="note"
@@ -121,8 +178,29 @@ function onRemove(index: number) {
         @change="onChange"
       >
       <SCard :mode="hasError ? 'danger' : undefined">
-        <SCardBlock class="header">
+        <SCardBlock v-if="droppable" class="drop-zone" ref="dropZoneEl" @click="open">
+          <div class="drop-zone-box">
+            <STrans lang="en">
+              <div class="drop-zone-text">
+                Drag and drop files here, or
+              </div>
+              <div class="drop-zone-action">
+                <SButton size="mini" label="Select files" />
+              </div>
+            </STrans>
+            <STrans lang="ja">
+              <div class="drop-zone-text">
+                ファイルをドラック＆ドロップ、または
+              </div>
+              <div class="drop-zone-action">
+                <SButton size="mini" label="ファイルを選択" />
+              </div>
+            </STrans>
+          </div>
+        </SCardBlock>
+        <SCardBlock v-if="!droppable || placeholder" class="header">
           <SButton
+            v-if="!droppable"
             size="small"
             :label="text ?? t.button_text"
             @click="open"
@@ -134,8 +212,9 @@ function onRemove(index: number) {
         <template v-if="_value.length">
           <SInputFileUploadItem
             v-for="file, i in _value"
-            :key="file.name"
+            :key="i"
             :file="file"
+            :rules="rules"
             @remove="() => { onRemove(i) }"
           />
         </template>
@@ -170,6 +249,35 @@ function onRemove(index: number) {
 <style lang="postcss" scoped>
 .input {
   display: none;
+}
+
+.drop-zone {
+  padding: 12px;
+
+  &:hover .drop-zone-box {
+    border-color: var(--c-border-info-1);
+    cursor: pointer;
+  }
+}
+
+.drop-zone-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  border: 1px dashed var(--c-border-mute-1);
+  border-radius: 3px;
+  padding: 24px 0;
+  min-height: 192px;
+  text-align: center;
+  transition: border-color 0.25s;
+}
+
+.drop-zone-text {
+  text-align: center;
+  font-size: 14px;
+  color: var(--c-text-2);
 }
 
 .header {
@@ -225,5 +333,17 @@ function onRemove(index: number) {
   flex-shrink: 0;
   width: 32px;
   height: 32px;
+}
+
+.SInputFileUpload.droppable {
+  .header {
+    padding-left: 16px;
+  }
+}
+
+.SInputFileUpload.is-over-drop-zone {
+  .drop-zone-box {
+    border-color: var(--c-border-info-1);
+  }
 }
 </style>
