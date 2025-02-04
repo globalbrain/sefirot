@@ -1,5 +1,5 @@
 import isEqual from 'lodash-es/isEqual'
-import { type MaybeRef, nextTick, unref, watch } from 'vue'
+import { type MaybeRef, computed, nextTick, unref, watch } from 'vue'
 import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
@@ -21,13 +21,22 @@ export function useUrlQuerySync(
   const route = useRoute()
   const router = useRouter()
 
+  const routeQuery = computed(() => ({
+    path: route.path,
+    query: route.query
+  }))
+
   const flattenedDefaultState = flattenObject(unref(state))
 
   let isSyncing = false
 
   watch(
-    () => route.query,
-    async () => {
+    routeQuery,
+    async (to, from) => {
+      if (from && from.path !== to.path) {
+        return
+      }
+
       if (!isSyncing) {
         isSyncing = true
         await setState()
