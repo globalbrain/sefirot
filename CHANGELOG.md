@@ -1,5 +1,12 @@
 
 
+## [3.51.1](https://github.com/globalbrain/sefirot/compare/v3.51.0...v3.51.1) (2025-02-04)
+
+
+### Bug Fixes
+
+* **Url:** observe `route.path` in `useUrlQuerySync` to preserve state during navigation ([#579](https://github.com/globalbrain/sefirot/issues/579)) ([ad4bf02](https://github.com/globalbrain/sefirot/commit/ad4bf0229284b566922f1dbc45222cdbfa419ded))
+
 # [3.51.0](https://github.com/globalbrain/sefirot/compare/v3.50.0...v3.51.0) (2024-08-26)
 
 
