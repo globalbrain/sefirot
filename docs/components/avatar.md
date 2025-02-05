@@ -11,9 +11,9 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
   story="/stories-components-savatar-01-playground-story-vue"
 >
   <div class="flex flex-wrap gap-16">
-    <SAvatar avatar="https://github.com/kiaking.png" />
-    <SAvatar avatar="https://github.com/ryo-gk.png" />
-    <SAvatar avatar="https://github.com/NozomuIkuta.png" />
+    <SAvatar avatar="https://i.pravatar.cc/144?img=8" />
+    <SAvatar avatar="https://i.pravatar.cc/144?img=12" />
+    <SAvatar avatar="https://i.pravatar.cc/144?img=45" />
     <SAvatar name="John Doe" />
     <SAvatar name="Anna Green" />
     <SAvatar name="George Walsh" />
@@ -22,7 +22,7 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
 
 ## Usage
 
-Import `<SAvatar>` component and pass in either the image or a name. When the image is passed, the image gets displayed, and when passing a name, the initial of the name will be used.
+Import `<SAvatar>` component and pass in either an image or a name. When an image is passed, the image gets displayed, and when passing a name, the initial of the name will be used.
 
 ```vue
 <script setup lang="ts">
@@ -41,7 +41,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the component. The default is `medium`.
+Defines the size of the component. The default is `'medium'`.
 
 ```ts
 interface Props {
@@ -69,7 +69,7 @@ interface Props {
 
 ### `:name`
 
-The name of the avatar user. The initial value of the name gets displayed. When `avatar` prop is set, this value gets ignored.
+The name of the avatar user. The initial of the name is displayed. If `:avatar` is provided, it will take precedence over this value.
 
 ```ts
 interface Props {
@@ -83,7 +83,7 @@ interface Props {
 
 ### `:tooltip`
 
-When set to `true`, a tooltip showing the name will be displayed when hovering over the avatar. You can also pass an object to define the position of the tooltip.
+When set to `true`, a tooltip showing the name will be displayed when hovering over an avatar. The default position of the tooltip is `'top'`. You can pass an object to control the positioning of the tooltip.
 
 ```ts
 interface Props {

@@ -20,7 +20,7 @@ import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 ## Usage
 
-Wrap `<SButton>` with `<SButtonGroup>` component. Note that currently it does not support button types other than `:type="fill"`. If you pass other type buttons the style might get corrupted.
+Wrap `<SButton>` with `<SButtonGroup>` component. Currently, it does not support button types other than `:type="fill"`. If you pass buttons of other types, the style may appear corrupted.
 
 ```vue
 <script setup lang="ts">

@@ -10,7 +10,7 @@ import SErrorBoundary from '@globalbrain/sefirot/lib/components/SErrorBoundary.v
 
 ## Usage
 
-Define `#default` and `#error` to handle errors accordingly. Errors in inline children are not captured. Make sure to move the logic to separate component and put it in the default slot.
+Define `#default` and `#error` to handle errors accordingly. Errors in inline children are not captured. Make sure to move the logic to a separate component and put it in the default slot.
 
 ```vue
 <script setup lang="ts">

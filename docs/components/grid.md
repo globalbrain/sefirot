@@ -63,9 +63,9 @@ import SGridItem from '@globalbrain/sefirot/lib/components/SGridItem.vue'
 
 You have the flexibility to define the `:cols` and `:gap` props when using the `<SGrid>` component, allowing you to have full control over the grid layout.
 
-The `cols` prop serves as a shorthand for the `grid-template-columns` CSS property. Similarly, the `gap` prop acts as a shorthand for the `gap` CSS property.
+The `:cols` prop serves as a shorthand for the `grid-template-columns` CSS property. Similarly, the `:gap` prop acts as a shorthand for the `gap` CSS property.
 
-Notably, the `gap` prop automatically appends the required `px` unit to the value, so there is no need to include it explicitly.
+Notably, the `:gap` prop automatically appends the required `px` unit to the value, so there is no need to include it explicitly.
 
 ```ts
 interface Props {
@@ -80,7 +80,7 @@ interface Props {
 </SGrid>
 ```
 
-Once you have defined the grid layout, you can use the `span` prop on the `<SGridItem>` component to define the number of columns that the item should span. The `span` prop serves as a shorthand for the `grid-column` CSS property.
+Once you have defined the grid layout, you can use the `:span` prop on the `<SGridItem>` component to define the number of columns that the item should span. The `:span` prop serves as a shorthand for the `grid-column` CSS property.
 
 ```ts
 interface Props {
@@ -97,7 +97,7 @@ interface Props {
 
 ### Responsive design
 
-If you need to adjust the overall grid layout based on different screen sizes or other conditions, it is recommended to use CSS instead of props. The props are provided for convenience, but for more complex layout structures, CSS should be used.
+If you need to adjust the overall grid layout based on different screen sizes or other conditions, it is recommended to use CSS instead of props. The props are provided for convenience but, for more complex layout structures and fine-grained control, the use of CSS styling is encouraged.
 
 ```vue
 <template>

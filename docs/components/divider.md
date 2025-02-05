@@ -6,10 +6,7 @@ import SDivider from 'sefirot/components/SDivider.vue'
 
 `<SDivider>` is a component to display a horizontal line.
 
-<Showcase
-  path="/components/SDivider.vue"
-  story="/stories-components-sdivider-01-playground-story-vue"
->
+<Showcase path="/components/SDivider.vue">
   <SDivider />
 </Showcase>
 

@@ -135,11 +135,11 @@ interface Props {
 
 ### `:dropdown-position`
 
-Fix the dropdown dialog position. If it's not defined, the dialog will be placed based on window space.
+Fix the dropdown dialog position. If it's not defined, the dialog placement will be based on window space.
 
 ```ts
 interface Props {
-  dropdowpPosition?: 'top' | 'bottom'
+  dropdownPosition?: 'top' | 'bottom'
 }
 ```
 

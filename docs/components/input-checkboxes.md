@@ -24,7 +24,7 @@ const options = [
 
 ## Usage
 
-Import `<SInputCheckboxes>` component and pass in `options` and `value` props.
+Import `<SInputCheckboxes>` component and pass in `:options` and `:value` props.
 
 ```vue
 <script setup lang="ts">
@@ -51,7 +51,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the input. The default is `small`.
+Defines the size of the input. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -99,13 +99,14 @@ interface Props {
 <SInputCheckboxes
   label="Domain"
   info="Some helpful information."
+  :options="[...]"
   v-model="..."
 />
 ```
 
 ### `:note`
 
-Adds small help text after the label. Best used along with `label` prop.
+Adds small help text after the label. Best used along with `:label`.
 
 ```ts
 interface Props {
@@ -138,7 +139,7 @@ interface Props {
 
 ### `:check-text`
 
-Text to display alongside `check-icon`.
+Text to display alongside `:check-icon`.
 
 ```ts
 interface Props {
@@ -147,12 +148,16 @@ interface Props {
 ```
 
 ```vue-html
-<SInputCheckboxes :check-text="Saved" />
+<SInputCheckboxes
+  :check-text="Saved"
+  :options="[...]"
+  v-model="..."
+/>
 ```
 
 ### `:check-color`
 
-Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
 
 ```ts
 interface Props {
@@ -173,6 +178,8 @@ type Color =
   :check-icon="IconCheckCircle"
   check-text="Uploaded"
   check-color="success"
+  :options="[...]"
+  v-model="..."
 />
 ```
 
@@ -223,7 +230,7 @@ interface Props {
 
 ### `:disabled`
 
-Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
+Mark input as disabled. When this prop is set, users may not be able to focus the element nor trigger any events.
 
 ```ts
 interface Props {
@@ -241,7 +248,7 @@ interface Props {
 
 ### `:value`
 
-Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
+Sets the input value. When `:model-value` is set (e.g. via `v-model` directive), this prop is ignored.
 
 ```ts
 interface Props {
@@ -284,14 +291,14 @@ interface Props {
   validation?: Validatable
 }
 
-export interface Validatable {
+interface Validatable {
   readonly $dirty: boolean
   readonly $invalid: boolean
   readonly $errors: ValidatableError[]
   readonly $touch: () => void
 }
 
-export interface ValidatableError {
+interface ValidatableError {
   readonly $message: string | Ref<string>
 }
 ```
@@ -329,7 +336,7 @@ Here are the list of slots you may define within the component.
 
 ### `#info` {#info-slot}
 
-Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+Same as `:info` prop. When both `:info` and this slot are defined, this slot will take precedence.
 
 ```vue-html
 <SInputCheckboxes label="Domain" v-model="...">
@@ -345,7 +352,7 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user selects the item. This event is always emitted together with `change` event.
+Emits when the user selects the item. This event is always emitted together with the `@change` event.
 
 ```ts
 interface Emits {
@@ -357,7 +364,7 @@ type Value = (string | number | boolean)[]
 
 ### `@change`
 
-Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
+Emits when the user selects the item. This event is always emitted together with the `@update:model-value` event.
 
 ```ts
 interface Emits {

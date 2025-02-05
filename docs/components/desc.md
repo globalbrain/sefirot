@@ -45,22 +45,22 @@ import SDescText from 'sefirot/components/SDescText.vue'
 ## Import
 
 ```ts
-import SDesc from 'sefirot/components/SDesc.vue'
-import SDescDay from 'sefirot/components/SDescDay.vue'
-import SDescFile from 'sefirot/components/SDescFile.vue'
-import SDescItem from 'sefirot/components/SDescItem.vue'
-import SDescLabel from 'sefirot/components/SDescLabel.vue'
-import SDescLink from 'sefirot/components/SDescLink.vue'
-import SDescNumber from 'sefirot/components/SDescNumber.vue'
-import SDescPill from 'sefirot/components/SDescPill.vue'
-import SDescState from 'sefirot/components/SDescState.vue'
-import SDescText from 'sefirot/components/SDescText.vue'
+import SDesc from '@globalbrain/sefirot/lib/components/SDesc.vue'
+import SDescDay from '@globalbrain/sefirot/lib/components/SDescDay.vue'
+import SDescFile from '@globalbrain/sefirot/lib/components/SDescFile.vue'
+import SDescItem from '@globalbrain/sefirot/lib/components/SDescItem.vue'
+import SDescLabel from '@globalbrain/sefirot/lib/components/SDescLabel.vue'
+import SDescLink from '@globalbrain/sefirot/lib/components/SDescLink.vue'
+import SDescNumber from '@globalbrain/sefirot/lib/components/SDescNumber.vue'
+import SDescPill from '@globalbrain/sefirot/lib/components/SDescPill.vue'
+import SDescState from '@globalbrain/sefirot/lib/components/SDescState.vue'
+import SDescText from '@globalbrain/sefirot/lib/components/SDescText.vue'
 ```
 
 You may also import all related components at once via mixin function.
 
 ```ts
-import { mixin as mixinDesc } from 'sefirot/mixins/Desc.vue'
+import { mixin as mixinDesc } from '@globalbrain/sefirot/lib/mixins/Desc'
 import { createApp } from 'vue'
 
 const app = createApp(App)
@@ -70,7 +70,7 @@ mixinDesc(app)
 
 ## Usage
 
-The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use the `<SDesc>`.
+The `<SDesc>` has various child components that you can use to build your description list. Here is a basic example of how to use it.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -104,9 +104,9 @@ At the top level, use `<SDesc>` and `<SDescItem>` to define the layout. `<SDesc>
 </SDesc>
 ```
 
-You may also define `:dir` to control the direction of the label and value stack. The default is set to `column` which stacks the label and value vertically. You may set it to `row` to stack them horizontally.
+You may also define `:dir` to control the direction of the label and value stack. The default is set to `'column'` which stacks the label and value vertically. You may set it to `'row'` to stack them horizontally.
 
-When setting `:dir` to `row`, you should also specify `labelWidth` prop which will determine how much width the label should have in the grid system. The value is in `px`.
+When setting `:dir="row"`, you should also specify the `:label-width` prop which will determine how much width the label should have in the grid system. The value is in `px`.
 
 ```ts
 interface Prop {
@@ -393,7 +393,7 @@ type Mode =
 </SDesc>
 ```
 
-You may also pass in mutiple pills as an array.
+You may also pass in multiple pills as an array.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -484,7 +484,7 @@ You may also pass in multiple avatars as an array.
 </SDesc>
 ```
 
-When passing in multiple avatars, you may also define `:dir` to control the direction of the avatar stack. The default is set to `column` which stacks the avatars vertically. You may set it to `row` to stack them horizontally.
+When passing in multiple avatars, you may also define `:dir` to control the direction of the avatar stack. The default is set to `'column'` which stacks the avatars vertically. You may set it to `'row'` to stack them horizontally.
 
 ```vue-html
 <SDesc cols="2" gap="24">
@@ -513,7 +513,7 @@ interface Item {
 ```vue-html
 <SDesc cols="2" gap="24">
   <SDescItem span="2">
-    <SDescLabel value="Attachements" />
+    <SDescLabel value="Attachments" />
     <SDescFile :file="[
       { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },
       { name: 'profile-photo.jpg', onDownload: () => {} }
@@ -524,7 +524,7 @@ interface Item {
 
 ## Empty state
 
-All components that support `:value` can accept empty values, which are represented as `null` or `undefined`. When `:value` is not present or is empty, the `<SDescEmpty>` is displayed.
+All components that support `:value` can accept nullish values, which are represented as `null` or `undefined`. When `:value` is not present or is nullish, the `<SDescEmpty>` is displayed.
 
 Although it may not be very useful, you have the option to directly use `<SDescEmpty>` to display empty values.
 
