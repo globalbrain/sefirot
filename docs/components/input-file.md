@@ -13,7 +13,7 @@ const input = ref(null)
   path="/components/SInputFile.vue"
   story="/stories-components-sinputfile-01-playground-story-vue"
 >
-  <SInputFile placeholder="No file choosen" v-model="input" />
+  <SInputFile placeholder="No file chosen" v-model="input" />
 </Showcase>
 
 ## Usage
@@ -29,7 +29,7 @@ const input = ref<File | File[] | null>(null)
 </script>
 
 <template>
-  <SInputFile placeholder="No file choosen" v-model="input" />
+  <SInputFile placeholder="No file chosen" v-model="input" />
 </template>
 ```
 
@@ -144,7 +144,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputFile placeholder="No file choosen" v-model="..." />
+<SInputFile placeholder="No file chosen" v-model="..." />
 ```
 
 ### `:accept`

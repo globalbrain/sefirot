@@ -4,7 +4,7 @@
 
 ## Overview
 
-Use this component to add subtle animations to the element when it enters or leaves the viewport. It is meant to be used on marketing heavy sites, such as corporate website. Good example being [XLIMIT Website](https://xlimit.globalbrains.com/).
+Use this component to add subtle animations to the element when it enters or leaves the viewport. It is meant to be used on marketing-heavy sites, such as a corporate website. A good example being [XLIMIT Website](https://xlimit.globalbrains.com/).
 
 Most of the time, avoid using this component on web apps. It makes the app feel more sluggish than it should be, especially once users are familiar with the app.
 
@@ -17,7 +17,7 @@ import SMFade from '@globalbrain/sefirot/lib/components/SMFade.vue'
 
 ## Usage
 
-`<SM>` takes a single slot, and it will apply the animation to the wrapper element, which is `<SM>` it self. Define properties that needs to animate. These values are initial value where the animation starts from. All properties will be animated to the element's default value, e.g. `1` for `opacity`.
+`<SM>` takes a single slot, and it will apply the animation to the wrapper element, which is `<SM>` itself. Define properties that need to be animated. These values are initial value where the animation starts from. All properties will be animated to the element's default value, e.g. `1` for `opacity`.
 
 ```vue-html
 <!-- This component will transtition opacity from 0 to 1. -->
@@ -44,7 +44,7 @@ See [Preset components section](#preset-components) for all available preset com
 
 ## Preset components
 
-All presets components extends all `<SM>` props. The only difference is that preset components have default value set for some of the props.
+All preset components extends all `<SM>` props. The only difference is that preset components have default value set for some of the props.
 
 ### `<SMFade>`
 
@@ -58,7 +58,7 @@ The preset component that animates `opacity` from `0` to `1`.
 
 ## Props
 
-These are the props for `<SM>`. All preset components such as `<SMFade>` extends these props but with different default values. See [Preset components section](#preset-components) for how each preset components defines their defaults.
+These are the props for `<SM>`. All preset components such as `<SMFade>` extends these props but with different default values. See [Preset components section](#preset-components) for how each preset component defines its defaults.
 
 ```ts
 interface Props {
@@ -176,9 +176,9 @@ interface Props {
 
 ### `:once`
 
-Whether animation should run everytime the element enters the viewport. If set to `true`, the animation will only run once. When set to `false` animation will play when the element also leaves the viewport.
+Whether animation should run every time the element enters the viewport. If set to `true`, the animation will only run once. When set to `false`, the animation will play when the element also leaves the viewport.
 
-It is defaults to `true` and it is recommended to keep it that way. Having to animate elements while user scroll back the already scrolled area may result in frastrating result.
+It defaults to `true` and it is recommended to keep it that way. Animating elements while the user scrolls back to an already scrolled area may result in a frustrating experience.
 
 ```ts
 interface Props {
