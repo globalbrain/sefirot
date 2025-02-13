@@ -11,7 +11,19 @@ export interface TransMessages<T> {
   ja: T
 }
 
+export interface HasLang {
+  lang: Lang
+}
+
 export const SefirotLangKey = 'sefirot-lang-key'
+
+export function useSetupLang(): (user?: HasLang | null) => void {
+  const browserLang = useBrowserLang()
+
+  return (user) => {
+    provideLang(user?.lang ?? browserLang)
+  }
+}
 
 export function provideLang(lang: Lang) {
   provide(SefirotLangKey, lang)
@@ -23,6 +35,12 @@ export function useLang(): Lang {
   return inject(SefirotLangKey, 'en') || 'en'
 }
 
+export function useBrowserLang(): Lang {
+  const lang = navigator.language
+
+  return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
+}
+
 export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
   const lang = useLang()
 
@@ -31,10 +49,4 @@ export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
   return {
     t
   }
-}
-
-export function useBrowserLang(): Lang {
-  const lang = navigator.language
-
-  return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
 }
