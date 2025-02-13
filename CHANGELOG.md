@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.11.0](https://github.com/globalbrain/sefirot/compare/v4.10.0...v4.11.0) (2025-02-13)
+
+
+### Features
+
+* add app setup composables ([#581](https://github.com/globalbrain/sefirot/issues/581)) ([0a647f6](https://github.com/globalbrain/sefirot/commit/0a647f6d93eb155ad30c6faa38652b4e69982e8b))
+* **Url:** observe `route.path` in `useUrlQuerySync` to preserve state during navigation ([#579](https://github.com/globalbrain/sefirot/issues/579)) ([7a09b97](https://github.com/globalbrain/sefirot/commit/7a09b97e0c36927c8bff57f8756cb7796ec8cec7))
+
 # [4.10.0](https://github.com/globalbrain/sefirot/compare/v4.9.0...v4.10.0) (2025-01-28)
 
 
