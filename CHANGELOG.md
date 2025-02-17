@@ -1,5 +1,12 @@
 
 
+## [3.51.2](https://github.com/globalbrain/sefirot/compare/v3.51.1...v3.51.2) (2025-02-17)
+
+
+### Bug Fixes
+
+* ignore google app errors on ios 18 ([6ebd1d6](https://github.com/globalbrain/sefirot/commit/6ebd1d6d38d1b9ff467d98944916f19afd548c11))
+
 ## [3.51.1](https://github.com/globalbrain/sefirot/compare/v3.51.0...v3.51.1) (2025-02-04)
 
 
