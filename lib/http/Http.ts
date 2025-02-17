@@ -8,8 +8,8 @@ import { type Lang } from '../composables/Lang'
 type Awaitable<T> = T | PromiseLike<T>
 
 export interface HttpClient {
-  <T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<T>
-  raw<T = any>(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<T>>
+  (request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<any>
+  raw(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<any>>
 }
 
 export interface HttpOptions {
@@ -97,12 +97,12 @@ export class Http {
     ]
   }
 
-  private async performRequest<T>(url: string, options: FetchOptions = {}) {
-    return Http.client<T>(...(await this.buildRequest(url, options)))
+  private async performRequest<T>(url: string, options: FetchOptions = {}): Promise<T> {
+    return Http.client(...(await this.buildRequest(url, options)))
   }
 
-  private async performRequestRaw<T>(url: string, options: FetchOptions = {}) {
-    return Http.client.raw<T>(...(await this.buildRequest(url, options)))
+  private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
+    return Http.client.raw(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
@@ -170,7 +170,7 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false) {
+  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false): FormData {
     const fd = form || new FormData()
     let formKey: string
 
