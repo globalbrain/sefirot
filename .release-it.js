@@ -21,6 +21,6 @@ module.exports = {
     'before:init': 'pnpm test:fail'
   },
   npm: {
-    publish: false
+    tag: 'latest-3'
   }
 }
