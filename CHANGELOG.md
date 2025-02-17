@@ -1,5 +1,12 @@
 
 
+## [3.51.4](https://github.com/globalbrain/sefirot/compare/v3.51.3...v3.51.4) (2025-02-17)
+
+
+### Bug Fixes
+
+* lock v-calendar version ([fde1e22](https://github.com/globalbrain/sefirot/commit/fde1e22f51aecba153e09bd85b361fc062e8a0b0))
+
 ## [3.51.3](https://github.com/globalbrain/sefirot/compare/v3.51.2...v3.51.3) (2025-02-17)
 
 
