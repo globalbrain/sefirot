@@ -143,7 +143,8 @@ function formatProps(props: Record<string, unknown>): string {
 const ignoreErrors = [
   /Network Error/,
   /Non-Error (?:exception|promise rejection) captured/,
-  /ResizeObserver loop/
+  /ResizeObserver loop/,
+  /Can't find variable: gmo/
 ]
 
 export function useErrorHandler({
