@@ -19,5 +19,8 @@ module.exports = {
   },
   hooks: {
     'before:init': 'pnpm test:fail'
+  },
+  npm: {
+    publish: false
   }
 }
