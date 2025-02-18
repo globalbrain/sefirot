@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IconDotsThree from '~icons/ph/dots-three-bold'
+import IconNotePencil from '~icons/ph/note-pencil'
 import SDesc from 'sefirot/components/SDesc.vue'
 import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
 import SDescDay from 'sefirot/components/SDescDay.vue'
@@ -13,6 +15,19 @@ import SDescText from 'sefirot/components/SDescText.vue'
 
 const title = 'Components / SDesc / 01. Playground'
 const docs = '/components/desc'
+
+const actions = [
+  { icon: IconNotePencil, onClick: () => {} },
+  {
+    type: 'menu' as const,
+    icon: IconDotsThree,
+    options: [
+      { label: 'Inspect', onClick: () => {} },
+      { label: 'Preview', onClick: () => {} },
+      { label: 'Delete', onClick: () => {} }
+    ]
+  }
+]
 
 function state() {
   return {
@@ -37,8 +52,8 @@ function state() {
           gap="24"
           :divider="state.divider"
         >
-          <SDescItem span="2">
-            <SDescLabel>Account</SDescLabel>
+          <SDescItem span="2" :divider="false">
+            <SDescLabel :actions="actions">Account</SDescLabel>
             <SDescAvatar
               :avatar="{
                 avatar: 'https://i.pravatar.cc/64?img=1',
@@ -47,35 +62,35 @@ function state() {
             />
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Full name</SDescLabel>
+            <SDescLabel :actions="actions">Full name</SDescLabel>
             <SDescText>Margot Foster</SDescText>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Website</SDescLabel>
+            <SDescLabel :actions="actions">Website</SDescLabel>
             <SDescLink>https://margot.example</SDescLink>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Birthday</SDescLabel>
+            <SDescLabel :actions="actions">Birthday</SDescLabel>
             <SDescDay>1985-10-10</SDescDay>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Age</SDescLabel>
+            <SDescLabel :actions="actions">Age</SDescLabel>
             <SDescNumber>37</SDescNumber>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Application for</SDescLabel>
+            <SDescLabel :actions="actions">Application for</SDescLabel>
             <SDescPill :pill="{ label: 'Frontend Developer' }" />
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel>Interview status</SDescLabel>
+            <SDescLabel :actions="actions">Interview status</SDescLabel>
             <SDescState :state="{ mode: 'info', label: 'In progress' }" />
           </SDescItem>
           <SDescItem span="2">
-            <SDescLabel>About</SDescLabel>
+            <SDescLabel :actions="actions">About</SDescLabel>
             <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
           </SDescItem>
           <SDescItem span="2">
-            <SDescLabel>Attachments</SDescLabel>
+            <SDescLabel :actions="actions">Attachments</SDescLabel>
             <SDescFile
               :item="[
                 { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },
