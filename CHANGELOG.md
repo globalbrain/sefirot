@@ -1,5 +1,12 @@
 
 
+## [3.51.5](https://github.com/globalbrain/sefirot/compare/v3.51.4...v3.51.5) (2025-02-18)
+
+
+### Bug Fixes
+
+* **Error:** ignore turnstile retriable error codes ([6963196](https://github.com/globalbrain/sefirot/commit/696319618e60feda676ff760d98f92ce981dab17))
+
 ## [3.51.4](https://github.com/globalbrain/sefirot/compare/v3.51.3...v3.51.4) (2025-02-17)
 
 
