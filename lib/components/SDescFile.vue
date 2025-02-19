@@ -52,7 +52,7 @@ const items = computed(() => {
   gap: 1px;
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  margin-top: 2px;
+  margin-top: 4px;
   background-color: var(--c-gutter);
   overflow: hidden;
 }
