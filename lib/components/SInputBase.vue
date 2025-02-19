@@ -118,7 +118,7 @@ function getErrorMsg(validation: Validatable) {
 }
 
 .label-text {
-  font-weight: 500;
+  font-weight: 400;
   color: var(--input-label-color);
   transition: color 0.25s;
 }

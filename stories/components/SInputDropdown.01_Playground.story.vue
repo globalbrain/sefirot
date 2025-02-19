@@ -41,8 +41,8 @@ function state() {
       <Board :title="title">
         <SInputDropdown
           :size="state.size"
-          label="Dropdown input"
-          placeholder="Select items"
+          label="Frameworks"
+          placeholder="Select frameworks"
           :options="options"
           nullable
           v-model="value"

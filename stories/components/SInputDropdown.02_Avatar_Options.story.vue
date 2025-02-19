@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 02. Avatar Options'
 
-const value = ref<string[]>([])
+const value = ref<number[]>([])
 
 const options: OptionAvatar[] = [
   { type: 'avatar', image: 'https://i.pravatar.cc/64?img=4', label: 'Kris James', value: 1 },
@@ -40,10 +40,10 @@ function state() {
       <Board :title="title">
         <SInputDropdown
           :size="state.size"
-          label="Dropdown input"
-          placeholder="Select items"
+          label="Users"
+          placeholder="Select users"
           :options="options"
-
+          nullable
           v-model="value"
         />
       </Board>

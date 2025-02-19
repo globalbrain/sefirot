@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import IconCaretDown from '~icons/ph/caret-down-bold'
-import IconCaretUp from '~icons/ph/caret-up-bold'
+import IconCaretDown from '~icons/ph/caret-down'
+import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
 import { type Component, computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
+import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import SDropdown from './SDropdown.vue'
 import SInputBase from './SInputBase.vue'
@@ -52,13 +53,19 @@ const props = defineProps<{
   nullable?: boolean
   closeOnClick?: boolean
   disabled?: boolean
-  modelValue: PrimitiveValue | ArrayValue
   validation?: Validatable
 }>()
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
-}>()
+const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
+
+const { t } = useTrans({
+  en: {
+    ph: 'Select items'
+  },
+  ja: {
+    ph: '項目を選択してください'
+  }
+})
 
 const container = ref<any>(null)
 
@@ -73,28 +80,28 @@ const classes = computed(() => [
 const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   type: 'filter',
   search: props.noSearch === undefined ? true : !props.noSearch,
-  selected: props.modelValue,
+  selected: model.value,
   options: props.options,
   onClick: handleSelect
 }])
 
 const selected = computed(() => {
-  if (Array.isArray(props.modelValue)) {
-    return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
+  if (Array.isArray(model.value)) {
+    return props.options.filter((o) => (model.value as ArrayValue).includes(o.value))
   }
 
-  const item = props.options.find((o) => o.value === props.modelValue)
+  const item = props.options.find((o) => o.value === model.value)
 
-  return item ? [item] : []
+  return item ?? null
 })
 
 const hasSelected = computed(() => {
-  return selected.value.length > 0
+  return Array.isArray(selected.value) ? selected.value.length > 0 : !!selected.value
 })
 
 const removable = computed(() => {
-  if (Array.isArray(props.modelValue)) {
-    return props.nullable || selected.value.length > 1
+  if (Array.isArray(model.value)) {
+    return props.nullable || (selected.value as Option[]).length > 1
   }
 
   return !!props.nullable
@@ -110,27 +117,25 @@ async function handleOpen() {
 function handleSelect(value: OptionValue) {
   props.validation?.$touch()
 
-  Array.isArray(props.modelValue) ? handleArray(value) : handlePrimitive(value)
+  Array.isArray(model.value) ? handleArray(value) : handlePrimitive(value)
 }
 
 function handlePrimitive(value: OptionValue) {
-  if (value !== props.modelValue) {
-    return emit('update:modelValue', value)
-  }
-
-  if (props.nullable) {
-    emit('update:modelValue', null)
+  if (value !== model.value) {
+    model.value = value
+  } else if (props.nullable) {
+    model.value = null
   }
 }
 
 function handleArray(value: OptionValue) {
-  const difference = xor(props.modelValue as ArrayValue, [value])
+  const difference = xor(model.value as ArrayValue, [value])
 
   if (!props.nullable && difference.length === 0) {
     return
   }
 
-  emit('update:modelValue', difference)
+  model.value = difference
 }
 </script>
 
@@ -160,14 +165,14 @@ function handleArray(value: OptionValue) {
         <div class="box-content">
           <SInputDropdownItem
             v-if="hasSelected"
-            :items="selected"
+            :item="selected!"
             :size="size ?? 'small'"
             :removable="removable"
             :disabled="disabled ?? false"
             @remove="handleSelect"
           />
 
-          <div v-else class="box-placeholder">{{ placeholder }}</div>
+          <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>
         </div>
 
         <div class="box-icon">
@@ -187,6 +192,7 @@ function handleArray(value: OptionValue) {
 <style scoped lang="postcss">
 .container {
   position: relative;
+  width: 100%;
 }
 
 .box {
@@ -209,6 +215,8 @@ function handleArray(value: OptionValue) {
 .box-content {
   display: flex;
   align-items: center;
+  flex-grow: 1;
+  max-width: 100%;
 }
 
 .box-placeholder {
@@ -250,9 +258,13 @@ function handleArray(value: OptionValue) {
   }
 
   .box-content {
-    padding: 3px 30px 3px 8px;
+    padding: 0 30px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+
+  .box-placeholder {
+    padding-left: 10px;
   }
 
   .box-icon {
@@ -267,9 +279,13 @@ function handleArray(value: OptionValue) {
   }
 
   .box-content {
-    padding: 5px 30px 5px 12px;
+    padding: 0 30px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .box-placeholder {
+    padding-left: 12px;
   }
 
   .box-icon {
@@ -280,13 +296,17 @@ function handleArray(value: OptionValue) {
 
 .SInputDropdown.medium {
   .box {
-    height: 48px;
+    min-height: 48px;
   }
 
   .box-content {
-    padding: 11px 44px 11px 16px;
+    padding: 0 40px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .box-placeholder {
+    padding-left: 16px;
   }
 
   .box-icon {
