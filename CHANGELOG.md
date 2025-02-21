@@ -1,5 +1,20 @@
 # Changelog
 
+# [4.12.0](https://github.com/globalbrain/sefirot/compare/v4.11.0...v4.12.0) (2025-02-21)
+
+
+### Bug Fixes
+
+* **Error:** ignore turnstile retriable error codes ([57fa4a6](https://github.com/globalbrain/sefirot/commit/57fa4a6bd7f50fb9e41668f3a67f60edcd20281f))
+* ignore google app errors on ios 18 ([ddd00d4](https://github.com/globalbrain/sefirot/commit/ddd00d44c0afaac0477458ed50886ef9fe6d4038))
+
+
+### Features
+
+* **desc:** add actions option ([#582](https://github.com/globalbrain/sefirot/issues/582)) ([d6203f1](https://github.com/globalbrain/sefirot/commit/d6203f1b1e5174858a7cfe09c91a395f95db5672))
+* **input-dropdown:** refine single item selection ([#583](https://github.com/globalbrain/sefirot/issues/583)) ([6da5fcb](https://github.com/globalbrain/sefirot/commit/6da5fcbb6abe0b067951fd95cabd6cd1af1531c3))
+* **input:** add warning props to text, textarea, and number ([#584](https://github.com/globalbrain/sefirot/issues/584)) ([3de54b9](https://github.com/globalbrain/sefirot/commit/3de54b977357786e62de11e730a1a91017b8280e))
+
 # [4.11.0](https://github.com/globalbrain/sefirot/compare/v4.10.0...v4.11.0) (2025-02-13)
 
 
