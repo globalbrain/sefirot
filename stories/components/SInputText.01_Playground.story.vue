@@ -15,7 +15,7 @@ const { data, init } = useData({
   name: null as string | null
 })
 
-const { validation, validateAndNotify } = useValidation(data, {
+const { validation, validateAndNotify, reset } = useValidation(data, {
   name: {
     required: required()
   }
@@ -53,8 +53,9 @@ async function submit() {
   }
 }
 
-function reset() {
+function onReset() {
   init()
+  reset()
   clearTimeout(timeout)
   inputState.value = undefined
 }
@@ -174,7 +175,7 @@ function state() {
 
         <div class="actions">
           <SButton size="small" mode="info" label="Submit" @click="submit" />
-          <SButton size="small" mode="mute" label="Reset" @click="reset" />
+          <SButton size="small" mode="mute" label="Reset" @click="onReset" />
         </div>
       </Board>
     </template>
@@ -184,7 +185,7 @@ function state() {
 <style scoped>
 .actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   padding-top: 24px;
 }
 </style>

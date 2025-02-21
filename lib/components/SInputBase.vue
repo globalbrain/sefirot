@@ -4,9 +4,8 @@ import { type Component, computed, unref, useSlots } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import STooltip from './STooltip.vue'
 
-type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-
-const props = defineProps<{
+export interface Props {
+  size?: Size
   name?: string
   label?: string
   info?: string
@@ -16,10 +15,23 @@ const props = defineProps<{
   checkText?: string
   checkColor?: Color
   validation?: Validatable
+  warning?: string
   hideError?: boolean
-}>()
+  hideWarning?: boolean
+}
+
+export type Size = 'mini' | 'small' | 'medium'
+export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+
+const props = defineProps<Props>()
 
 const slots = useSlots()
+
+const classes = computed(() => [
+  props.size ?? 'small',
+  { 'has-error': error.value?.has },
+  { 'has-warning': props.warning }
+])
 
 const hasInfo = computed(() => {
   return slots.info || props.info
@@ -53,7 +65,7 @@ function getErrorMsg(validation: Validatable) {
 </script>
 
 <template>
-  <div class="SInputBase" :class="{ 'has-error': error?.has }">
+  <div class="SInputBase" :class="classes">
     <label v-if="label" class="label" :for="name">
       <span class="label-text">{{ label }}</span>
 
@@ -76,8 +88,9 @@ function getErrorMsg(validation: Validatable) {
 
     <div class="help">
       <slot name="before-help" />
-      <p v-if="error?.show" class="help-error">{{ error.msg }}</p>
-      <p v-if="help" class="help-text">{{ help }}</p>
+      <p v-if="error?.show" class="help-value help-error">{{ error.msg }}</p>
+      <p v-if="warning && !hideWarning" class="help-value help-warning">{{ warning }}</p>
+      <p v-if="help" class="help-value help-text">{{ help }}</p>
     </div>
   </div>
 </template>
@@ -102,9 +115,16 @@ function getErrorMsg(validation: Validatable) {
   .label-text { font-size: var(--input-label-font-size, var(--input-medium-label-font-size)); }
 }
 
-.SInputBase.has-error {
+.SInputBase.has-error,
+.SInputBase.has-warning.has-error {
   .label-text {
     color: var(--input-error-text-color);
+  }
+}
+
+.SInputBase.has-warning {
+  .label-text {
+    color: var(--input-warning-text-color);
   }
 }
 
@@ -173,29 +193,32 @@ function getErrorMsg(validation: Validatable) {
   position: relative;
 }
 
-.help-error {
+.help-value {
   width: 100%;
   max-width: 65ch;
   margin: 0;
   padding: 6px 0 0 0;
-  line-height: 18px;
-  font-size: 12px;
-  font-weight: 400;
-  color: var(--input-error-text-color);
-  transition: opacity 0.25s, transform 0.25s;
-}
-
-.help-text {
-  max-width: 65ch;
-  margin: 0;
-  padding: 6px 0 0;
   line-height: 20px;
   font-size: 12px;
   font-weight: 400;
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+.help-error {
+  color: var(--input-error-text-color);
+}
+
+.help-warning {
+  color: var(--input-warning-text-color);
+}
+
+.help-text {
   color: var(--c-text-2);
 }
 
+.help-error + .help-warning,
 .help-error + .help-text,
+.help-warning + .help-text,
 .help-text + .help-error,
 .help-text + .help-text {
   padding: 0;

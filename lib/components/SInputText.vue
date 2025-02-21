@@ -1,51 +1,36 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
 import { isString } from '../support/Utils'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export interface Props {
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
+export interface Props extends BaseProps {
   type?: string
   placeholder?: string
   unitBefore?: Component | string
   unitAfter?: Component | string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: CheckColor
   textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
   modelValue: string | null
   displayValue?: string | null
-  hideError?: boolean
-  validation?: Validatable
 }
 
-export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: string | null): void
-  (e: 'input', value: string | null): void
-  (e: 'blur', value: string | null): void
-  (e: 'enter', value: string | null): void
+  'update:model-value': [value: string | null]
+  'input': [value: string | null]
+  'blur': [value: string | null]
+  'enter': [value: string | null]
 }>()
 
 const input = ref<HTMLElement | null>(null)
 const isFocused = ref(false)
 
 const classes = computed(() => [
-  props.size ?? 'small',
   props.align ?? 'left',
   { disabled: props.disabled }
 ])
@@ -116,6 +101,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   <SInputBase
     class="SInputText"
     :class="classes"
+    :size="size"
     :name="name"
     :label="label"
     :note="note"
@@ -124,8 +110,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     :check-icon="checkIcon"
     :check-text="checkText"
     :check-color="checkColor"
-    :hide-error="hideError"
     :validation="validation"
+    :warning="warning"
+    :hide-error="hideError"
+    :hide-warning="hideWarning"
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="$slots['addon-before']" class="addon before">
@@ -346,6 +334,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .box:hover,
   .box:focus {
     border-color: var(--input-error-border-color);
+  }
+}
+
+.SInputText.has-warning {
+  .box,
+  .box:hover,
+  .box:focus {
+    border-color: var(--input-warning-border-color);
   }
 }
 
