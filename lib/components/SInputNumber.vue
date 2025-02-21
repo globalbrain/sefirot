@@ -1,41 +1,30 @@
 <script setup lang="ts">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
+import { computed } from 'vue'
 import { isString } from '../support/Utils'
+import { type Props as BaseProps } from './SInputBase.vue'
 import SInputText from './SInputText.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Align = 'left' | 'center' | 'right'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
+export interface Props extends BaseProps {
   placeholder?: string
   unitBefore?: any
   unitAfter?: any
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: CheckColor
   textColor?: TextColor | ((value: number | null) => TextColor)
-  align?: Align
   separator?: boolean
+  align?: Align
   disabled?: boolean
   value?: number | null
   modelValue?: number | null
   displayValue?: string | null
-  hideError?: boolean
-  validation?: Validatable
-}>()
+}
+
+export type Align = 'left' | 'center' | 'right'
+export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: number | null): void
-  (e: 'input', value: number | null): void
+  'update:model-value': [value: number | null]
+  'input': [value: number | null]
 }>()
 
 const _value = computed(() => {
@@ -86,8 +75,8 @@ function emitUpdate(value: string | null) {
 <template>
   <SInputText
     class="SInputNumber"
-    :name="name"
     :size="size"
+    :name="name"
     type="number"
     :label="label"
     :note="note"
@@ -102,10 +91,12 @@ function emitUpdate(value: string | null) {
     :text-color="_textColor"
     :align="align"
     :disabled="disabled"
-    :hide-error="hideError"
     :display-value="displayValue"
     :model-value="_value == null ? null : String(_value)"
     :validation="validation"
+    :warning="warning"
+    :hide-error="hideError"
+    :hide-warning="hideWarning"
     @update:model-value="emitUpdate"
     @input="emitUpdate"
   >
