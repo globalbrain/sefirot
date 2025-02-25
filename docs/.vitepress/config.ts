@@ -17,7 +17,7 @@ export default defineConfig({
   lastUpdated: true,
 
   vite: {
-    ...baseConfig as any,
+    ...baseConfig,
     define: {
       __STORY_HOST__: JSON.stringify(getStoryHost())
     }

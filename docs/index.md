@@ -1,8 +1,3 @@
----
-title: Sefirot
-titleTemplate: false
----
-
 # Sefirot
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
