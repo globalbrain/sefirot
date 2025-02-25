@@ -1,6 +1,6 @@
 # SM <Badge text="3.2.0" />
 
-`<SM>`, where "M" stands for "Motion", allows element to animate when it enters or leaves the viewport. See in action on [Histoire](https://story.sefirot.globalbrains.com/story/stories-components-sm-01-playground-story-vue).
+`<SM>`, where "M" stands for "Motion", allows element to animate when it enters or leaves the viewport. See in action on [playground](/stories/m-01-playground).
 
 ## Overview
 

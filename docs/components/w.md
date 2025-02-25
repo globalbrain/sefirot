@@ -1,6 +1,6 @@
 # SW <Badge text="3.3.0" />
 
-`<SW>`, where "W" stands for "Word", is a simple helper component that marks separated words as a single word and prevent them from being word broken. See in action on [Histoire](https://story.sefirot.globalbrains.com/story/stories-components-sw-01-playground-story-vue).
+`<SW>`, where "W" stands for "Word", is a simple helper component that marks separated words as a single word and prevent them from being word broken. See in action on [playground](/stories/w-01-playground).
 
 ## Overview
 

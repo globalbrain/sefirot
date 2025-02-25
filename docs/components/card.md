@@ -27,7 +27,7 @@ import SControlText from 'sefirot/components/SControlText.vue'
       <SCardBlock size="small" class="pl-24 pr-16">
         <SControl>
           <SControlLeft>
-            <SControlText class="font-w-600">
+            <SControlText class="font-600">
               Header title
             </SControlText>
           </SControlLeft>
@@ -80,7 +80,7 @@ import SControlText from '@globalbrain/sefirot/lib/components/SControlText.vue'
     <SCardBlock size="small" class="s-pl-24 s-pr-16">
       <SControl>
         <SControlLeft>
-          <SControlText class="s-font-w-600">
+          <SControlText class="s-font-600">
             Header title
           </SControlText>
         </SControlLeft>

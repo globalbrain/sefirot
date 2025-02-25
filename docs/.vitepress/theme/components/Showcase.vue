@@ -1,27 +1,18 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
-import { computed } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   path: string
   story?: string
 }>()
-
-const computedPath = computed(() => {
-  return `@globalbrain/sefirot/lib${props.path}`
-})
-
-const computedStory = computed(() => {
-  return `https://${__STORY_HOST__}/story${props.story}`
-})
 </script>
 
 <template>
   <div class="Showcase">
     <div class="header">
-      <p class="path">{{ computedPath }}</p>
-      <a v-if="story" class="button" :href="computedStory" target="_blank">
-        <SButton size="mini" mode="mute" label="View in Histoire" />
+      <p class="path">@globalbrain/sefirot/lib{{ path }}</p>
+      <a v-if="story" class="button" :href="`/stories/${story}`" target="_blank">
+        <SButton size="mini" mode="mute" label="View in Playground" tag="span" />
       </a>
     </div>
 

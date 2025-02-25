@@ -19,9 +19,6 @@ export default defineConfig({
 
   vite: {
     ...baseConfig,
-    define: {
-      __STORY_HOST__: JSON.stringify(getStoryHost())
-    },
     plugins: [
       ...baseConfig.plugins!,
       storyPlugin()

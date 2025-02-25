@@ -37,5 +37,10 @@
   "exclude": [
     "**/dist/**",
     "node_modules"
-  ]
+  ],
+  "vueCompilerOptions": {
+    "vitePressExtensions": [
+      ".md"
+    ]
+  }
 }

@@ -90,6 +90,12 @@ importers:
       '@vueuse/core':
         specifier: ^12.7.0
         version: 12.7.0(typescript@5.7.3)
+      '@whyframe/core':
+        specifier: ^0.1.12
+        version: 0.1.12(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))
+      '@whyframe/vue':
+        specifier: ^0.1.7
+        version: 0.1.7(@whyframe/core@0.1.12(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0)))(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))
       body-scroll-lock:
         specifier: 4.0.0-beta.0
         version: 4.0.0-beta.0
@@ -126,6 +132,12 @@ importers:
       postcss-nested:
         specifier: ^7.0.2
         version: 7.0.2(postcss@8.5.3)
+      prettier:
+        specifier: ^3.5.2
+        version: 3.5.2
+      prettier-plugin-vitepress:
+        specifier: ^0.0.8
+        version: 0.0.8(prettier@3.5.2)
       punycode:
         specifier: ^2.3.1
         version: 2.3.1
@@ -1481,6 +1493,23 @@ packages:
 
   '@vueuse/shared@12.7.0':
     resolution: {integrity: sha512-coLlUw2HHKsm7rPN6WqHJQr18WymN4wkA/3ThFaJ4v4gWGWAQQGK+MJxLuJTBs4mojQiazlVWAKNJNpUWGRkNw==}
+
+  '@whyframe/core@0.1.12':
+    resolution: {integrity: sha512-WvDInjksP5cizvKab7QroNgaVVIwLMDxwbJKcON65NE9DwP+K9NWZg/8/fcF4OjFMg5S22mZjUB7+3N8YbcIdA==}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0
+      webpack: ^5.0.0
+    peerDependenciesMeta:
+      vite:
+        optional: true
+      webpack:
+        optional: true
+
+  '@whyframe/vue@0.1.7':
+    resolution: {integrity: sha512-7ARlEMl/c2KAMgNDf2GGQwLeccPrlhSFE976ywDqLbaYb43z7qtYlKdrMFjVfoos/mPZlfHuqwqcsnOHdGq4aw==}
+    peerDependencies:
+      '@whyframe/core': ^0.1.0
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0
 
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
@@ -3423,6 +3452,16 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier-plugin-vitepress@0.0.8:
+    resolution: {integrity: sha512-JCVPzqQVrkcAjMoEQjwnaAzHg0hpqPTHrrSV8CfxQ4pzAJWG3FAgTWoiJ1icInRcauSFgW/xGNg+o7LC41jwpA==}
+    peerDependencies:
+      prettier: ^3.4.2
+
+  prettier@3.5.2:
+    resolution: {integrity: sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-ms@9.2.0:
     resolution: {integrity: sha512-4yf0QO/sllf/1zbZWYnvWw3NxCQwLXKzIj0G849LSufP15BXKM0rbD2Z3wVnkMfjdn/CB0Dpp444gYAACdsplg==}
@@ -5755,6 +5794,17 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
+  '@whyframe/core@0.1.12(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))':
+    optionalDependencies:
+      vite: 6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0)
+
+  '@whyframe/vue@0.1.7(@whyframe/core@0.1.12(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0)))(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))':
+    dependencies:
+      '@vue/compiler-dom': 3.5.13
+      '@whyframe/core': 0.1.12(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))
+      magic-string: 0.30.17
+      vite: 6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0)
+
   abab@2.0.6: {}
 
   abbrev@3.0.0: {}
@@ -7918,6 +7968,12 @@ snapshots:
   preact@10.26.2: {}
 
   prelude-ls@1.2.1: {}
+
+  prettier-plugin-vitepress@0.0.8(prettier@3.5.2):
+    dependencies:
+      prettier: 3.5.2
+
+  prettier@3.5.2: {}
 
   pretty-ms@9.2.0:
     dependencies:
