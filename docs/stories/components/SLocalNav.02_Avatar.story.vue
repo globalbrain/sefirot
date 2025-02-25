@@ -31,14 +31,12 @@ const navMenu = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SLocalNav
-        :avatar="navAvatar"
-        :title="navTitle"
-        :description="navDescription"
-        :menu="navMenu"
-      />
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SLocalNav
+      :avatar="navAvatar"
+      :title="navTitle"
+      :description="navDescription"
+      :menu="navMenu"
+    />
+  </Board>
 </template>

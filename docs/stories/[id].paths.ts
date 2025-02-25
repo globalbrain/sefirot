@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineRoutes } from 'vitepress'
 
 export default defineRoutes({
@@ -10,12 +11,12 @@ export default defineRoutes({
 <Comp />
 
 <script setup lang="ts">
-import Comp from '../../${file}'
+import Comp from '/@fs/${resolve(file)}'
 </script>
 `
     }))
   },
-  watch: 'stories/components/**/*.story.vue'
+  watch: './components/*.story.vue'
 })
 
 function normalizePath(path: string): string {
@@ -23,7 +24,7 @@ function normalizePath(path: string): string {
     .replace(/\\/g, '/')
     .replace(/[A-Z]/g, '-$&')
     .toLowerCase()
-    .slice(22, -10)
+    .slice(27, -10)
     .replace(/[^a-z0-9]/g, '-')
     .replace(/-+/g, '-')
 }

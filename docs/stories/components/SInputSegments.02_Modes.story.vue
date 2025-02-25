@@ -19,12 +19,10 @@ const value = ref('default')
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SInputSegments
-        :options="options"
-        v-model="value"
-      />
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SInputSegments
+      :options="options"
+      v-model="value"
+    />
+  </Board>
 </template>

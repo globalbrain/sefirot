@@ -5,14 +5,12 @@ const title = 'Components / SMarkdown / 01. Playground'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
-      <SMarkdown
-        class="markdown"
-        content="**We** shape our **buildings**. Thereafter, **they** shape **us**."
-      />
-    </Board>
-  </Story>
+  <Board :title="title">
+    <SMarkdown
+      class="markdown"
+      content="**We** shape our **buildings**. Thereafter, **they** shape **us**."
+    />
+  </Board>
 </template>
 
 <style scoped>

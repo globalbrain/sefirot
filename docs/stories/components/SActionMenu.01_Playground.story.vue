@@ -19,12 +19,10 @@ const options = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
-      <SActionMenu
-        label="Open menu"
-        :options="options"
-      />
-    </Board>
-  </Story>
+  <Board :title="title">
+    <SActionMenu
+      label="Open menu"
+      :options="options"
+    />
+  </Board>
 </template>

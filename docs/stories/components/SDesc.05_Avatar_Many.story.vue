@@ -15,18 +15,16 @@ const avatars = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SDesc gap="24">
-        <SDescItem>
-          <SDescLabel>Vertical stack</SDescLabel>
-          <SDescAvatar :avatar="avatars" />
-        </SDescItem>
-        <SDescItem>
-          <SDescLabel>Horizontal stack</SDescLabel>
-          <SDescAvatar dir="row" :avatar="avatars" />
-        </SDescItem>
-      </SDesc>
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SDesc gap="24">
+      <SDescItem>
+        <SDescLabel>Vertical stack</SDescLabel>
+        <SDescAvatar :avatar="avatars" />
+      </SDescItem>
+      <SDescItem>
+        <SDescLabel>Horizontal stack</SDescLabel>
+        <SDescAvatar dir="row" :avatar="avatars" />
+      </SDescItem>
+    </SDesc>
+  </Board>
 </template>

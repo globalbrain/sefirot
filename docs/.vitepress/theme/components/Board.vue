@@ -1,23 +1,10 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
-import { computed } from 'vue'
 
-const props = defineProps<{
+defineProps<{
   title: string
   docs?: string
 }>()
-
-const href = computed(() => {
-  if (!props.docs) {
-    return undefined
-  }
-
-  if (props.docs.startsWith('/')) {
-    return `https://${__DOCS_HOST__}${props.docs}`
-  }
-
-  return props.docs
-})
 </script>
 
 <template>
@@ -27,12 +14,13 @@ const href = computed(() => {
         <div class="b-title">{{ title }}</div>
 
         <SButton
-          v-if="href"
+          v-if="docs"
           class="b-button"
           size="mini"
           mode="mute"
           label="View Documentation"
-          :href="href"
+          :href="docs"
+          tag="a"
         />
       </div>
 

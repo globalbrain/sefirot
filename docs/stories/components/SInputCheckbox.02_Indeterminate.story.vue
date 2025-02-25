@@ -28,23 +28,21 @@ const control = computed({
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Board :title="title" :docs="docs">
+    <SInputCheckbox
+      label="Complete the recipe"
+      text="Enchantment table"
+      v-model="control"
+    />
+    <div class="indent">
       <SInputCheckbox
-        label="Complete the recipe"
-        text="Enchantment table"
-        v-model="control"
+        v-for="(option, i) in options"
+        :key="i"
+        :text="option.label"
+        v-model="option.modelValue"
       />
-      <div class="indent">
-        <SInputCheckbox
-          v-for="(option, i) in options"
-          :key="i"
-          :text="option.label"
-          v-model="option.modelValue"
-        />
-      </div>
-    </Board>
-  </Story>
+    </div>
+  </Board>
 </template>
 
 <style scoped>

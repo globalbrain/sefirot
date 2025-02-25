@@ -24,14 +24,12 @@ const actions: Action[] = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SLoginPage
-        :cover="cover"
-        :cover-title="coverTitle"
-        :cover-photographer="coverPhotographer"
-        :actions="actions"
-      />
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SLoginPage
+      :cover="cover"
+      :cover-title="coverTitle"
+      :cover-photographer="coverPhotographer"
+      :actions="actions"
+    />
+  </Board>
 </template>

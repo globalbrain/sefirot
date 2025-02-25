@@ -5,9 +5,7 @@ const title = 'Components / SSnackbars / 01. Playground'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
-      <HFixture />
-    </Board>
-  </Story>
+  <Board :title="title">
+    <HFixture />
+  </Board>
 </template>

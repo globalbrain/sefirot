@@ -14,9 +14,7 @@ const steps: Step[] = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
-      <SSteps :steps="steps" />
-    </Board>
-  </Story>
+  <Board :title="title">
+    <SSteps :steps="steps" />
+  </Board>
 </template>

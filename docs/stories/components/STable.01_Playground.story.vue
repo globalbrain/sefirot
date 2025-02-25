@@ -355,37 +355,35 @@ const selected = ref<string[]>([])
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SCard>
-        <SCardBlock size="medium" class="s-px-12">
-          <SControl>
-            <SControlLeft>
-              <SControlInputSearch class="s-max-w-320" :model-value="null" />
-              <SControlButton type="outline" mode="mute" label="Reset filters" @click="resetFilters" />
-            </SControlLeft>
-            <SControlRight>
-              <SControlButton mode="info" label="New item" />
-            </SControlRight>
-          </SControl>
-        </SCardBlock>
-        <SCardBlock>
-          <STable class="table" :options="table" v-model:selected="selected" />
-        </SCardBlock>
-        <SCardBlock size="medium" class="s-px-12">
-          <SControl>
-            <SControlRight>
-              <SControlPagination
-                :total="orderedData.length"
-                :page="1"
-                :per-page="orderedData.length"
-              />
-            </SControlRight>
-          </SControl>
-        </SCardBlock>
-      </SCard>
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SCard>
+      <SCardBlock size="medium" class="s-px-12">
+        <SControl>
+          <SControlLeft>
+            <SControlInputSearch class="s-max-w-320" :model-value="null" />
+            <SControlButton type="outline" mode="mute" label="Reset filters" @click="resetFilters" />
+          </SControlLeft>
+          <SControlRight>
+            <SControlButton mode="info" label="New item" />
+          </SControlRight>
+        </SControl>
+      </SCardBlock>
+      <SCardBlock>
+        <STable class="table" :options="table" v-model:selected="selected" />
+      </SCardBlock>
+      <SCardBlock size="medium" class="s-px-12">
+        <SControl>
+          <SControlRight>
+            <SControlPagination
+              :total="orderedData.length"
+              :page="1"
+              :per-page="orderedData.length"
+            />
+          </SControlRight>
+        </SControl>
+      </SCardBlock>
+    </SCard>
+  </Board>
 </template>
 
 <style scoped>

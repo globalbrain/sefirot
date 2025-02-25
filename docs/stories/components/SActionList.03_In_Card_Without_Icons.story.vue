@@ -14,15 +14,13 @@ const list: ActionList = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SCard class="max-w-256">
-        <SCardBlock>
-          <div class="s-p-12">
-            <SActionList :list="list" />
-          </div>
-        </SCardBlock>
-      </SCard>
-    </Board>
-  </Story>
+  <Board :title="title" :docs="docs">
+    <SCard class="max-w-256">
+      <SCardBlock>
+        <div class="s-p-12">
+          <SActionList :list="list" />
+        </div>
+      </SCardBlock>
+    </SCard>
+  </Board>
 </template>
