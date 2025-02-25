@@ -3,8 +3,9 @@ module.exports = {
 
   ignorePatterns: [
     'docs/**/*',
-    '!docs/.vitepress/theme/**/*',
-    '!docs/.vitepress/config.ts'
+    '!docs/**/',
+    '!docs/**/*.ts',
+    '!docs/**/*.vue'
   ],
 
   rules: {

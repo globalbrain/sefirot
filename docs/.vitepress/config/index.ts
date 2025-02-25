@@ -1,5 +1,6 @@
-import { defineConfig, type DefaultTheme } from 'vitepress'
-import { baseConfig } from '../../config/vite'
+import { type DefaultTheme, defineConfig } from 'vitepress'
+import { baseConfig } from '../../../config/vite'
+import { storyPlugin } from './story'
 
 function getStoryHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -20,7 +21,11 @@ export default defineConfig({
     ...baseConfig,
     define: {
       __STORY_HOST__: JSON.stringify(getStoryHost())
-    }
+    },
+    plugins: [
+      ...baseConfig.plugins!,
+      storyPlugin()
+    ]
   },
 
   themeConfig: {
@@ -29,7 +34,7 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'Playground', link: `https://${getStoryHost()}` },
+      { text: 'Playground', link: `https://${getStoryHost()}` }
     ],
 
     outline: [2, 3],
@@ -49,7 +54,7 @@ export default defineConfig({
     const html = context.teleports?.['#sefirot-modals'] || ''
     context.teleports = {
       ...context.teleports,
-      body: (context.teleports?.['body'] || '') + `<div id="sefirot-modals">${html}</div>`
+      body: `${context.teleports?.body || ''}<div id="sefirot-modals">${html}</div>`
     }
   }
 })
