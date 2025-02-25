@@ -87,7 +87,7 @@ const cleanups = [
       setTimeout(() => { ignore.value = false })
     }
   }),
-  onClickOutside(root, hide, { ignore: [content] }),
+  onClickOutside(root, hide, { ignore: [content], controls: false }),
   () => timeoutId.value != null && window.clearTimeout(timeoutId.value)
 ]
 
