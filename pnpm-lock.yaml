@@ -74,7 +74,7 @@ importers:
         version: 5.2.1(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))(vue@3.5.13(typescript@5.7.3))
       '@vitest/coverage-v8':
         specifier: ^3.0.7
-        version: 3.0.7(vitest@3.0.7(@types/node@22.13.5)(happy-dom@14.12.3)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0))
+        version: 3.0.7(vitest@3.0.7(@types/node@22.13.5)(happy-dom@17.1.8)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0))
       '@vue/reactivity':
         specifier: ^3.5.13
         version: 3.5.13
@@ -103,8 +103,8 @@ importers:
         specifier: ^7.1.0
         version: 7.1.0
       happy-dom:
-        specifier: ^14.12.3
-        version: 14.12.3
+        specifier: ^17.1.8
+        version: 17.1.8
       histoire:
         specifier: 0.16.5
         version: 0.16.5(@types/node@22.13.5)(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))
@@ -146,7 +146,7 @@ importers:
         version: 2.0.0-alpha.3(@algolia/client-search@5.20.3)(@types/node@22.13.5)(fuse.js@7.1.0)(jiti@1.21.7)(postcss@8.5.3)(search-insights@2.17.3)(typescript@5.7.3)(yaml@2.7.0)
       vitest:
         specifier: ^3.0.7
-        version: 3.0.7(@types/node@22.13.5)(happy-dom@14.12.3)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0)
+        version: 3.0.7(@types/node@22.13.5)(happy-dom@17.1.8)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0)
       vue:
         specifier: ^3.5.13
         version: 3.5.13(typescript@5.7.3)
@@ -2532,9 +2532,9 @@ packages:
     engines: {node: '>=0.4.7'}
     hasBin: true
 
-  happy-dom@14.12.3:
-    resolution: {integrity: sha512-vsYlEs3E9gLwA1Hp+w3qzu+RUDFf4VTT8cyKqVICoZ2k7WM++Qyd2LwzyTi5bqMJFiIC/vNpTDYuxdreENRK/g==}
-    engines: {node: '>=16.0.0'}
+  happy-dom@17.1.8:
+    resolution: {integrity: sha512-Yxbq/FG79z1rhAf/iB6YM8wO2JB/JDQBy99RiLSs+2siEAi5J05x9eW1nnASHZJbpldjJE2KuFLsLZ+AzX/IxA==}
+    engines: {node: '>=18.0.0'}
 
   has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
@@ -5550,7 +5550,7 @@ snapshots:
       vite: 6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0)
       vue: 3.5.13(typescript@5.7.3)
 
-  '@vitest/coverage-v8@3.0.7(vitest@3.0.7(@types/node@22.13.5)(happy-dom@14.12.3)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0))':
+  '@vitest/coverage-v8@3.0.7(vitest@3.0.7(@types/node@22.13.5)(happy-dom@17.1.8)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0))':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@bcoe/v8-coverage': 1.0.2
@@ -5564,7 +5564,7 @@ snapshots:
       std-env: 3.8.0
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.0.7(@types/node@22.13.5)(happy-dom@14.12.3)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0)
+      vitest: 3.0.7(@types/node@22.13.5)(happy-dom@17.1.8)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -6974,9 +6974,8 @@ snapshots:
     optionalDependencies:
       uglify-js: 3.19.3
 
-  happy-dom@14.12.3:
+  happy-dom@17.1.8:
     dependencies:
-      entities: 4.5.0
       webidl-conversions: 7.0.0
       whatwg-mimetype: 3.0.0
 
@@ -7783,7 +7782,7 @@ snapshots:
       ky: 1.7.5
       registry-auth-token: 5.1.0
       registry-url: 6.0.1
-      semver: 7.6.3
+      semver: 7.7.1
 
   package-manager-detector@0.2.9: {}
 
@@ -8688,7 +8687,7 @@ snapshots:
       - universal-cookie
       - yaml
 
-  vitest@3.0.7(@types/node@22.13.5)(happy-dom@14.12.3)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0):
+  vitest@3.0.7(@types/node@22.13.5)(happy-dom@17.1.8)(jiti@1.21.7)(jsdom@20.0.3)(yaml@2.7.0):
     dependencies:
       '@vitest/expect': 3.0.7
       '@vitest/mocker': 3.0.7(vite@6.2.0(@types/node@22.13.5)(jiti@1.21.7)(yaml@2.7.0))
@@ -8712,7 +8711,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 22.13.5
-      happy-dom: 14.12.3
+      happy-dom: 17.1.8
       jsdom: 20.0.3
     transitivePeerDependencies:
       - jiti
