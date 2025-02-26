@@ -1,4 +1,4 @@
-import { getCurrentInstance, inject } from 'vue'
+import { type InjectionKey, getCurrentInstance, inject } from 'vue'
 
 export type Lang = 'en' | 'ja'
 
@@ -15,7 +15,7 @@ export interface HasLang {
   lang: Lang
 }
 
-export const SefirotLangKey = 'sefirot-lang-key'
+export const SefirotLangKey: InjectionKey<Lang> = Symbol.for('sefirot-lang-key')
 
 export function useSetupLang(): (user?: HasLang | null) => void {
   const browserLang = useBrowserLang()
