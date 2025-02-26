@@ -26,7 +26,10 @@ export function useSetupLang(): (user?: HasLang | null) => void {
 }
 
 export function provideLang(lang: Lang) {
-  provide(SefirotLangKey, lang)
+  const instance = getCurrentInstance()
+  if (instance) {
+    instance.appContext.provides[SefirotLangKey] = lang
+  }
 }
 
 export function useLang(): Lang {
