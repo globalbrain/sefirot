@@ -8,7 +8,7 @@ import SAvatar from 'sefirot/components/SAvatar.vue'
 
 <Showcase
   path="/components/SAvatar.vue"
-  story="/stories-components-savatar-01-playground-story-vue"
+  story="avatar-01-playground"
 >
   <div class="flex flex-wrap gap-16">
     <SAvatar avatar="https://github.com/kiaking.png" />

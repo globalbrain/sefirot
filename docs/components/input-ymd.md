@@ -15,7 +15,7 @@ const input = ref({
 
 <Showcase
   path="/components/SInputYMD.vue"
-  story="/stories-components-sinputymd-01-playground-story-vue"
+  story="input-ymd-01-playground"
 >
   <SInputYMD v-model="input" />
 </Showcase>

@@ -10,7 +10,7 @@ const modes = ['default', 'mute', 'neutral', 'info', 'success', 'warning', 'dang
 
 <Showcase
   path="/components/SPill.vue"
-  story="/stories-components-spill-01-playground-story-vue"
+  story="pill-01-playground"
 >
   <div class="flex flex-wrap gap-12">
     <SPill v-for="m in modes" :key="m" :mode="m" label="Pill" />

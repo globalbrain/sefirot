@@ -8,7 +8,7 @@ import SDivider from 'sefirot/components/SDivider.vue'
 
 <Showcase
   path="/components/SDivider.vue"
-  story="/stories-components-sdivider-01-playground-story-vue"
+  story="divider-01-playground"
 >
   <SDivider />
 </Showcase>

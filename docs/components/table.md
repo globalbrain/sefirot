@@ -51,7 +51,7 @@ const options = useTable({
 
 <Showcase
   path="/components/STable.vue"
-  story="/stories-components-stable-01-playground-story-vue"
+  story="table-01-playground"
 >
   <ClientOnly>
     <STable class="table" :options="options" />

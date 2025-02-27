@@ -17,7 +17,7 @@ const list: ActionList = [
 
 <Showcase
   path="/components/SActionList.vue"
-  story="/stories-components-sactionlist-01-playground-story-vue"
+  story="action-list-01-playground"
 >
   <SActionList :list="list" />
 </Showcase>

@@ -11,7 +11,7 @@ const input = ref(null)
 
 <Showcase
   path="/components/SInputFile.vue"
-  story="/stories-components-sinputfile-01-playground-story-vue"
+  story="input-file-01-playground"
 >
   <SInputFile placeholder="No file choosen" v-model="input" />
 </Showcase>

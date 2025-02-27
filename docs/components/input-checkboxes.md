@@ -17,7 +17,7 @@ const options = [
 
 <Showcase
   path="/components/SInputCheckboxes.vue"
-  story="/stories-components-sinputcheckboxes-01-playground-story-vue"
+  story="input-checkboxes-01-playground"
 >
   <SInputCheckboxes :options="options" v-model="input" />
 </Showcase>

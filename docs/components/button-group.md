@@ -9,7 +9,7 @@ import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 <Showcase
   path="/components/SButtonGroup.vue"
-  story="/stories-components-sbuttongroup-01-playground-story-vue"
+  story="button-group-01-playground"
 >
   <SButtonGroup>
     <SButton mode="mute" label="Left" />

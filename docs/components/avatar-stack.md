@@ -15,7 +15,7 @@ The `SAvatarStack` component is used to display a stack of avatars. It is useful
 
 <Showcase
   path="/components/SAvatarStack.vue"
-  story="/stories-components-savatarstack-01-playground-story-vue"
+  story="avatar-stack-01-playground"
 >
   <div class="flex flex-wrap gap-16">
     <SAvatarStack :avatars="avatars" />

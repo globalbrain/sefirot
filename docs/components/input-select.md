@@ -17,7 +17,7 @@ const options = [
 
 <Showcase
   path="/components/SSInputSelect.vue"
-  story="/stories-components-sinputselect-01-playground-story-vue"
+  story="input-select-01-playground"
 >
   <SInputSelect :options="options" nullable v-model="input" />
 </Showcase>

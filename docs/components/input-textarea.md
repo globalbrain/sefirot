@@ -11,7 +11,7 @@ const input = ref<string | null>(null)
 
 <Showcase
   path="/components/SInputTextarea.vue"
-  story="/stories-components-sinputtextarea-01-playground-story-vue"
+  story="input-textarea-01-playground"
 >
   <SInputTextarea placeholder="Placeholder text" v-model="input" />
 </Showcase>

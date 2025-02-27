@@ -11,7 +11,7 @@ defineProps<{
   <div class="Showcase">
     <div class="header">
       <p class="path">@globalbrain/sefirot/lib{{ path }}</p>
-      <a v-if="story" class="button" :href="`/stories/${story}`" target="_blank">
+      <a v-if="story" class="button" :href="`/stories/${story}`">
         <SButton size="mini" mode="mute" label="View in Playground" tag="span" />
       </a>
     </div>

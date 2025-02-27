@@ -18,7 +18,7 @@ const value = ref('table')
 
 <Showcase
   path="/components/SInputSegments.vue"
-  story="/stories-components-sinputsegments-01-playground-story-vue"
+  story="input-segments-01-playground"
 >
   <SInputSegments :options="options" v-model="value" />
 </Showcase>

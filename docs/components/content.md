@@ -8,7 +8,7 @@ import SContent from 'sefirot/components/SContent.vue'
 
 <Showcase
   path="/components/SContent.vue"
-  story="/stories-components-scontent-01-playground-story-vue"
+  story="content-01-playground"
 >
   <SContent>
     <h2>Title of the section</h2>

@@ -10,7 +10,7 @@ const modes = ['default', 'neutral', 'info', 'success', 'warning', 'danger'] as 
 
 <Showcase
   path="/components/SState.vue"
-  story="/stories-components-sstate-01-playground-story-vue"
+  story="state-01-playground"
 >
   <div class="flex flex-wrap gap-12">
     <SState v-for="m in modes" :key="m" :mode="m" label="State" />

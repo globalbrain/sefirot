@@ -11,7 +11,7 @@ const input = ref(false)
 
 <Showcase
   path="/components/SInputSwitch.vue"
-  story="/stories-components-sinputselect-01-playground-story-vue"
+  story="input-select-01-playground"
 >
   <SInputSwitch v-model="input" />
 </Showcase>

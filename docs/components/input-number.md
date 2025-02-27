@@ -11,7 +11,7 @@ const input = ref<number | null>(null)
 
 <Showcase
   path="/components/SInputNumber.vue"
-  story="/stories-components-sinputnumber-01-playground-story-vue"
+  story="input-number-01-playground"
 >
   <SInputNumber placeholder="123,456,789" v-model="input" />
 </Showcase>

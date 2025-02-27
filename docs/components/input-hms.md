@@ -15,7 +15,7 @@ const input = ref({
 
 <Showcase
   path="/components/SSInputHMS.vue"
-  story="/stories-components-sinputhms-01-playground-story-vue"
+  story="input-hms-01-playground"
 >
   <SInputHMS v-model="input" />
 </Showcase>

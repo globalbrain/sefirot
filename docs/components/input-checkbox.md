@@ -11,7 +11,7 @@ const input = ref(false)
 
 <Showcase
   path="/components/SInputCheckbox.vue"
-  story="/stories-components-sinputcheckbox-01-playground-story-vue"
+  story="input-checkbox-01-playground"
 >
   <SInputCheckbox text="Item 001" v-model="input" />
 </Showcase>

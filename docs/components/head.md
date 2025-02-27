@@ -10,7 +10,7 @@ import SHeadTitle from 'sefirot/components/SHeadTitle.vue'
 
 <Showcase
   path="/components/SHead.vue"
-  story="/stories-components-shead-01-playground-story-vue"
+  story="head-01-playground"
 >
   <SHead>
     <SHeadTitle>The head title</SHeadTitle>

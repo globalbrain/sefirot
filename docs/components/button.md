@@ -10,7 +10,7 @@ const modes = ['default', 'neutral', 'info', 'success', 'warning', 'danger'] as 
 
 <Showcase
   path="/components/SButton.vue"
-  story="/stories-components-sbutton-01-playground-story-vue"
+  story="button-01-playground"
 >
   <div class="flex flex-wrap gap-12">
     <SButton v-for="m in modes" :key="m" :mode="m" label="Button" />

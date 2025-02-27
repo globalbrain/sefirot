@@ -9,7 +9,7 @@ import SGridItem from 'sefirot/components/SGridItem.vue'
 
 <Showcase
   path="/components/SGrid.vue"
-  story="/stories-components-sgrid-01-playground-story-vue"
+  story="grid-01-playground"
 >
   <SGrid cols="4" gap="24">
     <SGridItem>

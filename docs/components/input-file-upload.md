@@ -11,7 +11,7 @@ const input = ref([])
 
 <Showcase
   path="/components/SInputFileUpload.vue"
-  story="/stories-components-sinputfileupload-01-playground-story-vue"
+  story="input-file-upload-01-playground"
 >
   <SInputFileUpload v-model="input" />
 </Showcase>

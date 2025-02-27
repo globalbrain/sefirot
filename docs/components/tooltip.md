@@ -8,7 +8,7 @@ import STooltip from 'sefirot/components/STooltip.vue'
 
 <Showcase
   path="/components/STooltip.vue"
-  story="/stories-components-stooltip-01-playground-story-vue"
+  story="tooltip-01-playground"
 >
   <STooltip text="This is a tooltip message.">
     Hover this text.

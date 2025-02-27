@@ -14,7 +14,7 @@ import SDescText from 'sefirot/components/SDescText.vue'
 
 <Showcase
   path="/components/SDesc.vue"
-  story="/stories-components-sdesc-01-playground-story-vue"
+  story="desc-01-playground"
 >
   <div>
     <SDesc cols="2" gap="24">

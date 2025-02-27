@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
+import 'sefirot/styles/bootstrap.css'
 
 defineProps<{
   title: string
@@ -8,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="Board">
+  <div class="Board vp-raw">
     <div class="b-root">
       <div class="b-menu">
         <div class="b-title">{{ title }}</div>

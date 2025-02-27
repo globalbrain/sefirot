@@ -12,7 +12,7 @@ const input = ref<string | null>(null)
 
 <Showcase
   path="/components/SInputText.vue"
-  story="/stories-components-sinputtext-02-addons-story-vue"
+  story="input-text-02-addons"
 >
   <SInputText placeholder="johndoe" v-model="input">
     <template #addon-before>

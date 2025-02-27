@@ -17,7 +17,7 @@ const options = [
 
 <Showcase
   path="/components/SInputRadios.vue"
-  story="/stories-components-sinputradios-01-playground-story-vue"
+  story="input-radios-01-playground"
 >
   <SInputRadios :options="options" v-model="input" />
 </Showcase>

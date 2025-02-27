@@ -10,7 +10,7 @@ const states = ['pending', 'ready', 'queued', 'running', 'completed', 'failed'] 
 
 <Showcase
   path="/components/SIndicator.vue"
-  story="/stories-components-sindicator-01-playground-story-vue"
+  story="indicator-01-playground"
 >
   <div class="flex flex-wrap gap-16">
     <SIndicator v-for="s in states" :key="s" size="mini" :state="s" />

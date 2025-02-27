@@ -11,7 +11,7 @@ const input = shallowRef(null)
 
 <Showcase
   path="/components/SInputImage.vue"
-  story="/stories-components-sinputimage-01-playground-story-vue"
+  story="input-image-01-playground"
 >
   <SInputImage help="JPG or PNG. 500KB max." v-model="input" />
 </Showcase>

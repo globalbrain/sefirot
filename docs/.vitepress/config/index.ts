@@ -2,13 +2,6 @@ import { type DefaultTheme, defineConfig } from 'vitepress'
 import { baseConfig } from '../../../config/vite'
 import { storyPlugin } from './story'
 
-function getStoryHost(): string {
-  if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
-    return new URL(process.env.DEPLOY_PRIME_URL).host.replace('-docs', '-story')
-  }
-  return 'story.sefirot.globalbrains.com'
-}
-
 export default defineConfig({
   lang: 'en-US',
   title: 'Sefirot',
@@ -19,10 +12,12 @@ export default defineConfig({
 
   vite: {
     ...baseConfig,
-    plugins: [
-      ...baseConfig.plugins!,
-      storyPlugin()
-    ]
+    plugins: [...(baseConfig.plugins || []), storyPlugin()],
+    optimizeDeps: {
+      entries: ['../lib/**/*'],
+      include: ['lodash-es', 'markdown-it > argparse', 'markdown-it > entities'],
+      exclude: ['markdown-it']
+    }
   },
 
   themeConfig: {
@@ -31,7 +26,7 @@ export default defineConfig({
     },
 
     nav: [
-      { text: 'Playground', link: `https://${getStoryHost()}` }
+      { text: 'Playground', link: '/stories/action-list-01-playground' }
     ],
 
     outline: [2, 3],

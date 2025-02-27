@@ -20,7 +20,7 @@ import SControlText from 'sefirot/components/SControlText.vue'
 
 <Showcase
   path="/components/SCard.vue"
-  story="/stories-components-scard-01-playground-story-vue"
+  story="card-01-playground"
 >
   <div class="flex flex-wrap gap-12">
     <SCard>
