@@ -21,7 +21,7 @@ function log(...args: any[]) {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :init-state="state">
     <template #controls="{ state }">
       <HstSelect
         title="size"

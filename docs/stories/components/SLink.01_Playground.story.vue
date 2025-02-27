@@ -18,7 +18,7 @@ function getExternal(value: 'undefined' | 'true' | 'false') {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :init-state="state">
     <template #controls="{ state }">
       <HstText
         title="href"
