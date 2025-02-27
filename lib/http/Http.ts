@@ -19,8 +19,8 @@ export interface HttpOptions {
   client?: HttpClient
   lang?: Lang
   payloadKey?: string
-  stringifyOptions?: IStringifyOptions<BooleanOptional>
   headers?: () => Awaitable<Record<string, string>>
+  stringifyOptions?: IStringifyOptions<BooleanOptional>
 }
 
 export class Http {
@@ -29,8 +29,8 @@ export class Http {
   private static client: HttpClient = ofetch
   private static lang: Lang | undefined = undefined
   private static payloadKey = '__payload__'
-  private static stringifyOptions: IStringifyOptions<BooleanOptional> = {}
   private static headers: () => Awaitable<Record<string, string>> = async () => ({})
+  private static stringifyOptions: IStringifyOptions<BooleanOptional> = {}
 
   static config(options: HttpOptions): void {
     if (options.baseUrl) {
@@ -48,11 +48,11 @@ export class Http {
     if (options.payloadKey) {
       Http.payloadKey = options.payloadKey
     }
-    if (options.stringifyOptions) {
-      Http.stringifyOptions = options.stringifyOptions
-    }
     if (options.headers) {
       Http.headers = options.headers
+    }
+    if (options.stringifyOptions) {
+      Http.stringifyOptions = options.stringifyOptions
     }
   }
 
@@ -74,7 +74,7 @@ export class Http {
   private async buildRequest(url: string, fetchOptions: FetchOptions = {}, stringifyOptions: IStringifyOptions<BooleanOptional> = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = fetchOptions
     const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
-    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions, ...stringifyOptions } as IStringifyOptions<BooleanOptional>)
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions, ...stringifyOptions })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
