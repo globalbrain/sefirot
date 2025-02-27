@@ -71,8 +71,8 @@ export class Http {
     return xsrfToken
   }
 
-  private async buildRequest(url: string, fetchOptions: FetchOptions = {}): Promise<[string, FetchOptions]> {
-    const { method, params, query, ...options } = fetchOptions
+  private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
+    const { method, params, query, ...options } = _options
     const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
     const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions })
@@ -95,23 +95,23 @@ export class Http {
     ]
   }
 
-  private async performRequest<T>(url: string, fetchOptions: FetchOptions = {}): Promise<T> {
-    return Http.client(...(await this.buildRequest(url, fetchOptions)))
+  private async performRequest<T>(url: string, options: FetchOptions = {}): Promise<T> {
+    return Http.client(...(await this.buildRequest(url, options)))
   }
 
-  private async performRequestRaw<T>(url: string, fetchOptions: FetchOptions = {}): Promise<FetchResponse<T>> {
-    return Http.client.raw(...(await this.buildRequest(url, fetchOptions)))
+  private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
+    return Http.client.raw(...(await this.buildRequest(url, options)))
   }
 
-  async get<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'GET', ...fetchOptions })
+  async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'GET', ...options })
   }
 
-  async head<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'HEAD', ...fetchOptions })
+  async head<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'HEAD', ...options })
   }
 
-  async post<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
+  async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
     if (body && !isFormData(body)) {
       let hasFile = false
 
@@ -132,30 +132,30 @@ export class Http {
       }
     }
 
-    return this.performRequest<T>(url, { method: 'POST', body, ...fetchOptions })
+    return this.performRequest<T>(url, { method: 'POST', body, ...options })
   }
 
-  async put<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PUT', body, ...fetchOptions })
+  async put<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PUT', body, ...options })
   }
 
-  async patch<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PATCH', body, ...fetchOptions })
+  async patch<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PATCH', body, ...options })
   }
 
-  async delete<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'DELETE', ...fetchOptions })
+  async delete<T = any>(url: string, options?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'DELETE', ...options })
   }
 
-  async upload<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
-    return this.post<T>(url, this.objectToFormData(body), fetchOptions)
+  async upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+    return this.post<T>(url, this.objectToFormData(body), options)
   }
 
-  async download(url: string, fetchOptions?: FetchOptions): Promise<void> {
+  async download(url: string, options?: FetchOptions): Promise<void> {
     const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
       method: 'GET',
       responseType: 'blob',
-      ...fetchOptions
+      ...options
     })
 
     if (!blob) {
