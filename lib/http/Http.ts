@@ -1,13 +1,7 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import {
-  FetchError,
-  type FetchOptions,
-  type FetchRequest,
-  type FetchResponse,
-  ofetch
-} from 'ofetch'
+import { FetchError, type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
 import { type IStringifyOptions, stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
@@ -77,19 +71,11 @@ export class Http {
     return xsrfToken
   }
 
-  private async buildRequest(
-    url: string,
-    fetchOptions: FetchOptions = {},
-    stringifyOptions: IStringifyOptions = {}
-  ): Promise<[string, FetchOptions]> {
+  private async buildRequest(url: string, fetchOptions: FetchOptions = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = fetchOptions
-    const xsrfToken
-      = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
+    const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
-    const queryString = stringify(
-      { ...params, ...query },
-      { encodeValuesOnly: true, ...Http.stringifyOptions, ...stringifyOptions }
-    )
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
@@ -109,44 +95,23 @@ export class Http {
     ]
   }
 
-  private async performRequest<T>(
-    url: string,
-    fetchOptions: FetchOptions = {},
-    stringifyOptions: IStringifyOptions = {}
-  ): Promise<T> {
-    return Http.client(...(await this.buildRequest(url, fetchOptions, stringifyOptions)))
+  private async performRequest<T>(url: string, fetchOptions: FetchOptions = {}): Promise<T> {
+    return Http.client(...(await this.buildRequest(url, fetchOptions)))
   }
 
-  private async performRequestRaw<T>(
-    url: string,
-    fetchOptions: FetchOptions = {},
-    stringifyOptions: IStringifyOptions = {}
-  ): Promise<FetchResponse<T>> {
-    return Http.client.raw(...(await this.buildRequest(url, fetchOptions, stringifyOptions)))
+  private async performRequestRaw<T>(url: string, fetchOptions: FetchOptions = {}): Promise<FetchResponse<T>> {
+    return Http.client.raw(...(await this.buildRequest(url, fetchOptions)))
   }
 
-  async get<T = any>(
-    url: string,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.performRequest<T>(url, { method: 'GET', ...fetchOptions }, stringifyOptions)
+  async get<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'GET', ...fetchOptions })
   }
 
-  async head<T = any>(
-    url: string,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.performRequest<T>(url, { method: 'HEAD', ...fetchOptions }, stringifyOptions)
+  async head<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'HEAD', ...fetchOptions })
   }
 
-  async post<T = any>(
-    url: string,
-    body?: any,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
+  async post<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
     if (body && !isFormData(body)) {
       let hasFile = false
 
@@ -167,54 +132,31 @@ export class Http {
       }
     }
 
-    return this.performRequest<T>(url, { method: 'POST', body, ...fetchOptions }, stringifyOptions)
+    return this.performRequest<T>(url, { method: 'POST', body, ...fetchOptions })
   }
 
-  async put<T = any>(
-    url: string,
-    body?: any,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PUT', body, ...fetchOptions }, stringifyOptions)
+  async put<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PUT', body, ...fetchOptions })
   }
 
-  async patch<T = any>(
-    url: string,
-    body?: any,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PATCH', body, ...fetchOptions }, stringifyOptions)
+  async patch<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PATCH', body, ...fetchOptions })
   }
 
-  async delete<T = any>(
-    url: string,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.performRequest<T>(url, { method: 'DELETE', ...fetchOptions }, stringifyOptions)
+  async delete<T = any>(url: string, fetchOptions?: FetchOptions): Promise<T> {
+    return this.performRequest<T>(url, { method: 'DELETE', ...fetchOptions })
   }
 
-  async upload<T = any>(
-    url: string,
-    body?: any,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<T> {
-    return this.post<T>(url, this.objectToFormData(body), fetchOptions, stringifyOptions)
+  async upload<T = any>(url: string, body?: any, fetchOptions?: FetchOptions): Promise<T> {
+    return this.post<T>(url, this.objectToFormData(body), fetchOptions)
   }
 
-  async download(
-    url: string,
-    fetchOptions?: FetchOptions,
-    stringifyOptions?: IStringifyOptions
-  ): Promise<void> {
-    const { _data: blob, headers } = await this.performRequestRaw<Blob>(
-      url,
-      { method: 'GET', responseType: 'blob', ...fetchOptions },
-      stringifyOptions
-    )
+  async download(url: string, fetchOptions?: FetchOptions): Promise<void> {
+    const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
+      method: 'GET',
+      responseType: 'blob',
+      ...fetchOptions
+    })
 
     if (!blob) {
       throw new Error('No blob')
@@ -226,12 +168,7 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(
-    obj: any,
-    form?: FormData,
-    namespace?: string,
-    onlyFiles = false
-  ): FormData {
+  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false): FormData {
     const fd = form || new FormData()
     let formKey: string
 
@@ -264,20 +201,10 @@ export class Http {
 export function isFetchError(e: unknown): e is FetchError {
   return (
     e instanceof FetchError
-    || (isError(e)
-      && (isString((e as FetchError).request) || isRequest((e as FetchError).request))
-      && ((e as FetchError).response === undefined || isResponse((e as FetchError).response))
-      && e.message.startsWith(
-        `[${
-          ((e as FetchError).request as Request | undefined)?.method
-          || (e as FetchError).options?.method
-          || 'GET'
-        }] ${JSON.stringify(
-          ((e as FetchError).request as Request | undefined)?.url
-            || String((e as FetchError).request)
-            || '/'
-        )}: `
-      ))
+    || (isError<FetchError>(e)
+      && (e.response === undefined || isResponse(e.response))
+      && ((isString(e.request) && e.message.startsWith(`[${e.options?.method || 'GET'}] ${e.request || '/'}: `))
+        || (isRequest(e.request) && e.message.startsWith(`[${e.request.method}] ${e.request.url}: `))))
   )
 }
 
