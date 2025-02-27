@@ -203,8 +203,8 @@ export function isFetchError(e: unknown): e is FetchError {
     e instanceof FetchError
     || (isError<FetchError>(e)
       && (e.response === undefined || isResponse(e.response))
-      && ((isString(e.request) && e.message.startsWith(`[${e.options?.method || 'GET'}] ${e.request || '/'}: `))
-        || (isRequest(e.request) && e.message.startsWith(`[${e.request.method}] ${e.request.url}: `))))
+      && ((isString(e.request) && e.message.startsWith(`[${e.options?.method || 'GET'}] ${JSON.stringify(e.request || '/')}: `))
+        || (isRequest(e.request) && e.message.startsWith(`[${e.request.method}] ${JSON.stringify(e.request.url)}: `))))
   )
 }
 
