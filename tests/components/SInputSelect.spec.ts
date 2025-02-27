@@ -70,6 +70,6 @@ describe('components/SInputSelect', async () => {
     })
 
     const selectElement = wrapper.find('select').element
-    expect(selectElement.options[selectElement.selectedIndex].text).toBe('Placeholder')
+    expect(selectElement.selectedOptions[0].text).toBe('Placeholder')
   })
 })
