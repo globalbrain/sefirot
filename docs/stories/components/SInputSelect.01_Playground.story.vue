@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { logEvent as log } from 'histoire/client'
 import SInputSelect from 'sefirot/components/SInputSelect.vue'
 import { ref } from 'vue'
 
@@ -26,6 +25,11 @@ function state() {
     disabled: false,
     error: false
   } as const
+}
+
+function log(...args: any[]) {
+  // eslint-disable-next-line no-console
+  console.log(...args)
 }
 </script>
 

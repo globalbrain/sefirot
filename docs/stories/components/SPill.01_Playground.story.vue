@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { logEvent as log } from 'histoire/client'
 import SPill from 'sefirot/components/SPill.vue'
 
 const title = 'Components / SPill / 01. Playground'
@@ -13,6 +12,11 @@ function state() {
     label: 'Pill',
     clickable: false
   }
+}
+
+function log(...args: any[]) {
+  // eslint-disable-next-line no-console
+  console.log(...args)
 }
 </script>
 

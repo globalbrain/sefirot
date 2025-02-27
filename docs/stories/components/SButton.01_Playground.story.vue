@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { logEvent as log } from 'histoire/client'
 import SButton from 'sefirot/components/SButton.vue'
 
 const title = 'Components / SButton / 01. Playground'
@@ -45,6 +44,11 @@ function state() {
       timeout: 0
     }
   }
+}
+
+function log(...args: any[]) {
+  // eslint-disable-next-line no-console
+  console.log(...args)
 }
 </script>
 

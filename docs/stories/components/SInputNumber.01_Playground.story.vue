@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { logEvent as log } from 'histoire/client'
 import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { ref } from 'vue'
 
@@ -29,6 +28,11 @@ function state() {
 function onInput(value: number | null) {
   log('update:model-value', { value })
   input.value = value
+}
+
+function log(...args: any[]) {
+  // eslint-disable-next-line no-console
+  console.log(...args)
 }
 </script>
 
