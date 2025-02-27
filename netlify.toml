@@ -1,5 +1,21 @@
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
+
+[build]
+  publish = "docs/.vitepress/dist"
+  command = "pnpm docs:build"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    cache-control = '''
+    max-age=31536000,
+    immutable'''
+
+[[headers]]
+  for = "/stories/_frame"
+  [headers.values]
+    x-robots-tag = "noindex"
 
 [images]
   remote_images = ["https:\\/\\/(?:[^\\/]*\\.)?globalbrains\\.com\\/.*"]

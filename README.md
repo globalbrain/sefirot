@@ -26,35 +26,23 @@ Sefirot follows the official [Vue Style Guide](https://v3.vuejs.org/style-guide/
 
 ### Development
 
-```bash
-$ pnpm run story
-```
-
-Serve Histoire at http://localhost:4010.
+Serve documentation website at http://localhost:4010:
 
 ```bash
-$ pnpm run docs
+$ pnpm docs:dev
 ```
 
-Serve documentation website at http://localhost:4011.
+Lint files using ESLint:
 
 ```bash
-$ pnpm run lint
+$ pnpm lint
 ```
 
-Lint files using a rule of Standard JS.
+Run tests:
 
 ```bash
 $ pnpm test
 ```
-
-Run the tests.
-
-```bash
-$ pnpm run coverage
-```
-
-Output test coverage in `coverage` directory.
 
 ## License
 

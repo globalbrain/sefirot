@@ -25,13 +25,9 @@
   ],
   "scripts": {
     "docs": "pnpm docs:dev",
-    "docs:dev": "vitepress dev docs --port 4011",
+    "docs:dev": "vitepress dev docs --port 4010",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress serve docs --port 4011",
-    "story": "pnpm story:dev",
-    "story:dev": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire dev --port 4010",
-    "story:build": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire build",
-    "story:preview": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire preview --port 4010",
+    "docs:preview": "vitepress serve docs --port 4010",
     "type": "vue-tsc --noEmit",
     "lint": "eslint --fix .",
     "lint:fail": "eslint .",
@@ -80,7 +76,6 @@
   },
   "devDependencies": {
     "@globalbrain/eslint-config": "^1.7.1",
-    "@histoire/plugin-vue": "0.16.5",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/ri": "^1.2.5",
     "@release-it/conventional-changelog": "^10.0.0",
@@ -102,7 +97,6 @@
     "eslint": "8.57.0",
     "fuse.js": "^7.1.0",
     "happy-dom": "^17.1.8",
-    "histoire": "0.16.5",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
     "normalize.css": "^8.0.1",
@@ -121,5 +115,10 @@
     "vue": "^3.5.13",
     "vue-router": "^4.5.0",
     "vue-tsc": "^2.2.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "^6.2.0"
+    }
   }
 }
