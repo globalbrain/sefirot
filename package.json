@@ -28,7 +28,7 @@
     "docs:dev": "vitepress dev docs --port 4010",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress serve docs --port 4010",
-    "type": "vue-tsc --noEmit",
+    "type": "vue-tsc --noEmit -p tsconfig.base.json",
     "lint": "eslint --fix .",
     "lint:fail": "eslint .",
     "vitest": "vitest",

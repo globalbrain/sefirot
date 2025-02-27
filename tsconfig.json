@@ -1,43 +1,5 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./",
-    "target": "esnext",
-    "module": "esnext",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "lib": [
-      "es2020",
-      "dom",
-      "dom.iterable"
-    ],
-    "paths": {
-      "sefirot/*": [
-        "lib/*"
-      ]
-    },
-    "types": [
-      "@types/node",
-      "vitest/globals"
-    ]
-  },
-  "include": [
-    "*.config.ts",
-    "docs",
-    "docs/.vitepress/**/*",
-    "env.d.ts",
-    "lib",
-    "stories",
-    "tests"
-  ],
-  "exclude": [
-    "**/dist/**",
-    "node_modules"
-  ],
+  "extends": "./tsconfig.base.json",
   "vueCompilerOptions": {
     "vitePressExtensions": [
       ".md"
