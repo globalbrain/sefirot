@@ -5,7 +5,8 @@ export default defineRoutes({
   paths(watchedFiles) {
     return watchedFiles.map((file) => ({
       params: {
-        id: normalizePath(file)
+        id: normalizePath(file),
+        title: getTitle(file)
       },
       content: `\
 <Comp />
@@ -27,4 +28,12 @@ function normalizePath(path: string): string {
     .slice(27, -10)
     .replace(/[^a-z0-9]/g, '-')
     .replace(/-+/g, '-')
+}
+
+function getTitle(path: string): string {
+  return path
+    .split('/')
+    .pop()
+    ?.replace('.story.vue', '')
+    .replace(/[^a-z]+/gi, ' - ') ?? ''
 }
