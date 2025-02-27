@@ -2,7 +2,7 @@ import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
-import { stringify } from 'qs'
+import { type BooleanOptional, type IStringifyOptions, stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
@@ -66,10 +66,10 @@ export class Http {
     return xsrfToken
   }
 
-  private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
-    const { method, params, query, ...options } = _options
+  private async buildRequest(url: string, fetchOptions: FetchOptions = {}, stringifyOptions: IStringifyOptions<BooleanOptional> = {}): Promise<[string, FetchOptions]> {
+    const { method, params, query, ...options } = fetchOptions
     const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
-    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true })
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...stringifyOptions })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
@@ -89,23 +89,23 @@ export class Http {
     ]
   }
 
-  private async performRequest<T>(url: string, options: FetchOptions = {}): Promise<T> {
-    return Http.client(...(await this.buildRequest(url, options)))
+  private async performRequest<T>(url: string, fetchOptions: FetchOptions = {}, stringifyOptions: IStringifyOptions<BooleanOptional> = {}): Promise<T> {
+    return Http.client(...(await this.buildRequest(url, fetchOptions, stringifyOptions)))
   }
 
-  private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
-    return Http.client.raw(...(await this.buildRequest(url, options)))
+  private async performRequestRaw<T>(url: string, fetchOptions: FetchOptions = {}, stringifyOptions: IStringifyOptions<BooleanOptional> = {}): Promise<FetchResponse<T>> {
+    return Http.client.raw(...(await this.buildRequest(url, fetchOptions, stringifyOptions)))
   }
 
-  async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'GET', ...options })
+  async get<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.performRequest<T>(url, { method: 'GET', ...fetchOptions }, stringifyOptions)
   }
 
-  async head<T = any>(url: string, options?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'HEAD', ...options })
+  async head<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.performRequest<T>(url, { method: 'HEAD', ...fetchOptions }, stringifyOptions)
   }
 
-  async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
+  async post<T = any>(url: string, body?: any, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
     if (body && !isFormData(body)) {
       let hasFile = false
 
@@ -126,31 +126,31 @@ export class Http {
       }
     }
 
-    return this.performRequest<T>(url, { method: 'POST', body, ...options })
+    return this.performRequest<T>(url, { method: 'POST', body, ...fetchOptions }, stringifyOptions)
   }
 
-  async put<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PUT', body, ...options })
+  async put<T = any>(url: string, body?: any, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PUT', body, ...fetchOptions }, stringifyOptions)
   }
 
-  async patch<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'PATCH', body, ...options })
+  async patch<T = any>(url: string, body?: any, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.performRequest<T>(url, { method: 'PATCH', body, ...fetchOptions }, stringifyOptions)
   }
 
-  async delete<T = any>(url: string, options?: FetchOptions): Promise<T> {
-    return this.performRequest<T>(url, { method: 'DELETE', ...options })
+  async delete<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.performRequest<T>(url, { method: 'DELETE', ...fetchOptions }, stringifyOptions)
   }
 
-  async upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    return this.post<T>(url, this.objectToFormData(body), options)
+  async upload<T = any>(url: string, body?: any, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T> {
+    return this.post<T>(url, this.objectToFormData(body), fetchOptions, stringifyOptions)
   }
 
-  async download(url: string, options?: FetchOptions): Promise<void> {
+  async download(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<void> {
     const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
       method: 'GET',
       responseType: 'blob',
-      ...options
-    })
+      ...fetchOptions
+    }, stringifyOptions)
 
     if (!blob) {
       throw new Error('No blob')

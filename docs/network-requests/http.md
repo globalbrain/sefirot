@@ -81,7 +81,7 @@ Performs a `GET` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  get<T = any>(url: string, options?: FetchOptions): Promise<T>
+  get<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -93,7 +93,7 @@ Performs a `HEAD` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  head<T = any>(url: string, options?: FetchOptions): Promise<T>
+  head<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -105,7 +105,7 @@ Performs a `POST` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
+  post<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -117,7 +117,7 @@ Performs a `PUT` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  put<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
+  put<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -129,7 +129,7 @@ Performs a `PATCH` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  patch<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
+  patch<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -141,7 +141,7 @@ Performs a `DELETE` request.
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  delete<T = any>(url: string, options?: FetchOptions): Promise<T>
+  delete<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -153,7 +153,7 @@ Performs a `POST` request with `multipart/form-data` content type. Useful for up
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T>
+  upload<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
 
@@ -165,6 +165,6 @@ Download a file from the response. Use this method when you want browser to save
 import { type FetchOptions } from 'ofetch'
 
 class Http {
-  download<T = any>(url: string, options?: FetchOptions): Promise<T>
+  download<T = any>(url: string, fetchOptions?: FetchOptions, stringifyOptions?: IStringifyOptions<BooleanOptional>): Promise<T>
 }
 ```
