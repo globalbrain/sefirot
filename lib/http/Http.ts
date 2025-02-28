@@ -2,7 +2,7 @@ import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
-import { stringify } from 'qs'
+import { type IStringifyOptions, stringify } from 'qs'
 import { type Lang } from '../composables/Lang'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
@@ -20,6 +20,7 @@ export interface HttpOptions {
   lang?: Lang
   payloadKey?: string
   headers?: () => Awaitable<Record<string, string>>
+  stringifyOptions?: IStringifyOptions
 }
 
 export class Http {
@@ -29,6 +30,7 @@ export class Http {
   private static lang: Lang | undefined = undefined
   private static payloadKey = '__payload__'
   private static headers: () => Awaitable<Record<string, string>> = async () => ({})
+  private static stringifyOptions: IStringifyOptions = {}
 
   static config(options: HttpOptions): void {
     if (options.baseUrl) {
@@ -48,6 +50,9 @@ export class Http {
     }
     if (options.headers) {
       Http.headers = options.headers
+    }
+    if (options.stringifyOptions) {
+      Http.stringifyOptions = options.stringifyOptions
     }
   }
 
@@ -69,7 +74,8 @@ export class Http {
   private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = _options
     const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
-    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true })
+
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
@@ -195,16 +201,10 @@ export class Http {
 export function isFetchError(e: unknown): e is FetchError {
   return (
     e instanceof FetchError
-    || (isError(e)
-      && (isString((e as FetchError).request) || isRequest((e as FetchError).request))
-      && ((e as FetchError).response === undefined || isResponse((e as FetchError).response))
-      && e.message.startsWith(
-        `[${
-          ((e as FetchError).request as Request | undefined)?.method || (e as FetchError).options?.method || 'GET'
-        }] ${JSON.stringify(
-          ((e as FetchError).request as Request | undefined)?.url || String((e as FetchError).request) || '/'
-        )}: `
-      ))
+    || (isError<FetchError>(e)
+      && (e.response === undefined || isResponse(e.response))
+      && ((isString(e.request) && e.message.startsWith(`[${e.options?.method || 'GET'}] ${JSON.stringify(e.request || '/')}: `))
+        || (isRequest(e.request) && e.message.startsWith(`[${e.request.method}] ${JSON.stringify(e.request.url)}: `))))
   )
 }
 
