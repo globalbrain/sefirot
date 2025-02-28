@@ -11,6 +11,9 @@ importers:
       '@sentry/browser':
         specifier: ^9.2.0
         version: 9.2.0
+      '@sentry/vue':
+        specifier: ^9.2.0
+        version: 9.2.0(pinia@3.0.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))
       '@tanstack/vue-virtual':
         specifier: 3.0.0-beta.62
         version: 3.0.0-beta.62(vue@3.5.13(typescript@5.7.3))
@@ -1089,6 +1092,16 @@ packages:
   '@sentry/core@9.2.0':
     resolution: {integrity: sha512-REnEuneWyv3DkZfr0ZCQOZRCkBxUuWMY7aJ7BwWU9t3CFRUIPO0ePiXb2eZJEkDtalJK+m9pSTDUbChtrzQmLA==}
     engines: {node: '>=18'}
+
+  '@sentry/vue@9.2.0':
+    resolution: {integrity: sha512-p4e8xObBnuN40S4hwcQfU/THBxaCOCGScs3N4ti6NLFMSIpdSVJK0/E11Ic9OS4JxM+W8z9GvcoeLHUowxVe2g==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      pinia: 2.x || 3.x
+      vue: 2.x || 3.x
+    peerDependenciesMeta:
+      pinia:
+        optional: true
 
   '@shikijs/core@3.0.0':
     resolution: {integrity: sha512-gSm3JQf2J2psiUn5bWokmZwnu5N0jfBtRps4CQ1B+qrFvmZCRAkMVoaxgl9qZgAFK5KisLAS3//XaMFVytYHKw==}
@@ -5292,6 +5305,14 @@ snapshots:
       '@sentry/core': 9.2.0
 
   '@sentry/core@9.2.0': {}
+
+  '@sentry/vue@9.2.0(pinia@3.0.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3)))(vue@3.5.13(typescript@5.7.3))':
+    dependencies:
+      '@sentry/browser': 9.2.0
+      '@sentry/core': 9.2.0
+      vue: 3.5.13(typescript@5.7.3)
+    optionalDependencies:
+      pinia: 3.0.1(typescript@5.7.3)(vue@3.5.13(typescript@5.7.3))
 
   '@shikijs/core@3.0.0':
     dependencies:

@@ -18,7 +18,9 @@
  */
 
 import * as Sentry from '@sentry/browser'
+import { createSentryPiniaPlugin } from '@sentry/vue'
 import { pauseTracking, resetTracking } from '@vue/reactivity'
+import { getActivePinia } from 'pinia'
 import {
   type ComponentInternalInstance,
   type ComponentOptions,
@@ -183,6 +185,7 @@ export function useErrorHandler({
 
   if (enabled) {
     Sentry.init({ dsn, environment, ignoreErrors })
+    getActivePinia()?.use(createSentryPiniaPlugin())
   }
 
   return function errorHandler(
