@@ -1,7 +1,7 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/8d606c44ece5a9940ede05513f844f698d082589/packages/runtime-core/src/component.ts
- * @see https://github.com/vuejs/core/blob/cdb1d1795d21591659e2560e201ee4fbf1ea4aca/packages/runtime-core/src/warning.ts
+ * @see https://github.com/vuejs/core/blob/1755ac0a108ba3486bd8397e56d3bdcd69196594/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
  * @see https://github.com/getsentry/sentry-javascript/blob/2cfb0ef3fa5c40f90c317267a4d10b969994d021/packages/vue/src/errorhandler.ts
  * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts#L12
  *
@@ -117,11 +117,8 @@ function formatTrace(instance: ComponentInternalInstance | null): string {
 }
 
 function formatTraceEntry({ vnode, recurseCount }: TraceEntry): string {
-  return `at <${formatComponentName(vnode.component)}${
-    vnode.props ? ` ${formatProps(vnode.props)}` : ''
-  }>${
-    recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''
-  }`
+  return `at <${formatComponentName(vnode.component)}${vnode.props ? ` ${formatProps(vnode.props)}` : ''}>\
+${recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''}`
 }
 
 function formatProps(props: Record<string, unknown>): string {
