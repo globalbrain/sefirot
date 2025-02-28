@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.13.0](https://github.com/globalbrain/sefirot/compare/v4.12.0...v4.13.0) (2025-02-28)
+
+
+### Bug Fixes
+
+* **lang:** provide lang at app level so that it's available in stores ([#586](https://github.com/globalbrain/sefirot/issues/586)) ([180babb](https://github.com/globalbrain/sefirot/commit/180babbc9e42234020ab23c5d8805f63a4278940))
+
+
+### Features
+
+* **http:** support configuring stringify options ([#587](https://github.com/globalbrain/sefirot/issues/587)) ([db4643a](https://github.com/globalbrain/sefirot/commit/db4643a3c2deb8bd20afb341e4d369d8332ef76f))
+
 # [4.12.0](https://github.com/globalbrain/sefirot/compare/v4.11.0...v4.12.0) (2025-02-21)
 
 
