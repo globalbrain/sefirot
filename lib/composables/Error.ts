@@ -2,15 +2,15 @@
  * Adapted from
  * @see https://github.com/vuejs/core/blob/1755ac0a108ba3486bd8397e56d3bdcd69196594/packages/runtime-core/src/component.ts
  * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
- * @see https://github.com/getsentry/sentry-javascript/blob/2cfb0ef3fa5c40f90c317267a4d10b969994d021/packages/vue/src/errorhandler.ts
- * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts#L12
+ * @see https://github.com/getsentry/sentry-javascript/blob/04711c20246f7cdaac2305286fec783ab1859a18/packages/vue/src/errorhandler.ts
+ * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts
  *
  * Original licenses:
  *
  * (c) 2018-present Yuxi (Evan) You and Vue contributors
  * @license MIT
  *
- * (c) 2019 Sentry (https://sentry.io) and individual contributors
+ * (c) 2012-2024 Functional Software, Inc. dba Sentry
  * @license MIT
  *
  * (c) 2023 Vercel, Inc.
@@ -190,8 +190,6 @@ export function useErrorHandler({
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
-    set(e)
-
     if (enabled) {
       pauseTracking()
 
@@ -222,6 +220,8 @@ export function useErrorHandler({
     } else {
       console.error(e)
     }
+
+    set(e)
   }
 }
 
