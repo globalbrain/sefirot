@@ -152,16 +152,17 @@ watch(
 
 :deep(.tooltip) {
   opacity: 0;
-  background-color: var(--c-bg-elv-2);
-  border: 1px solid var(--c-divider);
-  border-radius: 6px;
-  padding: 6px;
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
-  transition: transform 0.4s ease-out, opacity 0.25s 0.75s;
-  pointer-events: none;
   width: min(var(--max-tooltip-width), max(var(--min-tooltip-width), var(--available-width)));
   width: calc-size(auto, min(size, max(var(--min-tooltip-width), var(--available-width))));
+  padding: 2px 8px;
+  transition: transform 0.4s ease-out, opacity 0.25s 0.75s;
+  background-color: var(--c-bg-elv-2);
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
+  font-size: 12px;
 }
 </style>

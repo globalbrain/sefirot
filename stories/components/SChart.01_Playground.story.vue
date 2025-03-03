@@ -41,6 +41,6 @@ const data = [
 }
 
 :deep(.tooltip-number) {
-  font-weight: 500;
+  font-weight: 600;
 }
 </style>
