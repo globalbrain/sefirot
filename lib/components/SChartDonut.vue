@@ -3,13 +3,12 @@ import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
 
-type Color = 'blue' | 'green' | 'yellow' | 'red' | 'gray'
-export type KV = { key: string; value: number; color?: Color }
+export type KV = { key: string; value: number }
 
 const props = defineProps<{
   data: KV[]
   tooltip?: (d: KV) => string
-  color?: Color
+  colors?: string[]
   /** set radiusDiff to 0 to make it a pie chart */
   radiusDiff?: number
   legendDiff?: number
@@ -45,7 +44,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   const color = d3
     .scaleOrdinal<string>()
     .domain(props.data.map((d) => d.key))
-    .range(['var(--c-blue-10)', 'var(--c-green-10)', 'var(--c-yellow-11)', 'var(--c-red-10)'])
+    .range(props.colors ?? ['var(--c-blue-10)', 'var(--c-green-10)', 'var(--c-yellow-11)', 'var(--c-red-10)'])
     .unknown('var(--c-gray-10)')
 
   // Prepare data
