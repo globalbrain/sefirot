@@ -3,13 +3,15 @@ import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
 
-export type KV = { key: string; value: number }
+type Color = 'blue' | 'green' | 'yellow' | 'red' | 'gray'
+export type KV = { key: string; value: number; color?: Color | undefined }
 
 const props = defineProps<{
   data: KV[]
   margins?: { top: number; right: number; bottom: number; left: number }
   ticks?: number
   tooltip?: (d: KV) => string
+  color?: Color
 }>()
 
 const chartRef = ref<HTMLElement>()
@@ -101,7 +103,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('y', (d) => y(d.value))
     .attr('width', x.bandwidth())
     .attr('height', (d) => height - y(d.value))
-    .attr('fill', 'var(--c-fg-info-1)')
+    .attr('fill', (d) => `var(--c-${d.color ?? props.color ?? 'blue'}-10)`)
     .attr('rx', 2)
     .attr('ry', 2)
     .on('mouseover', () => {

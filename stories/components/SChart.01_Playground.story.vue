@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SChartBar from 'sefirot/components/SChartBarVertical.vue'
+import SChartBar, { type KV } from 'sefirot/components/SChartBarVertical.vue'
 
 const title = 'Components / SChart / 01. Playground'
 
-const data = [
+const data: KV[] = [
   { key: '2018', value: 10 },
   { key: '2019', value: 15 },
   { key: '2020', value: 20 },
