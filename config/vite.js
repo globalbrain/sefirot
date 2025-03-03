@@ -57,6 +57,7 @@ export const baseConfig = {
       '@vueuse/core',
       'body-scroll-lock',
       'dayjs',
+      'd3',
       'file-saver',
       'fuse.js',
       'lodash-es',

@@ -39,7 +39,7 @@ const options = useTable({
 })
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .table :deep(.col-name)   { --table-col-width: 128px; }
 .table :deep(.col-group)  { --table-col-width: 128px; }
 .table :deep(.col-status) { --table-col-width: 128px; }

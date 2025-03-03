@@ -31,7 +31,7 @@ const computedStory = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .Showcase {
   margin: 0 -12px;
   border: 1px solid var(--c-divider);

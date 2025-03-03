@@ -182,7 +182,7 @@ function state() {
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .actions {
   display: flex;
   gap: 8px;
