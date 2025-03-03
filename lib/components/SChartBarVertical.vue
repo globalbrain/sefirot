@@ -4,14 +4,14 @@ import * as d3 from 'd3'
 import { ref, watch } from 'vue'
 
 type Color = 'blue' | 'green' | 'yellow' | 'red' | 'gray'
-export type KV = { key: string; value: number; color?: Color | undefined }
+export type KV = { key: string; value: number; color?: Color }
 
 const props = defineProps<{
   data: KV[]
   margins?: { top: number; right: number; bottom: number; left: number }
-  ticks?: number
   tooltip?: (d: KV) => string
   color?: Color
+  ticks?: number
 }>()
 
 const chartRef = ref<HTMLElement>()
@@ -58,8 +58,8 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('transform', `translate(0,${height})`)
     .call(d3.axisBottom(x))
     .selectAll('text')
-    .style('fill', 'var(--c-text-2)')
-    .style('font-size', '12px')
+    .attr('fill', 'var(--c-text-2)')
+    .style('font-size', '14px')
     .style('text-anchor', 'middle')
 
   // Remove X axis line
@@ -68,10 +68,10 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   // Add Y axis
   svg
     .append('g')
-    .call(d3.axisLeft(y).ticks(props.ticks || 5))
+    .call(d3.axisLeft(y).ticks(props.ticks ?? 5))
     .selectAll('text')
-    .style('fill', 'var(--c-text-2)')
-    .style('font-size', '12px')
+    .attr('fill', 'var(--c-text-2)')
+    .style('font-size', '14px')
 
   // Remove Y axis line
   svg.select('.domain').remove()
@@ -79,7 +79,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   // Add horizontal grid lines
   svg
     .selectAll('line.grid')
-    .data(y.ticks(props.ticks || 5))
+    .data(y.ticks(props.ticks ?? 5))
     .enter()
     .append('line')
     .attr('class', 'grid')
@@ -90,11 +90,8 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('stroke', 'var(--c-divider)')
     .attr('stroke-dasharray', '2,2')
 
-  // Create a tooltip
-  const Tooltip = d3.select(chartRef.value).append('div').attr('class', 'tooltip')
-
   // Add bars
-  svg
+  const bars = svg
     .selectAll('rect')
     .data(props.data)
     .enter()
@@ -106,14 +103,25 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('fill', (d) => `var(--c-${d.color ?? props.color ?? 'blue'}-10)`)
     .attr('rx', 2)
     .attr('ry', 2)
-    .on('mouseover', () => {
-      Tooltip.style('opacity', 1)
-    })
-    .on('mousemove', (event, d) => {
-      Tooltip.html(props.tooltip ? props.tooltip(d) : `${d.key}: ${d.value}`)
-        .style('transform', `translate3d(${event.pageX + 10}px,${event.pageY + 10}px,0)`)
+
+  // Create a tooltip
+  const Tooltip = d3
+    .select(chartRef.value)
+    .append('div')
+    .attr('class', 'tooltip')
+
+  // Add interactivity
+  bars
+    .on('mouseover', (event, d) => {
+      Tooltip
+        .html(props.tooltip ? props.tooltip(d) : `${d.key}: ${d.value}`)
+        .style('opacity', 1)
         .style('--max-tooltip-width', `${Tooltip.text().length}ch`)
         .style('--min-tooltip-width', `${Math.max(...Tooltip.text().split(' ').map((t) => t.length))}ch`)
+    })
+    .on('mousemove', (event) => {
+      Tooltip
+        .style('transform', `translate3d(${event.pageX + 10}px,${event.pageY + 10}px,0)`)
         .style('--available-width', `${clientWidth - event.pageX + 24}px`)
     })
     .on('mouseleave', () => {
@@ -132,11 +140,11 @@ watch(
 </script>
 
 <template>
-  <div class="SChartBar" ref="chartRef" />
+  <div class="SChartBarVertical" ref="chartRef" />
 </template>
 
 <style scoped lang="postcss">
-.SChartBar {
+.SChartBarVertical {
   width: 100%;
   height: 100%;
   font-feature-settings: 'tnum' 1;
@@ -165,6 +173,6 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 14px;
 }
 </style>
