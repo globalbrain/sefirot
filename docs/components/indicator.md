@@ -33,11 +33,38 @@ import SIndicator from '@globalbrain/sefirot/lib/components/SIndicator.vue'
 
 ## Props
 
+Here are the list of props you may pass to the component.
+
+
+### `:state`
+
+The state of the indicator.
+
+```ts
+interface Props {
+  state: State
+}
+
+type State =
+  | 'pending'
+  | 'ready'
+  | 'queued'
+  | 'running'
+  | 'completed'
+  | 'failed'
+```
+
+```vue-html
+<SIndicator state="completed" />
+```
+
+### `:size`
+
+The size of the indicator. The default is `'medium'`.
+
 ```ts
 interface Props {
   size?: Size
-  state: State
-  mode?: Mode
 }
 
 type Size =
@@ -47,66 +74,15 @@ type Size =
   | 'medium'
   | 'large'
   | 'jumbo'
-
-type State =
-  | 'pending'
-  | 'ready'
-  | 'queued'
-  | 'running'
-  | 'completed'
-  | 'failed'
-
-type Mode =
-  | 'colored'
-  | 'monochrome'
-```
-
-### `:size`
-
-The size of the indicator. The default is `medium`.
-
-```ts
-interface Props {
-  size?: Size
-}
-
-type State =
-  | 'pending'
-  | 'ready'
-  | 'queued'
-  | 'running'
-  | 'completed'
-  | 'failed'
 ```
 
 ```vue-html
-<SIndicator state="completed" />
-```
-
-### `:state`
-
-The state of the indicator.
-
-```ts
-interface Props {
-  mode?: 
-}
-
-type Size =
-  | 'mini'
-  | 'small'
-  | 'medium'
-  | 'large'
-  | 'jumbo'
-```
-
-```vue-html
-<SIndicator state="completed" />
+<SIndicator size="small" state="..." />
 ```
 
 ### `:mode`
 
-Whether the indicator should have colors or be monochrome. The default is `colored`.
+Whether the indicator should have colors or be monochrome. The default is `'colored'`.
 
 ```ts
 interface Props {
@@ -119,5 +95,5 @@ type Mode =
 ```
 
 ```vue-html
-<SIndicator mode="monochrome" state="running" />
+<SIndicator mode="monochrome" state="..." />
 ```
