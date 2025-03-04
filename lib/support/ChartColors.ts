@@ -6,7 +6,8 @@
  *     https://github.com/radix-ui/colors/blob/main/LICENSE
  */
 
-const isLightDarkSupported = CSS.supports('color', 'light-dark(#000, #fff)')
+const isLightDarkSupported
+  = typeof document === 'undefined' ? true : CSS.supports('color', 'light-dark(#000, #fff)')
 
 // radixLight.9, radixDark.10
 export const chartColors = {
