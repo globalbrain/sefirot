@@ -7,7 +7,7 @@
  */
 
 const isLightDarkSupported
-  = typeof document === 'undefined' || CSS.supports('color', 'light-dark(#000, #fff)')
+  = typeof CSS !== 'undefined' && CSS.supports('color', 'light-dark(#000, #fff)')
 
 // radixLight.9, radixDark.10
 export const chartColors = {
