@@ -2,13 +2,16 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
+import { type ChartColor, scheme } from '../support/ChartColors'
 
-export type KV = { key: string; value: number }
+export type { ChartColor }
+export type KV = { key: string; value: number; color?: ChartColor }
 
 const props = defineProps<{
   data: KV[]
-  tooltip?: (d: KV) => string
-  colors?: string[]
+  tooltip?: (d: KV, color: string) => string
+  colors?: ChartColor[]
+
   /** set radiusDiff to 0 to make it a pie chart */
   radiusDiff?: number
   legendDiff?: number
@@ -25,6 +28,9 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   // Clear any existing SVG
   d3.select(chartRef.value).selectAll('*').remove()
 
+  // Create color scale
+  const color = scheme(props.data, props.colors)
+
   // Set dimensions and margins
   const margin = { top: 30, right: 30, bottom: 30, left: 30 }
   const width = clientWidth - margin.left - margin.right
@@ -39,13 +45,6 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('height', height + margin.top + margin.bottom)
     .append('g')
     .attr('transform', `translate(${clientWidth / 2},${clientHeight / 2})`)
-
-  // Create color scale
-  const color = d3
-    .scaleOrdinal<string>()
-    .domain(props.data.map((d) => d.key))
-    .range(props.colors ?? ['var(--c-blue-10)', 'var(--c-green-10)', 'var(--c-yellow-11)', 'var(--c-red-10)'])
-    .unknown('var(--c-gray-10)')
 
   // Prepare data
   const pie = d3
@@ -68,7 +67,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .data(dataReady)
     .join('path')
     .attr('d', arc)
-    .attr('fill', (d) => color(d.data.key))
+    .attr('fill', (d) => color(d.data))
 
   // Create a tooltip
   const Tooltip = d3
@@ -79,7 +78,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   // Add interactivity
   arcs
     .on('mouseover', (event, d) => {
-      Tooltip.html(props.tooltip ? props.tooltip(d.data) : `${d.data.key}: ${d.data.value}`)
+      Tooltip.html(props.tooltip?.(d.data, color(d.data)) ?? `${d.data.key}: ${d.data.value}`)
       Tooltip.style('opacity', 1)
     })
     .on('mousemove', (event) => {
@@ -113,7 +112,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('ry', 2)
     .attr('width', 18)
     .attr('height', 18)
-    .attr('fill', (d) => color(d.data.key))
+    .attr('fill', (d) => color(d.data))
 
   // Add legend text
   legend

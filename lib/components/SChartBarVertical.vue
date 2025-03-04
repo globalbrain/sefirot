@@ -2,15 +2,17 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
+import { type ChartColor, scheme } from '../support/ChartColors'
 
-type Color = 'blue' | 'green' | 'yellow' | 'red' | 'gray'
-export type KV = { key: string; value: number; color?: Color }
+export type { ChartColor }
+export type KV = { key: string; value: number; color?: ChartColor }
 
 const props = defineProps<{
   data: KV[]
+  tooltip?: (d: KV, color: string) => string
+  colors?: ChartColor[]
+
   margins?: { top: number; right: number; bottom: number; left: number }
-  tooltip?: (d: KV) => string
-  color?: Color
   ticks?: number
 }>()
 
@@ -23,6 +25,9 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
 
   // Clear any existing SVG
   d3.select(chartRef.value).selectAll('*').remove()
+
+  // Create color scale
+  const color = scheme(props.data, props.colors ?? ['blue'])
 
   // Set dimensions and margins
   const margin = { top: 30, right: 30, bottom: 60, left: 60, ...props.margins }
@@ -100,7 +105,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .attr('y', (d) => y(d.value))
     .attr('width', x.bandwidth())
     .attr('height', (d) => height - y(d.value))
-    .attr('fill', (d) => `var(--c-${d.color ?? props.color ?? 'blue'}-10)`)
+    .attr('fill', (d) => color(d))
     .attr('rx', 2)
     .attr('ry', 2)
 
@@ -114,7 +119,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   bars
     .on('mouseover', (event, d) => {
       Tooltip
-        .html(props.tooltip ? props.tooltip(d) : `${d.key}: ${d.value}`)
+        .html(props.tooltip?.(d, color(d)) ?? `${d.key}: ${d.value}`)
         .style('opacity', 1)
         .style('--max-tooltip-width', `${Tooltip.text().length}ch`)
         .style('--min-tooltip-width', `${Math.max(...Tooltip.text().split(' ').map((t) => t.length))}ch`)
