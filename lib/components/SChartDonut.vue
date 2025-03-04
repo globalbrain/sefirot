@@ -142,12 +142,12 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
 }
 
 watch(
-  [width, height],
+  [width, height, () => props],
   ([clientWidth, clientHeight]) => {
     if (!clientWidth || !clientHeight) { return }
     renderChart({ clientWidth, clientHeight })
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 )
 </script>
 

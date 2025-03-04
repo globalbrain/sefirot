@@ -3,10 +3,11 @@ import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SChartBar, { type KV } from 'sefirot/components/SChartBarVertical.vue'
 import SChartDonut from 'sefirot/components/SChartDonut.vue'
+import { ref } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
 
-const data: KV[] = [
+const data = ref<KV[]>([
   { key: '2018', value: 10 },
   { key: '2019', value: 15 },
   { key: '2020', value: 20 },
@@ -15,7 +16,7 @@ const data: KV[] = [
   { key: '2023', value: 35 },
   { key: '2024', value: 40 },
   { key: '2025', value: 45 }
-]
+])
 
 function tooltip(d: KV) {
   return `Total: <span class=tooltip-number>${d.value}</span>`
