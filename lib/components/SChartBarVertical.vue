@@ -23,11 +23,14 @@ const { width, height } = useElementSize(chartRef)
 function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clientHeight: number }) {
   if (!chartRef.value) { return }
 
-  // Clear any existing SVG
-  d3.select(chartRef.value).selectAll('*').remove()
-
   // Create color scale
   const color = scheme(props.data, props.colors ?? ['blue'])
+
+  // Clear any existing SVG
+  d3
+    .select(chartRef.value)
+    .selectAll('*')
+    .remove()
 
   // Set dimensions and margins
   const margin = { top: 30, right: 30, bottom: 60, left: 60, ...props.margins }
@@ -68,7 +71,9 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .style('text-anchor', 'middle')
 
   // Remove X axis line
-  svg.select('.domain').remove()
+  svg
+    .select('.domain')
+    .remove()
 
   // Add Y axis
   svg
@@ -79,7 +84,9 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .style('font-size', '14px')
 
   // Remove Y axis line
-  svg.select('.domain').remove()
+  svg
+    .select('.domain')
+    .remove()
 
   // Add horizontal grid lines
   svg
@@ -130,7 +137,8 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
         .style('--available-width', `${clientWidth - event.pageX + 24}px`)
     })
     .on('mouseleave', () => {
-      Tooltip.style('visibility', 'hidden')
+      Tooltip
+        .style('visibility', 'hidden')
     })
 }
 

@@ -25,11 +25,14 @@ const { width, height } = useElementSize(chartRef)
 function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clientHeight: number }) {
   if (!chartRef.value) { return }
 
-  // Clear any existing SVG
-  d3.select(chartRef.value).selectAll('*').remove()
-
   // Create color scale
   const color = scheme(props.data, props.colors)
+
+  // Clear any existing SVG
+  d3
+    .select(chartRef.value)
+    .selectAll('*')
+    .remove()
 
   // Set dimensions and margins
   const margin = { top: 30, right: 30, bottom: 30, left: 30 }
@@ -78,14 +81,17 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   // Add interactivity
   arcs
     .on('mouseover', (event, d) => {
-      Tooltip.html(props.tooltip?.(d.data, color(d.data)) ?? `${d.data.key}: ${d.data.value}`)
-      Tooltip.style('visibility', 'visible')
+      Tooltip
+        .html(props.tooltip?.(d.data, color(d.data)) ?? `${d.data.key}: ${d.data.value}`)
+        .style('visibility', 'visible')
     })
     .on('mousemove', (event) => {
-      Tooltip.style('transform', `translate3d(${event.pageX + 10}px,${event.pageY + 10}px,0)`)
+      Tooltip
+        .style('transform', `translate3d(${event.pageX + 10}px,${event.pageY + 10}px,0)`)
     })
     .on('mouseleave', () => {
-      Tooltip.style('visibility', 'hidden')
+      Tooltip
+        .style('visibility', 'hidden')
     })
 
   if (props.showLegend !== false) { return }
@@ -135,10 +141,12 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
 
   // Center the groups
   const legendWidth = legendGroup.node()?.getBBox().width ?? 0
-  svg.attr('transform', `translate(${width / 2 - legendWidth / 2},${clientHeight / 2})`)
+  svg
+    .attr('transform', `translate(${width / 2 - legendWidth / 2},${clientHeight / 2})`)
 
   const legendHeight = legendGroup.node()?.getBBox().height ?? 0
-  legendGroup.attr('transform', `translate(${radius * 1.5},${-legendHeight / 2})`)
+  legendGroup
+    .attr('transform', `translate(${radius * 1.5},${-legendHeight / 2})`)
 }
 
 watch(
