@@ -79,13 +79,13 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   arcs
     .on('mouseover', (event, d) => {
       Tooltip.html(props.tooltip?.(d.data, color(d.data)) ?? `${d.data.key}: ${d.data.value}`)
-      Tooltip.style('opacity', 1)
+      Tooltip.style('visibility', 'visible')
     })
     .on('mousemove', (event) => {
       Tooltip.style('transform', `translate3d(${event.pageX + 10}px,${event.pageY + 10}px,0)`)
     })
     .on('mouseleave', () => {
-      Tooltip.style('opacity', 0)
+      Tooltip.style('visibility', 'hidden')
     })
 
   if (props.showLegend !== false) { return }
@@ -163,13 +163,13 @@ watch(
 }
 
 :deep(.tooltip) {
-  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
   padding: 2px 8px;
-  transition: transform 0.4s ease-out, opacity 0.25s 0.75s;
+  transition: transform 0.4s ease-out, visibility 0s 0.75s;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;

@@ -120,7 +120,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .on('mouseover', (event, d) => {
       Tooltip
         .html(props.tooltip?.(d, color(d)) ?? `${d.key}: ${d.value}`)
-        .style('opacity', 1)
+        .style('visibility', 'visible')
         .style('--max-tooltip-width', `${Tooltip.text().length}ch`)
         .style('--min-tooltip-width', `${Math.max(...Tooltip.text().split(' ').map((t) => t.length))}ch`)
     })
@@ -130,7 +130,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
         .style('--available-width', `${clientWidth - event.pageX + 24}px`)
     })
     .on('mouseleave', () => {
-      Tooltip.style('opacity', 0)
+      Tooltip.style('visibility', 'hidden')
     })
 }
 
@@ -166,7 +166,7 @@ watch(
 }
 
 :deep(.tooltip) {
-  opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   position: absolute;
   top: 0;
@@ -174,7 +174,7 @@ watch(
   width: min(var(--max-tooltip-width), max(var(--min-tooltip-width), var(--available-width)));
   width: calc-size(auto, min(size, max(var(--min-tooltip-width), var(--available-width))));
   padding: 2px 8px;
-  transition: transform 0.4s ease-out, opacity 0.25s 0.75s;
+  transition: transform 0.4s ease-out, visibility 0s 0.75s;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
