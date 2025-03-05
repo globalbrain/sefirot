@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SChartBar, { type KV } from 'sefirot/components/SChartBarVertical.vue'
-import SChartDonut from 'sefirot/components/SChartDonut.vue'
+import SChartBar, { type KV } from 'sefirot/components/SChartBar.vue'
+import SChartPie from 'sefirot/components/SChartPie.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
@@ -21,33 +21,179 @@ const data = ref<KV[]>([
 function tooltip(d: KV) {
   return `Total: <span class=tooltip-number>${d.value}</span>`
 }
+
+function state() {
+  return {
+    barMode: 'vertical',
+    barDebug: false,
+    barMarginTop: 30,
+    barMarginRight: 30,
+    barMarginBottom: 60,
+    barMarginLeft: 60,
+    barTicks: 5,
+
+    pieMode: 'donut',
+    pieHalf: false,
+    pieDebug: false,
+    pieMarginTop: 30,
+    pieMarginRight: 30,
+    pieMarginBottom: 30,
+    pieMarginLeft: 30,
+    pieLegend: true,
+    pieLegendPadding: 70
+  }
+}
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
-      <SCard class="chart-card">
-        <SCardBlock size="medium" class="s-px-24" bg="elv-2">
-          <div class="s-font-14 s-font-w-500">Bar Chart</div>
-        </SCardBlock>
-        <SCardBlock bg="elv-2">
-          <div class="s-w-full s-h-320">
-            <SChartBar :data :tooltip />
-          </div>
-        </SCardBlock>
-      </SCard>
-      <br>
-      <SCard class="chart-card">
-        <SCardBlock size="medium" class="s-px-24" bg="elv-2">
-          <div class="s-font-14 s-font-w-500">Donut Chart</div>
-        </SCardBlock>
-        <SCardBlock bg="elv-2">
-          <div class="s-w-full s-h-320 s-pb-24">
-            <SChartDonut :data :tooltip />
-          </div>
-        </SCardBlock>
-      </SCard>
-    </Board>
+  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+    <template #controls="{ state }">
+      <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
+      <HstSelect
+        title="mode"
+        :options="{
+          vertical: 'vertical',
+          horizontal: 'horizontal'
+        }"
+        v-model="state.barMode"
+      />
+      <HstCheckbox
+        title="debug"
+        v-model="state.barDebug"
+      />
+      <HstSlider
+        title="margin-top"
+        v-model="state.barMarginTop"
+        :min="0"
+        :max="100"
+      />
+      <HstSlider
+        title="margin-right"
+        v-model="state.barMarginRight"
+        :min="0"
+        :max="300"
+      />
+      <HstSlider
+        title="margin-bottom"
+        v-model="state.barMarginBottom"
+        :min="0"
+        :max="100"
+      />
+      <HstSlider
+        title="margin-left"
+        v-model="state.barMarginLeft"
+        :min="0"
+        :max="300"
+      />
+      <HstSlider
+        title="ticks"
+        v-model="state.barTicks"
+        :min="0"
+        :max="20"
+      />
+      <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
+      <HstSelect
+        title="mode"
+        :options="{
+          donut: 'donut',
+          pie: 'pie'
+        }"
+        v-model="state.pieMode"
+      />
+      <HstCheckbox
+        title="half"
+        v-model="state.pieHalf"
+      />
+      <HstCheckbox
+        title="debug"
+        v-model="state.pieDebug"
+      />
+      <HstSlider
+        title="margin-top"
+        v-model="state.pieMarginTop"
+        :min="0"
+        :max="100"
+      />
+      <HstSlider
+        title="margin-right"
+        v-model="state.pieMarginRight"
+        :min="0"
+        :max="300"
+      />
+      <HstSlider
+        title="margin-bottom"
+        v-model="state.pieMarginBottom"
+        :min="0"
+        :max="100"
+      />
+      <HstSlider
+        title="margin-left"
+        v-model="state.pieMarginLeft"
+        :min="0"
+        :max="300"
+      />
+      <HstCheckbox
+        title="legend"
+        v-model="state.pieLegend"
+      />
+      <HstSlider
+        title="legend-padding"
+        v-model="state.pieLegendPadding"
+        :min="50"
+        :max="150"
+      />
+    </template>
+    <template #default="{ state }">
+      <Board :title="title">
+        <SCard class="chart-card">
+          <SCardBlock size="medium" class="s-px-24" bg="elv-2">
+            <div class="s-font-14 s-font-w-500">Bar Chart</div>
+          </SCardBlock>
+          <SCardBlock bg="elv-2">
+            <div class="s-w-full s-h-320">
+              <SChartBar
+                :data
+                :tooltip
+                :margins="{
+                  top: state.barMarginTop,
+                  right: state.barMarginRight,
+                  bottom: state.barMarginBottom,
+                  left: state.barMarginLeft
+                }"
+                :mode="state.barMode"
+                :debug="state.barDebug"
+                :ticks="state.barTicks"
+              />
+            </div>
+          </SCardBlock>
+        </SCard>
+        <br>
+        <SCard class="chart-card">
+          <SCardBlock size="medium" class="s-px-24" bg="elv-2">
+            <div class="s-font-14 s-font-w-500">Pie Chart</div>
+          </SCardBlock>
+          <SCardBlock bg="elv-2">
+            <div class="s-w-full s-h-320 s-pb-24">
+              <SChartPie
+                :data
+                :tooltip
+                :margins="{
+                  top: state.pieMarginTop,
+                  right: state.pieMarginRight,
+                  bottom: state.pieMarginBottom,
+                  left: state.pieMarginLeft
+                }"
+                :mode="state.pieMode"
+                :half="state.pieHalf"
+                :debug="state.pieDebug"
+                :legend="state.pieLegend"
+                :legend-padding="state.pieLegendPadding"
+              />
+            </div>
+          </SCardBlock>
+        </SCard>
+      </Board>
+    </template>
   </Story>
 </template>
 

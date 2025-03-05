@@ -33,6 +33,7 @@ export const chartColors = {
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type ChartColor = keyof typeof chartColors | (string & {})
+export type KV = { key: string; value: number; color?: ChartColor }
 
 export function getColor(...colors: (ChartColor | string | null | undefined)[]): string {
   for (const color of colors) {
