@@ -157,14 +157,11 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
       Tooltip
         .html(props.tooltip(d, color(d)))
         .style('visibility', 'visible')
-        .style('--max-tooltip-width', `${Tooltip.text().length}ch`)
-        .style('--min-tooltip-width', `${Math.max(...Tooltip.text().split(' ').map((t) => t.length))}ch`)
     })
     .on('mousemove', (event: PointerEvent) => {
       const [x, y] = d3.pointer(event, chartRef.value)
       Tooltip
         .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-        .style('--available-width', `${clientWidth - event.pageX + 20}px`)
     })
     .on('mouseleave', () => {
       Tooltip
@@ -214,8 +211,6 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
-  width: min(var(--max-tooltip-width), max(var(--min-tooltip-width), var(--available-width)));
-  width: calc-size(auto, min(size, max(var(--min-tooltip-width), var(--available-width))));
   padding: 2px 8px;
   transition: transform 0.4s ease-out, visibility 0s 0.75s;
   background-color: var(--c-bg-elv-2);
