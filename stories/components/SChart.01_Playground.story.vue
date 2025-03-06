@@ -31,7 +31,7 @@ function state() {
     barMarginBottom: undefined,
     barMarginLeft: undefined,
     barTicks: undefined,
-    barAnimations: true,
+    barAnimate: true,
     barXLabel: undefined,
     barYLabel: undefined,
     barXLabelOffset: undefined,
@@ -44,9 +44,9 @@ function state() {
     pieMarginRight: undefined,
     pieMarginBottom: undefined,
     pieMarginLeft: undefined,
-    pieLegend: true,
+    pieShowLegend: true,
     pieLegendPadding: undefined,
-    pieAnimations: true,
+    pieAnimate: true,
     pieActiveKey: undefined
   }
 }
@@ -96,8 +96,8 @@ function state() {
         :max="20"
       />
       <HstCheckbox
-        title="animations"
-        v-model="state.barAnimations"
+        title="animate"
+        v-model="state.barAnimate"
       />
       <HstText
         title="x-label"
@@ -161,8 +161,8 @@ function state() {
         :max="300"
       />
       <HstCheckbox
-        title="legend"
-        v-model="state.pieLegend"
+        title="show-legend"
+        v-model="state.pieShowLegend"
       />
       <HstSlider
         title="legend-padding"
@@ -171,8 +171,8 @@ function state() {
         :max="150"
       />
       <HstCheckbox
-        title="animations"
-        v-model="state.pieAnimations"
+        title="animate"
+        v-model="state.pieAnimate"
       />
       <HstSelect
         title="active-key"
@@ -200,7 +200,7 @@ function state() {
                 :mode="state.barMode"
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
-                :animations="state.barAnimations"
+                :animate="state.barAnimate"
                 :x-label="state.barXLabel"
                 :y-label="state.barYLabel"
                 :x-label-offset="state.barXLabelOffset"
@@ -228,9 +228,9 @@ function state() {
                 :mode="state.pieMode"
                 :half="state.pieHalf"
                 :debug="state.pieDebug"
-                :legend="state.pieLegend"
+                :show-legend="state.pieShowLegend"
                 :legend-padding="state.pieLegendPadding"
-                :animations="state.pieAnimations"
+                :animate="state.pieAnimate"
                 :active-key="state.pieActiveKey"
               />
             </div>

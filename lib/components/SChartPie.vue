@@ -15,22 +15,32 @@ const props = withDefaults(defineProps<{
   mode?: 'pie' | 'donut'
   half?: boolean
   debug?: boolean
-  legend?: boolean
-  legendFormatKey?: (d: KV) => string
-  legendFormatValue?: (d: KV) => string
-  legendPadding?: number
-  animations?: boolean
+  animate?: boolean
   activeKey?: string
+  showLegend?: boolean
+  formatLegendKey?: (d: KV) => string
+  formatLegendValue?: (d: KV) => string
+  legendPadding?: number
+  // showLabels?: boolean
+  // formatLabel?: (d: KV) => string
+  // showValues?: boolean
+  // formatValue?: (d: KV) => string
+  // showTicks?: boolean
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   mode: 'donut',
   half: false,
   debug: false,
-  legend: true,
-  legendFormatKey: (d: KV) => d.key,
-  legendFormatValue: (d: KV) => d.value.toString(),
-  legendPadding: 70,
-  animations: true
+  animate: true,
+  showLegend: true,
+  formatLegendKey: (d: KV) => d.key,
+  formatLegendValue: (d: KV) => d.value.toString(),
+  legendPadding: 70
+  // showLabels: false,
+  // formatLabel: (d: KV) => d.key,
+  // showValues: false,
+  // formatValue: (d: KV) => d.value.toString(),
+  // showTicks: false
 })
 
 const chartRef = ref<HTMLElement>()
@@ -96,7 +106,7 @@ function renderChart({
   let legendGroup
   let legendHeight = 0
   let legendWidth = 0
-  if (props.legend) {
+  if (props.showLegend) {
     // Create a group for the legend
     legendGroup = svg
       .append('g')
@@ -127,7 +137,7 @@ function renderChart({
       .attr('y', 14 / 2)
       .attr('dy', '0.35em')
       .attr('fill', 'var(--c-text-2)')
-      .text((d) => props.legendFormatKey(d.data))
+      .text((d) => props.formatLegendKey(d.data))
 
     // Show value next to the legend
     legend
@@ -137,7 +147,7 @@ function renderChart({
       .attr('dy', '0.35em')
       .attr('fill', 'var(--c-text-1)')
       .attr('text-anchor', 'end')
-      .text((d) => props.legendFormatValue(d.data))
+      .text((d) => props.formatLegendValue(d.data))
 
     ;({ width: legendWidth = 0, height: legendHeight = 0 } = legendGroup?.node()?.getBBox() ?? {})
 
@@ -154,13 +164,13 @@ function renderChart({
 
   // Calculate radius and center the chart
   const r_k = props.half ? 0.25 : 0.5
-  const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.legend ? r_k : 0)))
+  const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.showLegend ? r_k : 0)))
   const innerRadius = props.innerRadius?.(radius) ?? (props.mode === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
 
   legendGroup
     ?.attr('transform', `translate(${radius * (1 + r_k)},${-(props.half ? height_2 : 0) / 2 - legendHeight / 2})`)
   svg
-    .attr('transform', `translate(${margin.left + width_2 - (props.legend ? radius * r_k + legendWidth : 0) / 2},${margin.top + height_2})`)
+    .attr('transform', `translate(${margin.left + width_2 - (props.showLegend ? radius * r_k + legendWidth : 0) / 2},${margin.top + height_2})`)
 
   // Create arc generator
   const arc = d3
@@ -255,7 +265,7 @@ watch(
       clientWidth,
       clientHeight,
       animate:
-        props.animations
+        props.animate
         && ((oldWidth === 0 && oldHeight === 0)
           || (clientHeight === oldHeight && clientWidth === oldWidth))
     })

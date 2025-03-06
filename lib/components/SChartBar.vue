@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
   mode?: 'horizontal' | 'vertical'
   debug?: boolean
   ticks?: number
-  animations?: boolean
+  animate?: boolean
   xLabel?: string
   yLabel?: string
   xLabelOffset?: number
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   mode: 'vertical',
   debug: false,
   ticks: 5,
-  animations: true
+  animate: true
 })
 
 const chartRef = ref<HTMLElement>()
@@ -261,7 +261,7 @@ watch(
       clientWidth,
       clientHeight,
       animate:
-        props.animations
+        props.animate
         && ((oldWidth === 0 && oldHeight === 0)
           || (clientHeight === oldHeight && clientWidth === oldWidth))
     })
