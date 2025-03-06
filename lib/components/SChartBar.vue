@@ -18,7 +18,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   colors: () => ['blue'],
-  margins: (props) => ({ top: 30, right: 30, bottom: 60, left: 60, ...props.margins }),
   mode: 'vertical',
   debug: false,
   ticks: 5,
@@ -50,7 +49,12 @@ function renderChart({
     .remove()
 
   // Set dimensions and margins
-  const margin = props.margins as Required<typeof props.margins>
+  const margin = {
+    top: props.margins?.top ?? 30,
+    right: props.margins?.right ?? 30,
+    bottom: props.margins?.bottom ?? 60,
+    left: props.margins?.left ?? 60
+  }
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom
 
@@ -129,6 +133,27 @@ function renderChart({
       .attr('y1', 0)
       .attr('y2', height)
   }
+
+  // // Add axis labels
+  // svg
+  //   .append('text')
+  //   .attr('class', 'axis-label')
+  //   .attr('x', width / 2)
+  //   .attr('y', height + 46)
+  //   .attr('fill', 'var(--c-text-2)')
+  //   .style('font-size', '14px')
+  //   .style('text-anchor', 'middle')
+  //   .text('X Axis Label')
+  // svg
+  //   .append('text')
+  //   .attr('class', 'axis-label')
+  //   .attr('x', -height / 2)
+  //   .attr('y', -40)
+  //   .attr('transform', 'rotate(-90)')
+  //   .attr('fill', 'var(--c-text-2)')
+  //   .style('font-size', '14px')
+  //   .style('text-anchor', 'middle')
+  //   .text('Y Axis Label')
 
   // Add bars
   const bars = svg

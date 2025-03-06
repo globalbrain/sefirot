@@ -26,22 +26,22 @@ function state() {
   return {
     barMode: 'vertical',
     barDebug: false,
-    barMarginTop: 30,
-    barMarginRight: 30,
-    barMarginBottom: 60,
-    barMarginLeft: 60,
-    barTicks: 5,
+    barMarginTop: undefined,
+    barMarginRight: undefined,
+    barMarginBottom: undefined,
+    barMarginLeft: undefined,
+    barTicks: undefined,
     barAnimations: true,
 
     pieMode: 'donut',
     pieHalf: false,
     pieDebug: false,
-    pieMarginTop: 30,
-    pieMarginRight: 30,
-    pieMarginBottom: 30,
-    pieMarginLeft: 30,
+    pieMarginTop: undefined,
+    pieMarginRight: undefined,
+    pieMarginBottom: undefined,
+    pieMarginLeft: undefined,
     pieLegend: true,
-    pieLegendPadding: 70,
+    pieLegendPadding: undefined,
     pieAnimations: true
   }
 }

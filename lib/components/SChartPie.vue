@@ -22,7 +22,6 @@ const props = withDefaults(defineProps<{
   animations?: boolean
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
-  margins: (props) => ({ top: 30, right: 30, bottom: 60, left: 60, ...props.margins }),
   mode: 'donut',
   half: false,
   debug: false,
@@ -58,7 +57,12 @@ function renderChart({
     .remove()
 
   // Set dimensions and margins
-  const margin = props.margins as Required<typeof props.margins>
+  const margin = {
+    top: props.margins?.top ?? 30,
+    right: props.margins?.right ?? 30,
+    bottom: props.margins?.bottom ?? 30,
+    left: props.margins?.left ?? 30
+  }
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom
 
