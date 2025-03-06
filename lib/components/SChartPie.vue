@@ -20,6 +20,7 @@ const props = withDefaults(defineProps<{
   legendFormatValue?: (d: KV) => string
   legendPadding?: number
   animations?: boolean
+  activeKey?: string
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   mode: 'donut',
@@ -169,16 +170,25 @@ function renderChart({
     .cornerRadius(4)
 
   // Add the arcs
+  const transform = `translate(0,${-(height_2 - radius) / 2})`
+  const activeTransform = `${transform} scale(1.05)`
+
   const arcs = svg
     .selectAll()
     .data(dataReady)
     .join('path')
     .attr('fill', (d) => color(d.data))
-    .attr('transform', () => `translate(0,${-(height_2 - radius) / 2})`)
+    .attr('transform', transform)
+
+  const activeArcs = arcs
+    .filter((d) => d.data.key === props.activeKey)
 
   if (!animate) {
     arcs
       .attr('d', arc)
+
+    activeArcs
+      .attr('transform', activeTransform)
   } else {
     // Animate the arcs
     arcs
@@ -189,6 +199,13 @@ function renderChart({
         const startAngle = props.half ? -Math.PI / 2 : 0
         const i = d3.interpolate({ startAngle, endAngle: startAngle }, d)
         return (t) => arc(i(t))!
+      })
+      .end()
+      .then(() => {
+        activeArcs
+          .transition()
+          .duration(200)
+          .attr('transform', activeTransform)
       })
   }
 

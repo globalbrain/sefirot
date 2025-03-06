@@ -46,7 +46,8 @@ function state() {
     pieMarginLeft: undefined,
     pieLegend: true,
     pieLegendPadding: undefined,
-    pieAnimations: true
+    pieAnimations: true,
+    pieActiveKey: undefined
   }
 }
 </script>
@@ -57,10 +58,7 @@ function state() {
       <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
       <HstSelect
         title="mode"
-        :options="{
-          vertical: 'vertical',
-          horizontal: 'horizontal'
-        }"
+        :options="['vertical', 'horizontal']"
         v-model="state.barMode"
       />
       <HstCheckbox
@@ -176,6 +174,11 @@ function state() {
         title="animations"
         v-model="state.pieAnimations"
       />
+      <HstSelect
+        title="active-key"
+        :options="['none', ...data.map((d) => d.key)]"
+        v-model="state.pieActiveKey"
+      />
     </template>
     <template #default="{ state }">
       <Board :title="title">
@@ -228,6 +231,7 @@ function state() {
                 :legend="state.pieLegend"
                 :legend-padding="state.pieLegendPadding"
                 :animations="state.pieAnimations"
+                :active-key="state.pieActiveKey"
               />
             </div>
           </SCardBlock>
