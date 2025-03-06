@@ -19,7 +19,11 @@ const data = ref<KV[]>([
 ])
 
 function tooltip(d: KV) {
-  return `Total: <span class=tooltip-number>${d.value}</span>`
+  return `${d.key} &ndash; <span class="tooltip-number">${d.value}</span>`
+}
+
+function labelFormat(d: KV) {
+  return `${d.key} &ndash; <tspan fill="var(--c-text-1)">${d.value}</tspan>`
 }
 
 function state() {
@@ -44,10 +48,11 @@ function state() {
     pieMarginRight: undefined,
     pieMarginBottom: undefined,
     pieMarginLeft: undefined,
-    pieShowLegend: true,
-    pieLegendPadding: undefined,
     pieAnimate: true,
-    pieActiveKey: undefined
+    pieActiveKey: undefined,
+    pieLegend: true,
+    pieLegendPadding: undefined,
+    pieLabels: false
   }
 }
 </script>
@@ -161,8 +166,17 @@ function state() {
         :max="300"
       />
       <HstCheckbox
-        title="show-legend"
-        v-model="state.pieShowLegend"
+        title="animate"
+        v-model="state.pieAnimate"
+      />
+      <HstSelect
+        title="active-key"
+        :options="['none', ...data.map((d) => d.key)]"
+        v-model="state.pieActiveKey"
+      />
+      <HstCheckbox
+        title="legend"
+        v-model="state.pieLegend"
       />
       <HstSlider
         title="legend-padding"
@@ -171,13 +185,8 @@ function state() {
         :max="150"
       />
       <HstCheckbox
-        title="animate"
-        v-model="state.pieAnimate"
-      />
-      <HstSelect
-        title="active-key"
-        :options="['none', ...data.map((d) => d.key)]"
-        v-model="state.pieActiveKey"
+        title="labels"
+        v-model="state.pieLabels"
       />
     </template>
     <template #default="{ state }">
@@ -228,10 +237,12 @@ function state() {
                 :mode="state.pieMode"
                 :half="state.pieHalf"
                 :debug="state.pieDebug"
-                :show-legend="state.pieShowLegend"
-                :legend-padding="state.pieLegendPadding"
                 :animate="state.pieAnimate"
                 :active-key="state.pieActiveKey"
+                :legend="state.pieLegend"
+                :legend-padding="state.pieLegendPadding"
+                :labels="state.pieLabels"
+                :format-label="labelFormat"
               />
             </div>
           </SCardBlock>
@@ -248,6 +259,7 @@ function state() {
 }
 
 :deep(.tooltip-number) {
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--c-text-1);
 }
 </style>

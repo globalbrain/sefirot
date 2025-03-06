@@ -17,30 +17,24 @@ const props = withDefaults(defineProps<{
   debug?: boolean
   animate?: boolean
   activeKey?: string
-  showLegend?: boolean
-  formatLegendKey?: (d: KV) => string
-  formatLegendValue?: (d: KV) => string
+  legend?: boolean
+  legendFormatKey?: (d: KV) => string
+  legendFormatValue?: (d: KV) => string
   legendPadding?: number
-  // showLabels?: boolean
-  // formatLabel?: (d: KV) => string
-  // showValues?: boolean
-  // formatValue?: (d: KV) => string
-  // showTicks?: boolean
+  labels?: boolean
+  formatLabel?: (d: KV) => string
 }>(), {
-  tooltip: (d: KV) => `${d.key}: ${d.value}`,
+  tooltip: (d: KV) => `${d.key} – ${d.value}`,
   mode: 'donut',
   half: false,
   debug: false,
   animate: true,
-  showLegend: true,
-  formatLegendKey: (d: KV) => d.key,
-  formatLegendValue: (d: KV) => d.value.toString(),
-  legendPadding: 70
-  // showLabels: false,
-  // formatLabel: (d: KV) => d.key,
-  // showValues: false,
-  // formatValue: (d: KV) => d.value.toString(),
-  // showTicks: false
+  legend: true,
+  legendFormatKey: (d: KV) => d.key,
+  legendFormatValue: (d: KV) => d.value.toString(),
+  legendPadding: 70,
+  labels: false,
+  formatLabel: (d: KV) => `${d.key} – ${d.value}`
 })
 
 const chartRef = ref<HTMLElement>()
@@ -106,7 +100,7 @@ function renderChart({
   let legendGroup
   let legendHeight = 0
   let legendWidth = 0
-  if (props.showLegend) {
+  if (props.legend) {
     // Create a group for the legend
     legendGroup = svg
       .append('g')
@@ -137,7 +131,7 @@ function renderChart({
       .attr('y', 14 / 2)
       .attr('dy', '0.35em')
       .attr('fill', 'var(--c-text-2)')
-      .text((d) => props.formatLegendKey(d.data))
+      .html((d) => props.legendFormatKey(d.data))
 
     // Show value next to the legend
     legend
@@ -147,7 +141,7 @@ function renderChart({
       .attr('dy', '0.35em')
       .attr('fill', 'var(--c-text-1)')
       .attr('text-anchor', 'end')
-      .text((d) => props.formatLegendValue(d.data))
+      .html((d) => props.legendFormatValue(d.data))
 
     ;({ width: legendWidth = 0, height: legendHeight = 0 } = legendGroup?.node()?.getBBox() ?? {})
 
@@ -164,13 +158,13 @@ function renderChart({
 
   // Calculate radius and center the chart
   const r_k = props.half ? 0.25 : 0.5
-  const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.showLegend ? r_k : 0)))
+  const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.legend ? r_k : 0)))
   const innerRadius = props.innerRadius?.(radius) ?? (props.mode === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
 
   legendGroup
     ?.attr('transform', `translate(${radius * (1 + r_k)},${-(props.half ? height_2 : 0) / 2 - legendHeight / 2})`)
   svg
-    .attr('transform', `translate(${margin.left + width_2 - (props.showLegend ? radius * r_k + legendWidth : 0) / 2},${margin.top + height_2})`)
+    .attr('transform', `translate(${margin.left + width_2 - (props.legend ? radius * r_k + legendWidth : 0) / 2},${margin.top + height_2})`)
 
   // Create arc generator
   const arc = d3
@@ -217,6 +211,55 @@ function renderChart({
           .duration(200)
           .attr('transform', activeTransform)
       })
+  }
+
+  if (props.labels) {
+    const labelArc = d3.arc<d3.PieArcDatum<KV>>()
+      .innerRadius(radius)
+      .outerRadius(radius)
+
+    const labels = svg
+      .selectAll()
+      .data(dataReady)
+      .enter()
+      .append('g')
+      .attr('transform', transform)
+
+    labels
+      .append('polyline')
+      .attr('stroke', 'var(--c-divider)')
+      .attr('fill', 'none')
+      .attr('points', (d) => {
+        const posA = arc.centroid(d)
+        const posB = labelArc.centroid(d)
+        const posC = labelArc.centroid(d)
+        const midAngle = (d.startAngle + d.endAngle) / 2
+        posC[0] = radius * 1.05 * (midAngle < Math.PI ? 1 : -1)
+        return [posA, posB, posC].map((p) => p.join(',')).join(' ')
+      })
+
+    labels
+      .append('text')
+      .attr('transform', (d) => {
+        const pos = labelArc.centroid(d)
+        const midAngle = (d.startAngle + d.endAngle) / 2
+        pos[0] = radius * 1.1 * (midAngle < Math.PI ? 1 : -1)
+        return `translate(${pos})`
+      })
+      .attr('dy', '0.35em')
+      .attr('text-anchor', (d) => ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end'))
+      .style('font-size', '14px')
+      .style('fill', 'var(--c-text-2)')
+      .html((d) => props.formatLabel(d.data))
+
+    if (animate) {
+      labels
+        .attr('opacity', 0)
+        .transition()
+        .delay((_, i) => 800 + i * 100)
+        .duration(500)
+        .attr('opacity', 1)
+    }
   }
 
   // Create a tooltip
@@ -297,6 +340,6 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 12px;
 }
 </style>

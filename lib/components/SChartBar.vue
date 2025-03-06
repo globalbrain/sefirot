@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<{
   xLabelOffset?: number
   yLabelOffset?: number
 }>(), {
-  tooltip: (d: KV) => `${d.key}: ${d.value}`,
+  tooltip: (d: KV) => `${d.key} – ${d.value}`,
   colors: () => ['blue'],
   mode: 'vertical',
   debug: false,
@@ -151,7 +151,7 @@ function renderChart({
       .attr('fill', 'var(--c-text-2)')
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
-      .text(props.xLabel)
+      .html(props.xLabel)
   }
   if (props.yLabel) {
     svg
@@ -162,7 +162,7 @@ function renderChart({
       .attr('fill', 'var(--c-text-2)')
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
-      .text(props.yLabel)
+      .html(props.yLabel)
   }
 
   // Add bars
@@ -293,7 +293,7 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 :deep(.tick line) {
