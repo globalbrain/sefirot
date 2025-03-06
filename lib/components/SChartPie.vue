@@ -139,7 +139,7 @@ function renderChart({
 
   // Calculate radius and center the chart
   const r_k = props.half ? 0.25 : 0.5
-  const radius = Math.min(height_2, (width - legendWidth) / 2 + (props.legend ? r_k : 0))
+  const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.legend ? r_k : 0)))
   const innerRadius = props.innerRadius?.(radius) ?? (props.mode === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
 
   legendGroup
