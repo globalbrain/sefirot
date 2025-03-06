@@ -18,7 +18,7 @@ const data = ref<KV[]>([
   { key: '2025', value: 45 }
 ])
 
-function tooltip(d: KV) {
+function tooltipFormat(d: KV) {
   return `${d.key} &ndash; <span class="tooltip-number">${d.value}</span>`
 }
 
@@ -36,6 +36,7 @@ function state() {
     barMarginLeft: undefined,
     barTicks: undefined,
     barAnimate: true,
+    barTooltip: true,
     barXLabel: undefined,
     barYLabel: undefined,
     barXLabelOffset: undefined,
@@ -49,6 +50,7 @@ function state() {
     pieMarginBottom: undefined,
     pieMarginLeft: undefined,
     pieAnimate: true,
+    pieTooltip: true,
     pieActiveKey: undefined,
     pieLegend: true,
     pieLegendPadding: undefined,
@@ -103,6 +105,10 @@ function state() {
       <HstCheckbox
         title="animate"
         v-model="state.barAnimate"
+      />
+      <HstCheckbox
+        title="tooltip"
+        v-model="state.barTooltip"
       />
       <HstText
         title="x-label"
@@ -169,6 +175,10 @@ function state() {
         title="animate"
         v-model="state.pieAnimate"
       />
+      <HstCheckbox
+        title="tooltip"
+        v-model="state.pieTooltip"
+      />
       <HstSelect
         title="active-key"
         :options="['none', ...data.map((d) => d.key)]"
@@ -199,7 +209,6 @@ function state() {
             <div class="s-w-full s-h-320">
               <SChartBar
                 :data
-                :tooltip
                 :margins="{
                   top: state.barMarginTop,
                   right: state.barMarginRight,
@@ -210,6 +219,8 @@ function state() {
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
                 :animate="state.barAnimate"
+                :tooltip="state.barTooltip"
+                :tooltip-format
                 :x-label="state.barXLabel"
                 :y-label="state.barYLabel"
                 :x-label-offset="state.barXLabelOffset"
@@ -227,7 +238,6 @@ function state() {
             <div class="s-w-full s-h-320 s-pb-24">
               <SChartPie
                 :data
-                :tooltip
                 :margins="{
                   top: state.pieMarginTop,
                   right: state.pieMarginRight,
@@ -238,11 +248,13 @@ function state() {
                 :half="state.pieHalf"
                 :debug="state.pieDebug"
                 :animate="state.pieAnimate"
+                :tooltip="state.pieTooltip"
+                :tooltip-format
                 :active-key="state.pieActiveKey"
                 :legend="state.pieLegend"
                 :legend-padding="state.pieLegendPadding"
                 :labels="state.pieLabels"
-                :format-label="labelFormat"
+                :label-format="labelFormat"
               />
             </div>
           </SCardBlock>

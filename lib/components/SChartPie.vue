@@ -8,7 +8,6 @@ export type { ChartColor, KV }
 
 const props = withDefaults(defineProps<{
   data: KV[]
-  tooltip?: (d: KV, color: string) => string
   colors?: ChartColor[]
   margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
   innerRadius?: (outerRadius: number) => number
@@ -16,25 +15,28 @@ const props = withDefaults(defineProps<{
   half?: boolean
   debug?: boolean
   animate?: boolean
+  tooltip?: boolean
   activeKey?: string
+  tooltipFormat?: (d: KV, color: string) => string
   legend?: boolean
   legendFormatKey?: (d: KV) => string
   legendFormatValue?: (d: KV) => string
   legendPadding?: number
   labels?: boolean
-  formatLabel?: (d: KV) => string
+  labelFormat?: (d: KV) => string
 }>(), {
-  tooltip: (d: KV) => `${d.key} – ${d.value}`,
   mode: 'donut',
   half: false,
   debug: false,
   animate: true,
+  tooltip: true,
+  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
   legend: true,
   legendFormatKey: (d: KV) => d.key,
   legendFormatValue: (d: KV) => d.value.toString(),
   legendPadding: 70,
   labels: false,
-  formatLabel: (d: KV) => `${d.key} – ${d.value}`
+  labelFormat: (d: KV) => `${d.key} – ${d.value}`
 })
 
 const chartRef = ref<HTMLElement>()
@@ -250,7 +252,7 @@ function renderChart({
       .attr('text-anchor', (d) => ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end'))
       .style('font-size', '14px')
       .style('fill', 'var(--c-text-2)')
-      .html((d) => props.formatLabel(d.data))
+      .html((d) => props.labelFormat(d.data))
 
     if (animate) {
       labels
@@ -262,28 +264,30 @@ function renderChart({
     }
   }
 
+  if (props.tooltip) {
   // Create a tooltip
-  const Tooltip = d3
-    .select(chartRef.value)
-    .append('div')
-    .attr('class', 'tooltip')
+    const Tooltip = d3
+      .select(chartRef.value)
+      .append('div')
+      .attr('class', 'tooltip')
 
-  // Add interactivity
-  arcs
-    .on('mouseover', (_, d) => {
-      Tooltip
-        .html(props.tooltip(d.data, color(d.data)))
-        .style('visibility', 'visible')
-    })
-    .on('mousemove', (event: PointerEvent) => {
-      const [x, y] = d3.pointer(event, chartRef.value)
-      Tooltip
-        .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-    })
-    .on('mouseleave', () => {
-      Tooltip
-        .style('visibility', 'hidden')
-    })
+    // Add interactivity
+    arcs
+      .on('mouseover', (_, d) => {
+        Tooltip
+          .html(props.tooltipFormat(d.data, color(d.data)))
+          .style('visibility', 'visible')
+      })
+      .on('mousemove', (event: PointerEvent) => {
+        const [x, y] = d3.pointer(event, chartRef.value)
+        Tooltip
+          .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
+      })
+      .on('mouseleave', () => {
+        Tooltip
+          .style('visibility', 'hidden')
+      })
+  }
 
   // Render outline for debugging
   if (props.debug) {

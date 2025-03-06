@@ -8,24 +8,26 @@ export type { ChartColor, KV }
 
 const props = withDefaults(defineProps<{
   data: KV[]
-  tooltip?: (d: KV, color: string) => string
   colors?: ChartColor[]
   margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
   mode?: 'horizontal' | 'vertical'
   debug?: boolean
   ticks?: number
   animate?: boolean
+  tooltip?: boolean
+  tooltipFormat?: (d: KV, color: string) => string
   xLabel?: string
   yLabel?: string
   xLabelOffset?: number
   yLabelOffset?: number
 }>(), {
-  tooltip: (d: KV) => `${d.key} – ${d.value}`,
   colors: () => ['blue'],
   mode: 'vertical',
   debug: false,
   ticks: 5,
-  animate: true
+  animate: true,
+  tooltip: true,
+  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`
 })
 
 const chartRef = ref<HTMLElement>()
@@ -215,28 +217,30 @@ function renderChart({
     }
   }
 
+  if (props.tooltip) {
   // Create a tooltip
-  const Tooltip = d3
-    .select(chartRef.value)
-    .append('div')
-    .attr('class', 'tooltip')
+    const Tooltip = d3
+      .select(chartRef.value)
+      .append('div')
+      .attr('class', 'tooltip')
 
-  // Add interactivity
-  bars
-    .on('mouseover', (_, d) => {
-      Tooltip
-        .html(props.tooltip(d, color(d)))
-        .style('visibility', 'visible')
-    })
-    .on('mousemove', (event: PointerEvent) => {
-      const [x, y] = d3.pointer(event, chartRef.value)
-      Tooltip
-        .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-    })
-    .on('mouseleave', () => {
-      Tooltip
-        .style('visibility', 'hidden')
-    })
+    // Add interactivity
+    bars
+      .on('mouseover', (_, d) => {
+        Tooltip
+          .html(props.tooltipFormat(d, color(d)))
+          .style('visibility', 'visible')
+      })
+      .on('mousemove', (event: PointerEvent) => {
+        const [x, y] = d3.pointer(event, chartRef.value)
+        Tooltip
+          .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
+      })
+      .on('mouseleave', () => {
+        Tooltip
+          .style('visibility', 'hidden')
+      })
+  }
 
   // Render outline for debugging
   if (props.debug) {
