@@ -139,6 +139,16 @@ function renderChart({
       .text((d) => props.legendFormatValue(d.data))
 
     ;({ width: legendWidth = 0, height: legendHeight = 0 } = legendGroup?.node()?.getBBox() ?? {})
+
+    // Animate the legends
+    if (animate) {
+      legend
+        .attr('opacity', 0)
+        .transition()
+        .delay((d, i) => i * 100)
+        .duration(800)
+        .attr('opacity', 1)
+    }
   }
 
   // Calculate radius and center the chart
