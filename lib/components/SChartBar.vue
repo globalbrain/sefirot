@@ -103,7 +103,6 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .data(y.ticks(props.ticks))
     .enter()
     .append('line')
-    .attr('class', 'grid')
     .attr('stroke', 'var(--c-divider)')
     .attr('stroke-dasharray', '2,2')
 
