@@ -159,9 +159,24 @@ function renderChart({
     .selectAll()
     .data(dataReady)
     .join('path')
-    .attr('d', animate ? arc({ startAngle: 0, endAngle: 0, data: {} } as any) : arc)
     .attr('fill', (d) => color(d.data))
     .attr('transform', () => `translate(0,${-(height_2 - radius) / 2})`)
+
+  if (!animate) {
+    arcs
+      .attr('d', arc)
+  } else {
+    // Animate the arcs
+    arcs
+      .attr('d', arc({ startAngle: 0, endAngle: 0, data: {} } as any))
+      .transition()
+      .duration(800 + props.data.length * 100)
+      .attrTween('d', (d) => {
+        const startAngle = props.half ? -Math.PI / 2 : 0
+        const i = d3.interpolate({ startAngle, endAngle: startAngle }, d)
+        return (t) => arc(i(t))!
+      })
+  }
 
   // Create a tooltip
   const Tooltip = d3
@@ -198,18 +213,6 @@ function renderChart({
       .style('height', `${height}px`)
       .style('outline', '1px solid blue')
       .style('pointer-events', 'none')
-  }
-
-  if (animate) {
-  // Animate the arcs
-    arcs
-      .transition()
-      .duration(800 + props.data.length * 100)
-      .attrTween('d', (d) => {
-        const startAngle = props.half ? -Math.PI / 2 : 0
-        const i = d3.interpolate({ startAngle, endAngle: startAngle }, d)
-        return (t) => arc(i(t))!
-      })
   }
 }
 

@@ -140,18 +140,44 @@ function renderChart({
     .attr('rx', 2)
     .attr('ry', 2)
 
-  if (vertical) {
-    bars
-      .attr('x', (d) => x(d.key)!)
-      .attr('y', (d) => y(d.value))
-      .attr('width', x.bandwidth())
-      .attr('height', (d) => height - y(d.value))
+  if (!animate) {
+    if (vertical) {
+      bars
+        .attr('x', (d) => x(d.key)!)
+        .attr('y', (d) => y(d.value))
+        .attr('width', x.bandwidth())
+        .attr('height', (d) => height - y(d.value))
+    } else {
+      bars
+        .attr('x', 0)
+        .attr('y', (d) => x(d.key)!)
+        .attr('width', (d) => y(d.value))
+        .attr('height', x.bandwidth())
+    }
   } else {
-    bars
-      .attr('x', 0)
-      .attr('y', (d) => x(d.key)!)
-      .attr('width', (d) => y(d.value))
-      .attr('height', x.bandwidth())
+    // Animate the bars
+    if (vertical) {
+      bars
+        .attr('x', (d) => x(d.key)!)
+        .attr('y', height)
+        .attr('width', x.bandwidth())
+        .attr('height', 0)
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('y', (d) => y(d.value))
+        .attr('height', (d) => height - y(d.value))
+    } else {
+      bars
+        .attr('x', 0)
+        .attr('y', (d) => x(d.key)!)
+        .attr('width', 0)
+        .attr('height', x.bandwidth())
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('width', (d) => y(d.value))
+    }
   }
 
   // Create a tooltip
@@ -189,27 +215,6 @@ function renderChart({
       .style('height', `${height}px`)
       .style('outline', '1px solid blue')
       .style('pointer-events', 'none')
-  }
-
-  // Animate the bars
-  if (animate) {
-    if (vertical) {
-      bars
-        .attr('y', height)
-        .attr('height', 0)
-        .transition()
-        .duration(800)
-        .delay((_, i) => i * 100)
-        .attr('y', (d) => y(d.value))
-        .attr('height', (d) => height - y(d.value))
-    } else {
-      bars
-        .attr('width', 0)
-        .transition()
-        .duration(800)
-        .delay((_, i) => i * 100)
-        .attr('width', (d) => y(d.value))
-    }
   }
 }
 
