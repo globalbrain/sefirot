@@ -37,7 +37,15 @@ const chartRef = ref<HTMLElement>()
 const { width, height } = useElementSize(chartRef)
 
 // Function to render the chart
-function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clientHeight: number }) {
+function renderChart({
+  clientWidth,
+  clientHeight,
+  animate
+}: {
+  clientWidth: number
+  clientHeight: number
+  animate: boolean
+}) {
   if (!chartRef.value) { return }
 
   // Create color scale
@@ -151,7 +159,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .selectAll()
     .data(dataReady)
     .join('path')
-    .attr('d', arc({ startAngle: 0, endAngle: 0, data: {} } as any))
+    .attr('d', animate ? arc({ startAngle: 0, endAngle: 0, data: {} } as any) : arc)
     .attr('fill', (d) => color(d.data))
     .attr('transform', () => `translate(0,${-(height_2 - radius) / 2})`)
 
@@ -192,7 +200,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
       .style('pointer-events', 'none')
   }
 
-  if (props.animations) {
+  if (animate) {
   // Animate the arcs
     arcs
       .transition()
@@ -207,9 +215,16 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
 
 watch(
   [width, height, () => props],
-  ([clientWidth, clientHeight]) => {
+  ([clientWidth, clientHeight], [oldWidth, oldHeight]) => {
     if (!clientWidth || !clientHeight) { return }
-    renderChart({ clientWidth, clientHeight })
+    renderChart({
+      clientWidth,
+      clientHeight,
+      animate:
+        props.animations
+        && ((oldWidth === 0 && oldHeight === 0)
+          || (clientHeight === oldHeight && clientWidth === oldWidth))
+    })
   },
   { immediate: true, deep: true }
 )

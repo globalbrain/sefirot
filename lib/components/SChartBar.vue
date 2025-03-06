@@ -29,7 +29,15 @@ const chartRef = ref<HTMLElement>()
 const { width, height } = useElementSize(chartRef)
 
 // Function to render the chart
-function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clientHeight: number }) {
+function renderChart({
+  clientWidth,
+  clientHeight,
+  animate
+}: {
+  clientWidth: number
+  clientHeight: number
+  animate: boolean
+}) {
   if (!chartRef.value) { return }
 
   // Create color scale
@@ -184,7 +192,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
   }
 
   // Animate the bars
-  if (props.animations) {
+  if (animate) {
     if (vertical) {
       bars
         .attr('y', height)
@@ -207,9 +215,16 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
 
 watch(
   [width, height, () => props],
-  ([clientWidth, clientHeight]) => {
+  ([clientWidth, clientHeight], [oldWidth, oldHeight]) => {
     if (!clientWidth || !clientHeight) { return }
-    renderChart({ clientWidth, clientHeight })
+    renderChart({
+      clientWidth,
+      clientHeight,
+      animate:
+        props.animations
+        && ((oldWidth === 0 && oldHeight === 0)
+          || (clientHeight === oldHeight && clientWidth === oldWidth))
+    })
   },
   { immediate: true, deep: true }
 )
