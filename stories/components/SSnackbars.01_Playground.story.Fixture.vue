@@ -46,7 +46,7 @@ function pushDangerSnackbar() {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .list {
   display: flex;
   flex-wrap: wrap;

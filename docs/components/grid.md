@@ -108,7 +108,7 @@ If you need to adjust the overall grid layout based on different screen sizes or
   </SGrid>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .grid {
   grid-template-columns: 1fr;
   gap: 16px;

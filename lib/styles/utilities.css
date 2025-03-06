@@ -155,6 +155,15 @@
 .s-max-w-lg     { max-width: 960px; }
 .s-max-w-xl     { max-width: 1216px; }
 
+.s-h-256  { height: 256px; }
+.s-h-320  { height: 320px; }
+.s-h-512  { height: 512px; }
+.s-h-full { height: 100%; }
+
+.s-aspect-16-9 { aspect-ratio: 16 / 9; }
+.s-aspect-4-3  { aspect-ratio: 4 / 3; }
+.s-aspect-1-1  { aspect-ratio: 1 / 1; }
+
 /**
  * Typography
  * -------------------------------------------------------------------------- */

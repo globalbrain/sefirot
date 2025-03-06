@@ -65,7 +65,7 @@ function state() {
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .root {
   display: grid;
   gap: 32px;
