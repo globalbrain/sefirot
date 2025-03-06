@@ -15,13 +15,19 @@ const props = withDefaults(defineProps<{
   debug?: boolean
   ticks?: number
   animations?: boolean
+  labelX?: string
+  labelY?: string
+  labelXShift?: number
+  labelYShift?: number
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   colors: () => ['blue'],
   mode: 'vertical',
   debug: false,
   ticks: 5,
-  animations: true
+  animations: true,
+  labelXShift: 46,
+  labelYShift: 40
 })
 
 const chartRef = ref<HTMLElement>()
@@ -52,8 +58,8 @@ function renderChart({
   const margin = {
     top: props.margins?.top ?? 30,
     right: props.margins?.right ?? 30,
-    bottom: props.margins?.bottom ?? 60,
-    left: props.margins?.left ?? 60
+    bottom: props.margins?.bottom ?? (props.labelX ? 80 : 60),
+    left: props.margins?.left ?? (props.labelY ? 80 : 60)
   }
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom
@@ -134,26 +140,28 @@ function renderChart({
       .attr('y2', height)
   }
 
-  // // Add axis labels
-  // svg
-  //   .append('text')
-  //   .attr('class', 'axis-label')
-  //   .attr('x', width / 2)
-  //   .attr('y', height + 46)
-  //   .attr('fill', 'var(--c-text-2)')
-  //   .style('font-size', '14px')
-  //   .style('text-anchor', 'middle')
-  //   .text('X Axis Label')
-  // svg
-  //   .append('text')
-  //   .attr('class', 'axis-label')
-  //   .attr('x', -height / 2)
-  //   .attr('y', -40)
-  //   .attr('transform', 'rotate(-90)')
-  //   .attr('fill', 'var(--c-text-2)')
-  //   .style('font-size', '14px')
-  //   .style('text-anchor', 'middle')
-  //   .text('Y Axis Label')
+  // Add axis labels
+  if (props.labelX) {
+    svg
+      .append('text')
+      .attr('x', width / 2)
+      .attr('y', height + props.labelXShift)
+      .attr('fill', 'var(--c-text-2)')
+      .style('font-size', '14px')
+      .style('text-anchor', 'middle')
+      .text(props.labelX)
+  }
+  if (props.labelY) {
+    svg
+      .append('text')
+      .attr('x', -height / 2)
+      .attr('y', -props.labelYShift)
+      .attr('transform', 'rotate(-90)')
+      .attr('fill', 'var(--c-text-2)')
+      .style('font-size', '14px')
+      .style('text-anchor', 'middle')
+      .text(props.labelY)
+  }
 
   // Add bars
   const bars = svg
