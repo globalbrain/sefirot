@@ -31,6 +31,7 @@ function state() {
     barMarginBottom: 60,
     barMarginLeft: 60,
     barTicks: 5,
+    barAnimations: true,
 
     pieMode: 'donut',
     pieHalf: false,
@@ -40,7 +41,8 @@ function state() {
     pieMarginBottom: 30,
     pieMarginLeft: 30,
     pieLegend: true,
-    pieLegendPadding: 70
+    pieLegendPadding: 70,
+    pieAnimations: true
   }
 }
 </script>
@@ -90,6 +92,10 @@ function state() {
         v-model="state.barTicks"
         :min="0"
         :max="20"
+      />
+      <HstCheckbox
+        title="animations"
+        v-model="state.barAnimations"
       />
       <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
       <HstSelect
@@ -142,6 +148,10 @@ function state() {
         :min="50"
         :max="150"
       />
+      <HstCheckbox
+        title="animations"
+        v-model="state.pieAnimations"
+      />
     </template>
     <template #default="{ state }">
       <Board :title="title">
@@ -163,6 +173,7 @@ function state() {
                 :mode="state.barMode"
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
+                :animations="state.barAnimations"
               />
             </div>
           </SCardBlock>
@@ -188,6 +199,7 @@ function state() {
                 :debug="state.pieDebug"
                 :legend="state.pieLegend"
                 :legend-padding="state.pieLegendPadding"
+                :animations="state.pieAnimations"
               />
             </div>
           </SCardBlock>

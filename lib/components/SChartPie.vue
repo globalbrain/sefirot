@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<{
   legendFormatKey?: (d: KV) => string
   legendFormatValue?: (d: KV) => string
   legendPadding?: number
+  animations?: boolean
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   margins: (props) => ({ top: 30, right: 30, bottom: 60, left: 60, ...props.margins }),
@@ -28,7 +29,8 @@ const props = withDefaults(defineProps<{
   legend: true,
   legendFormatKey: (d: KV) => d.key,
   legendFormatValue: (d: KV) => d.value.toString(),
-  legendPadding: 70
+  legendPadding: 70,
+  animations: true
 })
 
 const chartRef = ref<HTMLElement>()
@@ -149,7 +151,7 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
     .selectAll()
     .data(dataReady)
     .join('path')
-    .attr('d', arc)
+    .attr('d', arc({ startAngle: 0, endAngle: 0, data: {} } as any))
     .attr('fill', (d) => color(d.data))
     .attr('transform', () => `translate(0,${-(height_2 - radius) / 2})`)
 
@@ -188,6 +190,18 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
       .style('height', `${height}px`)
       .style('outline', '1px solid blue')
       .style('pointer-events', 'none')
+  }
+
+  if (props.animations) {
+  // Animate the arcs
+    arcs
+      .transition()
+      .duration(800 + props.data.length * 100)
+      .attrTween('d', (d) => {
+        const startAngle = props.half ? -Math.PI / 2 : 0
+        const i = d3.interpolate({ startAngle, endAngle: startAngle }, d)
+        return (t) => arc(i(t))!
+      })
   }
 }
 

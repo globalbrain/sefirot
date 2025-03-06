@@ -14,13 +14,15 @@ const props = withDefaults(defineProps<{
   mode?: 'horizontal' | 'vertical'
   debug?: boolean
   ticks?: number
+  animations?: boolean
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   colors: () => ['blue'],
   margins: (props) => ({ top: 30, right: 30, bottom: 60, left: 60, ...props.margins }),
   mode: 'vertical',
   debug: false,
-  ticks: 5
+  ticks: 5,
+  animations: true
 })
 
 const chartRef = ref<HTMLElement>()
@@ -179,6 +181,27 @@ function renderChart({ clientWidth, clientHeight }: { clientWidth: number; clien
       .style('height', `${height}px`)
       .style('outline', '1px solid blue')
       .style('pointer-events', 'none')
+  }
+
+  // Animate the bars
+  if (props.animations) {
+    if (vertical) {
+      bars
+        .attr('y', height)
+        .attr('height', 0)
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('y', (d) => y(d.value))
+        .attr('height', (d) => height - y(d.value))
+    } else {
+      bars
+        .attr('width', 0)
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('width', (d) => y(d.value))
+    }
   }
 }
 
