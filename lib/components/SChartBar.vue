@@ -15,19 +15,17 @@ const props = withDefaults(defineProps<{
   debug?: boolean
   ticks?: number
   animations?: boolean
-  labelX?: string
-  labelY?: string
-  labelXShift?: number
-  labelYShift?: number
+  xLabel?: string
+  yLabel?: string
+  xLabelOffset?: number
+  yLabelOffset?: number
 }>(), {
   tooltip: (d: KV) => `${d.key}: ${d.value}`,
   colors: () => ['blue'],
   mode: 'vertical',
   debug: false,
   ticks: 5,
-  animations: true,
-  labelXShift: 46,
-  labelYShift: 40
+  animations: true
 })
 
 const chartRef = ref<HTMLElement>()
@@ -55,16 +53,20 @@ function renderChart({
     .remove()
 
   // Set dimensions and margins
+  const vertical = props.mode === 'vertical'
+
   const margin = {
     top: props.margins?.top ?? 30,
-    right: props.margins?.right ?? 30,
-    bottom: props.margins?.bottom ?? (props.labelX ? 80 : 60),
-    left: props.margins?.left ?? (props.labelY ? 80 : 60)
+    right: props.margins?.right ?? 40,
+    bottom: props.margins?.bottom ?? (props.xLabel ? 80 : 60),
+    left: props.margins?.left ?? (props.yLabel ? (vertical ? 80 : 100) : (vertical ? 60 : 80))
   }
+
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom
 
-  const vertical = props.mode === 'vertical'
+  const xLabelOffset = props.xLabelOffset ?? 46
+  const yLabelOffset = props.yLabelOffset ?? (vertical ? 40 : 56)
 
   // Create SVG
   const svg = d3
@@ -141,26 +143,26 @@ function renderChart({
   }
 
   // Add axis labels
-  if (props.labelX) {
+  if (props.xLabel) {
     svg
       .append('text')
       .attr('x', width / 2)
-      .attr('y', height + props.labelXShift)
+      .attr('y', height + xLabelOffset)
       .attr('fill', 'var(--c-text-2)')
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
-      .text(props.labelX)
+      .text(props.xLabel)
   }
-  if (props.labelY) {
+  if (props.yLabel) {
     svg
       .append('text')
       .attr('x', -height / 2)
-      .attr('y', -props.labelYShift)
+      .attr('y', -yLabelOffset)
       .attr('transform', 'rotate(-90)')
       .attr('fill', 'var(--c-text-2)')
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
-      .text(props.labelY)
+      .text(props.yLabel)
   }
 
   // Add bars

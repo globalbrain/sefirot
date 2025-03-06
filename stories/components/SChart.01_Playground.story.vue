@@ -32,10 +32,10 @@ function state() {
     barMarginLeft: undefined,
     barTicks: undefined,
     barAnimations: true,
-    barLabelX: undefined,
-    barLabelY: undefined,
-    barLabelXShift: undefined,
-    barLabelYShift: undefined,
+    barXLabel: undefined,
+    barYLabel: undefined,
+    barXLabelOffset: undefined,
+    barYLabelOffset: undefined,
 
     pieMode: 'donut',
     pieHalf: false,
@@ -102,24 +102,24 @@ function state() {
         v-model="state.barAnimations"
       />
       <HstText
-        title="label-x"
-        v-model="state.barLabelX"
+        title="x-label"
+        v-model="state.barXLabel"
       />
       <HstText
-        title="label-y"
-        v-model="state.barLabelY"
+        title="y-label"
+        v-model="state.barYLabel"
       />
       <HstSlider
-        title="label-x-shift"
-        v-model="state.barLabelXShift"
-        :min="-50"
-        :max="50"
+        title="x-label-offset"
+        v-model="state.barXLabelOffset"
+        :min="-10"
+        :max="60"
       />
       <HstSlider
-        title="label-y-shift"
-        v-model="state.barLabelYShift"
-        :min="-50"
-        :max="50"
+        title="y-label-offset"
+        v-model="state.barYLabelOffset"
+        :min="-10"
+        :max="60"
       />
       <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
       <HstSelect
@@ -198,10 +198,10 @@ function state() {
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
                 :animations="state.barAnimations"
-                :label-x="state.barLabelX"
-                :label-y="state.barLabelY"
-                :label-x-shift="state.barLabelXShift"
-                :label-y-shift="state.barLabelYShift"
+                :x-label="state.barXLabel"
+                :y-label="state.barYLabel"
+                :x-label-offset="state.barXLabelOffset"
+                :y-label-offset="state.barYLabelOffset"
               />
             </div>
           </SCardBlock>
