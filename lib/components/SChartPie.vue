@@ -227,6 +227,14 @@ function renderChart({
       .append('g')
       .attr('transform', transform)
 
+    const leftOrRight = (d: d3.PieArcDatum<KV>) => {
+      const midAngle = (d.startAngle + d.endAngle) / 2
+      if (props.half) {
+        return midAngle < 0 ? -1 : 1
+      }
+      return midAngle < Math.PI ? 1 : -1
+    }
+
     labels
       .append('polyline')
       .attr('stroke', 'var(--c-divider)')
@@ -235,21 +243,19 @@ function renderChart({
         const posA = arc.centroid(d)
         const posB = labelArc.centroid(d)
         const posC = labelArc.centroid(d)
-        const midAngle = (d.startAngle + d.endAngle) / 2
-        posC[0] = radius * 1.05 * (midAngle < Math.PI ? 1 : -1)
-        return [posA, posB, posC].map((p) => p.join(',')).join(' ')
+        posC[0] = radius * 1.05 * leftOrRight(d)
+        return [posA, posB, posC].map((p) => p.join(','))
       })
 
     labels
       .append('text')
       .attr('transform', (d) => {
         const pos = labelArc.centroid(d)
-        const midAngle = (d.startAngle + d.endAngle) / 2
-        pos[0] = radius * 1.1 * (midAngle < Math.PI ? 1 : -1)
+        pos[0] = radius * 1.1 * leftOrRight(d)
         return `translate(${pos})`
       })
       .attr('dy', '0.35em')
-      .attr('text-anchor', (d) => ((d.startAngle + d.endAngle) / 2 < Math.PI ? 'start' : 'end'))
+      .attr('text-anchor', (d) => leftOrRight(d) === 1 ? 'start' : 'end')
       .style('font-size', '14px')
       .style('fill', 'var(--c-text-2)')
       .html((d) => props.labelFormat(d.data))
