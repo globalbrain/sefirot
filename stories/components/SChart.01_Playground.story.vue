@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import IconDownload from '~icons/ph/download-simple-bold'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SChartBar, { type KV } from 'sefirot/components/SChartBar.vue'
+import SChartBar from 'sefirot/components/SChartBar.vue'
 import SChartPie from 'sefirot/components/SChartPie.vue'
-import { ref } from 'vue'
+import SControl from 'sefirot/components/SControl.vue'
+import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
+import SControlActionBarButton from 'sefirot/components/SControlActionBarButton.vue'
+import SControlLeft from 'sefirot/components/SControlLeft.vue'
+import SControlRight from 'sefirot/components/SControlRight.vue'
+import SControlText from 'sefirot/components/SControlText.vue'
+import { type KV, exportAsPng } from 'sefirot/support/Chart'
+import { ref, useTemplateRef } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
 
@@ -17,6 +25,9 @@ const data = ref<KV[]>([
   { key: '2024', value: 40 },
   { key: '2025', value: 45 }
 ])
+
+const barRef = useTemplateRef('bar-chart')
+const pieRef = useTemplateRef('pie-chart')
 
 function tooltipFormat(d: KV) {
   return `${d.key} &ndash; <span class="tooltip-number">${d.value}</span>`
@@ -203,11 +214,26 @@ function state() {
       <Board :title="title">
         <SCard class="chart-card">
           <SCardBlock size="medium" class="s-px-24" bg="elv-2">
-            <div class="s-font-14 s-font-w-500">Bar Chart</div>
+            <SControl>
+              <SControlLeft>
+                <SControlText class="s-font-w-500">
+                  Bar Chart
+                </SControlText>
+              </SControlLeft>
+              <SControlRight>
+                <SControlActionBar>
+                  <SControlActionBarButton
+                    :icon="IconDownload"
+                    @click="exportAsPng(barRef, 'bar-chart.png')"
+                  />
+                </SControlActionBar>
+              </SControlRight>
+            </SControl>
           </SCardBlock>
           <SCardBlock bg="elv-2">
             <div class="s-w-full s-h-320">
               <SChartBar
+                ref="bar-chart"
                 :data
                 :margins="{
                   top: state.barMarginTop,
@@ -232,11 +258,26 @@ function state() {
         <br>
         <SCard class="chart-card">
           <SCardBlock size="medium" class="s-px-24" bg="elv-2">
-            <div class="s-font-14 s-font-w-500">Pie Chart</div>
+            <SControl>
+              <SControlLeft>
+                <SControlText class="s-font-w-500">
+                  Pie Chart
+                </SControlText>
+              </SControlLeft>
+              <SControlRight>
+                <SControlActionBar>
+                  <SControlActionBarButton
+                    :icon="IconDownload"
+                    @click="exportAsPng(pieRef, 'pie-chart.png')"
+                  />
+                </SControlActionBar>
+              </SControlRight>
+            </SControl>
           </SCardBlock>
           <SCardBlock bg="elv-2">
             <div class="s-w-full s-h-320 s-pb-24">
               <SChartPie
+                ref="pie-chart"
                 :data
                 :margins="{
                   top: state.pieMarginTop,

@@ -81,7 +81,8 @@ export const baseConfig = {
       'dayjs/plugin/timezone',
       'dayjs/plugin/utc',
       'markdown-it > argparse',
-      'markdown-it > entities'
+      'markdown-it > entities',
+      'file-saver'
     ],
     exclude: [
       'markdown-it'

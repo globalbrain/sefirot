@@ -6,6 +6,9 @@
  *     https://github.com/radix-ui/colors/blob/main/LICENSE
  */
 
+import FileSaver from 'file-saver'
+import html2canvas from 'html2canvas'
+
 const isLightDarkSupported
   = typeof CSS !== 'undefined' && CSS.supports('color', 'light-dark(#000, #fff)')
 
@@ -50,7 +53,7 @@ export function scheme<T extends { key: string; color?: ChartColor }>(
   data: T[],
   colors: ChartColor[] = Object.keys(rest),
   unknown: ChartColor = 'gray'
-) {
+): (d: T) => string {
   const map = new Map<string, string>()
 
   for (let i = 0; i < data.length; i++) {
@@ -62,4 +65,48 @@ export function scheme<T extends { key: string; color?: ChartColor }>(
   return (d: T): string => {
     return map.get(d.key) ?? unknown
   }
+}
+
+export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): Promise<void> {
+  if (!_el) { return }
+  await new Promise((resolve) => setTimeout(resolve, delay))
+
+  const el = '$el' in _el ? _el.$el : _el
+  if (!(el instanceof HTMLElement)) { return }
+
+  const SCard = el.closest('.SCard')
+  if (!(SCard instanceof HTMLElement)) { return }
+
+  const canvas = await html2canvas(SCard, {
+    scale: 2,
+    backgroundColor: getBackgroundColor(el),
+    logging: false,
+    ignoreElements: (el) => el.classList.contains('SControlActionBar')
+  })
+
+  const dataUrl = canvas.toDataURL('image/png')
+  FileSaver.saveAs(dataUrl, fileName)
+}
+
+function getBackgroundColor(el: HTMLElement | null): string {
+  const defaultColor = 'rgba(0, 0, 0, 0)'
+  let color = 'rgba(0, 0, 0, 0)'
+
+  while (el) {
+    const bgColor = window.getComputedStyle(el).backgroundColor
+    if (bgColor !== defaultColor) {
+      color = bgColor
+      break
+    }
+
+    el = el.parentElement
+  }
+
+  if (color === defaultColor) {
+    return document.documentElement.classList.contains('dark')
+      ? 'rgba(0, 0, 0, 1)'
+      : 'rgba(255, 255, 255, 1)'
+  }
+
+  return color
 }
