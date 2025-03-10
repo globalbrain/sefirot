@@ -270,6 +270,33 @@ function renderChart({
     }
   }
 
+  if (props.tooltip) {
+    const Tooltip = d3
+      .select(chartRef.value)
+      .append('div')
+      .attr('class', 'tooltip')
+
+    function updatePos(event: PointerEvent) {
+      const [x, y] = d3.pointer(event, chartRef.value)
+      Tooltip
+        .style('left', `${x + 14}px`)
+        .style('top', `${y + 14}px`)
+    }
+
+    arcs
+      .on('pointerenter', (event: PointerEvent, { data: d }) => {
+        Tooltip
+          .html(props.tooltipFormat(d, color(d)))
+          .style('opacity', '1')
+        updatePos(event)
+      })
+      .on('pointermove', updatePos)
+      .on('pointerleave', () => {
+        Tooltip
+          .style('opacity', '0')
+      })
+  }
+
   // Render outline for debugging
   if (props.debug) {
     d3
@@ -312,5 +339,18 @@ watch(
   height: 100%;
   font-feature-settings: 'tnum' 1;
   position: relative;
+}
+
+:deep(.tooltip) {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 8px;
+  background-color: var(--c-bg-elv-2);
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
+  font-size: 12px;
 }
 </style>
