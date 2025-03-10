@@ -69,6 +69,8 @@ export function scheme<T extends { key: string; color?: ChartColor }>(
 
 export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): Promise<void> {
   if (!_el) { return }
+
+  // TODO: automatically wait for chart to be ready
   await new Promise((resolve) => setTimeout(resolve, delay))
 
   const el = '$el' in _el ? _el.$el : _el
@@ -77,6 +79,7 @@ export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): 
   const SCard = el.closest('.SCard')
   if (!(SCard instanceof HTMLElement)) { return }
 
+  // TODO: force render in light mode
   const canvas = await html2canvas(SCard, {
     scale: 2,
     backgroundColor: getBackgroundColor(el),
