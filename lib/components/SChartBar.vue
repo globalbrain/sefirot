@@ -33,6 +33,8 @@ const props = withDefaults(defineProps<{
 const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
 
+let tooltipTimeout = 0
+
 // Function to render the chart
 function renderChart({
   clientWidth,
@@ -255,6 +257,7 @@ function renderChart({
 
     barGroups
       .on('pointerenter', (event: PointerEvent, d) => {
+        window.clearTimeout(tooltipTimeout)
         Tooltip
           .html(props.tooltipFormat(d, color(d)))
           .style('opacity', '1')
@@ -262,8 +265,11 @@ function renderChart({
       })
       .on('pointermove', updatePos)
       .on('pointerleave', () => {
-        Tooltip
-          .style('opacity', '0')
+        window.clearTimeout(tooltipTimeout)
+        tooltipTimeout = window.setTimeout(() => {
+          Tooltip
+            .style('opacity', '0')
+        }, 400)
       })
   }
 
