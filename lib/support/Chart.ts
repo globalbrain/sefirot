@@ -9,41 +9,32 @@
 import FileSaver from 'file-saver'
 import html2canvas from 'html2canvas'
 
-const isLightDarkSupported
-  = typeof CSS !== 'undefined' && CSS.supports('color', 'light-dark(#000, #fff)')
-
 export const c = {
-  text1: isLightDarkSupported ? 'light-dark(#1c2024, #edeef0)' : 'var(--c-text-1)',
-  text2: isLightDarkSupported ? 'light-dark(#0007149e, #eff5ffb0)' : 'var(--c-text-2)',
-  divider: isLightDarkSupported ? 'light-dark(#e0e0e1, #2e3035)' : 'var(--c-divider)'
-}
-
-const c_light = {
-  text1: '#1c2024',
-  text2: '#0007149e',
-  divider: '#e0e0e1'
+  text1: 'light-dark(#1c2024, #edeef0)',
+  text2: 'light-dark(#0007149e, #eff5ffb0)',
+  divider: 'light-dark(#e0e0e1, #2e3035)'
 }
 
 // radixLight.9, radixDark.10
 export const chartColors = {
-  // orange: isLightDarkSupported ? 'light-dark(#f76b15, #ff801f)' : '#f76b15',
-  tomato: isLightDarkSupported ? 'light-dark(#e54d2e, #ec6142)' : '#e54d2e',
-  // red: isLightDarkSupported ? 'light-dark(#e5484d, #ec5d5e)' : '#e5484d',
-  ruby: isLightDarkSupported ? 'light-dark(#e54666, #ec5a72)' : '#e54666',
-  // crimson: isLightDarkSupported ? 'light-dark(#e93d82, #ee518a)' : '#e93d82',
-  pink: isLightDarkSupported ? 'light-dark(#d6409f, #de51a8)' : '#d6409f',
-  // plum: isLightDarkSupported ? 'light-dark(#ab4aba, #b658c4)' : '#ab4aba',
-  purple: isLightDarkSupported ? 'light-dark(#8e4ec6, #9a5cd0)' : '#8e4ec6',
-  // violet: isLightDarkSupported ? 'light-dark(#6e56cf, #7d66d9)' : '#6e56cf',
-  iris: isLightDarkSupported ? 'light-dark(#5b5bd6, #6e6ade)' : '#5b5bd6',
-  // indigo: isLightDarkSupported ? 'light-dark(#3e63dd, #5472e4)' : '#3e63dd',
-  blue: isLightDarkSupported ? 'light-dark(#0090ff, #3b9eff)' : '#0090ff',
-  // cyan: isLightDarkSupported ? 'light-dark(#00a2c7, #23afd0)' : '#00a2c7',
-  teal: isLightDarkSupported ? 'light-dark(#12a594, #0eb39e)' : '#12a594',
-  // jade: isLightDarkSupported ? 'light-dark(#29a383, #27b08b)' : '#29a383',
-  green: isLightDarkSupported ? 'light-dark(#30a46c, #33b074)' : '#30a46c',
-  // grass: isLightDarkSupported ? 'light-dark(#46a758, #53b365)' : '#46a758',
-  gray: isLightDarkSupported ? 'light-dark(#8d8d8d, #7b7b7b)' : '#8d8d8d'
+  // orange: 'light-dark(#f76b15, #ff801f)',
+  tomato: 'light-dark(#e54d2e, #ec6142)',
+  // red: 'light-dark(#e5484d, #ec5d5e)',
+  ruby: 'light-dark(#e54666, #ec5a72)',
+  // crimson: 'light-dark(#e93d82, #ee518a)',
+  pink: 'light-dark(#d6409f, #de51a8)',
+  // plum: 'light-dark(#ab4aba, #b658c4)',
+  purple: 'light-dark(#8e4ec6, #9a5cd0)',
+  // violet: 'light-dark(#6e56cf, #7d66d9)',
+  iris: 'light-dark(#5b5bd6, #6e6ade)',
+  // indigo: 'light-dark(#3e63dd, #5472e4)',
+  blue: 'light-dark(#0090ff, #3b9eff)',
+  // cyan: 'light-dark(#00a2c7, #23afd0)',
+  teal: 'light-dark(#12a594, #0eb39e)',
+  // jade: 'light-dark(#29a383, #27b08b)',
+  green: 'light-dark(#30a46c, #33b074)',
+  // grass: 'light-dark(#46a758, #53b365)',
+  gray: 'light-dark(#8d8d8d, #7b7b7b)'
 } as const
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -97,30 +88,13 @@ export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): 
     ignoreElements: (el) => el.classList.contains('SControlActionBar'),
     onclone(document, element) {
       document.documentElement.classList.remove('dark')
-      for (const el of element.querySelectorAll<HTMLElement>('*')) {
+      element.querySelectorAll<HTMLElement>('*').forEach((el) => {
         el.style.backgroundColor = 'transparent'
-        for (const [key, value] of Object.entries(c)) {
-          for (const attr of ['fill', 'stroke'] as const) {
-            if (el.getAttribute(attr) === value) {
-              el.style[attr] = c_light[key as keyof typeof c_light]
-            }
-          }
-        }
-      }
+        el.style.fill = el.getAttribute('fill') ?? el.style.fill
+        el.style.stroke = el.getAttribute('stroke') ?? el.style.stroke
+      })
     }
   })
-
-  // // for debugging
-  // const blob = await new Promise<Blob>((resolve) => {
-  //   canvas.toBlob((b) => {
-  //     if (b) {
-  //       resolve(b)
-  //     } else {
-  //       resolve(new Blob())
-  //     }
-  //   }, 'image/png')
-  // })
-  // window.open(URL.createObjectURL(blob), '_blank')
 
   const dataUrl = canvas.toDataURL('image/png')
   FileSaver.saveAs(dataUrl, fileName)
