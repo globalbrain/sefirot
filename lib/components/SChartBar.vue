@@ -79,25 +79,28 @@ function renderChart({
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`)
 
-  // X scale
-  const x = d3
-    .scaleBand()
+  // Create a padded scale for the bars (with padding for visual spacing)
+  const paddedScale = d3
+    .scaleBand<string>()
     .domain(props.data.map((d) => d.key))
     .range(vertical ? [0, width] : [0, height])
     .padding(0.4)
 
-  // Y scale
+  // Y scale for bar values
   const y = d3
     .scaleLinear()
     .domain([0, d3.max(props.data, (d) => d.value)!])
     .nice()
     .range(vertical ? [height, 0] : [0, width])
 
-  // Add X axis
+  // Compute a constant offset to center the colored bar inside its full band.
+  const groupOffset = (paddedScale.step() - paddedScale.bandwidth()) / 2
+
+  // For the axes, use the paddedScale so ticks remain centered on the bars.
   svg
     .append('g')
     .attr('transform', `translate(0,${height})`)
-    .call(vertical ? d3.axisBottom(x) : d3.axisBottom(y).ticks(props.ticks))
+    .call(vertical ? d3.axisBottom(paddedScale) : d3.axisBottom(y).ticks(props.ticks))
     .selectAll('text')
     .attr('fill', c.text2)
     .style('font-size', '14px')
@@ -111,7 +114,7 @@ function renderChart({
   // Add Y axis
   svg
     .append('g')
-    .call(vertical ? d3.axisLeft(y).ticks(props.ticks) : d3.axisLeft(x))
+    .call(vertical ? d3.axisLeft(y).ticks(props.ticks) : d3.axisLeft(paddedScale))
     .selectAll('text')
     .attr('fill', c.text2)
     .style('font-size', '14px')
@@ -123,7 +126,7 @@ function renderChart({
 
   // Add horizontal grid lines
   const gridLines = svg
-    .selectAll('line.grid')
+    .selectAll()
     .data(y.ticks(props.ticks))
     .enter()
     .append('line')
@@ -168,10 +171,30 @@ function renderChart({
   }
 
   // Add bars
-  const bars = svg
-    .selectAll('rect')
+  const barGroups = svg
+    .selectAll()
     .data(props.data)
     .enter()
+    .append('g')
+    .attr('transform', (d) =>
+      vertical
+        ? `translate(${(paddedScale(d.key)! - groupOffset)},0)`
+        : `translate(0,${(paddedScale(d.key)! - groupOffset)})`
+    )
+
+  // Each group gets a transparent rect covering the full band (using paddedScale.step())
+  barGroups
+    .append('rect')
+    .attr('fill', 'transparent')
+    .attr('pointer-events', 'all')
+    .attr('x', 0)
+    .attr('y', (d) => vertical ? y(d.value) - groupOffset : 0)
+    .attr('width', (d) => vertical ? paddedScale.step() : y(d.value) + groupOffset)
+    .attr('height', (d) => vertical ? height - y(d.value) + groupOffset : paddedScale.step())
+
+  // Append the colored bar rect inside each group.
+  // We now offset it by groupOffset so its left edge is at paddedScale(d.key)
+  const bars = barGroups
     .append('rect')
     .attr('fill', (d) => color(d))
     .attr('rx', 2)
@@ -180,24 +203,24 @@ function renderChart({
   if (!animate) {
     if (vertical) {
       bars
-        .attr('x', (d) => x(d.key)!)
+        .attr('x', groupOffset)
         .attr('y', (d) => y(d.value))
-        .attr('width', x.bandwidth())
+        .attr('width', paddedScale.bandwidth())
         .attr('height', (d) => height - y(d.value))
     } else {
       bars
         .attr('x', 0)
-        .attr('y', (d) => x(d.key)!)
+        .attr('y', groupOffset)
         .attr('width', (d) => y(d.value))
-        .attr('height', x.bandwidth())
+        .attr('height', paddedScale.bandwidth())
     }
   } else {
     // Animate the bars
     if (vertical) {
       bars
-        .attr('x', (d) => x(d.key)!)
+        .attr('x', groupOffset)
         .attr('y', height)
-        .attr('width', x.bandwidth())
+        .attr('width', paddedScale.bandwidth())
         .attr('height', 0)
         .transition()
         .duration(800)
@@ -207,14 +230,41 @@ function renderChart({
     } else {
       bars
         .attr('x', 0)
-        .attr('y', (d) => x(d.key)!)
+        .attr('y', groupOffset)
         .attr('width', 0)
-        .attr('height', x.bandwidth())
+        .attr('height', paddedScale.bandwidth())
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
         .attr('width', (d) => y(d.value))
     }
+  }
+
+  if (props.tooltip) {
+    const Tooltip = d3
+      .select(chartRef.value)
+      .append('div')
+      .attr('class', 'tooltip')
+
+    function updatePos(event: PointerEvent) {
+      const [x, y] = d3.pointer(event, chartRef.value)
+      Tooltip
+        .style('left', `${x + 14}px`)
+        .style('top', `${y + 14}px`)
+    }
+
+    barGroups
+      .on('pointerenter', (event: PointerEvent, d) => {
+        Tooltip
+          .html(props.tooltipFormat(d, color(d)))
+          .style('opacity', '1')
+        updatePos(event)
+      })
+      .on('pointermove', updatePos)
+      .on('pointerleave', () => {
+        Tooltip
+          .style('opacity', '0')
+      })
   }
 
   // Render outline for debugging
@@ -259,6 +309,19 @@ watch(
   height: 100%;
   font-feature-settings: 'tnum' 1;
   position: relative;
+}
+
+:deep(.tooltip) {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 2px 8px;
+  background-color: var(--c-bg-elv-2);
+  border: 1px solid var(--c-divider);
+  border-radius: 6px;
+  font-size: 12px;
 }
 
 :deep(.tick line) {

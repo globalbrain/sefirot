@@ -11,7 +11,7 @@ import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import SControlText from 'sefirot/components/SControlText.vue'
 import { type KV, c, exportAsPng } from 'sefirot/support/Chart'
-import { ref, useTemplateRef } from 'vue'
+import { ref } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
 
@@ -26,8 +26,8 @@ const data = ref<KV[]>([
   { key: '2025', value: 45 }
 ])
 
-const barRef = useTemplateRef('bar-chart')
-const pieRef = useTemplateRef('pie-chart')
+const barRef = ref()
+const pieRef = ref()
 
 function tooltipFormat(d: KV) {
   return `${d.key} &ndash; <span class="tooltip-number">${d.value}</span>`
@@ -233,7 +233,7 @@ function state() {
           <SCardBlock bg="elv-2">
             <div class="s-w-full s-h-320">
               <SChartBar
-                ref="bar-chart"
+                ref="barRef"
                 :data
                 :margins="{
                   top: state.barMarginTop,
@@ -277,7 +277,7 @@ function state() {
           <SCardBlock bg="elv-2">
             <div class="s-w-full s-h-320 s-pb-24">
               <SChartPie
-                ref="pie-chart"
+                ref="pieRef"
                 :data
                 :margins="{
                   top: state.pieMarginTop,
