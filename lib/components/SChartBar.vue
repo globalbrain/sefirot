@@ -185,14 +185,10 @@ function renderChart({
     )
 
   // Each group gets a transparent rect covering the full band (using paddedScale.step())
-  barGroups
+  const outerBars = barGroups
     .append('rect')
     .attr('fill', 'transparent')
     .attr('pointer-events', 'all')
-    .attr('x', 0)
-    .attr('y', (d) => vertical ? y(d.value) - groupOffset : 0)
-    .attr('width', (d) => vertical ? paddedScale.step() : y(d.value) + groupOffset)
-    .attr('height', (d) => vertical ? height - y(d.value) + groupOffset : paddedScale.step())
 
   // Append the colored bar rect inside each group.
   // We now offset it by groupOffset so its left edge is at paddedScale(d.key)
@@ -204,12 +200,22 @@ function renderChart({
 
   if (!animate) {
     if (vertical) {
+      outerBars
+        .attr('x', 0)
+        .attr('y', (d) => y(d.value) - groupOffset)
+        .attr('width', paddedScale.step())
+        .attr('height', (d) => height - y(d.value) + groupOffset)
       bars
         .attr('x', groupOffset)
         .attr('y', (d) => y(d.value))
         .attr('width', paddedScale.bandwidth())
         .attr('height', (d) => height - y(d.value))
     } else {
+      outerBars
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', (d) => y(d.value) + groupOffset)
+        .attr('height', paddedScale.step())
       bars
         .attr('x', 0)
         .attr('y', groupOffset)
@@ -219,6 +225,16 @@ function renderChart({
   } else {
     // Animate the bars
     if (vertical) {
+      outerBars
+        .attr('x', 0)
+        .attr('y', height)
+        .attr('width', paddedScale.step())
+        .attr('height', 0)
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('y', (d) => y(d.value) - groupOffset)
+        .attr('height', (d) => height - y(d.value) + groupOffset)
       bars
         .attr('x', groupOffset)
         .attr('y', height)
@@ -230,6 +246,15 @@ function renderChart({
         .attr('y', (d) => y(d.value))
         .attr('height', (d) => height - y(d.value))
     } else {
+      outerBars
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('width', 0)
+        .attr('height', paddedScale.step())
+        .transition()
+        .duration(800)
+        .delay((_, i) => i * 100)
+        .attr('width', (d) => y(d.value) + groupOffset)
       bars
         .attr('x', 0)
         .attr('y', groupOffset)
@@ -285,6 +310,8 @@ function renderChart({
       .style('height', `${height}px`)
       .style('outline', '1px solid blue')
       .style('pointer-events', 'none')
+    outerBars
+      .style('outline', '1px solid green')
   }
 }
 
