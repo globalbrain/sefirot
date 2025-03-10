@@ -9,6 +9,10 @@
 import FileSaver from 'file-saver'
 import html2canvas from 'html2canvas'
 
+export function shouldDisableTransitions(): boolean {
+  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent)
+}
+
 export const c = {
   text1: 'light-dark(#1c2024, #edeef0)',
   text2: 'light-dark(#5d616b, #abafb7)',

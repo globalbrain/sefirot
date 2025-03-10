@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
-import { ref, watch } from 'vue'
-import { type ChartColor, type KV, c, scheme } from '../support/Chart'
+import { useTemplateRef, watch } from 'vue'
+import { type ChartColor, type KV, c, scheme, shouldDisableTransitions } from '../support/Chart'
 
 export type { ChartColor, KV }
 
@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<{
   tooltipFormat: (d: KV) => `${d.key} – ${d.value}`
 })
 
-const chartRef = ref<HTMLElement>()
+const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
 
 // Function to render the chart
@@ -218,11 +218,16 @@ function renderChart({
   }
 
   if (props.tooltip) {
-  // Create a tooltip
+    // Create a tooltip
     const Tooltip = d3
       .select(chartRef.value)
       .append('div')
       .attr('class', 'tooltip')
+
+    if (shouldDisableTransitions()) {
+      Tooltip
+        .style('transition', 'none')
+    }
 
     // Add interactivity
     bars
@@ -275,7 +280,7 @@ watch(
 </script>
 
 <template>
-  <div ref="chartRef" class="SChartBar" :class="mode" />
+  <div ref="chart" class="SChartBar" />
 </template>
 
 <style scoped lang="postcss">
