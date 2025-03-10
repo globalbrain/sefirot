@@ -2,7 +2,7 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
-import { type ChartColor, type KV, c, scheme, shouldDisableTransitions } from '../support/Chart'
+import { type ChartColor, type KV, c, scheme } from '../support/Chart'
 
 export type { ChartColor, KV }
 
@@ -32,6 +32,9 @@ const props = withDefaults(defineProps<{
 
 const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
+
+let hideTimeout: number = 0
+let animationFrame: number = 0
 
 // Function to render the chart
 function renderChart({
@@ -224,26 +227,29 @@ function renderChart({
       .append('div')
       .attr('class', 'tooltip')
 
-    if (shouldDisableTransitions()) {
-      Tooltip
-        .style('transition', 'none')
-    }
-
     // Add interactivity
     bars
-      .on('mouseover', (_, d) => {
+      .on('mouseenter', (_, d) => {
+        clearTimeout(hideTimeout)
         Tooltip
           .html(props.tooltipFormat(d, color(d)))
           .style('visibility', 'visible')
       })
       .on('mousemove', (event: PointerEvent) => {
         const [x, y] = d3.pointer(event, chartRef.value)
-        Tooltip
-          .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
+        if (!animationFrame) {
+          animationFrame = requestAnimationFrame(() => {
+            Tooltip
+              .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
+            animationFrame = 0
+          })
+        }
       })
       .on('mouseleave', () => {
-        Tooltip
-          .style('visibility', 'hidden')
+        hideTimeout = setTimeout(() => {
+          Tooltip
+            .style('visibility', 'hidden')
+        }, 750) as unknown as number
       })
   }
 
@@ -298,7 +304,7 @@ watch(
   top: 0;
   left: 0;
   padding: 2px 8px;
-  transition: transform 0.4s ease-out, visibility 0s 0.75s;
+  transition: transform 0.4s ease-out;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
