@@ -42,12 +42,8 @@ export type ChartColor = keyof typeof chartColors | (string & {})
 export type KV = { key: string; value: number; color?: ChartColor }
 
 export function getColor(...colors: (ChartColor | string | null | undefined)[]): string {
-  for (const color of colors) {
-    if (color != null) {
-      return chartColors[color as keyof typeof chartColors] || color
-    }
-  }
-  return chartColors.blue
+  const color = colors.find((color) => color != null)
+  return chartColors[color as keyof typeof chartColors] || color || chartColors.blue
 }
 
 const { gray: _gray, ...rest } = chartColors
@@ -59,11 +55,10 @@ export function scheme<T extends { key: string; color?: ChartColor }>(
 ): (d: T) => string {
   const map = new Map<string, string>()
 
-  for (let i = 0; i < data.length; i++) {
-    const d = data[i]
+  data.forEach((d, i) => {
     const color = getColor(d.color, colors?.[i % (colors?.length ?? 1)])
     map.set(d.key, color)
-  }
+  })
 
   return (d: T): string => {
     return map.get(d.key) ?? unknown
