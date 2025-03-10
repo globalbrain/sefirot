@@ -33,9 +33,6 @@ const props = withDefaults(defineProps<{
 const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
 
-let tooltipTimeout: number = 0
-let animationFrame: number = 0
-
 // Function to render the chart
 function renderChart({
   clientWidth,
@@ -220,45 +217,6 @@ function renderChart({
     }
   }
 
-  if (props.tooltip) {
-    // Create a tooltip
-    const Tooltip = d3
-      .select(chartRef.value)
-      .append('div')
-      .attr('class', 'tooltip')
-
-    // Add interactivity
-    bars
-      .on('mouseenter', (event: PointerEvent, d) => {
-        const [x, y] = d3.pointer(event, chartRef.value)
-        Tooltip
-          .html(props.tooltipFormat(d, color(d)))
-          .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-        clearTimeout(tooltipTimeout)
-        tooltipTimeout = setTimeout(() => {
-          Tooltip
-            .style('visibility', 'visible')
-        }, 750) as unknown as number
-      })
-      .on('mousemove', (event: PointerEvent) => {
-        const [x, y] = d3.pointer(event, chartRef.value)
-        if (!animationFrame) {
-          animationFrame = requestAnimationFrame(() => {
-            Tooltip
-              .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-            animationFrame = 0
-          })
-        }
-      })
-      .on('mouseleave', () => {
-        clearTimeout(tooltipTimeout)
-        tooltipTimeout = setTimeout(() => {
-          Tooltip
-            .style('visibility', 'hidden')
-        }, 750) as unknown as number
-      })
-  }
-
   // Render outline for debugging
   if (props.debug) {
     d3
@@ -301,20 +259,6 @@ watch(
   height: 100%;
   font-feature-settings: 'tnum' 1;
   position: relative;
-}
-
-:deep(.tooltip) {
-  visibility: hidden;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 2px 8px;
-  transition: transform 0.4s ease-out;
-  background-color: var(--c-bg-elv-2);
-  border: 1px solid var(--c-divider);
-  border-radius: 6px;
-  font-size: 12px;
 }
 
 :deep(.tick line) {
