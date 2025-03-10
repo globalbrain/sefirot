@@ -26,6 +26,6 @@ export default defineConfig({
     define: {
       __DOCS_HOST__: JSON.stringify(getDocsHost())
     },
-    optimizeDeps: { ...baseConfig.optimizeDeps, noDiscovery: true } // vite 6 compat,
+    optimizeDeps: { ...baseConfig.optimizeDeps, noDiscovery: true } // vite 6 compat
   }
 })
