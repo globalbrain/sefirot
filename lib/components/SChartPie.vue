@@ -282,10 +282,12 @@ function renderChart({
 
     // Add interactivity
     arcs
-      .on('mouseenter', (_, d) => {
+      .on('mouseenter', (event: PointerEvent, d) => {
         clearTimeout(hideTimeout)
+        const [x, y] = d3.pointer(event, chartRef.value)
         Tooltip
           .html(props.tooltipFormat(d.data, color(d.data)))
+          .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
           .style('visibility', 'visible')
       })
       .on('mousemove', (event: PointerEvent) => {
