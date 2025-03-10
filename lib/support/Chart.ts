@@ -11,7 +11,7 @@ import html2canvas from 'html2canvas'
 
 export const c = {
   text1: 'light-dark(#1c2024, #edeef0)',
-  text2: 'light-dark(#0007149e, #eff5ffb0)',
+  text2: 'light-dark(#5d616b, #abafb7)',
   divider: 'light-dark(#e0e0e1, #2e3035)'
 }
 
