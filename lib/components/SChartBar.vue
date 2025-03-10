@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<{
 const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
 
-let hideTimeout: number = 0
+let tooltipTimeout: number = 0
 let animationFrame: number = 0
 
 // Function to render the chart
@@ -230,12 +230,15 @@ function renderChart({
     // Add interactivity
     bars
       .on('mouseenter', (event: PointerEvent, d) => {
-        clearTimeout(hideTimeout)
         const [x, y] = d3.pointer(event, chartRef.value)
         Tooltip
           .html(props.tooltipFormat(d, color(d)))
           .style('transform', `translate3d(${x + 14}px,${y + 14}px,0)`)
-          .style('visibility', 'visible')
+        clearTimeout(tooltipTimeout)
+        tooltipTimeout = setTimeout(() => {
+          Tooltip
+            .style('visibility', 'visible')
+        }, 750) as unknown as number
       })
       .on('mousemove', (event: PointerEvent) => {
         const [x, y] = d3.pointer(event, chartRef.value)
@@ -248,7 +251,8 @@ function renderChart({
         }
       })
       .on('mouseleave', () => {
-        hideTimeout = setTimeout(() => {
+        clearTimeout(tooltipTimeout)
+        tooltipTimeout = setTimeout(() => {
           Tooltip
             .style('visibility', 'hidden')
         }, 750) as unknown as number
