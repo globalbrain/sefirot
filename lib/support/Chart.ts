@@ -53,16 +53,11 @@ export function scheme<T extends { key: string; color?: ChartColor }>(
   colors: ChartColor[] = Object.keys(rest),
   unknown: ChartColor = 'gray'
 ): (d: T) => string {
-  const map = new Map<string, string>()
+  const map = new Map<string, string>(
+    data.map((d, i) => [d.key, getColor(d.color, colors?.[i % (colors?.length ?? 1)])])
+  )
 
-  data.forEach((d, i) => {
-    const color = getColor(d.color, colors?.[i % (colors?.length ?? 1)])
-    map.set(d.key, color)
-  })
-
-  return (d: T): string => {
-    return map.get(d.key) ?? unknown
-  }
+  return (d: T): string => map.get(d.key) ?? unknown
 }
 
 export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): Promise<void> {
