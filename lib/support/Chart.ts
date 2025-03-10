@@ -12,6 +12,18 @@ import html2canvas from 'html2canvas'
 const isLightDarkSupported
   = typeof CSS !== 'undefined' && CSS.supports('color', 'light-dark(#000, #fff)')
 
+export const c = {
+  text1: isLightDarkSupported ? 'light-dark(#1c2024, #edeef0)' : 'var(--c-text-1)',
+  text2: isLightDarkSupported ? 'light-dark(#0007149e, #eff5ffb0)' : 'var(--c-text-2)',
+  divider: isLightDarkSupported ? 'light-dark(#e0e0e1, #2e3035)' : 'var(--c-divider)'
+}
+
+const c_light = {
+  text1: '#1c2024',
+  text2: '#0007149e',
+  divider: '#e0e0e1'
+}
+
 // radixLight.9, radixDark.10
 export const chartColors = {
   // orange: isLightDarkSupported ? 'light-dark(#f76b15, #ff801f)' : '#f76b15',
@@ -79,37 +91,37 @@ export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): 
   const SCard = el.closest('.SCard')
   if (!(SCard instanceof HTMLElement)) { return }
 
-  // TODO: force render in light mode
   const canvas = await html2canvas(SCard, {
     scale: 2,
-    backgroundColor: getBackgroundColor(el),
     logging: false,
-    ignoreElements: (el) => el.classList.contains('SControlActionBar')
+    ignoreElements: (el) => el.classList.contains('SControlActionBar'),
+    onclone(document, element) {
+      document.documentElement.classList.remove('dark')
+      for (const el of element.querySelectorAll<HTMLElement>('*')) {
+        el.style.backgroundColor = 'transparent'
+        for (const [key, value] of Object.entries(c)) {
+          for (const attr of ['fill', 'stroke'] as const) {
+            if (el.getAttribute(attr) === value) {
+              el.style[attr] = c_light[key as keyof typeof c_light]
+            }
+          }
+        }
+      }
+    }
   })
+
+  // // for debugging
+  // const blob = await new Promise<Blob>((resolve) => {
+  //   canvas.toBlob((b) => {
+  //     if (b) {
+  //       resolve(b)
+  //     } else {
+  //       resolve(new Blob())
+  //     }
+  //   }, 'image/png')
+  // })
+  // window.open(URL.createObjectURL(blob), '_blank')
 
   const dataUrl = canvas.toDataURL('image/png')
   FileSaver.saveAs(dataUrl, fileName)
-}
-
-function getBackgroundColor(el: HTMLElement | null): string {
-  const defaultColor = 'rgba(0, 0, 0, 0)'
-  let color = 'rgba(0, 0, 0, 0)'
-
-  while (el) {
-    const bgColor = window.getComputedStyle(el).backgroundColor
-    if (bgColor !== defaultColor) {
-      color = bgColor
-      break
-    }
-
-    el = el.parentElement
-  }
-
-  if (color === defaultColor) {
-    return document.documentElement.classList.contains('dark')
-      ? 'rgba(0, 0, 0, 1)'
-      : 'rgba(255, 255, 255, 1)'
-  }
-
-  return color
 }

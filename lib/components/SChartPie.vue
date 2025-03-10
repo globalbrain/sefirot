@@ -2,7 +2,7 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
-import { type ChartColor, type KV, scheme } from '../support/Chart'
+import { type ChartColor, type KV, c, scheme } from '../support/Chart'
 
 export type { ChartColor, KV }
 
@@ -132,7 +132,7 @@ function renderChart({
       .attr('x', 30)
       .attr('y', 14 / 2)
       .attr('dy', '0.35em')
-      .attr('fill', 'var(--c-text-2)')
+      .attr('fill', c.text2)
       .html((d) => props.legendFormatKey(d.data))
 
     // Show value next to the legend
@@ -141,7 +141,7 @@ function renderChart({
       .attr('x', 30 + props.legendPadding)
       .attr('y', 14 / 2)
       .attr('dy', '0.35em')
-      .attr('fill', 'var(--c-text-1)')
+      .attr('fill', c.text1)
       .attr('text-anchor', 'end')
       .html((d) => props.legendFormatValue(d.data))
 
@@ -237,7 +237,7 @@ function renderChart({
 
     labels
       .append('polyline')
-      .attr('stroke', 'var(--c-divider)')
+      .attr('stroke', c.divider)
       .attr('fill', 'none')
       .attr('points', (d) => {
         const posA = arc.centroid(d)
@@ -255,9 +255,9 @@ function renderChart({
         return `translate(${pos})`
       })
       .attr('dy', '0.35em')
+      .attr('fill', c.text2)
       .attr('text-anchor', (d) => leftOrRight(d) === 1 ? 'start' : 'end')
       .style('font-size', '14px')
-      .style('fill', 'var(--c-text-2)')
       .html((d) => props.labelFormat(d.data))
 
     if (animate) {

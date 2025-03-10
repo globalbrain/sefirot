@@ -2,7 +2,7 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { ref, watch } from 'vue'
-import { type ChartColor, type KV, scheme } from '../support/Chart'
+import { type ChartColor, type KV, c, scheme } from '../support/Chart'
 
 export type { ChartColor, KV }
 
@@ -99,7 +99,7 @@ function renderChart({
     .attr('transform', `translate(0,${height})`)
     .call(vertical ? d3.axisBottom(x) : d3.axisBottom(y).ticks(props.ticks))
     .selectAll('text')
-    .attr('fill', 'var(--c-text-2)')
+    .attr('fill', c.text2)
     .style('font-size', '14px')
     .style('text-anchor', 'middle')
 
@@ -113,7 +113,7 @@ function renderChart({
     .append('g')
     .call(vertical ? d3.axisLeft(y).ticks(props.ticks) : d3.axisLeft(x))
     .selectAll('text')
-    .attr('fill', 'var(--c-text-2)')
+    .attr('fill', c.text2)
     .style('font-size', '14px')
 
   // Remove Y axis line
@@ -127,7 +127,7 @@ function renderChart({
     .data(y.ticks(props.ticks))
     .enter()
     .append('line')
-    .attr('stroke', 'var(--c-divider)')
+    .attr('stroke', c.divider)
     .attr('stroke-dasharray', '2,2')
 
   if (vertical) {
@@ -150,7 +150,7 @@ function renderChart({
       .append('text')
       .attr('x', width / 2)
       .attr('y', height + xLabelOffset)
-      .attr('fill', 'var(--c-text-2)')
+      .attr('fill', c.text2)
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
       .html(props.xLabel)
@@ -161,7 +161,7 @@ function renderChart({
       .attr('x', -height / 2)
       .attr('y', -yLabelOffset)
       .attr('transform', 'rotate(-90)')
-      .attr('fill', 'var(--c-text-2)')
+      .attr('fill', c.text2)
       .style('font-size', '14px')
       .style('text-anchor', 'middle')
       .html(props.yLabel)

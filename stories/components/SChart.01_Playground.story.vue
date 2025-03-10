@@ -10,7 +10,7 @@ import SControlActionBarButton from 'sefirot/components/SControlActionBarButton.
 import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import SControlText from 'sefirot/components/SControlText.vue'
-import { type KV, exportAsPng } from 'sefirot/support/Chart'
+import { type KV, c, exportAsPng } from 'sefirot/support/Chart'
 import { ref, useTemplateRef } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
@@ -34,7 +34,7 @@ function tooltipFormat(d: KV) {
 }
 
 function labelFormat(d: KV) {
-  return `${d.key} &ndash; <tspan fill="var(--c-text-1)">${d.value}</tspan>`
+  return `${d.key} &ndash; <tspan fill="${c.text1}">${d.value}</tspan>`
 }
 
 function state() {
