@@ -97,6 +97,7 @@ function renderChart({
 
   // Compute a constant offset to center the colored bar inside its full band.
   const groupOffset = (paddedScale.step() - paddedScale.bandwidth()) / 2
+  const heightPadding = 24
 
   // For the axes, use the paddedScale so ticks remain centered on the bars.
   svg
@@ -202,9 +203,9 @@ function renderChart({
     if (vertical) {
       outerBars
         .attr('x', 0)
-        .attr('y', (d) => y(d.value) - groupOffset)
+        .attr('y', (d) => Math.max(0, y(d.value) - heightPadding))
         .attr('width', paddedScale.step())
-        .attr('height', (d) => height - y(d.value) + groupOffset)
+        .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
       bars
         .attr('x', groupOffset)
         .attr('y', (d) => y(d.value))
@@ -214,7 +215,7 @@ function renderChart({
       outerBars
         .attr('x', 0)
         .attr('y', 0)
-        .attr('width', (d) => y(d.value) + groupOffset)
+        .attr('width', (d) => Math.min(width, y(d.value) + heightPadding))
         .attr('height', paddedScale.step())
       bars
         .attr('x', 0)
@@ -233,8 +234,8 @@ function renderChart({
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('y', (d) => y(d.value) - groupOffset)
-        .attr('height', (d) => height - y(d.value) + groupOffset)
+        .attr('y', (d) => Math.max(0, y(d.value) - heightPadding))
+        .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
       bars
         .attr('x', groupOffset)
         .attr('y', height)
@@ -254,7 +255,7 @@ function renderChart({
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('width', (d) => y(d.value) + groupOffset)
+        .attr('width', (d) => Math.min(width, y(d.value) + heightPadding))
       bars
         .attr('x', 0)
         .attr('y', groupOffset)
