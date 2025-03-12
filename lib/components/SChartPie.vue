@@ -179,7 +179,7 @@ function renderChart({
     .arc<d3.PieArcDatum<KV>>()
     .innerRadius(innerRadius)
     .outerRadius(radius)
-    .cornerRadius(4)
+    .cornerRadius(2)
 
   // Add the arcs
   const transform = `translate(0,${-(height_2 - radius) / 2})`
