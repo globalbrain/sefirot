@@ -13,6 +13,7 @@ const props = withDefaults(defineProps<{
   type?: 'horizontal' | 'vertical'
   debug?: boolean
   ticks?: number
+  tickFontSize?: string
   animate?: boolean
   tooltip?: boolean
   tooltipFormat?: (d: KV, color: string) => string
@@ -20,15 +21,20 @@ const props = withDefaults(defineProps<{
   yLabel?: string
   xLabelOffset?: number
   yLabelOffset?: number
+  xLabelFontSize?: string
+  yLabelFontSize?: string
   maxBandwidth?: number
 }>(), {
   colors: () => ['blue'],
   type: 'vertical',
   debug: false,
   ticks: 5,
+  tickFontSize: '14px',
   animate: true,
   tooltip: true,
   tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+  xLabelFontSize: '14px',
+  yLabelFontSize: '14px',
   maxBandwidth: 100
 })
 
@@ -110,7 +116,7 @@ function renderChart({
     .call(vertical ? d3.axisBottom(paddedScale) : d3.axisBottom(y).ticks(props.ticks))
     .selectAll('text')
     .attr('fill', c.text2)
-    .style('font-size', 'var(--chart-tick-font-size)')
+    .style('font-size', props.tickFontSize)
     .style('text-anchor', 'middle')
 
   // Remove X axis line
@@ -124,7 +130,7 @@ function renderChart({
     .call(vertical ? d3.axisLeft(y).ticks(props.ticks) : d3.axisLeft(paddedScale))
     .selectAll('text')
     .attr('fill', c.text2)
-    .style('font-size', 'var(--chart-tick-font-size)')
+    .style('font-size', props.tickFontSize)
 
   // Remove Y axis line
   svg
@@ -161,7 +167,7 @@ function renderChart({
       .attr('x', width / 2)
       .attr('y', height + xLabelOffset)
       .attr('fill', c.text2)
-      .style('font-size', 'var(--chart-label-font-size)')
+      .style('font-size', props.xLabelFontSize)
       .style('text-anchor', 'middle')
       .html(props.xLabel)
   }
@@ -172,7 +178,7 @@ function renderChart({
       .attr('y', -yLabelOffset)
       .attr('transform', 'rotate(-90)')
       .attr('fill', c.text2)
-      .style('font-size', 'var(--chart-label-font-size)')
+      .style('font-size', props.yLabelFontSize)
       .style('text-anchor', 'middle')
       .html(props.yLabel)
   }
@@ -359,7 +365,7 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: var(--chart-tooltip-font-size);
+  font-size: 12px;
 }
 
 :deep(.tick line) {

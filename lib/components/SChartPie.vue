@@ -22,8 +22,10 @@ const props = withDefaults(defineProps<{
   legendFormatKey?: (d: KV) => string
   legendFormatValue?: (d: KV) => string
   legendPadding?: number
+  legendFontSize?: string
   labels?: boolean
   labelFormat?: (d: KV) => string
+  labelFontSize?: string
 }>(), {
   type: 'donut',
   half: false,
@@ -35,8 +37,10 @@ const props = withDefaults(defineProps<{
   legendFormatKey: (d: KV) => d.key,
   legendFormatValue: (d: KV) => d.value.toString(),
   legendPadding: 70,
+  legendFontSize: '14px',
   labels: false,
-  labelFormat: (d: KV) => `${d.key} – ${d.value}`
+  labelFormat: (d: KV) => `${d.key} – ${d.value}`,
+  labelFontSize: '14px'
 })
 
 const chartRef = useTemplateRef('chart')
@@ -116,7 +120,7 @@ function renderChart({
       .enter()
       .append('g')
       .attr('transform', (d, i) => `translate(0,${i * 24})`)
-      .style('font-size', 'var(--chart-legend-font-size)')
+      .style('font-size', props.legendFontSize)
 
     // Add colored rectangles to the legend
     legend
@@ -259,7 +263,7 @@ function renderChart({
       .attr('dy', '0.35em')
       .attr('fill', c.text2)
       .attr('text-anchor', (d) => leftOrRight(d) === 1 ? 'start' : 'end')
-      .style('font-size', 'var(--chart-label-font-size)')
+      .style('font-size', props.labelFontSize)
       .html((d) => props.labelFormat(d.data))
 
     if (animate) {
@@ -357,6 +361,6 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: var(--chart-tooltip-font-size);
+  font-size: 12px;
 }
 </style>

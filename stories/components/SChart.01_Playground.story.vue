@@ -46,6 +46,7 @@ function state() {
     barMarginBottom: undefined,
     barMarginLeft: undefined,
     barTicks: undefined,
+    barTickFontSize: undefined,
     barMaxBandwidth: undefined,
     barAnimate: true,
     barTooltip: true,
@@ -53,6 +54,8 @@ function state() {
     barYLabel: undefined,
     barXLabelOffset: undefined,
     barYLabelOffset: undefined,
+    barXLabelFontSize: undefined,
+    barYLabelFontSize: undefined,
 
     pieType: 'donut',
     pieHalf: false,
@@ -66,7 +69,9 @@ function state() {
     pieActiveKey: undefined,
     pieLegend: true,
     pieLegendPadding: undefined,
-    pieLabels: false
+    pieLegendFontSize: undefined,
+    pieLabels: false,
+    pieLabelFontSize: undefined
   }
 }
 </script>
@@ -115,6 +120,12 @@ function state() {
         :max="20"
       />
       <HstSlider
+        title="tick-font-size"
+        v-model="state.barTickFontSize"
+        :min="10"
+        :max="20"
+      />
+      <HstSlider
         title="max-bandwidth"
         v-model="state.barMaxBandwidth"
         :min="1"
@@ -147,6 +158,18 @@ function state() {
         v-model="state.barYLabelOffset"
         :min="-10"
         :max="60"
+      />
+      <HstSlider
+        title="x-label-font-size"
+        v-model="state.barXLabelFontSize"
+        :min="10"
+        :max="20"
+      />
+      <HstSlider
+        title="y-label-font-size"
+        v-model="state.barYLabelFontSize"
+        :min="10"
+        :max="20"
       />
       <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
       <HstSelect
@@ -212,9 +235,21 @@ function state() {
         :min="50"
         :max="150"
       />
+      <HstSlider
+        title="legend-font-size"
+        v-model="state.pieLegendFontSize"
+        :min="10"
+        :max="20"
+      />
       <HstCheckbox
         title="labels"
         v-model="state.pieLabels"
+      />
+      <HstSlider
+        title="label-font-size"
+        v-model="state.pieLabelFontSize"
+        :min="10"
+        :max="20"
       />
     </template>
     <template #default="{ state }">
@@ -251,6 +286,7 @@ function state() {
                 :type="state.barType"
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
+                :tick-font-size="state.barTickFontSize"
                 :animate="state.barAnimate"
                 :tooltip="state.barTooltip"
                 :tooltip-format
@@ -258,6 +294,8 @@ function state() {
                 :y-label="state.barYLabel"
                 :x-label-offset="state.barXLabelOffset"
                 :y-label-offset="state.barYLabelOffset"
+                :x-label-font-size="state.barXLabelFontSize"
+                :y-label-font-size="state.barYLabelFontSize"
                 :max-bandwidth="state.barMaxBandwidth"
               />
             </div>
@@ -302,8 +340,10 @@ function state() {
                 :active-key="state.pieActiveKey"
                 :legend="state.pieLegend"
                 :legend-padding="state.pieLegendPadding"
+                :legend-font-size="state.pieLegendFontSize"
                 :labels="state.pieLabels"
                 :label-format="labelFormat"
+                :label-font-size="state.pieLabelFontSize"
               />
             </div>
           </SCardBlock>
