@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<{
   data: KV[]
   colors?: ChartColor[]
   margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
-  mode?: 'horizontal' | 'vertical'
+  type?: 'horizontal' | 'vertical'
   debug?: boolean
   ticks?: number
   animate?: boolean
@@ -20,14 +20,16 @@ const props = withDefaults(defineProps<{
   yLabel?: string
   xLabelOffset?: number
   yLabelOffset?: number
+  maxBandwidth?: number
 }>(), {
   colors: () => ['blue'],
-  mode: 'vertical',
+  type: 'vertical',
   debug: false,
   ticks: 5,
   animate: true,
   tooltip: true,
-  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`
+  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+  maxBandwidth: 100
 })
 
 const chartRef = useTemplateRef('chart')
@@ -57,7 +59,7 @@ function renderChart({
     .remove()
 
   // Set dimensions and margins
-  const vertical = props.mode === 'vertical'
+  const vertical = props.type === 'vertical'
 
   const margin = {
     top: props.margins?.top ?? 30,
@@ -98,6 +100,8 @@ function renderChart({
   // Compute a constant offset to center the colored bar inside its full band.
   const groupOffset = (paddedScale.step() - paddedScale.bandwidth()) / 2
   const heightPadding = 24
+  const bandwidth = Math.min(paddedScale.bandwidth(), props.maxBandwidth)
+  const innerOffset = (paddedScale.bandwidth() - bandwidth) / 2
 
   // For the axes, use the paddedScale so ticks remain centered on the bars.
   svg
@@ -106,7 +110,7 @@ function renderChart({
     .call(vertical ? d3.axisBottom(paddedScale) : d3.axisBottom(y).ticks(props.ticks))
     .selectAll('text')
     .attr('fill', c.text2)
-    .style('font-size', '14px')
+    .style('font-size', 'var(--chart-tick-font-size)')
     .style('text-anchor', 'middle')
 
   // Remove X axis line
@@ -120,7 +124,7 @@ function renderChart({
     .call(vertical ? d3.axisLeft(y).ticks(props.ticks) : d3.axisLeft(paddedScale))
     .selectAll('text')
     .attr('fill', c.text2)
-    .style('font-size', '14px')
+    .style('font-size', 'var(--chart-tick-font-size)')
 
   // Remove Y axis line
   svg
@@ -157,7 +161,7 @@ function renderChart({
       .attr('x', width / 2)
       .attr('y', height + xLabelOffset)
       .attr('fill', c.text2)
-      .style('font-size', '14px')
+      .style('font-size', 'var(--chart-label-font-size)')
       .style('text-anchor', 'middle')
       .html(props.xLabel)
   }
@@ -168,7 +172,7 @@ function renderChart({
       .attr('y', -yLabelOffset)
       .attr('transform', 'rotate(-90)')
       .attr('fill', c.text2)
-      .style('font-size', '14px')
+      .style('font-size', 'var(--chart-label-font-size)')
       .style('text-anchor', 'middle')
       .html(props.yLabel)
   }
@@ -207,9 +211,9 @@ function renderChart({
         .attr('width', paddedScale.step())
         .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
       bars
-        .attr('x', groupOffset)
+        .attr('x', groupOffset + innerOffset)
         .attr('y', (d) => y(d.value))
-        .attr('width', paddedScale.bandwidth())
+        .attr('width', bandwidth)
         .attr('height', (d) => height - y(d.value))
     } else {
       outerBars
@@ -219,9 +223,9 @@ function renderChart({
         .attr('height', paddedScale.step())
       bars
         .attr('x', 0)
-        .attr('y', groupOffset)
+        .attr('y', groupOffset + innerOffset)
         .attr('width', (d) => y(d.value))
-        .attr('height', paddedScale.bandwidth())
+        .attr('height', bandwidth)
     }
   } else {
     // Animate the bars
@@ -237,9 +241,9 @@ function renderChart({
         .attr('y', (d) => Math.max(0, y(d.value) - heightPadding))
         .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
       bars
-        .attr('x', groupOffset)
+        .attr('x', groupOffset + innerOffset)
         .attr('y', height)
-        .attr('width', paddedScale.bandwidth())
+        .attr('width', bandwidth)
         .attr('height', 0)
         .transition()
         .duration(800)
@@ -258,9 +262,9 @@ function renderChart({
         .attr('width', (d) => Math.min(width, y(d.value) + heightPadding))
       bars
         .attr('x', 0)
-        .attr('y', groupOffset)
+        .attr('y', groupOffset + innerOffset)
         .attr('width', 0)
-        .attr('height', paddedScale.bandwidth())
+        .attr('height', bandwidth)
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
@@ -355,7 +359,7 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: 12px;
+  font-size: var(--chart-tooltip-font-size);
 }
 
 :deep(.tick line) {

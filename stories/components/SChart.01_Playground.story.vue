@@ -39,13 +39,14 @@ function labelFormat(d: KV) {
 
 function state() {
   return {
-    barMode: 'vertical',
+    barType: 'vertical',
     barDebug: false,
     barMarginTop: undefined,
     barMarginRight: undefined,
     barMarginBottom: undefined,
     barMarginLeft: undefined,
     barTicks: undefined,
+    barMaxBandwidth: undefined,
     barAnimate: true,
     barTooltip: true,
     barXLabel: undefined,
@@ -53,7 +54,7 @@ function state() {
     barXLabelOffset: undefined,
     barYLabelOffset: undefined,
 
-    pieMode: 'donut',
+    pieType: 'donut',
     pieHalf: false,
     pieDebug: false,
     pieMarginTop: undefined,
@@ -75,9 +76,9 @@ function state() {
     <template #controls="{ state }">
       <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
       <HstSelect
-        title="mode"
+        title="type"
         :options="['vertical', 'horizontal']"
-        v-model="state.barMode"
+        v-model="state.barType"
       />
       <HstCheckbox
         title="debug"
@@ -113,6 +114,12 @@ function state() {
         :min="0"
         :max="20"
       />
+      <HstSlider
+        title="max-bandwidth"
+        v-model="state.barMaxBandwidth"
+        :min="1"
+        :max="100"
+      />
       <HstCheckbox
         title="animate"
         v-model="state.barAnimate"
@@ -143,12 +150,12 @@ function state() {
       />
       <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
       <HstSelect
-        title="mode"
+        title="type"
         :options="{
           donut: 'donut',
           pie: 'pie'
         }"
-        v-model="state.pieMode"
+        v-model="state.pieType"
       />
       <HstCheckbox
         title="half"
@@ -241,7 +248,7 @@ function state() {
                   bottom: state.barMarginBottom,
                   left: state.barMarginLeft
                 }"
-                :mode="state.barMode"
+                :type="state.barType"
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
                 :animate="state.barAnimate"
@@ -251,6 +258,7 @@ function state() {
                 :y-label="state.barYLabel"
                 :x-label-offset="state.barXLabelOffset"
                 :y-label-offset="state.barYLabelOffset"
+                :max-bandwidth="state.barMaxBandwidth"
               />
             </div>
           </SCardBlock>
@@ -285,7 +293,7 @@ function state() {
                   bottom: state.pieMarginBottom,
                   left: state.pieMarginLeft
                 }"
-                :mode="state.pieMode"
+                :type="state.pieType"
                 :half="state.pieHalf"
                 :debug="state.pieDebug"
                 :animate="state.pieAnimate"

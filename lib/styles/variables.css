@@ -878,3 +878,14 @@
   --input-switch-disabled-toggle-color: var(--c-fg-gray-1);
   --input-switch-disabled-bg-color: var(--c-bg-mute-1);
 }
+
+/**
+ * Component: Charts
+ * -------------------------------------------------------------------------- */
+
+:root {
+  --chart-tick-font-size: 14px;
+  --chart-legend-font-size: 14px;
+  --chart-label-font-size: 14px;
+  --chart-tooltip-font-size: 12px;
+}

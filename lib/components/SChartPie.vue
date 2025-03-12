@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   colors?: ChartColor[]
   margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
   innerRadius?: (outerRadius: number) => number
-  mode?: 'pie' | 'donut'
+  type?: 'pie' | 'donut'
   half?: boolean
   debug?: boolean
   animate?: boolean
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<{
   labels?: boolean
   labelFormat?: (d: KV) => string
 }>(), {
-  mode: 'donut',
+  type: 'donut',
   half: false,
   debug: false,
   animate: true,
@@ -116,7 +116,7 @@ function renderChart({
       .enter()
       .append('g')
       .attr('transform', (d, i) => `translate(0,${i * 24})`)
-      .style('font-size', '14px')
+      .style('font-size', 'var(--chart-legend-font-size)')
 
     // Add colored rectangles to the legend
     legend
@@ -163,7 +163,7 @@ function renderChart({
   // Calculate radius and center the chart
   const r_k = props.half ? 0.25 : 0.5
   const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.legend ? r_k : 0)))
-  const innerRadius = props.innerRadius?.(radius) ?? (props.mode === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
+  const innerRadius = props.innerRadius?.(radius) ?? (props.type === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
 
   legendGroup
     ?.attr('transform', `translate(${radius * (1 + r_k)},${-(props.half ? height_2 : 0) / 2 - legendHeight / 2})`)
@@ -259,7 +259,7 @@ function renderChart({
       .attr('dy', '0.35em')
       .attr('fill', c.text2)
       .attr('text-anchor', (d) => leftOrRight(d) === 1 ? 'start' : 'end')
-      .style('font-size', '14px')
+      .style('font-size', 'var(--chart-label-font-size)')
       .html((d) => props.labelFormat(d.data))
 
     if (animate) {
@@ -357,6 +357,6 @@ watch(
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  font-size: 12px;
+  font-size: var(--chart-tooltip-font-size);
 }
 </style>
