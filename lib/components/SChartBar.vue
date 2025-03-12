@@ -8,34 +8,45 @@ export type { ChartColor, KV }
 
 const props = withDefaults(defineProps<{
   data: KV[]
-  colors?: ChartColor[]
-  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
+
+  // Chart appearance
   type?: 'horizontal' | 'vertical'
-  debug?: boolean
-  ticks?: number
-  tickFontSize?: string
-  animate?: boolean
-  tooltip?: boolean
-  tooltipFormat?: (d: KV, color: string) => string
+  colors?: ChartColor[]
+  maxBandwidth?: number
+  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
+
+  // Axis & labels
   xLabel?: string
   yLabel?: string
   xLabelOffset?: number
   yLabelOffset?: number
   xLabelFontSize?: string
   yLabelFontSize?: string
-  maxBandwidth?: number
+  ticks?: number
+  tickFontSize?: string
+
+  // Tooltip
+  tooltip?: boolean
+  tooltipFormat?: (d: KV, color: string) => string
+
+  // Animation & debug
+  animate?: boolean
+  debug?: boolean
 }>(), {
-  colors: () => ['blue'],
   type: 'vertical',
-  debug: false,
-  ticks: 5,
-  tickFontSize: '14px',
-  animate: true,
-  tooltip: true,
-  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+  colors: () => ['blue'],
+  maxBandwidth: 100,
+
   xLabelFontSize: '14px',
   yLabelFontSize: '14px',
-  maxBandwidth: 100
+  ticks: 5,
+  tickFontSize: '14px',
+
+  tooltip: true,
+  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+
+  animate: true,
+  debug: false
 })
 
 const chartRef = useTemplateRef('chart')

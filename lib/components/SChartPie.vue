@@ -8,39 +8,55 @@ export type { ChartColor, KV }
 
 const props = withDefaults(defineProps<{
   data: KV[]
-  colors?: ChartColor[]
-  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
-  innerRadius?: (outerRadius: number) => number
+
+  // Chart appearance
   type?: 'pie' | 'donut'
   half?: boolean
-  debug?: boolean
-  animate?: boolean
-  tooltip?: boolean
-  activeKey?: string
-  tooltipFormat?: (d: KV, color: string) => string
+  colors?: ChartColor[]
+  innerRadius?: (outerRadius: number) => number
+  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
+
+  // Labels
+  labels?: boolean
+  labelFormat?: (d: KV) => string
+  labelFontSize?: string
+
+  // Legend
   legend?: boolean
   legendFormatKey?: (d: KV) => string
   legendFormatValue?: (d: KV) => string
   legendPadding?: number
   legendFontSize?: string
-  labels?: boolean
-  labelFormat?: (d: KV) => string
-  labelFontSize?: string
+
+  // Tooltip
+  tooltip?: boolean
+  tooltipFormat?: (d: KV, color: string) => string
+
+  // Interactivity & state
+  activeKey?: string
+
+  // Animation & debug
+  animate?: boolean
+  debug?: boolean
 }>(), {
   type: 'donut',
   half: false,
-  debug: false,
-  animate: true,
-  tooltip: true,
-  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+
+  labels: false,
+  labelFormat: (d: KV) => `${d.key} – ${d.value}`,
+  labelFontSize: '14px',
+
   legend: true,
   legendFormatKey: (d: KV) => d.key,
   legendFormatValue: (d: KV) => d.value.toString(),
   legendPadding: 70,
   legendFontSize: '14px',
-  labels: false,
-  labelFormat: (d: KV) => `${d.key} – ${d.value}`,
-  labelFontSize: '14px'
+
+  tooltip: true,
+  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+
+  animate: true,
+  debug: false
 })
 
 const chartRef = useTemplateRef('chart')
