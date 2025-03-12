@@ -2,19 +2,19 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
-import { type ChartColor, type KV, c, scheme } from '../support/Chart'
-
-export type { ChartColor, KV }
+import { type ChartColor, type KV, type Margins, c, scheme } from '../support/Chart'
 
 const props = withDefaults(defineProps<{
+  // State
   data: KV[]
+  activeKey?: string
 
   // Chart appearance
   type?: 'pie' | 'donut'
   half?: boolean
   colors?: ChartColor[]
+  margins?: Margins
   innerRadius?: (outerRadius: number) => number
-  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
 
   // Labels
   labels?: boolean
@@ -28,12 +28,9 @@ const props = withDefaults(defineProps<{
   legendPadding?: number
   legendFontSize?: string
 
-  // Tooltip
+  // Tooltip & interactivity
   tooltip?: boolean
   tooltipFormat?: (d: KV, color: string) => string
-
-  // Interactivity & state
-  activeKey?: string
 
   // Animation & debug
   animate?: boolean

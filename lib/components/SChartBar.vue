@@ -2,18 +2,17 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
-import { type ChartColor, type KV, c, scheme } from '../support/Chart'
-
-export type { ChartColor, KV }
+import { type ChartColor, type KV, type Margins, c, scheme } from '../support/Chart'
 
 const props = withDefaults(defineProps<{
+  // State
   data: KV[]
 
   // Chart appearance
   type?: 'horizontal' | 'vertical'
   colors?: ChartColor[]
+  margins?: Margins
   maxBandwidth?: number
-  margins?: Partial<{ top: number; right: number; bottom: number; left: number }>
 
   // Axis & labels
   xLabel?: string
@@ -25,7 +24,7 @@ const props = withDefaults(defineProps<{
   ticks?: number
   tickFontSize?: string
 
-  // Tooltip
+  // Tooltip & interactivity
   tooltip?: boolean
   tooltipFormat?: (d: KV, color: string) => string
 

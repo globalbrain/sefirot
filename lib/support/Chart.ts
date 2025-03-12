@@ -40,6 +40,7 @@ export const chartColors = {
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type ChartColor = keyof typeof chartColors | (string & {})
 export type KV = { key: string; value: number; color?: ChartColor }
+export type Margins = Partial<{ top: number; right: number; bottom: number; left: number }>
 
 export function getColor(...colors: (ChartColor | string | null | undefined)[]): string {
   const color = colors.find((color) => color != null)
