@@ -359,10 +359,10 @@ watch(
 
 <style scoped lang="postcss">
 .SChartBar {
+  position: relative;
   width: 100%;
   height: 100%;
   font-feature-settings: 'tnum' 1;
-  position: relative;
 }
 
 :deep(.tooltip) {
