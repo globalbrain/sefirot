@@ -15,7 +15,7 @@ const title = 'Components / SMarkdown / 01. Playground'
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .markdown {
   line-height: 24px;
   font-size: 16px;

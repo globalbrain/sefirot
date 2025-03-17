@@ -47,7 +47,7 @@ const control = computed({
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .indent {
   margin-left: 24px;
 }

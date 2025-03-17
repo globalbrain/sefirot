@@ -30,7 +30,7 @@ const options = [
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .switches {
   width: 192px;
 }

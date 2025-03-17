@@ -57,6 +57,7 @@ export const baseConfig = {
       '@vueuse/core',
       'body-scroll-lock',
       'dayjs',
+      'd3',
       'file-saver',
       'fuse.js',
       'lodash-es',
@@ -80,7 +81,8 @@ export const baseConfig = {
       'dayjs/plugin/timezone',
       'dayjs/plugin/utc',
       'markdown-it > argparse',
-      'markdown-it > entities'
+      'markdown-it > entities',
+      'file-saver'
     ],
     exclude: [
       'markdown-it'

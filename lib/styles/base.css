@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+:root:not(.dark):not(.htw-dark) {
+  color-scheme: light;
+}
+
+:root.dark {
+  color-scheme: dark;
+}
+
 body {
   width: 100%;
   min-width: 320px;
