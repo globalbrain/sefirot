@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.14.0](https://github.com/globalbrain/sefirot/compare/v4.13.0...v4.14.0) (2025-03-18)
+
+
+### Features
+
+* **chart:** add charts ([#589](https://github.com/globalbrain/sefirot/issues/589)) ([99a5e22](https://github.com/globalbrain/sefirot/commit/99a5e229839587f3cebe13ebc98a2297ccb251f0))
+* **error:** add sentry pinia integration and sync vendored code ([#588](https://github.com/globalbrain/sefirot/issues/588)) ([637ae1c](https://github.com/globalbrain/sefirot/commit/637ae1c1d57985ba82697f57ba6240ef5796c515))
+
 # [4.13.0](https://github.com/globalbrain/sefirot/compare/v4.12.0...v4.13.0) (2025-02-28)
 
 
