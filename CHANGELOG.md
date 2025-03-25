@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.14.1](https://github.com/globalbrain/sefirot/compare/v4.14.0...v4.14.1) (2025-03-25)
+
+
+### Bug Fixes
+
+* **lang:** directly use `html[lang]` in rules ([#592](https://github.com/globalbrain/sefirot/issues/592)) ([67d495f](https://github.com/globalbrain/sefirot/commit/67d495fa01cf8b22a36a49533610f0b40623c971))
+
 # [4.14.0](https://github.com/globalbrain/sefirot/compare/v4.13.0...v4.14.0) (2025-03-18)
 
 
