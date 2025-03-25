@@ -30,9 +30,7 @@ export function provideLang(lang: Lang) {
 }
 
 export function useLang(): Lang {
-  // Doing `||` check here because for some reason it doesn't return
-  // the default value in tests but becomes `undefined`.
-  return inject(SefirotLangKey, 'en') || 'en'
+  return inject(SefirotLangKey, 'en')
 }
 
 export function useBrowserLang(): Lang {
