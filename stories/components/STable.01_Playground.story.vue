@@ -17,6 +17,7 @@ import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, reactive, ref, shallowRef } from 'vue'
+import SButton from 'sefirot/components/SButton.vue'
 
 interface Sort {
   by: string
@@ -357,6 +358,7 @@ const selected = ref<string[]>([])
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
+      <SButton label="Reset selection" @click="selected = []" />
       <SCard>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>
