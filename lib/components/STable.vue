@@ -13,7 +13,6 @@ import {
   watch
 } from 'vue'
 import { type Table } from '../composables/Table'
-import { smartComputed } from '../support/Reactivity'
 import { getTextWidth } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -38,7 +37,7 @@ const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
-const ordersToShow = smartComputed(() => {
+const ordersToShow = computed(() => {
   const orders = unref(props.options.orders).filter((key) => {
     const show = unref(props.options.columns)[key]?.show
     return toValue(show) !== false
@@ -127,7 +126,7 @@ const recordsWithSummary = computed(() => {
   return summary ? [...records, summary] : records
 })
 
-const indexes = smartComputed(() => {
+const indexes = computed(() => {
   if (props.selected === undefined) {
     return []
   }
@@ -141,12 +140,15 @@ const indexes = smartComputed(() => {
 const control = computed({
   get() {
     if (Array.isArray(props.selected)) {
-      return props.selected.length === indexes.value.length
-        ? true
-        : props.selected.length ? 'indeterminate' : false
+      if (!props.selected.length) {
+        return false
+      }
+      if (props.selected.length === indexes.value.length) {
+        return true
+      }
     }
 
-    return 'indeterminate' // doesn't matter
+    return 'indeterminate'
   },
 
   set(newValue) {
@@ -161,7 +163,9 @@ const control = computed({
 watch(indexes, (newValue, oldValue) => {
   if (Array.isArray(props.selected)) {
     const removed = xor(newValue, oldValue)
-    updateSelected(props.selected.filter((item) => !removed.includes(item)))
+    if (removed.length) {
+      updateSelected(props.selected.filter((item) => !removed.includes(item)))
+    }
   }
 })
 
