@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="S extends any[] | any | undefined = undefined">
+<script setup lang="ts" generic="S extends any = undefined">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
@@ -130,13 +130,12 @@ const indexes = computed(() => {
   if (props.selected === undefined) {
     return []
   }
+
   const records = unref(props.options.records) ?? []
   const indexField = unref(props.options.indexField)
 
   return records.map((record, i) => indexField ? record[indexField] : i)
 })
-
-const selectedIndexes = reactive(new Set(Array.isArray(props.selected) ? props.selected : []))
 
 const control = computed({
   get() {
@@ -151,26 +150,19 @@ const control = computed({
 
   set(newValue) {
     if (newValue === false) {
-      selectedIndexes.clear()
+      updateSelected([])
     } else if (newValue === true) {
-      indexes.value.forEach((index) => {
-        selectedIndexes.add(index)
-      })
+      updateSelected(indexes.value)
     }
   }
 })
 
 watch(indexes, (newValue, oldValue) => {
   if (Array.isArray(props.selected)) {
-    xor(newValue, oldValue).forEach((index) => {
-      selectedIndexes.delete(index)
-    })
-  }
-})
-
-watch(selectedIndexes, (newValue) => {
-  if (Array.isArray(props.selected)) {
-    updateSelected(Array.from(newValue))
+    const removed = xor(newValue, oldValue)
+    if (removed.length) {
+      updateSelected(props.selected.filter((item) => !removed.includes(item)))
+    }
   }
 })
 
@@ -345,13 +337,15 @@ function getCell(key: string, index: number) {
 }
 
 function updateSelected(selected: any) {
-  if (Array.isArray(props.selected)) {
-    if (xor(selected, props.selected ?? []).length) {
-      emit('update:selected', selected)
-    }
-  } else {
-    emit('update:selected', selected)
-  }
+  emit('update:selected', selected)
+}
+
+function addSelected(item: any) {
+  updateSelected([...(props.selected as any[]), item])
+}
+
+function removeSelected(item: any) {
+  updateSelected((props.selected as any[]).filter((i) => i !== item))
 }
 </script>
 
@@ -456,8 +450,8 @@ function updateSelected(selected: any) {
                     <template v-if="key === '__select' && !isSummary(index)">
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
-                        :model-value="selectedIndexes.has(indexes[index])"
-                        @update:model-value="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                        :model-value="selected.includes(indexes[index])"
+                        @update:model-value="c => c ? addSelected(indexes[index]) : removeSelected(indexes[index])"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
