@@ -451,7 +451,7 @@ function removeSelected(item: any) {
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
                         :model-value="selected.includes(indexes[index])"
-                        @update:model-value="c => c ? addSelected(indexes[index]) : removeSelected(indexes[index])"
+                        @update:model-value="c => (c ? addSelected : removeSelected)(indexes[index])"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
