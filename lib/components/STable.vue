@@ -2,17 +2,9 @@
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import {
-  computed,
-  nextTick,
-  reactive,
-  ref,
-  shallowRef,
-  toValue,
-  unref,
-  watch
-} from 'vue'
+import { computed, nextTick, reactive, ref, shallowRef, toValue, unref, watch } from 'vue'
 import { type Table } from '../composables/Table'
+import { smartComputed } from '../support/Reactivity'
 import { getTextWidth } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -23,28 +15,24 @@ import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
 
-const props = defineProps<{
-  options: Table
-  selected?: S
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:selected', value: S): void
-}>()
+const props = defineProps<{ options: Table }>()
+const selected = defineModel<S>('selected')
 
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
-const ordersToShow = computed(() => {
+const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
     const show = unref(props.options.columns)[key]?.show
     return toValue(show) !== false
   })
-  if (props.selected === undefined) {
+
+  if (selected.value === undefined) {
     return orders
   }
+
   return ['__select', ...orders]
 })
 
@@ -126,24 +114,25 @@ const recordsWithSummary = computed(() => {
   return summary ? [...records, summary] : records
 })
 
-const indexes = computed(() => {
-  if (props.selected === undefined) {
+const indexes = smartComputed(() => {
+  if (selected.value === undefined) {
     return []
   }
 
   const records = unref(props.options.records) ?? []
   const indexField = unref(props.options.indexField)
 
-  return records.map((record, i) => indexField ? record[indexField] : i)
+  return records.map((record, i) => (indexField ? record[indexField] : i))
 })
 
 const control = computed({
   get() {
-    if (Array.isArray(props.selected)) {
-      if (!props.selected.length) {
+    if (Array.isArray(selected.value)) {
+      if (!selected.value.length) {
         return false
       }
-      if (props.selected.length === indexes.value.length) {
+
+      if (selected.value.length === indexes.value.length) {
         return true
       }
     }
@@ -161,10 +150,10 @@ const control = computed({
 })
 
 watch(indexes, (newValue, oldValue) => {
-  if (Array.isArray(props.selected)) {
+  if (Array.isArray(selected.value)) {
     const removed = xor(newValue, oldValue)
     if (removed.length) {
-      updateSelected(props.selected.filter((item) => !removed.includes(item)))
+      updateSelected(selected.value.filter((item) => !removed.includes(item)))
     }
   }
 })
@@ -251,10 +240,9 @@ watch(actionsColumnWidth, (newValue) => {
 
 function stopObserving() {
   const orders = ordersToShow.value
-  const lastOrder
-    = orders[orders.length - 1] === 'actions'
-      ? orders[orders.length - 2]
-      : orders[orders.length - 1]
+  const lastOrder = orders[orders.length - 1] === 'actions'
+    ? orders[orders.length - 2]
+    : orders[orders.length - 1]
   colWidths[lastOrder] = 'auto'
   resizeObserver.stop()
 }
@@ -279,10 +267,7 @@ async function handleResize() {
   }
 
   const availableFill = row.value.getBoundingClientRect().width - totalWidth
-  updateColWidth(
-    nameOfColToGrow.value,
-    `calc(${availableFill}px + ${initialWidth})`
-  )
+  updateColWidth(nameOfColToGrow.value, `calc(${availableFill}px + ${initialWidth})`)
 }
 
 function syncHeadScroll() {
@@ -336,19 +321,23 @@ function getCell(key: string, index: number) {
     return { type: 'custom' }
   }
   const col = unref(props.options.columns)[key]
-  return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
+  return isSummary(index) && col?.summaryCell ? col?.summaryCell : col?.cell
 }
 
-function updateSelected(selected: any) {
-  emit('update:selected', selected)
+function updateSelected(items: any) {
+  if (Array.isArray(selected.value)) {
+    selected.value = [...items] as any
+  } else {
+    selected.value = items
+  }
 }
 
 function addSelected(item: any) {
-  updateSelected([...(props.selected as any[]), item])
+  updateSelected([...(selected.value as any), item])
 }
 
 function removeSelected(item: any) {
-  updateSelected((props.selected as any[]).filter((i) => i !== item))
+  updateSelected((selected.value as any[]).filter((i) => i !== item))
 }
 </script>
 
@@ -366,11 +355,7 @@ function removeSelected(item: any) {
       />
 
       <div class="table" role="grid">
-        <div
-          class="container head"
-          ref="head"
-          @scroll="syncHeadScroll"
-        >
+        <div class="container head" ref="head" @scroll="syncHeadScroll">
           <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
@@ -418,10 +403,7 @@ function removeSelected(item: any) {
               position: 'relative'
             }"
           >
-            <div
-              v-for="{ index, key: __key, size, start } in virtualItems"
-              :key="__key"
-            >
+            <div v-for="{ index, key: __key, size, start } in virtualItems" :key="__key">
               <div
                 class="row"
                 :class="isSummaryOrLastClass(index)"
@@ -454,13 +436,13 @@ function removeSelected(item: any) {
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
                         :model-value="selected.includes(indexes[index])"
-                        @update:model-value="c => (c ? addSelected : removeSelected)(indexes[index])"
+                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[index])"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
                         v-else
                         :model-value="selected === indexes[index]"
-                        @update:model-value="c => updateSelected(c ? indexes[index] : null)"
+                        @update:model-value="(c) => updateSelected(c ? indexes[index] : null)"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                     </template>
