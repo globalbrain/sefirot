@@ -152,9 +152,7 @@ const control = computed({
 watch(indexes, (newValue, oldValue) => {
   if (Array.isArray(selected.value)) {
     const removed = xor(newValue, oldValue)
-    if (removed.length) {
-      updateSelected(selected.value.filter((item) => !removed.includes(item)))
-    }
+    updateSelected(selected.value.filter((item) => !removed.includes(item)))
   }
 })
 
