@@ -1,18 +1,10 @@
-<script setup lang="ts" generic="S extends any[] | any | undefined = undefined">
+<script setup lang="ts" generic="S extends any = undefined">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import {
-  computed,
-  nextTick,
-  reactive,
-  ref,
-  shallowRef,
-  toValue,
-  unref,
-  watch
-} from 'vue'
+import { computed, nextTick, reactive, ref, shallowRef, toValue, unref, watch } from 'vue'
 import { type Table } from '../composables/Table'
+import { smartComputed } from '../support/Reactivity'
 import { getTextWidth } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -23,28 +15,24 @@ import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
 
-const props = defineProps<{
-  options: Table
-  selected?: S
-}>()
-
-const emit = defineEmits<{
-  (e: 'update:selected', value: S): void
-}>()
+const props = defineProps<{ options: Table }>()
+const selected = defineModel<S>('selected')
 
 const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
 
-const ordersToShow = computed(() => {
+const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
     const show = unref(props.options.columns)[key]?.show
     return toValue(show) !== false
   })
-  if (props.selected === undefined) {
+
+  if (selected.value === undefined) {
     return orders
   }
+
   return ['__select', ...orders]
 })
 
@@ -126,51 +114,45 @@ const recordsWithSummary = computed(() => {
   return summary ? [...records, summary] : records
 })
 
-const indexes = computed(() => {
-  if (props.selected === undefined) {
+const indexes = smartComputed(() => {
+  if (selected.value === undefined) {
     return []
   }
+
   const records = unref(props.options.records) ?? []
   const indexField = unref(props.options.indexField)
 
-  return records.map((record, i) => indexField ? record[indexField] : i)
+  return records.map((record, i) => (indexField ? record[indexField] : i))
 })
-
-const selectedIndexes = reactive(new Set(Array.isArray(props.selected) ? props.selected : []))
 
 const control = computed({
   get() {
-    if (Array.isArray(props.selected)) {
-      return props.selected.length === indexes.value.length
-        ? true
-        : props.selected.length ? 'indeterminate' : false
+    if (Array.isArray(selected.value)) {
+      if (!selected.value.length) {
+        return false
+      }
+
+      if (selected.value.length === indexes.value.length) {
+        return true
+      }
     }
 
-    return 'indeterminate' // doesn't matter
+    return 'indeterminate'
   },
 
   set(newValue) {
     if (newValue === false) {
-      selectedIndexes.clear()
+      updateSelected([])
     } else if (newValue === true) {
-      indexes.value.forEach((index) => {
-        selectedIndexes.add(index)
-      })
+      updateSelected(indexes.value)
     }
   }
 })
 
 watch(indexes, (newValue, oldValue) => {
-  if (Array.isArray(props.selected)) {
-    xor(newValue, oldValue).forEach((index) => {
-      selectedIndexes.delete(index)
-    })
-  }
-})
-
-watch(selectedIndexes, (newValue) => {
-  if (Array.isArray(props.selected)) {
-    updateSelected(Array.from(newValue))
+  if (Array.isArray(selected.value)) {
+    const removed = xor(newValue, oldValue)
+    updateSelected(selected.value.filter((item) => !removed.includes(item)))
   }
 })
 
@@ -256,10 +238,9 @@ watch(actionsColumnWidth, (newValue) => {
 
 function stopObserving() {
   const orders = ordersToShow.value
-  const lastOrder
-    = orders[orders.length - 1] === 'actions'
-      ? orders[orders.length - 2]
-      : orders[orders.length - 1]
+  const lastOrder = orders[orders.length - 1] === 'actions'
+    ? orders[orders.length - 2]
+    : orders[orders.length - 1]
   colWidths[lastOrder] = 'auto'
   resizeObserver.stop()
 }
@@ -284,10 +265,7 @@ async function handleResize() {
   }
 
   const availableFill = row.value.getBoundingClientRect().width - totalWidth
-  updateColWidth(
-    nameOfColToGrow.value,
-    `calc(${availableFill}px + ${initialWidth})`
-  )
+  updateColWidth(nameOfColToGrow.value, `calc(${availableFill}px + ${initialWidth})`)
 }
 
 function syncHeadScroll() {
@@ -341,17 +319,23 @@ function getCell(key: string, index: number) {
     return { type: 'custom' }
   }
   const col = unref(props.options.columns)[key]
-  return (isSummary(index) && col?.summaryCell) ? col?.summaryCell : col?.cell
+  return isSummary(index) && col?.summaryCell ? col?.summaryCell : col?.cell
 }
 
-function updateSelected(selected: any) {
-  if (Array.isArray(props.selected)) {
-    if (xor(selected, props.selected ?? []).length) {
-      emit('update:selected', selected)
-    }
+function updateSelected(items: any) {
+  if (Array.isArray(selected.value)) {
+    selected.value = [...items] as any
   } else {
-    emit('update:selected', selected)
+    selected.value = items
   }
+}
+
+function addSelected(item: any) {
+  updateSelected([...(selected.value as any), item])
+}
+
+function removeSelected(item: any) {
+  updateSelected((selected.value as any[]).filter((i) => i !== item))
 }
 </script>
 
@@ -369,11 +353,7 @@ function updateSelected(selected: any) {
       />
 
       <div class="table" role="grid">
-        <div
-          class="container head"
-          ref="head"
-          @scroll="syncHeadScroll"
-        >
+        <div class="container head" ref="head" @scroll="syncHeadScroll">
           <div class="block" ref="block">
             <div class="row" ref="row">
               <STableItem
@@ -421,10 +401,7 @@ function updateSelected(selected: any) {
               position: 'relative'
             }"
           >
-            <div
-              v-for="{ index, key: __key, size, start } in virtualItems"
-              :key="__key"
-            >
+            <div v-for="{ index, key: __key, size, start } in virtualItems" :key="__key">
               <div
                 class="row"
                 :class="isSummaryOrLastClass(index)"
@@ -456,14 +433,14 @@ function updateSelected(selected: any) {
                     <template v-if="key === '__select' && !isSummary(index)">
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
-                        :model-value="selectedIndexes.has(indexes[index])"
-                        @update:model-value="c => selectedIndexes[c ? 'add' : 'delete'](indexes[index])"
+                        :model-value="selected.includes(indexes[index])"
+                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[index])"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                       <SInputRadio
                         v-else
                         :model-value="selected === indexes[index]"
-                        @update:model-value="c => updateSelected(c ? indexes[index] : null)"
+                        @update:model-value="(c) => updateSelected(c ? indexes[index] : null)"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
                       />
                     </template>
