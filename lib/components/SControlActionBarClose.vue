@@ -7,7 +7,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 </script>
 

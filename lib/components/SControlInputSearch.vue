@@ -19,10 +19,10 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'update:model-value', value: string | null): void
-  (e: 'input', value: string | null): void
-  (e: 'blur', value: string | null): void
-  (e: 'enter', value: string | null): void
+  'update:model-value': [value: string | null]
+  'input': [value: string | null]
+  'blur': [value: string | null]
+  'enter': [value: string | null]
 }>()
 
 const { t } = useTrans({

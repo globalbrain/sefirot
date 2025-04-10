@@ -42,8 +42,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: File | null): void
-  (e: 'change', value: File | null): void
+  'update:model-value': [file: File | null]
+  'change': [file: File | null]
 }>()
 
 const fileInput = ref<HTMLInputElement | null>(null)

@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'resize', value: string): void
+  resize: [value: string]
 }>()
 
 const { container, isOpen, toggle } = useFlyout()
