@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.14.2](https://github.com/globalbrain/sefirot/compare/v4.14.1...v4.14.2) (2025-04-10)
+
+
+### Bug Fixes
+
+* **table:** make selected reactive ([#596](https://github.com/globalbrain/sefirot/issues/596)) ([2d974ff](https://github.com/globalbrain/sefirot/commit/2d974ffd1eb217578106771f88f68bae86679860))
+
 ## [4.14.1](https://github.com/globalbrain/sefirot/compare/v4.14.0...v4.14.1) (2025-03-25)
 
 
