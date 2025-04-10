@@ -4,7 +4,6 @@ import IconImageSquare from '~icons/ph/image-square-bold'
 import IconNotePencil from '~icons/ph/note-pencil-bold'
 import IconTrash from '~icons/ph/trash-bold'
 import { orderBy, xor } from 'lodash-es'
-import SButton from 'sefirot/components/SButton.vue'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
@@ -17,7 +16,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, reactive, ref, shallowRef, watch } from 'vue'
+import { computed, reactive, ref, shallowRef } from 'vue'
 
 interface Sort {
   by: string
@@ -353,16 +352,11 @@ function updateTagsFilter(value: string) {
 }
 
 const selected = ref<string[]>([])
-
-watch(selected, (newValue) => {
-  console.log('Selected:', newValue)
-}, { deep: true, immediate: true })
 </script>
 
 <template>
   <Story :title="title" source="Not available" auto-props-disabled>
     <Board :title="title" :docs="docs">
-      <SButton label="Reset selection" @click="selected.length = 0" />
       <SCard>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>
