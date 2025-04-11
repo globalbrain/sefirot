@@ -190,7 +190,7 @@ const frozenColumns = smartComputed(() => {
   if (selected.value !== undefined && keys.length) {
     keys.unshift('__select')
   }
-  return keys
+  return keys.filter((key) => ordersToShow.value.includes(key))
 })
 
 useResizeObserver(block, ([entry]) => {
