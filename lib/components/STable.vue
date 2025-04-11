@@ -359,8 +359,7 @@ function getColWidth(key: string) {
   if (typeof document === 'undefined' || !block.value) {
     return '0px'
   }
-  const index = ordersToShow.value.indexOf(key)
-  const el = row.value?.children[index]
+  const el = row.value?.children?.[ordersToShow.value.indexOf(key)]
   if (!el) {
     return '0px'
   }
