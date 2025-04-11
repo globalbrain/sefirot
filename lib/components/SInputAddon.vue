@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 
 const container = ref<any>(null)

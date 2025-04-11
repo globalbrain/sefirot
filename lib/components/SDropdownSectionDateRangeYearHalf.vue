@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'change', value: YearHalf): void
+  change: [value: YearHalf]
 }>()
 
 const { validation } = useValidation(() => ({

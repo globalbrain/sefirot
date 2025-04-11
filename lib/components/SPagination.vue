@@ -21,8 +21,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'prev'): void
-  (e: 'next'): void
+  prev: []
+  next: []
 }>()
 
 const { t } = useTrans({

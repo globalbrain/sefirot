@@ -20,7 +20,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 
 const size = useControlSize()

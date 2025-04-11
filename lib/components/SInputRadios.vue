@@ -47,8 +47,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: ValueType | NullValue): void
-  (e: 'change', value: ValueType | NullValue): void
+  'update:model-value': [value: ValueType | NullValue]
+  'change': [value: ValueType | NullValue]
 }>()
 
 const _value = computed(() => {

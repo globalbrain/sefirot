@@ -32,7 +32,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  'remove': []
+  remove: []
 }>()
 
 const _file = computed(() => ({

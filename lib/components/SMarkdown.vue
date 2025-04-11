@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'clicked', payload: LinkSubscriberPayload): void
+  clicked: [payload: LinkSubscriberPayload]
 }>()
 
 const container = shallowRef<Element | null>(null)
