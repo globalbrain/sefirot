@@ -193,6 +193,12 @@ const frozenColumns = smartComputed(() => {
   return keys.filter((key) => ordersToShow.value.includes(key))
 })
 
+const frozenColWidths = smartComputed(() => {
+  // eslint-disable-next-line no-void
+  void blockWidth.value
+  return frozenColumns.value.map((key) => getColWidth(key))
+})
+
 useResizeObserver(block, ([entry]) => {
   blockWidth.value = entry.contentRect.width
 })
@@ -367,7 +373,7 @@ function getStyles(key: string) {
   if (length === 0) { return }
   const i = frozenColumns.value.indexOf(key)
   if (i < 0) { return }
-  const widthSum = frozenColumns.value.slice(0, i).map((k) => getColWidth(k)).join(' + ')
+  const widthSum = frozenColWidths.value.slice(0, i).join(' + ')
   return {
     '--table-col-position': 'sticky',
     '--table-col-z-index': length - i, // left to right decreasing
