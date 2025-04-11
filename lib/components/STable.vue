@@ -355,10 +355,6 @@ function getColWidth(key: string) {
   if (adjustedWidth && adjustedWidth !== 'auto') {
     return adjustedWidth
   }
-  // compute width
-  if (typeof document === 'undefined' || !block.value) {
-    return '0px'
-  }
   const el = row.value?.children?.[ordersToShow.value.indexOf(key)]
   if (!el) {
     return '0px'
