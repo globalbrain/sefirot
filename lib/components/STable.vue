@@ -184,6 +184,21 @@ watch(() => unref(props.options.records), () => {
   isSyncingBody = false
 }, { flush: 'post' })
 
+const frozenColumns = smartComputed(() => {
+  const columns = unref(props.options.columns)
+  const keys = Object.keys(columns).filter((key) => columns[key].freeze)
+  if (selected.value !== undefined && keys.length) {
+    keys.unshift('__select')
+  }
+  return keys.filter((key) => ordersToShow.value.includes(key))
+})
+
+const frozenColWidths = smartComputed(() => {
+  // eslint-disable-next-line no-void
+  void blockWidth.value
+  return frozenColumns.value.map((key) => getColWidth(key))
+})
+
 useResizeObserver(block, ([entry]) => {
   blockWidth.value = entry.contentRect.width
 })
@@ -337,6 +352,34 @@ function addSelected(item: any) {
 function removeSelected(item: any) {
   updateSelected((selected.value as any[]).filter((i) => i !== item))
 }
+
+function getColWidth(key: string) {
+  if (key === '__select') {
+    return '48px'
+  }
+  const adjustedWidth = colWidths[key]
+  if (adjustedWidth && adjustedWidth !== 'auto') {
+    return adjustedWidth
+  }
+  const el = row.value?.children?.[ordersToShow.value.indexOf(key)]
+  if (!el) {
+    return '0px'
+  }
+  return `${el.getBoundingClientRect().width}px`
+}
+
+function getStyles(key: string) {
+  const length = frozenColumns.value.length
+  if (length === 0) { return }
+  const i = frozenColumns.value.indexOf(key)
+  if (i < 0) { return }
+  const widthSum = frozenColWidths.value.slice(0, i).join(' + ')
+  return {
+    '--table-col-position': 'sticky',
+    '--table-col-z-index': length - i, // left to right decreasing
+    '--table-col-left': widthSum ? `calc(${widthSum})` : '0px'
+  }
+}
 </script>
 
 <template>
@@ -361,6 +404,7 @@ function removeSelected(item: any) {
                 :key="key"
                 :name="key"
                 :class-name="unref(options.columns)[key]?.className"
+                :style="getStyles(key)"
                 :width="colWidths[key]"
               >
                 <STableColumn
@@ -419,6 +463,7 @@ function removeSelected(item: any) {
                   :key="key"
                   :name="key"
                   :class-name="unref(options.columns)[key]?.className"
+                  :style="getStyles(key)"
                   :width="colWidths[key]"
                 >
                   <STableCell
