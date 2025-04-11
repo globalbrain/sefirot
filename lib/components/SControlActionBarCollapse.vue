@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 
 const { isCollapsed, setCollapse, toggleCollapse } = useCardState()

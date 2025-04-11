@@ -26,8 +26,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', file: File | File[] | null): void
-  (e: 'change', file: File | File[] | null): void
+  'update:model-value': [file: File | File[] | null]
+  'change': [file: File | File[] | null]
 }>()
 
 const _value = computed(() => {

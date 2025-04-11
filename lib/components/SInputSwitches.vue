@@ -30,7 +30,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: any[]): void
+  'update:modelValue': [value: any[]]
 }>()
 
 const classes = computed(() => [

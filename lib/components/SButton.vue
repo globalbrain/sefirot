@@ -51,8 +51,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'click'): void
-  (e: 'disabled-click'): void
+  'click': []
+  'disabled-click': []
 }>()
 
 const _leadIcon = computed(() => props.leadIcon ?? props.icon)

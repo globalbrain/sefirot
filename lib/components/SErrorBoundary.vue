@@ -3,7 +3,7 @@ import { onErrorCaptured, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 const emit = defineEmits<{
-  (e: 'error', value: any): void
+  error: [value: any]
 }>()
 
 const error = shallowRef<Error>()

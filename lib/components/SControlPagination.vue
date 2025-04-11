@@ -10,8 +10,8 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'prev'): void
-  (e: 'next'): void
+  prev: []
+  next: []
 }>()
 
 const size = useControlSize()
