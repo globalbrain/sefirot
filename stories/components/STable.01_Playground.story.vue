@@ -224,6 +224,7 @@ const table = useTable({
     name: {
       label: 'Name',
       dropdown: dropdownName,
+      freeze: true,
       grow: true,
       cell: (_, record) => ({
         type: 'text',
