@@ -236,7 +236,6 @@ const table = useTable({
     status: {
       label: 'Status',
       dropdown: dropdownStatus,
-      // freeze: true,
       cell: (_, record) => ({
         type: 'state',
         label: record.status,
@@ -248,7 +247,6 @@ const table = useTable({
 
     authors: {
       label: 'Authors',
-      freeze: true,
       cell: (authors) => ({
         type: 'avatars',
         avatars: authors,
