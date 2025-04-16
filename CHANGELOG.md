@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.15.0](https://github.com/globalbrain/sefirot/compare/v4.14.2...v4.15.0) (2025-04-16)
+
+
+### Features
+
+* **table:** allow freezing columns ([#598](https://github.com/globalbrain/sefirot/issues/598)) ([#601](https://github.com/globalbrain/sefirot/issues/601)) ([1e7856f](https://github.com/globalbrain/sefirot/commit/1e7856f6a450c3dae1ea284dc9ac7a55760e3eb7))
+* **table:** allow padding-left customization with row selection ([#604](https://github.com/globalbrain/sefirot/issues/604)) ([8e03cae](https://github.com/globalbrain/sefirot/commit/8e03cae48738a6032992167f32ef89502a34f954))
+
 ## [4.14.2](https://github.com/globalbrain/sefirot/compare/v4.14.1...v4.14.2) (2025-04-10)
 
 
