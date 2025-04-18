@@ -271,4 +271,8 @@ watch(
   border-radius: 6px;
   font-size: 12px;
 }
+
+:deep(.tick line) {
+  display: none;
+}
 </style>
