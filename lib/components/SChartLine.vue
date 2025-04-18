@@ -7,9 +7,11 @@ import { type ChartColor, type KV, type Margins, c, getColor } from '../support/
 const props = withDefaults(defineProps<{
   // Data
   data: KV[]
+
   // Styling
   colors?: ChartColor[]
   margins?: Margins
+
   // Axis & labels
   xLabel?: string
   yLabel?: string
@@ -19,27 +21,34 @@ const props = withDefaults(defineProps<{
   yLabelFontSize?: string
   ticks?: number
   tickFontSize?: string
+
   // Line appearance
   strokeWidth?: number
   showPoints?: boolean
   pointRadius?: number
+
   // Tooltip & interactivity
   tooltip?: boolean
   tooltipFormat?: (d: KV, color: string) => string
+
   // Animation & debug
   animate?: boolean
   debug?: boolean
 }>(), {
   colors: () => ['blue'],
+
   xLabelFontSize: '14px',
   yLabelFontSize: '14px',
   ticks: 5,
   tickFontSize: '14px',
+
   strokeWidth: 2,
   showPoints: true,
   pointRadius: 4,
+
   tooltip: true,
   tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+
   animate: true,
   debug: false
 })

@@ -41,6 +41,7 @@ function labelFormat(d: KV) {
 
 function state() {
   return {
+    // Bar chart state
     barType: 'vertical',
     barDebug: false,
     barMarginTop: undefined,
@@ -58,7 +59,7 @@ function state() {
     barYLabelOffset: undefined,
     barXLabelFontSize: undefined,
     barYLabelFontSize: undefined,
-
+    // Pie chart state
     pieType: 'donut',
     pieHalf: false,
     pieDebug: false,
@@ -100,178 +101,42 @@ function state() {
 <template>
   <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
+      <!-- Bar Chart Controls -->
       <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
-      <HstSelect
-        title="type"
-        :options="['vertical', 'horizontal']"
-        v-model="state.barType"
-      />
-      <HstCheckbox
-        title="debug"
-        v-model="state.barDebug"
-      />
-      <HstSlider
-        title="margin-top"
-        v-model="state.barMarginTop"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-right"
-        v-model="state.barMarginRight"
-        :min="0"
-        :max="300"
-      />
-      <HstSlider
-        title="margin-bottom"
-        v-model="state.barMarginBottom"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-left"
-        v-model="state.barMarginLeft"
-        :min="0"
-        :max="300"
-      />
-      <HstSlider
-        title="ticks"
-        v-model="state.barTicks"
-        :min="0"
-        :max="20"
-      />
-      <HstSlider
-        title="tick-font-size"
-        v-model="state.barTickFontSize"
-        :min="10"
-        :max="20"
-      />
-      <HstSlider
-        title="max-bandwidth"
-        v-model="state.barMaxBandwidth"
-        :min="1"
-        :max="100"
-      />
-      <HstCheckbox
-        title="animate"
-        v-model="state.barAnimate"
-      />
-      <HstCheckbox
-        title="tooltip"
-        v-model="state.barTooltip"
-      />
-      <HstText
-        title="x-label"
-        v-model="state.barXLabel"
-      />
-      <HstText
-        title="y-label"
-        v-model="state.barYLabel"
-      />
-      <HstSlider
-        title="x-label-offset"
-        v-model="state.barXLabelOffset"
-        :min="-10"
-        :max="60"
-      />
-      <HstSlider
-        title="y-label-offset"
-        v-model="state.barYLabelOffset"
-        :min="-10"
-        :max="60"
-      />
-      <HstSlider
-        title="x-label-font-size"
-        v-model="state.barXLabelFontSize"
-        :min="10"
-        :max="20"
-      />
-      <HstSlider
-        title="y-label-font-size"
-        v-model="state.barYLabelFontSize"
-        :min="10"
-        :max="20"
-      />
+      <HstSelect title="type" :options="['vertical', 'horizontal']" v-model="state.barType" />
+      <HstCheckbox title="debug" v-model="state.barDebug" />
+      <HstSlider title="margin-top" v-model="state.barMarginTop" :min="0" :max="100" />
+      <HstSlider title="margin-right" v-model="state.barMarginRight" :min="0" :max="300" />
+      <HstSlider title="margin-bottom" v-model="state.barMarginBottom" :min="0" :max="100" />
+      <HstSlider title="margin-left" v-model="state.barMarginLeft" :min="0" :max="300" />
+      <HstSlider title="ticks" v-model="state.barTicks" :min="0" :max="20" />
+      <HstSlider title="tick-font-size" v-model="state.barTickFontSize" :min="10" :max="20" />
+      <HstSlider title="max-bandwidth" v-model="state.barMaxBandwidth" :min="1" :max="100" />
+      <HstCheckbox title="animate" v-model="state.barAnimate" />
+      <HstCheckbox title="tooltip" v-model="state.barTooltip" />
+      <HstText title="x-label" v-model="state.barXLabel" />
+      <HstText title="y-label" v-model="state.barYLabel" />
+      <HstSlider title="x-label-offset" v-model="state.barXLabelOffset" :min="-10" :max="60" />
+      <HstSlider title="y-label-offset" v-model="state.barYLabelOffset" :min="-10" :max="60" />
+      <HstSlider title="x-label-font-size" v-model="state.barXLabelFontSize" :min="10" :max="20" />
+      <HstSlider title="y-label-font-size" v-model="state.barYLabelFontSize" :min="10" :max="20" />
+      <!-- Pie Chart Controls -->
       <div class="s-p-8 s-font-14 s-font-w-500">Pie Chart</div>
-      <HstSelect
-        title="type"
-        :options="{
-          donut: 'donut',
-          pie: 'pie'
-        }"
-        v-model="state.pieType"
-      />
-      <HstCheckbox
-        title="half"
-        v-model="state.pieHalf"
-      />
-      <HstCheckbox
-        title="debug"
-        v-model="state.pieDebug"
-      />
-      <HstSlider
-        title="margin-top"
-        v-model="state.pieMarginTop"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-right"
-        v-model="state.pieMarginRight"
-        :min="0"
-        :max="300"
-      />
-      <HstSlider
-        title="margin-bottom"
-        v-model="state.pieMarginBottom"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-left"
-        v-model="state.pieMarginLeft"
-        :min="0"
-        :max="300"
-      />
-      <HstCheckbox
-        title="animate"
-        v-model="state.pieAnimate"
-      />
-      <HstCheckbox
-        title="tooltip"
-        v-model="state.pieTooltip"
-      />
-      <HstSelect
-        title="active-key"
-        :options="['none', ...data.map((d) => d.key)]"
-        v-model="state.pieActiveKey"
-      />
-      <HstCheckbox
-        title="legend"
-        v-model="state.pieLegend"
-      />
-      <HstSlider
-        title="legend-padding"
-        v-model="state.pieLegendPadding"
-        :min="50"
-        :max="150"
-      />
-      <HstSlider
-        title="legend-font-size"
-        v-model="state.pieLegendFontSize"
-        :min="10"
-        :max="20"
-      />
-      <HstCheckbox
-        title="labels"
-        v-model="state.pieLabels"
-      />
-      <HstSlider
-        title="label-font-size"
-        v-model="state.pieLabelFontSize"
-        :min="10"
-        :max="20"
-      />
+      <HstSelect title="type" :options="{ donut: 'donut', pie: 'pie' }" v-model="state.pieType" />
+      <HstCheckbox title="half" v-model="state.pieHalf" />
+      <HstCheckbox title="debug" v-model="state.pieDebug" />
+      <HstSlider title="margin-top" v-model="state.pieMarginTop" :min="0" :max="100" />
+      <HstSlider title="margin-right" v-model="state.pieMarginRight" :min="0" :max="300" />
+      <HstSlider title="margin-bottom" v-model="state.pieMarginBottom" :min="0" :max="100" />
+      <HstSlider title="margin-left" v-model="state.pieMarginLeft" :min="0" :max="300" />
+      <HstCheckbox title="animate" v-model="state.pieAnimate" />
+      <HstCheckbox title="tooltip" v-model="state.pieTooltip" />
+      <HstSelect title="active-key" :options="['none', ...data.map((d) => d.key)]" v-model="state.pieActiveKey" />
+      <HstCheckbox title="legend" v-model="state.pieLegend" />
+      <HstSlider title="legend-padding" v-model="state.pieLegendPadding" :min="50" :max="150" />
+      <HstSlider title="legend-font-size" v-model="state.pieLegendFontSize" :min="10" :max="20" />
+      <HstCheckbox title="labels" v-model="state.pieLabels" />
+      <HstSlider title="label-font-size" v-model="state.pieLabelFontSize" :min="10" :max="20" />
       <!-- Line Chart Controls -->
       <div class="s-p-8 s-font-14 s-font-w-500">Line Chart</div>
       <HstCheckbox title="debug" v-model="state.lineDebug" />
@@ -295,6 +160,7 @@ function state() {
     </template>
     <template #default="{ state }">
       <Board :title="title">
+        <!-- Bar Chart Preview -->
         <SCard class="chart-card">
           <SCardBlock size="medium" class="s-px-24" bg="elv-2">
             <SControl>
@@ -343,6 +209,7 @@ function state() {
           </SCardBlock>
         </SCard>
         <br>
+        <!-- Pie Chart Preview -->
         <SCard class="chart-card">
           <SCardBlock size="medium" class="s-px-24" bg="elv-2">
             <SControl>
