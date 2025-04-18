@@ -57,14 +57,26 @@ const chartRef = useTemplateRef('chart')
 const { width, height } = useElementSize(chartRef)
 let tooltipTimeout = 0
 
-function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: number; clientHeight: number; animate: boolean }) {
+// Function to render the chart
+function renderChart({
+  clientWidth,
+  clientHeight,
+  animate
+}: {
+  clientWidth: number
+  clientHeight: number
+  animate: boolean
+}) {
   if (!chartRef.value) { return }
 
   // Determine line color
   const lineColor = getColor(...props.colors)
 
   // Clear existing
-  d3.select(chartRef.value).selectAll('*').remove()
+  d3
+    .select(chartRef.value)
+    .selectAll('*')
+    .remove()
 
   // Setup margins and dimensions
   const margin = {
@@ -77,17 +89,20 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
   const h = clientHeight - margin.top - margin.bottom
 
   // Scales
-  const x = d3.scalePoint<string>()
+  const x = d3
+    .scalePoint<string>()
     .domain(props.data.map((d) => d.key))
     .range([0, w])
     .padding(0.5)
-  const y = d3.scaleLinear()
+  const y = d3
+    .scaleLinear()
     .domain([0, d3.max(props.data, (d) => d.value)!])
     .nice()
     .range([h, 0])
 
   // Create SVG container
-  const svg = d3.select(chartRef.value)
+  const svg = d3
+    .select(chartRef.value)
     .append('svg')
     .attr('width', '100%')
     .attr('height', clientHeight)
@@ -95,7 +110,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
     .attr('transform', `translate(${margin.left},${margin.top})`)
 
   // X Axis
-  svg.append('g')
+  svg
+    .append('g')
     .attr('transform', `translate(0,${h})`)
     .call(d3.axisBottom(x).ticks(props.ticks))
     .selectAll('text')
@@ -105,7 +121,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
   svg.select('.domain').remove()
 
   // Y Axis
-  svg.append('g')
+  svg
+    .append('g')
     .call(d3.axisLeft(y).ticks(props.ticks))
     .selectAll('text')
     .attr('fill', c.text2)
@@ -113,7 +130,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
   svg.select('.domain').remove()
 
   // Grid lines
-  svg.selectAll()
+  svg
+    .selectAll()
     .data(y.ticks(props.ticks))
     .enter()
     .append('line')
@@ -126,7 +144,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
 
   // Axis labels
   if (props.xLabel) {
-    svg.append('text')
+    svg
+      .append('text')
       .attr('x', w / 2)
       .attr('y', h + (props.xLabelOffset ?? 46))
       .attr('fill', c.text2)
@@ -135,7 +154,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
       .html(props.xLabel)
   }
   if (props.yLabel) {
-    svg.append('text')
+    svg
+      .append('text')
       .attr('x', -h / 2)
       .attr('y', -(props.yLabelOffset ?? 40))
       .attr('transform', 'rotate(-90)')
@@ -146,13 +166,15 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
   }
 
   // Line generator
-  const lineGen = d3.line<KV>()
+  const lineGen = d3
+    .line<KV>()
     .x((d) => x(d.key)!)
     .y((d) => y(d.value))
     .curve(d3.curveMonotoneX)
 
   // Draw line path
-  const path = svg.append('path')
+  const path = svg
+    .append('path')
     .datum(props.data)
     .attr('fill', 'none')
     .attr('stroke', lineColor)
@@ -171,7 +193,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
   }
 
   // Draw points
-  const circles = svg.selectAll('circle')
+  const circles = svg
+    .selectAll('circle')
     .data(props.data)
     .enter()
     .append('circle')
@@ -192,7 +215,8 @@ function renderChart({ clientWidth, clientHeight, animate }: { clientWidth: numb
 
   // Tooltip interactivity
   if (props.tooltip) {
-    const Tooltip = d3.select(chartRef.value)
+    const Tooltip = d3
+      .select(chartRef.value)
       .append('div')
       .attr('class', 'tooltip')
     function updatePos(event: PointerEvent) {
