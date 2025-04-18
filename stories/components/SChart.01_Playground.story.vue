@@ -3,6 +3,7 @@ import IconDownload from '~icons/ph/download-simple-bold'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SChartBar from 'sefirot/components/SChartBar.vue'
+import SChartLine from 'sefirot/components/SChartLine.vue'
 import SChartPie from 'sefirot/components/SChartPie.vue'
 import SControl from 'sefirot/components/SControl.vue'
 import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
@@ -28,6 +29,7 @@ const data = ref<KV[]>([
 
 const barRef = ref()
 const pieRef = ref()
+const lineRef = ref()
 
 function tooltipFormat(d: KV) {
   return `${d.key} &ndash; <span class="tooltip-number">${d.value}</span>`
@@ -71,7 +73,26 @@ function state() {
     pieLegendPadding: undefined,
     pieLegendFontSize: undefined,
     pieLabels: false,
-    pieLabelFontSize: undefined
+    pieLabelFontSize: undefined,
+    // Line chart state
+    lineDebug: false,
+    lineMarginTop: undefined,
+    lineMarginRight: undefined,
+    lineMarginBottom: undefined,
+    lineMarginLeft: undefined,
+    lineTicks: undefined,
+    lineTickFontSize: undefined,
+    lineStrokeWidth: undefined,
+    lineShowPoints: true,
+    linePointRadius: undefined,
+    lineAnimate: true,
+    lineTooltip: true,
+    lineXLabel: undefined,
+    lineYLabel: undefined,
+    lineXLabelOffset: undefined,
+    lineYLabelOffset: undefined,
+    lineXLabelFontSize: undefined,
+    lineYLabelFontSize: undefined
   }
 }
 </script>
@@ -251,6 +272,26 @@ function state() {
         :min="10"
         :max="20"
       />
+      <!-- Line Chart Controls -->
+      <div class="s-p-8 s-font-14 s-font-w-500">Line Chart</div>
+      <HstCheckbox title="debug" v-model="state.lineDebug" />
+      <HstSlider title="margin-top" v-model="state.lineMarginTop" :min="0" :max="100" />
+      <HstSlider title="margin-right" v-model="state.lineMarginRight" :min="0" :max="300" />
+      <HstSlider title="margin-bottom" v-model="state.lineMarginBottom" :min="0" :max="100" />
+      <HstSlider title="margin-left" v-model="state.lineMarginLeft" :min="0" :max="300" />
+      <HstSlider title="ticks" v-model="state.lineTicks" :min="0" :max="20" />
+      <HstSlider title="tick-font-size" v-model="state.lineTickFontSize" :min="10" :max="20" />
+      <HstSlider title="stroke-width" v-model="state.lineStrokeWidth" :min="1" :max="10" />
+      <HstCheckbox title="show-points" v-model="state.lineShowPoints" />
+      <HstSlider title="point-radius" v-model="state.linePointRadius" :min="0" :max="10" />
+      <HstCheckbox title="animate" v-model="state.lineAnimate" />
+      <HstCheckbox title="tooltip" v-model="state.lineTooltip" />
+      <HstText title="x-label" v-model="state.lineXLabel" />
+      <HstText title="y-label" v-model="state.lineYLabel" />
+      <HstSlider title="x-label-offset" v-model="state.lineXLabelOffset" :min="-10" :max="60" />
+      <HstSlider title="y-label-offset" v-model="state.lineYLabelOffset" :min="-10" :max="60" />
+      <HstSlider title="x-label-font-size" v-model="state.lineXLabelFontSize" :min="10" :max="20" />
+      <HstSlider title="y-label-font-size" v-model="state.lineYLabelFontSize" :min="10" :max="20" />
     </template>
     <template #default="{ state }">
       <Board :title="title">
@@ -344,6 +385,54 @@ function state() {
                 :labels="state.pieLabels"
                 :label-format="labelFormat"
                 :label-font-size="state.pieLabelFontSize"
+              />
+            </div>
+          </SCardBlock>
+        </SCard>
+        <br>
+        <!-- Line Chart Preview -->
+        <SCard class="chart-card">
+          <SCardBlock size="medium" class="s-px-24" bg="elv-2">
+            <SControl>
+              <SControlLeft>
+                <SControlText class="s-font-w-500">
+                  Line Chart
+                </SControlText>
+              </SControlLeft>
+              <SControlRight>
+                <SControlActionBar>
+                  <SControlActionBarButton
+                    :icon="IconDownload"
+                    @click="exportAsPng(lineRef, 'line-chart.png')"
+                  />
+                </SControlActionBar>
+              </SControlRight>
+            </SControl>
+          </SCardBlock>
+          <SCardBlock bg="elv-2">
+            <div class="s-w-full s-h-320">
+              <SChartLine
+                ref="lineRef"
+                :data
+                :margins="{
+                  top: state.lineMarginTop,
+                  right: state.lineMarginRight,
+                  bottom: state.lineMarginBottom,
+                  left: state.lineMarginLeft
+                }"
+                :ticks="state.lineTicks"
+                :tick-font-size="state.lineTickFontSize"
+                :stroke-width="state.lineStrokeWidth"
+                :show-points="state.lineShowPoints"
+                :point-radius="state.linePointRadius"
+                :animate="state.lineAnimate"
+                :tooltip="state.lineTooltip"
+                :x-label="state.lineXLabel"
+                :y-label="state.lineYLabel"
+                :x-label-offset="state.lineXLabelOffset"
+                :y-label-offset="state.lineYLabelOffset"
+                :x-label-font-size="state.lineXLabelFontSize"
+                :y-label-font-size="state.lineYLabelFontSize"
               />
             </div>
           </SCardBlock>
