@@ -2,7 +2,7 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
-import { type ChartColor, type KV, c, scheme } from '../support/Chart'
+import { type ChartColor, type KV, type Margins, c, scheme } from '../support/Chart'
 import { getTextSize } from '../support/Text'
 
 const props = withDefaults(defineProps<{
@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
   // Chart appearance
   type?: 'horizontal' | 'vertical'
   colors?: ChartColor[]
+  margins?: Margins
   maxBandwidth?: number
 
   // Axis & labels
@@ -94,10 +95,10 @@ function renderChart({
   const yLabelOffset = props.yLabelOffset ?? 9 + maxVerticalTickWidthInPx + gapBetweenVerticalLabelAndTicks
 
   const margin = {
-    top: 30,
-    right: 30,
-    bottom: 30 + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0),
-    left: 30 + verticalLabelWidthInPx + yLabelOffset
+    top: props.margins?.top ?? 30,
+    right: props.margins?.right ?? 30,
+    bottom: props.margins?.bottom ?? (30 + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0)),
+    left: props.margins?.left ?? (30 + verticalLabelWidthInPx + yLabelOffset)
   }
 
   const width = clientWidth - margin.left - margin.right
