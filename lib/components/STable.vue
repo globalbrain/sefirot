@@ -5,7 +5,7 @@ import xor from 'lodash-es/xor'
 import { computed, nextTick, reactive, ref, shallowRef, toValue, unref, watch } from 'vue'
 import { type Table } from '../composables/Table'
 import { smartComputed } from '../support/Reactivity'
-import { getTextWidth } from '../support/Text'
+import { getTextSize } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
 import SSpinner from './SSpinner.vue'
@@ -231,12 +231,12 @@ const actionsColumnWidth = computed(() => {
 
     // has only label
     if (label && !icon) {
-      return 1 /* border */ + 12 /* padding */ + getTextWidth(label, font) + 12 /* padding */ + 1 /* border */
+      return 1 /* border */ + 12 /* padding */ + getTextSize(label, font).width + 12 /* padding */ + 1 /* border */
     }
 
     // has both icon and label
     if (icon && label) {
-      return 1 /* border */ + 8 /* padding */ + 16 /* icon */ + 4 /* padding */ + getTextWidth(label, font) + 10 /* padding */ + 1 /* border */
+      return 1 /* border */ + 8 /* padding */ + 16 /* icon */ + 4 /* padding */ + getTextSize(label, font).width + 10 /* padding */ + 1 /* border */
     }
 
     return 0

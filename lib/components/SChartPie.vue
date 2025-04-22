@@ -2,7 +2,7 @@
 import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
-import { type ChartColor, type KV, type Margins, c, scheme } from '../support/Chart'
+import { type ChartColor, type KV, c, scheme } from '../support/Chart'
 
 const props = withDefaults(defineProps<{
   // State
@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   type?: 'pie' | 'donut'
   half?: boolean
   colors?: ChartColor[]
-  margins?: Margins
   innerRadius?: (outerRadius: number) => number
 
   // Labels
@@ -84,10 +83,10 @@ function renderChart({
 
   // Set dimensions and margins
   const margin = {
-    top: props.margins?.top ?? 30,
-    right: props.margins?.right ?? 30,
-    bottom: props.margins?.bottom ?? 30,
-    left: props.margins?.left ?? 30
+    top: 30,
+    right: 30,
+    bottom: 30,
+    left: 30
   }
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom

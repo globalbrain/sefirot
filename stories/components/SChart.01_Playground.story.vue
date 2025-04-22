@@ -41,10 +41,6 @@ function state() {
   return {
     barType: 'vertical',
     barDebug: false,
-    barMarginTop: undefined,
-    barMarginRight: undefined,
-    barMarginBottom: undefined,
-    barMarginLeft: undefined,
     barTicks: undefined,
     barTickFontSize: undefined,
     barMaxBandwidth: undefined,
@@ -60,10 +56,6 @@ function state() {
     pieType: 'donut',
     pieHalf: false,
     pieDebug: false,
-    pieMarginTop: undefined,
-    pieMarginRight: undefined,
-    pieMarginBottom: undefined,
-    pieMarginLeft: undefined,
     pieAnimate: true,
     pieTooltip: true,
     pieActiveKey: undefined,
@@ -88,30 +80,6 @@ function state() {
       <HstCheckbox
         title="debug"
         v-model="state.barDebug"
-      />
-      <HstSlider
-        title="margin-top"
-        v-model="state.barMarginTop"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-right"
-        v-model="state.barMarginRight"
-        :min="0"
-        :max="300"
-      />
-      <HstSlider
-        title="margin-bottom"
-        v-model="state.barMarginBottom"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-left"
-        v-model="state.barMarginLeft"
-        :min="0"
-        :max="300"
       />
       <HstSlider
         title="ticks"
@@ -188,30 +156,6 @@ function state() {
         title="debug"
         v-model="state.pieDebug"
       />
-      <HstSlider
-        title="margin-top"
-        v-model="state.pieMarginTop"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-right"
-        v-model="state.pieMarginRight"
-        :min="0"
-        :max="300"
-      />
-      <HstSlider
-        title="margin-bottom"
-        v-model="state.pieMarginBottom"
-        :min="0"
-        :max="100"
-      />
-      <HstSlider
-        title="margin-left"
-        v-model="state.pieMarginLeft"
-        :min="0"
-        :max="300"
-      />
       <HstCheckbox
         title="animate"
         v-model="state.pieAnimate"
@@ -277,12 +221,6 @@ function state() {
               <SChartBar
                 ref="barRef"
                 :data
-                :margins="{
-                  top: state.barMarginTop,
-                  right: state.barMarginRight,
-                  bottom: state.barMarginBottom,
-                  left: state.barMarginLeft
-                }"
                 :type="state.barType"
                 :debug="state.barDebug"
                 :ticks="state.barTicks"
@@ -325,12 +263,6 @@ function state() {
               <SChartPie
                 ref="pieRef"
                 :data
-                :margins="{
-                  top: state.pieMarginTop,
-                  right: state.pieMarginRight,
-                  bottom: state.pieMarginBottom,
-                  left: state.pieMarginLeft
-                }"
                 :type="state.pieType"
                 :half="state.pieHalf"
                 :debug="state.pieDebug"
