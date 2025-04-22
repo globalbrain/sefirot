@@ -42,7 +42,7 @@ const props = withDefaults(defineProps<{
   tickFontSize: '14px',
 
   tooltip: true,
-  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+  tooltipFormat: (d: KV) => `${d.key}&nbsp;&ndash; ${d.value}`,
 
   animate: true,
   debug: false
