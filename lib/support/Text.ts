@@ -2,16 +2,16 @@
 
 let _canvas: HTMLCanvasElement
 
-export function getTextWidth(text: string, font: string): number
-export function getTextWidth(text: string, el: HTMLElement): number
-
-export function getTextWidth(text: string, fontOrEl: string | HTMLElement): number {
+export function getTextSize(text: string, fontOrEl: string | HTMLElement) {
   const canvas = _canvas || (_canvas = document.createElement('canvas'))
   const context = canvas.getContext('2d')!
   context.font = typeof fontOrEl === 'string' ? fontOrEl : getCanvasFont(fontOrEl)
   const metrics = context.measureText(text)
 
-  return metrics.width
+  return {
+    width: metrics.width,
+    height: metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+  }
 }
 
 function getCanvasFont(el: HTMLElement) {

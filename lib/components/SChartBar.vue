@@ -3,6 +3,7 @@ import { useElementSize } from '@vueuse/core'
 import * as d3 from 'd3'
 import { useTemplateRef, watch } from 'vue'
 import { type ChartColor, type KV, type Margins, c, scheme } from '../support/Chart'
+import { getTextSize } from '../support/Text'
 
 const props = withDefaults(defineProps<{
   // State
@@ -42,7 +43,7 @@ const props = withDefaults(defineProps<{
   tickFontSize: '14px',
 
   tooltip: true,
-  tooltipFormat: (d: KV) => `${d.key} – ${d.value}`,
+  tooltipFormat: (d: KV) => `${d.key}&nbsp;&ndash; ${d.value}`,
 
   animate: true,
   debug: false
@@ -67,6 +68,7 @@ function renderChart({
 
   // Create color scale
   const color = scheme(props.data, props.colors)
+  const font = getComputedStyle(chartRef.value).fontFamily
 
   // Clear any existing SVG
   d3
@@ -77,25 +79,37 @@ function renderChart({
   // Set dimensions and margins
   const vertical = props.type === 'vertical'
 
+  const maxKeyLength = props.data.reduce((a, b) => Math.max(a, b.key.length), Number.NEGATIVE_INFINITY)
+  const maxValueLength = props.data.reduce((a, b) => Math.max(a, b.value.toLocaleString().length), Number.NEGATIVE_INFINITY)
+
+  const maxVerticalTickWidthInCh = vertical ? maxValueLength : maxKeyLength
+  const maxVerticalTickWidthInPx = getTextSize('0'.repeat(maxVerticalTickWidthInCh), `400 ${props.tickFontSize} ${font}`).width
+  const verticalLabelWidthInPx = props.yLabel ? getTextSize(props.yLabel, `400 ${props.yLabelFontSize} ${font}`).height : 0
+  const gapBetweenVerticalLabelAndTicks = props.yLabel ? 20 : 0
+
+  const maxHorizontalTickHeightInPx = getTextSize('0', `400 ${props.tickFontSize} ${font}`).height // wrapping isn't supported
+  const horizontalLabelHeightInPx = props.xLabel ? getTextSize(props.xLabel, `400 ${props.xLabelFontSize} ${font}`).height : 0
+  const gapBetweenHorizontalLabelAndTicks = props.xLabel ? 20 : 0
+
+  const xLabelOffset = props.xLabelOffset ?? horizontalLabelHeightInPx + 9 + maxHorizontalTickHeightInPx + gapBetweenHorizontalLabelAndTicks
+  const yLabelOffset = props.yLabelOffset ?? 9 + maxVerticalTickWidthInPx + gapBetweenVerticalLabelAndTicks
+
   const margin = {
     top: props.margins?.top ?? 30,
-    right: props.margins?.right ?? 40,
-    bottom: props.margins?.bottom ?? (props.xLabel ? 80 : 60),
-    left: props.margins?.left ?? (props.yLabel ? (vertical ? 80 : 100) : (vertical ? 60 : 80))
+    right: props.margins?.right ?? 30,
+    bottom: props.margins?.bottom ?? (30 + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0)),
+    left: props.margins?.left ?? (30 + verticalLabelWidthInPx + yLabelOffset)
   }
 
   const width = clientWidth - margin.left - margin.right
   const height = clientHeight - margin.top - margin.bottom
-
-  const xLabelOffset = props.xLabelOffset ?? 46
-  const yLabelOffset = props.yLabelOffset ?? (vertical ? 40 : 56)
 
   // Create SVG
   const svg = d3
     .select(chartRef.value)
     .append('svg')
     .attr('width', '100%')
-    .attr('height', height + margin.top + margin.bottom)
+    .attr('height', clientHeight)
     .append('g')
     .attr('transform', `translate(${margin.left},${margin.top})`)
 
