@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.18.0](https://github.com/globalbrain/sefirot/compare/v4.16.0...v4.18.0) (2025-04-24)
+
+
+### Features
+
+* **chart:** add allow customizing gap between label and ticks and consider margin to be that of final shape instead of main rectangle ([#606](https://github.com/globalbrain/sefirot/issues/606)) ([138cf8a](https://github.com/globalbrain/sefirot/commit/138cf8a5f0ca2962682dacd359d27baef8875561))
+
 # [4.16.0](https://github.com/globalbrain/sefirot/compare/v4.15.0...v4.16.0) (2025-04-24)
 
 
