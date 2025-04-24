@@ -54,6 +54,8 @@ function state() {
     barYLabel: undefined,
     barXLabelOffset: undefined,
     barYLabelOffset: undefined,
+    barXLabelTickGap: undefined,
+    barYLabelTickGap: undefined,
     barXLabelFontSize: undefined,
     barYLabelFontSize: undefined,
 
@@ -158,6 +160,18 @@ function state() {
         v-model="state.barYLabelOffset"
         :min="-10"
         :max="60"
+      />
+      <HstSlider
+        title="x-label-tick-gap"
+        v-model="state.barXLabelTickGap"
+        :min="0"
+        :max="100"
+      />
+      <HstSlider
+        title="y-label-tick-gap"
+        v-model="state.barYLabelTickGap"
+        :min="0"
+        :max="100"
       />
       <HstSlider
         title="x-label-font-size"
@@ -294,6 +308,8 @@ function state() {
                 :y-label="state.barYLabel"
                 :x-label-offset="state.barXLabelOffset"
                 :y-label-offset="state.barYLabelOffset"
+                :x-label-tick-gap="state.barXLabelTickGap"
+                :y-label-tick-gap="state.barYLabelTickGap"
                 :x-label-font-size="state.barXLabelFontSize"
                 :y-label-font-size="state.barYLabelFontSize"
                 :max-bandwidth="state.barMaxBandwidth"
