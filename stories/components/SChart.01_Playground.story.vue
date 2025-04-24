@@ -52,8 +52,6 @@ function state() {
     barTooltip: true,
     barXLabel: undefined,
     barYLabel: undefined,
-    barXLabelOffset: undefined,
-    barYLabelOffset: undefined,
     barXLabelTickGap: undefined,
     barYLabelTickGap: undefined,
     barXLabelFontSize: undefined,
@@ -148,18 +146,6 @@ function state() {
       <HstText
         title="y-label"
         v-model="state.barYLabel"
-      />
-      <HstSlider
-        title="x-label-offset"
-        v-model="state.barXLabelOffset"
-        :min="-10"
-        :max="60"
-      />
-      <HstSlider
-        title="y-label-offset"
-        v-model="state.barYLabelOffset"
-        :min="-10"
-        :max="60"
       />
       <HstSlider
         title="x-label-tick-gap"
@@ -306,8 +292,6 @@ function state() {
                 :tooltip-format
                 :x-label="state.barXLabel"
                 :y-label="state.barYLabel"
-                :x-label-offset="state.barXLabelOffset"
-                :y-label-offset="state.barYLabelOffset"
                 :x-label-tick-gap="state.barXLabelTickGap"
                 :y-label-tick-gap="state.barYLabelTickGap"
                 :x-label-font-size="state.barXLabelFontSize"
