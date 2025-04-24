@@ -20,6 +20,8 @@ const props = withDefaults(defineProps<{
   yLabel?: string
   xLabelOffset?: number
   yLabelOffset?: number
+  xLabelTickGap?: number
+  yLabelTickGap?: number
   xLabelFontSize?: string
   yLabelFontSize?: string
   ticks?: number
@@ -39,6 +41,8 @@ const props = withDefaults(defineProps<{
 
   xLabelFontSize: '14px',
   yLabelFontSize: '14px',
+  xLabelTickGap: 20,
+  yLabelTickGap: 20,
   ticks: 5,
   tickFontSize: '14px',
 
@@ -85,11 +89,11 @@ function renderChart({
   const maxVerticalTickWidthInCh = vertical ? maxValueLength : maxKeyLength
   const maxVerticalTickWidthInPx = getTextSize('0'.repeat(maxVerticalTickWidthInCh), `400 ${props.tickFontSize} ${font}`).width
   const verticalLabelWidthInPx = props.yLabel ? getTextSize(props.yLabel, `400 ${props.yLabelFontSize} ${font}`).height : 0
-  const gapBetweenVerticalLabelAndTicks = props.yLabel ? 20 : 0
+  const gapBetweenVerticalLabelAndTicks = props.yLabel ? props.yLabelTickGap : 0
 
   const maxHorizontalTickHeightInPx = getTextSize('0', `400 ${props.tickFontSize} ${font}`).height // wrapping isn't supported
   const horizontalLabelHeightInPx = props.xLabel ? getTextSize(props.xLabel, `400 ${props.xLabelFontSize} ${font}`).height : 0
-  const gapBetweenHorizontalLabelAndTicks = props.xLabel ? 20 : 0
+  const gapBetweenHorizontalLabelAndTicks = props.xLabel ? props.xLabelTickGap : 0
 
   const xLabelOffset = props.xLabelOffset ?? horizontalLabelHeightInPx + 9 + maxHorizontalTickHeightInPx + gapBetweenHorizontalLabelAndTicks
   const yLabelOffset = props.yLabelOffset ?? 9 + maxVerticalTickWidthInPx + gapBetweenVerticalLabelAndTicks
@@ -97,8 +101,8 @@ function renderChart({
   const margin = {
     top: props.margins?.top ?? 30,
     right: props.margins?.right ?? 30,
-    bottom: props.margins?.bottom ?? (30 + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0)),
-    left: props.margins?.left ?? (30 + verticalLabelWidthInPx + yLabelOffset)
+    bottom: (props.margins?.bottom ?? 30) + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0),
+    left: (props.margins?.left ?? 30) + verticalLabelWidthInPx + yLabelOffset
   }
 
   const width = clientWidth - margin.left - margin.right
