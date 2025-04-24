@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.16.0](https://github.com/globalbrain/sefirot/compare/v4.15.0...v4.16.0) (2025-04-24)
+
+
+### Features
+
+* **chart:** auto-calculate margins in bar chart ([#605](https://github.com/globalbrain/sefirot/issues/605)) ([132dc50](https://github.com/globalbrain/sefirot/commit/132dc5099071ae07bf41c8c698c7e836bf15c9e3))
+
 # [4.15.0](https://github.com/globalbrain/sefirot/compare/v4.14.2...v4.15.0) (2025-04-16)
 
 
