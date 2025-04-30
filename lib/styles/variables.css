@@ -229,6 +229,10 @@
  * -------------------------------------------------------------------------- */
 
 :root {
+  --c-bg-1: var(--c-white);
+  --c-bg-2: var(--c-gray-3);
+  --c-bg-3: var(--c-gray-4);
+
   --c-bg-elv-1: #ffffff;
   --c-bg-elv-2: #f5f5f7;
   --c-bg-elv-3: #ffffff;
@@ -264,6 +268,10 @@
 }
 
 .dark {
+  --c-bg-1: var(--c-gray-1);
+  --c-bg-2: var(--c-gray-3);
+  --c-bg-3: var(--c-gray-4);
+
   --c-bg-elv-1: #000000;
   --c-bg-elv-2: #151517;
   --c-bg-elv-3: #1b1b1f;
@@ -719,17 +727,17 @@
  * -------------------------------------------------------------------------- */
 
 :root {
-  --pill-dimm-default-border-color: var(--c-border-mute-1);
+  --pill-dimm-default-border-color: var(--c-divider);
   --pill-dimm-default-text-color: var(--c-text-1);
-  --pill-dimm-default-bg-color: var(--c-bg-mute-1);
-  --pill-dimm-default-hover-bg-color: var(--c-bg-mute-2);
-  --pill-dimm-default-active-bg-color: var(--c-bg-mute-3);
+  --pill-dimm-default-bg-color: transparent;
+  --pill-dimm-default-hover-bg-color: var(--c-bg-2);
+  --pill-dimm-default-active-bg-color: var(--c-bg-3);
 
-  --pill-dimm-mute-border-color: var(--c-border-mute-1);
+  --pill-dimm-mute-border-color: var(--c-divider);
   --pill-dimm-mute-text-color: var(--c-text-2);
-  --pill-dimm-mute-bg-color: var(--c-bg-mute-1);
-  --pill-dimm-mute-hover-bg-color: var(--c-bg-mute-2);
-  --pill-dimm-mute-active-bg-color: var(--c-bg-mute-3);
+  --pill-dimm-mute-bg-color: transparent;
+  --pill-dimm-mute-hover-bg-color: var(--c-bg-2);
+  --pill-dimm-mute-active-bg-color: var(--c-bg-3);
 
   --pill-dimm-neutral-border-color: var(--c-neutral-1);
   --pill-dimm-neutral-text-color: var(--c-text-inverse-1);
