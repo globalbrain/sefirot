@@ -28,10 +28,10 @@ const classes = computed(() => [
 .SState {
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--c-border-mute-1);
+  border: 1px solid var(--c-divider);
   font-weight: 500;
   white-space: nowrap;
-  background-color: var(--c-bg-mute-1);
+  background-color: transparent;
 }
 
 .SState.mini {
