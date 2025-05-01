@@ -197,7 +197,7 @@ function getErrorMsg(validation: Validatable) {
   width: 100%;
   max-width: 65ch;
   margin: 0;
-  padding: 6px 0 0 0;
+  padding: 4px 0 0 0;
   line-height: 20px;
   font-size: 12px;
   font-weight: 400;

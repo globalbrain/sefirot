@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import IconCaretDown from '~icons/ph/caret-down-bold'
 import IconCaretUp from '~icons/ph/caret-up-bold'
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: string
+  options: Option[]
+  nullable?: boolean
+  disabled?: boolean
+  value?: Value
+  modelValue?: Value
+}
+
 export type Value = any
 
 export interface Option {
@@ -15,24 +21,7 @@ export interface Option {
   disabled?: boolean
 }
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option[]
-  nullable?: boolean
-  disabled?: boolean
-  value?: Value
-  modelValue?: Value
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+const props = withDefaults(defineProps<Props>(), {
   value: undefined,
   modelValue: undefined
 })
@@ -80,15 +69,16 @@ function emitChange(e: any): void {
   <SInputBase
     class="SInputSelect"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="box" :class="{ focus: isFocused }">
       <select
