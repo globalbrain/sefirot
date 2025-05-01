@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.19.0](https://github.com/globalbrain/sefirot/compare/v4.18.0...v4.19.0) (2025-05-01)
+
+
+### Bug Fixes
+
+* **input-select:** apply `:size` prop ([#609](https://github.com/globalbrain/sefirot/issues/609)) ([2f83132](https://github.com/globalbrain/sefirot/commit/2f831320395040e1a3ad6f9da94b40120c9da45b))
+
+
+### Features
+
+* **style:** add new bg color scheme and update pill and state style ([#607](https://github.com/globalbrain/sefirot/issues/607)) ([f219e18](https://github.com/globalbrain/sefirot/commit/f219e18ab7339082f1f866745b537e5851e13960))
+
 # [4.18.0](https://github.com/globalbrain/sefirot/compare/v4.16.0...v4.18.0) (2025-04-24)
 
 
