@@ -74,11 +74,11 @@ function emitChange(e: any): void {
     :note
     :info
     :help
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="box" :class="{ focus: isFocused }">
       <select
