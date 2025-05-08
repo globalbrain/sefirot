@@ -14,7 +14,7 @@ import SControlPagination from 'sefirot/components/SControlPagination.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
-import { useTable } from 'sefirot/composables/Table'
+import { useTable, type TableCellState } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, reactive, ref, shallowRef } from 'vue'
 
@@ -204,7 +204,7 @@ const orderedData = computed(() => {
 })
 
 const table = useTable({
-  records: orderedData as any, // FIXME
+  records: orderedData,
 
   borderless: true,
   indexField: 'name',
@@ -220,7 +220,7 @@ const table = useTable({
     'actions'
   ],
 
-  columns: computed(() => ({
+  columns: {
     name: {
       label: 'Name',
       dropdown: dropdownName,
@@ -239,9 +239,9 @@ const table = useTable({
       cell: (_, record) => ({
         type: 'state',
         label: record.status,
-        mode: record.status === 'Published'
+        mode: (record.status === 'Published'
           ? 'success'
-          : record.status === 'Draft' ? 'info' : 'mute'
+          : record.status === 'Draft' ? 'info' : 'mute')
       })
     },
 
@@ -257,14 +257,14 @@ const table = useTable({
 
     type: {
       label: 'Type',
-      show: !optionsSelected.value.includes('hide-type'),
+      show: computed(() => !optionsSelected.value.includes('hide-type')),
       dropdown: dropdownType,
       cell: { type: 'text', color: 'soft' }
     },
 
     width: {
       label: 'Width',
-      show: !optionsSelected.value.includes('hide-width'),
+      show: computed(() => !optionsSelected.value.includes('hide-width')),
       dropdown: dropdownWidth,
       cell: {
         type: 'number',
@@ -276,7 +276,7 @@ const table = useTable({
 
     tags: {
       label: 'Tags',
-      show: !optionsSelected.value.includes('hide-tags'),
+      show: computed(() => !optionsSelected.value.includes('hide-tags')),
       dropdown: dropdownTags,
       cell: (_, record) => ({
         type: 'pills',
@@ -322,7 +322,7 @@ const table = useTable({
       },
       resizable: false
     }
-  }))
+  }
 })
 
 function updateSort(by: string, order: 'asc' | 'desc') {
