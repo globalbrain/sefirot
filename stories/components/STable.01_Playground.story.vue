@@ -14,7 +14,7 @@ import SControlPagination from 'sefirot/components/SControlPagination.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
-import { useTable, type TableCellState } from 'sefirot/composables/Table'
+import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
 import { computed, reactive, ref, shallowRef } from 'vue'
 
