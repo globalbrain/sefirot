@@ -4,8 +4,8 @@ import { ymd as baseYmd } from '../validators/ymd'
 type YmdType = 'y' | 'm' | 'd'
 
 export const message = {
-  en: 'The field is required.',
-  ja: 'この項目は必須です。'
+  en: 'The date is invalid.',
+  ja: '日付表記が正しくありません。'
 }
 
 export function ymd(required?: YmdType[], msg?: string) {
