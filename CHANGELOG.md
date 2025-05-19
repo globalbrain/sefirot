@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.19.1](https://github.com/globalbrain/sefirot/compare/v4.19.0...v4.19.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **validation/ymd:** fix typo in message ([#611](https://github.com/globalbrain/sefirot/issues/611)) ([415274c](https://github.com/globalbrain/sefirot/commit/415274c31034acdf50959d34ee15e7f54decd380))
+
 # [4.19.0](https://github.com/globalbrain/sefirot/compare/v4.18.0...v4.19.0) (2025-05-01)
 
 
