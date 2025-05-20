@@ -1,14 +1,15 @@
+import { type Day } from '../../support/Day'
 import { createRule } from '../Rule'
 import { beforeOrEqual as baseBeforeOrEqual } from '../validators/beforeOrEqual'
 
 export const message = {
-  en: 'The date must be before or equal to the specified date.',
-  ja: '指定された日付よりも前または同じ日付でなければなりません。'
+  en: (date: string) => `Date must be before or equal to ${date}`,
+  ja: (date: string) => `${date}より前または同じの日付でなければなりません`
 }
 
-export function beforeOrEqual(date: unknown, msg?: string) {
+export function beforeOrEqual(date: Day, msg?: string) {
   return createRule({
-    message: ({ lang }) => msg ?? message[lang],
+    message: ({ lang }) => msg ?? message[lang](date.format('YYYY-MM-DD')),
     optional: true,
     validation: (value) => baseBeforeOrEqual(value, date)
   })

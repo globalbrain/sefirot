@@ -1,14 +1,15 @@
+import { type Day } from '../../support/Day'
 import { createRule } from '../Rule'
 import { after as baseAfter } from '../validators/after'
 
 export const message = {
-  en: 'The date must be after the specified date.',
-  ja: '指定された日付よりも後の日付でなければなりません。'
+  en: (date: string) => `Date must be after ${date}`,
+  ja: (date: string) => `${date}より後の日付でなければなりません`
 }
 
-export function after(date: unknown, msg?: string) {
+export function after(date: Day, msg?: string) {
   return createRule({
-    message: ({ lang }) => msg ?? message[lang],
+    message: ({ lang }) => msg ?? message[lang](date.format('YYYY-MM-DD')),
     optional: true,
     validation: (value) => baseAfter(value, date)
   })

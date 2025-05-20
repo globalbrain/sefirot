@@ -1,6 +1,6 @@
-import { isDay } from 'sefirot/support/Day'
+import { type Day, isDay } from '../../support/Day'
 
-export function beforeOrEqual(value: unknown, date: unknown): boolean {
+export function beforeOrEqual(value: unknown, date: Day): boolean {
   if (!isDay(value) || !isDay(date)) {
     return false
   }
