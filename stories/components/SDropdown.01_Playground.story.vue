@@ -50,10 +50,10 @@ const sections = createDropdown([
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title>
       <div class="max-w-256">
-        <SDropdown :sections="sections" />
+        <SDropdown :sections />
       </div>
     </Board>
   </Story>

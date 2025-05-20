@@ -13,9 +13,9 @@ withDefaults(defineProps<TableHeaderAction>(), {
   <div v-if="show" class="STableHeaderActionItem">
     <SButton
       size="mini"
-      :mode="mode"
-      :label="label"
-      :label-mode="labelMode"
+      :mode
+      :label
+      :label-mode
       @click="onClick"
     />
   </div>

@@ -7,8 +7,8 @@ const docs = '/components/content'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <div class="max-w-640">
         <SContent>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <SLink href="https://example.com">quis nostrud exercitation</SLink> ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>

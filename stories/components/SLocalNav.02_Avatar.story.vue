@@ -31,8 +31,8 @@ const navMenu = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SLocalNav
         :avatar="navAvatar"
         :title="navTitle"

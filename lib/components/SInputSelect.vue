@@ -84,7 +84,7 @@ function emitChange(e: any): void {
       <select
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
-        :disabled="disabled"
+        :disabled
         @focus="isFocused = true"
         @blur="isFocused = false"
         @change="emitChange"

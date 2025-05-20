@@ -35,7 +35,7 @@ const { stop } = useIntersectionObserver(target, ([{ isIntersecting }]) => {
 
 <template>
   <component :is="as" class="SM" :class="{ on }" ref="target">
-    <slot :on="on" />
+    <slot :on />
   </component>
 </template>
 

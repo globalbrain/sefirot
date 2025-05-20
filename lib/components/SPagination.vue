@@ -63,7 +63,7 @@ function next() {
       <SButton
         type="outline"
         mode="mute"
-        :size="size"
+        :size
         :lead-icon="IconCaretLeft"
         :label="t.prev"
         :disabled="!hasPrev"
@@ -77,7 +77,7 @@ function next() {
       <SButton
         type="outline"
         mode="mute"
-        :size="size"
+        :size
         :trail-icon="IconCaretRight"
         :label="t.next"
         :disabled="!hasNext"

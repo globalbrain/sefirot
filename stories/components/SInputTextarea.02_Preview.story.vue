@@ -8,7 +8,7 @@ const docs = '/components/input-textarea'
 
 const text = ref('')
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Label',
@@ -31,7 +31,7 @@ function preview() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -77,7 +77,7 @@ function preview() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputTextarea
           :class="{ 'has-error': state.error }"
           :size="state.size"
@@ -89,7 +89,7 @@ function preview() {
           :rows="state.rows"
           :disabled="state.disabled"
           v-model="text"
-          :preview="preview"
+          :preview
         />
       </Board>
     </template>

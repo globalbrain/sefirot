@@ -30,7 +30,7 @@ const contentModes = [
   { label: 'danger', value: 'danger' }
 ]
 
-function state() {
+function initState() {
   return {
     type: 'fill',
     mode: 'default',
@@ -49,7 +49,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="type"
@@ -112,7 +112,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SButton
           :type="state.type"
           :mode="state.mode"

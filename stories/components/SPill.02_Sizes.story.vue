@@ -14,7 +14,7 @@ const variants = [
 
 const types = ['dimm', 'fill'] as const
 
-function state() {
+function initState() {
   return {
     mode: 'default',
     label: 'Pill',
@@ -24,7 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="mode"
@@ -50,7 +50,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="grid gap-y-32">
           <div v-for="v in variants" :key="v.size" class="grid gap-y-12">
             <div class="leading-24 text-14 font-500 text-c-2">

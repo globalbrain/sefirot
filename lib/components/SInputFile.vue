@@ -65,22 +65,22 @@ function onChange(e: Event) {
   <SInputBase
     class="SInputFile"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
-    :hide-error="hideError"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :hide-error
   >
     <input
       ref="input"
       class="input"
       type="file"
-      :accept="accept"
-      :multiple="multiple"
+      :accept
+      :multiple
       @change="onChange"
     >
 

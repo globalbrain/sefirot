@@ -80,19 +80,19 @@ const isPreview = ref(false)
   <SInputBase
     class="SInputTextarea"
     :class="classes"
-    :size="size"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
-    :warning="warning"
-    :hide-error="hideError"
-    :hide-warning="hideWarning"
+    :size
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box">
       <div v-if="preview !== undefined" class="control">
@@ -109,10 +109,10 @@ const isPreview = ref(false)
         v-show="!isPreview"
         :id="name"
         class="input"
-        :style="style"
-        :placeholder="placeholder"
+        :style
+        :placeholder
         :rows="rows === 'fill' ? 3 : rows"
-        :disabled="disabled"
+        :disabled
         :value="_value ?? undefined"
         @input="emitInput"
         @blur="emitBlur"

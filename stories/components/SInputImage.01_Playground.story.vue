@@ -17,7 +17,7 @@ const { validation } = useValidation(data, {
   }
 })
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Upload photo',
@@ -39,7 +39,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -113,7 +113,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputImage
           class="i"
           :class="{ 'has-error': state.error }"

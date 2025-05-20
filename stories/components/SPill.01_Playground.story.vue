@@ -5,7 +5,7 @@ import SPill from 'sefirot/components/SPill.vue'
 const title = 'Components / SPill / 01. Playground'
 const docs = '/components/pill'
 
-function state() {
+function initState() {
   return {
     size: 'small',
     type: 'dimm',
@@ -17,7 +17,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -61,7 +61,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SPill
           :size="state.size"
           :type="state.type"

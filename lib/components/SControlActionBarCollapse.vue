@@ -30,8 +30,8 @@ const icon = computed(() => {
 <template>
   <div class="SControlActionBarCollapse" ref="el">
     <SControlActionBarButton
-      :as="as"
-      :icon="icon"
+      :as
+      :icon
       @click="toggleCollapse"
     />
   </div>

@@ -88,15 +88,15 @@ function onChange(value: ValueType) {
   <SInputBase
     class="SInputRadios"
     :class="[size ?? 'small']"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container">
       <div class="row">

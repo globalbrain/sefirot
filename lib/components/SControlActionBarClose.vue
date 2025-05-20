@@ -14,7 +14,7 @@ defineEmits<{
 <template>
   <div class="SControlActionBarClose">
     <SControlActionBarButton
-      :as="as"
+      :as
       :icon="IconX"
       @click="$emit('click')"
     />

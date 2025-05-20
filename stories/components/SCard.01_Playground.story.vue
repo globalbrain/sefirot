@@ -15,7 +15,7 @@ import SControlText from 'sefirot/components/SControlText.vue'
 const title = 'Components / SCard / 01. Playground'
 const docs = '/components/card'
 
-function state() {
+function initState() {
   return {
     cardMode: 'neutral',
     titleMode: 'neutral'
@@ -24,7 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="Card mode"
@@ -40,7 +40,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="s-max-w-512">
           <SCard :mode="state.cardMode">
             <SCardBlock size="small" class="s-pl-24 s-pr-8">

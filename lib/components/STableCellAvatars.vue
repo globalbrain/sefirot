@@ -50,7 +50,7 @@ const displayNames = computed(() => {
       <div v-if="displayAvatars.length" class="avatars">
         <div v-for="(avatar, index) in displayAvatars" :key="index" class="avatar">
           <div class="avatar-box">
-            <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" :tooltip="tooltip" />
+            <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" :tooltip />
           </div>
         </div>
         <div v-if="avatarDiff > 0" class="avatar">

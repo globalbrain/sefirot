@@ -6,7 +6,7 @@ import SHeadTitle from 'sefirot/components/SHeadTitle.vue'
 const title = 'Components / SHead / 01. Playground'
 const docs = '/components/head'
 
-function state() {
+function initState() {
   return {
     mode: 'neutral',
     title: 'The head title',
@@ -16,7 +16,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="mode"
@@ -40,7 +40,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="max-w-512">
           <SHead>
             <SHeadTitle v-if="state.title" :mode="state.mode">{{ state.title }}</SHeadTitle>

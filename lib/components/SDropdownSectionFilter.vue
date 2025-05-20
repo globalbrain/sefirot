@@ -92,7 +92,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
             <span class="radio-dot" />
           </span>
           <span class="option-item">
-            <SDropdownSectionFilterItem :option="option" />
+            <SDropdownSectionFilterItem :option />
           </span>
         </button>
       </li>

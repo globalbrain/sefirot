@@ -12,7 +12,7 @@ const options: Record<string, Position> = {
   left: 'left'
 }
 
-function state() {
+function initState() {
   return {
     position: 'top' as Position,
     text: 'This is a tooltip message.'
@@ -21,11 +21,11 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="position"
-        :options="options"
+        :options
         v-model="state.position"
       />
       <HstTextarea
@@ -35,7 +35,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <STooltip :text="state.text" :position="state.position">
           Hover this text.
         </STooltip>

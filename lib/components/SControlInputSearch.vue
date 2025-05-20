@@ -50,7 +50,7 @@ const _value = computed(() => {
       :placeholder="placeholder ?? t.placeholder"
       :unit-before="IconMagnifyingGlass"
       :model-value="_value"
-      :validation="validation"
+      :validation
       hide-error
       @update:model-value="$emit('update:model-value', $event)"
       @input="$emit('input', $event)"

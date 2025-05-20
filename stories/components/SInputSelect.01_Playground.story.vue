@@ -14,7 +14,7 @@ const options = [
   { label: 'Third option', value: 3 }
 ]
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Label',
@@ -30,7 +30,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -76,7 +76,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputSelect
           :class="{ 'has-error': state.error }"
           :size="state.size"
@@ -85,7 +85,7 @@ function state() {
           :note="state.note"
           :help="state.help"
           :placeholder="state.placeholder"
-          :options="options"
+          :options
           :nullable="state.nullable"
           :disabled="state.disabled"
           v-model="input"
