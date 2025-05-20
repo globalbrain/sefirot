@@ -132,3 +132,7 @@ export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): va
     }, [])
     .every((key) => value[key] === null || isString(value[key]))
 }
+
+export function isDay(value: unknown): value is Day {
+  return dayjs.isDayjs(value)
+}
