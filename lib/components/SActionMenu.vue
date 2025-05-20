@@ -43,21 +43,21 @@ async function onOpen() {
   <div class="SActionMenu" :class="[block]" ref="container">
     <div class="button">
       <SButton
-        :tag="tag"
-        :size="size"
-        :type="type"
-        :mode="mode"
-        :icon="icon"
-        :lead-icon="leadIcon"
-        :trail-icon="trailIcon"
-        :icon-mode="iconMode"
-        :label="label"
-        :label-mode="labelMode"
-        :rounded="rounded"
-        :block="block"
-        :loading="loading"
-        :disabled="disabled"
-        :tooltip="tooltip"
+        :tag
+        :size
+        :type
+        :mode
+        :icon
+        :lead-icon
+        :trail-icon
+        :icon-mode
+        :label
+        :label-mode
+        :rounded
+        :block
+        :loading
+        :disabled
+        :tooltip
         @click="onOpen"
       />
     </div>

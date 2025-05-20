@@ -15,8 +15,8 @@ const variants = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <div class="grid gap-y-32">
         <div v-for="v in variants" :key="v.size" class="grid gap-y-12">
           <div class="leading-24 text-14 font-500 text-c-2">

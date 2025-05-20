@@ -401,7 +401,7 @@ function getStyles(key: string) {
             <div class="row" ref="row">
               <STableItem
                 v-for="key in ordersToShow"
-                :key="key"
+                :key
                 :name="key"
                 :class-name="unref(options.columns)[key]?.className"
                 :style="getStyles(key)"
@@ -460,7 +460,7 @@ function getStyles(key: string) {
               >
                 <STableItem
                   v-for="key in ordersToShow"
-                  :key="key"
+                  :key
                   :name="key"
                   :class-name="unref(options.columns)[key]?.className"
                   :style="getStyles(key)"

@@ -11,7 +11,7 @@ defineProps<{
   <div class="SDropdown">
     <div class="container">
       <div v-for="(section, index) in sections" :key="index" class="section">
-        <SDropdownSection :section="section" />
+        <SDropdownSection :section />
       </div>
     </div>
   </div>

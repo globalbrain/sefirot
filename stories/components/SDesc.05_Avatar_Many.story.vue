@@ -15,8 +15,8 @@ const avatars = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SDesc gap="24">
         <SDescItem>
           <SDescLabel>Vertical stack</SDescLabel>

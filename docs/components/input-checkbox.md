@@ -241,7 +241,7 @@ export interface ValidatableError {
 ```vue-html
 <SInputCheckbox
   v-model="..."
-  :validation="validation"
+  :validation
 />
 ```
 
@@ -258,7 +258,7 @@ interface Props {
 ```vue-html
 <SInputCheckbox
   v-model="..."
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

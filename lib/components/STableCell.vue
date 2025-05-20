@@ -35,8 +35,8 @@ const computedCell = computed<TableCell | undefined>(() =>
   <div class="STableCell" :class="[className, `col-${name}`]">
     <STableCellText
       v-if="!computedCell || computedCell.type === 'text'"
-      :value="value"
-      :record="record"
+      :value
+      :record
       :align="computedCell?.align"
       :icon="computedCell?.icon"
       :text="computedCell?.value"
@@ -47,8 +47,8 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellNumber
       v-else-if="computedCell.type === 'number'"
-      :value="value"
-      :record="record"
+      :value
+      :record
       :align="computedCell.align"
       :icon="computedCell.icon"
       :number="computedCell.value"
@@ -90,8 +90,8 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellAvatar
       v-else-if="computedCell.type === 'avatar'"
-      :value="value"
-      :record="record"
+      :value
+      :record
       :image="computedCell.image"
       :name="computedCell.name"
       :link="computedCell.link"
@@ -108,7 +108,7 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellActions
       v-else-if="computedCell.type === 'actions'"
-      :record="record"
+      :record
       :actions="computedCell.actions"
     />
     <STableCellCustom
@@ -122,8 +122,8 @@ const computedCell = computed<TableCell | undefined>(() =>
     <component
       v-else-if="computedCell.type === 'component'"
       :is="computedCell.component"
-      :value="value"
-      :record="record"
+      :value
+      :record
       v-bind="computedCell.props"
     />
   </div>

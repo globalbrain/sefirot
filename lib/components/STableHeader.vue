@@ -32,7 +32,7 @@ const stats = computed(() => {
         </div>
       </div>
       <div v-if="menu && menu.length" class="menu">
-        <STableHeaderMenu :menu="menu" />
+        <STableHeaderMenu :menu />
       </div>
     </div>
   </div>

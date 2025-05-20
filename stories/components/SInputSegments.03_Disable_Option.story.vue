@@ -15,10 +15,10 @@ const value = ref('active-1')
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SInputSegments
-        :options="options"
+        :options
         v-model="value"
       />
     </Board>

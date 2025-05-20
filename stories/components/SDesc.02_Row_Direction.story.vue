@@ -13,7 +13,7 @@ import SDescText from 'sefirot/components/SDescText.vue'
 const title = 'Components / SDesc / 02. Row Direction'
 const docs = '/components/desc'
 
-function state() {
+function initState() {
   return {
     cols: 1,
     gap: 16,
@@ -24,7 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber
         title="cols"
@@ -45,7 +45,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SDesc
           :cols="state.cols"
           :gap="state.gap"

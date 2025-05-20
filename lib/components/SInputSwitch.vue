@@ -58,15 +58,15 @@ function emitChange(): void {
   <SInputBase
     class="SInputSwitch"
     :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :help="help"
-    :hide-error="hideError"
+    :name
+    :label
+    :note
+    :info
+    :check-icon
+    :check-text
+    :check-color
+    :help
+    :hide-error
   >
     <div class="container">
       <div class="input" :class="{ on: _value }" role="button" @click="emitChange">

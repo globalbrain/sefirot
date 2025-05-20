@@ -45,15 +45,15 @@ function onClick() {
   <SInputBase
     class="SInputRadio"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
-    :hide-error="hideError"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :hide-error
   >
     <div class="container">
       <div

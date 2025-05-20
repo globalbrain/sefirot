@@ -143,15 +143,15 @@ function createRequiredTouched(): boolean[] {
   <SInputBase
     class="SInputYMD"
     :class="[size ?? 'small', { disabled }]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container" :class="{ focus: isFocused, block }">
       <input
@@ -160,7 +160,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.year"
         :placeholder="padPlaceholder.year"
         :maxlength="4"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateYear"
       >
@@ -174,7 +174,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.month"
         :placeholder="padPlaceholder.month"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateMonth"
       >
@@ -188,7 +188,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.date"
         :placeholder="padPlaceholder.date"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateDate"
       >

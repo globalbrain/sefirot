@@ -29,21 +29,21 @@ const size = useControlSize()
 <template>
   <div class="SControlButton">
     <SButton
-      :tag="tag"
-      :size="size"
-      :type="type"
-      :mode="mode"
-      :icon="icon"
-      :lead-icon="leadIcon"
-      :trail-icon="trailIcon"
-      :icon-mode="iconMode"
-      :label="label"
-      :label-mode="labelMode"
-      :href="href"
-      :tooltip="tooltip"
+      :tag
+      :size
+      :type
+      :mode
+      :icon
+      :lead-icon
+      :trail-icon
+      :icon-mode
+      :label
+      :label-mode
+      :href
+      :tooltip
       block
-      :loading="loading"
-      :disabled="disabled"
+      :loading
+      :disabled
       @click="$emit('click')"
     />
   </div>

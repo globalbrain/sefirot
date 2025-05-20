@@ -19,7 +19,7 @@ const options = [
   path="/components/SSInputSelect.vue"
   story="/stories-components-sinputselect-01-playground-story-vue"
 >
-  <SInputSelect :options="options" nullable v-model="input" />
+  <SInputSelect :options nullable v-model="input" />
 </Showcase>
 
 ## Usage
@@ -41,7 +41,7 @@ const options = [
 </script>
 
 <template>
-  <SInputSelect :options="options" v-model="input" />
+  <SInputSelect :options v-model="input" />
 </template>
 ```
 
@@ -320,7 +320,7 @@ export interface ValidatableError {
 <SInputSelect
   :options="[...]"
   v-model="1"
-  :validation="validation"
+  :validation
 />
 ```
 
@@ -338,7 +338,7 @@ interface Props {
 <SInputSelect
   :options="[...]"
   v-model="1"
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

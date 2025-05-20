@@ -280,7 +280,7 @@ export interface ValidatableError {
 ```
 
 ```vue-html
-<SInputTextarea v-model="..." :validation="validation" />
+<SInputTextarea v-model="..." :validation />
 ```
 
 ### `:hide-error`
@@ -296,7 +296,7 @@ interface Props {
 ```vue-html
 <SInputTextarea
   v-model="..."
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

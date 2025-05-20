@@ -14,8 +14,8 @@ const docs = '/components/doc'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SCard class="max-w-768">
         <SCardBlock space="xwide">
           <SDoc>

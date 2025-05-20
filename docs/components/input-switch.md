@@ -250,7 +250,7 @@ export interface ValidatableError {
 ```
 
 ```vue-html
-<SInputSwitch v-model="..." :validation="validation" />
+<SInputSwitch v-model="..." :validation />
 ```
 
 ### `:hide-error`
@@ -266,7 +266,7 @@ interface Props {
 ```vue-html
 <SInputSwitch
   v-model="..."
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

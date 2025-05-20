@@ -322,7 +322,7 @@ export interface ValidatableError {
 ```
 
 ```vue-html
-<SInputNumber v-model="1" :validation="validation" />
+<SInputNumber v-model="1" :validation />
 ```
 
 ### `:hide-error`
@@ -338,7 +338,7 @@ interface Props {
 ```vue-html
 <SInputNumber
   v-model="1"
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

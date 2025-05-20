@@ -7,7 +7,7 @@ import SDescText from 'sefirot/components/SDescText.vue'
 const title = 'Components / SDesc / 04. Text'
 const docs = '/components/desc'
 
-function state() {
+function initState() {
   return {
     lineClamp: 10,
     preWrap: false,
@@ -17,7 +17,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber
         title="lineClamp"
@@ -34,7 +34,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SDesc cols="2" gap="24">
           <SDescItem span="2">
             <SDescLabel>Label</SDescLabel>

@@ -75,28 +75,28 @@ function emitUpdate(value: string | null) {
 <template>
   <SInputText
     class="SInputNumber"
-    :size="size"
-    :name="name"
+    :size
+    :name
     type="number"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :placeholder="placeholder"
-    :unit-before="unitBefore"
-    :unit-after="unitAfter"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
+    :label
+    :note
+    :info
+    :help
+    :placeholder
+    :unit-before
+    :unit-after
+    :check-icon
+    :check-text
+    :check-color
     :text-color="_textColor"
-    :align="align"
-    :disabled="disabled"
-    :display-value="displayValue"
+    :align
+    :disabled
+    :display-value
     :model-value="_value == null ? null : String(_value)"
-    :validation="validation"
-    :warning="warning"
-    :hide-error="hideError"
-    :hide-warning="hideWarning"
+    :validation
+    :warning
+    :hide-error
+    :hide-warning
     @update:model-value="emitUpdate"
     @input="emitUpdate"
   >

@@ -12,7 +12,7 @@ defineProps<{
     <SAvatar
       size="fill"
       :avatar="image"
-      :name="name"
+      :name
     />
   </div>
 </template>

@@ -40,8 +40,8 @@ const normalizedMenu = computed(() => {
       </div>
       <div class="title-bar-body">
         <div class="title-bar-title">
-          <SLocalNavTitle :title="title" />
-          <SLocalNavActions v-if="actions?.length" :actions="actions" />
+          <SLocalNavTitle :title />
+          <SLocalNavActions v-if="actions?.length" :actions />
         </div>
         <SLocalNavDescription v-if="description" :text="description" />
       </div>
