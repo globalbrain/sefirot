@@ -3,8 +3,8 @@ import { createRule } from '../Rule'
 import { before as baseBefore } from '../validators/before'
 
 export const message = {
-  en: (date: string) => `Date must be before ${date}`,
-  ja: (date: string) => `${date}より前の日付でなければなりません`
+  en: (date: string) => `Date must be before ${date}.`,
+  ja: (date: string) => `${date}より前の日付を指定してください。`
 }
 
 export function before(date: Day, msg?: string) {

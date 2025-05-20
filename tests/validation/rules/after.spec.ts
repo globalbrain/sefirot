@@ -15,7 +15,7 @@ describe('validation/rules/after', () => {
 
   test('default error message', () => {
     const rule = after(day('2020-01-02'))
-    expect(rule.$message({ $params: {} })).toBe('Date must be after 2020-01-02')
+    expect(rule.$message({ $params: {} })).toBe('Date must be after 2020-01-02.')
   })
 
   test('custom error message', () => {

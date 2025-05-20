@@ -15,7 +15,7 @@ describe('validation/rules/beforeOrEqual', () => {
 
   test('default error message', () => {
     const rule = beforeOrEqual(day('2020-01-02'))
-    expect(rule.$message({ $params: {} })).toBe('Date must be before or equal to 2020-01-02')
+    expect(rule.$message({ $params: {} })).toBe('Date must be before or equal to 2020-01-02.')
   })
 
   test('custom error message', () => {
