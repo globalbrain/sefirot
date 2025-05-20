@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.20.0](https://github.com/globalbrain/sefirot/compare/v4.19.1...v4.20.0) (2025-05-20)
+
+
+### Features
+
+* **validation:** add `before`, `beforeOrEqual`, `after`, `afterOrEqual` rules ([#591](https://github.com/globalbrain/sefirot/issues/591)) ([#612](https://github.com/globalbrain/sefirot/issues/612)) ([3c5e15b](https://github.com/globalbrain/sefirot/commit/3c5e15b25f047099bae64c82a1e5b0b7a91bf2da))
+
 ## [4.19.1](https://github.com/globalbrain/sefirot/compare/v4.19.0...v4.19.1) (2025-05-19)
 
 
