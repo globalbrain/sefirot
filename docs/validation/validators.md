@@ -8,6 +8,89 @@ You may import functions from `validation/validators`.
 import { ... } from '@globalbrain/sefirot/lib/validation/validators'
 ```
 
+## `after`
+
+Checks if the given date is after the specified date.
+
+```ts
+import { type Day, day } from '@globalbrain/sefirot/lib/support/Day'
+
+function after(
+  value: unknown,
+  date: unknown
+): boolean
+```
+
+```ts
+const d = day('2020-01-02')
+
+after(day('2020-01-03'), d) // <- true
+after(d, d) // <- false
+after(day('2020-01-01'), d) // <- false
+```
+
+## `afterOrEqual`
+
+Checks if the given date is after or equal to the specified date.
+
+```ts
+import { type Day, day } from '@globalbrain/sefirot/lib/support/Day'
+
+function afterOrEqual(
+  value: unknown,
+  date: unknown
+): boolean
+```
+
+```ts
+const d = day('2020-01-02')
+
+afterOrEqual(day('2020-01-03'), d) // <- true
+afterOrEqual(d, d) // <- true
+afterOrEqual(day('2020-01-01'), d) // <- false
+```
+
+## `before`
+
+Checks if the given date is before the specified date.
+
+```ts
+import { type Day, day } from '@globalbrain/sefirot/lib/support/Day'
+
+function before(
+  value: unknown,
+  date: unknown
+): boolean
+```
+
+```ts
+const d = day('2020-01-02')
+
+before(day('2020-01-01'), d) // <- true
+before(d, d) // <- false
+```
+
+## `beforeOrEqual`
+
+Checks if the given date is before or equal to the specified date.
+
+```ts
+import { type Day, day } from '@globalbrain/sefirot/lib/support/Day'
+
+function beforeOrEqual(
+  value: unknown,
+  date: unknown
+): boolean
+```
+
+```ts
+const d = day('2020-01-02')
+
+beforeOrEqual(day('2020-01-01'), d) // <- true
+beforeOrEqual(d, d) // <- true
+beforeOrEqual(day('2020-01-03'), d) // <- false
+```
+
 ## `checked`
 
 Checks if the given value is `true`. This is useful for validating inputs for things like a checkbox.
