@@ -17,7 +17,7 @@ const docs = '/components/card'
 
 const open = ref(false)
 
-function state() {
+function initState() {
   return {
     cardSize: 'small',
     cardMode: 'neutral',
@@ -27,7 +27,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="Card size"

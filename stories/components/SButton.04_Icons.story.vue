@@ -43,7 +43,7 @@ const icons = [
   IconMagnifyingGlass
 ]
 
-function state() {
+function initState() {
   return {
     size: 'medium',
     mode: 'default',
@@ -55,7 +55,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

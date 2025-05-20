@@ -37,7 +37,7 @@ function labelFormat(d: KV) {
   return `${d.key} &ndash; <tspan fill="${c.text1}">${d.value}</tspan>`
 }
 
-function state() {
+function initState() {
   return {
     barType: 'vertical',
     barDebug: false,
@@ -77,7 +77,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
       <HstSelect

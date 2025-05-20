@@ -12,7 +12,7 @@ const variants = [
   { title: 'Jumbo', size: 'jumbo' }
 ] as const
 
-function state() {
+function initState() {
   return {
     avatarCount: 2
   }
@@ -27,7 +27,7 @@ const avatars = [
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber title="avatarCount" v-model="state.avatarCount" />
     </template>

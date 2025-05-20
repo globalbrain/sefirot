@@ -4,7 +4,7 @@ import SIndicator from 'sefirot/components/SIndicator.vue'
 const title = 'Components / SIndicator / 01. Playground'
 const docs = '/components/indicator'
 
-function state() {
+function initState() {
   return {
     size: 'medium',
     state: 'pending',
@@ -14,7 +14,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

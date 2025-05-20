@@ -4,7 +4,7 @@ import SAlert from 'sefirot/components/SAlert.vue'
 const title = 'Components / SAlert / 01. Playground'
 const docs = '/components/alert'
 
-function state() {
+function initState() {
   return {
     mode: 'info'
   }
@@ -12,7 +12,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="mode"

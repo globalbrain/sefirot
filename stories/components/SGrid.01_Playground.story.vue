@@ -5,7 +5,7 @@ import SGridItem from 'sefirot/components/SGridItem.vue'
 const title = 'Components / SGrid / 01. Playground'
 const docs = '/components/grid'
 
-function state() {
+function initState() {
   return {
     cols: 4,
     gap: 24,
@@ -16,7 +16,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText title="cols" v-model="state.cols" />
       <HstText title="gap" v-model="state.gap" />

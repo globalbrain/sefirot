@@ -7,7 +7,7 @@ const docs = '/components/input-switch'
 
 const on = ref(false)
 
-function state() {
+function initState() {
   return {
     size: 'small' as Size,
     label: 'Label',
@@ -23,7 +23,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

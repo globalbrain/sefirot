@@ -5,7 +5,7 @@ import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 const title = 'Components / SButtonGroup / 01. Playground'
 const docs = '/components/button-group'
 
-function state() {
+function initState() {
   return {
     size: 'medium' as Size,
     mode: 'mute' as Mode,
@@ -17,7 +17,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

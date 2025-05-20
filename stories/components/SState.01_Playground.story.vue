@@ -4,7 +4,7 @@ import SState from 'sefirot/components/SState.vue'
 const title = 'Components / SState / 01. Playground'
 const docs = '/components/state'
 
-function state() {
+function initState() {
   return {
     size: 'small',
     mode: 'default',
@@ -14,7 +14,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

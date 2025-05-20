@@ -15,7 +15,7 @@ const options: OptionAvatar[] = [
   { type: 'avatar', image: 'https://i.pravatar.cc/64?img=10', label: 'Sefia Blue', value: 6 }
 ]
 
-function state() {
+function initState() {
   return {
     size: 'small' as Size
   }
@@ -23,7 +23,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

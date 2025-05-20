@@ -8,7 +8,7 @@ const docs = '/components/input-textarea'
 
 const text = ref('')
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Label',
@@ -31,7 +31,7 @@ function preview() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

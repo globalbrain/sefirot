@@ -4,7 +4,7 @@ import SM from 'sefirot/components/SM.vue'
 const title = 'Components / SM / 01. Playground'
 const docs = '/components/m'
 
-function state() {
+function initState() {
   return {
     opacity: 0,
     x: '16px',
@@ -17,7 +17,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
         title="opacity"

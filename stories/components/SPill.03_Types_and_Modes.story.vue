@@ -12,7 +12,7 @@ const variants = [
 
 const modes = ['default', 'mute', 'neutral', 'info', 'success', 'warning', 'danger'] as const
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Pill',
@@ -22,7 +22,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

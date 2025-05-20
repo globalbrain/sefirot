@@ -6,7 +6,7 @@ const title = 'Components / SInputDate / 01. Playground'
 
 const value = ref(null)
 
-function state() {
+function initState() {
   return {
     size: 'small'
   }
@@ -14,7 +14,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"

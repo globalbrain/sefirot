@@ -13,7 +13,7 @@ const options = [
   { label: 'Check box 3', value: 3 }
 ]
 
-function state() {
+function initState() {
   return {
     size: 'small',
     label: 'Label',
@@ -29,7 +29,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
