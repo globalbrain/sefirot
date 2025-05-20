@@ -17,12 +17,12 @@ const list: ActionList = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SCard class="max-w-256">
         <SCardBlock>
           <div class="p-12">
-            <SActionList :list="list" />
+            <SActionList :list />
           </div>
         </SCardBlock>
       </SCard>

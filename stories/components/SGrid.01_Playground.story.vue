@@ -16,7 +16,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText title="cols" v-model="state.cols" />
       <HstText title="gap" v-model="state.gap" />
@@ -25,7 +25,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SGrid :cols="state.cols" :gap="state.gap" :gap-row="state.gapRow" :gap-col="state.gapCol">
           <SGridItem>
             <div class="h-64 rounded-6 bg-info" />

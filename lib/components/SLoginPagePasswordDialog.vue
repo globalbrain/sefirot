@@ -85,7 +85,7 @@ async function onSubmit() {
           <SControlButton
             mode="info"
             label="Sign in"
-            :loading="loading"
+            :loading
             @click="onSubmit"
           />
         </SControlRight>

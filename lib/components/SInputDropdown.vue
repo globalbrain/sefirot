@@ -143,14 +143,14 @@ function handleArray(value: OptionValue) {
   <SInputBase
     class="SInputDropdown"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
   >
     <div class="container" ref="container">
       <div
@@ -167,7 +167,7 @@ function handleArray(value: OptionValue) {
             v-if="hasSelected"
             :item="selected!"
             :size="size ?? 'small'"
-            :removable="removable"
+            :removable
             :disabled="disabled ?? false"
             @remove="handleSelect"
           />

@@ -19,7 +19,7 @@ const list: ActionList = [
   path="/components/SActionList.vue"
   story="/stories-components-sactionlist-01-playground-story-vue"
 >
-  <SActionList :list="list" />
+  <SActionList :list />
 </Showcase>
 
 ## Usage
@@ -41,7 +41,7 @@ const list: ActionList = [
 </script>
 
 <template>
-  <SActionList :list="list" />
+  <SActionList :list />
 </template>
 ```
 

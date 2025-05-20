@@ -68,7 +68,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -90,7 +90,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title">
+      <Board :title>
         <div class="root">
           <div class="group">
             <div class="title">Addon Text (Before)</div>

@@ -17,8 +17,8 @@ const docs = '/components/desc'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <div class="max-w-640">
         <SCard>
           <SCardBlock size="small" class="s-px-24">

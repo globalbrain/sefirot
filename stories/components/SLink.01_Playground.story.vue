@@ -18,7 +18,7 @@ function getExternal(value: 'undefined' | 'true' | 'false') {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
         title="href"
@@ -40,7 +40,7 @@ function getExternal(value: 'undefined' | 'true' | 'false') {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SLink
           :href="state.href"
           :external="getExternal(state.external)"

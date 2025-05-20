@@ -21,11 +21,11 @@ const position = useControlPosition()
 <template>
   <div class="SControlPagination">
     <SPagination
-      :size="size"
+      :size
       :align="position"
-      :total="total"
-      :page="page"
-      :per-page="perPage"
+      :total
+      :page
+      :per-page
       @prev="$emit('prev')"
       @next="$emit('next')"
     />

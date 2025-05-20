@@ -69,14 +69,14 @@ function handleChange(value: Value): void {
   <SInputBase
     class="SInputCheckboxes"
     :class="[size ?? 'small']"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
   >
     <div class="container">
       <div class="row">

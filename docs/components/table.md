@@ -54,7 +54,7 @@ const options = useTable({
   story="/stories-components-stable-01-playground-story-vue"
 >
   <ClientOnly>
-    <STable class="table" :options="options" />
+    <STable class="table" :options />
   </ClientOnly>
 </Showcase>
 
@@ -105,7 +105,7 @@ const options = useTable({
 </script>
 
 <template>
-  <STable :options="options" />
+  <STable :options />
 </template>
 ```
 
@@ -589,7 +589,7 @@ interface Props {
 ```
 
 ```vue-html
-<STooltip :options="options" />
+<STooltip :options />
 ```
 
 ## Styles

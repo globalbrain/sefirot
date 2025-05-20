@@ -144,15 +144,15 @@ function createRequiredTouched(): boolean[] {
   <SInputBase
     class="SInputHMS"
     :class="[size ?? 'small', { disabled }]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container" :class="{ focus: isFocused }">
       <input
@@ -161,7 +161,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.hour"
         :placeholder="padPlaceholder.hour"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateHour"
       >
@@ -172,7 +172,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.minute"
         :placeholder="padPlaceholder.minute"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateMinute"
       >
@@ -183,7 +183,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.second"
         :placeholder="padPlaceholder.second"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateSecond"
       >

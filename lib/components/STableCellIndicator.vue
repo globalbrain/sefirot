@@ -9,7 +9,7 @@ defineProps<{
 
 <template>
   <div class="STableCellIndicator" :class="[state]">
-    <SIndicator size="nano" :state="state" />
+    <SIndicator size="nano" :state />
     <div v-if="label" class="text">{{ label }}</div>
   </div>
 </template>

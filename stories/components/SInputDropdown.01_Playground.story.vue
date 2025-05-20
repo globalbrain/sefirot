@@ -24,7 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -38,12 +38,12 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title">
+      <Board :title>
         <SInputDropdown
           :size="state.size"
           label="Frameworks"
           placeholder="Select frameworks"
-          :options="options"
+          :options
           nullable
           v-model="value"
         />

@@ -37,7 +37,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstCheckbox
         title="divider"
@@ -46,14 +46,14 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SDesc
           cols="2"
           gap="24"
           :divider="state.divider"
         >
           <SDescItem span="2" :divider="false">
-            <SDescLabel :actions="actions">Account</SDescLabel>
+            <SDescLabel :actions>Account</SDescLabel>
             <SDescAvatar
               :avatar="{
                 avatar: 'https://i.pravatar.cc/64?img=1',
@@ -62,35 +62,35 @@ function state() {
             />
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Full name</SDescLabel>
+            <SDescLabel :actions>Full name</SDescLabel>
             <SDescText>Margot Foster</SDescText>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Website</SDescLabel>
+            <SDescLabel :actions>Website</SDescLabel>
             <SDescLink>https://margot.example</SDescLink>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Birthday</SDescLabel>
+            <SDescLabel :actions>Birthday</SDescLabel>
             <SDescDay>1985-10-10</SDescDay>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Age</SDescLabel>
+            <SDescLabel :actions>Age</SDescLabel>
             <SDescNumber>37</SDescNumber>
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Application for</SDescLabel>
+            <SDescLabel :actions>Application for</SDescLabel>
             <SDescPill :pill="{ label: 'Frontend Developer' }" />
           </SDescItem>
           <SDescItem span="1">
-            <SDescLabel :actions="actions">Interview status</SDescLabel>
+            <SDescLabel :actions>Interview status</SDescLabel>
             <SDescState :state="{ mode: 'info', label: 'In progress' }" />
           </SDescItem>
           <SDescItem span="2">
-            <SDescLabel :actions="actions">About</SDescLabel>
+            <SDescLabel :actions>About</SDescLabel>
             <SDescText>Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim incididunt cillum culpa consequat. Excepteur <a href="https://hello.com">qui ipsum aliquip consequat</a> sint. Sit id mollit nulla mollit nostrud in ea officia proident. Irure nostrud pariatur mollit ad adipisicing reprehenderit deserunt qui eu.</SDescText>
           </SDescItem>
           <SDescItem span="2">
-            <SDescLabel :actions="actions">Attachments</SDescLabel>
+            <SDescLabel :actions>Attachments</SDescLabel>
             <SDescFile
               :item="[
                 { name: 'John-Doe-Resume-19851010.pdf', onDownload: () => {} },

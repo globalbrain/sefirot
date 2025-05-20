@@ -24,7 +24,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="Card mode"
@@ -40,7 +40,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="s-max-w-512">
           <SCard :mode="state.cardMode">
             <SCardBlock size="small" class="s-pl-24 s-pr-8">

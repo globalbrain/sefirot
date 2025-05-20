@@ -12,6 +12,7 @@ module.exports = {
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'warn',
-    'unused-imports/no-unused-vars': 'warn'
+    'unused-imports/no-unused-vars': 'warn',
+    'vue/v-bind-style': ['error', 'shorthand', { sameNameShorthand: 'always' }]
   }
 }

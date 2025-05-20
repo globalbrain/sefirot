@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex="tabindex">
+  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex>
     <component :is="triggerTag" class="trigger" ref="trigger">
       <slot />
     </component>

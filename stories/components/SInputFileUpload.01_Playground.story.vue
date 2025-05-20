@@ -31,7 +31,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
@@ -81,7 +81,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputFileUpload
           :size="state.size"
           :label="state.label"
@@ -94,7 +94,7 @@ function state() {
           :accept="state.accept"
           :droppable="state.droppable"
           v-model="data.files"
-          :rules="rules"
+          :rules
         />
       </Board>
     </template>

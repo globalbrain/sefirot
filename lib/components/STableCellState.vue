@@ -12,7 +12,7 @@ defineProps<{
     <SState
       v-if="state"
       size="mini"
-      :mode="mode"
+      :mode
       :label="state"
     />
   </div>

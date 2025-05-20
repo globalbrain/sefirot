@@ -8,8 +8,8 @@ const docs = '/components/error-boundary'
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SErrorBoundary>
         <template #default>
           <Comp />

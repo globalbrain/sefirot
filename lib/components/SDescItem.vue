@@ -17,7 +17,7 @@ const labelWidth = computed(() => {
 </script>
 
 <template>
-  <SGridItem class="SDescItem" :span="span">
+  <SGridItem class="SDescItem" :span>
     <slot />
   </SGridItem>
 </template>

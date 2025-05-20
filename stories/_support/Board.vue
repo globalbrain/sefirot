@@ -32,7 +32,7 @@ const href = computed(() => {
           size="mini"
           mode="mute"
           label="View Documentation"
-          :href="href"
+          :href
         />
       </div>
 

@@ -101,19 +101,19 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   <SInputBase
     class="SInputText"
     :class="classes"
-    :size="size"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
-    :warning="warning"
-    :hide-error="hideError"
-    :hide-warning="hideWarning"
+    :size
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="$slots['addon-before']" class="addon before">
@@ -132,8 +132,8 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             :class="inputClasses"
             :id="name"
             :type="type ?? 'text'"
-            :placeholder="placeholder"
-            :disabled="disabled"
+            :placeholder
+            :disabled
             :value="modelValue"
             ref="input"
             @focus="onFocus"

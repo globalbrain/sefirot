@@ -108,7 +108,7 @@ function handleClick(): void {
       :is="computedTag"
       class="SButton"
       :class="classes"
-      :href="href"
+      :href
       role="button"
       @click="handleClick"
     >

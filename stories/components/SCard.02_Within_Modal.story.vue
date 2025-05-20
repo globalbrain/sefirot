@@ -27,7 +27,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="Card size"
@@ -54,10 +54,10 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SButton mode="info" label="Open dialog" @click="open = true" />
 
-        <SModal :open="open" @close="open = false">
+        <SModal :open @close="open = false">
           <SCard :size="state.cardSize" :mode="state.cardMode">
             <SCardBlock size="small" class="s-pl-24 s-pr-8">
               <SControl>

@@ -77,7 +77,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state="state" source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <div class="s-p-8 s-font-14 s-font-w-500">Bar Chart</div>
       <HstSelect
@@ -253,7 +253,7 @@ function state() {
       />
     </template>
     <template #default="{ state }">
-      <Board :title="title">
+      <Board :title>
         <SCard class="chart-card">
           <SCardBlock size="medium" class="s-px-24" bg="elv-2">
             <SControl>
@@ -342,7 +342,7 @@ function state() {
                 :legend-padding="state.pieLegendPadding"
                 :legend-font-size="state.pieLegendFontSize"
                 :labels="state.pieLabels"
-                :label-format="labelFormat"
+                :label-format
                 :label-font-size="state.pieLabelFontSize"
               />
             </div>

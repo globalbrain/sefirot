@@ -20,7 +20,7 @@ const value = ref('table')
   path="/components/SInputSegments.vue"
   story="/stories-components-sinputsegments-01-playground-story-vue"
 >
-  <SInputSegments :options="options" v-model="value" />
+  <SInputSegments :options v-model="value" />
 </Showcase>
 
 ## Usage
@@ -43,7 +43,7 @@ const value = ref('table')
 </script>
 
 <template>
-  <SInputSegments :options="options" v-model="value" />
+  <SInputSegments :options v-model="value" />
 </template>
 ```
 
@@ -314,7 +314,7 @@ interface ValidatableError {
 <SInputSegments
   :options="[...]"
   v-model="1"
-  :validation="validation"
+  :validation
 />
 ```
 
@@ -332,7 +332,7 @@ interface Props {
 <SInputSegments
   :options="[...]"
   v-model="1"
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

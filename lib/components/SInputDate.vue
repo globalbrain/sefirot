@@ -54,16 +54,16 @@ function emitBlur() {
   <SInputBase
     class="SInputDate"
     :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container">
       <DatePicker
@@ -84,7 +84,7 @@ function emitBlur() {
           placeholder="YYYY-MM-DD"
           autocomplete="off"
           :value="inputValue"
-          :disabled="disabled"
+          :disabled
           v-on="disabled ? {} : inputEvents"
           @blur="emitBlur"
         >
