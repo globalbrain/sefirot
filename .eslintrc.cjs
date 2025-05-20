@@ -9,10 +9,10 @@ module.exports = {
 
   rules: {
     'vue/no-template-shadow': 'off',
+    'vue/v-bind-style': ['error', 'shorthand', { sameNameShorthand: 'always' }],
     'no-console': 'warn',
     '@typescript-eslint/no-unused-vars': 'off',
     'unused-imports/no-unused-imports': 'warn',
-    'unused-imports/no-unused-vars': 'warn',
-    'vue/v-bind-style': ['error', 'shorthand', { sameNameShorthand: 'always' }]
+    'unused-imports/no-unused-vars': 'warn'
   }
 }
