@@ -339,6 +339,7 @@ import { type Size } from '@globalbrain/sefirot/lib/components/SPagination.vue'
 
 interface Props {
   size?: Size
+  disabled?: boolean
   total: number
   page: number
   perPage: number

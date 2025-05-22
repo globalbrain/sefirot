@@ -11,12 +11,14 @@ export type Align = 'left' | 'center' | 'right'
 
 const props = withDefaults(defineProps<{
   size?: Size
+  disabled?: boolean
   align?: Align
   total: number
   page: number
   perPage: number
 }>(), {
   size: 'medium',
+  disabled: false,
   align: 'center'
 })
 
@@ -49,11 +51,11 @@ const hasNext = computed(() => {
 })
 
 function prev() {
-  hasPrev.value && emit('prev')
+  !props.disabled && hasPrev.value && emit('prev')
 }
 
 function next() {
-  hasNext.value && emit('next')
+  !props.disabled && hasNext.value && emit('next')
 }
 </script>
 
@@ -66,7 +68,7 @@ function next() {
         :size
         :lead-icon="IconCaretLeft"
         :label="t.prev"
-        :disabled="!hasPrev"
+        :disabled="disabled || !hasPrev"
         @click="prev"
       />
     </div>
@@ -80,7 +82,7 @@ function next() {
         :size
         :trail-icon="IconCaretRight"
         :label="t.next"
-        :disabled="!hasNext"
+        :disabled="disabled || !hasNext"
         @click="next"
       />
     </div>
