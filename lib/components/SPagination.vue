@@ -51,11 +51,11 @@ const hasNext = computed(() => {
 })
 
 function prev() {
-  !props.disabled && hasPrev.value && emit('prev')
+  hasPrev.value && emit('prev')
 }
 
 function next() {
-  !props.disabled && hasNext.value && emit('next')
+  hasNext.value && emit('next')
 }
 </script>
 
