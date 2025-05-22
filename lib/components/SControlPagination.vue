@@ -4,6 +4,7 @@ import SPagination, { type Size } from './SPagination.vue'
 
 defineProps<{
   size?: Size
+  disabled?: boolean
   total: number
   page: number
   perPage: number
@@ -22,6 +23,7 @@ const position = useControlPosition()
   <div class="SControlPagination">
     <SPagination
       :size
+      :disabled
       :align="position"
       :total
       :page

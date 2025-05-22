@@ -11,16 +11,18 @@ export type Align = 'left' | 'center' | 'right'
 
 const props = withDefaults(defineProps<{
   size?: Size
+  disabled?: boolean
   align?: Align
   total: number
   page: number
   perPage: number
 }>(), {
   size: 'medium',
+  disabled: false,
   align: 'center'
 })
 
-const emit = defineEmits<{
+defineEmits<{
   prev: []
   next: []
 }>()
@@ -47,14 +49,6 @@ const hasPrev = computed(() => {
 const hasNext = computed(() => {
   return to.value < props.total
 })
-
-function prev() {
-  hasPrev.value && emit('prev')
-}
-
-function next() {
-  hasNext.value && emit('next')
-}
 </script>
 
 <template>
@@ -66,8 +60,8 @@ function next() {
         :size
         :lead-icon="IconCaretLeft"
         :label="t.prev"
-        :disabled="!hasPrev"
-        @click="prev"
+        :disabled="disabled || !hasPrev"
+        @click="$emit('prev')"
       />
     </div>
     <div class="text">
@@ -80,8 +74,8 @@ function next() {
         :size
         :trail-icon="IconCaretRight"
         :label="t.next"
-        :disabled="!hasNext"
-        @click="next"
+        :disabled="disabled || !hasNext"
+        @click="$emit('next')"
       />
     </div>
   </div>
