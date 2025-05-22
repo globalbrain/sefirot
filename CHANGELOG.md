@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.21.0](https://github.com/globalbrain/sefirot/compare/v4.20.0...v4.21.0) (2025-05-22)
+
+
+### Features
+
+* **pagination:** add `disabled` prop to `SPagination` and `SControlPagination` ([#616](https://github.com/globalbrain/sefirot/issues/616)) ([0ee3a5d](https://github.com/globalbrain/sefirot/commit/0ee3a5da4aec81ff8395821c87ab5267c9de177e))
+
 # [4.20.0](https://github.com/globalbrain/sefirot/compare/v4.19.1...v4.20.0) (2025-05-20)
 
 
