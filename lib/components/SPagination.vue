@@ -22,7 +22,7 @@ const props = withDefaults(defineProps<{
   align: 'center'
 })
 
-const emit = defineEmits<{
+defineEmits<{
   prev: []
   next: []
 }>()
@@ -49,14 +49,6 @@ const hasPrev = computed(() => {
 const hasNext = computed(() => {
   return to.value < props.total
 })
-
-function prev() {
-  hasPrev.value && emit('prev')
-}
-
-function next() {
-  hasNext.value && emit('next')
-}
 </script>
 
 <template>
@@ -69,7 +61,7 @@ function next() {
         :lead-icon="IconCaretLeft"
         :label="t.prev"
         :disabled="disabled || !hasPrev"
-        @click="prev"
+        @click="$emit('prev')"
       />
     </div>
     <div class="text">
@@ -83,7 +75,7 @@ function next() {
         :trail-icon="IconCaretRight"
         :label="t.next"
         :disabled="disabled || !hasNext"
-        @click="next"
+        @click="$emit('next')"
       />
     </div>
   </div>
