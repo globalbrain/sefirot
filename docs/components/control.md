@@ -22,7 +22,7 @@ import SControlText from '@globalbrain/sefirot/lib/components/SControlText.vue'
 
 ### Mixins
 
-`<SControl>` serise are all packed in `Control` mixin, and also it is a part of `Fundamental` mixin.
+`<SControl>` series are all packed in the `Control` mixin, and also included in the `Fundamental` mixin.
 
 ```ts
 import { mixin as controlMixin } from '@globalbrain/sefirot/lib/mixins/Control'
@@ -34,7 +34,7 @@ app.use(controlMixin)
 
 `<SControl>` is a set of multiple components and you can combine them to create a horizontal control bar.
 
-A simple example would be creating "Cancel" and "Submit" form footer. This component will display 2 buttons aligned to the right.
+A simple example would be creating "Cancel" and "Submit" form footer. This component will display two buttons aligned to the right.
 
 ```vue-html
 <SControl>
@@ -47,7 +47,7 @@ A simple example would be creating "Cancel" and "Submit" form footer. This compo
 
 ### Controlling layout
 
-Use `<SControlLeft>`, `<SControlCenter>`, and `<SControlRight>` to align the content to the left, center, and right. Usually, you should always wrap the content within one of these components even if you only have single section.
+Use `<SControlLeft>`, `<SControlCenter>`, and `<SControlRight>` to align the content. You should always wrap the content within one of these components even if you only have a single section.
 
 ```vue-html
 <SControl>
@@ -72,7 +72,7 @@ Place action components such as `<SControlButton>` and `<SControlActionBar>` to 
 
 ### Combining with `<SCard>`
 
-When `<SControl>` is used inside [`<SCard>`](card), it will inherit the size option from the parent card compoennt and automatically adjust the size of control buttons. This is useful when adding header and footer to the card.
+When `<SControl>` is used inside [`<SCard>`](card), it will inherit the size option from the parent card component and automatically adjust the size of the control buttons. This is useful when adding a header and footer to the card.
 
 ```vue-html
 <SCard>
@@ -92,7 +92,7 @@ When `<SControl>` is used inside [`<SCard>`](card), it will inherit the size opt
 
 ## `<SControl>`
 
-The root component of control series. All the other components should be wrapped within it.
+The root component of control series. All control components should be placed within it.
 
 ```vue-html
 <SControl>
@@ -237,7 +237,7 @@ import IconTrash from '~icons/ph/trash-bold'
 
 ## `<SControlActionBarClose>`
 
-A helper component to create a close (X) button. This is exactly the same as passing X icon to `<SControlActionBarButton>`.
+A helper component to create a "close" (X) button. This is exactly the same as passing X icon to `<SControlActionBarButton>`.
 
 ```ts
 interface Props {
@@ -263,7 +263,7 @@ interface Emits {
 
 ## `<SControlActionBarCollapse>`
 
-A special component to add a collapse button, and its actual collapse behavior. This component only makes sense when used inside `<SCard>` component. Add this on 
+A special component to add a collapse button, and its actual collapse behavior. This component only makes sense when used inside `<SCard>` component.
 
 ```ts
 interface Props {
@@ -294,7 +294,7 @@ interface Emits {
 
 ## `<SControlInputSearch>`
 
-A helper component that creates `<SInputText>` component with magnifying glass icon. Useful for adding search feature.
+A helper component that creates `<SInputText>` component with a magnifying glass icon. Useful for adding a search feature.
 
 ```ts
 interface Props {
@@ -361,7 +361,7 @@ interface Emits {
     <SControlPagination
       :total="meta.total"
       :page="meta.page"
-      :perPage="meta.perPage"
+      :per-page="meta.perPage"
       @prev="prev"
       @next="next"
     />
