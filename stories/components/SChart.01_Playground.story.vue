@@ -26,6 +26,17 @@ const data = ref<KV[]>([
   { key: '2025', value: 45 }
 ])
 
+const dataWithNegative = ref<KV[]>([
+  { key: '2018', value: -10 },
+  { key: '2019', value: 20 },
+  { key: '2020', value: -15 },
+  { key: '2021', value: 25 },
+  { key: '2022', value: -35 },
+  { key: '2023', value: 30 },
+  { key: '2024', value: -40 },
+  { key: '2025', value: 45 }
+])
+
 const barRef = ref()
 const pieRef = ref()
 
@@ -276,7 +287,7 @@ function initState() {
             <div class="s-w-full s-h-320">
               <SChartBar
                 ref="barRef"
-                :data
+                :data="dataWithNegative"
                 :margins="{
                   top: state.barMarginTop,
                   right: state.barMarginRight,
