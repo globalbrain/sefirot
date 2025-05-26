@@ -370,6 +370,7 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
   padding: 2px 8px;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);

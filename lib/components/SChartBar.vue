@@ -246,7 +246,7 @@ function renderChart({
     if (vertical) {
       outerBars
         .attr('x', 0)
-        .attr('y', (d) => Math.min(y(d.value), y0) - heightPadding)
+        .attr('y', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? heightPadding : 0))
         .attr('width', paddedScale.step())
         .attr('height', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
@@ -256,7 +256,7 @@ function renderChart({
         .attr('height', (d) => Math.abs(y(d.value) - y0))
     } else {
       outerBars
-        .attr('x', (d) => Math.min(y(d.value), y0) - heightPadding)
+        .attr('x', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? 0 : heightPadding))
         .attr('y', 0)
         .attr('width', (d) => Math.abs(y(d.value) - y0) + heightPadding)
         .attr('height', paddedScale.step())
@@ -277,7 +277,7 @@ function renderChart({
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('y', (d) => Math.min(y(d.value), y0) - heightPadding)
+        .attr('y', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? heightPadding : 0))
         .attr('height', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
         .attr('x', groupOffset + innerOffset)
@@ -298,7 +298,7 @@ function renderChart({
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('x', (d) => Math.min(y(d.value), y0) - heightPadding)
+        .attr('x', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? 0 : heightPadding))
         .attr('width', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
         .attr('x', y0)
@@ -396,6 +396,7 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
   padding: 2px 8px;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);
