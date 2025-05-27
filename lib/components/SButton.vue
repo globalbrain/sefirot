@@ -42,6 +42,7 @@ const props = defineProps<{
   iconMode?: Mode
   label?: string
   labelMode?: Mode
+  count?: number
   href?: string
   rounded?: boolean
   block?: boolean
@@ -120,6 +121,9 @@ function handleClick(): void {
         <span v-if="trailIcon" class="icon" :class="iconMode">
           <component :is="trailIcon" class="icon-svg" />
         </span>
+        <span v-else-if="count !== undefined" class="count">
+          {{ count }}
+        </span>
       </span>
 
       <transition name="fade">
@@ -197,6 +201,11 @@ function handleClick(): void {
   color: var(--button-loader-color);
 }
 
+.count {
+  display: inline-block;
+  background-color: var(--button-count-bg-color);
+}
+
 .SButton.mini {
   min-width: 28px;
   min-height: 28px;
@@ -208,6 +217,15 @@ function handleClick(): void {
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
   .content                   { gap: 4px; }
   .icon-svg                  { width: 16px; height: 16px; }
+
+  .count {
+    border-radius: 9px;
+    padding: 0 6px;
+    min-width: 18px;
+    line-height: 18px;
+    font-size: 12px;
+    font-weight: 500;
+  }
 }
 
 .SButton.small {
@@ -219,8 +237,17 @@ function handleClick(): void {
   &.has-label                { padding: var(--button-padding, 0 12px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
-  .content                   { gap: 8px; }
+  .content                   { gap: 6px; }
   .icon-svg                  { width: 16px; height: 16px; }
+
+  .count {
+    border-radius: 9px;
+    padding: 0 6px;
+    min-width: 18px;
+    line-height: 18px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }
 
 .SButton.medium {
@@ -234,6 +261,15 @@ function handleClick(): void {
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 10px 0 12px); }
   .content                   { gap: 8px; }
   .icon-svg                  { width: 18px; height: 18px; }
+
+  .count {
+    border-radius: 10px;
+    padding: 0 6px;
+    min-width: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }
 
 .SButton.large {
@@ -247,6 +283,15 @@ function handleClick(): void {
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 12px 0 14px); }
   .content                   { gap: 8px; }
   .icon-svg                  { width: 18px; height: 18px; }
+
+  .count {
+    border-radius: 10px;
+    padding: 0 6px;
+    min-width: 20px;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
 }
 
 .SButton.jumbo {
@@ -260,6 +305,15 @@ function handleClick(): void {
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 18px 0 20px); }
   .content                   { gap: 8px; }
   .icon-svg                  { width: 20px; height: 20px; }
+
+  .count {
+    border-radius: 12px;
+    padding: 0 8px;
+    min-width: 24px;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 }
 
 .SButton.disabled {
@@ -288,6 +342,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-default-border-color);
     --button-text-color: var(--button-fill-default-text-color);
     --button-bg-color: var(--button-fill-default-bg-color);
+    --button-count-bg-color: var(--button-fill-default-count-bg-color);
     --button-hover-border-color: var(--button-fill-default-hover-border-color);
     --button-hover-text-color: var(--button-fill-default-hover-text-color);
     --button-hover-bg-color: var(--button-fill-default-hover-bg-color);
@@ -304,6 +359,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-mute-border-color);
     --button-text-color: var(--button-fill-mute-text-color);
     --button-bg-color: var(--button-fill-mute-bg-color);
+    --button-count-bg-color: var(--button-fill-mute-count-bg-color);
     --button-hover-border-color: var(--button-fill-mute-hover-border-color);
     --button-hover-text-color: var(--button-fill-mute-hover-text-color);
     --button-hover-bg-color: var(--button-fill-mute-hover-bg-color);
@@ -320,6 +376,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-neutral-border-color);
     --button-text-color: var(--button-fill-neutral-text-color);
     --button-bg-color: var(--button-fill-neutral-bg-color);
+    --button-count-bg-color: var(--button-fill-neutral-count-bg-color);
     --button-hover-border-color: var(--button-fill-neutral-hover-border-color);
     --button-hover-text-color: var(--button-fill-neutral-hover-text-color);
     --button-hover-bg-color: var(--button-fill-neutral-hover-bg-color);
@@ -336,6 +393,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-white-border-color);
     --button-text-color: var(--button-fill-white-text-color);
     --button-bg-color: var(--button-fill-white-bg-color);
+    --button-count-bg-color: var(--button-fill-white-count-bg-color);
     --button-hover-border-color: var(--button-fill-white-hover-border-color);
     --button-hover-text-color: var(--button-fill-white-hover-text-color);
     --button-hover-bg-color: var(--button-fill-white-hover-bg-color);
@@ -352,6 +410,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-black-border-color);
     --button-text-color: var(--button-fill-black-text-color);
     --button-bg-color: var(--button-fill-black-bg-color);
+    --button-count-bg-color: var(--button-fill-black-count-bg-color);
     --button-hover-border-color: var(--button-fill-black-hover-border-color);
     --button-hover-text-color: var(--button-fill-black-hover-text-color);
     --button-hover-bg-color: var(--button-fill-black-hover-bg-color);
@@ -368,6 +427,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-info-border-color);
     --button-text-color: var(--button-fill-info-text-color);
     --button-bg-color: var(--button-fill-info-bg-color);
+    --button-count-bg-color: var(--button-fill-info-count-bg-color);
     --button-hover-border-color: var(--button-fill-info-hover-border-color);
     --button-hover-text-color: var(--button-fill-info-hover-text-color);
     --button-hover-bg-color: var(--button-fill-info-hover-bg-color);
@@ -384,6 +444,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-success-border-color);
     --button-text-color: var(--button-fill-success-text-color);
     --button-bg-color: var(--button-fill-success-bg-color);
+    --button-count-bg-color: var(--button-fill-success-count-bg-color);
     --button-hover-border-color: var(--button-fill-success-hover-border-color);
     --button-hover-text-color: var(--button-fill-success-hover-text-color);
     --button-hover-bg-color: var(--button-fill-success-hover-bg-color);
@@ -400,6 +461,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-warning-border-color);
     --button-text-color: var(--button-fill-warning-text-color);
     --button-bg-color: var(--button-fill-warning-bg-color);
+    --button-count-bg-color: var(--button-fill-warning-count-bg-color);
     --button-hover-border-color: var(--button-fill-warning-hover-border-color);
     --button-hover-text-color: var(--button-fill-warning-hover-text-color);
     --button-hover-bg-color: var(--button-fill-warning-hover-bg-color);
@@ -416,6 +478,7 @@ function handleClick(): void {
     --button-border-color: var(--button-fill-danger-border-color);
     --button-text-color: var(--button-fill-danger-text-color);
     --button-bg-color: var(--button-fill-danger-bg-color);
+    --button-count-bg-color: var(--button-fill-danger-count-bg-color);
     --button-hover-border-color: var(--button-fill-danger-hover-border-color);
     --button-hover-text-color: var(--button-fill-danger-hover-text-color);
     --button-hover-bg-color: var(--button-fill-danger-hover-bg-color);
@@ -489,6 +552,7 @@ function handleClick(): void {
   &.default {
     --button-border-color: var(--button-outline-default-border-color);
     --button-text-color: var(--button-outline-default-text-color);
+    --button-count-bg-color: var(--button-outline-default-count-bg-color);
     --button-hover-bg-color: var(--button-outline-default-hover-bg-color);
     --button-active-bg-color: var(--button-outline-default-active-bg-color);
     --button-disabled-border-color: var(--button-outline-default-disabled-border-color);
@@ -498,6 +562,7 @@ function handleClick(): void {
   &.mute {
     --button-border-color: var(--button-outline-mute-border-color);
     --button-text-color: var(--button-outline-mute-text-color);
+    --button-count-bg-color: var(--button-outline-mute-count-bg-color);
     --button-hover-bg-color: var(--button-outline-mute-hover-bg-color);
     --button-active-bg-color: var(--button-outline-mute-active-bg-color);
     --button-disabled-border-color: var(--button-outline-mute-disabled-border-color);
@@ -507,6 +572,7 @@ function handleClick(): void {
   &.neutral {
     --button-border-color: var(--button-outline-neutral-border-color);
     --button-text-color: var(--button-outline-neutral-text-color);
+    --button-count-bg-color: var(--button-outline-neutral-count-bg-color);
     --button-hover-bg-color: var(--button-outline-neutral-hover-bg-color);
     --button-active-bg-color: var(--button-outline-neutral-active-bg-color);
     --button-disabled-border-color: var(--button-outline-neutral-disabled-border-color);
@@ -516,6 +582,7 @@ function handleClick(): void {
   &.white {
     --button-border-color: var(--button-outline-white-border-color);
     --button-text-color: var(--button-outline-white-text-color);
+    --button-count-bg-color: var(--button-outline-white-count-bg-color);
     --button-hover-bg-color: var(--button-outline-white-hover-bg-color);
     --button-active-bg-color: var(--button-outline-white-active-bg-color);
     --button-disabled-border-color: var(--button-outline-white-disabled-border-color);
@@ -525,6 +592,7 @@ function handleClick(): void {
   &.black {
     --button-border-color: var(--button-outline-black-border-color);
     --button-text-color: var(--button-outline-black-text-color);
+    --button-count-bg-color: var(--button-outline-black-count-bg-color);
     --button-hover-bg-color: var(--button-outline-black-hover-bg-color);
     --button-active-bg-color: var(--button-outline-black-active-bg-color);
     --button-disabled-border-color: var(--button-outline-black-disabled-border-color);
@@ -534,6 +602,7 @@ function handleClick(): void {
   &.info {
     --button-border-color: var(--button-outline-info-border-color);
     --button-text-color: var(--button-outline-info-text-color);
+    --button-count-bg-color: var(--button-outline-info-count-bg-color);
     --button-hover-bg-color: var(--button-outline-info-hover-bg-color);
     --button-active-bg-color: var(--button-outline-info-active-bg-color);
     --button-disabled-border-color: var(--button-outline-info-disabled-border-color);
@@ -543,6 +612,7 @@ function handleClick(): void {
   &.success {
     --button-border-color: var(--button-outline-success-border-color);
     --button-text-color: var(--button-outline-success-text-color);
+    --button-count-bg-color: var(--button-outline-success-count-bg-color);
     --button-hover-bg-color: var(--button-outline-success-hover-bg-color);
     --button-active-bg-color: var(--button-outline-success-active-bg-color);
     --button-disabled-border-color: var(--button-outline-success-disabled-border-color);
@@ -552,6 +622,7 @@ function handleClick(): void {
   &.warning {
     --button-border-color: var(--button-outline-warning-border-color);
     --button-text-color: var(--button-outline-warning-text-color);
+    --button-count-bg-color: var(--button-outline-warning-count-bg-color);
     --button-hover-bg-color: var(--button-outline-warning-hover-bg-color);
     --button-active-bg-color: var(--button-outline-warning-active-bg-color);
     --button-disabled-border-color: var(--button-outline-warning-disabled-border-color);
@@ -561,6 +632,7 @@ function handleClick(): void {
   &.danger {
     --button-border-color: var(--button-outline-danger-border-color);
     --button-text-color: var(--button-outline-danger-text-color);
+    --button-count-bg-color: var(--button-outline-danger-count-bg-color);
     --button-hover-bg-color: var(--button-outline-danger-hover-bg-color);
     --button-active-bg-color: var(--button-outline-danger-active-bg-color);
     --button-disabled-border-color: var(--button-outline-danger-disabled-border-color);
@@ -629,6 +701,7 @@ function handleClick(): void {
 
   &.default {
     --button-text-color: var(--button-text-default-text-color);
+    --button-count-bg-color: var(--button-text-default-count-bg-color);
     --button-hover-bg-color: var(--button-text-default-hover-bg-color);
     --button-active-bg-color: var(--button-text-default-active-bg-color);
     --button-disabled-text-color: var(--button-text-default-disabled-text-color);
@@ -636,6 +709,7 @@ function handleClick(): void {
 
   &.mute {
     --button-text-color: var(--button-text-mute-text-color);
+    --button-count-bg-color: var(--button-text-mute-count-bg-color);
     --button-hover-bg-color: var(--button-text-mute-hover-bg-color);
     --button-active-bg-color: var(--button-text-mute-active-bg-color);
     --button-disabled-text-color: var(--button-text-mute-disabled-text-color);
@@ -643,6 +717,7 @@ function handleClick(): void {
 
   &.neutral {
     --button-text-color: var(--button-text-neutral-text-color);
+    --button-count-bg-color: var(--button-text-neutral-count-bg-color);
     --button-hover-bg-color: var(--button-text-neutral-hover-bg-color);
     --button-active-bg-color: var(--button-text-neutral-active-bg-color);
     --button-disabled-text-color: var(--button-text-neutral-disabled-text-color);
@@ -650,6 +725,7 @@ function handleClick(): void {
 
   &.white {
     --button-text-color: var(--button-text-white-text-color);
+    --button-count-bg-color: var(--button-text-white-count-bg-color);
     --button-hover-bg-color: var(--button-text-white-hover-bg-color);
     --button-active-bg-color: var(--button-text-white-active-bg-color);
     --button-disabled-text-color: var(--button-text-white-disabled-text-color);
@@ -657,6 +733,7 @@ function handleClick(): void {
 
   &.black {
     --button-text-color: var(--button-text-black-text-color);
+    --button-count-bg-color: var(--button-text-black-count-bg-color);
     --button-hover-bg-color: var(--button-text-black-hover-bg-color);
     --button-active-bg-color: var(--button-text-black-active-bg-color);
     --button-disabled-text-color: var(--button-text-black-disabled-text-color);
@@ -664,6 +741,7 @@ function handleClick(): void {
 
   &.info {
     --button-text-color: var(--button-text-info-text-color);
+    --button-count-bg-color: var(--button-text-info-count-bg-color);
     --button-hover-bg-color: var(--button-text-info-hover-bg-color);
     --button-active-bg-color: var(--button-text-info-active-bg-color);
     --button-disabled-text-color: var(--button-text-info-disabled-text-color);
@@ -671,6 +749,7 @@ function handleClick(): void {
 
   &.success {
     --button-text-color: var(--button-text-success-text-color);
+    --button-count-bg-color: var(--button-text-success-count-bg-color);
     --button-hover-bg-color: var(--button-text-success-hover-bg-color);
     --button-active-bg-color: var(--button-text-success-active-bg-color);
     --button-disabled-text-color: var(--button-text-success-disabled-text-color);
@@ -678,6 +757,7 @@ function handleClick(): void {
 
   &.warning {
     --button-text-color: var(--button-text-warning-text-color);
+    --button-count-bg-color: var(--button-text-warning-count-bg-color);
     --button-hover-bg-color: var(--button-text-warning-hover-bg-color);
     --button-active-bg-color: var(--button-text-warning-active-bg-color);
     --button-disabled-text-color: var(--button-text-warning-disabled-text-color);
@@ -685,6 +765,7 @@ function handleClick(): void {
 
   &.danger {
     --button-text-color: var(--button-text-danger-text-color);
+    --button-count-bg-color: var(--button-text-danger-count-bg-color);
     --button-hover-bg-color: var(--button-text-danger-hover-bg-color);
     --button-active-bg-color: var(--button-text-danger-active-bg-color);
     --button-disabled-text-color: var(--button-text-danger-disabled-text-color);
