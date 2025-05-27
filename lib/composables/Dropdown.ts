@@ -1,5 +1,5 @@
 import { useElementBounding, useWindowSize } from '@vueuse/core'
-import { type Component, type MaybeRef, type MaybeRefOrGetter, type Ref, ref, unref } from 'vue'
+import { type Component, type MaybeRef, type MaybeRefOrGetter, type Ref, computed, ref, unref } from 'vue'
 import { type ActionList } from '../components/SActionList.vue'
 import { type DateRange } from '../support/DateRange'
 
@@ -83,6 +83,7 @@ export interface DropdownSectionComponent extends DropdownSectionBase {
 export interface ManualDropdownPosition {
   container: Ref<any>
   position: Ref<'top' | 'bottom'>
+  inset: Ref<{ top?: string; right?: string; bottom?: string; left?: string; transform?: string }>
   update(): void
 }
 
@@ -126,7 +127,7 @@ export function useManualDropdownPosition(
 ): ManualDropdownPosition {
   const el = container ?? ref<any>(null)
 
-  const { top, bottom } = useElementBounding(el)
+  const { top, bottom, left } = useElementBounding(el)
   const { height } = useWindowSize()
 
   const position = ref<'top' | 'bottom'>(initPosition ?? 'bottom')
@@ -154,9 +155,25 @@ export function useManualDropdownPosition(
     position.value = 'top'
   }
 
+  const inset = computed(() => {
+    if (position.value === 'top') {
+      return {
+        top: `${top.value - 8}px`,
+        left: `${left.value}px`,
+        transform: 'translateY(-100%)'
+      }
+    }
+
+    return {
+      top: `${bottom.value + 8}px`,
+      left: `${left.value}px`
+    }
+  })
+
   return {
     container: el,
     position,
+    inset,
     update
   }
 }

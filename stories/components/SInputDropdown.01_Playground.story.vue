@@ -20,7 +20,7 @@ const options: OptionText[] = [
 function initState() {
   return {
     size: 'small',
-    position: 'bottom',
+    position: undefined,
     nullable: true
   }
 }
@@ -41,8 +41,9 @@ function initState() {
       <HstSelect
         title="position"
         :options="{
-          top: 'top',
-          bottom: 'bottom'
+          '': 'auto',
+          'top': 'top',
+          'bottom': 'bottom'
         }"
         v-model="state.position"
       />
@@ -54,27 +55,43 @@ function initState() {
 
     <template #default="{ state }">
       <Board :title>
-        <div class="s-flex s-flex-col s-gap-24">
-          <SInputDropdown
-            :size="state.size"
-            :position="state.position"
-            label="Single select"
-            placeholder="Select a framework"
-            :options
-            :nullable="state.nullable"
-            v-model="singleValue"
-          />
-          <SInputDropdown
-            :size="state.size"
-            :position="state.position"
-            label="Multi select"
-            placeholder="Select frameworks"
-            :options
-            :nullable="state.nullable"
-            v-model="multiValue"
-          />
+        <div class="foo">
+          <div class="s-flex s-flex-col s-gap-24">
+            <SInputDropdown
+              :size="state.size"
+              :position="state.position || undefined"
+              label="Single select"
+              placeholder="Select a framework"
+              :options
+              :nullable="state.nullable"
+              v-model="singleValue"
+              :key="`${JSON.stringify(state)}-single`"
+            />
+            <SInputDropdown
+              :size="state.size"
+              :position="state.position || undefined"
+              label="Multi select"
+              placeholder="Select frameworks"
+              :options
+              :nullable="state.nullable"
+              v-model="multiValue"
+              :key="`${JSON.stringify(state)}-multi`"
+            />
+          </div>
         </div>
       </Board>
     </template>
   </Story>
 </template>
+
+<style scoped lang="postcss">
+.foo {
+  overflow: hidden;
+  max-width: 400px;
+  height: 300px;
+  padding: 16px;
+  border-radius: 6px;
+  outline: 1px solid var(--c-divider);
+  margin: 300px 0;
+}
+</style>

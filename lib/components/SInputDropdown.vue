@@ -56,10 +56,10 @@ const { t } = useTrans({
   }
 })
 
-const container = ref<any>(null)
+const container = ref<HTMLDivElement>()
 
 const { isOpen, open } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(container)
+const { inset, update: updatePosition } = useManualDropdownPosition(container, props.position)
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -171,7 +171,7 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :class="props.position ?? position">
+      <div v-if="isOpen" class="dropdown" :style="inset">
         <div class="dropdown-content">
           <SDropdown :sections="dropdownOptions" />
         </div>
@@ -236,25 +236,8 @@ function handleArray(value: OptionValue) {
 }
 
 .dropdown {
-  position: absolute;
-  left: 0;
-  z-index: var(--z-index-dropdown);
-
-  &.top {
-    bottom: calc(100% + 8px);
-
-    :deep(.SDropdown) {
-      transform: translateY(-100%);
-    }
-  }
-
-  &.bottom {
-    top: calc(100% + 8px);
-  }
-}
-
-.dropdown-content {
   position: fixed;
+  z-index: var(--z-index-dropdown);
 }
 
 .SInputDropdown.mini {
