@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import SInputDropdown, { type OptionText, type Size } from 'sefirot/components/SInputDropdown.vue'
+import SInputDropdown, { type OptionText } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 01. Playground'
 
-const value = ref<string[]>([])
+const singleValue = ref<string | null>(null)
+const multiValue = ref<string[]>([])
 
 const options: OptionText[] = [
   { label: 'Vue.js', value: 'vuejs' },
@@ -18,8 +19,9 @@ const options: OptionText[] = [
 
 function initState() {
   return {
-    size: 'small' as Size,
-    position: 'bottom' as 'top' | 'bottom'
+    size: 'small',
+    position: 'bottom',
+    nullable: true
   }
 }
 </script>
@@ -44,19 +46,34 @@ function initState() {
         }"
         v-model="state.position"
       />
+      <HstCheckbox
+        title="nullable"
+        v-model="state.nullable"
+      />
     </template>
 
     <template #default="{ state }">
       <Board :title>
-        <SInputDropdown
-          :size="state.size"
-          :position="state.position"
-          label="Frameworks"
-          placeholder="Select frameworks"
-          :options
-          nullable
-          v-model="value"
-        />
+        <div class="s-flex s-flex-col s-gap-24">
+          <SInputDropdown
+            :size="state.size"
+            :position="state.position"
+            label="Single select"
+            placeholder="Select a framework"
+            :options
+            :nullable="state.nullable"
+            v-model="singleValue"
+          />
+          <SInputDropdown
+            :size="state.size"
+            :position="state.position"
+            label="Multi select"
+            placeholder="Select frameworks"
+            :options
+            :nullable="state.nullable"
+            v-model="multiValue"
+          />
+        </div>
       </Board>
     </template>
   </Story>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputDropdown, { type OptionAvatar, type Size } from 'sefirot/components/SInputDropdown.vue'
+import SInputDropdown, { type OptionAvatar } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 02. Avatar Options'
@@ -17,7 +17,7 @@ const options: OptionAvatar[] = [
 
 function initState() {
   return {
-    size: 'small' as Size
+    size: 'small'
   }
 }
 </script>
