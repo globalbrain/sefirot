@@ -18,7 +18,8 @@ const options: OptionText[] = [
 
 function initState() {
   return {
-    size: 'small' as Size
+    size: 'small' as Size,
+    position: 'bottom' as 'top' | 'bottom'
   }
 }
 </script>
@@ -35,19 +36,41 @@ function initState() {
         }"
         v-model="state.size"
       />
+      <HstSelect
+        title="position"
+        :options="{
+          top: 'top',
+          bottom: 'bottom'
+        }"
+        v-model="state.position"
+      />
     </template>
 
     <template #default="{ state }">
       <Board :title>
-        <SInputDropdown
-          :size="state.size"
-          label="Frameworks"
-          placeholder="Select frameworks"
-          :options
-          nullable
-          v-model="value"
-        />
+        <div class="foo">
+          <SInputDropdown
+            :size="state.size"
+            :position="state.position"
+            label="Frameworks"
+            placeholder="Select frameworks"
+            :options
+            nullable
+            v-model="value"
+          />
+        </div>
       </Board>
     </template>
   </Story>
 </template>
+
+<style scoped lang="postcss">
+.foo {
+  overflow: hidden;
+  max-width: 400px;
+  height: 300px;
+  padding: 16px;
+  border-radius: 6px;
+  outline: 1px solid var(--c-divider);
+}
+</style>
