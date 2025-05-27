@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: Placeholder
+  noYear?: boolean
+  noMonth?: boolean
+  noDate?: boolean
+  block?: boolean
+  disabled?: boolean
+  value?: Value
+  modelValue?: Value
+}
 
 export interface Value {
   year: number | null
@@ -20,26 +27,7 @@ export interface Placeholder {
   date?: number
 }
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: Placeholder
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  noYear?: boolean
-  noMonth?: boolean
-  noDate?: boolean
-  block?: boolean
-  disabled?: boolean
-  value?: Value
-  modelValue?: Value
-  validation?: Validatable
-  hideError?: boolean
-}>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:model-value': [value: Value]
@@ -143,6 +131,7 @@ function createRequiredTouched(): boolean[] {
   <SInputBase
     class="SInputYMD"
     :class="[size ?? 'small', { disabled }]"
+    :size
     :label
     :note
     :info
