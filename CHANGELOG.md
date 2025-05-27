@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.23.0](https://github.com/globalbrain/sefirot/compare/v4.22.0...v4.23.0) (2025-05-27)
+
+
+### Bug Fixes
+
+* **input-dropdown:** manually position the dropdown element ([#622](https://github.com/globalbrain/sefirot/issues/622)) ([5870cbd](https://github.com/globalbrain/sefirot/commit/5870cbd78f9a44eb27f5ab0425e9b430611c663b))
+
+
+### Features
+
+* **button:** add `:count` prop ([#621](https://github.com/globalbrain/sefirot/issues/621)) ([38bcfdb](https://github.com/globalbrain/sefirot/commit/38bcfdbda9f0a1f2285b556bdfa73e4fd92aebc8))
+
 # [4.22.0](https://github.com/globalbrain/sefirot/compare/v4.21.0...v4.22.0) (2025-05-27)
 
 
