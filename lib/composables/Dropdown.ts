@@ -123,20 +123,20 @@ export function createDropdownComponent(
 
 export function useManualDropdownPosition(
   container?: Ref<any>,
-  initPosition?: MaybeRefOrGetter<'top' | 'bottom' | undefined>
+  override?: MaybeRefOrGetter<'top' | 'bottom' | undefined>
 ): ManualDropdownPosition {
   const el = container ?? ref<any>(null)
 
   const { top, bottom, left } = useElementBounding(el)
   const { height } = useWindowSize()
 
-  const position = ref<'top' | 'bottom'>(toValue(initPosition) ?? 'bottom')
+  const position = ref<'top' | 'bottom'>(toValue(override) ?? 'bottom')
   const dialogHeight = 400
 
   function update(): void {
-    const initial = toValue(initPosition)
-    if (initial) {
-      position.value = initial
+    const overrideValue = toValue(override)
+    if (overrideValue) {
+      position.value = overrideValue
       return
     }
 
