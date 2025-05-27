@@ -1,5 +1,18 @@
 # Changelog
 
+# [4.22.0](https://github.com/globalbrain/sefirot/compare/v4.21.0...v4.22.0) (2025-05-27)
+
+
+### Bug Fixes
+
+* **input-dropdown:** show the dropdown even inside container with overflow hidden ([#620](https://github.com/globalbrain/sefirot/issues/620)) ([0bcbae7](https://github.com/globalbrain/sefirot/commit/0bcbae7521038f005c64223425fa0b5fb302f520))
+* **input:** pass `:size` to base input ([#613](https://github.com/globalbrain/sefirot/issues/613)) ([#619](https://github.com/globalbrain/sefirot/issues/619)) ([a56e523](https://github.com/globalbrain/sefirot/commit/a56e5231ba2e125201969a57ee960518b631ecb6))
+
+
+### Features
+
+* **chart:** support negative values in bar chart ([#617](https://github.com/globalbrain/sefirot/issues/617)) ([dfaadee](https://github.com/globalbrain/sefirot/commit/dfaadeec49b8e18e588e66eb3e3f6baa09ffc59d))
+
 # [4.21.0](https://github.com/globalbrain/sefirot/compare/v4.20.0...v4.21.0) (2025-05-22)
 
 
