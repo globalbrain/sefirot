@@ -48,29 +48,16 @@ function initState() {
 
     <template #default="{ state }">
       <Board :title>
-        <div class="foo">
-          <SInputDropdown
-            :size="state.size"
-            :position="state.position"
-            label="Frameworks"
-            placeholder="Select frameworks"
-            :options
-            nullable
-            v-model="value"
-          />
-        </div>
+        <SInputDropdown
+          :size="state.size"
+          :position="state.position"
+          label="Frameworks"
+          placeholder="Select frameworks"
+          :options
+          nullable
+          v-model="value"
+        />
       </Board>
     </template>
   </Story>
 </template>
-
-<style scoped lang="postcss">
-.foo {
-  overflow: hidden;
-  max-width: 400px;
-  height: 300px;
-  padding: 16px;
-  border-radius: 6px;
-  outline: 1px solid var(--c-divider);
-}
-</style>
