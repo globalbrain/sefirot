@@ -20,7 +20,7 @@ const options: OptionText[] = [
 function initState() {
   return {
     size: 'small',
-    position: undefined,
+    position: '',
     nullable: true
   }
 }
