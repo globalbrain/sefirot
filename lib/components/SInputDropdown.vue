@@ -2,17 +2,23 @@
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
-import { type Validatable } from '../composables/Validation'
 import SDropdown from './SDropdown.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: string
+  options: Option[]
+  position?: 'top' | 'bottom'
+  noSearch?: boolean
+  nullable?: boolean
+  closeOnClick?: boolean
+  disabled?: boolean
+}
 
 export type PrimitiveValue = any
 export type ArrayValue = any[]
@@ -37,24 +43,7 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option[]
-  position?: 'top' | 'bottom'
-  noSearch?: boolean
-  nullable?: boolean
-  closeOnClick?: boolean
-  disabled?: boolean
-  validation?: Validatable
-}>()
+const props = defineProps<Props>()
 
 const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
@@ -143,6 +132,7 @@ function handleArray(value: OptionValue) {
   <SInputBase
     class="SInputDropdown"
     :class="classes"
+    :size
     :label
     :note
     :info
