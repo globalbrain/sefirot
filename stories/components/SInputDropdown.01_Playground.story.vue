@@ -20,7 +20,7 @@ const options: OptionText[] = [
 function initState() {
   return {
     size: 'small',
-    position: 'bottom',
+    position: '',
     nullable: true
   }
 }
@@ -41,8 +41,9 @@ function initState() {
       <HstSelect
         title="position"
         :options="{
-          top: 'top',
-          bottom: 'bottom'
+          '': 'auto',
+          'top': 'top',
+          'bottom': 'bottom'
         }"
         v-model="state.position"
       />
@@ -57,7 +58,7 @@ function initState() {
         <div class="s-flex s-flex-col s-gap-24">
           <SInputDropdown
             :size="state.size"
-            :position="state.position"
+            :position="state.position || undefined"
             label="Single select"
             placeholder="Select a framework"
             :options
@@ -66,7 +67,7 @@ function initState() {
           />
           <SInputDropdown
             :size="state.size"
-            :position="state.position"
+            :position="state.position || undefined"
             label="Multi select"
             placeholder="Select frameworks"
             :options
