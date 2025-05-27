@@ -124,10 +124,12 @@ function renderChart({
     .range(vertical ? [0, width] : [0, height])
     .padding(0.4)
 
-  // Y scale for bar values
+  // Y scale for bar values, including negative values
+  const minValue = d3.min(props.data, (d) => d.value)!
+  const maxValue = d3.max(props.data, (d) => d.value)!
   const y = d3
     .scaleLinear()
-    .domain([0, d3.max(props.data, (d) => d.value)!])
+    .domain([Math.min(0, minValue), Math.max(0, maxValue)])
     .nice()
     .range(vertical ? [height, 0] : [0, width])
 
@@ -136,6 +138,9 @@ function renderChart({
   const heightPadding = 24
   const bandwidth = Math.min(paddedScale.bandwidth(), props.maxBandwidth)
   const innerOffset = (paddedScale.bandwidth() - bandwidth) / 2
+
+  // Baseline coordinate for zero value
+  const y0 = y(0)
 
   // For the axes, use the paddedScale so ticks remain centered on the bars.
   svg
@@ -241,24 +246,24 @@ function renderChart({
     if (vertical) {
       outerBars
         .attr('x', 0)
-        .attr('y', (d) => Math.max(0, y(d.value) - heightPadding))
+        .attr('y', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? heightPadding : 0))
         .attr('width', paddedScale.step())
-        .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
+        .attr('height', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
         .attr('x', groupOffset + innerOffset)
-        .attr('y', (d) => y(d.value))
+        .attr('y', (d) => (d.value >= 0 ? y(d.value) : y0))
         .attr('width', bandwidth)
-        .attr('height', (d) => height - y(d.value))
+        .attr('height', (d) => Math.abs(y(d.value) - y0))
     } else {
       outerBars
-        .attr('x', 0)
+        .attr('x', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? 0 : heightPadding))
         .attr('y', 0)
-        .attr('width', (d) => Math.min(width, y(d.value) + heightPadding))
+        .attr('width', (d) => Math.abs(y(d.value) - y0) + heightPadding)
         .attr('height', paddedScale.step())
       bars
-        .attr('x', 0)
+        .attr('x', (d) => (d.value >= 0 ? y0 : y(d.value)))
         .attr('y', groupOffset + innerOffset)
-        .attr('width', (d) => y(d.value))
+        .attr('width', (d) => Math.abs(y(d.value) - y0))
         .attr('height', bandwidth)
     }
   } else {
@@ -266,43 +271,45 @@ function renderChart({
     if (vertical) {
       outerBars
         .attr('x', 0)
-        .attr('y', height)
+        .attr('y', y0)
         .attr('width', paddedScale.step())
         .attr('height', 0)
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('y', (d) => Math.max(0, y(d.value) - heightPadding))
-        .attr('height', (d) => height - Math.max(0, y(d.value) - heightPadding))
+        .attr('y', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? heightPadding : 0))
+        .attr('height', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
         .attr('x', groupOffset + innerOffset)
-        .attr('y', height)
+        .attr('y', y0)
         .attr('width', bandwidth)
         .attr('height', 0)
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('y', (d) => y(d.value))
-        .attr('height', (d) => height - y(d.value))
+        .attr('y', (d) => (d.value >= 0 ? y(d.value) : y0))
+        .attr('height', (d) => Math.abs(y(d.value) - y0))
     } else {
       outerBars
-        .attr('x', 0)
+        .attr('x', y0)
         .attr('y', 0)
         .attr('width', 0)
         .attr('height', paddedScale.step())
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('width', (d) => Math.min(width, y(d.value) + heightPadding))
+        .attr('x', (d) => Math.min(y(d.value), y0) - (d.value >= 0 ? 0 : heightPadding))
+        .attr('width', (d) => Math.abs(y(d.value) - y0) + heightPadding)
       bars
-        .attr('x', 0)
+        .attr('x', y0)
         .attr('y', groupOffset + innerOffset)
         .attr('width', 0)
         .attr('height', bandwidth)
         .transition()
         .duration(800)
         .delay((_, i) => i * 100)
-        .attr('width', (d) => y(d.value))
+        .attr('x', (d) => (d.value >= 0 ? y0 : y(d.value)))
+        .attr('width', (d) => Math.abs(y(d.value) - y0))
     }
   }
 
@@ -389,6 +396,7 @@ watch(
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
   padding: 2px 8px;
   background-color: var(--c-bg-elv-2);
   border: 1px solid var(--c-divider);

@@ -11,7 +11,7 @@ import SControlLeft from 'sefirot/components/SControlLeft.vue'
 import SControlRight from 'sefirot/components/SControlRight.vue'
 import SControlText from 'sefirot/components/SControlText.vue'
 import { type KV, c, exportAsPng } from 'sefirot/support/Chart'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const title = 'Components / SChart / 01. Playground'
 
@@ -25,6 +25,19 @@ const data = ref<KV[]>([
   { key: '2024', value: 40 },
   { key: '2025', value: 45 }
 ])
+
+const dataWithNegative = ref<KV[]>([
+  { key: '2018', value: -10 },
+  { key: '2019', value: 20 },
+  { key: '2020', value: -15 },
+  { key: '2021', value: 25 },
+  { key: '2022', value: -35 },
+  { key: '2023', value: 30 },
+  { key: '2024', value: -40 },
+  { key: '2025', value: 45 }
+])
+
+const colors = computed(() => dataWithNegative.value.map((d) => d.value < 0 ? 'tomato' : 'green'))
 
 const barRef = ref()
 const pieRef = ref()
@@ -276,7 +289,8 @@ function initState() {
             <div class="s-w-full s-h-320">
               <SChartBar
                 ref="barRef"
-                :data
+                :data="dataWithNegative"
+                :colors
                 :margins="{
                   top: state.barMarginTop,
                   right: state.barMarginRight,
