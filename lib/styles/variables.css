@@ -428,6 +428,7 @@
   --button-fill-default-text-color: var(--c-text-1);
   --button-fill-default-content-color: var(--c-text-1);
   --button-fill-default-bg-color: var(--c-bg-mute-1);
+  --button-fill-default-count-bg-color: var(--c-gray-7);
   --button-fill-default-loader-color: var(--c-neutral-1);
   --button-fill-default-hover-border-color: var(--c-border-mute-2);
   --button-fill-default-hover-text-color: var(--c-text-1);
@@ -444,6 +445,8 @@
   --button-fill-mute-text-color: var(--c-text-2);
   --button-fill-mute-content-color: var(--c-text-2);
   --button-fill-mute-bg-color: var(--c-bg-mute-1);
+  --button-fill-mute-count-bg-color: var(--c-gray-6);
+  --button-fill-default-count-bg-color: var(--c-gray-7);
   --button-fill-mute-loader-color: var(--c-neutral);
   --button-fill-mute-hover-border-color: var(--c-border-mute-2);
   --button-fill-mute-hover-text-color: var(--c-text-2);
@@ -461,6 +464,7 @@
   --button-fill-neutral-content-color: var(--c-text-1);
   --button-fill-neutral-bg-color: var(--c-neutral-1);
   --button-fill-neutral-loader-color: var(--c-neutral-inverse-1);
+  --button-fill-neutral-count-bg-color: var(--c-neutral-2);
   --button-fill-neutral-hover-border-color: transparent;
   --button-fill-neutral-hover-text-color: var(--c-text-inverse-1);
   --button-fill-neutral-hover-bg-color: var(--c-neutral-2);
@@ -477,6 +481,7 @@
   --button-fill-white-content-color: var(--c-text-dark-1);
   --button-fill-white-bg-color: var(--c-neutral-dark-1);
   --button-fill-white-loader-color: var(--c-neutral-light-1);
+  --button-fill-white-count-bg-color: var(--c-neutral-dark-2);
   --button-fill-white-hover-border-color: transparent;
   --button-fill-white-hover-text-color: var(--c-text-light-1);
   --button-fill-white-hover-bg-color: var(--c-neutral-dark-2);
@@ -493,6 +498,7 @@
   --button-fill-black-content-color: var(--c-text-light-1);
   --button-fill-black-bg-color: var(--c-neutral-light-1);
   --button-fill-black-loader-color: var(--c-neutral-dark-1);
+  --button-fill-black-count-bg-color: var(--c-neutral-light-2);
   --button-fill-black-hover-border-color: transparent;
   --button-fill-black-hover-text-color: var(--c-text-dark-1);
   --button-fill-black-hover-bg-color: var(--c-neutral-light-2);
@@ -509,6 +515,7 @@
   --button-fill-info-content-color: var(--c-white-1);
   --button-fill-info-bg-color: var(--c-bg-info-1);
   --button-fill-info-loader-color: var(--c-white-1);
+  --button-fill-info-count-bg-color: var(--c-blue-8);
   --button-fill-info-hover-border-color: var(--c-border-info-2);
   --button-fill-info-hover-text-color: var(--c-white-1);
   --button-fill-info-hover-bg-color: var(--c-bg-info-2);
@@ -525,6 +532,7 @@
   --button-fill-success-content-color: var(--c-white-1);
   --button-fill-success-bg-color: var(--c-bg-success-1);
   --button-fill-success-loader-color: var(--c-white);
+  --button-fill-success-count-bg-color: var(--c-green-8);
   --button-fill-success-hover-border-color: var(--c-border-success-2);
   --button-fill-success-hover-text-color: var(--c-white);
   --button-fill-success-hover-bg-color: var(--c-bg-success-2);
@@ -541,6 +549,7 @@
   --button-fill-warning-content-color: var(--c-text-warning-1);
   --button-fill-warning-bg-color: var(--c-bg-mute-1);
   --button-fill-warning-loader-color: var(--c-neutral);
+  --button-fill-warning-count-bg-color: var(--c-bg-mute-3);
   --button-fill-warning-hover-border-color: var(--c-border-warning-1);
   --button-fill-warning-hover-text-color: var(--c-white);
   --button-fill-warning-hover-bg-color: var(--c-bg-warning-1);
@@ -557,6 +566,7 @@
   --button-fill-danger-content-color: var(--c-text-danger-1);
   --button-fill-danger-bg-color: var(--c-bg-mute-1);
   --button-fill-danger-loader-color: var(--c-neutral);
+  --button-fill-danger-count-bg-color: var(--c-bg-mute-3);
   --button-fill-danger-hover-border-color: var(--c-border-danger-1);
   --button-fill-danger-hover-text-color: var(--c-white);
   --button-fill-danger-hover-bg-color: var(--c-bg-danger-1);
@@ -572,6 +582,7 @@
   --button-outline-default-text-color: var(--c-text-1);
   --button-outline-default-content-color: var(--c-text-1);
   --button-outline-default-loader-color: var(--c-neutral-1);
+  --button-outline-default-count-bg-color: var(--c-bg-mute-1);
   --button-outline-default-hover-bg-color: var(--c-neutral-dimm-a1);
   --button-outline-default-active-bg-color: var(--c-neutral-dimm-a2);
   --button-outline-default-disabled-border-color: var(--c-border-mute-1);
@@ -582,6 +593,7 @@
   --button-outline-mute-text-color: var(--c-text-2);
   --button-outline-mute-content-color: var(--c-text-2);
   --button-outline-mute-loader-color: var(--c-neutral-1);
+  --button-outline-mute-count-bg-color: var(--c-bg-mute-1);
   --button-outline-mute-hover-bg-color: var(--c-neutral-dimm-a1);
   --button-outline-mute-active-bg-color: var(--c-neutral-dimm-a2);
   --button-outline-mute-disabled-border-color: var(--c-border-mute-1);
@@ -592,6 +604,7 @@
   --button-outline-neutral-text-color: var(--c-text-1);
   --button-outline-neutral-content-color: var(--c-text-1);
   --button-outline-neutral-loader-color: var(--c-neutral-1);
+  --button-outline-neutral-count-bg-color: var(--c-bg-mute-1);
   --button-outline-neutral-hover-bg-color: var(--c-neutral-dimm-a1);
   --button-outline-neutral-active-bg-color: var(--c-neutral-dimm-a2);
   --button-outline-neutral-disabled-border-color: var(--c-neutral-3);
@@ -602,6 +615,7 @@
   --button-outline-white-text-color: var(--c-text-dark-1);
   --button-outline-white-content-color: var(--c-text-dark-1);
   --button-outline-white-loader-color: var(--c-neutral-dark-1);
+  --button-outline-white-count-bg-color: var(--c-bg-mute-1);
   --button-outline-white-hover-bg-color: var(--c-neutral-dark-dimm-a1);
   --button-outline-white-active-bg-color: var(--c-neutral-dark-dimm-a2);
   --button-outline-white-disabled-border-color: var(--c-neutral-dark-3);
@@ -612,6 +626,7 @@
   --button-outline-black-text-color: var(--c-text-light-1);
   --button-outline-black-content-color: var(--c-text-light-1);
   --button-outline-black-loader-color: var(--c-neutral-light-1);
+  --button-outline-black-count-bg-color: var(--c-bg-mute-1);
   --button-outline-black-hover-bg-color: var(--c-neutral-light-dimm-a1);
   --button-outline-black-active-bg-color: var(--c-neutral-light-dimm-a2);
   --button-outline-black-disabled-border-color: var(--c-neutral-light-3);
@@ -622,6 +637,7 @@
   --button-outline-info-text-color: var(--c-text-info-1);
   --button-outline-info-content-color: var(--c-text-info-1);
   --button-outline-info-loader-color: var(--c-neutral-1);
+  --button-outline-info-count-bg-color: var(--c-bg-info-dimm-a2);
   --button-outline-info-hover-bg-color: var(--c-bg-info-dimm-a1);
   --button-outline-info-active-bg-color: var(--c-bg-info-dimm-a2);
   --button-outline-info-disabled-border-color: var(--c-blue-8);
@@ -632,6 +648,7 @@
   --button-outline-success-text-color: var(--c-text-success-1);
   --button-outline-success-content-color: var(--c-text-success-1);
   --button-outline-success-loader-color: var(--c-neutral-1);
+  --button-outline-success-count-bg-color: var(--c-bg-success-dimm-a2);
   --button-outline-success-hover-bg-color: var(--c-bg-success-dimm-a1);
   --button-outline-success-active-bg-color: var(--c-bg-success-dimm-a2);
   --button-outline-success-disabled-border-color: var(--c-green-8);
@@ -642,6 +659,7 @@
   --button-outline-warning-text-color: var(--c-text-warning-1);
   --button-outline-warning-content-color: var(--c-text-warning-1);
   --button-outline-warning-loader-color: var(--c-neutral-1);
+  --button-outline-warning-count-bg-color: var(--c-bg-warning-dimm-a2);
   --button-outline-warning-hover-bg-color: var(--c-bg-warning-dimm-a1);
   --button-outline-warning-active-bg-color: var(--c-bg-warning-dimm-a2);
   --button-outline-warning-disabled-border-color: var(--c-yellow-8);
@@ -652,6 +670,7 @@
   --button-outline-danger-text-color: var(--c-text-danger-1);
   --button-outline-danger-content-color: var(--c-text-danger-1);
   --button-outline-danger-loader-color: var(--c-neutral-1);
+  --button-outline-danger-count-bg-color: var(--c-bg-danger-dimm-a2);
   --button-outline-danger-hover-bg-color: var(--c-bg-danger-dimm-a1);
   --button-outline-danger-active-bg-color: var(--c-bg-danger-dimm-a2);
   --button-outline-danger-disabled-border-color: var(--c-red-8);
@@ -660,6 +679,7 @@
 
   --button-text-default-text-color: var(--c-text-1);
   --button-text-default-content-color: var(--c-text-1);
+  --button-text-default-count-bg-color: var(--c-bg-mute-1);
   --button-text-default-hover-bg-color: var(--c-bg-mute-1);
   --button-text-default-active-bg-color: var(--c-bg-mute-2);
   --button-text-default-disabled-text-color: var(--c-text-3);
@@ -667,6 +687,7 @@
 
   --button-text-mute-text-color: var(--c-text-2);
   --button-text-mute-content-color: var(--c-text-2);
+  --button-text-mute-count-bg-color: var(--c-bg-mute-1);
   --button-text-mute-hover-bg-color: var(--c-bg-mute-1);
   --button-text-mute-active-bg-color: var(--c-bg-mute-2);
   --button-text-mute-disabled-text-color: var(--c-text-3);
@@ -674,6 +695,7 @@
 
   --button-text-neutral-text-color: var(--c-text-1);
   --button-text-neutral-content-color: var(--c-text-1);
+  --button-text-neutral-count-bg-color: var(--c-bg-mute-1);
   --button-text-neutral-hover-bg-color: var(--c-neutral-dimm-a1);
   --button-text-neutral-active-bg-color: var(--c-neutral-dimm-a2);
   --button-text-neutral-disabled-text-color: var(--c-text-3);
@@ -681,6 +703,7 @@
 
   --button-text-white-text-color: var(--c-text-dark-1);
   --button-text-white-content-color: var(--c-text-dark-1);
+  --button-text-white-count-bg-color: var(--c-bg-mute-1);
   --button-text-white-hover-bg-color: var(--c-neutral-dark-dimm-a1);
   --button-text-white-active-bg-color: var(--c-neutral-dark-dimm-a2);
   --button-text-white-disabled-text-color: var(--c-text-dark-3);
@@ -688,6 +711,7 @@
 
   --button-text-black-text-color: var(--c-text-light-1);
   --button-text-black-content-color: var(--c-text-light-1);
+  --button-text-black-count-bg-color: var(--c-bg-mute-1);
   --button-text-black-hover-bg-color: var(--c-neutral-light-dimm-a1);
   --button-text-black-active-bg-color: var(--c-neutral-light-dimm-a2);
   --button-text-black-disabled-text-color: var(--c-text-light-3);
@@ -695,6 +719,7 @@
 
   --button-text-info-text-color: var(--c-text-info-1);
   --button-text-info-content-color: var(--c-text-info-1);
+  --button-text-info-count-bg-color: var(--c-bg-info-dimm-a2);
   --button-text-info-hover-bg-color: var(--c-bg-info-dimm-a1);
   --button-text-info-active-bg-color: var(--c-bg-info-dimm-a2);
   --button-text-info-disabled-text-color: var(--c-text-info-3);
@@ -702,6 +727,7 @@
 
   --button-text-success-text-color: var(--c-text-success-1);
   --button-text-success-content-color: var(--c-text-success-1);
+  --button-text-success-count-bg-color: var(--c-bg-success-dimm-a2);
   --button-text-success-hover-bg-color: var(--c-bg-success-dimm-a1);
   --button-text-success-active-bg-color: var(--c-bg-success-dimm-a2);
   --button-text-success-disabled-text-color: var(--c-text-success-3);
@@ -709,6 +735,7 @@
 
   --button-text-warning-text-color: var(--c-text-warning-1);
   --button-text-warning-content-color: var(--c-text-warning-1);
+  --button-text-warning-count-bg-color: var(--c-bg-warning-dimm-a2);
   --button-text-warning-hover-bg-color: var(--c-bg-warning-dimm-a1);
   --button-text-warning-active-bg-color: var(--c-bg-warning-dimm-a2);
   --button-text-warning-disabled-text-color: var(--c-text-warning-3);
@@ -716,6 +743,7 @@
 
   --button-text-danger-text-color: var(--c-text-danger-1);
   --button-text-danger-content-color: var(--c-text-danger-1);
+  --button-text-danger-count-bg-color: var(--c-bg-danger-dimm-a2);
   --button-text-danger-hover-bg-color: var(--c-bg-danger-dimm-a1);
   --button-text-danger-active-bg-color: var(--c-bg-danger-dimm-a2);
   --button-text-danger-disabled-text-color: var(--c-text-danger-3);
