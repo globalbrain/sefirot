@@ -171,8 +171,10 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :class="position">
-        <SDropdown :sections="dropdownOptions" />
+      <div v-if="isOpen" class="dropdown" :class="props.position ?? position">
+        <div class="dropdown-content">
+          <SDropdown :sections="dropdownOptions" />
+        </div>
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>
@@ -238,8 +240,21 @@ function handleArray(value: OptionValue) {
   left: 0;
   z-index: var(--z-index-dropdown);
 
-  &.top    { bottom: calc(100% + 8px); }
-  &.bottom { top: calc(100% + 8px); }
+  &.top {
+    bottom: calc(100% + 8px);
+
+    :deep(.SDropdown) {
+      transform: translateY(-100%);
+    }
+  }
+
+  &.bottom {
+    top: calc(100% + 8px);
+  }
+}
+
+.dropdown-content {
+  position: fixed;
 }
 
 .SInputDropdown.mini {
