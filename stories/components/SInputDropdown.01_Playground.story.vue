@@ -65,7 +65,6 @@ function initState() {
               :options
               :nullable="state.nullable"
               v-model="singleValue"
-              :key="`${JSON.stringify(state)}-single`"
             />
             <SInputDropdown
               :size="state.size"
@@ -75,7 +74,6 @@ function initState() {
               :options
               :nullable="state.nullable"
               v-model="multiValue"
-              :key="`${JSON.stringify(state)}-multi`"
             />
           </div>
         </div>

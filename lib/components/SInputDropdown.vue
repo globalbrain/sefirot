@@ -59,7 +59,7 @@ const { t } = useTrans({
 const container = ref<HTMLDivElement>()
 
 const { isOpen, open } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(container, props.position)
+const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
 
 const classes = computed(() => [
   props.size ?? 'small',
