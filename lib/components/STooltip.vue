@@ -104,10 +104,10 @@ onBeforeUnmount(() => {
 
     <Teleport to="#sefirot-modals">
       <Transition name="fade">
-        <span v-show="on" class="container" :class="containerClasses" ref="content">
-          <span v-if="$slots.text" class="tip"><slot name="text" /></span>
-          <span v-else-if="text" class="tip" v-html="text" />
-        </span>
+        <div v-show="on" class="container" :class="containerClasses" ref="content">
+          <div v-if="$slots.text" class="tip"><slot name="text" /></div>
+          <div v-else-if="text" class="tip" v-html="text" />
+        </div>
       </Transition>
     </Teleport>
   </component>
