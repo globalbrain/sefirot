@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.23.1](https://github.com/globalbrain/sefirot/compare/v4.23.0...v4.23.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* **tooltip:** use div instead of span in tooltip tips ([#624](https://github.com/globalbrain/sefirot/issues/624)) ([fad0112](https://github.com/globalbrain/sefirot/commit/fad011250c6f117e6b3d8d6edc33a1a343831d5c))
+
 # [4.23.0](https://github.com/globalbrain/sefirot/compare/v4.22.0...v4.23.0) (2025-05-27)
 
 
