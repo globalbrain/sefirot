@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.24.0](https://github.com/globalbrain/sefirot/compare/v4.23.1...v4.24.0) (2025-06-05)
+
+
+### Features
+
+* **markdown:** sanitize the rendered html ([#625](https://github.com/globalbrain/sefirot/issues/625)) ([1af84f0](https://github.com/globalbrain/sefirot/commit/1af84f064552542626f2998f93306c285d453870))
+
 ## [4.23.1](https://github.com/globalbrain/sefirot/compare/v4.23.0...v4.23.1) (2025-06-04)
 
 
