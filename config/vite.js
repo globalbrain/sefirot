@@ -46,8 +46,10 @@ export const baseConfig = {
       'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url))
     },
 
+    // list the client-side direct dependencies/peerDependencies which get bundled
     dedupe: [
       '@sentry/browser',
+      '@sentry/vue',
       '@tanstack/vue-virtual',
       '@tinyhttp/content-disposition',
       '@tinyhttp/cookie',
@@ -56,10 +58,12 @@ export const baseConfig = {
       '@vuelidate/validators',
       '@vueuse/core',
       'body-scroll-lock',
-      'dayjs',
       'd3',
+      'dayjs',
+      'dompurify',
       'file-saver',
       'fuse.js',
+      'html2canvas',
       'lodash-es',
       'markdown-it',
       'normalize.css',
@@ -67,8 +71,8 @@ export const baseConfig = {
       'pinia',
       'qs',
       'v-calendar',
-      'vue-router',
-      'vue'
+      'vue',
+      'vue-router'
     ]
   },
 

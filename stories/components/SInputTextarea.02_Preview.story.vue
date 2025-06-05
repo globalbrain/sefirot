@@ -26,7 +26,7 @@ const render = useMarkdown()
 
 function preview() {
   if (!text.value) { return 'Nothing to preview' }
-  return render(text.value, false)
+  return render(text.value)
 }
 </script>
 
