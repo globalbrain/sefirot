@@ -20,8 +20,8 @@ const { addListeners, subscribe } = useLink({
   callbacks: props.callbacks
 })
 
-const markdown = useMarkdown()
-const rendered = computed(() => markdown(props.content, props.inline ?? false))
+const markdown = useMarkdown({ inline: props.inline })
+const rendered = computed(() => markdown(props.content))
 
 watch(
   rendered,

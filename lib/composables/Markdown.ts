@@ -1,16 +1,26 @@
+import DOMPurify, { type Config } from 'dompurify'
 import MarkdownIt, { type Options as MarkdownItOptions } from 'markdown-it'
 import { type Ref, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { type LinkAttrs, isCallbackUrl, isExternalUrl, linkPlugin } from './markdown/LinkPlugin'
 
-export type UseMarkdown = (source: string, inline: boolean) => string
+export type UseMarkdown = (source: string, inline?: boolean) => string
 
 export interface UseMarkdownOptions extends MarkdownItOptions {
   linkAttrs?: LinkAttrs
   config?: (md: MarkdownIt) => void
+  /** @default false */
+  inline?: boolean
+  domPurifyOptions?: Config
 }
 
-export function useMarkdown(options: UseMarkdownOptions = {}): UseMarkdown {
+export function useMarkdown({
+  linkAttrs,
+  config,
+  inline: _inline,
+  domPurifyOptions,
+  ...options
+}: UseMarkdownOptions = {}): UseMarkdown {
   const md = new MarkdownIt({
     html: true,
     linkify: true,
@@ -20,15 +30,14 @@ export function useMarkdown(options: UseMarkdownOptions = {}): UseMarkdown {
   md.use(linkPlugin, {
     target: '_blank',
     rel: 'noopener noreferrer',
-    ...options.linkAttrs
+    ...linkAttrs
   })
 
-  if (options.config) {
-    options.config(md)
-  }
+  config?.(md)
 
-  return (source, inline) => {
-    return inline ? md.renderInline(source) : md.render(source)
+  return (source, inline = _inline) => { // TODO: remove `inline` in next major version
+    const html = inline ? md.renderInline(source) : md.render(source)
+    return DOMPurify.sanitize(html, domPurifyOptions)
   }
 }
 
