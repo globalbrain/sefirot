@@ -2,7 +2,7 @@
   "name": "@globalbrain/sefirot",
   "type": "module",
   "version": "4.23.1",
-  "packageManager": "pnpm@10.11.1",
+  "packageManager": "pnpm@9.15.4",
   "description": "Vue Components for Global Brain Design System.",
   "author": "Kia Ishii <ka.ishii@globalbrains.com>",
   "license": "MIT",
@@ -122,8 +122,5 @@
     "vue": "^3.5.16",
     "vue-router": "^4.5.1",
     "vue-tsc": "^2.2.10"
-  },
-  "pnpm": {
-    "neverBuiltDependencies": []
   }
 }

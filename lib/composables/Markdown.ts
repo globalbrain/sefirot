@@ -1,43 +1,53 @@
 import DOMPurify, { type Config } from 'dompurify'
 import MarkdownIt, { type Options as MarkdownItOptions } from 'markdown-it'
-import { type Ref, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { type LinkAttrs, isCallbackUrl, isExternalUrl, linkPlugin } from './markdown/LinkPlugin'
 
 export type UseMarkdown = (source: string, inline?: boolean) => string
 
 export interface UseMarkdownOptions extends MarkdownItOptions {
-  linkAttrs?: LinkAttrs
   config?: (md: MarkdownIt) => void
   /** @default false */
   inline?: boolean
   domPurifyOptions?: Config
 }
 
+const EXTERNAL_URL_RE = /^(?:[a-z]+:|\/\/)/i
+
+DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+  if (node.tagName === 'A') {
+    const target = node.getAttribute('target')
+    if (target && target !== '_blank' && target !== '_self') {
+      node.removeAttribute('target')
+    }
+
+    const href = node.getAttribute('href')
+    if (href && EXTERNAL_URL_RE.test(href)) {
+      node.setAttribute('target', '_blank')
+      node.setAttribute('rel', 'noreferrer')
+    }
+
+    node.classList.add('SMarkdown-link')
+  }
+})
+
 export function useMarkdown({
-  linkAttrs,
   config,
   inline: _inline,
   domPurifyOptions,
   ...options
 }: UseMarkdownOptions = {}): UseMarkdown {
-  const md = new MarkdownIt({
-    html: true,
-    linkify: true,
-    ...options
-  })
+  //
 
-  md.use(linkPlugin, {
-    target: '_blank',
-    rel: 'noopener noreferrer',
-    ...linkAttrs
-  })
-
+  const md = new MarkdownIt({ html: true, linkify: true, ...options })
   config?.(md)
 
-  return (source, inline = _inline) => { // TODO: remove `inline` in next major version
+  return (source, inline = _inline) => {
+    // TODO: remove `inline` in next major version
     const html = inline ? md.renderInline(source) : md.render(source)
-    return DOMPurify.sanitize(html, domPurifyOptions)
+    return DOMPurify.sanitize(html, {
+      USE_PROFILES: { html: true },
+      ADD_ATTR: ['target'],
+      ...domPurifyOptions
+    })
   }
 }
 
@@ -53,110 +63,4 @@ export function useLinkifyIt() {
   }
 
   return (source: string) => md.renderInline(source)
-}
-
-export interface UseLink {
-  addListeners(): void
-  removeListeners(): void
-  subscribe(cb: LinkSubscriber): () => void
-}
-
-export interface UseLinkOptions {
-  container: Ref<Element | null>
-  callbacks?: LinkCallback[]
-}
-
-export interface LinkSubscriberPayload {
-  event: Event
-  target: HTMLAnchorElement
-  isExternal: boolean
-  isCallback: boolean
-}
-
-export type LinkSubscriber = (payload: LinkSubscriberPayload) => void
-
-export type LinkCallback = () => void
-
-export function useLink({ container, callbacks }: UseLinkOptions): UseLink {
-  const router = useRouter()
-  const subscribers: LinkSubscriber[] = []
-
-  onUnmounted(() => removeListeners())
-
-  function handler(event: Event): void {
-    const target = event.target as HTMLAnchorElement
-    const href = target.getAttribute('href')!
-
-    if (!href) {
-      return
-    }
-
-    const isExternal = isExternalUrl(href)
-    const isCallback = isCallbackUrl(href)
-
-    subscribers.forEach((sub) => sub({
-      event,
-      target,
-      isExternal,
-      isCallback
-    }))
-
-    if (isExternal) {
-      return
-    }
-
-    if (!event.defaultPrevented) {
-      event.preventDefault()
-    }
-
-    if (isCallback) {
-      const idx = Number.parseInt(target.dataset.callbackId || '')
-      const callback = (callbacks ?? [])[idx]
-
-      if (!callback) {
-        throw new Error(`Callback not found at index: ${idx}`)
-      }
-
-      return callback()
-    }
-
-    router.push(href)
-  }
-
-  function addListeners(): void {
-    removeListeners()
-
-    if (container.value) {
-      findLinks(container.value).forEach((element) => {
-        element.addEventListener('click', handler)
-      })
-    }
-  }
-
-  function removeListeners(): void {
-    if (container.value) {
-      findLinks(container.value).forEach((element) => {
-        element.removeEventListener('click', handler)
-      })
-    }
-  }
-
-  function subscribe(fn: LinkSubscriber): () => void {
-    subscribers.push(fn)
-
-    return () => {
-      const idx = subscribers.indexOf(fn)
-      idx > -1 && subscribers.splice(idx, 1)
-    }
-  }
-
-  return {
-    addListeners,
-    removeListeners,
-    subscribe
-  }
-}
-
-function findLinks(target: Element) {
-  return target.querySelectorAll('a.SMarkdown-link')
 }

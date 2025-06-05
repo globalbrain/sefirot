@@ -1,35 +1,15 @@
 <script setup lang="ts">
-import { computed, nextTick, shallowRef, watch } from 'vue'
-import { type LinkCallback, type LinkSubscriberPayload, useLink, useMarkdown } from '../composables/Markdown'
+import { computed } from 'vue'
+import { useMarkdown } from '../composables/Markdown'
 
 const props = defineProps<{
   tag?: string
   content: string
-  callbacks?: LinkCallback[]
   inline?: boolean
 }>()
 
-const emit = defineEmits<{
-  clicked: [payload: LinkSubscriberPayload]
-}>()
-
-const container = shallowRef<Element | null>(null)
-
-const { addListeners, subscribe } = useLink({
-  container,
-  callbacks: props.callbacks
-})
-
 const markdown = useMarkdown({ inline: props.inline })
 const rendered = computed(() => markdown(props.content))
-
-watch(
-  rendered,
-  () => nextTick(() => addListeners()),
-  { immediate: true }
-)
-
-subscribe((payload) => emit('clicked', payload))
 </script>
 
 <template>
@@ -37,7 +17,6 @@ subscribe((payload) => emit('clicked', payload))
     v-if="$slots.default"
     :is="tag ?? 'div'"
     class="SMarkdown-container"
-    ref="container"
   >
     <slot v-bind="{ rendered }" />
   </component>
@@ -46,7 +25,6 @@ subscribe((payload) => emit('clicked', payload))
     v-else
     :is="tag ?? 'div'"
     class="SMarkdown-container"
-    ref="container"
     v-html="rendered"
   />
 </template>
