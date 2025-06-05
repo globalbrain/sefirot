@@ -12,22 +12,24 @@ export interface UseMarkdownOptions extends MarkdownItOptions {
 
 const EXTERNAL_URL_RE = /^(?:[a-z]+:|\/\/)/i
 
-DOMPurify.addHook('afterSanitizeAttributes', (node) => {
-  if (node.tagName === 'A') {
-    const target = node.getAttribute('target')
-    if (target && target !== '_blank' && target !== '_self') {
-      node.removeAttribute('target')
-    }
+if (typeof document !== 'undefined') {
+  DOMPurify.addHook('afterSanitizeAttributes', (node) => {
+    if (node.tagName === 'A') {
+      const target = node.getAttribute('target')
+      if (target && target !== '_blank' && target !== '_self') {
+        node.removeAttribute('target')
+      }
 
-    const href = node.getAttribute('href')
-    if (href && EXTERNAL_URL_RE.test(href)) {
-      node.setAttribute('target', '_blank')
-      node.setAttribute('rel', 'noreferrer')
-    }
+      const href = node.getAttribute('href')
+      if (href && EXTERNAL_URL_RE.test(href)) {
+        node.setAttribute('target', '_blank')
+        node.setAttribute('rel', 'noreferrer')
+      }
 
-    node.classList.add('SMarkdown-link')
-  }
-})
+      node.classList.add('SMarkdown-link')
+    }
+  })
+}
 
 export function useMarkdown({
   config,
