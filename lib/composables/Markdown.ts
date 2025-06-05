@@ -41,7 +41,6 @@ export function useMarkdown({
   config?.(md)
 
   return (source, inline = _inline) => {
-    // TODO: remove `inline` in next major version
     const html = inline ? md.renderInline(source) : md.render(source)
     return DOMPurify.sanitize(html, {
       USE_PROFILES: { html: true },
