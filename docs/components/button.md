@@ -41,7 +41,7 @@ Defines how the HTML tag for the button. Any value passed to this prop will used
 
 ```ts
 interface Props {
-  tag?: string
+  tag?: Component | string
 }
 ```
 
@@ -286,7 +286,7 @@ interface Props {
   tooltip?: {
     // The HTML tag to be used for the tooltip.
     // Defaults to `span`.
-    tag?: string
+    tag?: Component | string
 
     // The text to be displayed in the tooltip. The tooltip
     // will only be visible when this prop is set.

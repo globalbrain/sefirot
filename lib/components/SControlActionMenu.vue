@@ -5,7 +5,7 @@ import { type DropdownSection } from '../composables/Dropdown'
 import SActionMenu, { type Mode, type Tooltip, type Type } from './SActionMenu.vue'
 
 defineProps<{
-  tag?: string
+  tag?: Component | string
   type?: Type
   mode?: Mode
   icon?: Component

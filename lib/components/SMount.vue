@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { type Component, onMounted, ref } from 'vue'
 
 defineProps<{
-  tag?: string
+  tag?: Component | string
 }>()
 
 const mount = ref(true)
