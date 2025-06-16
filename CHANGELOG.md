@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.25.0](https://github.com/globalbrain/sefirot/compare/v4.24.0...v4.25.0) (2025-06-16)
+
+
+### Features
+
+* **types:** allow passing components in `tag` props ([#626](https://github.com/globalbrain/sefirot/issues/626)) ([ebc3d55](https://github.com/globalbrain/sefirot/commit/ebc3d550b3bd2e9400f1707ea9764029a64f52ea))
+
 # [4.24.0](https://github.com/globalbrain/sefirot/compare/v4.23.1...v4.24.0) (2025-06-05)
 
 
