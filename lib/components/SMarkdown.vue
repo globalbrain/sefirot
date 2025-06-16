@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { useMarkdown } from '../composables/Markdown'
 
 const props = withDefaults(defineProps<{
-  tag?: string
+  tag?: string | Component
   content: string
   html?: boolean
   inline?: boolean

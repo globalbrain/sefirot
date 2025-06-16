@@ -3,7 +3,7 @@ import { type Component } from 'vue'
 import SButton, { type Mode, type Tooltip, type Type } from './SButton.vue'
 
 export interface Action {
-  tag?: string
+  tag?: string | Component
   type?: Type
   mode?: Mode
   icon?: Component
@@ -29,6 +29,7 @@ defineProps<{
     <div v-for="action, i in actions" :key="i" class="action">
       <SButton
         size="small"
+        :tag="action.tag"
         :type="action.type"
         :mode="action.mode"
         :icon="action.icon"

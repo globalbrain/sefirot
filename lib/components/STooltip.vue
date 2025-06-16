@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onClickOutside, onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
-import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
+import { type Component, computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
-  tag?: string
-  triggerTag?: string
+  tag?: string | Component
+  triggerTag?: string | Component
   text?: string
   position?: Position
   display?: 'inline' | 'inline-block' | 'block'

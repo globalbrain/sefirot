@@ -82,8 +82,7 @@ interface ActionListItem {
 interface Tooltip {
   // The HTML tag to be used for the tooltip.
   // Defaults to `span`.
-  tag?: string
-
+  tag?: string | Component
   // The text to be displayed in the tooltip. The tooltip
   // will only be visible when this prop is set.
   text?: MaybeRef<string | null>
