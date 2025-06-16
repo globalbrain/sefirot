@@ -4,7 +4,7 @@ import { useControlSize } from '../composables/Control'
 import SButton, { type Mode, type Tooltip, type Type } from './SButton.vue'
 
 defineProps<{
-  tag?: string | Component
+  tag?: Component | string
   type?: Type
   mode?: Mode
   icon?: Component

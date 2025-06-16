@@ -8,7 +8,7 @@ import SDropdown from './SDropdown.vue'
 export type { Mode, Size, Tooltip, Type }
 
 const props = defineProps<{
-  tag?: string | Component
+  tag?: Component | string
   size?: Size
   type?: Type
   mode?: Mode

@@ -22,8 +22,8 @@ export type Mode =
   | 'danger'
 
 export interface Tooltip {
-  tag?: string | Component
-  triggerTag?: string | Component
+  tag?: Component | string
+  triggerTag?: Component | string
   text?: MaybeRef<string | null>
   position?: Position
   display?: 'inline' | 'inline-block' | 'block'
@@ -32,7 +32,7 @@ export interface Tooltip {
 }
 
 const props = defineProps<{
-  tag?: string | Component
+  tag?: Component | string
   size?: Size
   type?: Type
   mode?: Mode

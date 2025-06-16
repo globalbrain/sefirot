@@ -3,7 +3,7 @@ import { type Component } from 'vue'
 import SButton, { type Mode, type Tooltip, type Type } from './SButton.vue'
 
 export interface Action {
-  tag?: string | Component
+  tag?: Component | string
   type?: Type
   mode?: Mode
   icon?: Component

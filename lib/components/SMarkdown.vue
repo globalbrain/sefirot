@@ -3,7 +3,7 @@ import { type Component, computed } from 'vue'
 import { useMarkdown } from '../composables/Markdown'
 
 const props = withDefaults(defineProps<{
-  tag?: string | Component
+  tag?: Component | string
   content: string
   html?: boolean
   inline?: boolean

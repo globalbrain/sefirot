@@ -2,7 +2,7 @@
 import { type Component, onMounted, ref } from 'vue'
 
 defineProps<{
-  tag?: string | Component
+  tag?: Component | string
 }>()
 
 const mount = ref(true)

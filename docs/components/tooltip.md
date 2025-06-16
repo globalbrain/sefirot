@@ -60,7 +60,7 @@ Defines the HTML tag for the pill. Any value passed to this prop will used as `<
 
 ```ts
 interface Props {
-  tag?: string | Component
+  tag?: Component | string
 }
 ```
 
@@ -76,7 +76,7 @@ Defines the HTML tag for the trigger element. Any value passed to this prop will
 
 ```ts
 interface Props {
-  triggertag?: string | Component
+  triggertag?: Component | string
 }
 ```
 

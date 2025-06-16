@@ -4,8 +4,8 @@ import { type Component, computed, onBeforeUnmount, ref, shallowRef, watch } fro
 import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
-  tag?: string | Component
-  triggerTag?: string | Component
+  tag?: Component | string
+  triggerTag?: Component | string
   text?: string
   position?: Position
   display?: 'inline' | 'inline-block' | 'block'
