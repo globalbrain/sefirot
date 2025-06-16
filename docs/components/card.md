@@ -263,7 +263,8 @@ interface Props {
 }
 
 export interface Tooltip {
-  tag?: string | Component  text?: MaybeRef<string>
+  tag?: string | Component
+  text?: MaybeRef<string>
   position?: Position
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
@@ -376,7 +377,8 @@ interface Props {
 }
 
 export interface Tooltip {
-  tag?: string | Component  text?: MaybeRef<string>
+  tag?: string | Component
+  text?: MaybeRef<string>
   position?: Position
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number

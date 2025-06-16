@@ -122,7 +122,8 @@ import { type Component } from 'vue'
 import { type Mode, type Tooltip, type Type } from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 export interface Action {
-  tag?: string | Component  type?: Type
+  tag?: string | Component
+  type?: Type
   mode?: Mode
   icon?: Component
   leadIcon?: Component

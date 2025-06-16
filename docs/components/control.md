@@ -148,7 +148,8 @@ import {
 } from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 interface Props {
-  tag?: string | Component  type?: Type
+  tag?: string | Component
+  type?: Type
   mode?: Mode
   icon?: Component
   iconMode?: Mode

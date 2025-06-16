@@ -41,7 +41,8 @@ Defines how the HTML tag for the button. Any value passed to this prop will used
 
 ```ts
 interface Props {
-  tag?: string | Component}
+  tag?: string | Component
+}
 ```
 
 ```vue-html
@@ -286,6 +287,7 @@ interface Props {
     // The HTML tag to be used for the tooltip.
     // Defaults to `span`.
     tag?: string | Component
+
     // The text to be displayed in the tooltip. The tooltip
     // will only be visible when this prop is set.
     text?: MaybeRef<string | null>
