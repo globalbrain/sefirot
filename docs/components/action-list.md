@@ -13,7 +13,7 @@ const list: ActionList = [
 
 # SActionList
 
-`<SAvatarList>` is a vertical list of interactive actions or options.
+`<SActionList>` is a vertical list of interactive actions or options.
 
 <Showcase
   path="/components/SActionList.vue"
@@ -24,7 +24,7 @@ const list: ActionList = [
 
 ## Usage
 
-`<SActionList>` takes a prop `:list` which is array of items to be listed as options.
+`<SActionList>` takes a `:list` prop which is an array of items to be listed as options.
 
 ```vue
 <script setup lang="ts">
@@ -120,4 +120,4 @@ type ActionList = ActionListItem[]
 
 ### `ActionListItem`
 
-The type of action list item. See `:list` for the details.
+The type of action list item. See [`:list`](#list) for the details.
