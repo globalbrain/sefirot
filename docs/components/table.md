@@ -615,8 +615,8 @@ You may define `--table-padding-right` and `--table-padding-left` to adjust the 
 
 ```css
 :root {
-  --table-padding-right: 0;
-  --table-padding-left: 0;
+  --table-padding-right: 0px;
+  --table-padding-left: 0px;
 }
 ```
 

@@ -355,7 +355,7 @@ function removeSelected(item: any) {
 
 function getColWidth(key: string) {
   if (key === '__select') {
-    return '48px + var(--table-padding-left, 0)'
+    return '48px + var(--table-padding-left)'
   }
   const adjustedWidth = colWidths[key]
   if (adjustedWidth && adjustedWidth !== 'auto') {
@@ -631,7 +631,7 @@ function getStyles(key: string) {
 }
 
 .STable .col-__select {
-  --table-col-width: calc(48px + var(--table-padding-left, 0));
+  --table-col-width: calc(48px + var(--table-padding-left));
 
   :deep(.input) {
     align-items: center;
