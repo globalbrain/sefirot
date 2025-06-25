@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.25.1](https://github.com/globalbrain/sefirot/compare/v4.25.0...v4.25.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **table:** correctly render selection column ([#628](https://github.com/globalbrain/sefirot/issues/628)) ([1c97bb7](https://github.com/globalbrain/sefirot/commit/1c97bb7bec2c295a0bf7a02db063954903882310)), closes [#627](https://github.com/globalbrain/sefirot/issues/627)
+
 # [4.25.0](https://github.com/globalbrain/sefirot/compare/v4.24.0...v4.25.0) (2025-06-16)
 
 
