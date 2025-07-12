@@ -176,7 +176,7 @@ type Color =
 
 ### `:image-type`
 
-The type of image to display. The type can be eitehr `rectangle` or `circle`. The default is `rectangle`.
+The type of image to display. The type can be either `rectangle` or `circle`. The default is `rectangle`.
 
 ```ts
 interface Props {
