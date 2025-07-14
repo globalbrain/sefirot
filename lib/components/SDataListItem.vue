@@ -6,8 +6,9 @@ const props = withDefaults(defineProps<{
   dir?: 'row' | 'column'
   maxWidth?: string
   align?: 'left' | 'right'
+  preWrap?: boolean
+  lineClamp?: string | number
   tnum?: boolean
-  trim?: boolean
 }>(), {
   dir: 'row',
   maxWidth: '100%'
@@ -22,8 +23,9 @@ const slots = useSlots()
 const classes = computed(() => [
   props.dir,
   props.align,
-  { tnum: props.tnum },
-  { trim: props.trim }
+  { 'pre-wrap': props.preWrap },
+  { 'line-clamp': !!props.lineClamp },
+  { tnum: props.tnum }
 ])
 
 const labelStyles = computed(() => ({
@@ -31,7 +33,8 @@ const labelStyles = computed(() => ({
 }))
 
 const valueStyles = computed(() => ({
-  maxWidth: props.maxWidth
+  'max-width': props.maxWidth,
+  '-webkit-line-clamp': props.lineClamp
 }))
 
 const hasValue = computed(() => hasSlotContent('value'))
@@ -117,16 +120,18 @@ function hasSlotContent(name = 'default'): boolean {
   text-align: right;
 }
 
-.SDataListItem.tnum .value {
-  font-feature-settings: "tnum";
+.SDataListItem.pre-wrap .value {
+  white-space: pre-wrap;
 }
 
-.SDataListItem.trim {
-  .content,
-  .value {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+.SDataListItem.line-clamp .value {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.SDataListItem.tnum .value {
+  font-feature-settings: "tnum";
 }
 </style>

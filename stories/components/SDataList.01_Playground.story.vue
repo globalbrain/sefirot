@@ -6,19 +6,6 @@ import SState from 'sefirot/components/SState.vue'
 
 const title = 'Components / SDataList / 01. Playground'
 
-const actions = [
-  // { icon: IconNotePencil, onClick: () => {} },
-  // {
-  //   type: 'menu' as const,
-  //   icon: IconDotsThree,
-  //   options: [
-  //     { label: 'Inspect', onClick: () => {} },
-  //     { label: 'Preview', onClick: () => {} },
-  //     { label: 'Delete', onClick: () => {} }
-  //   ]
-  // }
-]
-
 function initState() {
   return {
     labelWidth: '160px'
