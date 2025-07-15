@@ -242,7 +242,8 @@ const table = useTable({
         mode: (record.status === 'Published'
           ? 'success'
           : record.status === 'Draft' ? 'info' : 'mute')
-      })
+      }),
+      width: '128px'
     },
 
     authors: {
@@ -391,7 +392,6 @@ const selected = ref<string[]>([])
 
 <style scoped lang="postcss">
 .table :deep(.col-name)      { --table-col-width: 144px; }
-.table :deep(.col-status)    { --table-col-width: 128px; }
 .table :deep(.col-authors)   { --table-col-width: 128px; }
 .table :deep(.col-type)      { --table-col-width: 128px; }
 .table :deep(.col-width)     { --table-col-width: 128px; }
