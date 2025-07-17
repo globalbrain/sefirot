@@ -61,6 +61,7 @@ function onSelect(value: T) {
   <SInputBase
     class="SInputSegments"
     :class="[size ?? 'small', { block }]"
+    :size
     :label
     :note
     :info
