@@ -61,6 +61,13 @@ const cellOfColToGrow = computed(() => {
 const colWidths = reactive<Record<string, string>>({})
 const blockWidth = ref<number | undefined>()
 
+watch(() => unref(props.options.columns), (columns) => {
+  Object.keys(columns).forEach((key) => {
+    const width = columns[key]?.width
+    if (width) { colWidths[key] = width }
+  })
+}, { immediate: true, deep: true, flush: 'pre' })
+
 const showHeader = computed(() => {
   const header = unref(props.options.header)
 
