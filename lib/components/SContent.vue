@@ -104,6 +104,7 @@
 }
 
 .SContent :deep(ol > li::before) {
+  position: absolute;
   margin-right: 3px;
   margin-left: -20px;
   color: var(--c-text-1);

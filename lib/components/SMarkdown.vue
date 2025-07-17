@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
-import { useMarkdown } from '../composables/Markdown'
+import { type UseMarkdownOptions, useMarkdown } from '../composables/Markdown'
 
-const props = withDefaults(defineProps<{
+export interface SMarkdownProps extends UseMarkdownOptions {
   tag?: Component | string
   content: string
-  html?: boolean
-  inline?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<SMarkdownProps>(), {
   tag: 'div',
   html: true
 })
 
-const markdown = useMarkdown({ html: props.html, inline: props.inline })
+const markdown = useMarkdown(props)
 const rendered = computed(() => markdown(props.content))
 </script>
 
