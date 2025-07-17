@@ -1,5 +1,18 @@
 # Changelog
 
+# [4.26.0](https://github.com/globalbrain/sefirot/compare/v4.25.1...v4.26.0) (2025-07-17)
+
+
+### Bug Fixes
+
+* **input:** pass missing props to input base ([17c2077](https://github.com/globalbrain/sefirot/commit/17c207766e77c42feaf88b9903eeb7764e5409e9))
+
+
+### Features
+
+* **data-list:** introduce `<SDataList>` ([#629](https://github.com/globalbrain/sefirot/issues/629)) ([e536d3a](https://github.com/globalbrain/sefirot/commit/e536d3a44647c0a18a75e77f89ba08c988bb724b))
+* **table:** support specifying width in column options ([#631](https://github.com/globalbrain/sefirot/issues/631)) ([b567340](https://github.com/globalbrain/sefirot/commit/b56734032f8e1976b6d5050db265f94f94fadd7e)), closes [#630](https://github.com/globalbrain/sefirot/issues/630)
+
 ## [4.25.1](https://github.com/globalbrain/sefirot/compare/v4.25.0...v4.25.1) (2025-06-25)
 
 
