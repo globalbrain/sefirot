@@ -6,6 +6,7 @@ import SModal from '../components/SModal.vue'
 import STrans from '../components/STrans.vue'
 import { mixin as mixinCard } from './Card'
 import { mixin as mixinControl } from './Control'
+import { mixin as mixinDataList } from './DataList'
 import { mixin as mixinDesc } from './Desc'
 import { mixin as mixinDoc } from './Doc'
 import { mixin as mixinGrid } from './Grid'
@@ -14,6 +15,7 @@ import { mixin as mixinHead } from './Head'
 export function mixin(app: App): void {
   mixinCard(app)
   mixinControl(app)
+  mixinDataList(app)
   mixinDesc(app)
   mixinDoc(app)
   mixinGrid(app)
