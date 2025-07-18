@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.27.0](https://github.com/globalbrain/sefirot/compare/v4.26.0...v4.27.0) (2025-07-18)
+
+
+### Bug Fixes
+
+* **markdown, content:** set correct counter in ordered lists, render ordered list marker correctly, and allow passing advanced options ([#633](https://github.com/globalbrain/sefirot/issues/633)) ([e15c036](https://github.com/globalbrain/sefirot/commit/e15c036e229d86a024b7f1c6881a02a82d227c4a))
+
 # [4.26.0](https://github.com/globalbrain/sefirot/compare/v4.25.1...v4.26.0) (2025-07-17)
 
 
