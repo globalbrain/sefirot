@@ -1,5 +1,5 @@
 /// <reference lib="esnext" />
-/// <reference types="vitest" />
+/// <reference types="vitest/config" />
 
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from './config/vite'
@@ -21,7 +21,6 @@ export default defineConfig({
 
     coverage: {
       provider: 'v8',
-      all: true,
       include: ['lib'],
       reporter: ['html', 'json', 'lcov', 'text-summary']
     },
