@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.28.0](https://github.com/globalbrain/sefirot/compare/v4.27.0...v4.28.0) (2025-07-22)
+
+
+### Features
+
+* **action-menu:** add dropdown align option ([#634](https://github.com/globalbrain/sefirot/issues/634)) ([7ce8381](https://github.com/globalbrain/sefirot/commit/7ce8381229c83e37e3d632678799d6f18b071e54))
+
 # [4.27.0](https://github.com/globalbrain/sefirot/compare/v4.26.0...v4.27.0) (2025-07-18)
 
 
