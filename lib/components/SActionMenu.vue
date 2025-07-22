@@ -7,7 +7,7 @@ import SDropdown from './SDropdown.vue'
 
 export type { Mode, Size, Tooltip, Type }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   tag?: Component | string
   size?: Size
   type?: Type
@@ -23,8 +23,11 @@ const props = defineProps<{
   loading?: boolean
   disabled?: boolean
   tooltip?: string | Tooltip
+  dropdownAlign?: 'left' | 'right'
   options: DropdownSection[]
-}>()
+}>(), {
+  dropdownAlign: 'left'
+})
 
 const container = ref<any>(null)
 
@@ -40,7 +43,7 @@ async function onOpen() {
 </script>
 
 <template>
-  <div class="SActionMenu" :class="[block]" ref="container">
+  <div class="SActionMenu" :class="[{ block }, dropdownAlign]" ref="container">
     <div class="button">
       <SButton
         :tag
@@ -75,7 +78,6 @@ async function onOpen() {
 
 .dropdown {
   position: absolute;
-  left: 0;
   z-index: var(--z-index-dropdown);
 
   &.top    { bottom: calc(100% + 8px); }
@@ -85,4 +87,7 @@ async function onOpen() {
 .SActionMenu.block {
   display: block;
 }
+
+.SActionMenu.left .dropdown  { left: 0; }
+.SActionMenu.right .dropdown { right: 0; }
 </style>
