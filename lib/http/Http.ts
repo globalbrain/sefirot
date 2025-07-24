@@ -9,7 +9,7 @@ import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '..
 export type { HttpClient, HttpOptions } from '../stores/HttpConfig'
 
 export class Http {
-  private config = useHttpConfig().config
+  private config = useHttpConfig()
 
   static config(options: HttpOptions): void {
     useHttpConfig().apply(options)

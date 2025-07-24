@@ -30,16 +30,6 @@ export const useHttpConfig = defineStore('sefirot-http-config', () => {
   const headers = ref<() => Awaitable<Record<string, string>>>(async () => ({}))
   const stringifyOptions = ref<IStringifyOptions>({})
 
-  const config = computed(() => ({
-    baseUrl: baseUrl.value,
-    xsrfUrl: xsrfUrl.value,
-    client: client.value,
-    lang: lang.value,
-    payloadKey: payloadKey.value,
-    headers: headers.value,
-    stringifyOptions: stringifyOptions.value
-  }))
-
   function apply(options: HttpOptions): void {
     if (options.baseUrl != null) { baseUrl.value = options.baseUrl }
     if (options.xsrfUrl != null) { xsrfUrl.value = options.xsrfUrl }
@@ -51,7 +41,13 @@ export const useHttpConfig = defineStore('sefirot-http-config', () => {
   }
 
   return {
-    config,
+    baseUrl: computed(() => baseUrl.value),
+    xsrfUrl: computed(() => xsrfUrl.value),
+    client: computed(() => client.value),
+    lang: computed(() => lang.value),
+    payloadKey: computed(() => payloadKey.value),
+    headers: computed(() => headers.value),
+    stringifyOptions: computed(() => stringifyOptions.value),
     apply
   }
 })
