@@ -5,7 +5,7 @@ import { type Validatable } from '../composables/Validation'
 import { type Day, day } from '../support/Day'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -54,6 +54,7 @@ function emitBlur() {
   <SInputBase
     class="SInputDate"
     :class="classes"
+    :size
     :name
     :label
     :note
@@ -95,6 +96,7 @@ function emitBlur() {
 </template>
 
 <style lang="postcss" scoped>
+.SInputDate.sm,
 .SInputDate.mini {
   .input {
     padding: 3px 8px;
@@ -109,13 +111,27 @@ function emitBlur() {
   }
 }
 
+.SInputDate.md {
+  .input {
+    padding: 6px 10px;
+    max-width: 120px;
+    height: 36px;
+    line-height: 24px;
+    font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .input.block {
+    max-width: 100%;
+  }
+}
+
 .SInputDate.small {
   .input {
     padding: 5px 12px;
     max-width: 136px;
     height: 40px;
     line-height: 24px;
-    font-size: var(--input-font-size, var(--input-small-font-size));
+    font-size: var(--input-font-size, 14px);
   }
 
   .input.block {

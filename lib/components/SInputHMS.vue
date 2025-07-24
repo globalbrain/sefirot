@@ -184,6 +184,7 @@ function createRequiredTouched(): boolean[] {
 </template>
 
 <style lang="postcss" scoped>
+.SInputHMS.sm,
 .SInputHMS.mini {
   .container {
     padding: 0 8px;
@@ -204,6 +205,32 @@ function createRequiredTouched(): boolean[] {
 
   .separator::before {
     padding: 0 4px;
+  }
+}
+
+.SInputHMS.md {
+  .container {
+    padding: 0 10px;
+    min-height: 36px;
+  }
+
+  .input {
+    flex-shrink: 0;
+    padding: 5px 0;
+    width: 20px;
+    text-align: center;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .separator {
+    padding: 4px 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .separator::before {
+    padding: 0 6px;
   }
 }
 

@@ -11,7 +11,7 @@ import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Option<
@@ -88,6 +88,7 @@ function onChange(value: ValueType) {
   <SInputBase
     class="SInputRadios"
     :class="[size ?? 'small']"
+    :size
     :label
     :note
     :info
@@ -102,6 +103,7 @@ function onChange(value: ValueType) {
       <div class="row">
         <div v-for="(option, index) in options" :key="index" class="col">
           <SInputRadio
+            size="sm"
             :text="option.label"
             :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"

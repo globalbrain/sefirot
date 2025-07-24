@@ -5,7 +5,7 @@ import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = withDefaults(defineProps<{
@@ -60,6 +60,7 @@ function onClick() {
   <SInputBase
     class="SInputCheckbox"
     :class="classes"
+    :size
     :label
     :note
     :info
@@ -156,6 +157,12 @@ function onClick() {
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.SInputCheckbox.md {
+  .input {
+    height: 36px;
+  }
 }
 
 .SInputCheckbox.disabled {

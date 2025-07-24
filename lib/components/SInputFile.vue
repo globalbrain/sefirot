@@ -3,7 +3,7 @@ import { type Component, computed, ref } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -65,6 +65,7 @@ function onChange(e: Event) {
   <SInputBase
     class="SInputFile"
     :class="classes"
+    :size
     :label
     :note
     :info
@@ -101,6 +102,7 @@ function onChange(e: Event) {
 </template>
 
 <style lang="postcss" scoped>
+.SInputFile.sm,
 .SInputFile.mini {
   .action {
     padding: 3px 8px 3px 3px;
@@ -117,6 +119,26 @@ function onChange(e: Event) {
   .placeholder {
     line-height: 30px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+    font-weight: 400;
+  }
+}
+
+.SInputFile.md {
+  .action {
+    padding: 3px 8px 3px 3px;
+  }
+
+  .button {
+    padding: 0 8px;
+    line-height: 26px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .file-name,
+  .placeholder {
+    line-height: 34px;
+    font-size: var(--input-font-size, 14px);
     font-weight: 400;
   }
 }
