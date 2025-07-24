@@ -6,6 +6,8 @@ import { stringify } from 'qs'
 import { type HttpOptions, useHttpConfig } from '../stores/HttpConfig'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
+export type { HttpClient, HttpOptions } from '../stores/HttpConfig'
+
 export class Http {
   private config = useHttpConfig().config
 
