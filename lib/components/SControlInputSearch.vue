@@ -33,6 +33,9 @@ const { t } = useTrans({
 const size = useControlSize()
 
 const sizeDict = {
+  xs: 'sm',
+  sm: 'sm',
+  md: 'md',
   small: 'mini',
   medium: 'small'
 } as const

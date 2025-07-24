@@ -1,6 +1,6 @@
 import { type ComputedRef, computed, inject, provide, toValue } from 'vue'
 
-export type ControlSize = 'small' | 'medium'
+export type ControlSize = 'xs' | 'sm' | 'md' | 'small' | 'medium'
 export type ControlPosition = 'left' | 'center' | 'right'
 
 export const ControlSizeKey = 'sefirot-control-size-key'

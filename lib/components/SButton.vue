@@ -250,7 +250,7 @@ function handleClick(): void {
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
   .content                   { gap: 6px; }
-  .icon-svg                  { width: 14px; height: 14px; }
+  .icon-svg                  { width: 16px; height: 16px; }
 
   .count {
     border-radius: 9px;
