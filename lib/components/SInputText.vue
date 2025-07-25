@@ -162,7 +162,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
 <style scoped lang="postcss">
 .SInputText.sm,
-.SInputText.small {
+.SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
   .area  { min-height: 30px; }
