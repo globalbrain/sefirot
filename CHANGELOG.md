@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.29.1](https://github.com/globalbrain/sefirot/compare/v4.29.0...v4.29.1) (2025-07-25)
+
+
+### Bug Fixes
+
+* **input:** bring back `mini` size ([f1b2cd6](https://github.com/globalbrain/sefirot/commit/f1b2cd6adfaaf2a4b448806746d2af6f6b1a5ba7))
+
 # [4.29.0](https://github.com/globalbrain/sefirot/compare/v4.28.0...v4.29.0) (2025-07-25)
 
 
