@@ -3,16 +3,15 @@ import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
 import { stringify } from 'qs'
-import { type HttpOptions, useHttpConfig } from '../stores/HttpConfig'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
-export type { HttpClient, HttpOptions } from '../stores/HttpConfig'
+type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
 
 export class Http {
-  private config = useHttpConfig()
+  private config: Config
 
-  static config(options: HttpOptions): void {
-    useHttpConfig().apply(options)
+  constructor(options: Config) {
+    this.config = options
   }
 
   private async ensureXsrfToken(): Promise<string | undefined> {
