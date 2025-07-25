@@ -9,11 +9,15 @@ const docs = '/components/content'
 <template>
   <Story :title source="Not available" auto-props-disabled>
     <Board :title :docs>
-      <div class="max-w-640">
+      <div class="max-w-720">
         <SContent>
+          <h1>Level one heading</h1>
+
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, <SLink href="https://example.com">quis nostrud exercitation</SLink> ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 
           <p><strong>Duis aute irure dolor in reprehenderit</strong> in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+          <h2>This is a level two heading</h2>
 
           <ul>
             <li>Excepteur sint occaecat cupidatat.</li>
@@ -26,6 +30,8 @@ const docs = '/components/content'
             </li>
             <li>Labore et dolore magna aliqua.</li>
           </ul>
+
+          <h3>This is a level three heading</h3>
 
           <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 

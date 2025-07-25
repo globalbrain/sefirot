@@ -8,25 +8,25 @@
 .SContent {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .SContent :deep(h1),
 .SContent :deep(.h1) {
   margin: 0;
   padding: 0;
-  max-width: 640px;
-  line-height: 40px;
-  font-size: 32px;
+  max-width: 720px;
+  line-height: 36px;
+  font-size: 24px;
   font-weight: 500;
   color: var(--c-text-1);
 }
 
 .SContent :deep(h2),
 .SContent :deep(.h2) {
-  margin: 0;
+  margin: 16px 0 0;
   padding: 0;
-  max-width: 640px;
+  max-width: 720px;
   line-height: 32px;
   font-size: 20px;
   font-weight: 500;
@@ -35,18 +35,27 @@
 
 .SContent :deep(h3),
 .SContent :deep(.h3) {
-  margin: 0;
+  margin: 16px 0 0;
   padding: 0;
-  max-width: 640px;
-  line-height: 24px;
-  font-size: 16px;
+  max-width: 720px;
+  line-height: 28px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--c-text-1);
 }
 
+.SContent :deep(h1:first-child),
+.SContent :deep(.h1:first-child),
+.SContent :deep(h2:first-child),
+.SContent :deep(.h2:first-child),
+.SContent :deep(h3:first-child),
+.SContent :deep(.h3:first-child) {
+  margin-top: 0;
+}
+
 .SContent :deep(p) {
   margin: 0;
-  max-width: 640px;
+  max-width: 720px;
   line-height: 24px;
   font-size: 14px;
   font-weight: 400;
@@ -70,7 +79,7 @@
 .SContent :deep(ol) {
   margin: 0;
   padding-left: 0;
-  max-width: 640px;
+  max-width: 720px;
   list-style: none;
 }
 
