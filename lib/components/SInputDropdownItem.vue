@@ -20,7 +20,7 @@ export interface ItemAvatar extends ItemBase {
   image?: string | null
 }
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 
 defineProps<{
   item: Item | Item[]
@@ -240,6 +240,7 @@ defineEmits<{
   height: 16px;
 }
 
+.SInputDropdownItem.sm,
 .SInputDropdownItem.mini {
   .many {
     padding: 3px 0 3px 3px;
@@ -256,6 +257,25 @@ defineEmits<{
   .one-avatar {
     gap: 6px;
     padding-left: 7px;
+  }
+}
+
+.SInputDropdownItem.md {
+  .many {
+    padding: 5px 0 5px 4px;
+  }
+
+  .one-text {
+    padding-left: 12px;
+  }
+
+  .one-text-value {
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .one-avatar {
+    gap: 8px;
+    padding-left: 10px;
   }
 }
 

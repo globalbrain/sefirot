@@ -8,7 +8,7 @@ const value = ref(null)
 
 function initState() {
   return {
-    size: 'small'
+    size: 'md'
   }
 }
 </script>
@@ -19,9 +19,8 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />
@@ -32,10 +31,6 @@ function initState() {
         <SInputDate
           label="Label"
           :size="state.size"
-          info="Some helpful information."
-          note="Note text"
-          text="Text for the checkbox"
-          help="This is a help text."
           v-model="value"
         />
       </Board>

@@ -16,7 +16,7 @@ const value = ref('table')
 
 function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Project view',
     info: '',
     note: '',
@@ -34,9 +34,8 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />

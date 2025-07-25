@@ -187,6 +187,7 @@ function createRequiredTouched(): boolean[] {
 </template>
 
 <style scoped lang="postcss">
+.SInputYMD.sm,
 .SInputYMD.mini {
   .container {
     padding: 0 4px;
@@ -206,6 +207,31 @@ function createRequiredTouched(): boolean[] {
     padding: 3px 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+}
+
+.SInputYMD.md {
+  .container {
+    padding: 0 6px;
+    height: 36px;
+  }
+
+  .input {
+    padding: 5px 0;
+    text-align: center;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .input.year  { margin-right: 2px; }
+  .input.year  { width: 48px; }
+  .input.month { width: 32px; }
+  .input.date  { width: 32px; }
+
+  .separator {
+    padding: 5px 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
   }
 }
 

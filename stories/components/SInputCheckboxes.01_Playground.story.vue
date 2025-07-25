@@ -15,7 +15,7 @@ const options = [
 
 function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Label',
     info: 'Some helpful information.',
     note: 'Note text',
@@ -34,8 +34,7 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
+          md: 'md',
           medium: 'medium'
         }"
         v-model="state.size"

@@ -6,7 +6,7 @@ import { useTrans } from '../composables/Lang'
 import { format } from '../support/Num'
 import SButton from './SButton.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'xs' | 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
 
 const props = withDefaults(defineProps<{

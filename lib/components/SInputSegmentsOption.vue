@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -78,9 +78,20 @@ function onClick() {
   }
 }
 
+.SInputSegmentsOption.sm,
 .SInputSegmentsOption.mini {
   .SInputSegmentsOption + &::before {
     top: 4px;
+  }
+
+  .label {
+    padding: 0 12px;
+  }
+}
+
+.SInputSegmentsOption.md {
+  .SInputSegmentsOption + &::before {
+    top: 6px;
   }
 
   .label {

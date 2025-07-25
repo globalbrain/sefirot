@@ -20,7 +20,7 @@ export interface Props {
   hideWarning?: boolean
 }
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<Props>()
@@ -105,6 +105,8 @@ function getErrorMsg(validation: Validatable) {
   .check           { padding-top: 0; line-height: 20px; }
 }
 
+.SInputBase.sm,
+.SInputBase.md,
 .SInputBase.small {
   .label      { padding-bottom: 6px; min-height: 26px; }
   .label-text { font-size: var(--input-label-font-size, var(--input-small-label-font-size)); }

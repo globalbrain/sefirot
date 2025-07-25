@@ -18,11 +18,11 @@ const modes = [
 ]
 
 const sizes = [
-  { label: 'mini', value: 'mini' },
-  { label: 'small', value: 'small' },
-  { label: 'medium', value: 'medium' },
-  { label: 'large', value: 'large' },
-  { label: 'jumbo', value: 'jumbo' }
+  { label: 'xs', value: 'xs' },
+  { label: 'sm', value: 'sm' },
+  { label: 'md', value: 'md' },
+  { label: 'lg', value: 'lg' },
+  { label: 'xl', value: 'xl' }
 ]
 
 const contentModes = [
@@ -40,7 +40,7 @@ const contentModes = [
 
 function initState() {
   return {
-    size: 'medium',
+    size: 'md',
     type: 'fill',
     mode: 'default',
     labelMode: null,
