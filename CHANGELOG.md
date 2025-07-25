@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.29.0](https://github.com/globalbrain/sefirot/compare/v4.28.0...v4.29.0) (2025-07-25)
+
+
+### Features
+
+* **button,input:** add new `sm` and `md` size ([#637](https://github.com/globalbrain/sefirot/issues/637)) ([14f855c](https://github.com/globalbrain/sefirot/commit/14f855c38ccd07946ea497be4e9a06d747935260))
+* **content:** refine content styles ([#636](https://github.com/globalbrain/sefirot/issues/636)) ([4e1a8b4](https://github.com/globalbrain/sefirot/commit/4e1a8b45c02a979213f836917ad0fdb53c5de2e9))
+
 # [4.28.0](https://github.com/globalbrain/sefirot/compare/v4.27.0...v4.28.0) (2025-07-22)
 
 
