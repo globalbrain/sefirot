@@ -1,4 +1,4 @@
-import { type HttpOptions } from '../http/Http'
+import { type HttpOptions } from 'sefirot/stores/HttpConfig'
 import { useSetupHttp } from './Http'
 import { type HasLang, useSetupLang } from './Lang'
 import { type HasTheme, useSetupTheme } from './Theme'
