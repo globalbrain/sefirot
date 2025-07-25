@@ -3,7 +3,7 @@ import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -45,6 +45,7 @@ function onClick() {
   <SInputBase
     class="SInputRadio"
     :class="classes"
+    :size
     :label
     :note
     :info
@@ -137,6 +138,12 @@ function onClick() {
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.SInputRadio.md {
+  .input {
+    height: 36px;
+  }
 }
 
 .SInputRadio.disabled {

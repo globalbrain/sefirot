@@ -6,7 +6,17 @@ import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
 import STooltip from './STooltip.vue'
 
-export type Size = 'mini' | 'small' | 'medium' | 'large' | 'jumbo'
+export type Size =
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | 'xl'
+  | 'mini'
+  | 'small'
+  | 'medium'
+  | 'large'
+  | 'jumbo'
 
 export type Type = 'fill' | 'outline' | 'text'
 
@@ -206,17 +216,18 @@ function handleClick(): void {
   background-color: var(--button-count-bg-color);
 }
 
+.SButton.xs,
 .SButton.mini {
   min-width: 28px;
   min-height: 28px;
   font-size: var(--button-font-size, var(--button-mini-font-size));
 
   &.rounded                  { border-radius: 16px; }
-  &.has-label                { padding: var(--button-padding, 0 12px); }
+  &.has-label                { padding: var(--button-padding, 0 10px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
-  .content                   { gap: 4px; }
-  .icon-svg                  { width: 16px; height: 16px; }
+  .content                   { gap: 6px; }
+  .icon-svg                  { width: 14px; height: 14px; }
 
   .count {
     border-radius: 9px;
@@ -228,13 +239,14 @@ function handleClick(): void {
   }
 }
 
+.SButton.sm,
 .SButton.small {
   min-width: 32px;
   min-height: 32px;
   font-size: var(--button-font-size, var(--button-small-font-size));
 
   &.rounded                  { border-radius: 16px; }
-  &.has-label                { padding: var(--button-padding, 0 12px); }
+  &.has-label                { padding: var(--button-padding, 0 10px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 10px 0 8px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 8px 0 10px); }
   .content                   { gap: 6px; }
@@ -250,17 +262,17 @@ function handleClick(): void {
   }
 }
 
-.SButton.medium {
-  min-width: 40px;
-  min-height: 40px;
+.SButton.md {
+  min-width: 36px;
+  min-height: 36px;
   font-size: var(--button-font-size, var(--button-medium-font-size));
 
-  &.rounded                  { border-radius: 20px; }
-  &.has-label                { padding: var(--button-padding, 0 16px); }
+  &.rounded                  { border-radius: 18px; }
+  &.has-label                { padding: var(--button-padding, 0 12px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 12px 0 10px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 10px 0 12px); }
-  .content                   { gap: 8px; }
-  .icon-svg                  { width: 18px; height: 18px; }
+  .content                   { gap: 6px; }
+  .icon-svg                  { width: 16px; height: 16px; }
 
   .count {
     border-radius: 10px;
@@ -272,17 +284,19 @@ function handleClick(): void {
   }
 }
 
+.SButton.lg,
+.SButton.medium,
 .SButton.large {
-  min-width: 48px;
-  min-height: 48px;
+  min-width: 40px;
+  min-height: 40px;
   font-size: var(--button-font-size, var(--button-large-font-size));
 
-  &.rounded                  { border-radius: 24px; }
-  &.has-label                { padding: var(--button-padding, 0 20px); }
+  &.rounded                  { border-radius: 20px; }
+  &.has-label                { padding: var(--button-padding, 0 14px); }
   &.has-label.has-lead-icon  { padding: var(--button-padding, 0 14px 0 12px); }
   &.has-label.has-trail-icon { padding: var(--button-padding, 0 12px 0 14px); }
   .content                   { gap: 8px; }
-  .icon-svg                  { width: 18px; height: 18px; }
+  .icon-svg                  { width: 16px; height: 16px; }
 
   .count {
     border-radius: 10px;
@@ -294,16 +308,17 @@ function handleClick(): void {
   }
 }
 
+.SButton.xl,
 .SButton.jumbo {
-  min-width: 64px;
-  min-height: 64px;
+  min-width: 48px;
+  min-height: 48px;
   font-size: var(--button-font-size, var(--button-jumbo-font-size));
 
-  &.rounded                  { border-radius: 32px; }
-  &.has-label                { padding: var(--button-padding, 0 24px); }
-  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 20px 0 18px); }
-  &.has-label.has-trail-icon { padding: var(--button-padding, 0 18px 0 20px); }
-  .content                   { gap: 8px; }
+  &.rounded                  { border-radius: 24px; }
+  &.has-label                { padding: var(--button-padding, 0 16px); }
+  &.has-label.has-lead-icon  { padding: var(--button-padding, 0 16px 0 14px); }
+  &.has-label.has-trail-icon { padding: var(--button-padding, 0 14px 0 16px); }
+  .content                   { gap: 10px; }
   .icon-svg                  { width: 20px; height: 20px; }
 
   .count {

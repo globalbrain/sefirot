@@ -4,7 +4,7 @@ import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
@@ -90,10 +90,18 @@ function onSelect(value: T) {
 </template>
 
 <style scoped lang="postcss">
+.SInputSegments.sm,
 .SInputSegments.mini {
   .box {
     padding: 2px;
     height: 32px;
+  }
+}
+
+.SInputSegments.md {
+  .box {
+    padding: 2px;
+    height: 36px;
   }
 }
 

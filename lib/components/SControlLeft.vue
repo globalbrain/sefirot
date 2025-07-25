@@ -19,6 +19,12 @@ provideControlPosition('left')
   flex-shrink: 0;
 }
 
+.SControl.xs .SControlLeft { gap: 8px; height: 28px; }
+.SControl.sm .SControlLeft { gap: 8px; height: 32px; }
+.SControl.md .SControlLeft { gap: 8px; height: 36px; }
+.SControl.lg .SControlLeft { gap: 12px; height: 40px; }
+.SControl.xl .SControlLeft { gap: 16px; height: 48px; }
+
 .SControl.small .SControlLeft  { gap: 8px; }
 .SControl.medium .SControlLeft { gap: 12px; }
 </style>

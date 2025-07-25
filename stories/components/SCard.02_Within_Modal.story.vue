@@ -59,8 +59,8 @@ function initState() {
 
         <SModal :open @close="open = false">
           <SCard :size="state.cardSize" :mode="state.cardMode">
-            <SCardBlock size="small" class="s-pl-24 s-pr-8">
-              <SControl>
+            <SCardBlock class="s-py-8 s-pl-24 s-pr-8">
+              <SControl size="sm">
                 <SControlLeft>
                   <SControlText class="s-font-w-600">
                     Header title
@@ -81,8 +81,8 @@ function initState() {
                 consequat.
               </p>
             </SCardBlock>
-            <SCardBlock size="large" class="s-px-24">
-              <SControl>
+            <SCardBlock class="s-py-16 s-px-24">
+              <SControl size="md">
                 <SControlRight>
                   <SControlButton label="Cancel" @click="open = false" />
                   <SControlButton mode="info" label="Submit" @click="open = false" />

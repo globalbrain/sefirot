@@ -241,6 +241,7 @@ function handleArray(value: OptionValue) {
   z-index: var(--z-index-dropdown);
 }
 
+.SInputDropdown.sm,
 .SInputDropdown.mini {
   .box {
     min-height: 32px;
@@ -258,6 +259,27 @@ function handleArray(value: OptionValue) {
 
   .box-icon {
     top: 3px;
+    right: 8px;
+  }
+}
+
+.SInputDropdown.md {
+  .box {
+    min-height: 36px;
+  }
+
+  .box-content {
+    padding: 0 30px 0 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .box-placeholder {
+    padding-left: 10px;
+  }
+
+  .box-icon {
+    top: 5px;
     right: 8px;
   }
 }

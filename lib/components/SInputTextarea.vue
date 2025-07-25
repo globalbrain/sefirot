@@ -27,6 +27,8 @@ const emit = defineEmits<{
 }>()
 
 const sizePaddingYDict = {
+  sm: 12,
+  md: 14,
   mini: 12,
   small: 14,
   medium: 22
@@ -182,14 +184,26 @@ const isPreview = ref(false)
   }
 }
 
+.SInputTextarea.sm,
 .SInputTextarea.mini {
   .input,
   .prose {
-    padding: 6px 10px;
+    padding: 3px 8px;
     width: 100%;
     min-height: 30px;
-    line-height: 20px;
+    line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+}
+
+.SInputTextarea.md {
+  .input,
+  .prose {
+    padding: 5px 10px;
+    width: 100%;
+    min-height: 34px;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
   }
 }
 

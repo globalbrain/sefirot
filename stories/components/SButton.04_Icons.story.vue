@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import IconCheckCircle from '~icons/ph/check-circle-bold'
-import IconImageSquare from '~icons/ph/image-square-bold'
-import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
+import IconCheckCircle from '~icons/ph/check-circle'
+import IconImageSquare from '~icons/ph/image-square'
+import IconMagnifyingGlass from '~icons/ph/magnifying-glass'
 import SButton from 'sefirot/components/SButton.vue'
 
 const title = 'Components / SButton / 04. Icons'
@@ -45,7 +45,7 @@ const icons = [
 
 function initState() {
   return {
-    size: 'medium',
+    size: 'md',
     mode: 'default',
     iconMode: null,
     labelMode: null,
@@ -60,11 +60,11 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium',
-          large: 'large',
-          jumbo: 'jumbo'
+          xs: 'xs',
+          sm: 'sm',
+          md: 'md',
+          lg: 'lg',
+          xl: 'xl'
         }"
         v-model="state.size"
       />

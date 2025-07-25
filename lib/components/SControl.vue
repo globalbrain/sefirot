@@ -12,6 +12,9 @@ const props = defineProps<{
 const cardSize = useCardBlockSize()
 
 const sizeDict = {
+  xs: 'xs',
+  sm: 'sm',
+  md: 'md',
   xsmall: 'small',
   small: 'small',
   medium: 'small',
@@ -44,6 +47,12 @@ provideControlSize(_size)
   align-items: center;
   flex-grow: 1;
 }
+
+.SControl.xs { gap: 8px; height: 28px; }
+.SControl.sm { gap: 8px; height: 32px; }
+.SControl.md { gap: 8px; height: 36px; }
+.SControl.lg { gap: 12px; height: 40px; }
+.SControl.xl { gap: 16px; height: 48px; }
 
 .SControl.small  { gap: 8px; height: 32px; }
 .SControl.medium { gap: 12px; height: 40px; }
