@@ -3,9 +3,9 @@ import SAvatarStack from 'sefirot/components/SAvatarStack.vue'
 
 const avatars = [
   { image: 'https://i.pravatar.cc/144?img=1' },
-  { image: 'https://i.pravatar.cc/144?img=8' },
-  { image: 'https://i.pravatar.cc/144?img=12' },
-  { image: 'https://i.pravatar.cc/144?img=45' }
+  { image: 'https://i.pravatar.cc/144?img=2' },
+  { image: 'https://i.pravatar.cc/144?img=3' },
+  { image: 'https://i.pravatar.cc/144?img=4' }
 ]
 </script>
 
