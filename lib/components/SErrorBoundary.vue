@@ -3,7 +3,7 @@ import { onErrorCaptured, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 const emit = defineEmits<{
-  (e: 'error', value: any): void
+  error: [value: any]
 }>()
 
 const error = shallowRef<Error>()
@@ -28,6 +28,6 @@ async function clearError(options: { redirect?: string } = {}) {
 </script>
 
 <template>
-  <slot v-if="error != null" name="error" :error="error" :clear-error="clearError" />
+  <slot v-if="error != null" name="error" :error :clear-error />
   <slot v-else />
 </template>

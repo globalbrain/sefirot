@@ -39,10 +39,10 @@ const rel = computed(() => isExternal.value ? 'noopener noreferrer' : null)
     :is="component"
     class="SLink"
     :class="{ link: href }"
-    :href="href"
+    :href
     :to="href"
-    :target="target"
-    :rel="rel"
+    :target
+    :rel
   >
     <slot />
   </component>

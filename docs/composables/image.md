@@ -26,6 +26,6 @@ const { src } = useImageSrcFromFile(file)
 </script>
 
 <template>
-  <img :src="src">
+  <img :src>
 </template>
 ```

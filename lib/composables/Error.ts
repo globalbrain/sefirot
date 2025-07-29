@@ -1,16 +1,16 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/8d606c44ece5a9940ede05513f844f698d082589/packages/runtime-core/src/component.ts
- * @see https://github.com/vuejs/core/blob/cdb1d1795d21591659e2560e201ee4fbf1ea4aca/packages/runtime-core/src/warning.ts
- * @see https://github.com/getsentry/sentry-javascript/blob/2cfb0ef3fa5c40f90c317267a4d10b969994d021/packages/vue/src/errorhandler.ts
- * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts#L12
+ * @see https://github.com/vuejs/core/blob/1755ac0a108ba3486bd8397e56d3bdcd69196594/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
+ * @see https://github.com/getsentry/sentry-javascript/blob/04711c20246f7cdaac2305286fec783ab1859a18/packages/vue/src/errorhandler.ts
+ * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts
  *
  * Original licenses:
  *
  * (c) 2018-present Yuxi (Evan) You and Vue contributors
  * @license MIT
  *
- * (c) 2019 Sentry (https://sentry.io) and individual contributors
+ * (c) 2012-2024 Functional Software, Inc. dba Sentry
  * @license MIT
  *
  * (c) 2023 Vercel, Inc.
@@ -18,7 +18,9 @@
  */
 
 import * as Sentry from '@sentry/browser'
+import { createSentryPiniaPlugin } from '@sentry/vue'
 import { pauseTracking, resetTracking } from '@vue/reactivity'
+import { getActivePinia } from 'pinia'
 import {
   type ComponentInternalInstance,
   type ComponentOptions,
@@ -115,11 +117,8 @@ function formatTrace(instance: ComponentInternalInstance | null): string {
 }
 
 function formatTraceEntry({ vnode, recurseCount }: TraceEntry): string {
-  return `at <${formatComponentName(vnode.component)}${
-    vnode.props ? ` ${formatProps(vnode.props)}` : ''
-  }>${
-    recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''
-  }`
+  return `at <${formatComponentName(vnode.component)}${vnode.props ? ` ${formatProps(vnode.props)}` : ''}>\
+${recurseCount > 0 ? ` ... (${recurseCount} recursive call${recurseCount > 1 ? 's' : ''})` : ''}`
 }
 
 function formatProps(props: Record<string, unknown>): string {
@@ -143,7 +142,9 @@ function formatProps(props: Record<string, unknown>): string {
 const ignoreErrors = [
   /Network Error/,
   /Non-Error (?:exception|promise rejection) captured/,
-  /ResizeObserver loop/
+  /ResizeObserver loop/,
+  /Can't find variable: gmo/,
+  /\[Cloudflare Turnstile\] Error: (?:10[2-46]|1106[02]|[36]00)/
 ]
 
 export function useErrorHandler({
@@ -181,6 +182,7 @@ export function useErrorHandler({
 
   if (enabled) {
     Sentry.init({ dsn, environment, ignoreErrors })
+    getActivePinia()?.use(createSentryPiniaPlugin())
   }
 
   return function errorHandler(
@@ -188,8 +190,6 @@ export function useErrorHandler({
     instance: ComponentPublicInstance | null = null,
     info: string = ''
   ) {
-    set(e)
-
     if (enabled) {
       pauseTracking()
 
@@ -220,6 +220,8 @@ export function useErrorHandler({
     } else {
       console.error(e)
     }
+
+    set(e)
   }
 }
 

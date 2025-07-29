@@ -19,7 +19,7 @@ const list: ActionList = [
   path="/components/SActionList.vue"
   story="/stories-components-sactionlist-01-playground-story-vue"
 >
-  <SActionList :list="list" />
+  <SActionList :list />
 </Showcase>
 
 ## Usage
@@ -41,7 +41,7 @@ const list: ActionList = [
 </script>
 
 <template>
-  <SActionList :list="list" />
+  <SActionList :list />
 </template>
 ```
 
@@ -82,7 +82,7 @@ interface ActionListItem {
 interface Tooltip {
   // The HTML tag to be used for the tooltip.
   // Defaults to `span`.
-  tag?: string
+  tag?: Component | string
 
   // The text to be displayed in the tooltip. The tooltip
   // will only be visible when this prop is set.

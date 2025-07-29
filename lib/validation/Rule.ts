@@ -1,6 +1,6 @@
 import { type ValidationRuleWithParams } from '@vuelidate/core'
 import { type MessageProps as VMessageProps, helpers } from '@vuelidate/validators'
-import { type Lang, useLang } from '../composables/Lang'
+import { type Lang } from '../composables/Lang'
 import { _required } from './validators'
 
 export interface RuleOptions {
@@ -18,7 +18,9 @@ export interface MessageProps extends VMessageProps {
 export function createRule(
   options: RuleOptions
 ): ValidationRuleWithParams {
-  const lang = useLang()
+  const lang = typeof document !== 'undefined'
+    ? (document.documentElement.lang === 'ja' ? 'ja' : 'en')
+    : 'en'
 
   const params = options.params ?? {}
 

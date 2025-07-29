@@ -14,9 +14,9 @@ const options = [
 
 const value = ref('table')
 
-function state() {
+function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Project view',
     info: '',
     note: '',
@@ -29,14 +29,13 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />
@@ -71,7 +70,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputSegments
           :class="{ 'has-error': state.error }"
           :size="state.size"
@@ -79,7 +78,7 @@ function state() {
           :info="state.info"
           :note="state.note"
           :help="state.help"
-          :options="options"
+          :options
           :block="state.block"
           :disabled="state.disabled"
           v-model="value"

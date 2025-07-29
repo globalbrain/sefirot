@@ -1,5 +1,212 @@
 # Changelog
 
+## [4.29.1](https://github.com/globalbrain/sefirot/compare/v4.29.0...v4.29.1) (2025-07-25)
+
+
+### Bug Fixes
+
+* **input:** bring back `mini` size ([f1b2cd6](https://github.com/globalbrain/sefirot/commit/f1b2cd6adfaaf2a4b448806746d2af6f6b1a5ba7))
+
+# [4.29.0](https://github.com/globalbrain/sefirot/compare/v4.28.0...v4.29.0) (2025-07-25)
+
+
+### Features
+
+* **button,input:** add new `sm` and `md` size ([#637](https://github.com/globalbrain/sefirot/issues/637)) ([14f855c](https://github.com/globalbrain/sefirot/commit/14f855c38ccd07946ea497be4e9a06d747935260))
+* **content:** refine content styles ([#636](https://github.com/globalbrain/sefirot/issues/636)) ([4e1a8b4](https://github.com/globalbrain/sefirot/commit/4e1a8b45c02a979213f836917ad0fdb53c5de2e9))
+
+# [4.28.0](https://github.com/globalbrain/sefirot/compare/v4.27.0...v4.28.0) (2025-07-22)
+
+
+### Features
+
+* **action-menu:** add dropdown align option ([#634](https://github.com/globalbrain/sefirot/issues/634)) ([7ce8381](https://github.com/globalbrain/sefirot/commit/7ce8381229c83e37e3d632678799d6f18b071e54))
+
+# [4.27.0](https://github.com/globalbrain/sefirot/compare/v4.26.0...v4.27.0) (2025-07-18)
+
+
+### Bug Fixes
+
+* **markdown, content:** set correct counter in ordered lists, render ordered list marker correctly, and allow passing advanced options ([#633](https://github.com/globalbrain/sefirot/issues/633)) ([e15c036](https://github.com/globalbrain/sefirot/commit/e15c036e229d86a024b7f1c6881a02a82d227c4a))
+
+# [4.26.0](https://github.com/globalbrain/sefirot/compare/v4.25.1...v4.26.0) (2025-07-17)
+
+
+### Bug Fixes
+
+* **input:** pass missing props to input base ([17c2077](https://github.com/globalbrain/sefirot/commit/17c207766e77c42feaf88b9903eeb7764e5409e9))
+
+
+### Features
+
+* **data-list:** introduce `<SDataList>` ([#629](https://github.com/globalbrain/sefirot/issues/629)) ([e536d3a](https://github.com/globalbrain/sefirot/commit/e536d3a44647c0a18a75e77f89ba08c988bb724b))
+* **table:** support specifying width in column options ([#631](https://github.com/globalbrain/sefirot/issues/631)) ([b567340](https://github.com/globalbrain/sefirot/commit/b56734032f8e1976b6d5050db265f94f94fadd7e)), closes [#630](https://github.com/globalbrain/sefirot/issues/630)
+
+## [4.25.1](https://github.com/globalbrain/sefirot/compare/v4.25.0...v4.25.1) (2025-06-25)
+
+
+### Bug Fixes
+
+* **table:** correctly render selection column ([#628](https://github.com/globalbrain/sefirot/issues/628)) ([1c97bb7](https://github.com/globalbrain/sefirot/commit/1c97bb7bec2c295a0bf7a02db063954903882310)), closes [#627](https://github.com/globalbrain/sefirot/issues/627)
+
+# [4.25.0](https://github.com/globalbrain/sefirot/compare/v4.24.0...v4.25.0) (2025-06-16)
+
+
+### Features
+
+* **types:** allow passing components in `tag` props ([#626](https://github.com/globalbrain/sefirot/issues/626)) ([ebc3d55](https://github.com/globalbrain/sefirot/commit/ebc3d550b3bd2e9400f1707ea9764029a64f52ea))
+
+# [4.24.0](https://github.com/globalbrain/sefirot/compare/v4.23.1...v4.24.0) (2025-06-05)
+
+
+### Features
+
+* **markdown:** sanitize the rendered html ([#625](https://github.com/globalbrain/sefirot/issues/625)) ([1af84f0](https://github.com/globalbrain/sefirot/commit/1af84f064552542626f2998f93306c285d453870))
+
+## [4.23.1](https://github.com/globalbrain/sefirot/compare/v4.23.0...v4.23.1) (2025-06-04)
+
+
+### Bug Fixes
+
+* **tooltip:** use div instead of span in tooltip tips ([#624](https://github.com/globalbrain/sefirot/issues/624)) ([fad0112](https://github.com/globalbrain/sefirot/commit/fad011250c6f117e6b3d8d6edc33a1a343831d5c))
+
+# [4.23.0](https://github.com/globalbrain/sefirot/compare/v4.22.0...v4.23.0) (2025-05-27)
+
+
+### Bug Fixes
+
+* **input-dropdown:** manually position the dropdown element ([#622](https://github.com/globalbrain/sefirot/issues/622)) ([5870cbd](https://github.com/globalbrain/sefirot/commit/5870cbd78f9a44eb27f5ab0425e9b430611c663b))
+
+
+### Features
+
+* **button:** add `:count` prop ([#621](https://github.com/globalbrain/sefirot/issues/621)) ([38bcfdb](https://github.com/globalbrain/sefirot/commit/38bcfdbda9f0a1f2285b556bdfa73e4fd92aebc8))
+
+# [4.22.0](https://github.com/globalbrain/sefirot/compare/v4.21.0...v4.22.0) (2025-05-27)
+
+
+### Bug Fixes
+
+* **input-dropdown:** show the dropdown even inside container with overflow hidden ([#620](https://github.com/globalbrain/sefirot/issues/620)) ([0bcbae7](https://github.com/globalbrain/sefirot/commit/0bcbae7521038f005c64223425fa0b5fb302f520))
+* **input:** pass `:size` to base input ([#613](https://github.com/globalbrain/sefirot/issues/613)) ([#619](https://github.com/globalbrain/sefirot/issues/619)) ([a56e523](https://github.com/globalbrain/sefirot/commit/a56e5231ba2e125201969a57ee960518b631ecb6))
+
+
+### Features
+
+* **chart:** support negative values in bar chart ([#617](https://github.com/globalbrain/sefirot/issues/617)) ([dfaadee](https://github.com/globalbrain/sefirot/commit/dfaadeec49b8e18e588e66eb3e3f6baa09ffc59d))
+
+# [4.21.0](https://github.com/globalbrain/sefirot/compare/v4.20.0...v4.21.0) (2025-05-22)
+
+
+### Features
+
+* **pagination:** add `disabled` prop to `SPagination` and `SControlPagination` ([#616](https://github.com/globalbrain/sefirot/issues/616)) ([0ee3a5d](https://github.com/globalbrain/sefirot/commit/0ee3a5da4aec81ff8395821c87ab5267c9de177e))
+
+# [4.20.0](https://github.com/globalbrain/sefirot/compare/v4.19.1...v4.20.0) (2025-05-20)
+
+
+### Features
+
+* **validation:** add `before`, `beforeOrEqual`, `after`, `afterOrEqual` rules ([#591](https://github.com/globalbrain/sefirot/issues/591)) ([#612](https://github.com/globalbrain/sefirot/issues/612)) ([3c5e15b](https://github.com/globalbrain/sefirot/commit/3c5e15b25f047099bae64c82a1e5b0b7a91bf2da))
+
+## [4.19.1](https://github.com/globalbrain/sefirot/compare/v4.19.0...v4.19.1) (2025-05-19)
+
+
+### Bug Fixes
+
+* **validation/ymd:** fix typo in message ([#611](https://github.com/globalbrain/sefirot/issues/611)) ([415274c](https://github.com/globalbrain/sefirot/commit/415274c31034acdf50959d34ee15e7f54decd380))
+
+# [4.19.0](https://github.com/globalbrain/sefirot/compare/v4.18.0...v4.19.0) (2025-05-01)
+
+
+### Bug Fixes
+
+* **input-select:** apply `:size` prop ([#609](https://github.com/globalbrain/sefirot/issues/609)) ([2f83132](https://github.com/globalbrain/sefirot/commit/2f831320395040e1a3ad6f9da94b40120c9da45b))
+
+
+### Features
+
+* **style:** add new bg color scheme and update pill and state style ([#607](https://github.com/globalbrain/sefirot/issues/607)) ([f219e18](https://github.com/globalbrain/sefirot/commit/f219e18ab7339082f1f866745b537e5851e13960))
+
+# [4.18.0](https://github.com/globalbrain/sefirot/compare/v4.16.0...v4.18.0) (2025-04-24)
+
+
+### Features
+
+* **chart:** add allow customizing gap between label and ticks and consider margin to be that of final shape instead of main rectangle ([#606](https://github.com/globalbrain/sefirot/issues/606)) ([138cf8a](https://github.com/globalbrain/sefirot/commit/138cf8a5f0ca2962682dacd359d27baef8875561))
+
+# [4.16.0](https://github.com/globalbrain/sefirot/compare/v4.15.0...v4.16.0) (2025-04-24)
+
+
+### Features
+
+* **chart:** auto-calculate margins in bar chart ([#605](https://github.com/globalbrain/sefirot/issues/605)) ([132dc50](https://github.com/globalbrain/sefirot/commit/132dc5099071ae07bf41c8c698c7e836bf15c9e3))
+
+# [4.15.0](https://github.com/globalbrain/sefirot/compare/v4.14.2...v4.15.0) (2025-04-16)
+
+
+### Features
+
+* **table:** allow freezing columns ([#598](https://github.com/globalbrain/sefirot/issues/598)) ([#601](https://github.com/globalbrain/sefirot/issues/601)) ([1e7856f](https://github.com/globalbrain/sefirot/commit/1e7856f6a450c3dae1ea284dc9ac7a55760e3eb7))
+* **table:** allow padding-left customization with row selection ([#604](https://github.com/globalbrain/sefirot/issues/604)) ([8e03cae](https://github.com/globalbrain/sefirot/commit/8e03cae48738a6032992167f32ef89502a34f954))
+
+## [4.14.2](https://github.com/globalbrain/sefirot/compare/v4.14.1...v4.14.2) (2025-04-10)
+
+
+### Bug Fixes
+
+* **table:** make selected reactive ([#596](https://github.com/globalbrain/sefirot/issues/596)) ([2d974ff](https://github.com/globalbrain/sefirot/commit/2d974ffd1eb217578106771f88f68bae86679860))
+
+## [4.14.1](https://github.com/globalbrain/sefirot/compare/v4.14.0...v4.14.1) (2025-03-25)
+
+
+### Bug Fixes
+
+* **lang:** directly use `html[lang]` in rules ([#592](https://github.com/globalbrain/sefirot/issues/592)) ([67d495f](https://github.com/globalbrain/sefirot/commit/67d495fa01cf8b22a36a49533610f0b40623c971))
+
+# [4.14.0](https://github.com/globalbrain/sefirot/compare/v4.13.0...v4.14.0) (2025-03-18)
+
+
+### Features
+
+* **chart:** add charts ([#589](https://github.com/globalbrain/sefirot/issues/589)) ([99a5e22](https://github.com/globalbrain/sefirot/commit/99a5e229839587f3cebe13ebc98a2297ccb251f0))
+* **error:** add sentry pinia integration and sync vendored code ([#588](https://github.com/globalbrain/sefirot/issues/588)) ([637ae1c](https://github.com/globalbrain/sefirot/commit/637ae1c1d57985ba82697f57ba6240ef5796c515))
+
+# [4.13.0](https://github.com/globalbrain/sefirot/compare/v4.12.0...v4.13.0) (2025-02-28)
+
+
+### Bug Fixes
+
+* **lang:** provide lang at app level so that it's available in stores ([#586](https://github.com/globalbrain/sefirot/issues/586)) ([180babb](https://github.com/globalbrain/sefirot/commit/180babbc9e42234020ab23c5d8805f63a4278940))
+
+
+### Features
+
+* **http:** support configuring stringify options ([#587](https://github.com/globalbrain/sefirot/issues/587)) ([db4643a](https://github.com/globalbrain/sefirot/commit/db4643a3c2deb8bd20afb341e4d369d8332ef76f))
+
+# [4.12.0](https://github.com/globalbrain/sefirot/compare/v4.11.0...v4.12.0) (2025-02-21)
+
+
+### Bug Fixes
+
+* **Error:** ignore turnstile retriable error codes ([57fa4a6](https://github.com/globalbrain/sefirot/commit/57fa4a6bd7f50fb9e41668f3a67f60edcd20281f))
+* ignore google app errors on ios 18 ([ddd00d4](https://github.com/globalbrain/sefirot/commit/ddd00d44c0afaac0477458ed50886ef9fe6d4038))
+
+
+### Features
+
+* **desc:** add actions option ([#582](https://github.com/globalbrain/sefirot/issues/582)) ([d6203f1](https://github.com/globalbrain/sefirot/commit/d6203f1b1e5174858a7cfe09c91a395f95db5672))
+* **input-dropdown:** refine single item selection ([#583](https://github.com/globalbrain/sefirot/issues/583)) ([6da5fcb](https://github.com/globalbrain/sefirot/commit/6da5fcbb6abe0b067951fd95cabd6cd1af1531c3))
+* **input:** add warning props to text, textarea, and number ([#584](https://github.com/globalbrain/sefirot/issues/584)) ([3de54b9](https://github.com/globalbrain/sefirot/commit/3de54b977357786e62de11e730a1a91017b8280e))
+
+# [4.11.0](https://github.com/globalbrain/sefirot/compare/v4.10.0...v4.11.0) (2025-02-13)
+
+
+### Features
+
+* add app setup composables ([#581](https://github.com/globalbrain/sefirot/issues/581)) ([0a647f6](https://github.com/globalbrain/sefirot/commit/0a647f6d93eb155ad30c6faa38652b4e69982e8b))
+* **Url:** observe `route.path` in `useUrlQuerySync` to preserve state during navigation ([#579](https://github.com/globalbrain/sefirot/issues/579)) ([7a09b97](https://github.com/globalbrain/sefirot/commit/7a09b97e0c36927c8bff57f8756cb7796ec8cec7))
+
 # [4.10.0](https://github.com/globalbrain/sefirot/compare/v4.9.0...v4.10.0) (2025-01-28)
 
 

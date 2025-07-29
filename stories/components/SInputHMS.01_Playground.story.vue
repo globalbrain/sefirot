@@ -11,9 +11,9 @@ const input = ref({
   second: null
 })
 
-function state() {
+function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Label',
     info: 'Some helpful information.',
     note: 'Note',
@@ -28,14 +28,13 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />
@@ -78,7 +77,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SInputHMS
           :class="{ 'has-error': state.error }"
           :size="state.size"

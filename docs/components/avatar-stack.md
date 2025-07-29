@@ -18,7 +18,7 @@ const avatars = [
   story="/stories-components-savatarstack-01-playground-story-vue"
 >
   <div class="flex flex-wrap gap-16">
-    <SAvatarStack :avatars="avatars" />
+    <SAvatarStack :avatars />
   </div>
 </Showcase>
 
@@ -38,7 +38,7 @@ const avatars = [
 </script>
 
 <template>
-  <SAvatarStack :avatars="avatars" />
+  <SAvatarStack :avatars />
 </template>
 ```
 

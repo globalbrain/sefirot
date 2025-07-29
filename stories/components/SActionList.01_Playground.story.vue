@@ -15,9 +15,9 @@ const list: ActionList = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
-      <SActionList :list="list" />
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
+      <SActionList :list />
     </Board>
   </Story>
 </template>

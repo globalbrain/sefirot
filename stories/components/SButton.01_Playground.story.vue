@@ -17,6 +17,14 @@ const modes = [
   'danger'
 ]
 
+const sizes = [
+  { label: 'xs', value: 'xs' },
+  { label: 'sm', value: 'sm' },
+  { label: 'md', value: 'md' },
+  { label: 'lg', value: 'lg' },
+  { label: 'xl', value: 'xl' }
+]
+
 const contentModes = [
   { label: 'undefined', value: null },
   { label: 'default', value: 'default' },
@@ -30,12 +38,14 @@ const contentModes = [
   { label: 'danger', value: 'danger' }
 ]
 
-function state() {
+function initState() {
   return {
+    size: 'md',
     type: 'fill',
     mode: 'default',
     labelMode: null,
     label: 'Button',
+    count: undefined,
     loading: false,
     disabled: false,
     tooltip: {
@@ -49,8 +59,13 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
+      <HstSelect
+        title="size"
+        :options="sizes"
+        v-model="state.size"
+      />
       <HstSelect
         title="type"
         :options="{
@@ -73,6 +88,10 @@ function state() {
       <HstText
         title="label"
         v-model="state.label"
+      />
+      <HstNumber
+        title="count"
+        v-model="state.count"
       />
       <HstText
         title="tooltip.text"
@@ -112,12 +131,14 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SButton
+          :size="state.size"
           :type="state.type"
           :mode="state.mode"
           :label="state.label"
           :label-mode="state.labelMode"
+          :count="state.count"
           :loading="state.loading"
           :disabled="state.disabled"
           :tooltip="{

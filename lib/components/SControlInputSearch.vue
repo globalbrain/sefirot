@@ -19,10 +19,10 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'update:model-value', value: string | null): void
-  (e: 'input', value: string | null): void
-  (e: 'blur', value: string | null): void
-  (e: 'enter', value: string | null): void
+  'update:model-value': [value: string | null]
+  'input': [value: string | null]
+  'blur': [value: string | null]
+  'enter': [value: string | null]
 }>()
 
 const { t } = useTrans({
@@ -33,6 +33,9 @@ const { t } = useTrans({
 const size = useControlSize()
 
 const sizeDict = {
+  xs: 'sm',
+  sm: 'sm',
+  md: 'md',
   small: 'mini',
   medium: 'small'
 } as const
@@ -50,7 +53,7 @@ const _value = computed(() => {
       :placeholder="placeholder ?? t.placeholder"
       :unit-before="IconMagnifyingGlass"
       :model-value="_value"
-      :validation="validation"
+      :validation
       hide-error
       @update:model-value="$emit('update:model-value', $event)"
       @input="$emit('input', $event)"

@@ -32,7 +32,7 @@ const href = computed(() => {
           size="mini"
           mode="mute"
           label="View Documentation"
-          :href="href"
+          :href
         />
       </div>
 
@@ -43,7 +43,7 @@ const href = computed(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .b-root {
   display: flex;
   flex-direction: column;

@@ -17,7 +17,7 @@ const docs = '/components/card'
 
 const open = ref(false)
 
-function state() {
+function initState() {
   return {
     cardSize: 'small',
     cardMode: 'neutral',
@@ -27,7 +27,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="Card size"
@@ -54,13 +54,13 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SButton mode="info" label="Open dialog" @click="open = true" />
 
-        <SModal :open="open" @close="open = false">
+        <SModal :open @close="open = false">
           <SCard :size="state.cardSize" :mode="state.cardMode">
-            <SCardBlock size="small" class="s-pl-24 s-pr-8">
-              <SControl>
+            <SCardBlock class="s-py-8 s-pl-24 s-pr-8">
+              <SControl size="sm">
                 <SControlLeft>
                   <SControlText class="s-font-w-600">
                     Header title
@@ -81,8 +81,8 @@ function state() {
                 consequat.
               </p>
             </SCardBlock>
-            <SCardBlock size="large" class="s-px-24">
-              <SControl>
+            <SCardBlock class="s-py-16 s-px-24">
+              <SControl size="md">
                 <SControlRight>
                   <SControlButton label="Cancel" @click="open = false" />
                   <SControlButton mode="info" label="Submit" @click="open = false" />

@@ -4,7 +4,7 @@ import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
@@ -35,8 +35,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: T): void
-  (e: 'change', value: T): void
+  'update:model-value': [value: T]
+  'change': [value: T]
 }>()
 
 const _value = computed(() => {
@@ -61,15 +61,16 @@ function onSelect(value: T) {
   <SInputBase
     class="SInputSegments"
     :class="[size ?? 'small', { block }]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="box">
       <SInputSegmentsOption
@@ -89,10 +90,18 @@ function onSelect(value: T) {
 </template>
 
 <style scoped lang="postcss">
+.SInputSegments.sm,
 .SInputSegments.mini {
   .box {
     padding: 2px;
     height: 32px;
+  }
+}
+
+.SInputSegments.md {
+  .box {
+    padding: 2px;
+    height: 36px;
   }
 }
 

@@ -44,6 +44,8 @@ export interface TableColumn<V, R, SV, SR> {
   label?: string
   className?: string
   dropdown?: DropdownSection[]
+  freeze?: boolean
+  width?: string
   grow?: boolean
   resizable?: boolean
   cell?: TableCell<V, R> | TableColumnCellFn<V, R>

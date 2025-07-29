@@ -4,14 +4,15 @@ import SPagination, { type Size } from './SPagination.vue'
 
 defineProps<{
   size?: Size
+  disabled?: boolean
   total: number
   page: number
   perPage: number
 }>()
 
 defineEmits<{
-  (e: 'prev'): void
-  (e: 'next'): void
+  prev: []
+  next: []
 }>()
 
 const size = useControlSize()
@@ -21,11 +22,12 @@ const position = useControlPosition()
 <template>
   <div class="SControlPagination">
     <SPagination
-      :size="size"
+      :size
+      :disabled
       :align="position"
-      :total="total"
-      :page="page"
-      :per-page="perPage"
+      :total
+      :page
+      :per-page
       @prev="$emit('prev')"
       @next="$emit('next')"
     />

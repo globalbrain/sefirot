@@ -16,7 +16,7 @@ export function isDate(value: unknown): value is Date {
   return _isDate(value)
 }
 
-export function isError(value: unknown): value is Error {
+export function isError<T extends Error = Error>(value: unknown): value is T {
   return _isError(value)
 }
 

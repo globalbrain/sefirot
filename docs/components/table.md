@@ -39,7 +39,7 @@ const options = useTable({
 })
 </script>
 
-<style scoped>
+<style scoped lang="postcss">
 .table :deep(.col-name)   { --table-col-width: 128px; }
 .table :deep(.col-group)  { --table-col-width: 128px; }
 .table :deep(.col-status) { --table-col-width: 128px; }
@@ -54,7 +54,7 @@ const options = useTable({
   story="/stories-components-stable-01-playground-story-vue"
 >
   <ClientOnly>
-    <STable class="table" :options="options" />
+    <STable class="table" :options />
   </ClientOnly>
 </Showcase>
 
@@ -105,7 +105,7 @@ const options = useTable({
 </script>
 
 <template>
-  <STable :options="options" />
+  <STable :options />
 </template>
 ```
 
@@ -589,7 +589,7 @@ interface Props {
 ```
 
 ```vue-html
-<STooltip :options="options" />
+<STooltip :options />
 ```
 
 ## Styles
@@ -615,8 +615,8 @@ You may define `--table-padding-right` and `--table-padding-left` to adjust the 
 
 ```css
 :root {
-  --table-padding-right: 0;
-  --table-padding-left: 0;
+  --table-padding-right: 0px;
+  --table-padding-left: 0px;
 }
 ```
 

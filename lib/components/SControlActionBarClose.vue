@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconX from '~icons/ph/x-bold'
+import IconX from '~icons/ph/x'
 import SControlActionBarButton from './SControlActionBarButton.vue'
 
 defineProps<{
@@ -7,14 +7,14 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 </script>
 
 <template>
   <div class="SControlActionBarClose">
     <SControlActionBarButton
-      :as="as"
+      :as
       :icon="IconX"
       @click="$emit('click')"
     />

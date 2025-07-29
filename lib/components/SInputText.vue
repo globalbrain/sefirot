@@ -1,51 +1,36 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
 import { isString } from '../support/Utils'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export interface Props {
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
+export interface Props extends BaseProps {
   type?: string
   placeholder?: string
   unitBefore?: Component | string
   unitAfter?: Component | string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: CheckColor
   textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
   modelValue: string | null
   displayValue?: string | null
-  hideError?: boolean
-  validation?: Validatable
 }
 
-export type Size = 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: string | null): void
-  (e: 'input', value: string | null): void
-  (e: 'blur', value: string | null): void
-  (e: 'enter', value: string | null): void
+  'update:model-value': [value: string | null]
+  'input': [value: string | null]
+  'blur': [value: string | null]
+  'enter': [value: string | null]
 }>()
 
 const input = ref<HTMLElement | null>(null)
 const isFocused = ref(false)
 
 const classes = computed(() => [
-  props.size ?? 'small',
   props.align ?? 'left',
   { disabled: props.disabled }
 ])
@@ -116,16 +101,19 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   <SInputBase
     class="SInputText"
     :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box" :class="{ focus: isFocused }" @click="focus">
       <div v-if="$slots['addon-before']" class="addon before">
@@ -144,8 +132,8 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             :class="inputClasses"
             :id="name"
             :type="type ?? 'text'"
-            :placeholder="placeholder"
-            :disabled="disabled"
+            :placeholder
+            :disabled
             :value="modelValue"
             ref="input"
             @focus="onFocus"
@@ -173,6 +161,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 </template>
 
 <style scoped lang="postcss">
+.SInputText.sm,
 .SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
@@ -219,6 +208,55 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     margin-right: -2px;
     width: 10px;
     height: 10px;
+  }
+}
+
+.SInputText.md {
+  .box   { min-height: 36px; }
+  .value { min-height: 34px; }
+  .area  { min-height: 34px; }
+  .unit  { min-height: 34px; }
+
+  .input {
+    padding: 5px 10px;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
+
+  .unit {
+    padding: 5px 10px;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
+
+  .unit-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  :slotted(.SInputAddon) .action {
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  :slotted(.SInputAddon) .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  :slotted(.SInputAddon) .caret {
+    margin-left: 6px;
+    margin-right: -2px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -349,6 +387,14 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   }
 }
 
+.SInputText.has-warning {
+  .box,
+  .box:hover,
+  .box:focus {
+    border-color: var(--input-warning-border-color);
+  }
+}
+
 .box {
   position: relative;
   display: flex;
@@ -425,10 +471,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   align-items: center;
   justify-content: center;
   color: var(--c-text-2);
-}
-
-.unit-text {
-  font-weight: 500;
 }
 
 .addon {

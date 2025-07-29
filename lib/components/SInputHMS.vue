@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: Placeholder
+  noHour?: boolean
+  noMinute?: boolean
+  noSecond?: boolean
+  disabled?: boolean
+  value?: Value
+  modelValue?: Value
+}
 
 export interface Value {
   hour: string | null
@@ -20,29 +26,11 @@ export interface Placeholder {
 
 export type ValueType = 'hour' | 'minute' | 'second'
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: Placeholder
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  noHour?: boolean
-  noMinute?: boolean
-  noSecond?: boolean
-  disabled?: boolean
-  value?: Value
-  modelValue?: Value
-  validation?: Validatable
-  hideError?: boolean
-}>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: Value): void
-  (e: 'change', value: Value): void
+  'update:model-value': [value: Value]
+  'change': [value: Value]
 }>()
 
 const _value = computed(() => {
@@ -144,15 +132,16 @@ function createRequiredTouched(): boolean[] {
   <SInputBase
     class="SInputHMS"
     :class="[size ?? 'small', { disabled }]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container" :class="{ focus: isFocused }">
       <input
@@ -161,7 +150,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.hour"
         :placeholder="padPlaceholder.hour"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateHour"
       >
@@ -172,7 +161,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.minute"
         :placeholder="padPlaceholder.minute"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateMinute"
       >
@@ -183,7 +172,7 @@ function createRequiredTouched(): boolean[] {
         :value="_value?.second"
         :placeholder="padPlaceholder.second"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateSecond"
       >
@@ -195,6 +184,7 @@ function createRequiredTouched(): boolean[] {
 </template>
 
 <style lang="postcss" scoped>
+.SInputHMS.sm,
 .SInputHMS.mini {
   .container {
     padding: 0 8px;
@@ -215,6 +205,32 @@ function createRequiredTouched(): boolean[] {
 
   .separator::before {
     padding: 0 4px;
+  }
+}
+
+.SInputHMS.md {
+  .container {
+    padding: 0 10px;
+    min-height: 36px;
+  }
+
+  .input {
+    flex-shrink: 0;
+    padding: 5px 0;
+    width: 20px;
+    text-align: center;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .separator {
+    padding: 4px 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .separator::before {
+    padding: 0 6px;
   }
 }
 

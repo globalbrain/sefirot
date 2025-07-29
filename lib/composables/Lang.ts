@@ -1,4 +1,4 @@
-import { inject, provide } from 'vue'
+import { type InjectionKey, getCurrentInstance, inject } from 'vue'
 
 export type Lang = 'en' | 'ja'
 
@@ -11,16 +11,32 @@ export interface TransMessages<T> {
   ja: T
 }
 
-export const SefirotLangKey = 'sefirot-lang-key'
+export interface HasLang {
+  lang: Lang
+}
+
+export const SefirotLangKey: InjectionKey<Lang> = Symbol.for('sefirot-lang-key')
+
+export function useSetupLang(): (user?: HasLang | null) => void {
+  const browserLang = useBrowserLang()
+
+  return (user) => {
+    provideLang(user?.lang ?? browserLang)
+  }
+}
 
 export function provideLang(lang: Lang) {
-  provide(SefirotLangKey, lang)
+  getCurrentInstance()?.appContext.app.provide(SefirotLangKey, lang)
 }
 
 export function useLang(): Lang {
-  // Doing `||` check here because for some reason it doesn't return
-  // the default value in tests but becomes `undefined`.
-  return inject(SefirotLangKey, 'en') || 'en'
+  return inject(SefirotLangKey, 'en')
+}
+
+export function useBrowserLang(): Lang {
+  const lang = navigator.language
+
+  return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
 }
 
 export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
@@ -31,10 +47,4 @@ export function useTrans<T>(messages: TransMessages<T>): Trans<T> {
   return {
     t
   }
-}
-
-export function useBrowserLang(): Lang {
-  const lang = navigator.language
-
-  return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
 }

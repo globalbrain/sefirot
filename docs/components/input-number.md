@@ -322,7 +322,7 @@ interface ValidatableError {
 ```
 
 ```vue-html
-<SInputNumber v-model="..." :validation="validation" />
+<SInputNumber v-model="1" :validation />
 ```
 
 ### `:hide-error`
@@ -337,8 +337,8 @@ interface Props {
 
 ```vue-html
 <SInputNumber
-  v-model="..."
-  :validation="validation"
+  v-model="1"
+  :validation
   hide-error
 />
 ```

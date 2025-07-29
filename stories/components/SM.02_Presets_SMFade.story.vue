@@ -4,7 +4,7 @@ import SMFade from 'sefirot/components/SMFade.vue'
 const title = 'Components / SM / 02. Presets: SMFade'
 const docs = '/components/m'
 
-function state() {
+function initState() {
   return {
     x: '16px',
     y: '0',
@@ -16,7 +16,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
         title="x"
@@ -41,7 +41,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div>Scroll down to see animation.</div>
         <div v-for="i in [...Array(5).keys()]" :key="i" class="py-256">
           <SMFade

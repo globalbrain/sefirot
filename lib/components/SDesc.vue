@@ -20,8 +20,8 @@ provide('sefirot-desc-label-width', () => props.labelWidth)
   <SGrid
     class="SDesc"
     :class="[dir, { divider }]"
-    :cols="cols"
-    :gap="gap"
+    :cols
+    :gap
   >
     <slot />
   </SGrid>

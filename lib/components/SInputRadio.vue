@@ -3,7 +3,7 @@ import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
@@ -24,8 +24,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: boolean): void
-  (e: 'change', value: boolean): void
+  'update:model-value': [value: boolean]
+  'change': [value: boolean]
 }>()
 
 const classes = computed(() => [
@@ -45,15 +45,16 @@ function onClick() {
   <SInputBase
     class="SInputRadio"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
-    :hide-error="hideError"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :hide-error
   >
     <div class="container">
       <div
@@ -137,6 +138,12 @@ function onClick() {
   line-height: 20px;
   font-size: 14px;
   font-weight: 400;
+}
+
+.SInputRadio.md {
+  .input {
+    height: 36px;
+  }
 }
 
 .SInputRadio.disabled {

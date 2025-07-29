@@ -20,7 +20,7 @@ const modes = [
   'danger'
 ] as const
 
-function state() {
+function initState() {
   return {
     label: 'Button',
     rounded: false,
@@ -31,7 +31,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText title="label" v-model="state.label" />
       <HstCheckbox title="rounded" v-model="state.rounded" />
@@ -40,7 +40,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="root">
           <div v-for="v in variants" :key="v.type" class="group">
             <div class="title">{{ v.title }}</div>
@@ -65,7 +65,7 @@ function state() {
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .root {
   display: grid;
   gap: 32px;

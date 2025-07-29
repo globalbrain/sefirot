@@ -1,4 +1,8 @@
 export { and, not, or } from '@vuelidate/validators'
+export { after } from './after'
+export { afterOrEqual } from './afterOrEqual'
+export { before } from './before'
+export { beforeOrEqual } from './beforeOrEqual'
 export { checked } from './checked'
 export { decimal } from './decimal'
 export { decimalOrHyphen } from './decimalOrHyphen'

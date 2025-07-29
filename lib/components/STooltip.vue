@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onClickOutside, onKeyStroke, useElementHover, useFocusWithin } from '@vueuse/core'
-import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
+import { type Component, computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
 import { type Position, useTooltip } from '../composables/Tooltip'
 
 const props = withDefaults(defineProps<{
-  tag?: string
-  triggerTag?: string
+  tag?: Component | string
+  triggerTag?: Component | string
   text?: string
   position?: Position
   display?: 'inline' | 'inline-block' | 'block'
@@ -87,7 +87,7 @@ const cleanups = [
       setTimeout(() => { ignore.value = false })
     }
   }),
-  onClickOutside(root, hide, { ignore: [content] }),
+  onClickOutside(root, hide, { ignore: [content], controls: false }),
   () => timeoutId.value != null && window.clearTimeout(timeoutId.value)
 ]
 
@@ -97,17 +97,17 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex="tabindex">
+  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex>
     <component :is="triggerTag" class="trigger" ref="trigger">
       <slot />
     </component>
 
     <Teleport to="#sefirot-modals">
       <Transition name="fade">
-        <span v-show="on" class="container" :class="containerClasses" ref="content">
-          <span v-if="$slots.text" class="tip"><slot name="text" /></span>
-          <span v-else-if="text" class="tip" v-html="text" />
-        </span>
+        <div v-show="on" class="container" :class="containerClasses" ref="content">
+          <div v-if="$slots.text" class="tip"><slot name="text" /></div>
+          <div v-else-if="text" class="tip" v-html="text" />
+        </div>
       </Transition>
     </Teleport>
   </component>

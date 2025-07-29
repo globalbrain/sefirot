@@ -22,7 +22,7 @@ const title = [
 </script>
 
 <template>
-  <SLocalNav :title="title" />
+  <SLocalNav :title />
 </template>
 ```
 
@@ -39,7 +39,7 @@ const title = [
 </script>
 
 <template>
-  <SLocalNav :title="title" />
+  <SLocalNav :title />
 </template>
 ```
 
@@ -60,7 +60,7 @@ const actions = [
 </script>
 
 <template>
-  <SLocalNav :title="title" :actions="actions" />
+  <SLocalNav :title :actions />
 </template>
 ```
 
@@ -87,7 +87,7 @@ const menu = [
 </script>
 
 <template>
-  <SLocalNav :title="title" :menu="menu" />
+  <SLocalNav :title :menu />
 </template>
 ```
 
@@ -122,7 +122,7 @@ import { type Component } from 'vue'
 import { type Mode, type Tooltip, type Type } from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 export interface Action {
-  tag?: string
+  tag?: Component | string
   type?: Type
   mode?: Mode
   icon?: Component

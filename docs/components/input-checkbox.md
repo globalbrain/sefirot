@@ -240,8 +240,8 @@ interface ValidatableError {
 
 ```vue-html
 <SInputCheckbox
-  :validation="validation"
   v-model="..."
+  :validation
 />
 ```
 
@@ -257,9 +257,9 @@ interface Props {
 
 ```vue-html
 <SInputCheckbox
-  :validation="validation"
-  hide-error
   v-model="..."
+  :validation
+  hide-error
 />
 ```
 

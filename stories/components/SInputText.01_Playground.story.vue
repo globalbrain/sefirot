@@ -15,7 +15,7 @@ const { data, init } = useData({
   name: null as string | null
 })
 
-const { validation, validateAndNotify } = useValidation(data, {
+const { validation, validateAndNotify, reset } = useValidation(data, {
   name: {
     required: required()
   }
@@ -53,15 +53,16 @@ async function submit() {
   }
 }
 
-function reset() {
+function onReset() {
   init()
+  reset()
   clearTimeout(timeout)
   inputState.value = undefined
 }
 
-function state() {
+function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Label',
     info: 'Some helpful information.',
     note: 'Required',
@@ -79,14 +80,13 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />
@@ -153,7 +153,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title">
+      <Board :title>
         <SInputText
           :size="state.size"
           name="name"
@@ -174,17 +174,17 @@ function state() {
 
         <div class="actions">
           <SButton size="small" mode="info" label="Submit" @click="submit" />
-          <SButton size="small" mode="mute" label="Reset" @click="reset" />
+          <SButton size="small" mode="mute" label="Reset" @click="onReset" />
         </div>
       </Board>
     </template>
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .actions {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   padding-top: 24px;
 }
 </style>

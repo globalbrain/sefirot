@@ -5,9 +5,9 @@ import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 const title = 'Components / SButtonGroup / 01. Playground'
 const docs = '/components/button-group'
 
-function state() {
+function initState() {
   return {
-    size: 'medium' as Size,
+    size: 'md' as Size,
     mode: 'mute' as Mode,
     labelA: 'Left',
     labelB: 'Middle',
@@ -17,16 +17,16 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium',
-          large: 'large',
-          jumbo: 'jumbo'
+          xs: 'xs',
+          sm: 'sm',
+          md: 'md',
+          lg: 'lg',
+          xl: 'xl'
         }"
         v-model="state.size"
       />
@@ -59,7 +59,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <SButtonGroup>
           <SButton :size="state.size" :mode="state.mode" :label="state.labelA" />
           <SButton :size="state.size" :mode="state.mode" :label="state.labelB" />

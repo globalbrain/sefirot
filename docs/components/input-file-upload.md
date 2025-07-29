@@ -311,7 +311,7 @@ interface ValidatableError {
 ```vue-html
 <SInputFileUpload
   v-model="file"
-  :validation="validation"
+  :validation
 />
 ```
 
@@ -328,7 +328,7 @@ interface Props {
 ```vue-html
 <SInputFileUpload
   v-model="file"
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

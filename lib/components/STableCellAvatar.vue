@@ -22,7 +22,7 @@ defineProps<{
       @click="() => onClick?.(value, record)"
     >
       <div v-if="image || name" class="avatar">
-        <SAvatar size="mini" :avatar="image" :name="name" />
+        <SAvatar size="mini" :avatar="image" :name />
       </div>
       <span v-if="name" class="name">
         {{ name }}

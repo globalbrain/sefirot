@@ -17,7 +17,7 @@ const labelWidth = computed(() => {
 </script>
 
 <template>
-  <SGridItem class="SDescItem" :span="span">
+  <SGridItem class="SDescItem" :span>
     <slot />
   </SGridItem>
 </template>
@@ -29,7 +29,17 @@ const labelWidth = computed(() => {
 }
 
 .SDesc.row > .SDescItem {
-  grid-template-columns: var(--desc-label-width, v-bind(labelWidth)) minmax(0, 1fr);
+  & {
+    grid-template-columns: var(--desc-label-width, v-bind(labelWidth)) minmax(0, 1fr);
+  }
+
+  & > :deep(.SDescLabel) {
+    height: 24px;
+  }
+
+  & > :deep(.SDescLabel > .value) {
+    line-height: 24px;
+  }
 }
 
 .SDesc.divider > .SDescItem:not(:has(> .SDescFile)) {

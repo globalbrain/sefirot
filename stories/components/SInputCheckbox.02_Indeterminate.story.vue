@@ -28,8 +28,8 @@ const control = computed({
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title" :docs="docs">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title :docs>
       <SInputCheckbox
         label="Complete the recipe"
         text="Enchantment table"
@@ -47,7 +47,7 @@ const control = computed({
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .indent {
   margin-left: 24px;
 }

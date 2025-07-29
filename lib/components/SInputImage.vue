@@ -42,8 +42,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: File | null): void
-  (e: 'change', value: File | null): void
+  'update:model-value': [file: File | null]
+  'change': [file: File | null]
 }>()
 
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -81,21 +81,21 @@ function onFileDelete() {
   <SInputBase
     class="SInputImage"
     :class="[size]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :label
+    :note
+    :info
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <template #default>
       <input
         ref="fileInput"
         class="file-input"
         type="file"
-        :accept="accept"
+        :accept
         @change="onFileSelect"
       >
 
@@ -115,7 +115,7 @@ function onFileDelete() {
             <SButton
               size="small"
               :label="selectText"
-              :disabled="disabled"
+              :disabled
               @click="openFileSelect"
             />
             <SButton
@@ -123,7 +123,7 @@ function onFileDelete() {
               size="small"
               mode="danger"
               :label="removeText"
-              :disabled="disabled"
+              :disabled
               @click="onFileDelete"
             />
           </div>

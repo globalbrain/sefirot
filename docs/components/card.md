@@ -263,7 +263,7 @@ interface Props {
 }
 
 export interface Tooltip {
-  tag?: string
+  tag?: Component | string
   text?: MaybeRef<string>
   position?: Position
   trigger?: 'hover' | 'focus' | 'both'
@@ -377,7 +377,7 @@ interface Props {
 }
 
 export interface Tooltip {
-  tag?: string
+  tag?: Component | string
   text?: MaybeRef<string>
   position?: Position
   trigger?: 'hover' | 'focus' | 'both'

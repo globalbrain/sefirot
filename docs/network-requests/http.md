@@ -65,6 +65,12 @@ interface HttpOptions {
    * @default '__payload__'
    */
   payloadKey?: string
+  /**
+   * The options for the stringify function to create a queryString.
+   * 
+   * @default {}
+   */
+  stringifyOptions?: import('qs').IStringifyOptions
 }
 
 interface HttpClient {

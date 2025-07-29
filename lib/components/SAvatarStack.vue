@@ -29,10 +29,10 @@ const count = computed(() => {
     <SAvatar
       v-for="(avatar, index) in avatars"
       :key="index"
-      :size="size"
+      :size
       :avatar="avatar.image"
       :name="avatar.name"
-      :tooltip="tooltip"
+      :tooltip
     />
     <div v-if="count" class="more">+{{ count }}</div>
   </div>

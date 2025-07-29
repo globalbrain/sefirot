@@ -9,6 +9,6 @@ withDefaults(defineProps<Props>(), {
 
 <template>
   <SM class="SMFade" v-bind="$props" v-slot="{ on }">
-    <slot :on="on" />
+    <slot :on />
   </SM>
 </template>

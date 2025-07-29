@@ -5,11 +5,11 @@ const title = 'Components / SButton / 02. Sizes'
 const docs = '/components/button'
 
 const variants = [
-  { title: 'Mini', size: 'mini' },
-  { title: 'Small', size: 'small' },
-  { title: 'Medium', size: 'medium' },
-  { title: 'Large', size: 'large' },
-  { title: 'Jumbo', size: 'jumbo' }
+  { title: 'XS', size: 'xs' },
+  { title: 'SM', size: 'sm' },
+  { title: 'MD', size: 'md' },
+  { title: 'LG', size: 'lg' },
+  { title: 'XL', size: 'xl' }
 ] as const
 
 const modes = [
@@ -24,7 +24,7 @@ const modes = [
   'danger'
 ]
 
-function state() {
+function initState() {
   return {
     mode: 'default',
     label: 'Button',
@@ -34,7 +34,7 @@ function state() {
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="mode"
@@ -52,7 +52,7 @@ function state() {
     </template>
 
     <template #default="{ state }">
-      <Board :title="title" :docs="docs">
+      <Board :title :docs>
         <div class="root">
           <div v-for="v in variants" :key="v.size" class="group">
             <div class="title">{{ v.title }}</div>
@@ -75,7 +75,7 @@ function state() {
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .root {
   display: grid;
   gap: 32px;

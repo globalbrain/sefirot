@@ -148,7 +148,7 @@ import {
 } from '@globalbrain/sefirot/lib/components/SButton.vue'
 
 interface Props {
-  tag?: string
+  tag?: Component | string
   type?: Type
   mode?: Mode
   icon?: Component
@@ -339,6 +339,7 @@ import { type Size } from '@globalbrain/sefirot/lib/components/SPagination.vue'
 
 interface Props {
   size?: Size
+  disabled?: boolean
   total: number
   page: number
   perPage: number

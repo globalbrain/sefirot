@@ -115,7 +115,7 @@ const dropdown = createDropdown([
 </script>
 
 <template>
-  <SInputAddon :dropdown="dropdown" />
+  <SInputAddon :dropdown />
 </template>
 ```
 
@@ -130,7 +130,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputAddon :dropdown="dropdown" :dropdown-caret="false" />
+<SInputAddon :dropdown :dropdown-caret="false" />
 ```
 
 ### `:dropdown-position`
@@ -144,7 +144,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputAddon :dropdown="dropdown" :dropdown-position="bottom" />
+<SInputAddon :dropdown :dropdown-position="bottom" />
 ```
 
 ### `:disabled`

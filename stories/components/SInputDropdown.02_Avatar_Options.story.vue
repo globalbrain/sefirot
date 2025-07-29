@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import SInputDropdown, { type OptionAvatar, type Size } from 'sefirot/components/SInputDropdown.vue'
+import SInputDropdown, { type OptionAvatar } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 02. Avatar Options'
 
-const value = ref<string[]>([])
+const value = ref<number[]>([])
 
 const options: OptionAvatar[] = [
   { type: 'avatar', image: 'https://i.pravatar.cc/64?img=4', label: 'Kris James', value: 1 },
@@ -15,35 +15,34 @@ const options: OptionAvatar[] = [
   { type: 'avatar', image: 'https://i.pravatar.cc/64?img=10', label: 'Sefia Blue', value: 6 }
 ]
 
-function state() {
+function initState() {
   return {
-    size: 'small' as Size
+    size: 'md'
   }
 }
 </script>
 
 <template>
-  <Story :title="title" :init-state="state" source="Not available" auto-props-disabled>
+  <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />
     </template>
 
     <template #default="{ state }">
-      <Board :title="title">
+      <Board :title>
         <SInputDropdown
           :size="state.size"
-          label="Dropdown input"
-          placeholder="Select items"
-          :options="options"
-
+          label="Users"
+          placeholder="Select users"
+          :options
+          nullable
           v-model="value"
         />
       </Board>

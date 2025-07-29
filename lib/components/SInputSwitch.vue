@@ -3,7 +3,7 @@ import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
@@ -30,8 +30,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: boolean): void
-  (e: 'change', value: boolean): void
+  'update:model-value': [value: boolean]
+  'change': [value: boolean]
 }>()
 
 const _value = computed(() => {
@@ -58,15 +58,16 @@ function emitChange(): void {
   <SInputBase
     class="SInputSwitch"
     :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :help="help"
-    :hide-error="hideError"
+    :size
+    :name
+    :label
+    :note
+    :info
+    :check-icon
+    :check-text
+    :check-color
+    :help
+    :hide-error
   >
     <div class="container">
       <div class="input" :class="{ on: _value }" role="button" @click="emitChange">
@@ -115,6 +116,7 @@ function emitChange(): void {
   transition: background-color 0.25s, transform 0.25s;
 }
 
+.SInputSwitch.sm,
 .SInputSwitch.mini {
   .input {
     height: 32px;
@@ -126,20 +128,48 @@ function emitChange(): void {
   }
 
   .box {
-    border-radius: 9px;
-    width: 32px;
-    height: 18px;
+    border-radius: 10px;
+    width: 36px;
+    height: 20px;
   }
 
   .toggle {
-    top: 1px;
-    left: 1px;
+    top: 2px;
+    left: 2px;
     width: 14px;
     height: 14px;
   }
 
   .input.on .toggle {
-    transform: translateX(14px);
+    transform: translateX(16px);
+  }
+}
+
+.SInputSwitch.md {
+  .input {
+    height: 36px;
+  }
+
+  .text {
+    line-height: 20px;
+    font-size: 14px;
+  }
+
+  .box {
+    border-radius: 12px;
+    width: 44px;
+    height: 24px;
+  }
+
+  .toggle {
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .input.on .toggle {
+    transform: translateX(20px);
   }
 }
 

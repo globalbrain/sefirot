@@ -41,7 +41,7 @@ describe('validation/rules/ymd', () => {
 
   test('default error message', () => {
     const rule = ymd()
-    expect(rule.$message({ $params: {} })).toBe('The field is required.')
+    expect(rule.$message({ $params: {} })).toBe('The date is invalid.')
   })
 
   test('custom error message', () => {

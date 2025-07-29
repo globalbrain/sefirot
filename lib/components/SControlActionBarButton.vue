@@ -12,7 +12,7 @@ defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 
 const size = useControlSize()
@@ -24,12 +24,12 @@ const size = useControlSize()
       :tag="as"
       type="text"
       mode="mute"
-      :size="size"
-      :icon="icon"
-      :href="href"
+      :size
+      :icon
+      :href
       block
-      :disabled="disabled"
-      :tooltip="tooltip"
+      :disabled
+      :tooltip
       @click="$emit('click')"
     />
   </div>

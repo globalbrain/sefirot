@@ -6,23 +6,25 @@ import { useTrans } from '../composables/Lang'
 import { format } from '../support/Num'
 import SButton from './SButton.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'xs' | 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Align = 'left' | 'center' | 'right'
 
 const props = withDefaults(defineProps<{
   size?: Size
+  disabled?: boolean
   align?: Align
   total: number
   page: number
   perPage: number
 }>(), {
   size: 'medium',
+  disabled: false,
   align: 'center'
 })
 
-const emit = defineEmits<{
-  (e: 'prev'): void
-  (e: 'next'): void
+defineEmits<{
+  prev: []
+  next: []
 }>()
 
 const { t } = useTrans({
@@ -47,14 +49,6 @@ const hasPrev = computed(() => {
 const hasNext = computed(() => {
   return to.value < props.total
 })
-
-function prev() {
-  hasPrev.value && emit('prev')
-}
-
-function next() {
-  hasNext.value && emit('next')
-}
 </script>
 
 <template>
@@ -63,11 +57,11 @@ function next() {
       <SButton
         type="outline"
         mode="mute"
-        :size="size"
+        :size
         :lead-icon="IconCaretLeft"
         :label="t.prev"
-        :disabled="!hasPrev"
-        @click="prev"
+        :disabled="disabled || !hasPrev"
+        @click="$emit('prev')"
       />
     </div>
     <div class="text">
@@ -77,11 +71,11 @@ function next() {
       <SButton
         type="outline"
         mode="mute"
-        :size="size"
+        :size
         :trail-icon="IconCaretRight"
         :label="t.next"
-        :disabled="!hasNext"
-        @click="next"
+        :disabled="disabled || !hasNext"
+        @click="$emit('next')"
       />
     </div>
   </div>

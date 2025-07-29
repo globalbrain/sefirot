@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: Placeholder
+  noYear?: boolean
+  noMonth?: boolean
+  noDate?: boolean
+  block?: boolean
+  disabled?: boolean
+  value?: Value
+  modelValue?: Value
+}
 
 export interface Value {
   year: number | null
@@ -20,30 +27,11 @@ export interface Placeholder {
   date?: number
 }
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: Placeholder
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  noYear?: boolean
-  noMonth?: boolean
-  noDate?: boolean
-  block?: boolean
-  disabled?: boolean
-  value?: Value
-  modelValue?: Value
-  validation?: Validatable
-  hideError?: boolean
-}>()
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: Value): void
-  (e: 'change', value: Value): void
+  'update:model-value': [value: Value]
+  'change': [value: Value]
 }>()
 
 const _value = computed(() => {
@@ -143,15 +131,16 @@ function createRequiredTouched(): boolean[] {
   <SInputBase
     class="SInputYMD"
     :class="[size ?? 'small', { disabled }]"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :hide-error
+    :validation
   >
     <div class="container" :class="{ focus: isFocused, block }">
       <input
@@ -160,7 +149,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.year"
         :placeholder="padPlaceholder.year"
         :maxlength="4"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateYear"
       >
@@ -174,7 +163,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.month"
         :placeholder="padPlaceholder.month"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateMonth"
       >
@@ -188,7 +177,7 @@ function createRequiredTouched(): boolean[] {
         :value="padValue?.date"
         :placeholder="padPlaceholder.date"
         :maxlength="2"
-        :disabled="disabled"
+        :disabled
         @focus="onFocus"
         @blur="updateDate"
       >
@@ -198,6 +187,7 @@ function createRequiredTouched(): boolean[] {
 </template>
 
 <style scoped lang="postcss">
+.SInputYMD.sm,
 .SInputYMD.mini {
   .container {
     padding: 0 4px;
@@ -217,6 +207,31 @@ function createRequiredTouched(): boolean[] {
     padding: 3px 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+}
+
+.SInputYMD.md {
+  .container {
+    padding: 0 6px;
+    height: 36px;
+  }
+
+  .input {
+    padding: 5px 0;
+    text-align: center;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .input.year  { margin-right: 2px; }
+  .input.year  { width: 48px; }
+  .input.month { width: 32px; }
+  .input.date  { width: 32px; }
+
+  .separator {
+    padding: 5px 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
   }
 }
 

@@ -25,9 +25,9 @@ const _tooltip = computed<Tooltip | undefined>(() => {
       size="small"
       type="text"
       :icon="leadIcon"
-      :label="label"
+      :label
       :href="link"
-      :disabled="disabled"
+      :disabled
       :tooltip="_tooltip"
       @click="onClick"
     />

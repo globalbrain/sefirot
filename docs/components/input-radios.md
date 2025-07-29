@@ -19,7 +19,7 @@ const options = [
   path="/components/SInputRadios.vue"
   story="/stories-components-sinputradios-01-playground-story-vue"
 >
-  <SInputRadios :options="options" v-model="input" />
+  <SInputRadios :options v-model="input" />
 </Showcase>
 
 ## Usage
@@ -41,7 +41,7 @@ const options = [
 </script>
 
 <template>
-  <SInputRadios :options="options" v-model="input" />
+  <SInputRadios :options v-model="input" />
 </template>
 ```
 
@@ -299,9 +299,9 @@ export interface ValidatableError {
 
 ```vue-html
 <SInputRadios
-  :options="options"
-  v-model="input"
-  :validation="validation"
+  :options="[...]"
+  v-model="1"
+  :validation
 />
 ```
 
@@ -317,9 +317,9 @@ interface Props {
 
 ```vue-html
 <SInputRadios
-  :options="options"
-  v-model="input"
-  :validation="validation"
+  :options="[...]"
+  v-model="1"
+  :validation
   hide-error
 />
 ```

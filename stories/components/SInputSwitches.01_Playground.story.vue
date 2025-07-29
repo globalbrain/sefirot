@@ -14,23 +14,24 @@ const options = [
 </script>
 
 <template>
-  <Story :title="title" source="Not available" auto-props-disabled>
-    <Board :title="title">
+  <Story :title source="Not available" auto-props-disabled>
+    <Board :title>
       <SInputSwitches
         class="switches"
+        size="md"
         name="input"
         label="Label"
         info="Some helpful information."
         note="Note text"
         help="This is a help text."
-        :options="options"
+        :options
         v-model="data"
       />
     </Board>
   </Story>
 </template>
 
-<style scoped>
+<style scoped lang="postcss">
 .switches {
   width: 192px;
 }

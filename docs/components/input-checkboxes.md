@@ -19,7 +19,7 @@ const options = [
   path="/components/SInputCheckboxes.vue"
   story="/stories-components-sinputcheckboxes-01-playground-story-vue"
 >
-  <SInputCheckboxes :options="options" v-model="input" />
+  <SInputCheckboxes :options v-model="input" />
 </Showcase>
 
 ## Usage
@@ -41,7 +41,7 @@ const options = [
 </script>
 
 <template>
-  <SInputCheckboxes :options="options" v-model="input" />
+  <SInputCheckboxes :options v-model="input" />
 </template>
 ```
 
@@ -307,7 +307,7 @@ interface ValidatableError {
 <SInputCheckboxes
   :options="[...]"
   v-model="..."
-  :validation="validation"
+  :validation
 />
 ```
 
@@ -325,7 +325,7 @@ interface Props {
 <SInputCheckboxes
   :options="[...]"
   v-model="..."
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

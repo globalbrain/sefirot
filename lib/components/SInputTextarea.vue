@@ -1,45 +1,34 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSegments from './SInputSegments.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
-
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props extends BaseProps {
   placeholder?: string
   disabled?: boolean
   rows?: number | 'fill'
   autoResize?: boolean | number
   value?: string | null
   modelValue?: string | null
-  hideError?: boolean
-  validation?: Validatable
   preview?: (value: string | null) => string
   previewLabel?: string
   writeLabel?: string
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   size: 'small',
   rows: 3
 })
 
 const emit = defineEmits<{
-  (e: 'update:model-value', value: string | null): void
-  (e: 'input', value: string | null): void
-  (e: 'blur', value: string | null): void
+  'update:model-value': [value: string | null]
+  'input': [value: string | null]
+  'blur': [value: string | null]
 }>()
 
 const sizePaddingYDict = {
+  sm: 12,
+  md: 14,
   mini: 12,
   small: 14,
   medium: 22
@@ -93,16 +82,19 @@ const isPreview = ref(false)
   <SInputBase
     class="SInputTextarea"
     :class="classes"
-    :name="name"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :hide-error="hideError"
-    :validation="validation"
+    :size
+    :name
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box">
       <div v-if="preview !== undefined" class="control">
@@ -119,10 +111,10 @@ const isPreview = ref(false)
         v-show="!isPreview"
         :id="name"
         class="input"
-        :style="style"
-        :placeholder="placeholder"
+        :style
+        :placeholder
         :rows="rows === 'fill' ? 3 : rows"
-        :disabled="disabled"
+        :disabled
         :value="_value ?? undefined"
         @input="emitInput"
         @blur="emitBlur"
@@ -192,14 +184,26 @@ const isPreview = ref(false)
   }
 }
 
+.SInputTextarea.sm,
 .SInputTextarea.mini {
   .input,
   .prose {
-    padding: 6px 10px;
+    padding: 3px 8px;
     width: 100%;
     min-height: 30px;
-    line-height: 20px;
+    line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
+  }
+}
+
+.SInputTextarea.md {
+  .input,
+  .prose {
+    padding: 5px 10px;
+    width: 100%;
+    min-height: 34px;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
   }
 }
 
@@ -246,6 +250,12 @@ const isPreview = ref(false)
 .SInputTextarea.has-error {
   .box {
     border-color: var(--input-error-border-color);
+  }
+}
+
+.SInputTextarea.has-warning {
+  .box {
+    border-color: var(--input-warning-border-color);
   }
 }
 </style>

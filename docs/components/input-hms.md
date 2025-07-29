@@ -264,7 +264,7 @@ interface Value {
 ```
 
 ```vue-html
-<SInputHMS :value="value" />
+<SInputHMS :value />
 ```
 
 ### `:model-value`
@@ -311,7 +311,7 @@ interface ValidatableError {
 ```
 
 ```vue-html
-<SInputHMS v-model="..." :validation="validation" />
+<SInputHMS v-model="..." :validation />
 ```
 
 ### `:hide-error`
@@ -327,7 +327,7 @@ interface Props {
 ```vue-html
 <SInputHMS 
   v-model="1"
-  :validation="validation"
+  :validation
   hide-error
 />
 ```

@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import IconCaretDown from '~icons/ph/caret-down-bold'
-import IconCaretUp from '~icons/ph/caret-up-bold'
+import IconCaretDown from '~icons/ph/caret-down'
+import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
-import { type Validatable } from '../composables/Validation'
+import { useTrans } from '../composables/Lang'
 import SDropdown from './SDropdown.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export interface Props extends BaseProps {
+  placeholder?: string
+  options: Option[]
+  position?: 'top' | 'bottom'
+  noSearch?: boolean
+  nullable?: boolean
+  closeOnClick?: boolean
+  disabled?: boolean
+}
 
 export type PrimitiveValue = any
 export type ArrayValue = any[]
@@ -36,34 +43,23 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  placeholder?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option[]
-  position?: 'top' | 'bottom'
-  noSearch?: boolean
-  nullable?: boolean
-  closeOnClick?: boolean
-  disabled?: boolean
-  modelValue: PrimitiveValue | ArrayValue
-  validation?: Validatable
-}>()
+const props = defineProps<Props>()
 
-const emit = defineEmits<{
-  (e: 'update:modelValue', value: PrimitiveValue | ArrayValue): void
-}>()
+const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
-const container = ref<any>(null)
+const { t } = useTrans({
+  en: {
+    ph: 'Select items'
+  },
+  ja: {
+    ph: '項目を選択してください'
+  }
+})
+
+const container = ref<HTMLDivElement>()
 
 const { isOpen, open } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(container)
+const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -73,28 +69,28 @@ const classes = computed(() => [
 const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   type: 'filter',
   search: props.noSearch === undefined ? true : !props.noSearch,
-  selected: props.modelValue,
+  selected: model.value,
   options: props.options,
   onClick: handleSelect
 }])
 
 const selected = computed(() => {
-  if (Array.isArray(props.modelValue)) {
-    return props.options.filter((o) => (props.modelValue as ArrayValue).includes(o.value))
+  if (Array.isArray(model.value)) {
+    return props.options.filter((o) => (model.value as ArrayValue).includes(o.value))
   }
 
-  const item = props.options.find((o) => o.value === props.modelValue)
+  const item = props.options.find((o) => o.value === model.value)
 
-  return item ? [item] : []
+  return item ?? null
 })
 
 const hasSelected = computed(() => {
-  return selected.value.length > 0
+  return Array.isArray(selected.value) ? selected.value.length > 0 : !!selected.value
 })
 
 const removable = computed(() => {
-  if (Array.isArray(props.modelValue)) {
-    return props.nullable || selected.value.length > 1
+  if (Array.isArray(model.value)) {
+    return props.nullable || (selected.value as Option[]).length > 1
   }
 
   return !!props.nullable
@@ -110,27 +106,25 @@ async function handleOpen() {
 function handleSelect(value: OptionValue) {
   props.validation?.$touch()
 
-  Array.isArray(props.modelValue) ? handleArray(value) : handlePrimitive(value)
+  Array.isArray(model.value) ? handleArray(value) : handlePrimitive(value)
 }
 
 function handlePrimitive(value: OptionValue) {
-  if (value !== props.modelValue) {
-    return emit('update:modelValue', value)
-  }
-
-  if (props.nullable) {
-    emit('update:modelValue', null)
+  if (value !== model.value) {
+    model.value = value
+  } else if (props.nullable) {
+    model.value = null
   }
 }
 
 function handleArray(value: OptionValue) {
-  const difference = xor(props.modelValue as ArrayValue, [value])
+  const difference = xor(model.value as ArrayValue, [value])
 
   if (!props.nullable && difference.length === 0) {
     return
   }
 
-  emit('update:modelValue', difference)
+  model.value = difference
 }
 </script>
 
@@ -138,14 +132,16 @@ function handleArray(value: OptionValue) {
   <SInputBase
     class="SInputDropdown"
     :class="classes"
-    :label="label"
-    :note="note"
-    :info="info"
-    :help="help"
-    :check-icon="checkIcon"
-    :check-text="checkText"
-    :check-color="checkColor"
-    :validation="validation"
+    :size
+    :label
+    :note
+    :info
+    :help
+    :check-icon
+    :check-text
+    :check-color
+    :validation
+    :hide-error
   >
     <div class="container" ref="container">
       <div
@@ -160,14 +156,14 @@ function handleArray(value: OptionValue) {
         <div class="box-content">
           <SInputDropdownItem
             v-if="hasSelected"
-            :items="selected"
+            :item="selected!"
             :size="size ?? 'small'"
-            :removable="removable"
+            :removable
             :disabled="disabled ?? false"
             @remove="handleSelect"
           />
 
-          <div v-else class="box-placeholder">{{ placeholder }}</div>
+          <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>
         </div>
 
         <div class="box-icon">
@@ -176,8 +172,10 @@ function handleArray(value: OptionValue) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :class="position">
-        <SDropdown :sections="dropdownOptions" />
+      <div v-if="isOpen" class="dropdown" :style="inset">
+        <div class="dropdown-content">
+          <SDropdown :sections="dropdownOptions" />
+        </div>
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>
@@ -187,6 +185,7 @@ function handleArray(value: OptionValue) {
 <style scoped lang="postcss">
 .container {
   position: relative;
+  width: 100%;
 }
 
 .box {
@@ -209,6 +208,8 @@ function handleArray(value: OptionValue) {
 .box-content {
   display: flex;
   align-items: center;
+  flex-grow: 1;
+  max-width: 100%;
 }
 
 .box-placeholder {
@@ -236,27 +237,49 @@ function handleArray(value: OptionValue) {
 }
 
 .dropdown {
-  position: absolute;
-  left: 0;
+  position: fixed;
   z-index: var(--z-index-dropdown);
-
-  &.top    { bottom: calc(100% + 8px); }
-  &.bottom { top: calc(100% + 8px); }
 }
 
+.SInputDropdown.sm,
 .SInputDropdown.mini {
   .box {
     min-height: 32px;
   }
 
   .box-content {
-    padding: 3px 30px 3px 8px;
+    padding: 0 30px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
+  .box-placeholder {
+    padding-left: 10px;
+  }
+
   .box-icon {
     top: 3px;
+    right: 8px;
+  }
+}
+
+.SInputDropdown.md {
+  .box {
+    min-height: 36px;
+  }
+
+  .box-content {
+    padding: 0 30px 0 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .box-placeholder {
+    padding-left: 10px;
+  }
+
+  .box-icon {
+    top: 5px;
     right: 8px;
   }
 }
@@ -267,9 +290,13 @@ function handleArray(value: OptionValue) {
   }
 
   .box-content {
-    padding: 5px 30px 5px 12px;
+    padding: 0 30px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
+  }
+
+  .box-placeholder {
+    padding-left: 12px;
   }
 
   .box-icon {
@@ -280,13 +307,17 @@ function handleArray(value: OptionValue) {
 
 .SInputDropdown.medium {
   .box {
-    height: 48px;
+    min-height: 48px;
   }
 
   .box-content {
-    padding: 11px 44px 11px 16px;
+    padding: 0 40px 0 0;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
+  }
+
+  .box-placeholder {
+    padding-left: 16px;
   }
 
   .box-icon {

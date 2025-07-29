@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconArrowsInLineVertical from '~icons/ph/arrows-in-line-vertical-bold'
-import IconArrowsOutLineVertical from '~icons/ph/arrows-out-line-vertical-bold'
+import IconArrowsInLineVertical from '~icons/ph/arrows-in-line-vertical'
+import IconArrowsOutLineVertical from '~icons/ph/arrows-out-line-vertical'
 import { computed, shallowRef } from 'vue'
 import { useCardState } from '../composables/Card'
 import SControlActionBarButton from './SControlActionBarButton.vue'
@@ -11,7 +11,7 @@ const props = defineProps<{
 }>()
 
 defineEmits<{
-  (e: 'click'): void
+  click: []
 }>()
 
 const { isCollapsed, setCollapse, toggleCollapse } = useCardState()
@@ -30,8 +30,8 @@ const icon = computed(() => {
 <template>
   <div class="SControlActionBarCollapse" ref="el">
     <SControlActionBarButton
-      :as="as"
-      :icon="icon"
+      :as
+      :icon
       @click="toggleCollapse"
     />
   </div>
