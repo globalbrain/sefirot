@@ -276,7 +276,7 @@ interface Props {
 
 ### `:disabled`
 
-Disbale the input. When disabled, the user cannot select nor remove the image. The default is `false`.
+Disable the input. When disabled, the user cannot select nor remove the image. The default is `false`.
 
 ```ts
 interface Props {
