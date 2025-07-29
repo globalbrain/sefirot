@@ -106,7 +106,7 @@ interface Props {
 
 ### `:note`
 
-Adds small help text after the label. Best used along with `:label`.
+Adds small help text after the label. Best used along with the `:label` prop.
 
 ```ts
 interface Props {
