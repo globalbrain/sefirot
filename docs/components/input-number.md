@@ -393,7 +393,7 @@ Emits when the user inputs any value. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: number | null): void
+  'update:model-value': [value: number | null]
 }
 ```
 
@@ -403,7 +403,7 @@ Emits when the user inputs any value. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: number | null): void
+  change: [value: number | null]
 }
 ```
 

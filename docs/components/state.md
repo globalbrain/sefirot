@@ -47,11 +47,10 @@ Import `<SState>` component and set `:mode` and `:label`.
 
 ### `:as`
 
-Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`.
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default is `'span'`.
 
 ```ts
 interface Props {
-  // @default 'span'
   as?: string
 }
 ```
@@ -62,11 +61,10 @@ interface Props {
 
 ### `:size`
 
-Defines the size of the component.
+Defines the size of the component. The default is `'small'`.
 
 ```ts
 interface Props {
-  // @default 'small'
   size?: 'mini' | 'small' | 'medium' | 'large'
 }
 ```
@@ -77,11 +75,10 @@ interface Props {
 
 ### `:mode`
 
-Defines the color of the state.
+Defines the color of the state. The default is `'default'`.
 
 ```ts
 interface Props {
-  // @default 'default'
   mode?: Mode
 }
 

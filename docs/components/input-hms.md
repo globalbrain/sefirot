@@ -358,7 +358,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: Value): void
+  'update:model-value': [value: Value]
 }
 
 interface Value {
@@ -374,7 +374,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: Value): void
+  change: [value: Value]
 }
 
 interface Value {

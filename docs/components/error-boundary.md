@@ -42,7 +42,7 @@ function check404(err: any) {
 
 ```ts
 interface Emits {
-  (e: 'error', value: any): void
+  error: [value: any]
 }
 ```
 
@@ -52,7 +52,7 @@ Emitted when an error is thrown from its children components.
 
 ```ts
 interface Emits {
-  (e: 'error', value: any): void
+  error: [value: any]
 }
 ```
 

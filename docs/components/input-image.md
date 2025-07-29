@@ -390,7 +390,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: File | null): void
+  'update:model-value': [value: File | null]
 }
 ```
 
@@ -400,7 +400,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: File | null): void
+  change: [value: File | null]
 }
 ```
 

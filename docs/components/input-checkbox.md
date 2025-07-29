@@ -289,7 +289,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: boolean): void
+  'update:model-value': [value: boolean]
 }
 ```
 
@@ -299,7 +299,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: boolean): void
+  change: [value: boolean]
 }
 ```
 

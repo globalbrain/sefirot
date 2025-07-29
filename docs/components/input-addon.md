@@ -171,6 +171,6 @@ Emits when the user clicks the addon button. It will not be emitted when `:click
 
 ```ts
 interface Emits {
-  (e: 'click'): void
+  click: []
 }
 ```

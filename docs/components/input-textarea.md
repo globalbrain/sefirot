@@ -18,7 +18,7 @@ const input = ref<string | null>(null)
 
 ## Usage
 
-Import `<SInputTextarea>` component and pass in the `value` prop.
+Import `<SInputTextarea>` component and pass in the `:value` prop.
 
 ```vue
 <script setup lang="ts">
@@ -39,7 +39,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the input. The default is `small`.
+Defines the size of the input. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -99,7 +99,7 @@ interface Props {
 
 ### `:note`
 
-Adds small help text after the label. Best used along with `label` prop.
+Adds small help text after the label. Best used with the `:label` prop.
 
 ```ts
 interface Props {
@@ -141,7 +141,7 @@ interface Props {
 
 ### `:check-text`
 
-Text to display alongside `check-icon`.
+Text to display alongside `:check-icon`.
 
 ```ts
 interface Props {
@@ -155,7 +155,7 @@ interface Props {
 
 ### `:check-color`
 
-Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
 
 ```ts
 interface Props {
@@ -230,7 +230,7 @@ interface Props {
 
 ### `:value`
 
-Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
+Sets the input value. When `:model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
 ```ts
 interface Props {
@@ -307,7 +307,7 @@ Here are the list of slots you may define within the component.
 
 ### `#info` {#info-slot}
 
-Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+Same as `:info` prop. When `:info` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
 <SInputTextarea label="Message" v-model="...">
@@ -323,31 +323,31 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user inputs value, and when the focus is out. This event is always emitted together with `input` and `blur` event.
+Emits when the user inputs value, and when the focus is out. This event is always emitted together with `@input` and `@blur` event.
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: string | null): void
+  'update:model-value': [value: string | null]
 }
 ```
 
 ### `@input`
 
-Emits when the user inputs any value. This event is always emitted together with `update:model-value` event.
+Emits when the user inputs any value. This event is always emitted together with `@update:model-value` event.
 
 ```ts
 interface Emits {
-  (e: 'input', value: string | null): void
+  input: [value: string | null]
 }
 ```
 
 ### `@blur`
 
-Emits when the input lose its focus. This event is always emitted together with `update:model-value` event.
+Emits when the input lose its focus. This event is always emitted together with `@update:model-value` event.
 
 ```ts
 interface Emits {
-  (e: 'blur', value: string | null): void
+  blur: [value: string | null]
 }
 ```
 

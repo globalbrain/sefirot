@@ -344,7 +344,7 @@ Emits when the button is clicked. This event will not be emitted when `:loading`
 
 ```ts
 interface Emits {
-  (e: 'click'): void
+  click: []
 }
 ```
 
@@ -356,7 +356,7 @@ This event gives you a chance to, for example, show a message to the user about 
 
 ```ts
 interface Emits {
-  (e: 'disabled-click'): void
+  'disabled-click': []
 }
 ```
 

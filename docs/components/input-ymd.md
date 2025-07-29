@@ -47,7 +47,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the input. The default is `small`.
+Defines the size of the input. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -152,7 +152,7 @@ interface Props {
 
 ### `:check-text`
 
-Text to display alongside `check-icon`.
+Text to display alongside `:check-icon`.
 
 ```ts
 interface Props {
@@ -166,7 +166,7 @@ interface Props {
 
 ### `:check-color`
 
-Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
 
 ```ts
 interface Props {
@@ -263,7 +263,7 @@ interface Props {
 
 ### `:value`
 
-Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
+Sets the input value. When `:model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
 
 ```ts
 interface Props {
@@ -352,7 +352,7 @@ Here are the list of slots you may define within the component.
 
 ### `#info` {#info-slot}
 
-Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+Same as `:info` prop. When `:info` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
 <SInputYMD label="Date" v-model="...">
@@ -368,11 +368,11 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user selects the item. This event is always emitted together with `change` event.
+Emits when the user selects the item. This event is always emitted together with `@change` event.
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: Value): void
+  'update:model-value': [value: Value]
 }
 
 interface Value {
@@ -384,11 +384,11 @@ interface Value {
 
 ### `@change`
 
-Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
+Emits when the user selects the item. This event is always emitted together with `@update:model-value` event.
 
 ```ts
 interface Emits {
-  (e: 'change', value: Value): void
+  change: [value: Value]
 }
 
 interface Value {

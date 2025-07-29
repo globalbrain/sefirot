@@ -62,7 +62,7 @@ interface Props {
 ```vue-html
 <SInputRadios
   size="small"
-  :options="options"
+  :options="[...]"
   v-model="input"
 />
 ```
@@ -80,7 +80,7 @@ interface Props {
 ```vue-html
 <SInputRadios
   label="Name"
-  :options="options"
+  :options="[...]"
   v-model="input"
 />
 ```
@@ -99,7 +99,7 @@ interface Props {
 <SInputRadios
   label="Domain"
   info="Some helpful information."
-  :options="options"
+  :options="[...]"
   v-model="input"
 />
 ```
@@ -118,7 +118,7 @@ interface Props {
 <SInputRadios
   label="Company URL"
   note="Optional"
-  :options="options"
+  :options="[...]"
   v-model="input"
 />
 ```
@@ -216,7 +216,7 @@ interface Props {
 
 ```vue-html
 <SInputRadios
-  :options="options"
+  :options="[...]"
   nullable
   v-model="input"
 />
@@ -234,7 +234,7 @@ interface Props {
 
 ```vue-html
 <SInputRadios
-  :options="options"
+  :options="[...]"
   disabled
   v-model="input"
 />
@@ -252,7 +252,7 @@ interface Props {
 
 ```vue-html
 <SInputRadios
-  :options="options"
+  :options="[...]"
   :value="1"
 />
 ```
@@ -269,7 +269,7 @@ interface Props {
 
 ```vue-html
 <SInputRadios
-  :options="options"
+  :options="[...]"
   v-model="1"
 />
 ```
@@ -333,7 +333,7 @@ Here are the list of slots you may define within the component.
 Same as `:info` prop. When both `:info` and this slot are defined, this slot will take precedence.
 
 ```vue-html
-<SInputRadios label="Domain" :options="options" v-model="input">
+<SInputRadios label="Domain" :options="[...]" v-model="input">
   <template #info>
     Learn more about this field <SLink href="...">here</SLink>.
   </template>
@@ -350,7 +350,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: Value): void
+  'update:model-value': [value: Value]
 }
 
 type Value = string | number | boolean | null
@@ -362,7 +362,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: Value): void
+  change: [value: Value]
 }
 
 type Value = string | number | boolean | null

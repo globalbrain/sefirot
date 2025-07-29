@@ -356,7 +356,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: Value): void
+  'update:model-value': [value: Value]
 }
 
 type Value = (string | number | boolean)[]
@@ -368,7 +368,7 @@ Emits when the user selects the item. This event is always emitted together with
 
 ```ts
 interface Emits {
-  (e: 'change', value: Value): void
+  change: [value: Value]
 }
 
 type Value = (string | number | boolean)[]
