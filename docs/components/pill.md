@@ -47,11 +47,10 @@ Import `<SPill>` component and it's good to go. All props are optional.
 
 ### `:as`
 
-Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default tag for the button is `span`. The `tag` prop will take precedence even when the `clickable` prop is set.
+Defines the HTML tag for the pill. Any value passed to this prop will used as `<component :is="as">`. The default tag for the button is `span`. The `:tag` prop will take precedence even when the `:clickable` prop is set.
 
 ```ts
 interface Props {
-  // @default 'span' | 'button'
   as?: string
 }
 ```
@@ -62,7 +61,7 @@ interface Props {
 
 ### `:size`
 
-Defines the size of the pill. The default is `small`.
+Defines the size of the pill. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -76,11 +75,10 @@ interface Props {
 
 ### `:type`
 
-Defines how the pill look.
+Defines how the pill look. The default is `'dimm'`.
 
 ```ts
 interface Props {
-  // @default 'dimm'
   type?: 'dimm' | 'fill'
 }
 ```
@@ -91,11 +89,10 @@ interface Props {
 
 ### `:mode`
 
-Defines the color of the pill.
+Defines the color of the pill. The default is `'default'`.
 
 ```ts
 interface Props {
-  // @default 'default'
   mode?: Mode
 }
 
@@ -129,7 +126,7 @@ interface Props {
 
 ### `:clickable`
 
-Mark pill clickable. When this prop is set, an user will be able to click the pill and the component will emit `click` event. Also, when this prop is set, the `button` HTML tag will be used instead of `span` unless `tag` prop is defined.
+Mark pill clickable. When this prop is set, an user will be able to click the pill and the component will emit `@click` event. Also, when this prop is set, the `button` HTML tag will be used instead of `span` unless `:tag` prop is defined.
 
 ```ts
 interface Props {
@@ -149,11 +146,11 @@ interface Props {
 
 ### `@click`
 
-Emits when an user clicks the button. This event will only be emitted when the `clickable` prop is set to `true`.
+Emits when an user clicks the button. This event will only be emitted when the `:clickable` prop is set to `true`.
 
 ```ts
 interface Emits {
-  (e: 'click'): void
+  click: []
 }
 ```
 

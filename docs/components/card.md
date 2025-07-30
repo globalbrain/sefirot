@@ -16,7 +16,7 @@ import SControlText from 'sefirot/components/SControlText.vue'
 
 # SCard
 
-`<SCard>` is a basic card component that can display variety of contents.
+`<SCard>` is a basic card component that can display a variety of content.
 
 <Showcase
   path="/components/SCard.vue"
@@ -60,7 +60,7 @@ import SControlText from 'sefirot/components/SControlText.vue'
 
 ## Usage
 
-`<SCard>` comes with various `SCard` and `SControl` components that you can use to build your card. For example, basic card with header, body, and footer can be built like this:
+`<SCard>` comes with various `SCard` and `SControl` components that you can use to build your card. For example, basic card with header, body, and footer can be built as follows:
 
 ```vue
 <script setup lang="ts">
@@ -110,7 +110,7 @@ Learn more about each child component's usage in the following sections.
 
 ## Root
 
-The `<SCard>` is the root component of the card. All child components must be placed under this component.
+`<SCard>` is the root component of the card. All child components must be placed within this component.
 
 ```vue-html
 <SCard>
@@ -124,7 +124,7 @@ The `<SCard>` is the root component of the card. All child components must be pl
 
 #### `:mode`
 
-You may define `:mode` to change the appearance of the card. Usually, this is most used when creating "dangerous" cards, such as a card that displays a warning message before deleting something.
+You may define `:mode` to change the appearance of the card. This is primarily used for creating "danger-zone" cards, such as those displaying a warning message before deleting something.
 
 ```ts
 interface Props {
@@ -143,7 +143,7 @@ interface Props {
 
 #### `:size`
 
-You may define `:size` to change the size of the card. This prop is **required** if you are rendering the card inside a `<SModal>` component. It has no effect when the card is rendered as a standalone component.
+Applies the size of the card. This prop is **required** if you are rendering the card inside the `<SModal>` component. It has no effect when the card is rendered as a standalone component.
 
 ```ts
 interface Props {
@@ -173,7 +173,7 @@ Use `<SCardBlock>` to display generic block element. This component can be used 
 
 #### `:size`
 
-You need to define `:size` to specify the size of the block. This prop is **required**. You might need to add some padding to the block to make it look good.
+Specifies the size of the block. This prop is **required**. You may also need to add some padding to the block to make it look good.
 
 ```ts
 interface Props {
@@ -191,7 +191,7 @@ interface Props {
 
 #### `:bg`
 
-You may define `:bg` to change the background color of the block. This prop is useful when you want to emphasize the block.
+Changes the background color of the block. This prop is useful when you want to emphasize the block.
 
 ```ts
 interface Props {
@@ -285,7 +285,7 @@ There are also a few predefined header actions that you can use.
 - `<SCardHeaderActionClose>`
 - `<SCardHeaderActionCollapse>`
 
-You may also use `<SCardHeaderActionClose>` to display close button. It emits `@click` event when user clicks on the button. This component is shorcut for setting "X" icon to `<SCardHeaderAction>`.
+You may also use `<SCardHeaderActionClose>` to display close button. It emits `@click` event when user clicks on the button. This component is shortcut for setting "X" icon to `<SCardHeaderAction>`.
 
 ```vue-html
 <SCard>

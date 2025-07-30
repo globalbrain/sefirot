@@ -4,7 +4,7 @@ import SContent from 'sefirot/components/SContent.vue'
 
 # SContent
 
-`<SContent>` applies basic styles to the native HTML elements.
+`<SContent>` applies basic styles to a [supported list](#supported-elements) of native HTML elements.
 
 <Showcase
   path="/components/SContent.vue"
@@ -46,7 +46,9 @@ Place HTML elements inside `<SContent>` component and it will apply basic styles
 </template>
 ```
 
-The supported elements are:
+### Supported elements
+
+The following elements are supported:
 
 - `<h1>`
 - `<h2>`
@@ -58,9 +60,9 @@ The supported elements are:
 - `<ol>`
 - `<table>`
 
-### Use CSS class to style the headings
+### Heading styles
 
-You may use css class either `h1` or `h2` to apply the styles to the element.
+You may use either the `h1` or `h2` class to apply the respective heading styles to the element. For example, you may want to use `h1` class to style the element as a heading.
 
 ```vue-html
 <SContent>

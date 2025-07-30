@@ -45,7 +45,7 @@ const title = [
 
 ### Page actions
 
-You may define `:actions` to display page actions (buttons). The `:actions` prop accepts array of [`Action`](#action) object. The action object is the same as props for [`<SButton>`](button) except `:size` since the size is fixed to `small`, and an extra `onClick` function to handle the click event.
+You may define `:actions` to display page actions (buttons). The `:actions` prop accepts array of [`Action`](#action) object. The action object is the same as props for [`<SButton>`](button) except `:size` since the size is fixed to `'small'`, and an extra `onClick` function to handle the click event.
 
 ```vue
 <script setup lang="ts">

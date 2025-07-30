@@ -23,7 +23,7 @@ import SAlert from '@globalbrain/sefirot/lib/components/SAlert.vue'
 
 ## Usage
 
-`<SAlert>` takes `:mode` to define the type of the alert, and slot to display the content. The content should be wrapped in a element such as `<p>`.
+`<SAlert>` takes `:mode` to define the type of the alert, and slot to display the content. The content should be wrapped in an element such as `<p>`.
 
 ```vue-html
 <SAlert mode="info">
@@ -39,7 +39,7 @@ import SAlert from '@globalbrain/sefirot/lib/components/SAlert.vue'
 
 ### Modes
 
-`<SAlert>` has 4 modes: `info`, `success`, `warning` and `danger`. Each mode has different color and icon.
+`<SAlert>` has the following modes where each mode uses a different color and icon:
 
 - `info` - Use this mode to display informative messages or tips.
 - `success` - Use this mode to display that something has succeeded.

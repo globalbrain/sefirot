@@ -17,7 +17,7 @@ import STooltip from 'sefirot/components/STooltip.vue'
 
 ## Usage
 
-Import `<STooltip>` component and pass in tooltip `text` as a prop.
+Import `<STooltip>` component and pass in a `:text` prop.
 
 ```vue
 <script setup lang="ts">
@@ -200,7 +200,7 @@ The content that a user would hover over to display tooltip.
 
 ### `#text` {#text-slot}
 
-The content of tooltip. Same as `text` prop. When `text` prop and this slot are defined at the same time, this slot will take precedence.
+The content of tooltip. Same as `:text` prop. When `:text` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
 <STooltip>
