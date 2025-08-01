@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import IconX from '~icons/ph/x'
 import SAvatar from './SAvatar.vue'
+import { type Size } from './SInputBase.vue'
+
+export type { Size }
 
 export type Item = ItemText | ItemAvatar
 
@@ -19,8 +22,6 @@ export interface ItemAvatar extends ItemBase {
   label: string
   image?: string | null
 }
-
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 
 defineProps<{
   item: Item | Item[]

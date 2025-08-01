@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color as CheckColor, type Size } from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { CheckColor, Size }
 
 export interface Option {
   label: string

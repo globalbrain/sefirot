@@ -1,12 +1,10 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color as CheckColor, type Size } from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type Color = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { CheckColor, Size }
 
 export interface Option<T extends string | number | boolean> {
   label: string

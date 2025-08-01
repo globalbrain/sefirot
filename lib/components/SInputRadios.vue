@@ -8,11 +8,10 @@
 >
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color, type Size } from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { Size, Color }
 
 export interface Option<
   ValueType extends string | number | boolean = string | number | boolean

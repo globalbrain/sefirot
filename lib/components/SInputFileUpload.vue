@@ -9,12 +9,12 @@ import SButton, { type Mode as ButtonMode } from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
 import { type State as IndicatorState } from './SIndicator.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color } from './SInputBase.vue'
 import SInputFileUploadItem from './SInputFileUploadItem.vue'
 import STrans from './STrans.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { Color }
 
 export type ModelType = 'file' | 'object'
 export type ModelValue<T extends ModelType> = T extends 'file' ? File : FileObject

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color, type Size } from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { Color, Size }
 
 export type Value = any
 

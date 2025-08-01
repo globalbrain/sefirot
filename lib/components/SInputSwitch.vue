@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color as CheckColor, type Size } from './SInputBase.vue'
 
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
+export type { Size, CheckColor }
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = withDefaults(defineProps<{
   size?: Size
