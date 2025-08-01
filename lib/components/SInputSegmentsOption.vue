@@ -1,5 +1,7 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
+import { type Size } from './SInputBase.vue'
+
+export type { Size }
 export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{

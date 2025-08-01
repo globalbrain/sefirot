@@ -4,10 +4,10 @@ import { type Component, computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
 import { type Validatable } from '../composables/Validation'
 import SButton from './SButton.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Color } from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type CheckColor = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
+export type { Color }
 export type ImageType = 'rectangle' | 'circle'
 
 const props = withDefaults(defineProps<{
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
   help?: string
   checkIcon?: Component
   checkText?: string
-  checkColor?: CheckColor
+  checkColor?: Color
   imageType?: ImageType
   imageWidth?: string
   imageAspectRatio?: string
