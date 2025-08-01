@@ -16,6 +16,7 @@ const props = defineProps<{
   placeholder?: string
   accept?: string
   multiple?: boolean
+  tabindex?: -1 | 0 | number
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
@@ -82,12 +83,13 @@ function onChange(e: Event) {
       type="file"
       :accept
       :multiple
+      :tabindex
       @change="onChange"
     >
 
     <div class="box" role="button" @click="open">
       <div class="action">
-        <button class="button">
+        <button class="button" :tabindex>
           {{ text ?? 'Choose File' }}
         </button>
       </div>

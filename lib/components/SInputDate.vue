@@ -20,6 +20,7 @@ const props = defineProps<{
   checkColor?: Color
   block?: boolean
   disabled?: boolean
+  tabindex?: -1 | 0 | number
   modelValue: Day | null
   validation?: Validatable
   hideError?: boolean
@@ -86,6 +87,7 @@ function emitBlur() {
           autocomplete="off"
           :value="inputValue"
           :disabled
+          :tabindex
           v-on="disabled ? {} : inputEvents"
           @blur="emitBlur"
         >

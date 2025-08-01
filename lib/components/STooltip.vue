@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
   display?: 'inline' | 'inline-block' | 'block'
   trigger?: 'hover' | 'focus' | 'both'
   timeout?: number
-  tabindex?: number
+  tabindex?: -1 | 0 | number
 }>(), {
   tag: 'span',
   triggerTag: 'span',

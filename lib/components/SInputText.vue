@@ -11,6 +11,7 @@ export interface Props extends BaseProps {
   textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
+  tabindex?: -1 | 0 | number
   modelValue: string | null
   displayValue?: string | null
 }
@@ -134,6 +135,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
             :type="type ?? 'text'"
             :placeholder
             :disabled
+            :tabindex
             :value="modelValue"
             ref="input"
             @focus="onFocus"

@@ -60,6 +60,11 @@ function initState() {
         title="error"
         v-model="state.error"
       />
+      <HstSelect
+        title="tabindex"
+        :options="[0, -1]"
+        v-model="state.tabindex"
+      />
     </template>
 
     <template #default="{ state }">
@@ -74,6 +79,7 @@ function initState() {
           :text="state.text"
           multiple
           :placeholder="state.placeholder"
+          :tabindex="state.tabindex"
           v-model="input"
         />
       </Board>

@@ -146,6 +146,11 @@ function initState() {
         title="disabled"
         v-model="state.disabled"
       />
+      <HstSelect
+        title="tabindex"
+        :options="[0, -1]"
+        v-model="state.tabindex"
+      />
       <HstCheckbox
         title="error"
         v-model="state.error"
@@ -164,12 +169,16 @@ function initState() {
           :placeholder="state.placeholder"
           :unit-before="state.unitBefore"
           :unit-after="state.unitAfter"
+          :align="state.align"
+          :disabled="state.disabled"
+          :tabindex="state.tabindex"
           :check-icon="check?.icon"
           :check-text="check?.text"
           :check-color="check?.color"
           :text-color="state.textColor"
           v-model="data.name"
           :validation="validation.name"
+
         />
 
         <div class="actions">

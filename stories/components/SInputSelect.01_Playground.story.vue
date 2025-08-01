@@ -72,6 +72,11 @@ function initState() {
         title="error"
         v-model="state.error"
       />
+      <HstSelect
+        title="tabindex"
+        :options="[0, -1]"
+        v-model="state.tabindex"
+      />
     </template>
 
     <template #default="{ state }">
@@ -87,6 +92,7 @@ function initState() {
           :options
           :nullable="state.nullable"
           :disabled="state.disabled"
+          :tabindex="state.tabindex"
           v-model="input"
           @update:model-value="(value) => log('update:model-value', { value })"
           @change="(value) => log('change', { value })"
