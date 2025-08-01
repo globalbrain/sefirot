@@ -1,12 +1,12 @@
 import { useUrlQuerySync } from 'sefirot/composables/Url'
-import { setup } from 'tests/Utils'
+import { setupWithWrapper } from 'tests/Utils'
 import { reactive, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 describe('composables/Url', () => {
   describe('useUrlQuerySync', () => {
     test('should sync data changes to URL query', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({ page: 1 })
         useUrlQuerySync(data)
 
@@ -22,10 +22,12 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.page
       }).toBe('2')
+
+      wrapper.unmount()
     })
 
     test('should sync URL query to state on initialization', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
         // Set initial URL query before creating the composable
@@ -40,14 +42,13 @@ describe('composables/Url', () => {
 
       // State should be updated from URL query
       await expect.poll(() => vm.data.page).toBe('5')
+
+      wrapper.unmount()
     })
 
     test('should support casting with casts option', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
-
-        // Clear any existing query first
-        router.replace({ query: {} })
 
         // Set initial URL query
         router.replace({ query: { page: '10', isActive: 'true' } })
@@ -73,14 +74,12 @@ describe('composables/Url', () => {
       await expect.poll(() => vm.data.isActive).toBe(true)
       expect(typeof vm.data.page).toBe('number')
       expect(typeof vm.data.isActive).toBe('boolean')
+
+      wrapper.unmount()
     })
 
     test('should exclude specified keys from URL sync', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           perPage: 50,
@@ -107,14 +106,12 @@ describe('composables/Url', () => {
 
       expect(vm.route.query.perPage).toBeUndefined()
       expect(vm.route.query.secretToken).toBeUndefined()
+
+      wrapper.unmount()
     })
 
     test('should handle arrays correctly', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           tags: ['vue', 'typescript'],
           categories: [] as string[]
@@ -137,14 +134,14 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.categories
       }).toEqual(['frontend', 'backend'])
+
+      wrapper.unmount()
     })
 
     test('should sync arrays from URL to state', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
-        // Clear and set initial URL query with arrays
-        router.replace({ query: {} })
         router.replace({
           query: {
             tags: ['react', 'vue'],
@@ -165,14 +162,12 @@ describe('composables/Url', () => {
       // State arrays should be updated from URL
       await expect.poll(() => vm.data.tags).toEqual(['react', 'vue'])
       await expect.poll(() => vm.data.ids).toEqual(['1', '2', '3'])
+
+      wrapper.unmount()
     })
 
     test('should not show default values in URL', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           size: 10,
@@ -195,14 +190,12 @@ describe('composables/Url', () => {
       // Other default values should still not be in URL
       expect(vm.route.query.size).toBeUndefined()
       expect(vm.route.query.search).toBeUndefined()
+
+      wrapper.unmount()
     })
 
     test('should clear URL when values return to default', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           search: ''
@@ -229,7 +222,6 @@ describe('composables/Url', () => {
 
       // Reset one value to default and check if it gets removed
       vm.data.page = 1 // back to default
-      // FIXME: seems interfered by other tests, need to work on this later
       await expect.poll(() => vm.route.query.page).toBeUndefined()
 
       // Change back to non-default to verify sync still works
@@ -241,14 +233,12 @@ describe('composables/Url', () => {
 
       // This confirms bidirectional sync is working correctly
       expect(vm.data.page).toBe(5)
+
+      wrapper.unmount()
     })
 
     test('should work with ref instead of reactive', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
+      const { wrapper, vm } = setupWithWrapper(() => {
         const data = ref({
           page: 1,
           name: 'test'
@@ -271,42 +261,13 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.name
       }).toBe('updated')
-    })
 
-    test('should handle boolean values correctly', async () => {
-      const vm = setup(() => {
-        const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
-
-        const data = reactive({
-          isActive: false,
-          showDetails: true,
-          enableFeature: false
-        })
-
-        useUrlQuerySync(data)
-
-        const route = useRoute()
-        return { data, route }
-      })
-
-      // Change boolean values
-      vm.data.isActive = true
-      vm.data.showDetails = false
-      vm.data.enableFeature = true
-
-      // Booleans are converted to strings in URL query
-      await expect.poll(() => vm.route.query.isActive).toBe('true')
-      await expect.poll(() => vm.route.query.showDetails).toBeUndefined() // false returns to default
-      await expect.poll(() => vm.route.query.enableFeature).toBe('true')
+      wrapper.unmount()
     })
 
     test('should handle complex scenario with all features', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
 
         // Set initial URL with various data types
         router.replace({
@@ -359,24 +320,19 @@ describe('composables/Url', () => {
       await expect.poll(() => vm.route.query.tags).toEqual(['new-tag'])
 
       // showDeleted is set back to default (false), so it should not be in URL
-      // However, the implementation might still have it since the original value was true from URL
-      // Let's check the actual behavior
-      await new Promise((resolve) => setTimeout(resolve, 100))
-
-      // For this complex test, let's focus on verifying the main functionality works
-      // The showDeleted behavior might be complex due to default value handling
+      await expect.poll(() => vm.route.query.showDeleted).toBeUndefined()
 
       // Excluded values should not be in URL
       expect(vm.route.query.perPage).toBeUndefined()
       expect(vm.route.query.internalToken).toBeUndefined()
+
+      wrapper.unmount()
     })
 
     // #578
     test('should preserve state when path changes', async () => {
-      const vm = setup(() => {
+      const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
-        // Clear any existing query first
-        router.replace({ query: {} })
 
         const data = reactive({
           page: 1,
@@ -405,32 +361,33 @@ describe('composables/Url', () => {
       await expect.poll(() => vm.route.query.page).toBe('5')
       await expect.poll(() => vm.route.query.search).toBe('modified')
 
-      // Now simulate a path change by manipulating the route
-      // We'll use a different approach since we can't navigate to non-existent routes
-      // Instead, we'll test the condition by checking if the logic works when path changes
+      // Add a new route dynamically to test path changes
+      vm.router.addRoute({
+        path: '/about',
+        component: { render: () => null }
+      })
 
-      // Get current route path
-      const currentPath = vm.route.path
-
-      // Manually trigger a route change with different path and query
-      // This simulates what happens when user navigates to a different page
+      // Navigate to the new route with different query parameters
       await vm.router.push({
-        path: currentPath === '/' ? '/test' : '/',
+        path: '/about',
         query: { page: '99', search: 'different', otherParam: 'value' }
       })
 
       // Wait a bit to ensure any potential sync has time to occur
       await new Promise((resolve) => setTimeout(resolve, 100))
 
-      // The state should be preserved (not updated from the new query)
-      // because the path changed, which is the edge case we're testing
+      // The internal state should be preserved (not updated from the new query)
+      // because the path changed, but the internal state is only associated with the previous path
       expect(vm.data.page).toBe(5) // Should still be our modified value
       expect(vm.data.search).toBe('modified') // Should still be our modified value
 
-      // Verify the route query has actually changed
+      // Verify the route has actually changed to the new path and query
+      expect(vm.route.path).toBe('/about')
       expect(vm.route.query.page).toBe('99')
       expect(vm.route.query.search).toBe('different')
       expect(vm.route.query.otherParam).toBe('value')
+
+      wrapper.unmount()
     })
   })
 })
