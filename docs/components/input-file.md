@@ -13,12 +13,12 @@ const input = ref(null)
   path="/components/SInputFile.vue"
   story="/stories-components-sinputfile-01-playground-story-vue"
 >
-  <SInputFile placeholder="No file choosen" v-model="input" />
+  <SInputFile placeholder="No file chosen" v-model="input" />
 </Showcase>
 
 ## Usage
 
-Import `<SInputFile>` and pass in the `value` prop.
+Import `<SInputFile>` and pass in the `:value` prop.
 
 ```vue
 <script setup lang="ts">
@@ -29,7 +29,7 @@ const input = ref<File | File[] | null>(null)
 </script>
 
 <template>
-  <SInputFile placeholder="No file choosen" v-model="input" />
+  <SInputFile placeholder="No file chosen" v-model="input" />
 </template>
 ```
 
@@ -39,7 +39,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the input. The default is `small`.
+Defines the size of the input. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -85,7 +85,7 @@ interface Props {
 
 ### `:note`
 
-Adds small help text after the label. Best used along with `label` prop.
+Adds small help text after the label. Best used along with `:label`.
 
 ```ts
 interface Props {
@@ -144,7 +144,7 @@ interface Props {
 ```
 
 ```vue-html
-<SInputFile placeholder="No file choosen" v-model="..." />
+<SInputFile placeholder="No file chosen" v-model="..." />
 ```
 
 ### `:accept`
@@ -191,7 +191,7 @@ interface Props {
 
 ### `:check-text`
 
-Text to display alongside `check-icon`.
+Text to display alongside `:check-icon`.
 
 ```ts
 interface Props {
@@ -205,7 +205,7 @@ interface Props {
 
 ### `:check-color`
 
-Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
 
 ```ts
 interface Props {
@@ -231,7 +231,7 @@ type Color =
 
 ### `:value`
 
-Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
+Sets the input value. When `:model-value` is set (e.g. via `v-model` directive), this prop is ignored.
 
 ```ts
 interface Props {
@@ -268,14 +268,14 @@ interface Props {
   validation?: Validatable
 }
 
-export interface Validatable {
+interface Validatable {
   readonly $dirty: boolean
   readonly $invalid: boolean
   readonly $errors: ValidatableError[]
   readonly $touch: () => void
 }
 
-export interface ValidatableError {
+interface ValidatableError {
   readonly $message: string | Ref<string>
 }
 ```
@@ -311,7 +311,7 @@ Here are the list of slots you may define within the component.
 
 ### `#info` {#info-slot}
 
-Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+Same as `:info` prop. When both `:info` and this slot are defined, this slot will take precedence.
 
 ```vue-html
 <SInputFile label="Upload image" v-model="...">
@@ -327,21 +327,21 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user selects the item. This event is always emitted together with `change` event.
+Emits when the user selects the item. This event is always emitted together with the `@change` event.
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: File | File[] | null): void
+  'update:model-value': [value: File | File[] | null]
 }
 ```
 
 ### `@change`
 
-Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
+Emits when the user selects the item. This event is always emitted together with the `@update:model-value` event.
 
 ```ts
 interface Emits {
-  (e: 'change', value: File | File[] | null): void
+  change: [value: File | File[] | null]
 }
 ```
 

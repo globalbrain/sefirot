@@ -1,70 +1,28 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
-import { FetchError, type FetchOptions, type FetchRequest, type FetchResponse, ofetch } from 'ofetch'
-import { type IStringifyOptions, stringify } from 'qs'
-import { type Lang } from '../composables/Lang'
+import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
+import { stringify } from 'qs'
 import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
-type Awaitable<T> = T | PromiseLike<T>
-
-export interface HttpClient {
-  (request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<any>
-  raw(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<any>>
-}
-
-export interface HttpOptions {
-  baseUrl?: string
-  xsrfUrl?: string | false
-  client?: HttpClient
-  lang?: Lang
-  payloadKey?: string
-  headers?: () => Awaitable<Record<string, string>>
-  stringifyOptions?: IStringifyOptions
-}
+type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
 
 export class Http {
-  private static baseUrl: string | undefined = undefined
-  private static xsrfUrl: string | false = '/api/csrf-cookie'
-  private static client: HttpClient = ofetch
-  private static lang: Lang | undefined = undefined
-  private static payloadKey = '__payload__'
-  private static headers: () => Awaitable<Record<string, string>> = async () => ({})
-  private static stringifyOptions: IStringifyOptions = {}
+  private config: Config
 
-  static config(options: HttpOptions): void {
-    if (options.baseUrl) {
-      Http.baseUrl = options.baseUrl
-    }
-    if (options.xsrfUrl !== undefined) {
-      Http.xsrfUrl = options.xsrfUrl
-    }
-    if (options.client) {
-      Http.client = options.client
-    }
-    if (options.lang) {
-      Http.lang = options.lang
-    }
-    if (options.payloadKey) {
-      Http.payloadKey = options.payloadKey
-    }
-    if (options.headers) {
-      Http.headers = options.headers
-    }
-    if (options.stringifyOptions) {
-      Http.stringifyOptions = options.stringifyOptions
-    }
+  constructor(options: Config) {
+    this.config = options
   }
 
   private async ensureXsrfToken(): Promise<string | undefined> {
-    if (!Http.xsrfUrl) {
+    if (!this.config.xsrfUrl) {
       return undefined
     }
 
     let xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
 
     if (!xsrfToken) {
-      await this.head(Http.xsrfUrl)
+      await this.head(this.config.xsrfUrl)
       xsrfToken = parseCookie(document.cookie)['XSRF-TOKEN']
     }
 
@@ -75,20 +33,20 @@ export class Http {
     const { method, params, query, ...options } = _options
     const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
-    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...Http.stringifyOptions })
+    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...this.config.stringifyOptions })
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
       {
-        baseURL: Http.baseUrl,
+        baseURL: this.config.baseUrl,
         method,
         credentials: 'include',
         ...options,
         headers: {
           Accept: 'application/json',
-          ...(await Http.headers()),
+          ...(await this.config.headers()),
           ...(xsrfToken && { 'X-Xsrf-Token': xsrfToken }),
-          ...(Http.lang && { 'Accept-Language': Http.lang }),
+          ...(this.config.lang && { 'Accept-Language': this.config.lang }),
           ...options.headers
         }
       }
@@ -96,11 +54,11 @@ export class Http {
   }
 
   private async performRequest<T>(url: string, options: FetchOptions = {}): Promise<T> {
-    return Http.client(...(await this.buildRequest(url, options)))
+    return this.config.client(...(await this.buildRequest(url, options)))
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
-    return Http.client.raw(...(await this.buildRequest(url, options)))
+    return this.config.client.raw(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {
@@ -125,7 +83,7 @@ export class Http {
 
       if (hasFile) {
         const formData = this.objectToFormData(body, undefined, undefined, true)
-        formData.append(Http.payloadKey, payload)
+        formData.append(this.config.payloadKey, payload)
         body = formData
       } else {
         body = payload

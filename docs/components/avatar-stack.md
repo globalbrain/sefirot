@@ -11,7 +11,7 @@ const avatars = [
 
 # SAvatarStack
 
-The `SAvatarStack` component is used to display a stack of avatars. It is useful when you want to display a list of users or avatars in a single component.
+`<SAvatarStack>` is used to display a stack of avatars. It is useful when you want to display a list of users or avatars in a single component.
 
 <Showcase
   path="/components/SAvatarStack.vue"
@@ -78,7 +78,7 @@ If you want to display initials instead of images, you can pass an array of obje
 
 ### `:size`
 
-Defines the size of the component. The default is `medium`.
+Defines the size of the component. The default is `'medium'`.
 
 ```ts
 interface Props {
@@ -118,7 +118,7 @@ interface Props {
 
 ### `:tooltip`
 
-Whether to display a tooltip when hovering over the component. You can also pass an object with the `position` property to define the position of the tooltip. The default position is `top`. The tooltip will display the name of the user if provided.
+When set to `true`, a tooltip showing the name will be displayed when hovering over an avatar. The default position of the tooltip is `'top'`. You can pass an object to control the positioning of the tooltip.
 
 ```ts
 interface Props {

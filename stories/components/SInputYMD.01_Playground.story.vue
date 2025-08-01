@@ -13,7 +13,7 @@ const input = ref({
 
 function initState() {
   return {
-    size: 'small',
+    size: 'md',
     label: 'Label',
     info: 'Some helpful information.',
     note: 'Note',
@@ -34,9 +34,8 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium'
+          sm: 'sm',
+          md: 'md'
         }"
         v-model="state.size"
       />

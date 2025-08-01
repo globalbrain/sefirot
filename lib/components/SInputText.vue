@@ -161,6 +161,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 </template>
 
 <style scoped lang="postcss">
+.SInputText.sm,
 .SInputText.mini {
   .box   { min-height: 32px; }
   .value { min-height: 30px; }
@@ -207,6 +208,55 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
     margin-right: -2px;
     width: 10px;
     height: 10px;
+  }
+}
+
+.SInputText.md {
+  .box   { min-height: 36px; }
+  .value { min-height: 34px; }
+  .area  { min-height: 34px; }
+  .unit  { min-height: 34px; }
+
+  .input {
+    padding: 5px 10px;
+    letter-spacing: 0;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .unit + .area .input      { padding-left: 8px; }
+  .area:has(+ .unit) .input { padding-right: 8px; }
+
+  .unit {
+    padding: 5px 10px;
+    line-height: 24px;
+    font-size: var(--input-font-size, 14px);
+  }
+
+  .unit.before { padding-right: 0; }
+  .unit.after  { padding-left: 0; }
+
+  .unit-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  :slotted(.SInputAddon) .action {
+    padding: 0 12px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  :slotted(.SInputAddon) .action-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  :slotted(.SInputAddon) .caret {
+    margin-left: 6px;
+    margin-right: -2px;
+    width: 12px;
+    height: 12px;
   }
 }
 
@@ -421,10 +471,6 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   align-items: center;
   justify-content: center;
   color: var(--c-text-2);
-}
-
-.unit-text {
-  font-weight: 500;
 }
 
 .addon {

@@ -4,7 +4,7 @@ import { type Validatable } from '../composables/Validation'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
-export type Size = 'mini' | 'small' | 'medium'
+export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
 export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 export type Value = any
@@ -69,6 +69,7 @@ function handleChange(value: Value): void {
   <SInputBase
     class="SInputCheckboxes"
     :class="[size ?? 'small']"
+    :size
     :name
     :label
     :note
@@ -82,6 +83,7 @@ function handleChange(value: Value): void {
       <div class="row">
         <div v-for="option in options" :key="String(option.value)" class="col">
           <SInputCheckbox
+            size="sm"
             :text="option.label"
             :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"

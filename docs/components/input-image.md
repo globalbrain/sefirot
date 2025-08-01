@@ -39,7 +39,7 @@ Here are the list of props you may pass to the component.
 
 ### `:size`
 
-Defines the size of the input. The default is `small`.
+Defines the size of the input. The default is `'small'`.
 
 ```ts
 interface Props {
@@ -85,7 +85,7 @@ interface Props {
 
 ### `:note`
 
-Adds small help text after the label. Best used along with `label` prop.
+Adds small help text after the label. Best used along with `:label`.
 
 ```ts
 interface Props {
@@ -135,7 +135,7 @@ interface Props {
 
 ### `:check-text`
 
-Text to display alongside `check-icon`.
+Text to display alongside `:check-icon`.
 
 ```ts
 interface Props {
@@ -149,7 +149,7 @@ interface Props {
 
 ### `:check-color`
 
-Defines the color of `check-icon` and `check-text`. The default is `neutral`.
+Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
 
 ```ts
 interface Props {
@@ -176,7 +176,7 @@ type Color =
 
 ### `:image-type`
 
-The type of image to display. The type can be eitehr `rectangle` or `circle`. The default is `rectangle`.
+The type of image to display. The type can be either `'rectangle'` or `'circle'`. The default is `'rectangle'`.
 
 ```ts
 interface Props {
@@ -192,7 +192,7 @@ type ImageType = 'rectangle' | 'circle'
 
 ### `:image-width`
 
-The width of the image placeholder. The default is `96px`. You may also control the width by `--input-image-width` CSS variable. Using CSS variable is recommended when you need responsive design.
+The width of the image placeholder. The default is `'96px'`. You may also control the width by `--input-image-width` CSS variable. Using CSS variable is recommended when you need responsive design.
 
 ```ts
 interface Props {
@@ -206,7 +206,7 @@ interface Props {
 
 ### `:image-aspect-ratio`
 
-Set the aspect ratio of the image placeholder. The default is `1 / 1`. The value is directly passed to CSS property `aspect-ratio`.
+Set the aspect ratio of the image placeholder. The default is `'1 / 1'`. The value is directly passed to CSS property `aspect-ratio`.
 
 ```ts
 interface Props {
@@ -220,7 +220,7 @@ interface Props {
 
 ### `:select-text`
 
-The text for the "select image" button. The default is `Select image`.
+The text for the "select image" button. The default is `'Select image'`.
 
 ```ts
 interface Props {
@@ -234,7 +234,7 @@ interface Props {
 
 ### `:remove-text`
 
-The text for the "remove image" button. The default is `Remove image`.
+The text for the "remove image" button. The default is `'Remove image'`.
 
 ```ts
 interface Props {
@@ -276,7 +276,7 @@ interface Props {
 
 ### `:disabled`
 
-Disbale the input. When disabled, the user cannot select nor remove file. The default is `false`.
+Disable the input. When disabled, the user cannot select nor remove the image. The default is `false`.
 
 ```ts
 interface Props {
@@ -290,7 +290,7 @@ interface Props {
 
 ### `:value`
 
-Sets the input value. When `model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
+Sets the input value. When `:model-value` is set (e.g. via `v-model` directive), this prop is ignored.
 
 ```ts
 interface Props {
@@ -327,14 +327,14 @@ interface Props {
   validation?: Validatable
 }
 
-export interface Validatable {
+interface Validatable {
   readonly $dirty: boolean
   readonly $invalid: boolean
   readonly $errors: ValidatableError[]
   readonly $touch: () => void
 }
 
-export interface ValidatableError {
+interface ValidatableError {
   readonly $message: string | Ref<string>
 }
 ```
@@ -370,7 +370,7 @@ Here are the list of slots you may define within the component.
 
 ### `#info` {#info-slot}
 
-Same as `info` prop. When `info` prop and this slot are defined at the same time, this slot will take precedence.
+Same as `:info` prop. When both `:info` and this slot are defined, this slot will take precedence.
 
 ```vue-html
 <SInputImage label="Upload image" v-model="...">
@@ -386,21 +386,21 @@ Here are the list of events the component may emit.
 
 ### `@update:model-value`
 
-Emits when the user selects the item. This event is always emitted together with `change` event.
+Emits when the user selects the item. This event is always emitted together with the `@change` event.
 
 ```ts
 interface Emits {
-  (e: 'update:model-value', value: File | null): void
+  'update:model-value': [value: File | null]
 }
 ```
 
 ### `@change`
 
-Emits when the user selects the item. This event is always emitted together with `update:model-value` event.
+Emits when the user selects the item. This event is always emitted together with the `@update:model-value` event.
 
 ```ts
 interface Emits {
-  (e: 'change', value: File | null): void
+  change: [value: File | null]
 }
 ```
 

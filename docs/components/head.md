@@ -37,7 +37,7 @@ import SHeadTitle from '@globalbrain/sefirot/lib/components/SHeadTitle.vue'
 </template>
 ```
 
-You may also define `:mode` on `<SHeadTitle>` to change the title's appearance. The default mode is `neutral`.
+You may also define `:mode` on `<SHeadTitle>` to change the title's appearance. The default mode is `'neutral'`.
 
 ```ts
 interface Props {
@@ -52,4 +52,4 @@ interface Props {
 </SHead>
 ```
 
-Also, note that the `<SHeadLead>` component also styles `<a>` elements when it is passed so there is no need to style links manually.
+Note that the `<SHeadLead>` component also styles `<a>` elements so there is no need to style links manually.

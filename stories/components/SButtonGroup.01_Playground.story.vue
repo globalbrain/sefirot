@@ -7,7 +7,7 @@ const docs = '/components/button-group'
 
 function initState() {
   return {
-    size: 'medium' as Size,
+    size: 'md' as Size,
     mode: 'mute' as Mode,
     labelA: 'Left',
     labelB: 'Middle',
@@ -22,11 +22,11 @@ function initState() {
       <HstSelect
         title="size"
         :options="{
-          mini: 'mini',
-          small: 'small',
-          medium: 'medium',
-          large: 'large',
-          jumbo: 'jumbo'
+          xs: 'xs',
+          sm: 'sm',
+          md: 'md',
+          lg: 'lg',
+          xl: 'xl'
         }"
         v-model="state.size"
       />

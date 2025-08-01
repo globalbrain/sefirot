@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconLink from '~icons/ph/arrow-square-out-bold'
-import IconPlus from '~icons/ph/plus-bold'
+import IconLink from '~icons/ph/arrow-square-out'
+import IconPlus from '~icons/ph/plus'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
@@ -43,8 +43,8 @@ function initState() {
       <Board :title :docs>
         <div class="s-max-w-512">
           <SCard :mode="state.cardMode">
-            <SCardBlock size="small" class="s-pl-24 s-pr-8">
-              <SControl>
+            <SCardBlock class="s-py-8 s-pl-24 s-pr-8">
+              <SControl size="sm">
                 <SControlLeft>
                   <SControlText class="s-font-w-500">
                     Header title
@@ -67,8 +67,8 @@ function initState() {
                 consequat.
               </p>
             </SCardBlock>
-            <SCardBlock size="large" class="s-px-24">
-              <SControl>
+            <SCardBlock class="s-py-16 s-px-24">
+              <SControl size="md">
                 <SControlRight>
                   <SControlButton label="Cancel" />
                   <SControlButton mode="info" label="Submit" />

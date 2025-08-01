@@ -1,5 +1,5 @@
 import { type Lang, useBrowserLang } from 'sefirot/composables/Lang'
-import { Http, type HttpOptions } from 'sefirot/http/Http'
+import { type HttpOptions, useHttpConfig } from 'sefirot/stores/HttpConfig'
 
 export interface HasLang {
   lang: Lang
@@ -7,9 +7,10 @@ export interface HasLang {
 
 export function useSetupHttp(): (user?: HasLang | null, options?: HttpOptions) => void {
   const browserLang = useBrowserLang()
+  const httpConfig = useHttpConfig()
 
   return (user, options = {}) => {
-    Http.config({
+    httpConfig.apply({
       lang: user?.lang ?? browserLang,
       ...options
     })

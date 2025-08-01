@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconCaretDown from '~icons/ph/caret-down-bold'
-import IconCaretUp from '~icons/ph/caret-up-bold'
+import IconCaretDown from '~icons/ph/caret-down'
+import IconCaretUp from '~icons/ph/caret-up'
 import { computed, ref } from 'vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
@@ -121,6 +121,7 @@ function emitChange(e: any): void {
 </template>
 
 <style scoped lang="postcss">
+.SInputSelect.sm,
 .SInputSelect.mini {
   line-height: 30px;
   font-size: var(--input-font-size, var(--input-mini-font-size));
@@ -129,6 +130,16 @@ function emitChange(e: any): void {
   .select   { padding: 0 30px 0 10px; }
   .icon     { top: 5px; right: 8px; }
   .icon-svg { width: 12px; height: 12px; }
+}
+
+.SInputSelect.md {
+  line-height: 34px;
+  font-size: var(--input-font-size, 14px);
+
+  .box      { height: 36px; }
+  .select   { padding: 0 30px 0 10px; }
+  .icon     { top: 5px; right: 8px; }
+  .icon-svg { width: 14px; height: 14px; }
 }
 
 .SInputSelect.small {

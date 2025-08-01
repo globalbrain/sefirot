@@ -20,7 +20,7 @@ const tooltip = ref('')
 
 <template>
   <!--
-    Wrap component with `<SToooltip>` only when tooltip ref
+    Wrap component with `<STooltip>` only when tooltip ref
     is set. Otherwise, it will render `<SButton>` directly.
   -->
   <SFragment :is="tooltip && STooltip" :text="tooltip">
@@ -29,7 +29,7 @@ const tooltip = ref('')
 </template>
 ```
 
-Note that `<SFragment>` will pass down all additional props defined along with `:is`, for example in the above case `:text` is passed to `<STooltip>`.
+Note that `<SFragment>` will forward all props to a given component, for example in the above case `:text` is forwarded on to `<STooltip>`.
 
 ## Props
 

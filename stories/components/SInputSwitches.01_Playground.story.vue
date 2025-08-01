@@ -18,6 +18,7 @@ const options = [
     <Board :title>
       <SInputSwitches
         class="switches"
+        size="md"
         name="input"
         label="Label"
         info="Some helpful information."

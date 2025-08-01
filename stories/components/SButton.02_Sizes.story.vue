@@ -5,11 +5,11 @@ const title = 'Components / SButton / 02. Sizes'
 const docs = '/components/button'
 
 const variants = [
-  { title: 'Mini', size: 'mini' },
-  { title: 'Small', size: 'small' },
-  { title: 'Medium', size: 'medium' },
-  { title: 'Large', size: 'large' },
-  { title: 'Jumbo', size: 'jumbo' }
+  { title: 'XS', size: 'xs' },
+  { title: 'SM', size: 'sm' },
+  { title: 'MD', size: 'md' },
+  { title: 'LG', size: 'lg' },
+  { title: 'XL', size: 'xl' }
 ] as const
 
 const modes = [

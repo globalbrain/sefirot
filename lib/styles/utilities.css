@@ -143,11 +143,13 @@
 .s-w-256  { width: 256px; }
 .s-w-320  { width: 320px; }
 .s-w-512  { width: 512px; }
+.s-w-720  { width: 720px; }
 .s-w-full { max-width: 100%; }
 
 .s-max-w-256    { max-width: 256px; }
 .s-max-w-320    { max-width: 320px; }
 .s-max-w-512    { max-width: 512px; }
+.s-max-w-720    { max-width: 720px; }
 .s-max-w-prose  { max-width: 65ch; }
 .s-max-w-full   { max-width: 100%; }
 .s-max-w-xs     { max-width: 320px; }

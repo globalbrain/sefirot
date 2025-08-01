@@ -1,3 +1,4 @@
+import { useHttpConfig } from 'sefirot/stores/HttpConfig'
 import { type Ref, type WatchSource, ref, watch } from 'vue'
 import { Http } from '../http/Http'
 import { tryOnMounted } from './Utils'
@@ -45,6 +46,7 @@ export function useQuery<Data = any>(
 ): Query<Data> {
   const loading = ref(false)
   const data = ref<Data | undefined>()
+  const httpConfig = useHttpConfig()
 
   if (options.immediate !== false) {
     tryOnMounted(execute)
@@ -57,7 +59,7 @@ export function useQuery<Data = any>(
   async function execute({ assign = true, silent = false } = {}): Promise<Data> {
     if (!silent) { loading.value = true }
 
-    const res: Data = await req(new Http())
+    const res: Data = await req(new Http(httpConfig))
     if (assign) { data.value = res }
 
     loading.value = false
@@ -72,11 +74,12 @@ export function useMutation<Data = any, Args extends any[] = any[]>(
 ): Mutation<Data, Args> {
   const loading = ref(false)
   const data = ref<Data | undefined>()
+  const httpConfig = useHttpConfig()
 
   async function execute(...args: Args): Promise<Data> {
     loading.value = true
 
-    const res: Data = await req(new Http(), ...args)
+    const res: Data = await req(new Http(httpConfig), ...args)
     data.value = res
 
     loading.value = false

@@ -37,7 +37,7 @@ Here are the list of props you may pass to the component.
 
 ### `:tag`
 
-Defines how the HTML tag for the button. Any value passed to this prop will used as `<component :is="tag">`. The default tag for the button is `button`. The `tag` prop will take precedence even when the `href` prop is set.
+Defines the HTML tag for the button. The default tag is `'button'`. The `:tag` prop will take precedence even when the `:href` prop is set.
 
 ```ts
 interface Props {
@@ -51,7 +51,7 @@ interface Props {
 
 ### `:size`
 
-Defines the size of the button. The default is `medium`.
+Defines the size of the button. The default is `'medium'`.
 
 ```ts
 interface Props {
@@ -72,7 +72,7 @@ type Size =
 
 ### `:type`
 
-Defines how the button look. The default is `fill`.
+Defines the button appearance. The default is `'fill'`.
 
 ```ts
 interface Props {
@@ -88,7 +88,7 @@ type Type = 'fill' | 'outline' | 'text'
 
 ### `:mode`
 
-Defines the color of the button. The default is `default`.
+Defines the color of the button. The default is `'default'`.
 
 ```ts
 interface Props {
@@ -152,7 +152,7 @@ type Mode =
 
 ### `:icon`
 
-Prepend the given icon to the button. You may pass any Iconify icons.
+Prepend the given icon to the button. You may pass any Iconify icon.
 
 ```ts
 interface Props {
@@ -207,7 +207,7 @@ import IconCheckCircle from '~icons/ph/check-circle-bold'
 
 ### `:href`
 
-The href attribute to be used in for link. When this prop is set, the button element will use `SLink` component under the hood. However, when `tag` prop is set it will take the precedence.
+The `href` attribute to be used for the link. When this prop is set, the button element will use the [`<SLink>`](link) component under the hood. However, if the `:tag` prop is set, it will take precedence over this.
 
 ```ts
 interface Props {
@@ -221,7 +221,7 @@ interface Props {
 
 ### `:rounded`
 
-Make the button to have rounded corners.
+Give the button rounded corners.
 
 ```ts
 interface Props {
@@ -249,7 +249,7 @@ interface Props {
 
 ### `:loading`
 
-Display a loading spinner. While this prop is set to true, the `click` event will not be emitted.
+Display a loading spinner. While this prop is set to `true`, the `@click` event will not be emitted.
 
 ```ts
 interface Props {
@@ -263,7 +263,7 @@ interface Props {
 
 ### `:disabled`
 
-Mark button as disabled. It will dimm the color of the button, and prevent `hover` or `click` styles. While this prop is set to true, the `click` event will not be emitted.
+Mark button as disabled. It will dim the color of the button and prevent `hover` or `click` styles. While this prop is set to `true`, the `@click` event will not be emitted.
 
 ```ts
 interface Props {
@@ -277,7 +277,7 @@ interface Props {
 
 ### `:tooltip`
 
-Display a tooltip when the user interacts with the button. Under the hood, this component uses [`STooltip`](tooltip) component.
+Display a tooltip when the user interacts with the button. Under the hood, this component uses the [`<STooltip>`](tooltip) component.
 
 The tooltip will only be visible when `:tooltip.text` is set.
 
@@ -322,9 +322,9 @@ interface Props {
 
 Here are the list of slots you may define within the component.
 
-### `@tooltip-text`
+### `#tooltip-text`
 
-The content of tooltip. Same as `:tooltip.text` prop. When `:tooltip.text` prop and this slot are defined at the same time, this slot will take precedence.
+The tooltip content. Same as `:tooltip.text` prop. When the `:tooltip.text` prop and this slot are defined at the same time, this slot will take precedence.
 
 ```vue-html
 <SButton label="Button">
@@ -340,23 +340,23 @@ Here are the list of events the component may emit.
 
 ### `@click`
 
-Emits when an user clicks the button. This event will not be emitted when the `loading` or the `disabled` prop is set to `true`.
+Emits when the button is clicked. This event will not be emitted when `:loading` or `:disabled` is set to `true`.
 
 ```ts
 interface Emits {
-  (e: 'click'): void
+  click: []
 }
 ```
 
 ### `@disabled-click`
 
-Emits when an user clicks the button with the `:disabled` set to `true`. This event will not be emitted when the `loading` or the `disabled` prop is set to `false`.
+Emits when the button is clicked while the `:disabled` is set to `true`. This event will not be emitted when `:loading` or `:disabled` is set to `false`.
 
 This event gives you a chance to, for example, show a message to the user about why the button is disabled.
 
 ```ts
 interface Emits {
-  (e: 'disabled-click'): void
+  'disabled-click': []
 }
 ```
 
@@ -366,7 +366,7 @@ You may customize the styles by overriding `--button` prefixed CSS variables.
 
 ### Font size
 
-Customize the font size of the button's label. The font size is different depending on the button's size defined by the `size` prop. You may override the font size for all button sizes, or customize them individually.
+Customize the font size of the button's label. The font size is different depending on the button's size defined by the `:size` prop. You may override the font size for all button sizes, or customize them individually.
 
 ```css
 :root {
@@ -401,7 +401,7 @@ You may control the padding the button has. Useful when you want to have wider `
 
 ### Variant styles
 
-The component has several different styles based on its type and color combination defined via the `type` and the `mode` prop. You may override the styles for each variation of buttons using the following CSS variables.
+The component has several different styles based on its type and color combination defined via `:type` and `:mode` props. You may override the styles for each variation of buttons using the following CSS variables.
 
 ```css
 :root {
@@ -432,7 +432,7 @@ The component has several different styles based on its type and color combinati
   --button-fill-mute-active-border-color: var(--c-border-mute-3);
   --button-fill-mute-active-text-color: var(--c-text-2);
   --button-fill-mute-active-bg-color: var(--c-bg-mute-3);
-  --button-fill-mute-disabled-border-color: var(--c-divider-2);
+  --button-fill-mute-disabled-border-color: var(--c-border-mute-1);
   --button-fill-mute-disabled-text-color: var(--c-text-3);
   --button-fill-mute-disabled-content-color: var(--c-text-3);
   --button-fill-mute-disabled-bg-color: var(--c-bg-mute-1);
@@ -499,11 +499,11 @@ The component has several different styles based on its type and color combinati
   --button-fill-info-disabled-border-color: var(--c-blue-9);
   --button-fill-info-disabled-text-color: var(--c-white-a2);
   --button-fill-info-disabled-content-color: var(--c-white-a2);
-  --button-fill-info-disabled-bg-color: var(--c-info-bg-dark);
+  --button-fill-info-disabled-bg-color: var(--c-blue-8);
 
   --button-fill-success-border-color: var(--c-border-success-1);
   --button-fill-success-text-color: var(--c-white-1);
-  --button-fill-success-content-color: var(--c-success-text);
+  --button-fill-success-content-color: var(--c-white-1);
   --button-fill-success-bg-color: var(--c-bg-success-1);
   --button-fill-success-loader-color: var(--c-white);
   --button-fill-success-hover-border-color: var(--c-border-success-2);
@@ -515,7 +515,7 @@ The component has several different styles based on its type and color combinati
   --button-fill-success-disabled-border-color: var(--c-green-9);
   --button-fill-success-disabled-text-color: var(--c-white-a2);
   --button-fill-success-disabled-content-color: var(--c-white-a2);
-  --button-fill-success-disabled-bg-color: var(--c-success-bg-dark);
+  --button-fill-success-disabled-bg-color: var(--c-green-8);
 
   --button-fill-warning-border-color: var(--c-border-mute-1);
   --button-fill-warning-text-color: var(--c-text-warning-1);
