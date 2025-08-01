@@ -3,7 +3,7 @@ import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import SInputBase, { type Color as CheckColor, type Size } from './SInputBase.vue'
 
-export type { Size, CheckColor }
+export type { CheckColor, Size }
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 
 const props = withDefaults(defineProps<{

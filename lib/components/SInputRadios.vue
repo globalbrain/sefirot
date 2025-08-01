@@ -11,7 +11,7 @@ import { type Validatable } from '../composables/Validation'
 import SInputBase, { type Color, type Size } from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
-export type { Size, Color }
+export type { Color, Size }
 
 export interface Option<
   ValueType extends string | number | boolean = string | number | boolean
