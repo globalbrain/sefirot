@@ -6,6 +6,7 @@ import SInputSegments from './SInputSegments.vue'
 export interface Props extends BaseProps {
   placeholder?: string
   disabled?: boolean
+  tabindex?: 0 | -1 | number
   rows?: number | 'fill'
   autoResize?: boolean | number
   value?: string | null
@@ -115,6 +116,7 @@ const isPreview = ref(false)
         :placeholder
         :rows="rows === 'fill' ? 3 : rows"
         :disabled
+        :tabindex
         :value="_value ?? undefined"
         @input="emitInput"
         @blur="emitBlur"

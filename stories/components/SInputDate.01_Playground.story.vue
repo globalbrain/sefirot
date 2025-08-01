@@ -24,6 +24,11 @@ function initState() {
         }"
         v-model="state.size"
       />
+      <HstSelect
+        title="tabindex"
+        :options="[0, -1]"
+        v-model="state.tabindex"
+      />
     </template>
 
     <template #default="{ state }">
@@ -31,6 +36,7 @@ function initState() {
         <SInputDate
           label="Label"
           :size="state.size"
+          :tabindex="state.tabindex"
           v-model="value"
         />
       </Board>

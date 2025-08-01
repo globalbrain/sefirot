@@ -103,6 +103,11 @@ function onInput(value: number | null) {
         title="error"
         v-model="state.error"
       />
+      <HstSelect
+        title="tabindex"
+        :options="[0, -1]"
+        v-model="state.tabindex"
+      />
     </template>
 
     <template #default="{ state }">
@@ -121,6 +126,7 @@ function onInput(value: number | null) {
           :align="state.align"
           :separator="state.separator"
           :disabled="state.disabled"
+          :tabindex="state.tabindex"
           :value="input"
           @update:model-value="onInput"
           @input="(value) => log('input', { value })"

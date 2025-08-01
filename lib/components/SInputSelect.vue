@@ -9,6 +9,7 @@ export interface Props extends BaseProps {
   options: Option[]
   nullable?: boolean
   disabled?: boolean
+  tabindex?: -1 | 0 | number
   value?: Value
   modelValue?: Value
 }
@@ -85,6 +86,7 @@ function emitChange(e: any): void {
         class="select"
         :class="{ 'is-not-selected': isNotSelected }"
         :disabled
+        :tabindex
         @focus="isFocused = true"
         @blur="isFocused = false"
         @change="emitChange"

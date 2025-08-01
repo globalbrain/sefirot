@@ -12,6 +12,7 @@ export interface Props extends BaseProps {
   separator?: boolean
   align?: Align
   disabled?: boolean
+  tabindex?: -1 | 0 | number
   value?: number | null
   modelValue?: number | null
   displayValue?: string | null
@@ -91,6 +92,7 @@ function emitUpdate(value: string | null) {
     :text-color="_textColor"
     :align
     :disabled
+    :tabindex
     :display-value
     :model-value="_value == null ? null : String(_value)"
     :validation
