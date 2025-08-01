@@ -402,7 +402,7 @@ const selected = ref<string[]>([])
   --table-col-position: sticky;
   --table-col-z-index: 50;
   --table-col-left: auto;
-  --table-col-right: 0;
+  --table-col-right: 0px;
   --table-col-border-left: 1px;
 }
 </style>

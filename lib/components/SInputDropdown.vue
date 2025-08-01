@@ -141,6 +141,7 @@ function handleArray(value: OptionValue) {
     :check-text
     :check-color
     :validation
+    :hide-error
   >
     <div class="container" ref="container">
       <div
