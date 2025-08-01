@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color as CheckColor, type Size } from './SInputBase.vue'
+import SInputBase, { type Color, type Size } from './SInputBase.vue'
 
-export type { CheckColor, Size }
+export type { Color, Size }
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 
 const props = withDefaults(defineProps<{
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<{
   help?: string
   checkIcon?: Component
   checkText?: string
-  checkColor?: CheckColor
+  checkColor?: Color
   disabled?: boolean
   value?: boolean
   modelValue?: boolean
