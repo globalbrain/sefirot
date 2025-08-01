@@ -3,6 +3,7 @@ import { type Component, computed, ref } from 'vue'
 import { isString } from '../support/Utils'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
+export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   type?: string
   placeholder?: string

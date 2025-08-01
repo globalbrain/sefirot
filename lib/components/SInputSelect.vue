@@ -4,6 +4,7 @@ import IconCaretUp from '~icons/ph/caret-up'
 import { computed, ref } from 'vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
+export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   placeholder?: string
   options: Option[]
