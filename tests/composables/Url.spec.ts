@@ -229,13 +229,8 @@ describe('composables/Url', () => {
 
       // Reset one value to default and check if it gets removed
       vm.data.page = 1 // back to default
-
-      // Wait a bit for the URL to potentially update
-      await new Promise((resolve) => setTimeout(resolve, 150))
-
-      // Check the behavior - the implementation might not immediately remove default values
-      // This test is more about documenting the actual behavior
-      // Let's verify that at least the sync is working both ways
+      // FIXME: seems interfered by other tests, need to work on this later
+      await expect.poll(() => vm.route.query.page).toBeUndefined()
 
       // Change back to non-default to verify sync still works
       vm.data.page = 5
