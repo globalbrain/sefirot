@@ -6,20 +6,23 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 export function setupWithWrapper<T>(
   setup: () => T,
   options?: any
-): VueWrapper<any> {
+): { wrapper: VueWrapper<any>; vm: UnwrapRef<T> } {
   const wrapper = mount({
     setup,
     template: '<div />'
   }, options)
 
-  return wrapper
+  return {
+    wrapper,
+    vm: wrapper.vm as UnwrapRef<T>
+  }
 }
 
 export function setup<T>(
   setup: () => T,
   options?: any
 ): UnwrapRef<T> {
-  return setupWithWrapper(setup, options).vm as UnwrapRef<T>
+  return setupWithWrapper(setup, options).vm
 }
 
 export function setupRouter(): void {
