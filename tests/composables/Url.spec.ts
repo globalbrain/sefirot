@@ -1,3 +1,4 @@
+import { type VueWrapper } from '@vue/test-utils'
 import { useUrlQuerySync } from 'sefirot/composables/Url'
 import { setupWithWrapper } from 'tests/Utils'
 import { reactive, ref } from 'vue'
@@ -5,14 +6,21 @@ import { useRoute, useRouter } from 'vue-router'
 
 describe('composables/Url', () => {
   describe('useUrlQuerySync', () => {
+    let wrapper: VueWrapper<any>
+
+    afterEach(() => {
+      wrapper?.unmount()
+    })
+
     test('should sync data changes to URL query', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = reactive({ page: 1 })
         useUrlQuerySync(data)
 
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // If the query is default value, do not show params on URL.
       expect(vm.route.query.page).toBeUndefined()
@@ -22,12 +30,10 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.page
       }).toBe('2')
-
-      wrapper.unmount()
     })
 
     test('should sync URL query to state on initialization', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const router = useRouter()
 
         // Set initial URL query before creating the composable
@@ -39,15 +45,14 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // State should be updated from URL query
       await expect.poll(() => vm.data.page).toBe('5')
-
-      wrapper.unmount()
     })
 
     test('should support casting with casts option', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const router = useRouter()
 
         // Set initial URL query
@@ -68,18 +73,17 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // State should be updated with casted values
       await expect.poll(() => vm.data.page).toBe(10)
       await expect.poll(() => vm.data.isActive).toBe(true)
       expect(typeof vm.data.page).toBe('number')
       expect(typeof vm.data.isActive).toBe('boolean')
-
-      wrapper.unmount()
     })
 
     test('should exclude specified keys from URL sync', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           perPage: 50,
@@ -93,6 +97,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // Change all values
       vm.data.page = 2
@@ -106,12 +111,10 @@ describe('composables/Url', () => {
 
       expect(vm.route.query.perPage).toBeUndefined()
       expect(vm.route.query.secretToken).toBeUndefined()
-
-      wrapper.unmount()
     })
 
     test('should handle arrays correctly', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = reactive({
           tags: ['vue', 'typescript'],
           categories: [] as string[]
@@ -122,6 +125,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // Modify arrays
       vm.data.tags.push('javascript')
@@ -134,12 +138,10 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.categories
       }).toEqual(['frontend', 'backend'])
-
-      wrapper.unmount()
     })
 
     test('should sync arrays from URL to state', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const router = useRouter()
 
         router.replace({
@@ -158,16 +160,15 @@ describe('composables/Url', () => {
 
         return { data }
       })
+      const { vm } = wrapper
 
       // State arrays should be updated from URL
       await expect.poll(() => vm.data.tags).toEqual(['react', 'vue'])
       await expect.poll(() => vm.data.ids).toEqual(['1', '2', '3'])
-
-      wrapper.unmount()
     })
 
     test('should not show default values in URL', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           size: 10,
@@ -179,6 +180,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // Change one value from default
       vm.data.page = 2
@@ -190,12 +192,10 @@ describe('composables/Url', () => {
       // Other default values should still not be in URL
       expect(vm.route.query.size).toBeUndefined()
       expect(vm.route.query.search).toBeUndefined()
-
-      wrapper.unmount()
     })
 
     test('should clear URL when values return to default', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
           search: ''
@@ -206,6 +206,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // Change values away from defaults
       vm.data.page = 3
@@ -233,12 +234,10 @@ describe('composables/Url', () => {
 
       // This confirms bidirectional sync is working correctly
       expect(vm.data.page).toBe(5)
-
-      wrapper.unmount()
     })
 
     test('should work with ref instead of reactive', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const data = ref({
           page: 1,
           name: 'test'
@@ -249,6 +248,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route }
       })
+      const { vm } = wrapper
 
       // Change ref value
       vm.data.page = 5
@@ -261,12 +261,10 @@ describe('composables/Url', () => {
       await expect.poll(() => {
         return vm.route.query.name
       }).toBe('updated')
-
-      wrapper.unmount()
     })
 
     test('should handle complex scenario with all features', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const router = useRouter()
 
         // Set initial URL with various data types
@@ -299,6 +297,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route, router }
       })
+      const { vm } = wrapper
 
       // Initial sync from URL should work with casting
       await expect.poll(() => vm.data.page).toBe(5)
@@ -325,13 +324,11 @@ describe('composables/Url', () => {
       // Excluded values should not be in URL
       expect(vm.route.query.perPage).toBeUndefined()
       expect(vm.route.query.internalToken).toBeUndefined()
-
-      wrapper.unmount()
     })
 
     // #578
     test('should preserve state when path changes', async () => {
-      const { wrapper, vm } = setupWithWrapper(() => {
+      wrapper = setupWithWrapper(() => {
         const router = useRouter()
 
         const data = reactive({
@@ -344,6 +341,7 @@ describe('composables/Url', () => {
         const route = useRoute()
         return { data, route, router }
       })
+      const { vm } = wrapper
 
       // Set initial state and sync to URL
       vm.data.page = 2
@@ -386,8 +384,6 @@ describe('composables/Url', () => {
       expect(vm.route.query.page).toBe('99')
       expect(vm.route.query.search).toBe('different')
       expect(vm.route.query.otherParam).toBe('value')
-
-      wrapper.unmount()
     })
   })
 })
