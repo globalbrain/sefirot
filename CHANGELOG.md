@@ -1,5 +1,23 @@
 # Changelog
 
+# [4.30.0](https://github.com/globalbrain/sefirot/compare/v4.29.1...v4.30.0) (2025-08-05)
+
+
+### Bug Fixes
+
+* **http:** config leaking state in ssr ([#638](https://github.com/globalbrain/sefirot/issues/638)) ([6ba293b](https://github.com/globalbrain/sefirot/commit/6ba293b4a0d7d055a13bf829d2ed9f4472c54710))
+
+
+### Features
+
+* **input:** add `tabindex` props to basic input components ([#528](https://github.com/globalbrain/sefirot/issues/528)) ([#639](https://github.com/globalbrain/sefirot/issues/639)) ([4896a85](https://github.com/globalbrain/sefirot/commit/4896a85607a7f8f114dff9233f3b71190e03e3bd))
+* **input:** consistent Size and Color type exports from input components ([#640](https://github.com/globalbrain/sefirot/issues/640)) ([0ce3e64](https://github.com/globalbrain/sefirot/commit/0ce3e64ff900aacab17bf4d9771a666e2ef455b6))
+
+
+### BREAKING CHANGES
+
+* **input:** `CheckColor` is renamed to `Check` for consistency
+
 ## [4.29.1](https://github.com/globalbrain/sefirot/compare/v4.29.0...v4.29.1) (2025-07-25)
 
 
