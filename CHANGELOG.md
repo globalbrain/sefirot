@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.30.1](https://github.com/globalbrain/sefirot/compare/v4.30.0...v4.30.1) (2025-08-05)
+
+
+### Bug Fixes
+
+* force override locale and prevent warnings on re-instantiation ([#642](https://github.com/globalbrain/sefirot/issues/642)) ([6838faf](https://github.com/globalbrain/sefirot/commit/6838fafe04aa912c8082e5e8741fb66b3ffaa883))
+
 # [4.30.0](https://github.com/globalbrain/sefirot/compare/v4.29.1...v4.30.0) (2025-08-05)
 
 
