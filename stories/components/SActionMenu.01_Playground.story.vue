@@ -16,15 +16,62 @@ const options = [
     ]
   })
 ]
+
+function initState() {
+  return {
+    xAxis: 32,
+    yAxis: 32,
+    dropdownAlign: 'left'
+  }
+}
 </script>
 
 <template>
-  <Story :title source="Not available" auto-props-disabled>
-    <Board :title>
-      <SActionMenu
-        label="Open menu"
-        :options
+  <Story :title :init-state source="Not available" auto-props-disabled>
+    <template #controls="{ state }">
+      <HstNumber
+        title="X Axis"
+        v-model="state.xAxis"
+        :min="0"
       />
-    </Board>
+      <HstNumber
+        title="Y Axis"
+        v-model="state.yAxis"
+        :min="0"
+      />
+      <HstSelect
+        title="dropdown-align"
+        :options="{
+          left: 'left',
+          right: 'right'
+        }"
+        v-model="state.dropdownAlign"
+      />
+    </template>
+
+    <template #default="{ state }">
+      <Board :title>
+        <div
+          class="position-container"
+          :style="{
+            position: 'absolute',
+            left: `${state.xAxis}px`,
+            top: `${state.yAxis}px`
+          }"
+        >
+          <SActionMenu
+            label="Open menu"
+            :options
+            :dropdown-align="state.dropdownAlign"
+          />
+        </div>
+      </Board>
+    </template>
   </Story>
 </template>
+
+<style lang="postcss">
+.b-page {
+  position: relative;
+}
+</style>
