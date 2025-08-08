@@ -125,7 +125,7 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      // Should maintain left alignment (plenty of space on right: 1024 - 50 = 974 > 200)
+      // Should maintain left alignment (plenty of space on right: 1024 - 50 = 974 > 288)
       await expect
         .poll(() => wrapper.find('.SActionMenu').classes())
         .toContain('left')
@@ -171,7 +171,7 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      // Should flip to right (only 124px space on right: 1024 - 900 = 124 < 200)
+      // Should flip to right (only 124px space on right: 1024 - 900 = 124 < 288)
       await expect
         .poll(() => wrapper.find('.SActionMenu').classes())
         .toContain('right')
@@ -193,7 +193,7 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      // Should keep right (1000px space on left > 200px needed)
+      // Should keep right (1000px space on left > 288px needed)
       await expect
         .poll(() => wrapper.find('.SActionMenu').classes())
         .toContain('right')
