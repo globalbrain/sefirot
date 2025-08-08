@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Component, ref } from 'vue'
+import { type Component, ref, useTemplateRef } from 'vue'
 import { type DropdownSection, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import SButton, { type Mode, type Size, type Tooltip, type Type } from './SButton.vue'
@@ -29,21 +29,52 @@ const props = withDefaults(defineProps<{
   dropdownAlign: 'left'
 })
 
-const container = ref<any>(null)
+const containerRef = useTemplateRef('container')
+const dropdownRef = useTemplateRef('dropdown')
 
-const { isOpen, toggle } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(container)
+const { isOpen, toggle } = useFlyout(containerRef)
+const { position: verticalPlacement, update: updateVerticalPlacement }
+  = useManualDropdownPosition(containerRef)
+
+const actualAlign = ref(props.dropdownAlign)
+
+function calculateOptimalAlign(dropdownElement: HTMLElement): 'left' | 'right' {
+  // Temporarily show the dropdown to measure it (similar to tooltip approach)
+  const originalDisplay = dropdownElement.style.display
+  dropdownElement.style.display = 'block'
+  const dropdownRect = dropdownElement.getBoundingClientRect()
+  dropdownElement.style.display = originalDisplay
+
+  const dropdownWidth = dropdownRect.width
+
+  const viewportWidth = window.innerWidth
+  const containerRect = containerRef.value!.getBoundingClientRect()
+
+  const spaceOnRight = viewportWidth - containerRect.left
+  const spaceOnLeft = containerRect.right
+
+  if (props.dropdownAlign === 'left') {
+    return spaceOnRight >= dropdownWidth ? 'left' : 'right'
+  }
+
+  return spaceOnLeft >= dropdownWidth ? 'right' : 'left'
+}
 
 async function onOpen() {
   if (!props.disabled) {
-    updatePosition()
+    updateVerticalPlacement()
+
+    if (dropdownRef.value) {
+      actualAlign.value = calculateOptimalAlign(dropdownRef.value)
+    }
+
     toggle()
   }
 }
 </script>
 
 <template>
-  <div class="SActionMenu" :class="[{ block }, dropdownAlign]" ref="container">
+  <div class="SActionMenu" :class="[{ block }, actualAlign]" ref="container">
     <div class="button">
       <SButton
         :tag
@@ -64,7 +95,12 @@ async function onOpen() {
         @click="onOpen"
       />
     </div>
-    <div v-if="isOpen" class="dropdown" :class="position">
+    <div
+      class="dropdown"
+      :class="verticalPlacement"
+      :style="{ display: isOpen ? 'block' : 'none' }"
+      ref="dropdown"
+    >
       <SDropdown :sections="options" />
     </div>
   </div>
