@@ -17,14 +17,6 @@ export interface HasLang {
 
 export const SefirotLangKey: InjectionKey<Lang> = Symbol.for('sefirot-lang-key')
 
-export function useSetupLang(): (user?: HasLang | null) => void {
-  const browserLang = useBrowserLang()
-
-  return (user) => {
-    provideLang(user?.lang ?? browserLang)
-  }
-}
-
 export function provideLang(lang: Lang) {
   getCurrentInstance()!.appContext.app._context.provides[SefirotLangKey] = lang
 }
@@ -33,10 +25,14 @@ export function useLang(): Lang {
   return inject(SefirotLangKey, 'en')
 }
 
-export function useBrowserLang(): Lang {
-  const lang = navigator.language
-
+export function getBrowserLang(): Lang {
+  const lang = String(globalThis.navigator?.language || 'en')
   return lang.split('-')[0] === 'ja' ? 'ja' : 'en'
+}
+
+/** @deprecated use `getBrowserLang` instead */
+export function useBrowserLang(): Lang {
+  return getBrowserLang()
 }
 
 export function useTrans<T>(messages: TransMessages<T>): Trans<T> {

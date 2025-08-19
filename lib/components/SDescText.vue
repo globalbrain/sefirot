@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useLinkifyIt } from 'sefirot/composables/Markdown'
 import { computed } from 'vue'
+import { useLinkifyIt } from '../composables/Markdown'
 import { useHasSlotContent } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
 
