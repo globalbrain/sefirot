@@ -8,7 +8,10 @@ export interface SetupAppOptions {
   http?: HttpOptions
 }
 
-export function useSetupApp(): (user?: Partial<SetupAppUser> | null, options?: SetupAppOptions) => void {
+export function useSetupApp(): (
+  user?: Partial<SetupAppUser> | null,
+  options?: SetupAppOptions
+) => void {
   const theme = useTheme()
   const httpConfig = useHttpConfig()
 
