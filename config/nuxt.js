@@ -23,8 +23,8 @@ export const baseConfig = {
   vite: {
     ...baseViteConfig,
     resolve: { ...baseViteConfig.resolve, alias: {} },
-    plugins: baseViteConfig.plugins?.filter((plugin) =>
-      plugin && 'name' in plugin ? plugin.name !== 'unplugin-icons' : null
+    plugins: baseViteConfig.plugins?.filter(
+      (plugin) => plugin && 'name' in plugin && plugin.name !== 'unplugin-icons'
     )
   }
 }
