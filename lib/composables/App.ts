@@ -1,17 +1,17 @@
 import { type HttpOptions, useHttpConfig } from '../stores/HttpConfig'
-import { type HasLang, getBrowserLang, provideLang } from './Lang'
-import { type HasTheme, useTheme } from './Theme'
+import { type Lang, getBrowserLang, provideLang } from './Lang'
+import { type Theme, useTheme } from './Theme'
 
-export interface SetupAppUser extends HasLang, HasTheme {}
+export interface SetupAppUser {
+  lang?: Lang
+  theme?: Theme
+}
 
 export interface SetupAppOptions {
   http?: HttpOptions
 }
 
-export function useSetupApp(): (
-  user?: Partial<SetupAppUser> | null,
-  options?: SetupAppOptions
-) => void {
+export function useSetupApp(): (user?: SetupAppUser | null, options?: SetupAppOptions) => void {
   const theme = useTheme()
   const httpConfig = useHttpConfig()
 

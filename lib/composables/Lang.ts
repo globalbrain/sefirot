@@ -11,10 +11,6 @@ export interface TransMessages<T> {
   ja: T
 }
 
-export interface HasLang {
-  lang: Lang
-}
-
 export const SefirotLangKey: InjectionKey<Lang> = Symbol.for('sefirot-lang-key')
 
 export function provideLang(lang: Lang) {

@@ -3,10 +3,6 @@ import { type WritableComputedRef, computed } from 'vue'
 
 export type Theme = 'light' | 'dark'
 
-export interface HasTheme {
-  theme: Theme
-}
-
 export function useTheme(): WritableComputedRef<Theme> {
   const _isDark = useDark()
 
