@@ -5,9 +5,6 @@ import icons from 'unplugin-icons/nuxt'
 import { mergeConfig } from 'vite'
 import { baseConfig as baseViteConfig } from './vite.js'
 
-delete baseViteConfig.plugins
-delete baseViteConfig.resolve?.alias
-
 export const baseConfig = {
   alias: { sefirot: fileURLToPath(new URL('../lib', import.meta.url)) },
   app: { teleportId: 'sefirot-modals' },
@@ -23,7 +20,13 @@ export const baseConfig = {
   ],
   postcss: { plugins: { 'postcss-nested': {} } },
   telemetry: false,
-  vite: baseViteConfig
+  vite: {
+    ...baseViteConfig,
+    resolve: { ...baseViteConfig.resolve, alias: {} },
+    plugins: baseViteConfig.plugins?.filter((plugin) =>
+      plugin && 'name' in plugin ? plugin.name !== 'unplugin-icons' : null
+    )
+  }
 }
 
 export function defineConfig(config = {}) {
