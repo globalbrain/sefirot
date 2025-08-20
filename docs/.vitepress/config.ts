@@ -16,6 +16,7 @@ export default defineConfig({
   cleanUrls: true,
   lastUpdated: true,
 
+  // @ts-expect-error vite version mismatch
   vite: {
     ...baseConfig,
     define: {

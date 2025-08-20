@@ -1,16 +1,5 @@
 // @ts-check
 
-/**
- * Adapted from
- * @see https://github.com/unplugin/unplugin-icons/blob/67fd9b7791dc1754cb8dc46b854b22c8bb4cf380/src/core/compilers/vue3.ts
- * @see https://github.com/unplugin/unplugin-icons/blob/639ec9691e022e52c641d0f96f585dbf04dab095/src/core/svgId.ts
- *
- * Original licenses:
- *
- * Copyright (c) 2020 Anthony Fu <https://github.com/antfu>
- * @license MIT
- */
-
 import { fileURLToPath } from 'node:url'
 import MagicString from 'magic-string'
 import icons from 'unplugin-icons/vite'
@@ -48,6 +37,7 @@ export const baseConfig = {
 
     // list the client-side direct dependencies/peerDependencies which get bundled
     dedupe: [
+      '@popperjs/core',
       '@sentry/browser',
       '@sentry/vue',
       '@tanstack/vue-virtual',
