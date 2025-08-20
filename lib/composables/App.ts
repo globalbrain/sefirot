@@ -1,22 +1,24 @@
-import { type HttpOptions } from 'sefirot/stores/HttpConfig'
-import { useSetupHttp } from './Http'
-import { type HasLang, useSetupLang } from './Lang'
-import { type HasTheme, useSetupTheme } from './Theme'
+import { type HttpOptions, useHttpConfig } from '../stores/HttpConfig'
+import { type Lang, getBrowserLang, provideLang } from './Lang'
+import { type Theme, useTheme } from './Theme'
 
-export interface SetupAppUser extends HasLang, HasTheme {}
+export interface SetupAppUser {
+  lang?: Lang
+  theme?: Theme
+}
 
 export interface SetupAppOptions {
   http?: HttpOptions
 }
 
 export function useSetupApp(): (user?: SetupAppUser | null, options?: SetupAppOptions) => void {
-  const setupLang = useSetupLang()
-  const setupTheme = useSetupTheme()
-  const setupHttp = useSetupHttp()
+  const theme = useTheme()
+  const httpConfig = useHttpConfig()
 
   return (user, options) => {
-    setupLang(user)
-    setupTheme(user)
-    setupHttp(user, options?.http)
+    const lang = user?.lang ?? getBrowserLang()
+    provideLang(lang)
+    if (user?.theme) { theme.value = user.theme }
+    httpConfig.apply({ lang, ...options?.http })
   }
 }

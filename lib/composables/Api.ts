@@ -1,6 +1,6 @@
-import { useHttpConfig } from 'sefirot/stores/HttpConfig'
 import { type Ref, type WatchSource, ref, watch } from 'vue'
 import { Http } from '../http/Http'
+import { useHttpConfig } from '../stores/HttpConfig'
 import { tryOnMounted } from './Utils'
 
 export interface Query<Data = any> {
