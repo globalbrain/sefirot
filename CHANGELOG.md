@@ -1,5 +1,14 @@
 # Changelog
 
+# [4.31.0](https://github.com/globalbrain/sefirot/compare/v4.30.1...v4.31.0) (2025-08-20)
+
+
+### Bug Fixes
+
+* **action-menu:** flip dropdown alignment if not enough space ([#632](https://github.com/globalbrain/sefirot/issues/632)) ([#643](https://github.com/globalbrain/sefirot/issues/643)) ([638901a](https://github.com/globalbrain/sefirot/commit/638901a263554332c852599150668b9f0ca63218))
+* keep the linkify-it patch on nuxt too ([#644](https://github.com/globalbrain/sefirot/issues/644)) ([e0def5f](https://github.com/globalbrain/sefirot/commit/e0def5fa4ca896fa72df6c11e129e5de5f786467))
+* reduce unnecessary modularity, make useSetupApp SSR compatible, handle fallbacks properly, don't use aliased imports in distributed code, rename useBrowserLang to getBrowserLang ([#646](https://github.com/globalbrain/sefirot/issues/646)) ([0cb1b38](https://github.com/globalbrain/sefirot/commit/0cb1b3851e4f6beaff5e480cb216454404f9f219))
+
 ## [4.30.1](https://github.com/globalbrain/sefirot/compare/v4.30.0...v4.30.1) (2025-08-05)
 
 
