@@ -8,7 +8,7 @@ export interface Trans<T> {
 
 export interface TransMessages<T> {
   en: T
-  ja: T
+  ja: NoInfer<T>
 }
 
 export const SefirotLangKey: InjectionKey<Lang> = Symbol.for('sefirot-lang-key')
