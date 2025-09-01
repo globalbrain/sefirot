@@ -158,7 +158,7 @@ export function useErrorHandler({
   const error = useError()
 
   function set(value: any) {
-    const message = getErrorMessage(value) || 'unknown error'
+    const message = getErrorMessage(value)
     if (ignoreErrors.some((ignore) => ignore.test(message))) {
       return
     }
@@ -224,12 +224,21 @@ export function useErrorHandler({
   }
 }
 
-function getErrorMessage(error: unknown | undefined): string | undefined {
-  try {
-    if (typeof error === 'string') { return error }
-    if (error instanceof Error) { return error.message }
-    return JSON.stringify(error)
-  } catch {}
-
-  return undefined
+function getErrorMessage(error: unknown | undefined): string {
+  let str
+  if (!str && typeof error === 'string') { str = error }
+  if (!str && error instanceof Error) { str = error.message }
+  if (!str) {
+    try {
+      const s = JSON.stringify(error)
+      if (s && s !== '{}') { str = s }
+    } catch {}
+  }
+  if (!str) {
+    try {
+      const s = String(error)
+      if (s) { str = s }
+    } catch {}
+  }
+  return str || 'unknown error'
 }
