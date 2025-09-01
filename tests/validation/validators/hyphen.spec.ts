@@ -2,7 +2,7 @@ import { hyphen } from 'sefirot/validation/validators'
 
 describe('validation/validators/hyphen', () => {
   it('returns true only for the string "-"', () => {
-    expect(hyphen('-')).toBe(true)
+    expect(hyphen('-')).toBe(true) // hyphen-minus
     expect(hyphen(String.fromCharCode(0x2D))).toBe(true)
   })
 
