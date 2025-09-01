@@ -1,32 +1,56 @@
 import { maxValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/maxValue', () => {
-  it('validates whether the value is valid number or string', () => {
-    const max = 10
-
-    expect(maxValue(0, max)).toBe(true)
-    expect(maxValue(10, max)).toBe(true)
-    expect(maxValue('0', max)).toBe(true)
-    expect(maxValue('10', max)).toBe(true)
-
-    expect(maxValue(undefined, max)).toBe(false)
-    expect(maxValue(null, max)).toBe(false)
-    expect(maxValue(true, max)).toBe(false)
-    expect(maxValue(false, max)).toBe(false)
-    expect(maxValue(11, max)).toBe(false)
-    expect(maxValue('11', max)).toBe(false)
-    expect(maxValue({}, max)).toBe(false)
-    expect(maxValue([], max)).toBe(false)
+  it('returns true when number <= max', () => {
+    expect(maxValue(5, 10)).toBe(true)
+    expect(maxValue(10, 10)).toBe(true)
+  })
+  it('returns false when number > max', () => {
+    expect(maxValue(11, 10)).toBe(false)
   })
 
-  it('validates whether the value is valid date', () => {
-    const maxDate = new Date('Fri Jan 19 2024 14:55:27 GMT+0900 (Japan Standard Time)')
-    const invalidDate = new Date('Fri Jan 19 2024 14:55:28 GMT+0900 (Japan Standard Time)')
+  it('accepts numeric strings', () => {
+    expect(maxValue('5', 10)).toBe(true)
+    expect(maxValue('10', 10)).toBe(true)
+  })
+  it('rejects non-numeric strings', () => {
+    expect(maxValue('abc', 10)).toBe(false)
+    expect(maxValue('123a', 200)).toBe(false)
+  })
 
-    expect(maxValue(maxDate, +maxDate)).toBe(true)
+  it('rejects empty string', () => {
+    expect(maxValue('', 0)).toBe(false)
+  })
+  it('rejects whitespace-only string', () => {
+    expect(maxValue('   ', 0)).toBe(false)
+  })
 
-    expect(maxValue(undefined, +maxDate)).toBe(false)
-    expect(maxValue(null, +maxDate)).toBe(false)
-    expect(maxValue(invalidDate, +maxDate)).toBe(false)
+  it('accepts Date whose timestamp <= max', () => {
+    const d = new Date('2024-01-01T00:00:00.000Z')
+    expect(maxValue(d, +d)).toBe(true)
+  })
+  it('rejects Date whose timestamp > max', () => {
+    const d = new Date('2024-01-01T00:00:00.000Z')
+    const later = new Date(+d + 1)
+    expect(maxValue(later, +d)).toBe(false)
+  })
+  it('rejects invalid Date', () => {
+    const bad = new Date('not-a-date')
+    expect(maxValue(bad, Date.now())).toBe(false)
+  })
+
+  it('rejects NaN and non-supported types', () => {
+    expect(maxValue(Number.NaN, 10)).toBe(false)
+    expect(maxValue(true, 10)).toBe(false)
+    expect(maxValue({}, 10)).toBe(false)
+    expect(maxValue(null, 10)).toBe(false)
+    expect(maxValue(undefined, 10)).toBe(false)
+  })
+
+  it('rejects comma-formatted strings', () => {
+    expect(maxValue('1,000', 1500)).toBe(false)
+  })
+  it('rejects exponential notation strings', () => {
+    expect(maxValue('5e2', 600)).toBe(false)
   })
 })

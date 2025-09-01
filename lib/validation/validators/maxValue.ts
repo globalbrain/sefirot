@@ -1,7 +1,5 @@
-export function maxValue(value: unknown, max: number) {
-  if (Number.isFinite(value) || typeof value === 'string' || value instanceof Date) {
-    return +value <= max
-  }
+import { decimal } from './decimal'
 
-  return false
+export function maxValue(value: unknown, max: number) {
+  return (decimal(value) || value instanceof Date) && Number(value) <= max
 }

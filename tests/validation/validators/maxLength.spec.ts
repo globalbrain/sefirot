@@ -1,21 +1,36 @@
 import { maxLength } from 'sefirot/validation/validators'
 
 describe('validation/validators/maxLength', () => {
-  it('validates whether the value is valid', () => {
-    const length = 10
+  it('accepts strings within the max length', () => {
+    expect(maxLength('abc', 5)).toBe(true)
+    expect(maxLength('', 0)).toBe(true)
+    expect(maxLength('', 1)).toBe(true)
+  })
 
-    expect(maxLength('', length)).toBe(true)
-    expect(maxLength('1'.repeat(10), length)).toBe(true)
-    expect(maxLength([], length)).toBe(true)
-    expect(maxLength(Array(10).fill('1'), length)).toBe(true)
+  it('rejects strings longer than max length', () => {
+    expect(maxLength('abcdef', 5)).toBe(false)
+  })
 
-    expect(maxLength(undefined, length)).toBe(false)
-    expect(maxLength(null, length)).toBe(false)
-    expect(maxLength(true, length)).toBe(false)
-    expect(maxLength(false, length)).toBe(false)
-    expect(maxLength('1'.repeat(11), length)).toBe(false)
-    expect(maxLength({}, length)).toBe(false)
-    expect(maxLength({ length: 10 }, length)).toBe(false)
-    expect(maxLength(Array(11).fill('1'), length)).toBe(false)
+  it('accepts arrays within the max length', () => {
+    expect(maxLength([1, 2, 3], 3)).toBe(true)
+    expect(maxLength([], 0)).toBe(true)
+    expect(maxLength([], 1)).toBe(true)
+  })
+
+  it('rejects arrays longer than max length', () => {
+    expect(maxLength([1, 2, 3, 4], 3)).toBe(false)
+  })
+
+  it('rejects non-string/array values', () => {
+    expect(maxLength(123, 3)).toBe(false)
+    expect(maxLength(true, 3)).toBe(false)
+    expect(maxLength({ length: 2 }, 3)).toBe(false)
+    expect(maxLength(null, 3)).toBe(false)
+    expect(maxLength(undefined, 3)).toBe(false)
+  })
+
+  it('counts UTF-16 code units, not grapheme clusters', () => {
+    expect(maxLength('👩‍🚀', 4)).toBe(false)
+    expect(maxLength('👩‍🚀', 5)).toBe(true) // 🧑 (2) + zwj (1) + 🚀 (2)
   })
 })
