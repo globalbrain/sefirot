@@ -10,4 +10,5 @@ declare module 'v-calendar' {
 
 interface NumberConstructor {
   isFinite(value: unknown): value is number
+  isInteger(value: unknown): value is number
 }
