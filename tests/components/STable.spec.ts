@@ -9,7 +9,7 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
 
 describe('components/STable', () => {
   describe('basics', () => {
-    test('it displays columns in order', () => {
+    it('displays columns in order', () => {
       const table = useTable({
         orders: ['item_1', 'item_2', 'item_3'],
         columns: {
@@ -59,7 +59,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenuItem .label').text()).toBe('Option A')
     })
 
-    test('displays divider when multiple group of menus are passed', async () => {
+    it('displays divider when multiple group of menus are passed', async () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -122,7 +122,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenuItem .caret').exists()).toBe(false)
     })
 
-    test('opens dropdown dialog when clicking the menu item', async () => {
+    it('opens dropdown dialog when clicking the menu item', async () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -153,7 +153,7 @@ describe('components/STable', () => {
   })
 
   describe('cell number', () => {
-    test('it displays `0` value', () => {
+    it('displays `0` value', () => {
       const table = useTable({
         orders: ['num'],
         columns: {
@@ -180,7 +180,7 @@ describe('components/STable', () => {
   })
 
   describe('summary', () => {
-    test('it displays summary row at bottom', () => {
+    it('displays summary row at bottom', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {
@@ -208,7 +208,7 @@ describe('components/STable', () => {
   })
 
   describe('conditional hide', () => {
-    test('it hides column when `show` is set to `false`', () => {
+    it('hides column when `show` is set to `false`', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {

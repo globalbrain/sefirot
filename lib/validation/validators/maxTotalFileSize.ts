@@ -1,17 +1,11 @@
-import { isFile } from '../../support/Utils'
-
 /**
  * Validates if the total size of the given files is smaller than the
  * given size.
  */
 export function maxTotalFileSize(value: unknown, size: string): boolean {
-  if (!isArrayOfFiles(value)) {
-    return false
-  }
+  if (!isArrayOfFiles(value)) { return false }
 
-  if (value.length === 0) {
-    return true
-  }
+  if (value.length === 0) { return true }
 
   const factor = /gb/i.test(size)
     ? 1e9
@@ -27,5 +21,5 @@ export function maxTotalFileSize(value: unknown, size: string): boolean {
 }
 
 function isArrayOfFiles(value: unknown): value is File[] {
-  return Array.isArray(value) && value.every((v) => isFile(v))
+  return Array.isArray(value) && value.every((v) => v instanceof File)
 }

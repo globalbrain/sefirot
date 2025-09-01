@@ -4,7 +4,7 @@ import { setup } from 'tests/Utils'
 import { ref } from 'vue'
 
 describe('composables/Validation', () => {
-  test('it validates the data', () => {
+  it('validates the data', () => {
     const vm = setup(() => {
       const { data } = useData({
         name: null as string | null
@@ -58,7 +58,7 @@ describe('composables/Validation', () => {
     expect(vm.validation.a.$invalid).toBe(true)
   })
 
-  test('rules can be getter', () => {
+  it('rules can be getter', () => {
     const vm = setup(() => {
       const { data } = useData({
         v: 5
@@ -83,7 +83,7 @@ describe('composables/Validation', () => {
     expect(vm.validation.v.$invalid).toBe(true)
   })
 
-  test('it can validate all fields in once', async () => {
+  it('can validate all fields in once', async () => {
     const vm = setup(() => {
       const { data } = useData({
         a: 1,
@@ -103,7 +103,7 @@ describe('composables/Validation', () => {
     expect(await vm.validate()).toBe(true)
   })
 
-  test('it can set and reset dirty state', () => {
+  it('can set and reset dirty state', () => {
     const vm = setup(() => {
       const { data } = useData({
         name: null as string | null

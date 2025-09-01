@@ -9,7 +9,7 @@ import {
 } from 'tests/Utils'
 
 describe('components/SInputHMS', async () => {
-  test('accepts `:value`', async () => {
+  it('accepts `:value`', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         value: { hour: '01', minute: '02', second: '03' }
@@ -21,7 +21,7 @@ describe('components/SInputHMS', async () => {
     expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('03')
   })
 
-  test('accepts `:model-value`', async () => {
+  it('accepts `:model-value`', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         modelValue: { hour: '01', minute: '02', second: '03' }
@@ -33,7 +33,7 @@ describe('components/SInputHMS', async () => {
     expect(getInputValue(wrapper.find('.SInputHMS .input.second'))).toBe('03')
   })
 
-  test('accepts `:placeholder`', async () => {
+  it('accepts `:placeholder`', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         placeholder: {
@@ -49,7 +49,7 @@ describe('components/SInputHMS', async () => {
     expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.second'))).toBe('06')
   })
 
-  test('accepts `:placeholder` partially', async () => {
+  it('accepts `:placeholder` partially', async () => {
     const wrapper = mount(SInputHMS)
 
     await wrapper.setProps({ placeholder: { hour: '10' } })
@@ -62,7 +62,7 @@ describe('components/SInputHMS', async () => {
     expect(getInputPlaceholder(wrapper.find('.SInputHMS .input.second'))).toBe('06')
   })
 
-  test('focuses conatiner when input is focused', async () => {
+  it('focuses conatiner when input is focused', async () => {
     const wrapper = mount(SInputHMS)
 
     await wrapper.find('.SInputHMS .input.hour').trigger('focus')
@@ -70,7 +70,7 @@ describe('components/SInputHMS', async () => {
     expect(wrapper.find('.SInputHMS .container').classes()).toContain('focus')
   })
 
-  test('emits `@update:model-value` and `@change` on blur', async () => {
+  it('emits `@update:model-value` and `@change` on blur', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         modelValue: { hour: '01', minute: '02', second: '03' }
@@ -93,7 +93,7 @@ describe('components/SInputHMS', async () => {
     assertEmitted(wrapper, 'change', 3, { hour: '01', minute: '02', second: '06' })
   })
 
-  test('emits events with `null` when the input is not number', async () => {
+  it('emits events with `null` when the input is not number', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         modelValue: { hour: '1', minute: '2', second: '3' }
@@ -116,7 +116,7 @@ describe('components/SInputHMS', async () => {
     assertEmitted(wrapper, 'change', 3, { hour: '1', minute: '2', second: null })
   })
 
-  test('emits events with `null` when the input is empty', async () => {
+  it('emits events with `null` when the input is empty', async () => {
     const wrapper = mount(SInputHMS, {
       props: {
         modelValue: { hour: '1', minute: '2', second: '3' }
@@ -139,7 +139,7 @@ describe('components/SInputHMS', async () => {
     assertEmitted(wrapper, 'change', 3, { hour: '1', minute: '2', second: null })
   })
 
-  test('does not emits events when no value is given', async () => {
+  it('does not emits events when no value is given', async () => {
     const wrapper = mount(SInputHMS)
 
     await wrapper.find('.SInputHMS .input.hour').setValue('4')
@@ -148,7 +148,7 @@ describe('components/SInputHMS', async () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('touches validation when all inputs are blurred', async () => {
+  it('touches validation when all inputs are blurred', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputHMS, {

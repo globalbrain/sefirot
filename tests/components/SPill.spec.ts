@@ -40,7 +40,7 @@ describe('components/SPill', () => {
     expect(wrapper.find('.SPill').element.tagName).toBe('DIV')
   })
 
-  test('it emits click event when `clickable` prop is set', () => {
+  it('emits click event when `clickable` prop is set', () => {
     const wrapper = mount(SPill, {
       props: {
         clickable: true
@@ -52,7 +52,7 @@ describe('components/SPill', () => {
     assertEmitted(wrapper, 'click', 1, undefined)
   })
 
-  test('it does not emits click event when `clickable` prop is not set', () => {
+  it('does not emits click event when `clickable` prop is not set', () => {
     const wrapper = mount(SPill)
 
     wrapper.find('.SPill').trigger('click')

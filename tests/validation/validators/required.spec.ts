@@ -1,7 +1,7 @@
 import { _required, required } from 'sefirot/validation/validators'
 
 describe('validation/validators/required', () => {
-  test('validates if the value is valid', () => {
+  it('validates if the value is valid', () => {
     expect(required([1])).toBe(true)
     expect(required({})).toBe(true)
     expect(required({ a: 1 })).toBe(true)
@@ -24,7 +24,7 @@ describe('validation/validators/required', () => {
 })
 
 describe('validation/validators/required', () => {
-  test('validates if the value is valid', () => {
+  it('validates if the value is valid', () => {
     expect(_required('  ')).toBe(true)
   })
 })

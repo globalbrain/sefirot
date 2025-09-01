@@ -1,6 +1,6 @@
 import { isClient } from '@vueuse/core'
 import { type MaybeRefOrGetter, type Ref, ref, toValue, watchEffect } from 'vue'
-import { isFile, isString } from '../support/Utils'
+import { isString } from '../support/Utils'
 
 export interface ImageSrcFromFile {
   src: Ref<string | null>
@@ -34,7 +34,7 @@ export function useImageSrcFromFile(
   function read(): void {
     const f = toValue(file)
 
-    if (isFile(f)) {
+    if (f instanceof File) {
       reader.readAsDataURL(f)
       return
     }

@@ -1,7 +1,7 @@
 import { minValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/minValue', () => {
-  test('it validates whether the value is valid number or string', () => {
+  it('validates whether the value is valid number or string', () => {
     const min = 10
 
     expect(minValue(10, min)).toBe(true)
@@ -19,7 +19,7 @@ describe('validation/validators/minValue', () => {
     expect(minValue([], min)).toBe(false)
   })
 
-  test('it validates whether the value is valid date', () => {
+  it('validates whether the value is valid date', () => {
     const minDate = new Date('Fri Jan 19 2024 14:55:28 GMT+0900 (Japan Standard Time)')
     const invalidDate = new Date('Fri Jan 19 2024 14:55:27 GMT+0900 (Japan Standard Time)')
 

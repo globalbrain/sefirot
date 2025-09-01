@@ -8,7 +8,7 @@ describe('components/STooltip', () => {
     expect(wrapper.find('.STooltip').element.tagName).toBe('SPAN')
   })
 
-  test('shows `text` slot content', () => {
+  it('shows `text` slot content', () => {
     mount(STooltip, {
       slots: {
         text: 'Example text.'
@@ -18,7 +18,7 @@ describe('components/STooltip', () => {
     expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Example text.')
   })
 
-  test('shows `text` prop content', () => {
+  it('shows `text` prop content', () => {
     mount(STooltip, {
       props: {
         text: 'Example text.'

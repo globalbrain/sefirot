@@ -5,9 +5,7 @@ export interface SlackChannelNameOptions {
 }
 
 export function slackChannelName(value: unknown, options: SlackChannelNameOptions = {}): boolean {
-  if (!isString(value)) {
-    return false
-  }
+  if (!isString(value)) { return false }
 
   const { offset = 0 } = options
   const maxLength = /* Slack channel name max length */ 80 - offset

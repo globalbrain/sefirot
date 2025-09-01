@@ -1,4 +1,4 @@
-import { isDate, isString } from '../../support/Utils'
+import { isString } from '../../support/Utils'
 
 export function required(value: unknown): boolean {
   if (isString(value)) {
@@ -13,15 +13,11 @@ export function _required(value: unknown): boolean {
     return !!value.length
   }
 
-  if (value == null) {
-    return false
-  }
+  if (value == null) { return false }
 
-  if (value === false) {
-    return true
-  }
+  if (value === false) { return true }
 
-  if (isDate(value)) {
+  if (value instanceof Date) {
     return !Number.isNaN(value.getTime())
   }
 

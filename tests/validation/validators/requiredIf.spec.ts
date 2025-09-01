@@ -1,7 +1,7 @@
 import { requiredIf } from 'sefirot/validation/validators'
 
 describe('validation/validators/requiredIf', () => {
-  test('validates if the value is required if condition is `true`', () => {
+  it('validates if the value is required if condition is `true`', () => {
     [
       { condition: true, result: true },
       { condition: false, result: false },

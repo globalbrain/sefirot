@@ -1,9 +1,5 @@
-import { isFile } from '../../support/Utils'
-
 export function maxFileSize(value: unknown, size: string): boolean {
-  if (!isFile(value)) {
-    return false
-  }
+  if (!(value instanceof File)) { return false }
 
   const factor = /gb/i.test(size)
     ? 1e9

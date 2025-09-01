@@ -115,7 +115,7 @@ describe('components/SInputText', () => {
     expect(wrapper.find('.SInputText .input').element).toBe(document.activeElement)
   })
 
-  test('touches validation on blur', async () => {
+  it('touches validation on blur', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputText, {
@@ -131,7 +131,7 @@ describe('components/SInputText', () => {
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
-  test('touches validation on enter', async () => {
+  it('touches validation on enter', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputText, {

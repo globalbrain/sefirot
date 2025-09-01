@@ -1,20 +1,14 @@
 import { getExtension } from '../../support/File'
-import { isFile } from '../../support/Utils'
 
 export function fileExtension(value: unknown, extensions: string[]): boolean {
-  if (!isFile(value)) {
-    return false
+  if (!(value instanceof File)) { return false }
+
+  extensions = extensions.map((ext) => ext.toLowerCase())
+  const fileExtension = getExtension(value) // already lowercased
+
+  if (fileExtension === 'jpg' || fileExtension === 'jpeg') {
+    return extensions.includes('jpg') || extensions.includes('jpeg')
   }
 
-  const fileExtension = getExtension(value)
-
-  return extensions.some((extension) => {
-    // If the extention option is `jpg`, we'll consider other variants such as
-    // `JPG`, `jpeg`, or `JPEG` to be valid as well for the sake of simplicity.
-    if (extension === 'jpg') {
-      return ['jpg', 'jpeg', 'JPG', 'JPEG'].includes(fileExtension)
-    }
-
-    return fileExtension === extension
-  })
+  return extensions.includes(fileExtension)
 }

@@ -3,7 +3,7 @@ import SInputNumber from 'sefirot/components/SInputNumber.vue'
 import { assertEmitted, getInputValue } from 'tests/Utils'
 
 describe('components/SInputNumber', () => {
-  test('it accepts `value` prop', async () => {
+  it('accepts `value` prop', async () => {
     const wrapper = mount(SInputNumber, {
       props: { value: 1 }
     })
@@ -11,13 +11,13 @@ describe('components/SInputNumber', () => {
     expect(getInputValue(wrapper.find('.SInputNumber .input'))).toBe('1')
   })
 
-  test('it sets value to `null` when nither `value` or `modelValue` is set', async () => {
+  it('sets value to `null` when nither `value` or `modelValue` is set', async () => {
     const wrapper = mount(SInputNumber)
 
     expect(getInputValue(wrapper.find('.SInputNumber .input'))).toBe('')
   })
 
-  test('it should apply color when `textColor` prop is set as value', async () => {
+  it('should apply color when `textColor` prop is set as value', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         textColor: 'info',
@@ -28,7 +28,7 @@ describe('components/SInputNumber', () => {
     expect(wrapper.find('.SInputNumber .input').classes()).toContain('info')
   })
 
-  test('it should apply color when `textColor` prop is set as callback', async () => {
+  it('should apply color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         textColor: (value: number | null) => value === 123 ? 'success' : 'danger',
@@ -45,7 +45,7 @@ describe('components/SInputNumber', () => {
     expect(input.classes()).toContain('danger')
   })
 
-  test('it emits value on input event', async () => {
+  it('emits value on input event', async () => {
     const wrapper = mount(SInputNumber, {
       props: { modelValue: 1 }
     })
@@ -60,7 +60,7 @@ describe('components/SInputNumber', () => {
     assertEmitted(wrapper, 'update:model-value', 5, -2)
   })
 
-  test('it emits value on input', async () => {
+  it('emits value on input', async () => {
     const wrapper = mount(SInputNumber, {
       props: { modelValue: 1 }
     })
@@ -75,7 +75,7 @@ describe('components/SInputNumber', () => {
     assertEmitted(wrapper, 'update:model-value', 5, -2)
   })
 
-  test('it emits null when value is null or empty', async () => {
+  it('emits null when value is null or empty', async () => {
     const wrapper = mount(SInputNumber, {
       props: { modelValue: 1 }
     })
@@ -90,7 +90,7 @@ describe('components/SInputNumber', () => {
     assertEmitted(wrapper, 'update:model-value', 5, null)
   })
 
-  test('is shows the value with thousand separator when the foucs is out', async () => {
+  it('is shows the value with thousand separator when the foucs is out', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         modelValue: null,
@@ -103,7 +103,7 @@ describe('components/SInputNumber', () => {
     expect(wrapper.find('.SInputNumber .display').text()).toBe('1,000,000')
   })
 
-  test('it shows the value without thousand separator when separator props is not passed', async () => {
+  it('shows the value without thousand separator when separator props is not passed', async () => {
     const wrapper = mount(SInputNumber, {
       props: { modelValue: 1 }
     })
@@ -113,7 +113,7 @@ describe('components/SInputNumber', () => {
     expect((wrapper.find('.SInputNumber .input').element as any).value).toBe('1000000')
   })
 
-  test('it does not display too large number', async () => {
+  it('does not display too large number', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         separator: true,
@@ -124,7 +124,7 @@ describe('components/SInputNumber', () => {
     expect((wrapper.find('.SInputNumber .display').text())).toBe('The number is too big')
   })
 
-  test('it displays `displayValue` if passed', async () => {
+  it('displays `displayValue` if passed', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         modelValue: 1,

@@ -1,7 +1,7 @@
 import { minLength } from 'sefirot/validation/validators'
 
 describe('validation/validators/minLength', () => {
-  test('it validates whether the value is valid', () => {
+  it('validates whether the value is valid', () => {
     const length = 10
 
     expect(minLength('1'.repeat(10), length)).toBe(true)

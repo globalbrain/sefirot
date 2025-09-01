@@ -1,7 +1,7 @@
 import { requiredYmd } from 'sefirot/validation/validators'
 
 describe('validation/validators/requiredYmd', () => {
-  test('validates if the year, month, and date are present', () => {
+  it('validates if the year, month, and date are present', () => {
     expect(requiredYmd({ year: 2000, month: 12, date: 31 })).toBe(true)
 
     expect(requiredYmd(undefined)).toBe(false)
@@ -18,7 +18,7 @@ describe('validation/validators/requiredYmd', () => {
     expect(requiredYmd([])).toBe(false)
   })
 
-  test('validates only given types', () => {
+  it('validates only given types', () => {
     expect(requiredYmd({ year: 2000, month: 12, date: null }, ['y', 'm'])).toBe(true)
     expect(requiredYmd({ year: 2000, month: 12 }, ['y', 'm'])).toBe(true)
 

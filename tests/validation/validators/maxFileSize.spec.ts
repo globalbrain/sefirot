@@ -1,7 +1,7 @@
 import { maxFileSize } from 'sefirot/validation/validators'
 
 describe('validation/validators/maxFileSize', () => {
-  test('it validates whether the file is smaller than size', () => {
+  it('validates whether the file is smaller than size', () => {
     const size = '5 KB'
 
     expect(maxFileSize(new File([new ArrayBuffer(5_000)], 'foo.txt', { type: 'text/plain' }), size)).toBe(true)

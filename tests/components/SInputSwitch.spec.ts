@@ -3,7 +3,7 @@ import SInputSwitch from 'sefirot/components/SInputSwitch.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputSwitch', () => {
-  test('it accepts `value` prop', async () => {
+  it('accepts `value` prop', async () => {
     const wrapper = mount(SInputSwitch, {
       props: {
         value: true
@@ -13,7 +13,7 @@ describe('components/SInputSwitch', () => {
     expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(true)
   })
 
-  test('it accepts `modelValue` prop', () => {
+  it('accepts `modelValue` prop', () => {
     const wrapper = mount(SInputSwitch, {
       props: {
         modelValue: true
@@ -29,7 +29,7 @@ describe('components/SInputSwitch', () => {
     expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(false)
   })
 
-  test('it emits `update:model-value` and `change` events when item is selected', async () => {
+  it('emits `update:model-value` and `change` events when item is selected', async () => {
     const wrapper = mount(SInputSwitch, {
       props: {
         modelValue: false

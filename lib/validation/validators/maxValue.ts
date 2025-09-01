@@ -1,7 +1,7 @@
-import { isDate, isNumber, isString } from '../../support/Utils'
+import { isNumber, isString } from '../../support/Utils'
 
 export function maxValue(value: unknown, max: number) {
-  if (isNumber(value) || isString(value) || isDate(value)) {
+  if (isNumber(value) || isString(value) || value instanceof Date) {
     return +value <= max
   }
 

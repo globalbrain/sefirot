@@ -44,7 +44,7 @@ describe('components/SButton', () => {
     expect(wrapper.find('.SButton').element.tagName).toBe('DIV')
   })
 
-  test('it emits click event on click', () => {
+  it('emits click event on click', () => {
     const wrapper = mount(SButton)
 
     wrapper.find('.SButton').trigger('click')
@@ -52,7 +52,7 @@ describe('components/SButton', () => {
     assertEmitted(wrapper, 'click', 1, undefined)
   })
 
-  test('it emits disabled-click event on click', () => {
+  it('emits disabled-click event on click', () => {
     const wrapper = mount(SButton, {
       props: {
         disabled: true

@@ -1,7 +1,7 @@
 import { slackChannelName } from 'sefirot/validation/validators'
 
 describe('validation/validators/slackChannelName', () => {
-  test('it validates whether the value is valid', () => {
+  it('validates whether the value is valid', () => {
     expect(slackChannelName('1'.repeat(80))).toBe(true)
 
     expect(slackChannelName('')).toBe(false)
@@ -49,7 +49,7 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName('a-z09ぁんァヶー一龯_')).toBe(true)
   })
 
-  test('it validates whether the value is valid with offset', () => {
+  it('validates whether the value is valid with offset', () => {
     const options = {
       offset: 10
     }

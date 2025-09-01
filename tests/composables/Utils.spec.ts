@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 describe('composables/Utils', () => {
   describe('computedWhen', () => {
-    test('it creates computed value only when the condition is met', () => {
+    it('creates computed value only when the condition is met', () => {
       const condition = ref(false)
       const state = ref('initial')
 
@@ -29,7 +29,7 @@ describe('composables/Utils', () => {
       expect(c.value).toBe(undefined)
     })
 
-    test('it passes non-nullable value of condition to the closure arg', () => {
+    it('passes non-nullable value of condition to the closure arg', () => {
       const value = ref<string | null>(null)
 
       const c = Utils.computedWhen(value, (v) => v)

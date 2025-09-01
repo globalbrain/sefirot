@@ -1,7 +1,7 @@
 import { maxValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/maxValue', () => {
-  test('it validates whether the value is valid number or string', () => {
+  it('validates whether the value is valid number or string', () => {
     const max = 10
 
     expect(maxValue(0, max)).toBe(true)
@@ -19,7 +19,7 @@ describe('validation/validators/maxValue', () => {
     expect(maxValue([], max)).toBe(false)
   })
 
-  test('it validates whether the value is valid date', () => {
+  it('validates whether the value is valid date', () => {
     const maxDate = new Date('Fri Jan 19 2024 14:55:27 GMT+0900 (Japan Standard Time)')
     const invalidDate = new Date('Fri Jan 19 2024 14:55:28 GMT+0900 (Japan Standard Time)')
 
