@@ -64,7 +64,7 @@ describe('support/File', () => {
       expect(getExtension(new File([], './dist/app.mjs'))).toBe('mjs')
     })
 
-    it('should yield empty for directory-like names', () => {
+    it('yields empty for directory-like names', () => {
       expect(getExtension(new File([], '/var/log/'))).toBe('')
       expect(getExtension(new File([], 'C:\\temp\\folder\\'))).toBe('')
     })

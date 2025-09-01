@@ -1,32 +1,62 @@
+import { day } from 'sefirot/support/Day'
 import { minValue } from 'sefirot/validation/validators'
 
 describe('validation/validators/minValue', () => {
-  it('validates whether the value is valid number or string', () => {
-    const min = 10
-
-    expect(minValue(10, min)).toBe(true)
-    expect(minValue('10', min)).toBe(true)
-
-    expect(minValue(undefined, min)).toBe(false)
-    expect(minValue(null, min)).toBe(false)
-    expect(minValue(true, min)).toBe(false)
-    expect(minValue(false, min)).toBe(false)
-    expect(minValue(0, min)).toBe(false)
-    expect(minValue(9, min)).toBe(false)
-    expect(minValue('0', min)).toBe(false)
-    expect(minValue('9', min)).toBe(false)
-    expect(minValue({}, min)).toBe(false)
-    expect(minValue([], min)).toBe(false)
+  it('accepts numbers >= min', () => {
+    expect(minValue(5, 5)).toBe(true)
+    expect(minValue(6, 5)).toBe(true)
   })
 
-  it('validates whether the value is valid date', () => {
-    const minDate = new Date('Fri Jan 19 2024 14:55:28 GMT+0900 (Japan Standard Time)')
-    const invalidDate = new Date('Fri Jan 19 2024 14:55:27 GMT+0900 (Japan Standard Time)')
+  it('rejects numbers < min', () => {
+    expect(minValue(4, 5)).toBe(false)
+  })
 
-    expect(minValue(minDate, +minDate)).toBe(true)
+  it('accepts numeric strings', () => {
+    expect(minValue('5', 5)).toBe(true)
+    expect(minValue('6', 5)).toBe(true)
+  })
 
-    expect(minValue(undefined, +minDate)).toBe(false)
-    expect(minValue(null, +minDate)).toBe(false)
-    expect(minValue(invalidDate, +minDate)).toBe(false)
+  it('rejects non-numeric strings', () => {
+    expect(minValue('abc', 10)).toBe(false)
+    expect(minValue('123a', 200)).toBe(false)
+  })
+
+  it('rejects scientific notation', () => {
+    expect(minValue('5e2', 400)).toBe(false)
+  })
+
+  it('rejects empty string', () => {
+    expect(minValue('', 0)).toBe(false)
+  })
+
+  it('rejects lone minus string "-"', () => {
+    expect(minValue('-', -10)).toBe(false)
+  })
+
+  it('rejects decimal point without digits', () => {
+    expect(minValue('123.', 100)).toBe(false)
+  })
+
+  it('accepts Date when timestamp >= min', () => {
+    const d = day('2024-01-01')
+    expect(minValue(d.toDate(), +d)).toBe(true)
+  })
+
+  it('rejects Date when timestamp < min', () => {
+    const d = day('2024-01-01')
+    const earlier = new Date(+d - 1)
+    expect(minValue(earlier, +d)).toBe(false)
+  })
+
+  it('rejects invalid Date', () => {
+    const bad = new Date('invalid')
+    expect(minValue(bad, Date.now())).toBe(false)
+  })
+
+  it('rejects non-decimal, non-Date types', () => {
+    expect(minValue(true, 0)).toBe(false)
+    expect(minValue({}, 0)).toBe(false)
+    expect(minValue(null, 0)).toBe(false)
+    expect(minValue(undefined, 0)).toBe(false)
   })
 })

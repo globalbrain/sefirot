@@ -1,7 +1,7 @@
 import { positiveInteger } from 'sefirot/validation/validators'
 
 describe('validation/validators/positiveInteger', () => {
-  it('should validates if the value is positive integer', () => {
+  it('validatess if the value is positive integer', () => {
     expect(positiveInteger(1)).toBe(true)
     expect(positiveInteger(+1)).toBe(true)
     expect(positiveInteger(1.0)).toBe(true)

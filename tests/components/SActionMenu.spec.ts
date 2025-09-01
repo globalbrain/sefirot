@@ -113,7 +113,7 @@ describe('SActionMenu Viewport Alignment', () => {
   })
 
   describe('Top-Left Position', () => {
-    it('should keep left alignment when there is space on the right', async () => {
+    it('keeps left alignment when there is space on the right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -135,7 +135,7 @@ describe('SActionMenu Viewport Alignment', () => {
         .toContain('bottom')
     })
 
-    it('should flip to left alignment even when preferring right', async () => {
+    it('flips to left alignment even when preferring right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -159,7 +159,7 @@ describe('SActionMenu Viewport Alignment', () => {
   })
 
   describe('Top-Right Position', () => {
-    it('should flip to right alignment when insufficient space on right', async () => {
+    it('flips to right alignment when insufficient space on right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -181,7 +181,7 @@ describe('SActionMenu Viewport Alignment', () => {
         .toContain('bottom')
     })
 
-    it('should keep right alignment when space is available on left', async () => {
+    it('keeps right alignment when space is available on left', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -205,7 +205,7 @@ describe('SActionMenu Viewport Alignment', () => {
   })
 
   describe('Bottom-Left Position', () => {
-    it('should keep left alignment', async () => {
+    it('keeps left alignment', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -226,7 +226,7 @@ describe('SActionMenu Viewport Alignment', () => {
         .toContain('top')
     })
 
-    it('should flip to left alignment when right preferred but insufficient space', async () => {
+    it('flips to left alignment when right preferred but insufficient space', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -249,7 +249,7 @@ describe('SActionMenu Viewport Alignment', () => {
   })
 
   describe('Bottom-Right Position', () => {
-    it('should flip to right alignment when left preferred but insufficient space', async () => {
+    it('flips to right alignment when left preferred but insufficient space', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -270,7 +270,7 @@ describe('SActionMenu Viewport Alignment', () => {
         .toContain('top')
     })
 
-    it('should keep right alignment when space is available', async () => {
+    it('keeps right alignment when space is available', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,

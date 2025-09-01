@@ -17,7 +17,7 @@ describe('components/SInputNumber', () => {
     expect(getInputValue(wrapper.find('.SInputNumber .input'))).toBe('')
   })
 
-  it('should apply color when `textColor` prop is set as value', async () => {
+  it('applys color when `textColor` prop is set as value', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         textColor: 'info',
@@ -28,7 +28,7 @@ describe('components/SInputNumber', () => {
     expect(wrapper.find('.SInputNumber .input').classes()).toContain('info')
   })
 
-  it('should apply color when `textColor` prop is set as callback', async () => {
+  it('applys color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
         textColor: (value: number | null) => value === 123 ? 'success' : 'danger',

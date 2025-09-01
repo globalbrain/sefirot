@@ -37,7 +37,7 @@ describe('components/SInputTextarea', () => {
     assertEmitted(wrapper, 'input', 3, '0')
   })
 
-  it('should emit blur event', async () => {
+  it('emits blur event', async () => {
     const wrapper = mount(SInputTextarea, {
       props: {
         modelValue: null

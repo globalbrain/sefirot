@@ -1,7 +1,7 @@
 import { zero } from 'sefirot/validation/validators'
 
 describe('validation/validators/zero', () => {
-  it('should validates if the value is zero', () => {
+  it('validatess if the value is zero', () => {
     expect(zero(0)).toBe(true)
 
     expect(zero(undefined)).toBe(false)

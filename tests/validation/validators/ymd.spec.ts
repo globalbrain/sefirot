@@ -1,7 +1,7 @@
 import { ymd } from 'sefirot/validation/validators'
 
 describe('validation/validators/ymd', () => {
-  it('should validate if the year, month, and date is valid value', () => {
+  it('validates if the year, month, and date is valid value', () => {
     expect(ymd({ year: 1, month: 1, date: 1 })).toBe(true)
     expect(ymd({ year: 9999, month: 12, date: null })).toBe(true)
 
@@ -25,7 +25,7 @@ describe('validation/validators/ymd', () => {
     expect(ymd([])).toBe(false)
   })
 
-  it('should validate only the given types', () => {
+  it('validates only the given types', () => {
     expect(ymd({ year: 2000, month: 12, date: 32 }, ['y', 'm'])).toBe(true)
     expect(ymd({ year: 2000, month: null }, ['y', 'm'])).toBe(true)
 

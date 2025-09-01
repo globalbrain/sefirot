@@ -1,22 +1,37 @@
 import { minLength } from 'sefirot/validation/validators'
 
 describe('validation/validators/minLength', () => {
-  it('validates whether the value is valid', () => {
-    const length = 10
+  it('accepts strings with length >= min', () => {
+    expect(minLength('abc', 3)).toBe(true)
+    expect(minLength('abcd', 3)).toBe(true)
+  })
 
-    expect(minLength('1'.repeat(10), length)).toBe(true)
-    expect(minLength(Array(10).fill('1'), length)).toBe(true)
+  it('rejects strings shorter than min', () => {
+    expect(minLength('ab', 3)).toBe(false)
+    expect(minLength('', 1)).toBe(false)
+  })
 
-    expect(minLength(undefined, length)).toBe(false)
-    expect(minLength(null, length)).toBe(false)
-    expect(minLength(true, length)).toBe(false)
-    expect(minLength(false, length)).toBe(false)
-    expect(minLength(10, length)).toBe(false)
-    expect(minLength('', length)).toBe(false)
-    expect(minLength('1'.repeat(9), length)).toBe(false)
-    expect(minLength([], length)).toBe(false)
-    expect(minLength(Array(9).fill('1'), length)).toBe(false)
-    expect(minLength({}, length)).toBe(false)
-    expect(minLength({ length: 10 }, length)).toBe(false)
+  it('accepts arrays with length >= min', () => {
+    expect(minLength([1, 2, 3], 3)).toBe(true)
+    expect(minLength([1, 2, 3, 4], 3)).toBe(true)
+  })
+
+  it('rejects arrays shorter than min', () => {
+    expect(minLength([1], 2)).toBe(false)
+    expect(minLength([], 1)).toBe(false)
+  })
+
+  it('rejects non-string/array types', () => {
+    expect(minLength(123 as any, 3)).toBe(false)
+    expect(minLength(true as any, 3)).toBe(false)
+    expect(minLength({ length: 2 } as any, 2)).toBe(false)
+    expect(minLength(null as any, 3)).toBe(false)
+    expect(minLength(undefined as any, 3)).toBe(false)
+  })
+
+  it('counts UTF-16 code units, not grapheme clusters', () => {
+    expect(minLength('👩‍🚀', 4)).toBe(true)
+    expect(minLength('👩‍🚀', 5)).toBe(true)
+    expect(minLength('👩‍🚀', 6)).toBe(false)
   })
 })

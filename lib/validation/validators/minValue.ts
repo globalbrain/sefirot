@@ -1,7 +1,5 @@
-export function minValue(value: unknown, min: number) {
-  if (Number.isFinite(value) || typeof value === 'string' || value instanceof Date) {
-    return +value >= min
-  }
+import { decimal } from './decimal'
 
-  return false
+export function minValue(value: unknown, min: number) {
+  return (decimal(value) || value instanceof Date) && Number(value) >= min
 }
