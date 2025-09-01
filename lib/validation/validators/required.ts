@@ -1,7 +1,5 @@
-import { isString } from '../../support/Utils'
-
 export function required(value: unknown): boolean {
-  if (isString(value)) {
+  if (typeof value === 'string') {
     value = value.trim()
   }
 

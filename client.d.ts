@@ -7,3 +7,7 @@ declare module 'v-calendar' {
   export * from 'v-calendar/dist/types/src/index.d.ts'
   export { default } from 'v-calendar/dist/types/src/index.d.ts'
 }
+
+interface NumberConstructor {
+  isFinite(value: unknown): value is number
+}
