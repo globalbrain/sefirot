@@ -2,7 +2,7 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'
-import { isNumber, isObject, isString } from './Utils'
+import { isObject } from './Utils'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
@@ -67,7 +67,7 @@ export function createYmd(
   month: number | null = null,
   date: number | null = null
 ): Ymd {
-  if (isNumber(yearOrDay) || yearOrDay == null) {
+  if (typeof yearOrDay === 'number' || yearOrDay == null) {
     return {
       year: yearOrDay,
       month,
@@ -92,7 +92,7 @@ export function createHms(
   minute: string | null = null,
   second: string | null = null
 ): Hms {
-  if (isString(hourOrDay) || hourOrDay == null) {
+  if (typeof hourOrDay === 'string' || hourOrDay == null) {
     return {
       hour: hourOrDay,
       minute,
@@ -117,7 +117,7 @@ export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): va
       keys.push(YmdMap[type])
       return keys
     }, [])
-    .every((key) => value[key] === null || isNumber(value[key]))
+    .every((key) => value[key] === null || typeof value[key] === 'number')
 }
 
 export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
@@ -130,7 +130,7 @@ export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): va
       keys.push(HmsMap[type])
       return keys
     }, [])
-    .every((key) => value[key] === null || isString(value[key]))
+    .every((key) => value[key] === null || typeof value[key] === 'string')
 }
 
 export function isDay(value: unknown): value is Day {

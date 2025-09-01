@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isString } from '../support/Utils'
 import { type Props as BaseProps } from './SInputBase.vue'
 import SInputText from './SInputText.vue'
 
@@ -39,7 +38,7 @@ const _textColor = computed(() => {
     return 'neutral'
   }
 
-  if (isString(props.textColor)) {
+  if (typeof props.textColor === 'string') {
     return props.textColor
   }
 

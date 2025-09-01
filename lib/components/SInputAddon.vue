@@ -7,7 +7,6 @@ import {
   useManualDropdownPosition
 } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
-import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 
 const props = withDefaults(defineProps<{
@@ -80,7 +79,7 @@ function handleClickButton() {
     >
       <span class="action-label">
         <component
-          v-if="props.label && !isString(props.label)"
+          v-if="props.label && (typeof props.label !== 'string')"
           :is="props.label"
           class="action-icon"
         />

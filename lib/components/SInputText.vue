@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
-import { isString } from '../support/Utils'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export type { Color, Size } from './SInputBase.vue'
@@ -47,7 +46,7 @@ const textColor = computed(() => {
     return 'neutral'
   }
 
-  if (isString(props.textColor)) {
+  if (typeof props.textColor === 'string') {
     return props.textColor
   }
 
@@ -124,7 +123,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
       <div class="value">
         <div v-if="unitBefore" class="unit before">
-          <span v-if="isString(unitBefore)" class="unit-text">{{ unitBefore }}</span>
+          <span v-if="typeof unitBefore === 'string'" class="unit-text">{{ unitBefore }}</span>
           <component v-else :is="unitBefore" class="unit-icon" />
         </div>
 
@@ -150,7 +149,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         </div>
 
         <div v-if="unitAfter" class="unit after">
-          <span v-if="isString(unitAfter)" class="unit-text">{{ unitAfter }}</span>
+          <span v-if="typeof unitAfter === 'string'" class="unit-text">{{ unitAfter }}</span>
           <component v-else :is="unitAfter" class="unit-icon" />
         </div>
       </div>
