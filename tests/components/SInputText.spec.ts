@@ -3,7 +3,7 @@ import SInputText from 'sefirot/components/SInputText.vue'
 import { assertEmitted, createValidatable } from 'tests/Utils'
 
 describe('components/SInputText', () => {
-  it('applys color when `textColor` prop is set as value', async () => {
+  it('applies color when `textColor` prop is set as value', async () => {
     const wrapper = mount(SInputText, {
       props: {
         textColor: 'info',
@@ -14,7 +14,7 @@ describe('components/SInputText', () => {
     expect(wrapper.find('.SInputText .input').classes()).toContain('info')
   })
 
-  it('applys color when `textColor` prop is set as callback', async () => {
+  it('applies color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputText, {
       props: {
         textColor: (value: string | null) => value === 'text' ? 'success' : 'danger',
