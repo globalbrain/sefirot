@@ -2,7 +2,5 @@
 const emailRE = /^(?!\.)(?!.*\.\.)([a-z0-9_'+\-\.]*)[a-z0-9_'+\-]@([a-z0-9][a-z0-9\-]*\.)+[a-z0-9\-]{2,}$/i
 
 export function email(value: unknown): boolean {
-  if (typeof value !== 'string') { return false }
-
-  return emailRE.test(value)
+  return typeof value === 'string' && emailRE.test(value)
 }

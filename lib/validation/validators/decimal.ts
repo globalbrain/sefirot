@@ -1,6 +1,9 @@
 export function decimal(value: unknown): boolean {
+  const num = Number(value)
   return (
-    Number.isFinite(value)
-    || (typeof value === 'string' && value.length > 0 && Number.isFinite(Number(value)))
+    !Number.isNaN(num)
+    && num >= Number.MIN_SAFE_INTEGER
+    && num <= Number.MAX_SAFE_INTEGER
+    && num.toString() === value?.toString()
   )
 }
