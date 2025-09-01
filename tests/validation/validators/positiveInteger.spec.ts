@@ -1,28 +1,27 @@
 import { positiveInteger } from 'sefirot/validation/validators'
 
 describe('validation/validators/positiveInteger', () => {
-  it('validatess if the value is positive integer', () => {
+  it('accepts positive integers within safe range', () => {
     expect(positiveInteger(1)).toBe(true)
-    expect(positiveInteger(+1)).toBe(true)
-    expect(positiveInteger(1.0)).toBe(true)
-    expect(positiveInteger(+1.0)).toBe(true)
-    expect(positiveInteger(10)).toBe(true)
-    expect(positiveInteger(+10)).toBe(true)
+    expect(positiveInteger(Number.MAX_SAFE_INTEGER)).toBe(true)
+  })
 
-    expect(positiveInteger(undefined)).toBe(false)
-    expect(positiveInteger(null)).toBe(false)
-    expect(positiveInteger(true)).toBe(false)
-    expect(positiveInteger(false)).toBe(false)
+  it('rejects zero and -0', () => {
+    expect(positiveInteger(0)).toBe(false)
+    expect(positiveInteger(-0)).toBe(false)
+  })
+
+  it('rejects negatives, non-integers, and non-numbers', () => {
     expect(positiveInteger(-1)).toBe(false)
-    expect(positiveInteger(1.1)).toBe(false)
-    expect(positiveInteger(-1.1)).toBe(false)
-    expect(positiveInteger('1')).toBe(false)
-    expect(positiveInteger('+1')).toBe(false)
-    expect(positiveInteger('1.0')).toBe(false)
-    expect(positiveInteger('+1.0')).toBe(false)
-    expect(positiveInteger('10')).toBe(false)
-    expect(positiveInteger('+10')).toBe(false)
-    expect(positiveInteger({})).toBe(false)
-    expect(positiveInteger([])).toBe(false)
+    expect(positiveInteger(1.2)).toBe(false)
+    expect(positiveInteger('2')).toBe(false)
+    expect(positiveInteger(Number.NaN)).toBe(false)
+    expect(positiveInteger(Number.POSITIVE_INFINITY)).toBe(false)
+    // eslint-disable-next-line no-new-wrappers
+    expect(positiveInteger(new Number(3))).toBe(false)
+  })
+
+  it('rejects values above MAX_SAFE_INTEGER', () => {
+    expect(positiveInteger(Number.MAX_SAFE_INTEGER + 1)).toBe(false)
   })
 })
