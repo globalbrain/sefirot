@@ -24,6 +24,7 @@ describe('validation/validators/maxFileSize', () => {
   })
 
   it('returns false for invalid size strings', () => {
+    expect(maxFileSize(f(0), 'abc')).toBe(false)
     expect(maxFileSize(f(10), 'abc')).toBe(false)
   })
 

@@ -1,25 +1,8 @@
-/**
- * Validates if the total size of the given files is smaller than the
- * given size.
- */
 export function maxTotalFileSize(value: unknown, size: string): boolean {
-  if (!isArrayOfFiles(value)) { return false }
+  if (!Array.isArray(value) || value.some((v) => !(v instanceof File))) { return false }
 
-  if (value.length === 0) { return true }
-
-  const factor = /gb/i.test(size)
-    ? 1e9
-    : /mb/i.test(size)
-      ? 1e6
-      : /kb/i.test(size)
-        ? 1e3
-        : 1
-
+  const factor = /gb/i.test(size) ? 1e9 : /mb/i.test(size) ? 1e6 : /kb/i.test(size) ? 1e3 : 1
   const total = value.reduce((total, file) => total + file.size, 0)
 
-  return total <= factor * +size.replace(/[^\d\.]/g, '')
-}
-
-function isArrayOfFiles(value: unknown): value is File[] {
-  return Array.isArray(value) && value.every((v) => v instanceof File)
+  return total <= factor * Number.parseFloat(size.replace(/[^\d\.]/g, ''))
 }
