@@ -4,7 +4,7 @@ describe('validation/validators/maxLength', () => {
   it('validates whether the value is valid', () => {
     const length = 10
 
-    // expect(maxLength('', length)).toBe(true)
+    expect(maxLength('', length)).toBe(true)
     expect(maxLength('1'.repeat(10), length)).toBe(true)
     expect(maxLength([], length)).toBe(true)
     expect(maxLength(Array(10).fill('1'), length)).toBe(true)

@@ -10,5 +10,5 @@ export function isObject(value: unknown): value is Record<string, unknown> {
 }
 
 export function isString(value: unknown): value is string {
-  return typeof value === 'string' && value.length > 0
+  return typeof value === 'string'
 }
