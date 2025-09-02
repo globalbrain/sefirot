@@ -24,15 +24,13 @@ describe('validation/validators/email', () => {
   })
 
   it('rejects bad domains', () => {
-    expect(email('a@-example.com')).toBe(false)
-    expect(email('a@example..com')).toBe(false)
-    expect(email('a@exa_mple.com')).toBe(false)
-    expect(email('a@localhost')).toBe(false)
-    expect(email('a@b.c')).toBe(false)
-  })
-
-  it.skip('rejects a domain label ending with a hyphen', () => {
+    expect(email('a@-a.com')).toBe(false)
     expect(email('a@a-.com')).toBe(false)
+    expect(email('a@a.-com')).toBe(false)
+    expect(email('a@b.c')).toBe(false)
+    expect(email('a@exa_mple.com')).toBe(false)
+    expect(email('a@example..com')).toBe(false)
+    expect(email('a@localhost')).toBe(false)
   })
 
   it('accepts punycode TLDs with digits', () => {
