@@ -1,17 +1,26 @@
-import { HmsMap, type HmsType, isHms } from '../../support/Day'
+import { type HmsType } from '../../support/Day'
+import { isObject } from '../../support/Utils'
 
-export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's']): boolean {
-  if (!isHms(value, required)) { return false }
+const hourRE = /^(?:[01]?\d|2[0-3])$/
+const minuteAndSecondRE = /^[0-5]?\d$/
 
-  return required.every((r) => {
-    const _value = value[HmsMap[r]]
+export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's'], rejectNull = false): boolean {
+  if (!isObject(value)) { return false }
 
-    if (_value === null) { return true }
+  const { hour, minute, second, ...rest } = value
+  if (Object.keys(rest).length > 0) { return false }
 
-    const valueAsNumber = Number(_value)
+  const requiredSet = new Set(required)
 
-    return (r === 'h')
-      ? (valueAsNumber >= 0 && valueAsNumber < 24)
-      : (valueAsNumber >= 0 && valueAsNumber < 60)
-  })
+  return (
+    isValidPart(hour, requiredSet.has('h'), hourRE)
+    && isValidPart(minute, requiredSet.has('m'), minuteAndSecondRE)
+    && isValidPart(second, requiredSet.has('s'), minuteAndSecondRE)
+  )
+
+  function isValidPart(v: unknown, req: boolean, re: RegExp): v is string | null | undefined {
+    if (v === undefined) { return !req }
+    if (v === null) { return !rejectNull || !req }
+    return typeof v === 'string' && re.test(v)
+  }
 }

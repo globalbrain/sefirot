@@ -7,7 +7,7 @@ describe('validation/validators/beforeOrEqual', () => {
     expect(beforeOrEqual(undefined, date)).toBe(false)
     expect(beforeOrEqual('2024-01-02', date)).toBe(false)
     expect(beforeOrEqual(1704067200000, date)).toBe(false)
-    expect(beforeOrEqual({} as any, date)).toBe(false)
+    expect(beforeOrEqual({}, date)).toBe(false)
   })
 
   it('returns false when date arg is not a Day', () => {

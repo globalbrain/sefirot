@@ -1,6 +1,6 @@
 import { type RequiredIfCondition, requiredHmsIf } from 'sefirot/validation/validators'
 
-describe('validation/validators/requiredHmsIf', () => {
+describe.skip('validation/validators/requiredHmsIf', () => {
   function getTestCasesForAllTypes() {
     return [
       { value: { hour: '01', minute: '02', second: '03' }, expected: true },

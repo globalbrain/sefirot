@@ -22,11 +22,11 @@ describe('validation/validators/minLength', () => {
   })
 
   it('rejects non-string/array types', () => {
-    expect(minLength(123 as any, 3)).toBe(false)
-    expect(minLength(true as any, 3)).toBe(false)
-    expect(minLength({ length: 2 } as any, 2)).toBe(false)
-    expect(minLength(null as any, 3)).toBe(false)
-    expect(minLength(undefined as any, 3)).toBe(false)
+    expect(minLength(123, 3)).toBe(false)
+    expect(minLength(true, 3)).toBe(false)
+    expect(minLength({ length: 2 }, 2)).toBe(false)
+    expect(minLength(null, 3)).toBe(false)
+    expect(minLength(undefined, 3)).toBe(false)
   })
 
   it('counts UTF-16 code units, not grapheme clusters', () => {

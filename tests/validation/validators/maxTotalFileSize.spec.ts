@@ -1,15 +1,16 @@
 import { maxTotalFileSize } from 'sefirot/validation/validators'
+import { f } from '../../Utils'
 
 describe('validation/validators/maxTotalFileSize', () => {
   it('returns false when value is not an array', () => {
-    expect(maxTotalFileSize(null as any, '1MB')).toBe(false)
-    expect(maxTotalFileSize({} as any, '1MB')).toBe(false)
-    expect(maxTotalFileSize('not a file' as any, '1MB')).toBe(false)
-    expect(maxTotalFileSize(f(100), '1MB') as any).toBe(false)
+    expect(maxTotalFileSize(null, '1MB')).toBe(false)
+    expect(maxTotalFileSize({}, '1MB')).toBe(false)
+    expect(maxTotalFileSize('not a file', '1MB')).toBe(false)
+    expect(maxTotalFileSize(f(100), '1MB')).toBe(false)
   })
 
   it('returns false when array contains non-File elements', () => {
-    expect(maxTotalFileSize([f(100), {} as any], '1MB')).toBe(false)
+    expect(maxTotalFileSize([f(100), {}], '1MB')).toBe(false)
   })
 
   it('accepts valid arrays of Files and compares total size', () => {
@@ -42,7 +43,3 @@ describe('validation/validators/maxTotalFileSize', () => {
     expect(maxTotalFileSize([f(10)], 'abc')).toBe(false)
   })
 })
-
-function f(bytes: number) {
-  return new File([new Uint8Array(bytes)], 'foo.txt', { type: 'text/plain' })
-}

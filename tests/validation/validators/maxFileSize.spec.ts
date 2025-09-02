@@ -1,4 +1,5 @@
 import { maxFileSize } from 'sefirot/validation/validators'
+import { f } from '../../Utils'
 
 describe('validation/validators/maxFileSize', () => {
   it('returns false when value is not a File', () => {
@@ -33,7 +34,3 @@ describe('validation/validators/maxFileSize', () => {
     expect(maxFileSize(f(1501), '1.5KB')).toBe(false)
   })
 })
-
-function f(bytes: number) {
-  return new File([new Uint8Array(bytes)], 'foo.txt', { type: 'text/plain' })
-}

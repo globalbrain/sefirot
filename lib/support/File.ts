@@ -1,3 +1,5 @@
+const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+
 /**
  * Get extension of the given file.
  */
@@ -12,13 +14,11 @@ export function getExtension(file: File): string {
  * array of files and returns the total size.
  */
 export function formatSize(files: File | File[]): string {
-  const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
   files = Array.isArray(files) ? files : [files]
-  let size = files.reduce((previous, file) => previous + file.size, 0)
-  let index = 0
-  while (size >= 1024 && index < units.length) {
-    size /= 1024
-    index++
-  }
-  return `${size.toFixed(2)}${units[index]}`
+
+  const size = files.reduce((sum, file) => sum + file.size, 0)
+  if (size === 0) { return `0 ${units[0]}` }
+
+  const i = Math.min(Math.floor(Math.log(size) / Math.log(1000)), units.length - 1)
+  return `${(size / 1000 ** i).toFixed(2)} ${units[i]}`
 }

@@ -10,10 +10,10 @@ describe('validation/validators/email', () => {
   })
 
   it('rejects non-strings', () => {
-    expect(email(undefined as any)).toBe(false)
-    expect(email(null as any)).toBe(false)
-    expect(email(123 as any)).toBe(false)
-    expect(email({} as any)).toBe(false)
+    expect(email(undefined)).toBe(false)
+    expect(email(null)).toBe(false)
+    expect(email(123)).toBe(false)
+    expect(email({})).toBe(false)
   })
 
   it('rejects bad local parts', () => {
