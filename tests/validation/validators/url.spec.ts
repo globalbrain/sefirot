@@ -56,15 +56,15 @@ describe('validation/validators/url', () => {
     expect(url('http://localhost')).toBe(false)
   })
 
-  for (const candidate of validURLCandidates) {
-    it(`accepts ${JSON.stringify(candidate)}`, () => {
-      expect(url(candidate)).toBe(true)
-    })
-  }
+  it('accepts valid URL candidates', () => {
+    for (const candidate of validURLCandidates) {
+      expect(url(candidate), `should accept ${JSON.stringify(candidate)}`).toBe(true)
+    }
+  })
 
-  for (const candidate of invalidURLCandidates) {
-    it(`rejects ${JSON.stringify(candidate)}`, () => {
-      expect(url(candidate)).toBe(false)
-    })
-  }
+  it('rejects invalid URL candidates', () => {
+    for (const candidate of invalidURLCandidates) {
+      expect(url(candidate), `should reject ${JSON.stringify(candidate)}`).toBe(false)
+    }
+  })
 })

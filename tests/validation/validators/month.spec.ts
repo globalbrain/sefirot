@@ -3,7 +3,7 @@ import { month } from 'sefirot/validation/validators'
 describe('validation/validators/month', () => {
   it('accepts integers from 1 to 12 inclusive', () => {
     for (let i = 1; i <= 12; i++) {
-      expect(month(i)).toBe(true)
+      expect(month(i), `should accept ${i}`).toBe(true)
     }
   })
 
