@@ -78,7 +78,7 @@ describe('validation/validators/ymd', () => {
 
     // @ts-expect-error mock
     globalThis.Date = class extends RealDate {
-      constructor(...args: []) {
+      constructor(...args: ConstructorParameters<typeof RealDate> | []) {
         if (args.length === 0) {
           super('2024-02-01T00:00:00Z')
         } else {
@@ -97,7 +97,7 @@ describe('validation/validators/ymd', () => {
 
     // @ts-expect-error mock
     globalThis.Date = class extends RealDate {
-      constructor(...args: []) {
+      constructor(...args: ConstructorParameters<typeof RealDate> | []) {
         if (args.length === 0) {
           super('2024-03-01T00:00:00Z')
         } else {
