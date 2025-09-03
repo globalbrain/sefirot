@@ -1,5 +1,5 @@
 import { createRule } from '../Rule'
-import { decimal as baseDecimal, hyphen } from '../validators'
+import { decimal as baseDecimal } from '../validators'
 
 export const message = {
   en: 'The value must be a valid decimal number.',
@@ -10,6 +10,6 @@ export function decimal(msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
     optional: true,
-    validation: (value) => !hyphen(value) && baseDecimal(value)
+    validation: (value) => baseDecimal(value)
   })
 }
