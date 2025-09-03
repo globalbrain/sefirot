@@ -65,6 +65,7 @@ describe('validation/validators/slackChannelName', () => {
 
   it('rejects empty string', () => {
     expect(slackChannelName('')).toBe(false)
+    expect(slackChannelName(' ')).toBe(false)
   })
 
   it('rejects leading/trailing uppercase after lowercasing', () => {

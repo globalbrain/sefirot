@@ -27,7 +27,7 @@ export function createRule(
   const validator = helpers.withParams(
     params,
     (value: unknown) => {
-      return options.optional && !required(value)
+      return options.optional && !required(value, false)
         ? true
         : options.validation(value)
     }
