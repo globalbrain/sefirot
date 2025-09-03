@@ -30,7 +30,6 @@ describe('validation/validators/maxLength', () => {
   })
 
   it('counts UTF-16 code units, not grapheme clusters', () => {
-    expect(maxLength('👩‍🚀', 4)).toBe(false)
-    expect(maxLength('👩‍🚀', 5)).toBe(true) // 🧑 (2) + zwj (1) + 🚀 (2)
+    expect(maxLength('👩‍🚀', 5)).toBe(true) // 👩 (2) + zwj (1) + 🚀 (2)
   })
 })

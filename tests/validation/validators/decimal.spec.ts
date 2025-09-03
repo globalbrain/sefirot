@@ -129,14 +129,17 @@ describe('validation/validators/decimal', () => {
     expect(decimal('12345678901234567890')).toBe(false)
     expect(decimal('0.000000000123456789')).toBe(false)
     expect(decimal('-0.000000000123456789')).toBe(false)
-
     // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
     expect(decimal(12345678901234567890)).toBe(false)
-    expect(decimal(12345678901234567890n)).toBe(false)
   })
 
-  it('accepts bigint types if within safe integer range', () => {
+  it('accepts bigint types if within the safe integer range', () => {
     expect(decimal(9007199254740991n)).toBe(true)
     expect(decimal(-9007199254740991n)).toBe(true)
+  })
+
+  it ('rejects bigint types outside the safe integer range', () => {
+    expect(decimal(12345678901234567890n)).toBe(false)
+    expect(decimal(-12345678901234567890n)).toBe(false)
   })
 })
