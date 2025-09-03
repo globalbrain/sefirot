@@ -50,6 +50,7 @@ describe('validation/validators/ymd', () => {
     expect(ymd({ year: null, month: 1, date: 1 }, ['y', 'm', 'd'])).toBe(true)
     expect(ymd({ year: 2024, month: null, date: 1 }, ['y', 'm', 'd'])).toBe(true)
     expect(ymd({ year: 2024, month: 1, date: null }, ['y', 'm', 'd'])).toBe(true)
+    expect(ymd({ year: null, month: null, date: null }, ['y', 'm', 'd'])).toBe(true)
   })
 
   it('accepts null for required parts', () => {
