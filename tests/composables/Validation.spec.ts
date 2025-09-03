@@ -29,7 +29,7 @@ describe('composables/Validation', () => {
     expect(vm.validation.name.$invalid).toBe(false)
   })
 
-  test('data can be getter', () => {
+  it('allows data to be a getter', () => {
     const vm = setup(() => {
       const { data } = useData({
         v: 1
@@ -58,7 +58,7 @@ describe('composables/Validation', () => {
     expect(vm.validation.a.$invalid).toBe(true)
   })
 
-  it('rules can be getter', () => {
+  it('allows rules to be a getter', () => {
     const vm = setup(() => {
       const { data } = useData({
         v: 5
@@ -83,7 +83,7 @@ describe('composables/Validation', () => {
     expect(vm.validation.v.$invalid).toBe(true)
   })
 
-  it('can validate all fields in once', async () => {
+  it('validates all fields at once', async () => {
     const vm = setup(() => {
       const { data } = useData({
         a: 1,
@@ -103,7 +103,7 @@ describe('composables/Validation', () => {
     expect(await vm.validate()).toBe(true)
   })
 
-  it('can set and reset dirty state', () => {
+  it('sets and resets the dirty state', () => {
     const vm = setup(() => {
       const { data } = useData({
         name: null as string | null

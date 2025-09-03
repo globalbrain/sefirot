@@ -1,7 +1,7 @@
 import { minLength } from 'sefirot/validation/rules'
 
 describe('validation/rules/minLength', () => {
-  it('validates whether the value is valid', () => {
+  it('validates the minimum length', () => {
     const rule = minLength(10)
 
     expect(rule.$validator('1'.repeat(10), null, null)).toBe(true)
@@ -20,12 +20,12 @@ describe('validation/rules/minLength', () => {
     expect(rule.$validator({ length: 10 }, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = minLength(10)
     expect(rule.$message({ $params: {} })).toBe('The value must be greater than or equal to 10 characters.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = minLength(10, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

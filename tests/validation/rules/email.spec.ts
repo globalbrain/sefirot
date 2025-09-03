@@ -1,7 +1,7 @@
 import { email } from 'sefirot/validation/rules'
 
 describe('validation/rules/email', () => {
-  it('validates whether the value is email', () => {
+  it('validates email addresses', () => {
     const rule = email()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -46,12 +46,12 @@ describe('validation/rules/email', () => {
     expect(rule.$validator('"john..doe"@example.org', null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = email()
     expect(rule.$message({ $params: {} })).toBe('The email is invalid.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = email('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

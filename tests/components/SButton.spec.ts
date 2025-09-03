@@ -3,7 +3,7 @@ import SButton from 'sefirot/components/SButton.vue'
 import { assertEmitted } from 'tests/Utils'
 
 describe('components/SButton', () => {
-  test('tag is set to `button` by default', () => {
+  it('sets tag to `button` by default', () => {
     const wrapper = mount(SButton, {
       props: {
         label: 'Button'
@@ -13,7 +13,7 @@ describe('components/SButton', () => {
     expect(wrapper.find('.SButton').element.tagName).toBe('BUTTON')
   })
 
-  test('tag is set to `SLink` when `href` is set', () => {
+  it('uses `SLink` when `href` is set', () => {
     const wrapper = mount(SButton, {
       props: {
         href: 'http://example.com'
@@ -23,7 +23,7 @@ describe('components/SButton', () => {
     expect(wrapper.find('.SButton').classes()).toContain('SLink')
   })
 
-  test('tag is set to given `tag` if it exists', () => {
+  it('uses the given `tag` if it exists', () => {
     const wrapper = mount(SButton, {
       props: {
         tag: 'div'
@@ -33,7 +33,7 @@ describe('components/SButton', () => {
     expect(wrapper.find('.SButton').element.tagName).toBe('DIV')
   })
 
-  test('tag is set to given `tag` if it exists even if `href` is set', () => {
+  it('uses the given `tag` even when `href` is set', () => {
     const wrapper = mount(SButton, {
       props: {
         tag: 'div',

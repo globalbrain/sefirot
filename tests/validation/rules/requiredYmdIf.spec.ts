@@ -53,35 +53,35 @@ describe('validation/rules/requiredYmdIf', () => {
     }, [] as ({ value: unknown; condition: RequiredIfCondition; expected: boolean })[])
   }
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForAllTypes(), true)
   )('validates if the year, month, and date are present: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
     const rule = requiredYmdIf(condition)
     expect(await rule.$validator(value, null, null)).toBe(expected)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForAllTypes(), false)
   )('validates if the year, month, and date are present: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredYmdIf(condition)
     expect(await rule.$validator(value, null, null)).toBe(true)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForGivenTypes(), true)
   )('validates only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
     const rule = requiredYmdIf(condition, ['y', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(expected)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForGivenTypes(), false)
   )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredYmdIf(condition, ['y', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(true)
   })
 
-  test('condition can be reactive', async () => {
+  it('supports reactive conditions', async () => {
     const condition = ref(false)
 
     const { data } = useData({
@@ -102,12 +102,12 @@ describe('validation/rules/requiredYmdIf', () => {
     expect(validation.value.$invalid).toBe(true)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = requiredYmdIf(true)
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = requiredYmdIf(true, undefined, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

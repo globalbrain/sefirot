@@ -47,7 +47,7 @@ describe('support/Day', () => {
       expect(Day.createYmd(Day.day('1985-10-10'))).toEqual(expected)
     })
 
-    test('all fields are `null` by default', () => {
+    it('treats all fields as `null` by default', () => {
       const expected = {
         year: null,
         month: null,
@@ -79,7 +79,7 @@ describe('support/Day', () => {
       expect(Day.createHms(Day.day('1985-10-10 10:20:30'))).toEqual(expected)
     })
 
-    test('all fields are `null` by default', () => {
+    it('treats all fields as `null` by default', () => {
       const expected = {
         hour: null,
         minute: null,

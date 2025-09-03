@@ -32,7 +32,7 @@ describe('components/STable', () => {
   })
 
   describe('menu', () => {
-    test('menu items is displayed in the header when `:menu` is set', () => {
+    it('displays menu items in the header when `:menu` is set', () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -59,7 +59,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenuItem .label').text()).toBe('Option A')
     })
 
-    it('displays divider when multiple group of menus are passed', async () => {
+    it('displays a divider when multiple groups of menus are passed', async () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -93,7 +93,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenu .divider').exists()).toBe(true)
     })
 
-    test('display indicator icon when the state is set to `indicate`', () => {
+    it('displays an indicator icon when the state is `indicate`', () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -180,7 +180,7 @@ describe('components/STable', () => {
   })
 
   describe('summary', () => {
-    it('displays summary row at bottom', () => {
+    it('displays a summary row at the bottom', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {

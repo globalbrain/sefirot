@@ -33,12 +33,12 @@ describe('vaidation/rules/fileExtension', () => {
     expect(fileExtension(['jpg']).$validator(JPEG, null, null)).toBe(true)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = fileExtension(['txt'])
     expect(rule.$message({ $params: {} })).toBe('The file extension is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = fileExtension(['txt'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

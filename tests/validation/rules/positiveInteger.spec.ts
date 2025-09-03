@@ -26,12 +26,12 @@ describe('validation/rules/positiveInteger', () => {
     expect(rule.$validator('+10', null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = positiveInteger()
     expect(rule.$message({ $params: {} })).toBe('The value must be a valid positive integer.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = positiveInteger('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

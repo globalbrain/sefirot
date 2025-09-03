@@ -1,7 +1,7 @@
 import { decimalOrHyphen } from 'sefirot/validation/rules'
 
 describe('validation/rules/decimalOrHyphen', () => {
-  it('validates whether the value is decimalOrHyphen', () => {
+  it('validates decimal numbers or a hyphen', () => {
     const rule = decimalOrHyphen()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -22,12 +22,12 @@ describe('validation/rules/decimalOrHyphen', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = decimalOrHyphen()
     expect(rule.$message({ $params: {} })).toBe('The value must be valid decimal numbers or just a hyphen.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = decimalOrHyphen('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

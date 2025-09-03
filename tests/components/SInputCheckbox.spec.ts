@@ -23,7 +23,7 @@ describe('components/SInputCheckbox', () => {
     expect(wrapper.find('.SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('value defaults to `false` when both `:value` and `:modelValue` is missing', () => {
+  it('defaults to `false` when both `:value` and `:modelValue` are missing', () => {
     const wrapper = mount(SInputCheckbox)
 
     expect(wrapper.find('.SInputCheckbox .input').classes('on')).toBe(false)

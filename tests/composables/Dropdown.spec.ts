@@ -53,7 +53,7 @@ describe('composables/Dropdown', () => {
       expect(position.value).toBe('top')
     })
 
-    test('if container is not passed it will return a new one', () => {
+    it('returns a container ref when none is provided', () => {
       window.innerHeight = 500
 
       const { container } = Dropdown.useManualDropdownPosition()

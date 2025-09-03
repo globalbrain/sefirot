@@ -23,7 +23,7 @@ describe('components/SInputSwitch', () => {
     expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(true)
   })
 
-  test('value defaults to `false` if both `value` and `modelValue` is undefined', () => {
+  it('defaults to `false` when both `value` and `modelValue` are undefined', () => {
     const wrapper = mount(SInputSwitch)
 
     expect(wrapper.find('.SInputSwitch .input').classes('on')).toBe(false)
@@ -42,7 +42,7 @@ describe('components/SInputSwitch', () => {
     assertEmitted(wrapper, 'change', 1, true)
   })
 
-  test('should not emit when disabled', async () => {
+  it('does not emit when disabled', async () => {
     const wrapper = mount(SInputSwitch, {
       props: {
         modelValue: false,

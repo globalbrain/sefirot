@@ -1,7 +1,7 @@
 import { maxLength } from 'sefirot/validation/rules'
 
 describe('validation/rules/maxLength', () => {
-  it('validates whether the value is valid', () => {
+  it('validates the maximum length', () => {
     const rule = maxLength(10)
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -19,12 +19,12 @@ describe('validation/rules/maxLength', () => {
     expect(rule.$validator(Array(11).fill('1'), null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = maxLength(10)
     expect(rule.$message({ $params: {} })).toBe('The value must be less than or equal to 10 characters.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = maxLength(10, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

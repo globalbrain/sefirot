@@ -3,13 +3,13 @@ import SPill from 'sefirot/components/SPill.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SPill', () => {
-  test('tag is set to `span` by default', () => {
+  it('sets tag to `span` by default', () => {
     const wrapper = mount(SPill)
 
     expect(wrapper.find('.SPill').element.tagName).toBe('SPAN')
   })
 
-  test('tag is set to `button` when `clickable` is set', () => {
+  it('renders a `button` when `clickable` is set', () => {
     const wrapper = mount(SPill, {
       props: {
         clickable: true
@@ -19,7 +19,7 @@ describe('components/SPill', () => {
     expect(wrapper.find('.SPill').element.tagName).toBe('BUTTON')
   })
 
-  test('tag is set to given `:as` if it exists', () => {
+  it('uses the given `:as` if it exists', () => {
     const wrapper = mount(SPill, {
       props: {
         as: 'div'
@@ -29,7 +29,7 @@ describe('components/SPill', () => {
     expect(wrapper.find('.SPill').element.tagName).toBe('DIV')
   })
 
-  test('tag is set to given `:as` if it exists even if `clickable` is set', () => {
+  it('uses the given `:as` even when `clickable` is set', () => {
     const wrapper = mount(SPill, {
       props: {
         as: 'div',
@@ -52,7 +52,7 @@ describe('components/SPill', () => {
     assertEmitted(wrapper, 'click', 1, undefined)
   })
 
-  it('does not emits click event when `clickable` prop is not set', () => {
+  it('does not emit click event when `clickable` prop is not set', () => {
     const wrapper = mount(SPill)
 
     wrapper.find('.SPill').trigger('click')

@@ -24,12 +24,12 @@ describe('validation/rules/negativeInteger', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = negativeInteger()
     expect(rule.$message({ $params: {} })).toBe('The value must be a valid negative integer.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = negativeInteger('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

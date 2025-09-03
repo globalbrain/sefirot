@@ -19,12 +19,12 @@ describe('validation/rules/month', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = month()
     expect(rule.$message({ $params: {} })).toBe('The month is invalid.')
   })
 
-  it('can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = month('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

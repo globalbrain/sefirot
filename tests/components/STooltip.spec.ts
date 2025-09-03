@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import STooltip from 'sefirot/components/STooltip.vue'
 
 describe('components/STooltip', () => {
-  test('tag is set to `span` by default', () => {
+  it('sets tag to `span` by default', () => {
     const wrapper = mount(STooltip)
 
     expect(wrapper.find('.STooltip').element.tagName).toBe('SPAN')
@@ -29,7 +29,7 @@ describe('components/STooltip', () => {
   })
 
   // FIXME: .
-  test.skip('shows tooltip on hover', async () => {
+  it.skip('shows tooltip on hover', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {
@@ -55,7 +55,7 @@ describe('components/STooltip', () => {
   })
 
   // FIXME: .
-  test.skip('shows tooltip on focus', async () => {
+  it.skip('shows tooltip on focus', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {

@@ -44,12 +44,12 @@ describe('validation/rules/hms', () => {
     expect(rule.$validator({ hour: '24', minute: '59', second: '60' }, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = hms()
     expect(rule.$message({ $params: {} })).toBe('The time is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = hms(['h', 'm', 's'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

@@ -25,7 +25,7 @@ describe('components/SInputCheckboxes', () => {
     expect(wrapper.find('.SInputCheckboxes .SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('value defaults to empty array when both `:value` and `:modelValue` is missing', () => {
+  it('defaults to an empty array when both `:value` and `:modelValue` are missing', () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }]

@@ -39,12 +39,12 @@ describe('validation/rules/ymd', () => {
     expect(rule.$validator({ year: 2000, month: undefined }, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = ymd()
     expect(rule.$message({ $params: {} })).toBe('The date is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = ymd(['y', 'm', 'd'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

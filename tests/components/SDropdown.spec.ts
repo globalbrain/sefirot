@@ -18,7 +18,7 @@ describe('components/SDropdown', () => {
       expect(wrapper.findAll('.SDropdownSectionFilterItemAvatar').length).toBe(3)
     })
 
-    test('hide disabled options', async () => {
+    it('hides disabled options', async () => {
       const wrapper = mount(SDropdownSectionFilter, {
         props: {
           selected: 1,
