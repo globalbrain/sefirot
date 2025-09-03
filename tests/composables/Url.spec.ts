@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 describe('composables/Url', () => {
   describe('useUrlQuerySync', () => {
-    test('should sync data changes to URL query', async () => {
+    it('syncs data changes to the URL query', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({ page: 1 })
         useUrlQuerySync(data)
@@ -26,7 +26,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should sync URL query to state on initialization', async () => {
+    it('syncs the URL query to state on initialization', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -46,7 +46,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should support casting with casts option', async () => {
+    it('supports casting with the casts option', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -78,7 +78,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should exclude specified keys from URL sync', async () => {
+    it('excludes specified keys from URL sync', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
@@ -110,7 +110,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should handle arrays correctly', async () => {
+    it('handles arrays correctly', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           tags: ['vue', 'typescript'],
@@ -138,7 +138,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should sync arrays from URL to state', async () => {
+    it('syncs arrays from the URL to state', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -166,7 +166,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should not show default values in URL', async () => {
+    it('does not show default values in the URL', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
@@ -194,7 +194,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should clear URL when values return to default', async () => {
+    it('clears the URL when values return to default', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({
           page: 1,
@@ -237,7 +237,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should work with ref instead of reactive', async () => {
+    it('works with a ref instead of reactive', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = ref({
           page: 1,
@@ -265,7 +265,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    test('should handle complex scenario with all features', async () => {
+    it('handles a complex scenario with all features', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -330,7 +330,7 @@ describe('composables/Url', () => {
     })
 
     // #578
-    test('should preserve state when path changes', async () => {
+    it('preserves state when the path changes', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 

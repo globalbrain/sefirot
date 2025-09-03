@@ -2,22 +2,50 @@ import { day } from 'sefirot/support/Day'
 import { afterOrEqual } from 'sefirot/validation/validators'
 
 describe('validation/validators/afterOrEqual', () => {
-  it('should validate if the date is after or equal to the specified date', () => {
-    const date = day('2020-01-02')
-
-    expect(afterOrEqual(day('2020-01-03'), date)).toBe(true)
-    expect(afterOrEqual(date, date)).toBe(true)
-    expect(afterOrEqual(day('2020-01-01'), date)).toBe(false)
+  it('returns false when value is not a Day', () => {
+    const date = day('2024-01-01')
+    expect(afterOrEqual(undefined, date)).toBe(false)
+    expect(afterOrEqual('2024-01-02', date)).toBe(false)
+    expect(afterOrEqual(1704067200000, date)).toBe(false)
+    expect(afterOrEqual({}, date)).toBe(false)
   })
 
-  it('should return false if value or date is not a Day instance', () => {
-    const date = day('2020-01-02')
+  it('returns false when date arg is not a Day', () => {
+    const value = day('2024-01-02')
+    // @ts-expect-error intentional bad arg
+    expect(afterOrEqual(value, undefined)).toBe(false)
+    // @ts-expect-error intentional bad arg
+    expect(afterOrEqual(value, '2024-01-01')).toBe(false)
+    // @ts-expect-error intentional bad arg
+    expect(afterOrEqual(value, 0)).toBe(false)
+  })
 
-    expect(afterOrEqual(undefined, date)).toBe(false)
-    expect(afterOrEqual(null, date)).toBe(false)
-    expect(afterOrEqual(true as any, date)).toBe(false)
-    expect(afterOrEqual(date, undefined as any)).toBe(false)
-    expect(afterOrEqual(date, null as any)).toBe(false)
-    expect(afterOrEqual(date as any, '2020-01-02' as any)).toBe(false)
+  it('returns true when value is strictly after', () => {
+    const value = day('2024-01-02')
+    const date = day('2024-01-01')
+    expect(afterOrEqual(value, date)).toBe(true)
+  })
+
+  it('returns true when value equals date exactly', () => {
+    const d = day('2024-01-01T00:00:00')
+    expect(afterOrEqual(d, d)).toBe(true)
+  })
+
+  it('treats the same calendar day as equal even if value is later in the day', () => {
+    const value = day('2024-01-01T10:00:00')
+    const date = day('2024-01-01T00:00:00')
+    expect(afterOrEqual(value, date)).toBe(true)
+  })
+
+  it('treats the same calendar day as equal even if value is earlier in the day', () => {
+    const value = day('2024-01-01T00:00:00')
+    const date = day('2024-01-01T23:59:59')
+    expect(afterOrEqual(value, date)).toBe(true)
+  })
+
+  it('returns false when value is before the previous calendar day', () => {
+    const value = day('2023-12-31')
+    const date = day('2024-01-01')
+    expect(afterOrEqual(value, date)).toBe(false)
   })
 })

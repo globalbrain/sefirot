@@ -3,7 +3,6 @@ import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
 import { stringify } from 'qs'
-import { isBlob, isError, isFormData, isRequest, isResponse, isString } from '../support/Utils'
 
 type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
 
@@ -70,11 +69,11 @@ export class Http {
   }
 
   async post<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    if (body && !isFormData(body)) {
+    if (body && !(body instanceof FormData)) {
       let hasFile = false
 
       const payload = JSON.stringify(body, (_, value) => {
-        if (isBlob(value)) {
+        if (value instanceof Blob) {
           hasFile = true
           return undefined
         }
@@ -141,11 +140,11 @@ export class Http {
         return
       }
 
-      if (typeof obj[property] === 'object' && !isBlob(obj[property]) && obj[property] !== null) {
+      if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob) && obj[property] !== null) {
         this.objectToFormData(obj[property], fd, property, onlyFiles)
       } else {
         const value = obj[property] === null ? '' : obj[property]
-        if (onlyFiles && !isBlob(value)) {
+        if (onlyFiles && !(value instanceof Blob)) {
           return
         }
         fd.append(formKey, value)
@@ -157,13 +156,7 @@ export class Http {
 }
 
 export function isFetchError(e: unknown): e is FetchError {
-  return (
-    e instanceof FetchError
-    || (isError<FetchError>(e)
-      && (e.response === undefined || isResponse(e.response))
-      && ((isString(e.request) && e.message.startsWith(`[${e.options?.method || 'GET'}] ${JSON.stringify(e.request || '/')}: `))
-        || (isRequest(e.request) && e.message.startsWith(`[${e.request.method}] ${JSON.stringify(e.request.url)}: `))))
-  )
+  return e instanceof FetchError || (e instanceof Error && e.name === 'FetchError')
 }
 
 export { FetchError, type FetchOptions, type FetchRequest, type FetchResponse } from 'ofetch'

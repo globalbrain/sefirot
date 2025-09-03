@@ -9,7 +9,7 @@ import {
 } from 'tests/Utils'
 
 describe('components/SInputYMD', async () => {
-  test('accepts `:value`', async () => {
+  it('accepts `:value`', async () => {
     const wrapper = mount(SInputYMD, {
       props: {
         value: { year: 1970, month: 1, date: 1 }
@@ -21,7 +21,7 @@ describe('components/SInputYMD', async () => {
     expect(getInputValue(wrapper.find('.SInputYMD .input.date'))).toBe('01')
   })
 
-  test('accepts `:model-value`', async () => {
+  it('accepts `:model-value`', async () => {
     const wrapper = mount(SInputYMD, {
       props: {
         value: { year: 1970, month: 1, date: 1 }
@@ -33,7 +33,7 @@ describe('components/SInputYMD', async () => {
     expect(getInputValue(wrapper.find('.SInputYMD .input.date'))).toBe('01')
   })
 
-  test('accepts `:placeholder`', async () => {
+  it('accepts `:placeholder`', async () => {
     const wrapper = mount(SInputYMD, {
       props: {
         placeholder: {
@@ -49,7 +49,7 @@ describe('components/SInputYMD', async () => {
     expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.date'))).toBe('15')
   })
 
-  test('accepts `:placeholder` partially', async () => {
+  it('accepts `:placeholder` partially', async () => {
     const wrapper = mount(SInputYMD)
 
     await wrapper.setProps({ placeholder: { year: 1985 } })
@@ -62,7 +62,7 @@ describe('components/SInputYMD', async () => {
     expect(getInputPlaceholder(wrapper.find('.SInputYMD .input.date'))).toBe('15')
   })
 
-  test('focuses conatiner when input is focused', async () => {
+  it('focuses conatiner when input is focused', async () => {
     const wrapper = mount(SInputYMD)
 
     await wrapper.find('.SInputYMD .input.year').trigger('focus')
@@ -70,7 +70,7 @@ describe('components/SInputYMD', async () => {
     expect(wrapper.find('.SInputYMD .container').classes()).toContain('focus')
   })
 
-  test('emits `@update:model-value` and `@change` on blur', async () => {
+  it('emits `@update:model-value` and `@change` on blur', async () => {
     const wrapper = mount(SInputYMD, {
       props: {
         value: { year: 1970, month: 1, date: 1 }
@@ -93,7 +93,7 @@ describe('components/SInputYMD', async () => {
     assertEmitted(wrapper, 'change', 3, { year: 1970, month: 1, date: 6 })
   })
 
-  test('emits events with `null` when the input is empty', async () => {
+  it('emits events with `null` when the input is empty', async () => {
     const wrapper = mount(SInputYMD, {
       props: {
         value: { year: 1970, month: 1, date: 1 }
@@ -116,7 +116,7 @@ describe('components/SInputYMD', async () => {
     assertEmitted(wrapper, 'change', 3, { year: 1970, month: 1, date: null })
   })
 
-  test('does not emits events when no value is given', async () => {
+  it('does not emits events when no value is given', async () => {
     const wrapper = mount(SInputYMD)
 
     await wrapper.find('.SInputYMD .input.year').setValue('2000')
@@ -125,7 +125,7 @@ describe('components/SInputYMD', async () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('touches validation when all inputs are blurred', async () => {
+  it('touches validation when all inputs are blurred', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputYMD, {

@@ -3,7 +3,7 @@ import SInputSelect from 'sefirot/components/SInputSelect.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputSelect', async () => {
-  test('it emits `update:model-value` and `change` events when item is selected', async () => {
+  it('emits `update:model-value` and `change` events when item is selected', async () => {
     const wrapper = mount(SInputSelect, {
       props: {
         options: [{ label: 'Item 001', value: 1 }]
@@ -16,7 +16,7 @@ describe('components/SInputSelect', async () => {
     assertEmitted(wrapper, 'change', 1, 1)
   })
 
-  test('it does not emit event when `disabled` is set', async () => {
+  it('does not emit event when `disabled` is set', async () => {
     const wrapper = mount(SInputSelect, {
       props: {
         options: [{ label: 'Item 001', value: 1 }],
@@ -30,7 +30,7 @@ describe('components/SInputSelect', async () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('it accepts `value` prop', async () => {
+  it('accepts `value` prop', async () => {
     const wrapper = mount(SInputSelect, {
       props: {
         options: [
@@ -44,7 +44,7 @@ describe('components/SInputSelect', async () => {
     expect(wrapper.find('select').element.value).toBe('1')
   })
 
-  test('it accepts `modelValue` prop', () => {
+  it('accepts `modelValue` prop', () => {
     const wrapper = mount(SInputSelect, {
       props: {
         options: [
@@ -58,7 +58,7 @@ describe('components/SInputSelect', async () => {
     expect(wrapper.find('select').element.value).toBe('1')
   })
 
-  test('it shows placeholder unless selected', async () => {
+  it('shows placeholder unless selected', async () => {
     const wrapper = mount(SInputSelect, {
       props: {
         options: [

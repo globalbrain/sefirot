@@ -1,7 +1,7 @@
 import { required } from 'sefirot/validation/rules'
 
 describe('validation/rules/required', () => {
-  test('validates if the value is valid', () => {
+  it('validates if the value is valid', () => {
     const rule = required()
 
     expect(rule.$validator([1], null, null)).toBe(true)
@@ -24,12 +24,12 @@ describe('validation/rules/required', () => {
     expect(rule.$validator(new Date('a'), null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = required()
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = required('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

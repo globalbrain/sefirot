@@ -31,7 +31,6 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
-import { isError } from '../support/Utils'
 
 export interface User {
   id?: string | number
@@ -225,18 +224,21 @@ export function useErrorHandler({
   }
 }
 
-function getErrorMessage(error: unknown | undefined) {
-  if (error == null) {
-    return 'unknown error'
+function getErrorMessage(error: unknown | undefined): string {
+  let str
+  if (!str && typeof error === 'string') { str = error }
+  if (!str && error instanceof Error) { str = error.message }
+  if (!str) {
+    try {
+      const s = JSON.stringify(error)
+      if (s && s !== '{}') { str = s }
+    } catch {}
   }
-
-  if (typeof error === 'string') {
-    return error
+  if (!str) {
+    try {
+      const s = String(error)
+      if (s) { str = s }
+    } catch {}
   }
-
-  if (isError(error)) {
-    return error.message
-  }
-
-  return JSON.stringify(error)
+  return str || 'unknown error'
 }
