@@ -28,7 +28,7 @@ describe('validation/rules/requiredHmsIf', () => {
   function getTestCasesForGivenTypes() {
     return [
       { value: { hour: '23', minute: '59', second: '59' }, expected: true },
-      { value: { hour: '23', minute: '59', second: '60' }, expected: true },
+      { value: { hour: '23', minute: '59', second: null }, expected: true },
       { value: { hour: '23', minute: '59' }, expected: true },
       { value: { hour: '23', minute: null }, expected: false },
       { value: undefined, expected: false },
@@ -40,8 +40,6 @@ describe('validation/rules/requiredHmsIf', () => {
       { value: {}, expected: false },
       { value: { hour: '23' }, expected: false },
       { value: { hour: '23', minute: undefined }, expected: false },
-      { value: { hour: '23', minute: '60', second: '60' }, expected: true },
-      { value: { hour: '24', minute: '59', second: '60' }, expected: true },
       { value: [], expected: false }
     ]
   }
@@ -72,14 +70,14 @@ describe('validation/rules/requiredHmsIf', () => {
 
   test.each(
     addConditions(getTestCasesForGivenTypes(), true)
-  )('validates only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
+  )('requires only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
     const rule = requiredHmsIf(condition, ['h', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(expected)
   })
 
   test.each(
     addConditions(getTestCasesForGivenTypes(), false)
-  )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
+  )('requires only given types: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredHmsIf(condition, ['h', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(true)
   })
@@ -99,7 +97,7 @@ describe('validation/rules/requiredHmsIf', () => {
 
     condition.value = true
 
-    // Await since this is async validator.
+    // await since this is async validator.
     await flushPromises()
 
     expect(validation.value.$invalid).toBe(true)

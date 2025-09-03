@@ -96,7 +96,7 @@ describe('validation/rules/requiredYmdIf', () => {
 
     condition.value = true
 
-    // Await since this is async validator.
+    // await since this is async validator.
     await flushPromises()
 
     expect(validation.value.$invalid).toBe(true)
