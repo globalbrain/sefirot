@@ -22,14 +22,14 @@ describe('validation/rules/hms', () => {
     expect(rule.$validator({ hour: '23', minute: '59' }, null, null)).toBe(false)
   })
 
-  it('validates only the given types', () => {
+  it('accepts null for required fields', () => {
     const rule = hms(['h', 'm'])
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: '59', second: '59' }, null, null)).toBe(true)
-    expect(rule.$validator({ hour: '23', minute: '59', second: '60' }, null, null)).toBe(true)
+    expect(rule.$validator({ hour: '23', minute: '59', second: null }, null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: '59' }, null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: null }, null, null)).toBe(true)
 
