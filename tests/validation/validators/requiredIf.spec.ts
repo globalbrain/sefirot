@@ -1,37 +1,35 @@
 import { requiredIf } from 'sefirot/validation/validators'
 
 describe('validation/validators/requiredIf', () => {
-  it('validates if the value is required if condition is `true`', () => {
-    [
-      { condition: true, result: true },
-      { condition: false, result: false },
-      { condition: 'string', result: true },
-      { condition: '', result: false },
-      { condition: () => true, result: true },
-      { condition: () => false, result: false },
-      { condition: async () => true, result: true },
-      { condition: async () => false, result: false }
-    ].forEach(({ condition, result }) => {
-      const expected = Promise.resolve(result)
+  it('skips validation when condition is boolean false', async () => {
+    const res = await requiredIf('', false)
+    expect(res).toBe(true)
+  })
 
-      expect(requiredIf([1], condition)).toStrictEqual(expected)
-      expect(requiredIf({}, condition)).toStrictEqual(expected)
-      expect(requiredIf({ a: 1 }, condition)).toStrictEqual(expected)
-      expect(requiredIf(true, condition)).toStrictEqual(expected)
-      expect(requiredIf(false, condition)).toStrictEqual(expected)
-      expect(requiredIf(0, condition)).toStrictEqual(expected)
-      expect(requiredIf('1', condition)).toStrictEqual(expected)
-      expect(requiredIf(' 1 ', condition)).toStrictEqual(expected)
-      expect(requiredIf('🎉', condition)).toStrictEqual(expected)
-      expect(requiredIf({}, condition)).toStrictEqual(expected)
-      expect(requiredIf(new Date(1234123412341), condition)).toStrictEqual(expected)
+  it('applies required when condition is boolean true', async () => {
+    const res1 = await requiredIf('hello', true)
+    const res2 = await requiredIf('', true)
+    expect(res1).toBe(true)
+    expect(res2).toBe(false)
+  })
 
-      expect(requiredIf(undefined, condition)).toStrictEqual(expected)
-      expect(requiredIf(null, condition)).toStrictEqual(expected)
-      expect(requiredIf([], condition)).toStrictEqual(expected)
-      expect(requiredIf('', condition)).toStrictEqual(expected)
-      expect(requiredIf('  ', condition)).toStrictEqual(expected)
-      expect(requiredIf(new Date('a'), condition)).toStrictEqual(expected)
-    })
+  it('treats non-empty string condition as true, empty string as false', async () => {
+    expect(await requiredIf('', '')).toBe(true)
+    expect(await requiredIf('', 'x')).toBe(false)
+    expect(await requiredIf('y', 'x')).toBe(true)
+  })
+
+  it('supports sync function condition', async () => {
+    const yes = () => true
+    const no = () => false
+    expect(await requiredIf('', yes)).toBe(false)
+    expect(await requiredIf('', no)).toBe(true)
+  })
+
+  it('supports async function condition', async () => {
+    const yesAsync = async () => true
+    const noAsync = async () => false
+    expect(await requiredIf('hi', yesAsync)).toBe(true)
+    expect(await requiredIf('', noAsync)).toBe(true)
   })
 })

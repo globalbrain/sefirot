@@ -1,23 +1,6 @@
 export function required(value: unknown): boolean {
-  if (typeof value === 'string') {
-    value = value.trim()
-  }
-
-  return _required(value)
-}
-
-export function _required(value: unknown): boolean {
-  if (Array.isArray(value)) {
-    return !!value.length
-  }
-
+  if (Array.isArray(value)) { return !!value.length }
   if (value == null) { return false }
-
-  if (value === false) { return true }
-
-  if (value instanceof Date) {
-    return !Number.isNaN(value.getTime())
-  }
-
-  return !!String(value).length
+  if (typeof value === 'number' || value instanceof Date) { return !Number.isNaN(+value) }
+  return !!String(value).trim().length
 }

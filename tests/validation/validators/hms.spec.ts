@@ -8,10 +8,6 @@ describe('validation/validators/hms', () => {
     expect(hms({ hour: 12, minute: 0, second: 0 })).toBe(false)
   })
 
-  it('returns false when unexpected keys are present', () => {
-    expect(hms({ hour: '10', minute: '15', second: '30', extra: 'field' })).toBe(false)
-  })
-
   it('accepts valid full time', () => {
     expect(hms({ hour: '00', minute: '00', second: '00' })).toBe(true)
     expect(hms({ hour: '23', minute: '59', second: '59' })).toBe(true)

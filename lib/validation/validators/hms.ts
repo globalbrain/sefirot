@@ -7,9 +7,7 @@ const minuteAndSecondRE = /^[0-5]?\d$/
 export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's'], rejectNull = false): boolean {
   if (!isObject(value)) { return false }
 
-  const { hour, minute, second, ...rest } = value
-  if (Object.keys(rest).length > 0) { return false }
-
+  const { hour, minute, second } = value
   const requiredSet = new Set(required)
 
   return (

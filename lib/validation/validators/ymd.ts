@@ -4,9 +4,7 @@ import { isObject } from '../../support/Utils'
 export function ymd(value: unknown, required: YmdType[] = ['y', 'm', 'd'], rejectNull = false): boolean {
   if (!isObject(value)) { return false }
 
-  const { year, month, day: date, ...rest } = value
-  if (Object.keys(rest).length > 0) { return false }
-
+  const { year, month, day: date } = value
   const requiredSet = new Set(required)
 
   if (

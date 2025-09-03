@@ -7,10 +7,6 @@ describe('validation/validators/ymd', () => {
     expect(ymd('2024-01-01')).toBe(false)
   })
 
-  it('returns false when unexpected keys are present', () => {
-    expect(ymd({ year: 2024, month: 1, day: 1, extra: true })).toBe(false)
-  })
-
   it('accepts valid complete dates', () => {
     expect(ymd({ year: 2024, month: 2, day: 29 })).toBe(true)
     expect(ymd({ year: 2023, month: 12, day: 31 })).toBe(true)
