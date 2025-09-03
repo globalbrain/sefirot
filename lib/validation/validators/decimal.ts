@@ -4,6 +4,6 @@ export function decimal(value: unknown): boolean {
     !Number.isNaN(num)
     && num >= Number.MIN_SAFE_INTEGER
     && num <= Number.MAX_SAFE_INTEGER
-    && num.toString() === value?.toString()
+    && num.toString() === value?.toString().replace(/(\.\d*?)0+$/, (_, p1) => (p1 === '.' ? '' : p1))
   )
 }

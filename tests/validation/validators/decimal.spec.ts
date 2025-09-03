@@ -32,6 +32,12 @@ describe('validation/validators/decimal', () => {
     expect(decimal('+0123')).toBe(false)
   })
 
+  it('accepts trailing zeros in decimal part', () => {
+    expect(decimal('1.0')).toBe(true)
+    expect(decimal('1.00')).toBe(true)
+    expect(decimal('-1.00')).toBe(true)
+  })
+
   it('accepts number types', () => {
     expect(decimal(-0)).toBe(true)
     expect(decimal(123)).toBe(true)
