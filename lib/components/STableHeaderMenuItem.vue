@@ -14,7 +14,7 @@ const { container, isOpen, toggle } = useFlyout()
 </script>
 
 <template>
-  <div class="STableHeaderMenuItem" ref="container">
+  <div ref="container" class="STableHeaderMenuItem">
     <button class="button" :class="[state]" @click="toggle">
       <span class="label">{{ label }}</span>
       <span v-if="state !== 'indicate'" class="caret">

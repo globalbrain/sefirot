@@ -33,8 +33,8 @@ const containerRef = useTemplateRef('container')
 const dropdownRef = useTemplateRef('dropdown')
 
 const { isOpen, toggle } = useFlyout(containerRef)
-const { position: verticalPlacement, update: updateVerticalPlacement }
-  = useManualDropdownPosition(containerRef)
+const { position: verticalPlacement, update: updateVerticalPlacement } =
+  useManualDropdownPosition(containerRef)
 
 const actualAlign = ref(props.dropdownAlign)
 
@@ -74,7 +74,7 @@ async function onOpen() {
 </script>
 
 <template>
-  <div class="SActionMenu" :class="[{ block }, actualAlign]" ref="container">
+  <div ref="container" class="SActionMenu" :class="[{ block }, actualAlign]">
     <div class="button">
       <SButton
         :tag
@@ -96,10 +96,10 @@ async function onOpen() {
       />
     </div>
     <div
+      ref="dropdown"
       class="dropdown"
       :class="verticalPlacement"
       :style="{ display: isOpen ? 'block' : 'none' }"
-      ref="dropdown"
     >
       <SDropdown :sections="options" />
     </div>

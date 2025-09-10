@@ -17,8 +17,8 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
-        title="SDataList.labelWidth"
         v-model="state.labelWidth"
+        title="SDataList.labelWidth"
       />
     </template>
 

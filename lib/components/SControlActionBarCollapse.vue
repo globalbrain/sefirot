@@ -21,14 +21,12 @@ setCollapse(props.collapsed)
 const el = shallowRef<HTMLElement | null>(null)
 
 const icon = computed(() => {
-  return isCollapsed.value
-    ? IconArrowsOutLineVertical
-    : IconArrowsInLineVertical
+  return isCollapsed.value ? IconArrowsOutLineVertical : IconArrowsInLineVertical
 })
 </script>
 
 <template>
-  <div class="SControlActionBarCollapse" ref="el">
+  <div ref="el" class="SControlActionBarCollapse">
     <SControlActionBarButton
       :as
       :icon

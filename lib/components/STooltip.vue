@@ -97,14 +97,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <component ref="root" :is="tag" class="STooltip" :class="rootClasses" :tabindex>
-    <component :is="triggerTag" class="trigger" ref="trigger">
+  <component :is="tag" ref="root" class="STooltip" :class="rootClasses" :tabindex>
+    <component :is="triggerTag" ref="trigger" class="trigger">
       <slot />
     </component>
 
     <Teleport to="#sefirot-modals">
       <Transition name="fade">
-        <div v-show="on" class="container" :class="containerClasses" ref="content">
+        <div v-show="on" ref="content" class="container" :class="containerClasses">
           <div v-if="$slots.text" class="tip"><slot name="text" /></div>
           <div v-else-if="text" class="tip" v-html="text" />
         </div>

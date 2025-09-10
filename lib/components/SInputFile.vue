@@ -33,17 +33,20 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const input = ref<HTMLInputElement | null>(null)
 
 const classes = computed(() => [props.size ?? 'small'])
 
-const fileName = computed(() => Array.isArray(_value.value)
-  ? _value.value.map((file) => file.name).join(', ')
-  : _value.value?.name ?? ''
-)
+const fileName = computed(() => {
+  return Array.isArray(_value.value)
+    ? _value.value.map((file) => file.name).join(', ')
+    : (_value.value?.name ?? '')
+})
 
 function open() {
   input.value!.click()
@@ -243,6 +246,6 @@ function onChange(e: Event) {
 
 .placeholder {
   font-weight: 500;
-  color: var(--input-placeholder-color)
+  color: var(--input-placeholder-color);
 }
 </style>

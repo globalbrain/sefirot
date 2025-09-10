@@ -30,22 +30,22 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber
-        title="X Axis"
         v-model="state.xAxis"
+        title="X Axis"
         :min="0"
       />
       <HstNumber
-        title="Y Axis"
         v-model="state.yAxis"
+        title="Y Axis"
         :min="0"
       />
       <HstSelect
+        v-model="state.dropdownAlign"
         title="dropdown-align"
         :options="{
           left: 'left',
           right: 'right'
         }"
-        v-model="state.dropdownAlign"
       />
     </template>
 

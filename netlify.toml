@@ -1,5 +1,5 @@
 [build.environment]
-  NODE_VERSION = "22"
+NODE_VERSION = "22"
 
 [images]
-  remote_images = ["https:\\/\\/(?:[^\\/]*\\.)?globalbrains\\.com\\/.*"]
+remote_images = [ "https:\\/\\/(?:[^\\/]*\\.)?globalbrains\\.com\\/.*" ]

@@ -29,7 +29,7 @@ const avatars = [
 <template>
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
-      <HstNumber title="avatarCount" v-model="state.avatarCount" />
+      <HstNumber v-model="state.avatarCount" title="avatarCount" />
     </template>
 
     <template #default="{ state }">

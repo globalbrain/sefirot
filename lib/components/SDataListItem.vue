@@ -14,9 +14,7 @@ const props = withDefaults(defineProps<{
   maxWidth: '100%'
 })
 
-const {
-  labelWidth
-} = useDataListState()
+const { labelWidth } = useDataListState()
 
 const slots = useSlots()
 

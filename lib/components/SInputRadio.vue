@@ -60,14 +60,14 @@ function onClick() {
         class="input"
         :class="{ on: props.modelValue }"
         role="button"
-        @click="onClick"
         :aria-disabled="disabled"
+        @click="onClick"
       >
         <div class="box">
           <div class="check" />
         </div>
 
-        <p class="text" v-if="text">{{ text }}</p>
+        <p v-if="text" class="text">{{ text }}</p>
       </div>
     </div>
     <template v-if="$slots.info" #info><slot name="info" /></template>

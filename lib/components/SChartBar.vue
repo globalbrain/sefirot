@@ -83,26 +83,51 @@ function renderChart({
   // Set dimensions and margins
   const vertical = props.type === 'vertical'
 
-  const maxKeyLength = props.data.reduce((a, b) => Math.max(a, b.key.length), Number.NEGATIVE_INFINITY)
-  const maxValueLength = props.data.reduce((a, b) => Math.max(a, b.value.toLocaleString().length), Number.NEGATIVE_INFINITY)
+  const maxKeyLength = props.data.reduce(
+    (a, b) => Math.max(a, b.key.length),
+    Number.NEGATIVE_INFINITY
+  )
+  const maxValueLength = props.data.reduce(
+    (a, b) => Math.max(a, b.value.toLocaleString().length),
+    Number.NEGATIVE_INFINITY
+  )
 
   const maxVerticalTickWidthInCh = vertical ? maxValueLength : maxKeyLength
-  const maxVerticalTickWidthInPx = getTextSize('0'.repeat(maxVerticalTickWidthInCh), `400 ${props.tickFontSize} ${font}`).width
-  const verticalLabelWidthInPx = props.yLabel ? getTextSize(props.yLabel, `400 ${props.yLabelFontSize} ${font}`).height : 0
+  const maxVerticalTickWidthInPx = getTextSize(
+    '0'.repeat(maxVerticalTickWidthInCh),
+    `400 ${props.tickFontSize} ${font}`
+  ).width
+  const verticalLabelWidthInPx = props.yLabel
+    ? getTextSize(props.yLabel, `400 ${props.yLabelFontSize} ${font}`).height
+    : 0
   const gapBetweenVerticalLabelAndTicks = props.yLabel ? props.yLabelTickGap : 0
 
-  const maxHorizontalTickHeightInPx = getTextSize('0', `400 ${props.tickFontSize} ${font}`).height // wrapping isn't supported
-  const horizontalLabelHeightInPx = props.xLabel ? getTextSize(props.xLabel, `400 ${props.xLabelFontSize} ${font}`).height : 0
+  const maxHorizontalTickHeightInPx = getTextSize(
+    '0',
+    `400 ${props.tickFontSize} ${font}`
+  ).height // wrapping isn't supported
+  const horizontalLabelHeightInPx = props.xLabel
+    ? getTextSize(props.xLabel, `400 ${props.xLabelFontSize} ${font}`).height
+    : 0
   const gapBetweenHorizontalLabelAndTicks = props.xLabel ? props.xLabelTickGap : 0
 
-  const xLabelOffset = props.xLabelOffset ?? horizontalLabelHeightInPx + 9 + maxHorizontalTickHeightInPx + gapBetweenHorizontalLabelAndTicks
-  const yLabelOffset = props.yLabelOffset ?? 9 + maxVerticalTickWidthInPx + gapBetweenVerticalLabelAndTicks
+  const xLabelOffset = props.xLabelOffset
+    ?? horizontalLabelHeightInPx + 9 + maxHorizontalTickHeightInPx + gapBetweenHorizontalLabelAndTicks
+  const yLabelOffset = props.yLabelOffset
+    ?? 9 + maxVerticalTickWidthInPx + gapBetweenVerticalLabelAndTicks
 
   const margin = {
     top: props.margins?.top ?? 30,
     right: props.margins?.right ?? 30,
-    bottom: (props.margins?.bottom ?? 30) + horizontalLabelHeightInPx + xLabelOffset - (props.xLabel ? 9 : 0),
-    left: (props.margins?.left ?? 30) + verticalLabelWidthInPx + yLabelOffset
+    bottom:
+      (props.margins?.bottom ?? 30)
+      + horizontalLabelHeightInPx
+      + xLabelOffset
+      - (props.xLabel ? 9 : 0),
+    left:
+      (props.margins?.left ?? 30)
+      + verticalLabelWidthInPx
+      + yLabelOffset
   }
 
   const width = clientWidth - margin.left - margin.right
@@ -224,8 +249,8 @@ function renderChart({
     .append('g')
     .attr('transform', (d) =>
       vertical
-        ? `translate(${(paddedScale(d.key)! - groupOffset)},0)`
-        : `translate(0,${(paddedScale(d.key)! - groupOffset)})`
+        ? `translate(${paddedScale(d.key)! - groupOffset},0)`
+        : `translate(0,${paddedScale(d.key)! - groupOffset})`
     )
 
   // Each group gets a transparent rect covering the full band (using paddedScale.step())

@@ -42,8 +42,8 @@ const dropdown1 = createDropdown([
     search: true,
     selected: dropdown1SelectedValue,
     options: [
-      { label: '¥', value: 1, onClick: (value: number) => dropdown1SelectedValue.value = value },
-      { label: '$', value: 2, onClick: (value: number) => dropdown1SelectedValue.value = value }
+      { label: '¥', value: 1, onClick: (value: number) => (dropdown1SelectedValue.value = value) },
+      { label: '$', value: 2, onClick: (value: number) => (dropdown1SelectedValue.value = value) }
     ]
   }
 ])
@@ -52,8 +52,8 @@ const dropdown2 = createDropdown([
   {
     type: 'menu',
     options: [
-      { label: 'Generate', onClick: () => data.password3 = generatePassword() },
-      { label: 'Reset', onClick: () => data.password3 = null }
+      { label: 'Generate', onClick: () => (data.password3 = generatePassword()) },
+      { label: 'Reset', onClick: () => (data.password3 = null) }
     ]
   }
 ])
@@ -71,21 +71,21 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
           small: 'small',
           medium: 'medium'
         }"
-        v-model="state.size"
       />
       <HstText
-        title="unit-before"
         v-model="state.unitBefore"
+        title="unit-before"
       />
       <HstText
-        title="unit-after"
         v-model="state.unitAfter"
+        title="unit-after"
       />
     </template>
 
@@ -96,11 +96,11 @@ function initState() {
             <div class="title">Addon Text (Before)</div>
             <div class="grid">
               <SInputText
+                v-model="data.name"
                 :size="state.size"
                 placeholder="John Doe"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.name"
               >
                 <template #addon-before>
                   <SInputAddon label="@" :clickable="false" />
@@ -113,11 +113,11 @@ function initState() {
             <div class="title">Addon Text (After)</div>
             <div class="grid">
               <SInputText
+                v-model="data.domain"
                 :size="state.size"
                 placeholder="sample"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.domain"
               >
                 <template #addon-after>
                   <SInputAddon label=".com" :clickable="false" />
@@ -130,11 +130,11 @@ function initState() {
             <div class="title">Addon Button (Before / Text)</div>
             <div class="grid">
               <SInputText
+                v-model="data.password1"
                 :size="state.size"
                 placeholder="mypassword"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.password1"
               >
                 <template #addon-before>
                   <SInputAddon label="Generate" @click="data.password1 = generatePassword()" />
@@ -147,14 +147,17 @@ function initState() {
             <div class="title">Addon Button (After / Icon)</div>
             <div class="grid">
               <SInputText
+                v-model="data.password2"
                 :size="state.size"
                 placeholder="mypassword"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.password2"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconLightbulb" @click="data.password2 = generatePassword()" />
+                  <SInputAddon
+                    :label="IconLightbulb"
+                    @click="data.password2 = generatePassword()"
+                  />
                 </template>
               </SInputText>
             </div>
@@ -164,11 +167,11 @@ function initState() {
             <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
             <div class="grid">
               <SInputText
+                v-model="data.currency"
                 :size="state.size"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
                 placeholder="1000"
-                v-model="data.currency"
               >
                 <template #addon-before>
                   <SInputAddon :dropdown="dropdown1" />
@@ -181,14 +184,18 @@ function initState() {
             <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
             <div class="grid">
               <SInputText
+                v-model="data.password3"
                 :size="state.size"
                 placeholder="mypassword"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.password3"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+                  <SInputAddon
+                    :label="IconDotsThree"
+                    :dropdown="dropdown2"
+                    :dropdown-caret="false"
+                  />
                 </template>
               </SInputText>
             </div>
@@ -198,12 +205,12 @@ function initState() {
             <div class="title">Addon Dropdown (Before / After / Disabled)</div>
             <div class="grid">
               <SInputText
+                v-model="data.password4"
                 :size="state.size"
                 placeholder="mypassword"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
                 disabled
-                v-model="data.password4"
               >
                 <template #addon-before>
                   <SInputAddon :label="IconDotsThree" disabled />

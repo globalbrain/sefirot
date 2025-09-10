@@ -8,7 +8,7 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <SM class="SMFade" v-bind="$props" v-slot="{ on }">
+  <SM v-slot="{ on }" class="SMFade" v-bind="$props">
     <slot :on />
   </SM>
 </template>

@@ -17,6 +17,7 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
@@ -24,9 +25,9 @@ function initState() {
           medium: 'medium',
           large: 'large'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="{
           default: 'default',
@@ -37,11 +38,10 @@ function initState() {
           warning: 'warning',
           danger: 'danger'
         }"
-        v-model="state.mode"
       />
       <HstTextarea
-        title="label"
         v-model="state.label"
+        title="label"
       />
     </template>
 

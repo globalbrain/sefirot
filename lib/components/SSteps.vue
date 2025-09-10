@@ -19,7 +19,7 @@ function getBarLeftMode(index: number): BarMode | null {
   const current = props.steps[index]
   const prev = props.steps[index - 1]
 
-  return (isActive(prev) && isActive(current)) ? 'active' : 'mute'
+  return isActive(prev) && isActive(current) ? 'active' : 'mute'
 }
 
 function getBarRightMode(index: number): BarMode | null {
@@ -30,7 +30,7 @@ function getBarRightMode(index: number): BarMode | null {
   const current = props.steps[index]
   const next = props.steps[index + 1]
 
-  return (isActive(current) && isActive(next)) ? 'active' : 'mute'
+  return isActive(current) && isActive(next) ? 'active' : 'mute'
 }
 
 function isActive(step: Step): boolean {
@@ -41,12 +41,12 @@ function isActive(step: Step): boolean {
 <template>
   <div class="SSteps">
     <SStep
-      v-for="(step, index) in steps"
-      :key="index"
+      v-for="(step, i) in steps"
+      :key="i"
       class="item"
       :style="{ width }"
-      :bar-left="getBarLeftMode(index)"
-      :bar-right="getBarRightMode(index)"
+      :bar-left="getBarLeftMode(i)"
+      :bar-right="getBarRightMode(i)"
       v-bind="step"
     />
   </div>

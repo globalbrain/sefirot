@@ -20,16 +20,16 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber
-        title="lineClamp"
         v-model="state.lineClamp"
+        title="lineClamp"
       />
       <HstCheckbox
-        title="preWrap"
         v-model="state.preWrap"
+        title="preWrap"
       />
       <HstCheckbox
-        title="linkify"
         v-model="state.linkify"
+        title="linkify"
       />
     </template>
 

@@ -38,19 +38,27 @@ defineEmits<{
 <template>
   <div class="SInputDropdownItem" :class="[size, { disabled }]">
     <div v-if="Array.isArray(item)" class="many">
-      <template v-for="i, index in item" :key="index">
-        <div v-if="i.type === undefined || i.type === 'text'" class="many-text">
-          <div class="many-text-value">{{ i.label }}</div>
-          <button v-if="removable" class="many-text-close" @click.stop="$emit('remove', i.value)">
+      <template v-for="(item, i) in item" :key="i">
+        <div v-if="item.type === undefined || item.type === 'text'" class="many-text">
+          <div class="many-text-value">{{ item.label }}</div>
+          <button
+            v-if="removable"
+            class="many-text-close"
+            @click.stop="$emit('remove', item.value)"
+          >
             <IconX class="many-text-close-icon" />
           </button>
         </div>
-        <div v-else-if="i.type === 'avatar'" class="many-avatar">
+        <div v-else-if="item.type === 'avatar'" class="many-avatar">
           <div class="many-avatar-body">
-            <div class="many-avatar-image"><SAvatar size="fill" :avatar="i.image" /></div>
-            <div class="many-avatar-name">{{ i.label }}</div>
+            <div class="many-avatar-image"><SAvatar size="fill" :avatar="item.image" /></div>
+            <div class="many-avatar-name">{{ item.label }}</div>
           </div>
-          <button v-if="removable" class="many-avatar-close" @click.stop="$emit('remove', i.value)">
+          <button
+            v-if="removable"
+            class="many-avatar-close"
+            @click.stop="$emit('remove', item.value)"
+          >
             <IconX class="many-avatar-close-icon" />
           </button>
         </div>

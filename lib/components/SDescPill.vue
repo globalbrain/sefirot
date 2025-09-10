@@ -13,16 +13,14 @@ const props = defineProps<{
 }>()
 
 const pills = computed(() => {
-  return props.pill
-    ? Array.isArray(props.pill) ? props.pill : [props.pill]
-    : null
+  return props.pill ? (Array.isArray(props.pill) ? props.pill : [props.pill]) : null
 })
 </script>
 
 <template>
   <div v-if="pills && pills.length" class="SDescPill">
     <div class="value">
-      <div v-for="pill, index in pills" :key="index" class="pill">
+      <div v-for="(pill, i) in pills" :key="i" class="pill">
         <SPill tag="div" size="mini" :mode="pill.mode" :label="pill.label" />
       </div>
     </div>

@@ -1,5 +1,12 @@
-import { type ComputedRef, type MaybeRefOrGetter, computed, getCurrentInstance, onMounted, toValue, useSlots } from 'vue'
-import { isString } from '../support/Utils'
+import {
+  type ComputedRef,
+  type MaybeRefOrGetter,
+  computed,
+  getCurrentInstance,
+  onMounted,
+  toValue,
+  useSlots
+} from 'vue'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
 
@@ -22,7 +29,7 @@ export function computedWhen<T, C, D>(
   return computed(() => {
     const c = toValue(condition)
 
-    return c ? fn(c) : whenFalse as D
+    return c ? fn(c) : (whenFalse as D)
   })
 }
 
@@ -68,7 +75,7 @@ export function useSlotValue(name = 'default'): ComputedRef<string | null> {
 
   return computed(() => {
     const c = slots[name]?.()[0]?.children
-    const v = isString(c) ? c.trim() : null
+    const v = typeof c === 'string' ? c.trim() : null
     return v !== '' ? v : null
   })
 }

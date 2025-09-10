@@ -49,9 +49,11 @@ const emit = defineEmits<{
 const fileInput = ref<HTMLInputElement | null>(null)
 
 const _value = computed(() => {
-  return (props.modelValue !== undefined)
+  return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const { src: imageSrc } = useImageSrcFromFile(_value)

@@ -17,6 +17,7 @@ const options = [
   <Story :title source="Not available" auto-props-disabled>
     <Board :title>
       <SInputSwitches
+        v-model="data"
         class="switches"
         size="md"
         name="input"
@@ -25,7 +26,6 @@ const options = [
         note="Note text"
         help="This is a help text."
         :options
-        v-model="data"
       />
     </Board>
   </Story>
