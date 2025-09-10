@@ -138,7 +138,7 @@ describe('validation/validators/decimal', () => {
     expect(decimal(-9007199254740991n)).toBe(true)
   })
 
-  it ('rejects bigint types outside the safe integer range', () => {
+  it('rejects bigint types outside the safe integer range', () => {
     expect(decimal(12345678901234567890n)).toBe(false)
     expect(decimal(-12345678901234567890n)).toBe(false)
   })

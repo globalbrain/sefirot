@@ -1,5 +1,4 @@
+autoInstallPeers: false
 onlyBuiltDependencies:
   - esbuild
   - vue-demi
-
-autoInstallPeers: false

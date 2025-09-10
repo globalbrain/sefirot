@@ -6,7 +6,7 @@ import { ref } from 'vue'
 
 describe('validation/rules/requiredIf', () => {
   it('validates if the value is valid', () => {
-    [
+    ;[
       { condition: true, result: true },
       { condition: false, result: false },
       { condition: 'string', result: true },
