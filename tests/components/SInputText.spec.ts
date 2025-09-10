@@ -17,7 +17,7 @@ describe('components/SInputText', () => {
   it('applies color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputText, {
       props: {
-        textColor: (value: string | null) => value === 'text' ? 'success' : 'danger',
+        textColor: (value: string | null) => (value === 'text' ? 'success' : 'danger'),
         modelValue: 'text'
       }
     })

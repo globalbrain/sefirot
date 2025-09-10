@@ -19,9 +19,7 @@ describe('composables/Url', () => {
 
       // Change the data and check if the URL is updated.
       vm.data.page = 2
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('2')
+      await expect.poll(() => vm.route.query.page).toBe('2')
 
       wrapper.unmount()
     })
@@ -100,9 +98,7 @@ describe('composables/Url', () => {
       vm.data.secretToken = 'xyz789'
 
       // Only page should appear in URL
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('2')
+      await expect.poll(() => vm.route.query.page).toBe('2')
 
       expect(vm.route.query.perPage).toBeUndefined()
       expect(vm.route.query.secretToken).toBeUndefined()
@@ -127,13 +123,9 @@ describe('composables/Url', () => {
       vm.data.tags.push('javascript')
       vm.data.categories = ['frontend', 'backend']
 
-      await expect.poll(() => {
-        return vm.route.query.tags
-      }).toEqual(['vue', 'typescript', 'javascript'])
+      await expect.poll(() => vm.route.query.tags).toEqual(['vue', 'typescript', 'javascript'])
 
-      await expect.poll(() => {
-        return vm.route.query.categories
-      }).toEqual(['frontend', 'backend'])
+      await expect.poll(() => vm.route.query.categories).toEqual(['frontend', 'backend'])
 
       wrapper.unmount()
     })
@@ -183,9 +175,7 @@ describe('composables/Url', () => {
       // Change one value from default
       vm.data.page = 2
 
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('2')
+      await expect.poll(() => vm.route.query.page).toBe('2')
 
       // Other default values should still not be in URL
       expect(vm.route.query.size).toBeUndefined()
@@ -212,13 +202,9 @@ describe('composables/Url', () => {
       vm.data.search = 'test'
 
       // Wait for URL to update
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('3')
+      await expect.poll(() => vm.route.query.page).toBe('3')
 
-      await expect.poll(() => {
-        return vm.route.query.search
-      }).toBe('test')
+      await expect.poll(() => vm.route.query.search).toBe('test')
 
       // Reset one value to default and check if it gets removed
       vm.data.page = 1 // back to default
@@ -227,9 +213,7 @@ describe('composables/Url', () => {
       // Change back to non-default to verify sync still works
       vm.data.page = 5
 
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('5')
+      await expect.poll(() => vm.route.query.page).toBe('5')
 
       // This confirms bidirectional sync is working correctly
       expect(vm.data.page).toBe(5)
@@ -254,13 +238,9 @@ describe('composables/Url', () => {
       vm.data.page = 5
       vm.data.name = 'updated'
 
-      await expect.poll(() => {
-        return vm.route.query.page
-      }).toBe('5')
+      await expect.poll(() => vm.route.query.page).toBe('5')
 
-      await expect.poll(() => {
-        return vm.route.query.name
-      }).toBe('updated')
+      await expect.poll(() => vm.route.query.name).toBe('updated')
 
       wrapper.unmount()
     })

@@ -4,7 +4,11 @@ import { isObject } from '../../support/Utils'
 const hourRE = /^(?:[01]?\d|2[0-3])$/
 const minuteAndSecondRE = /^[0-5]?\d$/
 
-export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's'], rejectNull = false): boolean {
+export function hms(
+  value: unknown,
+  required: HmsType[] = ['h', 'm', 's'],
+  rejectNull = false
+): boolean {
   if (!isObject(value)) { return false }
 
   const { hour, minute, second } = value
@@ -16,7 +20,11 @@ export function hms(value: unknown, required: HmsType[] = ['h', 'm', 's'], rejec
     && isValidPart(second, requiredSet.has('s'), minuteAndSecondRE)
   )
 
-  function isValidPart(v: unknown, req: boolean, re: RegExp): v is string | null | undefined {
+  function isValidPart(
+    v: unknown,
+    req: boolean,
+    re: RegExp
+  ): v is string | null | undefined {
     if (v === undefined) { return !req }
     if (v === null) { return !rejectNull || !req }
     return typeof v === 'string' && re.test(v)

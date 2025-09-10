@@ -7,9 +7,7 @@ describe('composables/Utils', () => {
       const condition = ref(false)
       const state = ref('initial')
 
-      const c = Utils.computedWhen(condition, () => {
-        return state.value
-      }, 'default')
+      const c = Utils.computedWhen(condition, () => state.value, 'default')
 
       // Default value.
       expect(c.value).toBe('default')

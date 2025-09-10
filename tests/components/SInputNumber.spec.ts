@@ -31,7 +31,7 @@ describe('components/SInputNumber', () => {
   it('applies color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputNumber, {
       props: {
-        textColor: (value: number | null) => value === 123 ? 'success' : 'danger',
+        textColor: (value: number | null) => (value === 123 ? 'success' : 'danger'),
         modelValue: 123
       }
     })
@@ -121,7 +121,7 @@ describe('components/SInputNumber', () => {
       }
     })
 
-    expect((wrapper.find('.SInputNumber .display').text())).toBe('The number is too big')
+    expect(wrapper.find('.SInputNumber .display').text()).toBe('The number is too big')
   })
 
   it('displays `displayValue` if passed', async () => {
@@ -132,6 +132,6 @@ describe('components/SInputNumber', () => {
       }
     })
 
-    expect((wrapper.find('.SInputNumber .display').text())).toBe('100')
+    expect(wrapper.find('.SInputNumber .display').text()).toBe('100')
   })
 })

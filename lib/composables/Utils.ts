@@ -1,4 +1,12 @@
-import { type ComputedRef, type MaybeRefOrGetter, computed, getCurrentInstance, onMounted, toValue, useSlots } from 'vue'
+import {
+  type ComputedRef,
+  type MaybeRefOrGetter,
+  computed,
+  getCurrentInstance,
+  onMounted,
+  toValue,
+  useSlots
+} from 'vue'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
 
@@ -21,7 +29,7 @@ export function computedWhen<T, C, D>(
   return computed(() => {
     const c = toValue(condition)
 
-    return c ? fn(c) : whenFalse as D
+    return c ? fn(c) : (whenFalse as D)
   })
 }
 

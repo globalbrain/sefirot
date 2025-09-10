@@ -30,9 +30,13 @@ export class Http {
 
   private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = _options
-    const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
+    const xsrfToken =
+      ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
 
-    const queryString = stringify({ ...params, ...query }, { encodeValuesOnly: true, ...this.config.stringifyOptions })
+    const queryString = stringify(
+      { ...params, ...query },
+      { encodeValuesOnly: true, ...this.config.stringifyOptions }
+    )
 
     return [
       `${url}${queryString ? `?${queryString}` : ''}`,
@@ -125,7 +129,12 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(obj: any, form?: FormData, namespace?: string, onlyFiles = false): FormData {
+  private objectToFormData(
+    obj: any,
+    form?: FormData,
+    namespace?: string,
+    onlyFiles = false
+  ): FormData {
     const fd = form || new FormData()
     let formKey: string
 
@@ -140,7 +149,11 @@ export class Http {
         return
       }
 
-      if (typeof obj[property] === 'object' && !(obj[property] instanceof Blob) && obj[property] !== null) {
+      if (
+        typeof obj[property] === 'object'
+        && !(obj[property] instanceof Blob)
+        && obj[property] !== null
+      ) {
         this.objectToFormData(obj[property], fd, property, onlyFiles)
       } else {
         const value = obj[property] === null ? '' : obj[property]
