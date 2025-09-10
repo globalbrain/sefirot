@@ -58,6 +58,7 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           xs: 'xs',
@@ -66,30 +67,29 @@ function initState() {
           lg: 'lg',
           xl: 'xl'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="modes"
-        v-model="state.mode"
       />
       <HstSelect
+        v-model="state.iconMode"
         title="icon-mode"
         :options="contentModes"
-        v-model="state.iconMode"
       />
       <HstSelect
+        v-model="state.labelMode"
         title="label-mode"
         :options="contentModes"
-        v-model="state.labelMode"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstCheckbox
-        title="disabled"
         v-model="state.disabled"
+        title="disabled"
       />
     </template>
 

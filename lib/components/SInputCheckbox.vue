@@ -74,8 +74,8 @@ function onClick() {
         class="input"
         :class="{ on: _value || isIndeterminate }"
         role="button"
-        @click="onClick"
         :aria-disabled="disabled"
+        @click="onClick"
       >
         <div class="box">
           <div class="check">

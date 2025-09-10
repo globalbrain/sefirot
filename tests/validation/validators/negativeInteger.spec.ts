@@ -17,7 +17,7 @@ describe('validation/validators/negativeInteger', () => {
     expect(negativeInteger(Number.NaN)).toBe(false)
     expect(negativeInteger(Number.POSITIVE_INFINITY)).toBe(false)
     expect(negativeInteger(Number.NEGATIVE_INFINITY)).toBe(false)
-    // eslint-disable-next-line no-new-wrappers
+    // eslint-disable-next-line unicorn/new-for-builtins
     expect(negativeInteger(new Number(-1))).toBe(false)
   })
 

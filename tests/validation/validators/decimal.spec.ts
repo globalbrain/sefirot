@@ -129,7 +129,7 @@ describe('validation/validators/decimal', () => {
     expect(decimal('12345678901234567890')).toBe(false)
     expect(decimal('0.000000000123456789')).toBe(false)
     expect(decimal('-0.000000000123456789')).toBe(false)
-    // eslint-disable-next-line @typescript-eslint/no-loss-of-precision
+    // eslint-disable-next-line no-loss-of-precision
     expect(decimal(12345678901234567890)).toBe(false)
   })
 

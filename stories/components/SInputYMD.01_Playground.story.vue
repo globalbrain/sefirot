@@ -32,58 +32,59 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           sm: 'sm',
           md: 'md'
         }"
-        v-model="state.size"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstText
-        title="info"
         v-model="state.info"
+        title="info"
       />
       <HstText
-        title="note"
         v-model="state.note"
+        title="note"
       />
       <HstText
-        title="help"
         v-model="state.help"
+        title="help"
       />
       <HstCheckbox
-        title="no-year"
         v-model="state.noYear"
+        title="no-year"
       />
       <HstCheckbox
-        title="no-month"
         v-model="state.noMonth"
+        title="no-month"
       />
       <HstCheckbox
-        title="no-date"
         v-model="state.noDate"
+        title="no-date"
       />
       <HstCheckbox
-        title="block"
         v-model="state.block"
+        title="block"
       />
       <HstCheckbox
-        title="disabled"
         v-model="state.disabled"
+        title="disabled"
       />
       <HstCheckbox
-        title="error"
         v-model="state.error"
+        title="error"
       />
     </template>
 
     <template #default="{ state }">
       <Board :title :docs>
         <SInputYMD
+          v-model="input"
           :class="{ 'has-error': state.error }"
           :size="state.size"
           :label="state.label"
@@ -95,7 +96,6 @@ function initState() {
           :no-date="state.noDate"
           :block="state.block"
           :disabled="state.disabled"
-          v-model="input"
         />
       </Board>
     </template>

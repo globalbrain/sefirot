@@ -10,13 +10,13 @@ const props = defineProps<{
   mode?: Mode
 }>()
 
+const { isCollapsed } = provideCardState()
+
 const classes = computed(() => [
   props.size,
   props.mode ?? 'neutral',
   { collapsed: isCollapsed.value }
 ])
-
-const { isCollapsed } = provideCardState()
 </script>
 
 <template>

@@ -85,7 +85,7 @@
     "unplugin-icons": "^22.2.0"
   },
   "devDependencies": {
-    "@globalbrain/eslint-config": "^1.7.1",
+    "@globalbrain/eslint-config": "^2.0.2",
     "@histoire/plugin-vue": "0.16.5",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/ri": "^1.2.5",
@@ -104,7 +104,7 @@
     "@vueuse/core": "^13.0.0",
     "body-scroll-lock": "4.0.0-beta.0",
     "dayjs": "^1.11.18",
-    "eslint": "8.57.0",
+    "eslint": "^9.35.0",
     "fuse.js": "^7.1.0",
     "happy-dom": "^18.0.1",
     "histoire": "0.16.5",

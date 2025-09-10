@@ -4,6 +4,9 @@ export function decimal(value: unknown): boolean {
     !Number.isNaN(num)
     && num >= Number.MIN_SAFE_INTEGER
     && num <= Number.MAX_SAFE_INTEGER
+    // eslint-disable-next-line regexp/no-super-linear-backtracking
     && num.toString() === value?.toString().replace(/(\.\d*?)0+$/, (_, p1) => (p1 === '.' ? '' : p1))
   )
 }
+
+// FIXME: fix eslint errors in the regex

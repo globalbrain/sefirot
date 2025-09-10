@@ -21,7 +21,7 @@ describe('validation/validators/checked', () => {
     expect(checked(0)).toBe(false)
     expect(checked([])).toBe(false)
     expect(checked({})).toBe(false)
-    // eslint-disable-next-line no-new-wrappers
+    // eslint-disable-next-line unicorn/new-for-builtins
     expect(checked(new Boolean(true))).toBe(false)
   })
 })

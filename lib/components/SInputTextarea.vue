@@ -101,11 +101,11 @@ const isPreview = ref(false)
     <div class="box">
       <div v-if="preview !== undefined" class="control">
         <SInputSegments
+          v-model="isPreview"
           :options="[
             { label: writeLabel ?? 'Write', value: false },
             { label: previewLabel ?? 'Preview', value: true }
           ]"
-          v-model="isPreview"
           size="mini"
         />
       </div>

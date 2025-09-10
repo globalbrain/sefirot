@@ -37,7 +37,6 @@ export const chartColors = {
   gray: 'light-dark(#8d8d8d, #7b7b7b)'
 } as const
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type ChartColor = keyof typeof chartColors | (string & {})
 export type KV = { key: string; value: number; color?: ChartColor }
 export type Margins = Partial<{ top: number; right: number; bottom: number; left: number }>
@@ -47,6 +46,7 @@ export function getColor(...colors: (ChartColor | string | null | undefined)[]):
   return chartColors[color as keyof typeof chartColors] || color || chartColors.blue
 }
 
+// eslint-disable-next-line ts/no-unused-vars
 const { gray: _gray, ...rest } = chartColors
 
 export function scheme<T extends { key: string; color?: ChartColor }>(

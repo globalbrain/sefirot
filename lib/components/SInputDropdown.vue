@@ -144,7 +144,7 @@ function handleArray(value: OptionValue) {
     :validation
     :hide-error
   >
-    <div class="container" ref="container">
+    <div ref="container" class="container">
       <div
         class="box"
         role="button"

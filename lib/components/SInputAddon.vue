@@ -68,7 +68,7 @@ function handleClickButton() {
 </script>
 
 <template>
-  <div class="SInputAddon" :class="classes" ref="container" @click.stop>
+  <div ref="container" class="SInputAddon" :class="classes" @click.stop>
     <component
       :is="clickable ? 'button' : 'div'"
       class="action"
@@ -79,8 +79,8 @@ function handleClickButton() {
     >
       <span class="action-label">
         <component
-          v-if="props.label && (typeof props.label !== 'string')"
           :is="props.label"
+          v-if="props.label && (typeof props.label !== 'string')"
           class="action-icon"
         />
         <span v-else>

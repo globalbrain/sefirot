@@ -16,7 +16,7 @@ describe('validation/validators/zero', () => {
     expect(zero(null)).toBe(false)
     expect(zero(undefined)).toBe(false)
     expect(zero([])).toBe(false)
-    // eslint-disable-next-line no-new-wrappers
+    // eslint-disable-next-line unicorn/new-for-builtins
     expect(zero(new Number(0))).toBe(false)
   })
 })

@@ -9,14 +9,14 @@ describe('validation/rules/maxLength', () => {
     expect(rule.$validator('', null, null)).toBe(true)
     expect(rule.$validator('1'.repeat(10), null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
-    expect(rule.$validator(Array(10).fill('1'), null, null)).toBe(true)
+    expect(rule.$validator(Array.from({ length: 10 }).fill('1'), null, null)).toBe(true)
 
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator('1'.repeat(11), null, null)).toBe(false)
     expect(rule.$validator({}, null, null)).toBe(false)
     expect(rule.$validator({ length: 10 }, null, null)).toBe(false)
-    expect(rule.$validator(Array(11).fill('1'), null, null)).toBe(false)
+    expect(rule.$validator(Array.from({ length: 11 }).fill('1'), null, null)).toBe(false)
   })
 
   it('shows the default error message', () => {

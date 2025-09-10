@@ -60,7 +60,7 @@ validation.value.$touch()
       <div class="name-label">
         <div class="name-icon">
           <IconFileText v-if="_file.indicatorState == null" class="name-icon-svg" />
-          <SIndicator size="fill" v-else :state="_file.indicatorState" />
+          <SIndicator v-else size="fill" :state="_file.indicatorState" />
         </div>
         <p class="name-text">{{ _file.name }}</p>
       </div>

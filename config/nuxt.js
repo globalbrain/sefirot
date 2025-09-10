@@ -14,7 +14,6 @@ export const baseConfig = {
      * @param {any} nuxt
      */
     function (_, nuxt) {
-      // eslint-disable-next-line @typescript-eslint/no-invalid-this
       return icons.bind(this, { scale: 1 }, nuxt)()
     }
   ],

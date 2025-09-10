@@ -201,7 +201,6 @@ const frozenColumns = smartComputed(() => {
 })
 
 const frozenColWidths = smartComputed(() => {
-  // eslint-disable-next-line no-void
   void blockWidth.value
   return frozenColumns.value.map((key) => getColWidth(key))
 })
@@ -403,9 +402,9 @@ function getStyles(key: string) {
       />
 
       <div class="table" role="grid">
-        <div class="container head" ref="head" @scroll="syncHeadScroll">
-          <div class="block" ref="block">
-            <div class="row" ref="row">
+        <div ref="head" class="container head" @scroll="syncHeadScroll">
+          <div ref="block" class="block">
+            <div ref="row" class="row">
               <STableItem
                 v-for="key in ordersToShow"
                 :key
@@ -440,8 +439,8 @@ function getStyles(key: string) {
 
         <div
           v-if="!unref(options.loading) && unref(options.records)?.length"
-          class="container body"
           ref="body"
+          class="container body"
           @scroll="syncBodyScroll"
         >
           <div
@@ -486,14 +485,14 @@ function getStyles(key: string) {
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
                         :model-value="selected.includes(indexes[index])"
-                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[index])"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
+                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[index])"
                       />
                       <SInputRadio
                         v-else
                         :model-value="selected === indexes[index]"
-                        @update:model-value="(c) => updateSelected(c ? indexes[index] : null)"
                         :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
+                        @update:model-value="(c) => updateSelected(c ? indexes[index] : null)"
                       />
                     </template>
                   </STableCell>

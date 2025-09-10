@@ -28,7 +28,7 @@ const icon = computed(() => {
 </script>
 
 <template>
-  <div class="SControlActionBarCollapse" ref="el">
+  <div ref="el" class="SControlActionBarCollapse">
     <SControlActionBarButton
       :as
       :icon

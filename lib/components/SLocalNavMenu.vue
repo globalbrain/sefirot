@@ -19,7 +19,7 @@ defineProps<{
     <div v-for="nav, index in menu" :key="index" class="group">
       <div v-for="item in nav" :key="item.text" class="item">
         <SLink class="link" :class="{ active: item.active }" :href="item.link">
-          <component v-if="item.icon" :is="item.icon" class="icon-svg" />
+          <component :is="item.icon" v-if="item.icon" class="icon-svg" />
           <span class="text">{{ item.text }}</span>
         </SLink>
       </div>

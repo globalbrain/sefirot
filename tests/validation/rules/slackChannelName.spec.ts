@@ -33,8 +33,7 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator('+', null, null)).toBe(false)
     expect(rule.$validator('|', null, null)).toBe(false)
     expect(rule.$validator('・', null, null)).toBe(false)
-    // eslint-disable-next-line @typescript-eslint/quotes
-    expect(rule.$validator("'", null, null)).toBe(false)
+    expect(rule.$validator('\'', null, null)).toBe(false)
     expect(rule.$validator('`', null, null)).toBe(false)
     expect(rule.$validator('~', null, null)).toBe(false)
     expect(rule.$validator('/', null, null)).toBe(false)
