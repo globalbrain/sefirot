@@ -197,7 +197,7 @@ function handleArray(value: OptionValue) {
   border-radius: 6px;
   width: 100%;
   color: var(--input-text);
-  background-color: var(--input-bg-color);;
+  background-color: var(--input-bg-color);
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 
