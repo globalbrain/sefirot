@@ -1,6 +1,14 @@
 import { ymd } from 'sefirot/validation/validators'
 
 describe('validation/validators/ymd', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('returns false when value is not an object', () => {
     expect(ymd(null)).toBe(false)
     expect(ymd(undefined)).toBe(false)
@@ -74,43 +82,13 @@ describe('validation/validators/ymd', () => {
     expect(ymd({ year: 2024, month: null, date: null }, ['y', 'm', 'd'])).toBe(true)
     expect(ymd({ year: null, month: 1, date: 1 }, ['y', 'm', 'd'])).toBe(true)
 
-    const RealDate = Date
+    vi.setSystemTime(new Date('2024-02-01T00:00:00Z'))
+    expect(ymd({ month: 2, date: 29 }, ['m', 'd'])).toBe(true)
+    expect(ymd({ month: 2, date: 30 }, ['m', 'd'])).toBe(false)
+    expect(ymd({ date: 29 }, ['d'])).toBe(true)
 
-    // @ts-expect-error mock
-    globalThis.Date = class extends RealDate {
-      constructor(...args: ConstructorParameters<typeof RealDate> | []) {
-        if (args.length === 0) {
-          super('2024-02-01T00:00:00Z')
-        } else {
-          super(...args)
-        }
-      }
-    }
-
-    try {
-      expect(ymd({ month: 2, date: 29 }, ['m', 'd'])).toBe(true)
-      expect(ymd({ month: 2, date: 30 }, ['m', 'd'])).toBe(false)
-      expect(ymd({ date: 29 }, ['d'])).toBe(true)
-    } finally {
-      globalThis.Date = RealDate
-    }
-
-    // @ts-expect-error mock
-    globalThis.Date = class extends RealDate {
-      constructor(...args: ConstructorParameters<typeof RealDate> | []) {
-        if (args.length === 0) {
-          super('2024-03-01T00:00:00Z')
-        } else {
-          super(...args)
-        }
-      }
-    }
-
-    try {
-      expect(ymd({ month: 2, date: 29 }, ['m', 'd'])).toBe(true)
-      expect(ymd({ date: 31 }, ['d'])).toBe(true)
-    } finally {
-      globalThis.Date = RealDate
-    }
+    vi.setSystemTime(new Date('2024-03-01T00:00:00Z'))
+    expect(ymd({ month: 2, date: 29 }, ['m', 'd'])).toBe(true)
+    expect(ymd({ date: 31 }, ['d'])).toBe(true)
   })
 })
