@@ -40,7 +40,7 @@ const _file = computed(() => ({
   file: props.file instanceof File ? props.file : props.file.file,
   size: formatSize(props.file instanceof File ? props.file : props.file.file),
   indicatorState: props.file instanceof File ? null : props.file.indicatorState,
-  canRemove: props.file instanceof File ? true : props.file.canRemove ?? true,
+  canRemove: props.file instanceof File ? true : (props.file.canRemove ?? true),
   action: props.file instanceof File ? null : props.file.action,
   errorMessage: props.file instanceof File ? null : props.file.errorMessage
 }))
@@ -65,7 +65,9 @@ validation.value.$touch()
         <p class="name-text">{{ _file.name }}</p>
       </div>
       <p v-if="_file.errorMessage" class="error">{{ _file.errorMessage }}</p>
-      <p v-else-if="validation.$errors.length" class="error">{{ validation.$errors[0]?.$message }}</p>
+      <p v-else-if="validation.$errors.length" class="error">
+        {{ validation.$errors[0]?.$message }}
+      </p>
     </div>
     <div v-if="_file.action" class="action">
       <SButton

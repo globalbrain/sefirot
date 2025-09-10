@@ -28,9 +28,11 @@ const emit = defineEmits<{
 }>()
 
 const _value = computed(() => {
-  return (props.modelValue !== undefined)
+  return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const _textColor = computed(() => {
@@ -60,9 +62,7 @@ const displayValue = computed(() => {
     return props.displayValue
   }
 
-  return (!props.separator || valueWithSeparator.value == null)
-    ? null
-    : valueWithSeparator.value
+  return !props.separator || valueWithSeparator.value == null ? null : valueWithSeparator.value
 })
 
 function emitUpdate(value: string | null) {

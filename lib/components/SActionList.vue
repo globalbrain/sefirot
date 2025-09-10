@@ -12,8 +12,8 @@ defineProps<{
 <template>
   <div class="SActionList">
     <SActionListItem
-      v-for="item, index in list"
-      :key="index"
+      v-for="(item, i) in list"
+      :key="i"
       :lead-icon="item.leadIcon"
       :label="item.label"
       :link="item.link"

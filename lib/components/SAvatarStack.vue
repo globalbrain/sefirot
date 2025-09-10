@@ -27,8 +27,8 @@ const count = computed(() => {
 <template>
   <div class="SAvatarStack" :class="size">
     <SAvatar
-      v-for="(avatar, index) in avatars"
-      :key="index"
+      v-for="(avatar, i) in avatars"
+      :key="i"
       :size
       :avatar="avatar.image"
       :name="avatar.name"

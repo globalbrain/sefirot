@@ -99,7 +99,7 @@ async function adjustDialogPosition() {
   await nextTick()
 
   const dialogWidth = dialog.value?.offsetWidth ?? 0
-  const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
+  const position = window.innerWidth - rect.right > dialogWidth ? 'right' : 'left'
 
   top.value = `${rect.top + rect.height - 8}px`
   left.value = `${Math.max(

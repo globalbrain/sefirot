@@ -48,7 +48,7 @@ const displayNames = computed(() => {
   <div class="STableCellAvatars" :class="[color]">
     <div class="container">
       <div v-if="displayAvatars.length" class="avatars">
-        <div v-for="(avatar, index) in displayAvatars" :key="index" class="avatar">
+        <div v-for="(avatar, i) in displayAvatars" :key="i" class="avatar">
           <div class="avatar-box">
             <SAvatar size="mini" :avatar="avatar.image" :name="avatar.name" :tooltip />
           </div>

@@ -44,7 +44,7 @@ function isActionButton(action: Action): action is ActionButton {
       <template v-else>{{ value }}</template>
     </div>
     <div v-if="actions?.length" class="actions">
-      <template v-for="action, index in actions" :key="index">
+      <template v-for="(action, i) in actions" :key="i">
         <SButton
           v-if="isActionButton(action)"
           type="text"

@@ -21,9 +21,7 @@ setCollapse(props.collapsed)
 const el = shallowRef<HTMLElement | null>(null)
 
 const icon = computed(() => {
-  return isCollapsed.value
-    ? IconArrowsOutLineVertical
-    : IconArrowsInLineVertical
+  return isCollapsed.value ? IconArrowsOutLineVertical : IconArrowsInLineVertical
 })
 </script>
 

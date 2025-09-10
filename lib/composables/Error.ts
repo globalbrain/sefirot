@@ -77,11 +77,10 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
         }
       }
     }
-    name =
-      inferFromRegistry(
-        // @ts-expect-error internal api
-        instance.components || (instance.parent.type as ComponentOptions).components
-      ) || inferFromRegistry(instance.appContext.components)
+    name = inferFromRegistry(
+      // @ts-expect-error internal api
+      instance.components || (instance.parent.type as ComponentOptions).components
+    ) || inferFromRegistry(instance.appContext.components)
   }
 
   return name ? classify(name) : isRoot ? 'App' : 'Anonymous'

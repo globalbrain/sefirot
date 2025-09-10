@@ -30,8 +30,8 @@ const component = computed(() => {
   return isExternal.value ? 'a' : 'router-link'
 })
 
-const target = computed(() => isExternal.value ? '_blank' : null)
-const rel = computed(() => isExternal.value ? 'noopener noreferrer' : null)
+const target = computed(() => (isExternal.value ? '_blank' : null))
+const rel = computed(() => (isExternal.value ? 'noopener noreferrer' : null))
 </script>
 
 <template>

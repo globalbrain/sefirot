@@ -451,10 +451,10 @@ function getStyles(key: string) {
               position: 'relative'
             }"
           >
-            <div v-for="{ index, key: __key, size, start } in virtualItems" :key="__key">
+            <div v-for="{ index: i, key: __key, size, start } in virtualItems" :key="__key">
               <div
                 class="row"
-                :class="isSummaryOrLastClass(index)"
+                :class="isSummaryOrLastClass(i)"
                 :style="{
                   position: 'absolute',
                   top: 0,
@@ -474,25 +474,25 @@ function getStyles(key: string) {
                 >
                   <STableCell
                     :name="key"
-                    :class="isSummary(index) && 'summary'"
+                    :class="isSummary(i) && 'summary'"
                     :class-name="unref(options.columns)[key]?.className"
-                    :cell="getCell(key, index)"
-                    :value="recordsWithSummary[index][key]"
-                    :record="recordsWithSummary[index]"
+                    :cell="getCell(key, i)"
+                    :value="recordsWithSummary[i][key]"
+                    :record="recordsWithSummary[i]"
                     :records="unref(options.records)!"
                   >
-                    <template v-if="key === '__select' && !isSummary(index)">
+                    <template v-if="key === '__select' && !isSummary(i)">
                       <SInputCheckbox
                         v-if="Array.isArray(selected)"
-                        :model-value="selected.includes(indexes[index])"
-                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
-                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[index])"
+                        :model-value="selected.includes(indexes[i])"
+                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
+                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[i])"
                       />
                       <SInputRadio
                         v-else
-                        :model-value="selected === indexes[index]"
-                        :disabled="options.disableSelection?.(recordsWithSummary[index]) === true"
-                        @update:model-value="(c) => updateSelected(c ? indexes[index] : null)"
+                        :model-value="selected === indexes[i]"
+                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
+                        @update:model-value="(c) => updateSelected(c ? indexes[i] : null)"
                       />
                     </template>
                   </STableCell>

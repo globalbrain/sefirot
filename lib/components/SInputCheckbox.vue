@@ -44,7 +44,9 @@ const isIndeterminate = computed(() => {
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue === true
-    : props.value !== undefined ? props.value === true : false
+    : props.value !== undefined
+      ? props.value === true
+      : false
 })
 
 function onClick() {

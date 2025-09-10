@@ -30,8 +30,8 @@ export class Http {
 
   private async buildRequest(url: string, _options: FetchOptions = {}): Promise<[string, FetchOptions]> {
     const { method, params, query, ...options } = _options
-    const xsrfToken =
-      ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '') && (await this.ensureXsrfToken())
+    const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
+      && (await this.ensureXsrfToken())
 
     const queryString = stringify(
       { ...params, ...query },
