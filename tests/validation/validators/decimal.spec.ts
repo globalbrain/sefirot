@@ -36,6 +36,8 @@ describe('validation/validators/decimal', () => {
     expect(decimal('1.0')).toBe(true)
     expect(decimal('1.00')).toBe(true)
     expect(decimal('-1.00')).toBe(true)
+    expect(decimal('1.2300')).toBe(true)
+    expect(decimal('0.0')).toBe(true)
   })
 
   it('accepts number types', () => {
@@ -46,6 +48,7 @@ describe('validation/validators/decimal', () => {
 
   it('rejects minus zero as string', () => {
     expect(decimal('-0')).toBe(false)
+    expect(decimal('-0.0')).toBe(false)
   })
 
   it('rejects non-string/number types', () => {
