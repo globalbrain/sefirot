@@ -20,6 +20,8 @@ describe('validation/validators/email', () => {
     expect(email('.abc@example.com')).toBe(false)
     expect(email('abc.@example.com')).toBe(false)
     expect(email('a..b@example.com')).toBe(false)
+    expect(email('..b@example.com')).toBe(false)
+    expect(email('..@example.com')).toBe(false)
     expect(email('a"b@example.com')).toBe(false)
   })
 

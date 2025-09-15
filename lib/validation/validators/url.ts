@@ -1,7 +1,6 @@
-import { hostnameREStr } from './email'
+import { hostnameRE } from './email'
 
 const protocolRE = /^https?:$/i
-const hostnameRE = new RegExp(hostnameREStr, 'i')
 
 export function url(value: unknown): boolean {
   if (typeof value !== 'string') { return false }
