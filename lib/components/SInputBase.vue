@@ -27,16 +27,6 @@ const props = defineProps<Props>()
 
 const slots = useSlots()
 
-const classes = computed(() => [
-  props.size ?? 'small',
-  { 'has-error': error.value?.has },
-  { 'has-warning': props.warning }
-])
-
-const hasInfo = computed(() => {
-  return slots.info || props.info
-})
-
 const error = computed(() => {
   if (!props.validation) {
     return null
@@ -51,6 +41,16 @@ const error = computed(() => {
     show: showError,
     msg: errorMsg
   }
+})
+
+const classes = computed(() => [
+  props.size ?? 'small',
+  { 'has-error': error.value?.has },
+  { 'has-warning': props.warning }
+])
+
+const hasInfo = computed(() => {
+  return slots.info || props.info
 })
 
 function isDirtyAndInvalid(validation: Validatable) {
@@ -79,7 +79,7 @@ function getErrorMsg(validation: Validatable) {
       <span class="label-note" :class="{ 'has-info': hasInfo }">{{ note }}</span>
 
       <span v-if="checkIcon || checkText" class="check" :class="checkColor || 'neutral'">
-        <component v-if="checkIcon" :is="checkIcon" class="check-icon" />
+        <component :is="checkIcon" v-if="checkIcon" class="check-icon" />
         <span v-if="checkText" class="check-text">{{ checkText }}</span>
       </span>
     </label>

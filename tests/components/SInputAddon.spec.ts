@@ -3,7 +3,7 @@ import SInputAddon from 'sefirot/components/SInputAddon.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputAddon', () => {
-  test('it displays given label', () => {
+  it('displays given label', () => {
     const wrapper = mount(SInputAddon, {
       props: {
         label: 'Label'
@@ -13,7 +13,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon .action-label').text()).toBe('Label')
   })
 
-  test('it focuses the button', async () => {
+  it('focuses the button', async () => {
     const wrapper = mount(SInputAddon)
 
     await wrapper.find('.SInputAddon .action').trigger('focus')
@@ -21,7 +21,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon').classes('focused')).toBe(true)
   })
 
-  test('it blurs the button', async () => {
+  it('blurs the button', async () => {
     const wrapper = mount(SInputAddon)
 
     await wrapper.find('.SInputAddon .action').trigger('focus')
@@ -31,7 +31,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon').classes('focused')).toBe(false)
   })
 
-  test('it emits `click` event', async () => {
+  it('emits `click` event', async () => {
     const wrapper = mount(SInputAddon)
 
     await wrapper.find('.SInputAddon .action').trigger('click')
@@ -39,7 +39,7 @@ describe('components/SInputAddon', () => {
     assertEmitted(wrapper, 'click', 1)
   })
 
-  test('it renders `div` for action if it is not clickable', () => {
+  it('renders `div` for action if it is not clickable', () => {
     const wrapper = mount(SInputAddon, {
       props: {
         clickable: false
@@ -49,7 +49,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon .action').element.tagName).toBe('DIV')
   })
 
-  test('it opens dropdown if it is defined', async () => {
+  it('opens dropdown if it is defined', async () => {
     const wrapper = mount(SInputAddon, {
       props: {
         dropdown: [
@@ -70,7 +70,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon .dialog').isVisible()).toBe(true)
   })
 
-  test('it displayes selected dropdown item if `label` is not set', async () => {
+  it('displayes selected dropdown item if `label` is not set', async () => {
     const wrapper = mount(SInputAddon, {
       props: {
         dropdown: [
@@ -89,7 +89,7 @@ describe('components/SInputAddon', () => {
     expect(wrapper.find('.SInputAddon .action-label').text()).toBe('Item 2')
   })
 
-  test('it does not emit events if it is disabled', async () => {
+  it('does not emit events if it is disabled', async () => {
     const wrapper = mount(SInputAddon, {
       props: {
         disabled: true

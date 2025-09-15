@@ -93,7 +93,7 @@ export class DateFromTo extends DateRangePresetBase {
     const f = this.getFrom()?.format('YYYY-MM-DD')
     const t = this.getTo()?.format('YYYY-MM-DD')
 
-    return (f && t) ? `${f} – ${t}` : 'Error'
+    return f && t ? `${f} – ${t}` : 'Error'
   }
 
   setFrom(from: Day | null): this {

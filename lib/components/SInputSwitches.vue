@@ -66,7 +66,7 @@ function handleChange(value: any): void {
   >
     <div class="container">
       <div class="row">
-        <div v-for="(option, index) in options" :key="index" class="col">
+        <div v-for="(option, i) in options" :key="i" class="col">
           <SInputSwitch
             size="sm"
             :text="option.label"

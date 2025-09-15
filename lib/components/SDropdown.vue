@@ -10,7 +10,7 @@ defineProps<{
 <template>
   <div class="SDropdown">
     <div class="container">
-      <div v-for="(section, index) in sections" :key="index" class="section">
+      <div v-for="(section, i) in sections" :key="i" class="section">
         <SDropdownSection :section />
       </div>
     </div>

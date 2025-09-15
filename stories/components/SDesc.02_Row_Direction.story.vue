@@ -27,20 +27,20 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstNumber
-        title="cols"
         v-model="state.cols"
+        title="cols"
       />
       <HstNumber
-        title="gap"
         v-model="state.gap"
+        title="gap"
       />
       <HstNumber
-        title="labelWidth"
         v-model="state.labelWidth"
+        title="labelWidth"
       />
       <HstCheckbox
-        title="divider"
         v-model="state.divider"
+        title="divider"
       />
     </template>
 

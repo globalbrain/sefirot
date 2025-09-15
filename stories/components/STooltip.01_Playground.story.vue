@@ -24,13 +24,13 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.position"
         title="position"
         :options
-        v-model="state.position"
       />
       <HstTextarea
-        title="text"
         v-model="state.text"
+        title="text"
       />
     </template>
 

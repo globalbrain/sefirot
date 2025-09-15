@@ -1,7 +1,7 @@
 import { decimal } from 'sefirot/validation/rules'
 
 describe('validation/rules/decimal', () => {
-  test('it validates whether the value is decimal', () => {
+  it('validates decimal numbers', () => {
     const rule = decimal()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -22,12 +22,12 @@ describe('validation/rules/decimal', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = decimal()
-    expect(rule.$message({ $params: {} })).toBe('The value must be valid decimal numbers.')
+    expect(rule.$message({ $params: {} })).toBe('The value must be a valid decimal number.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = decimal('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

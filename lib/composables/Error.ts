@@ -31,7 +31,6 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
-import { isError } from '../support/Utils'
 
 export interface User {
   id?: string | number
@@ -78,11 +77,10 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
         }
       }
     }
-    name
-      = inferFromRegistry(
-        // @ts-expect-error internal api
-        instance.components || (instance.parent.type as ComponentOptions).components
-      ) || inferFromRegistry(instance.appContext.components)
+    name = inferFromRegistry(
+      // @ts-expect-error internal api
+      instance.components || (instance.parent.type as ComponentOptions).components
+    ) || inferFromRegistry(instance.appContext.components)
   }
 
   return name ? classify(name) : isRoot ? 'App' : 'Anonymous'
@@ -102,8 +100,8 @@ function getComponentTrace(currentVNode: VNode | null): ComponentTraceStack {
     } else {
       normalizedStack.push({ vnode: currentVNode, recurseCount: 0 })
     }
-    const parentInstance: ComponentInternalInstance | null
-      = currentVNode.component && currentVNode.component.parent
+    const parentInstance: ComponentInternalInstance | null =
+      currentVNode.component && currentVNode.component.parent
     currentVNode = parentInstance && parentInstance.vnode
   }
 
@@ -225,18 +223,21 @@ export function useErrorHandler({
   }
 }
 
-function getErrorMessage(error: unknown | undefined) {
-  if (error == null) {
-    return 'unknown error'
+function getErrorMessage(error: unknown | undefined): string {
+  let str
+  if (!str && typeof error === 'string') { str = error }
+  if (!str && error instanceof Error) { str = error.message }
+  if (!str) {
+    try {
+      const s = JSON.stringify(error)
+      if (s && s !== '{}') { str = s }
+    } catch {}
   }
-
-  if (typeof error === 'string') {
-    return error
+  if (!str) {
+    try {
+      const s = String(error)
+      if (s) { str = s }
+    } catch {}
   }
-
-  if (isError(error)) {
-    return error.message
-  }
-
-  return JSON.stringify(error)
+  return str || 'unknown error'
 }

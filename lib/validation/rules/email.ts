@@ -2,7 +2,7 @@ import { createRule } from '../Rule'
 import { email as baseEmail } from '../validators'
 
 export const message = {
-  en: 'The Email is invalid.',
+  en: 'The email is invalid.',
   ja: 'Emailの形式が正しくありません。'
 }
 

@@ -3,7 +3,7 @@ import SButton from 'sefirot/components/SButton.vue'
 import SButtonGroup from 'sefirot/components/SButtonGroup.vue'
 
 describe('components/SButtonGroup', () => {
-  test('display slotted buttons', () => {
+  it('displays slotted buttons', () => {
     const wrapper = mount(SButtonGroup, {
       slots: {
         default: [SButton, SButton, SButton]

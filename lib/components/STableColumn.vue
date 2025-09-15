@@ -99,14 +99,13 @@ async function adjustDialogPosition() {
   await nextTick()
 
   const dialogWidth = dialog.value?.offsetWidth ?? 0
-  const position = (window.innerWidth - rect.right) > dialogWidth ? 'right' : 'left'
+  const position = window.innerWidth - rect.right > dialogWidth ? 'right' : 'left'
 
   top.value = `${rect.top + rect.height - 8}px`
-  left.value
-    = `${Math.max(
-      16,
-      position === 'right' ? rect.left - 4 : rect.right - dialogWidth - 4
-    )}px`
+  left.value = `${Math.max(
+    16,
+    position === 'right' ? rect.left - 4 : rect.right - dialogWidth - 4
+  )}px`
 }
 
 function startDialogPositionListener() {
@@ -121,18 +120,18 @@ function stopDialogPositionListener() {
 </script>
 
 <template>
-  <div class="STableColumn STableCell" :class="classes" ref="column">
+  <div ref="column" class="STableColumn STableCell" :class="classes">
     <div class="container">
       <slot>
         <p class="label">{{ label }}</p>
 
-        <div v-if="dropdown" class="action" ref="container">
+        <div v-if="dropdown" ref="container" class="action">
           <button class="button" :class="{ active: buttonActive }" @click="toggle">
             <IconDotsThree class="icon" />
           </button>
 
           <transition name="fade">
-            <div v-if="isOpen" class="dialog" :style="{ top, left }" ref="dialog">
+            <div v-if="isOpen" ref="dialog" class="dialog" :style="{ top, left }">
               <SDropdown :sections="dropdown" />
             </div>
           </transition>

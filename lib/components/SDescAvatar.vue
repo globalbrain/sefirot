@@ -26,7 +26,7 @@ const _avatar = computed(() => {
 
 <template>
   <div v-if="_avatar?.length" class="SDescAvatar" :class="[dir]">
-    <div v-for="a, i in _avatar" :key="i" class="value">
+    <div v-for="(a, i) in _avatar" :key="i" class="value">
       <SAvatar
         size="nano"
         :avatar="a.avatar"

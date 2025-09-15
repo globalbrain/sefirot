@@ -62,42 +62,43 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="sizes"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.type"
         title="type"
         :options="{
           fill: 'fill',
           outline: 'outline',
           text: 'text'
         }"
-        v-model="state.type"
       />
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="modes"
-        v-model="state.mode"
       />
       <HstSelect
+        v-model="state.labelMode"
         title="label-mode"
         :options="contentModes"
-        v-model="state.labelMode"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstNumber
-        title="count"
         v-model="state.count"
+        title="count"
       />
       <HstText
-        title="tooltip.text"
         v-model="state.tooltip.text"
+        title="tooltip.text"
       />
       <HstSelect
+        v-model="state.tooltip.position"
         title="tooltip.position"
         :options="{
           top: 'top',
@@ -105,28 +106,27 @@ function initState() {
           bottom: 'bottom',
           left: 'left'
         }"
-        v-model="state.tooltip.position"
       />
       <HstSelect
+        v-model="state.tooltip.trigger"
         title="tooltip.trigger"
         :options="{
           both: 'both',
           hover: 'hover',
           focus: 'focus'
         }"
-        v-model="state.tooltip.trigger"
       />
       <HstNumber
-        title="tooltip.timeout"
         v-model="state.tooltip.timeout"
+        title="tooltip.timeout"
       />
       <HstCheckbox
-        title="loading"
         v-model="state.loading"
+        title="loading"
       />
       <HstCheckbox
-        title="disabled"
         v-model="state.disabled"
+        title="disabled"
       />
     </template>
 

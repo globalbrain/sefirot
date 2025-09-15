@@ -239,9 +239,7 @@ const table = useTable({
       cell: (_, record) => ({
         type: 'state',
         label: record.status,
-        mode: (record.status === 'Published'
-          ? 'success'
-          : record.status === 'Draft' ? 'info' : 'mute')
+        mode: record.status === 'Published' ? 'success' : record.status === 'Draft' ? 'info' : 'mute'
       })
     },
 
@@ -282,9 +280,7 @@ const table = useTable({
         type: 'pills',
         pills: record.tags.map((tag: string) => ({
           label: tag,
-          color: tag === 'Info'
-            ? 'info'
-            : tag === 'Latest' ? 'success' : 'mute'
+          color: tag === 'Info' ? 'info' : tag === 'Latest' ? 'success' : 'mute'
         }))
       })
     },
@@ -363,7 +359,12 @@ const selected = ref<string[]>([])
           <SControl>
             <SControlLeft>
               <SControlInputSearch class="s-max-w-320" :model-value="null" />
-              <SControlButton type="outline" mode="mute" label="Reset filters" @click="resetFilters" />
+              <SControlButton
+                type="outline"
+                mode="mute"
+                label="Reset filters"
+                @click="resetFilters"
+              />
             </SControlLeft>
             <SControlRight>
               <SControlButton mode="info" label="New item" />
@@ -371,7 +372,7 @@ const selected = ref<string[]>([])
           </SControl>
         </SCardBlock>
         <SCardBlock>
-          <STable class="table" :options="table" v-model:selected="selected" />
+          <STable v-model:selected="selected" class="table" :options="table" />
         </SCardBlock>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>
