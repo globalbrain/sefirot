@@ -1,20 +1,16 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/1755ac0a108ba3486bd8397e56d3bdcd69196594/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/5e1e791880238380a1038ae2c505e206ceb34d77/packages/runtime-core/src/component.ts
  * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
- * @see https://github.com/getsentry/sentry-javascript/blob/04711c20246f7cdaac2305286fec783ab1859a18/packages/vue/src/errorhandler.ts
- * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts
+ * @see https://github.com/getsentry/sentry-javascript/blob/ce46ffccfc21b308ea64e3baf1a4a0c1a228f799/packages/vue/src/errorhandler.ts
  *
  * Original licenses:
  *
- * (c) 2018-present Yuxi (Evan) You and Vue contributors
+ * Copyright (c) 2018-present, Yuxi (Evan) You
  * @license MIT
  *
- * (c) 2012-2024 Functional Software, Inc. dba Sentry
+ * Copyright (c) 2019 Functional Software, Inc. dba Sentry
  * @license MIT
- *
- * (c) 2023 Vercel, Inc.
- * @license Apache-2.0
  */
 
 import * as Sentry from '@sentry/browser'
@@ -42,7 +38,7 @@ type TraceEntry = { vnode: VNode; recurseCount: number }
 
 type ComponentTraceStack = TraceEntry[]
 
-const classifyRE = /(?:^|[-_])(\w)/g
+const classifyRE = /(?:^|[-_])\w/g
 function classify(str: string): string {
   return str.replace(classifyRE, (c) => c.toUpperCase()).replace(/[-_]/g, '')
 }
@@ -202,7 +198,7 @@ export function useErrorHandler({
           componentName: formatComponentName($),
           lifecycleHook: info,
           trace: formatTrace($),
-          propsData: $ && $.props
+          propsData: $.props
         }
 
         setTimeout(() => {
