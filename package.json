@@ -106,7 +106,7 @@
     "dayjs": "^1.11.18",
     "eslint": "^9.36.0",
     "fuse.js": "^7.1.0",
-    "happy-dom": "^18.0.1",
+    "happy-dom": "^20.0.0",
     "histoire": "0.16.5",
     "lodash-es": "^4.17.21",
     "markdown-it": "^14.1.0",
