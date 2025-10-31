@@ -21,21 +21,21 @@ function getExternal(value: 'undefined' | 'true' | 'false') {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
-        title="href"
         v-model="state.href"
+        title="href"
       />
       <HstText
-        title="text"
         v-model="state.text"
+        title="text"
       />
       <HstSelect
+        v-model="state.external"
         title="external"
         :options="{
           undefined: 'undefined',
           true: 'true',
           false: 'false'
         }"
-        v-model="state.external"
       />
     </template>
 

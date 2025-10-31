@@ -6,10 +6,7 @@ export const message = {
   ja: 'この項目は必須です。'
 }
 
-export function requiredIf(
-  condition: RequiredIfCondition,
-  msg?: string
-) {
+export function requiredIf(condition: RequiredIfCondition, msg?: string) {
   return createRule({
     async: true,
     params: { condition },

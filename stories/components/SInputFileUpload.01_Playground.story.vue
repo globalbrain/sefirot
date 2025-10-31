@@ -34,55 +34,56 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
           small: 'small',
           medium: 'medium'
         }"
-        v-model="state.size"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstText
-        title="info"
         v-model="state.info"
+        title="info"
       />
       <HstText
-        title="note"
         v-model="state.note"
+        title="note"
       />
       <HstText
-        title="help"
         v-model="state.help"
+        title="help"
       />
       <HstText
-        title="text"
         v-model="state.text"
+        title="text"
       />
       <HstText
-        title="placeholder"
         v-model="state.placeholder"
+        title="placeholder"
       />
       <HstText
-        title="empty-text"
         v-model="state.emptyText"
+        title="empty-text"
       />
       <HstText
-        title="accept"
         v-model="state.accept"
+        title="accept"
       />
       <HstCheckbox
-        title="droppable"
         v-model="state.droppable"
+        title="droppable"
       />
     </template>
 
     <template #default="{ state }">
       <Board :title :docs>
         <SInputFileUpload
+          v-model="data.files"
           :size="state.size"
           :label="state.label"
           :info="state.info"
@@ -93,7 +94,6 @@ function initState() {
           :empty-text="state.emptyText"
           :accept="state.accept"
           :droppable="state.droppable"
-          v-model="data.files"
           :rules
         />
       </Board>

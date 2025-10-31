@@ -82,9 +82,7 @@ const classes = computed(() => [
 ])
 
 const computedTag = computed(() => {
-  return props.tag
-    ? props.tag
-    : props.href ? SLink : 'button'
+  return props.tag ? props.tag : props.href ? SLink : 'button'
 })
 
 const slots = useSlots()
@@ -109,8 +107,8 @@ function handleClick(): void {
     :tag="typeof tooltip === 'object' ? tooltip.tag : undefined"
     :text="typeof tooltip === 'object' ? unref(tooltip.text) : tooltip"
     :position="typeof tooltip === 'object' ? tooltip.position : undefined"
-    :display="typeof tooltip === 'object' ? tooltip.display ?? 'inline-block' : 'inline-block'"
-    :trigger="typeof tooltip === 'object' ? tooltip.trigger ?? 'both' : 'both'"
+    :display="typeof tooltip === 'object' ? (tooltip.display ?? 'inline-block') : 'inline-block'"
+    :trigger="typeof tooltip === 'object' ? (tooltip.trigger ?? 'both') : 'both'"
     :timeout="typeof tooltip === 'object' ? tooltip.timeout : undefined"
     :tabindex="-1"
   >

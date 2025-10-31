@@ -28,7 +28,7 @@ const classes = computed(() => [
 const initial = computed(() => props.name?.charAt(0).toUpperCase())
 
 const tooltipPosition = computed(() => {
-  return (props.tooltip && typeof props.tooltip === 'object')
+  return props.tooltip && typeof props.tooltip === 'object'
     ? props.tooltip.position || 'top'
     : 'top'
 })

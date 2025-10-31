@@ -1,7 +1,7 @@
 import { negativeInteger } from 'sefirot/validation/rules'
 
 describe('validation/rules/negativeInteger', () => {
-  it('should validates if the value is negative integer', () => {
+  it('validates if the value is negative integer', () => {
     const rule = negativeInteger()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -24,12 +24,12 @@ describe('validation/rules/negativeInteger', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = negativeInteger()
-    expect(rule.$message({ $params: {} })).toBe('The value must be valid negative integer.')
+    expect(rule.$message({ $params: {} })).toBe('The value must be a valid negative integer.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = negativeInteger('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

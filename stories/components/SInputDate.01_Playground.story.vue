@@ -17,27 +17,27 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           sm: 'sm',
           md: 'md'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.tabindex"
         title="tabindex"
         :options="[0, -1]"
-        v-model="state.tabindex"
       />
     </template>
 
     <template #default="{ state }">
       <Board :title>
         <SInputDate
+          v-model="value"
           label="Label"
           :size="state.size"
           :tabindex="state.tabindex"
-          v-model="value"
         />
       </Board>
     </template>

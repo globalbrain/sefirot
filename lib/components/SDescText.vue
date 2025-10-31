@@ -32,10 +32,10 @@ const _value = computed(() => {
 
 <template>
   <div v-if="hasSlot || _value" class="SDescText" :class="classes">
-    <div class="value" v-if="hasSlot">
+    <div v-if="hasSlot" class="value">
       <slot />
     </div>
-    <div class="value" v-else v-html="_value" />
+    <div v-else class="value" v-html="_value" />
   </div>
   <SDescEmpty v-else />
 </template>

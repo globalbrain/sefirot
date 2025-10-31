@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SMarkdown from 'sefirot/components/SMarkdown.vue'
 
 describe('components/SMarkdown', () => {
-  it('should render content', () => {
+  it('renders content', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {
         content: '**text**'
@@ -13,7 +13,7 @@ describe('components/SMarkdown', () => {
     expect(content.text()).toBe('text')
   })
 
-  it('should render inline content', () => {
+  it('renders inline content', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {
         content: '**text**',
@@ -25,7 +25,7 @@ describe('components/SMarkdown', () => {
     expect(content.text()).toBe('text')
   })
 
-  it('should render component tag', () => {
+  it('renders component tag', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {
         tag: 'span',
@@ -38,7 +38,7 @@ describe('components/SMarkdown', () => {
     expect(container.element.nodeName.toLowerCase()).toEqual('span')
   })
 
-  it('should render external link', () => {
+  it('renders external link', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {
         content: '[Sefirot](https://sefirot.globalbrains.com)'
@@ -52,7 +52,7 @@ describe('components/SMarkdown', () => {
     expect(wrapper.find('.SMarkdown-container .SMarkdown-link').attributes()).toEqual(attrs)
   })
 
-  it('should render internal link', () => {
+  it('renders internal link', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {
         content: '[Sefirot](/sefirot)'

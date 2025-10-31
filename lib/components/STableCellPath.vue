@@ -16,8 +16,8 @@ function classes(item: TableCellPathSegment) {
 
 <template>
   <div class="STableCellPath">
-    <template v-for="segment, index in segments" :key="index">
-      <div v-if="index > 0" class="divider">/</div>
+    <template v-for="(segment, i) in segments" :key="i">
+      <div v-if="i > 0" class="divider">/</div>
       <SLink
         class="text"
         :class="classes(segment)"

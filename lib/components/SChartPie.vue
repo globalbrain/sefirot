@@ -180,12 +180,18 @@ function renderChart({
   // Calculate radius and center the chart
   const r_k = props.half ? 0.25 : 0.5
   const radius = Math.min(height_2, (width - legendWidth) / (2 + (props.legend ? r_k : 0)))
-  const innerRadius = props.innerRadius?.(radius) ?? (props.type === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
+  const innerRadius = props.innerRadius?.(radius)
+    ?? (props.type === 'pie' ? 6 : Math.max(radius / 1.5, radius - 50))
 
-  legendGroup
-    ?.attr('transform', `translate(${radius * (1 + r_k)},${-(props.half ? height_2 : 0) / 2 - legendHeight / 2})`)
-  svg
-    .attr('transform', `translate(${margin.left + width_2 - (props.legend ? radius * r_k + legendWidth : 0) / 2},${margin.top + height_2})`)
+  legendGroup?.attr(
+    'transform',
+    `translate(${radius * (1 + r_k)},${-(props.half ? height_2 : 0) / 2 - legendHeight / 2})`
+  )
+  svg.attr(
+    'transform',
+    `translate(${margin.left + width_2 - (props.legend ? radius * r_k + legendWidth : 0) / 2}`
+    + `,${margin.top + height_2})`
+  )
 
   // Create arc generator
   const arc = d3
@@ -275,7 +281,7 @@ function renderChart({
       })
       .attr('dy', '0.35em')
       .attr('fill', c.text2)
-      .attr('text-anchor', (d) => leftOrRight(d) === 1 ? 'start' : 'end')
+      .attr('text-anchor', (d) => (leftOrRight(d) === 1 ? 'start' : 'end'))
       .style('font-size', props.labelFontSize)
       .html((d) => props.labelFormat(d.data))
 

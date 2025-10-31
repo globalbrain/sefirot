@@ -1,7 +1,7 @@
 import { useData } from 'sefirot/composables/Data'
 
 describe('composables/Data', () => {
-  test('it resets the state to the initial value', () => {
+  it('resets the state to the initial value', () => {
     const { data, init } = useData({
       a: 1,
       b: 2

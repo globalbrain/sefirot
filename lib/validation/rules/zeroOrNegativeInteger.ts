@@ -2,7 +2,7 @@ import { createRule } from '../Rule'
 import { negativeInteger as baseNegativeInteger, zero } from '../validators'
 
 export const message = {
-  en: 'The value must be zero or valid negative integer.',
+  en: 'The value must be zero or a valid negative integer.',
   ja: 'この値はゼロまたは負の整数である必要があります。'
 }
 

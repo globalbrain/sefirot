@@ -42,79 +42,80 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
           small: 'small',
           medium: 'medium'
         }"
-        v-model="state.size"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstText
-        title="info"
         v-model="state.info"
+        title="info"
       />
       <HstText
-        title="note"
         v-model="state.note"
+        title="note"
       />
       <HstText
-        title="help"
         v-model="state.help"
+        title="help"
       />
       <HstSelect
+        v-model="state.imageType"
         title="image-type"
         :options="{
           rectangle: 'rectangle',
           circle: 'circle'
         }"
-        v-model="state.imageType"
       />
       <HstText
-        title="image-width"
         v-model="state.imageWidth"
+        title="image-width"
       />
       <HstText
-        title="image-aspect-ratio"
         v-model="state.imageAspectRatio"
+        title="image-aspect-ratio"
       />
       <HstText
-        title="select-text"
         v-model="state.selectText"
+        title="select-text"
       />
       <HstText
-        title="remove-text"
         v-model="state.removeText"
+        title="remove-text"
       />
       <HstText
-        title="accept"
         v-model="state.accept"
+        title="accept"
       />
       <HstCheckbox
-        title="nullable"
         v-model="state.nullable"
+        title="nullable"
       />
       <HstCheckbox
-        title="disabled"
         v-model="state.disabled"
+        title="disabled"
       />
       <HstCheckbox
-        title="error"
         v-model="state.error"
+        title="error"
       />
       <HstCheckbox
-        title="hide-error"
         v-model="state.hideError"
+        title="hide-error"
       />
     </template>
 
     <template #default="{ state }">
       <Board :title :docs>
         <SInputImage
+          v-model="data.image"
           class="i"
           :class="{ 'has-error': state.error }"
           :size="state.size"
@@ -130,7 +131,6 @@ function initState() {
           :accept="state.accept"
           :nullable="state.nullable"
           :disabled="state.disabled"
-          v-model="data.image"
           :validation="validation.image"
           :hide-error="state.hideError"
         />

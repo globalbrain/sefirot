@@ -12,13 +12,8 @@ const props = defineProps<{
 const slotValue = useSlotValue()
 
 const link = computed(() => {
-  if (props.href) {
-    return props.href
-  }
-
-  return slotValue.value
-    ? slotValue.value
-    : props.value
+  if (props.href) { return props.href }
+  return slotValue.value ? slotValue.value : props.value
 })
 </script>
 

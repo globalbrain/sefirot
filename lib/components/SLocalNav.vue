@@ -6,7 +6,7 @@ import SLocalNavDescription from './SLocalNavDescription.vue'
 import SLocalNavMenu, { type MenuItem } from './SLocalNavMenu.vue'
 import SLocalNavTitle, { type Title } from './SLocalNavTitle.vue'
 
-export type { Title, Action, MenuItem }
+export type { Action, MenuItem, Title }
 
 export interface Avatar {
   image?: string | null

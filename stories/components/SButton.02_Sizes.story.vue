@@ -37,17 +37,17 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="modes"
-        v-model="state.mode"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstCheckbox
-        title="rounded"
         v-model="state.rounded"
+        title="rounded"
       />
     </template>
 

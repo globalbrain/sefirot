@@ -1,14 +1,14 @@
-import type { Config } from 'release-it'
+import { type Config } from 'release-it'
 
 export default {
   git: {
     commitMessage: 'release: v${version}',
-    tagName: 'v${version}',
+    tagName: 'v${version}'
   },
   github: {
     release: true,
     releaseName: 'v${version}',
-    // @ts-ignore broken types
+    // @ts-expect-error broken types
     releaseNotes(context: { changelog: string }) {
       return context.changelog.split('\n').slice(1).join('\n').trim()
     }

@@ -31,16 +31,16 @@ const control = computed({
   <Story :title source="Not available" auto-props-disabled>
     <Board :title :docs>
       <SInputCheckbox
+        v-model="control"
         label="Complete the recipe"
         text="Enchantment table"
-        v-model="control"
       />
       <div class="indent">
         <SInputCheckbox
           v-for="(option, i) in options"
           :key="i"
-          :text="option.label"
           v-model="option.modelValue"
+          :text="option.label"
         />
       </div>
     </Board>

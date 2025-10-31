@@ -27,6 +27,7 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.cardMode"
         title="Card mode"
         :options="{
           neutral: 'neutral',
@@ -35,7 +36,6 @@ function initState() {
           warning: 'warning',
           danger: 'danger'
         }"
-        v-model="state.cardMode"
       />
     </template>
 

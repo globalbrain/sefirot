@@ -40,8 +40,8 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstCheckbox
-        title="divider"
         v-model="state.divider"
+        title="divider"
       />
     </template>
 

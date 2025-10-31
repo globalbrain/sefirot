@@ -42,10 +42,18 @@ const hasNext = computed(() => {
       <p class="info">{{ format(from) }}–{{ format(to) }} of {{ format(_total) }}</p>
 
       <div v-if="onPrev && onNext" class="actions">
-        <button class="button prev" :class="{ active: hasPrev }" @click="() => hasPrev && onPrev?.()">
+        <button
+          class="button prev"
+          :class="{ active: hasPrev }"
+          @click="() => hasPrev && onPrev?.()"
+        >
           <IconCaretLeft class="icon" />
         </button>
-        <button class="button next" :class="{ active: hasNext }" @click="() => hasNext && onNext?.()">
+        <button
+          class="button next"
+          :class="{ active: hasNext }"
+          @click="() => hasNext && onNext?.()"
+        >
           <IconCaretRight class="icon" />
         </button>
       </div>
