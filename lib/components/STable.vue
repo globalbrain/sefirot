@@ -2,13 +2,12 @@
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import { computed, nextTick, reactive, ref, shallowRef, toValue, unref, watch } from 'vue'
+import { computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
 import { smartComputed } from '../support/Reactivity'
 import { getTextSize } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
-import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
@@ -18,10 +17,11 @@ import STableItem from './STableItem.vue'
 const props = defineProps<{ options: Table }>()
 const selected = defineModel<S>('selected')
 
-const head = shallowRef<HTMLElement | null>(null)
-const body = shallowRef<HTMLElement | null>(null)
-const block = shallowRef<HTMLElement | null>(null)
-const row = shallowRef<HTMLElement | null>(null)
+const tableRoot = useTemplateRef<HTMLElement>('tableRoot')
+const head = useTemplateRef<HTMLElement>('head')
+const body = useTemplateRef<HTMLElement>('body')
+const block = useTemplateRef<HTMLElement>('block')
+const row = useTemplateRef<HTMLElement>('row')
 
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
@@ -257,6 +257,99 @@ watch(actionsColumnWidth, (newValue) => {
   }
 }, { immediate: true, flush: 'post' })
 
+function easeOutCubic(t: number): number {
+  return 1 - (1 - t) ** 3
+}
+
+function smoothScrollTo(
+  element: HTMLElement | Window,
+  targetY: number,
+  duration = 200
+): Promise<void> {
+  let startTimestamp: number | null = null
+  const from = element instanceof Window ? element.scrollY : element.scrollTop
+  const delta = targetY - from
+  const controller = new AbortController()
+  const cancel = () => controller.abort()
+  const opts = { passive: true, once: true } as const
+
+  const target = element instanceof Window ? window : element
+  target.addEventListener('wheel', cancel, opts)
+  target.addEventListener('touchstart', cancel, opts)
+  target.addEventListener('mousedown', cancel, opts)
+  target.addEventListener('keydown', cancel, opts)
+
+  return new Promise<void>((resolve) => {
+    function step(currentTimestamp: number): void {
+      if (controller.signal.aborted) {
+        return resolve()
+      }
+      if (startTimestamp == null) {
+        startTimestamp = currentTimestamp
+      }
+      const progress = Math.min(1, (currentTimestamp - startTimestamp) / duration)
+      const eased = easeOutCubic(progress)
+      const position = from + delta * eased
+
+      if (element instanceof Window) {
+        element.scrollTo({ top: position, left: 0 })
+      } else {
+        element.scrollTop = position
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(step)
+      } else {
+        resolve()
+      }
+    }
+    requestAnimationFrame(step)
+  })
+}
+
+watch(() => unref(props.options.loading), (newValue, oldValue) => {
+  if (!newValue || oldValue || !tableRoot.value) {
+    return
+  }
+
+  // Loading started - reset horizontal scroll and scroll to top
+  if (head.value) {
+    head.value.scrollLeft = 0
+  }
+  if (body.value) {
+    body.value.scrollLeft = 0
+  }
+
+  const element = tableRoot.value
+  const rect = element.getBoundingClientRect()
+
+  // Account for border size
+  const borderSize = unref(props.options.borderless)
+    ? 0
+    : (unref(props.options.borderSize) ?? 1)
+
+  // Find the first scrollable parent and scroll it to bring the table into view
+  let scrollableParent = element.parentElement
+  while (scrollableParent) {
+    const overflowY = window.getComputedStyle(scrollableParent).overflowY
+    const isScrollable = overflowY === 'auto' || overflowY === 'scroll'
+
+    if (isScrollable) {
+      const parentRect = scrollableParent.getBoundingClientRect()
+      const relativeTop = rect.top - parentRect.top
+      const targetScrollTop = scrollableParent.scrollTop + relativeTop - borderSize
+      smoothScrollTo(scrollableParent, targetScrollTop)
+      return
+    }
+
+    scrollableParent = scrollableParent.parentElement
+  }
+
+  // No scrollable parent found - scroll the window instead
+  const windowScrollTop = rect.top + window.scrollY - borderSize
+  smoothScrollTo(window, windowScrollTop)
+})
+
 function stopObserving() {
   const orders = ordersToShow.value
   const lastOrder = orders[orders.length - 1] === 'actions'
@@ -389,7 +482,7 @@ function getStyles(key: string) {
 </script>
 
 <template>
-  <div class="STable" :class="classes">
+  <div class="STable" :class="classes" ref="tableRoot">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -508,8 +601,26 @@ function getStyles(key: string) {
       </div>
 
       <div v-if="unref(options.loading)" class="loading">
-        <div class="loading-icon">
-          <SSpinner class="loading-svg" />
+        <div class="loading-skeleton">
+          <div
+            v-for="i in 50"
+            :key="`skeleton-${i}`"
+            class="skeleton-row"
+            :class="{ last: i === 50 }"
+          >
+            <STableItem
+              v-for="key in ordersToShow"
+              :key
+              :name="key"
+              :class-name="unref(options.columns)[key]?.className"
+              :style="getStyles(key)"
+              :width="colWidths[key]"
+            >
+              <div class="skeleton-cell">
+                <div class="skeleton-shimmer" />
+              </div>
+            </STableItem>
+          </div>
         </div>
       </div>
 
@@ -620,20 +731,56 @@ function getStyles(key: string) {
 
 .loading {
   border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
-  padding: 64px 32px;
   background-color: var(--c-bg-elv-3);
+  overflow: hidden;
+
+  .has-footer & {
+    border-radius: 0;
+  }
 }
 
-.loading-icon {
-  margin: 0 auto;
-  width: 48px;
-  height: 48px;
+.loading-skeleton {
+  width: 100%;
 }
 
-.loading-svg {
-  width: 48px;
-  height: 48px;
-  color: var(--c-text-1);
+.skeleton-row {
+  display: flex;
+  border-bottom: 1px solid var(--c-gutter);
+
+  &.last {
+    border-bottom: 0;
+  }
+}
+
+.skeleton-cell {
+  padding: 12px 16px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.skeleton-shimmer {
+  width: 100%;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--c-bg-mute-1) 25%,
+    var(--c-bg-mute-2) 37%,
+    var(--c-bg-mute-1) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 .STable .col-__select {
