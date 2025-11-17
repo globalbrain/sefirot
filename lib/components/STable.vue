@@ -562,10 +562,10 @@ function getStyles(key: string) {
       <div v-if="isSkeletonVisible" class="loading">
         <div class="loading-skeleton">
           <div
-            v-for="i in 50"
+            v-for="i in (unref(options.perPage) || 50)"
             :key="`skeleton-${i}`"
             class="skeleton-row"
-            :class="{ last: i === 50 }"
+            :class="{ last: i === (unref(options.perPage) || 50) }"
           >
             <STableItem
               v-for="key in ordersToShow"
