@@ -16,7 +16,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, onMounted, reactive, ref, shallowRef } from 'vue'
+import { computed, onMounted, reactive, ref, shallowRef, watch } from 'vue'
 
 interface Sort {
   by: string
@@ -157,88 +157,87 @@ const dropdownCreatedAt = createDropdown([
   }
 ])
 
-const fullData = shallowRef(
-  Array(100)
-    .fill([
-      {
-        name: 'Artwork 001',
-        link: 'https://example.com',
-        status: 'Published',
-        type: 'Photo',
-        width: 1280,
-        authors: [
-          { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
-          { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
-        ],
-        createdAt: day('2022-10-10'),
-        tags: ['Info', 'News', 'Latest']
-      },
-      {
-        name: 'Artwork 002',
-        link: 'https://example.com',
-        status: 'Draft',
-        type: 'Icon',
-        width: 1280,
-        authors: [
-          { image: 'https://i.pravatar.cc/64?img=3', name: 'John Black' }
-        ],
-        createdAt: day('2022-10-09'),
-        tags: ['Info']
-      },
-      {
-        name: 'Artwork 003',
-        link: 'https://example.com',
-        status: 'Published',
-        type: 'Photo',
-        width: 1920,
-        authors: [
-          { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
-          { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
-          { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
-        ],
-        createdAt: day('2022-10-02'),
-        tags: ['Info', 'News']
-      },
-      {
-        name: 'Artwork 004',
-        link: 'https://example.com',
-        status: 'Published',
-        type: 'Illustration',
-        width: 768,
-        authors: [
-          { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
-          { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
-        ],
-        createdAt: day('2022-09-12'),
-        tags: ['Info', 'News']
-      },
-      {
-        name: 'Artwork 005',
-        link: 'https://example.com',
-        status: 'Archived',
-        type: 'Other',
-        width: 512,
-        authors: [
-          { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
-          { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
-          { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
-        ],
-        createdAt: day('2022-09-08'),
-        tags: ['Info']
-      }
-    ])
-    .flat()
-    .map((item, index) => ({
-      ...item,
-      name: `Artwork ${(index + 1).toString().padStart(3, '0')}`
-    }))
-)
+const fullData = Array(199)
+  .fill([
+    {
+      name: 'Artwork 001',
+      link: 'https://example.com',
+      status: 'Published',
+      type: 'Photo',
+      width: 1280,
+      authors: [
+        { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
+        { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
+      ],
+      createdAt: day('2022-10-10'),
+      tags: ['Info', 'News', 'Latest']
+    },
+    {
+      name: 'Artwork 002',
+      link: 'https://example.com',
+      status: 'Draft',
+      type: 'Icon',
+      width: 1280,
+      authors: [
+        { image: 'https://i.pravatar.cc/64?img=3', name: 'John Black' }
+      ],
+      createdAt: day('2022-10-09'),
+      tags: ['Info']
+    },
+    {
+      name: 'Artwork 003',
+      link: 'https://example.com',
+      status: 'Published',
+      type: 'Photo',
+      width: 1920,
+      authors: [
+        { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
+        { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
+        { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
+      ],
+      createdAt: day('2022-10-02'),
+      tags: ['Info', 'News']
+    },
+    {
+      name: 'Artwork 004',
+      link: 'https://example.com',
+      status: 'Published',
+      type: 'Illustration',
+      width: 768,
+      authors: [
+        { image: 'https://i.pravatar.cc/64?img=1', name: 'Jane Doe' },
+        { image: 'https://i.pravatar.cc/64?img=2', name: 'Daniel Green' }
+      ],
+      createdAt: day('2022-09-12'),
+      tags: ['Info', 'News']
+    },
+    {
+      name: 'Artwork 005',
+      link: 'https://example.com',
+      status: 'Archived',
+      type: 'Other',
+      width: 512,
+      authors: [
+        { image: 'https://i.pravatar.cc/64?img=4', name: 'Kris James' },
+        { image: 'https://i.pravatar.cc/64?img=5', name: 'Becky Lu' },
+        { image: 'https://i.pravatar.cc/64?img=7', name: 'Thomas Wane' }
+      ],
+      createdAt: day('2022-09-08'),
+      tags: ['Info']
+    }
+  ])
+  .flat()
+  .map((item, index) => ({
+    ...item,
+    name: `Artwork ${(index + 1).toString().padStart(3, '0')}`
+  }))
 
 const perPage = shallowRef(50)
 const page = shallowRef(1)
 
-const loadingDelay = shallowRef(500)
+const loadingDelay = shallowRef(300)
 const loading = shallowRef(true)
+const displayedData = shallowRef<any[]>([])
 
 onMounted(() => {
   // Simulate initial loading
@@ -263,7 +262,7 @@ function gotoPrevPage() {
 }
 
 const filteredData = computed(() => {
-  return fullData.value
+  return fullData
     .filter((i) => filterBy(i.status, dropdownStatusSelected.value))
     .filter((i) => filterBy(i.type, dropdownTypeSelected.value))
     .filter((i) =>
@@ -276,9 +275,16 @@ const orderedData = computed(() => {
     .slice((page.value - 1) * perPage.value, page.value * perPage.value)
 })
 
+// Update displayed data when loading completes
+watch(loading, (newValue) => {
+  if (!newValue) {
+    displayedData.value = orderedData.value
+  }
+})
+
 const table = useTable({
   loading,
-  records: orderedData,
+  records: displayedData,
 
   borderless: true,
   indexField: 'name',
