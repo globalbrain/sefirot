@@ -1,29 +1,56 @@
-// Scroll animation duration (in milliseconds)
+// The browser-native smooth scroll animation is too soft and slow, too catchy.
+// This module provides a custom smooth scroll that is more subtle and faster.
+
+// Duration configuration (in milliseconds)
 const MIN_SCROLL_DURATION = 100
-const MAX_SCROLL_DURATION = 140
+const MAX_SCROLL_DURATION = 160
 const DURATION_SCALE_FACTOR = 0.15
 
 function easeOutCubic(t: number): number {
   return 1 - (1 - t) ** 3
 }
 
-function getScrollDuration(distance: number): number {
+/**
+ * Calculate scroll animation duration based on distance.
+ * Shorter distances get faster animations, longer distances are capped at max duration.
+ */
+function calculateScrollDuration(distance: number): number {
   const absDistance = Math.abs(distance)
   const scaled = absDistance * DURATION_SCALE_FACTOR
   return Math.min(MAX_SCROLL_DURATION, Math.max(MIN_SCROLL_DURATION, scaled))
 }
 
-export function smoothScrollTo(
+/**
+ * Smoothly scroll an element to a target Y position with adaptive duration.
+ * The animation can be interrupted by user interaction (wheel, touch, mouse, keyboard).
+ */
+function smoothScrollTo(
   element: HTMLElement | Window,
   targetY: number
 ): Promise<void> {
-  let startTimestamp: number | null = null
   const from = element instanceof Window ? element.scrollY : element.scrollTop
   const delta = targetY - from
-  const duration = getScrollDuration(delta)
+
+  // Skip animation for very small distances
+  if (Math.abs(delta) < 1) {
+    return Promise.resolve()
+  }
+
+  const duration = calculateScrollDuration(delta)
+  let startTime: number | null = null
+  let animationFrame: number | null = null
+
+  // Allow user to interrupt the scroll
   const controller = new AbortController()
-  const cancel = () => controller.abort()
-  const opts = { passive: true, once: true } as const
+  const cancel = () => {
+    if (animationFrame !== null) {
+      cancelAnimationFrame(animationFrame)
+      animationFrame = null
+    }
+    controller.abort()
+  }
+
+  const opts = { passive: true, signal: controller.signal } as const
 
   const target = element instanceof Window ? window : element
   target.addEventListener('wheel', cancel, opts)
@@ -32,33 +59,43 @@ export function smoothScrollTo(
   target.addEventListener('keydown', cancel, opts)
 
   return new Promise<void>((resolve) => {
-    function step(currentTimestamp: number): void {
+    function step(currentTime: number): void {
       if (controller.signal.aborted) {
-        return resolve()
+        resolve()
+        return
       }
-      if (startTimestamp == null) {
-        startTimestamp = currentTimestamp
+
+      if (startTime === null) {
+        startTime = currentTime
       }
-      const progress = Math.min(1, (currentTimestamp - startTimestamp) / duration)
+
+      const elapsed = currentTime - startTime
+      const progress = Math.min(elapsed / duration, 1)
       const eased = easeOutCubic(progress)
       const position = from + delta * eased
 
       if (element instanceof Window) {
-        element.scrollTo({ top: position, left: 0 })
+        element.scrollTo(0, position)
       } else {
         element.scrollTop = position
       }
 
       if (progress < 1) {
-        requestAnimationFrame(step)
+        animationFrame = requestAnimationFrame(step)
       } else {
+        animationFrame = null
         resolve()
       }
     }
-    requestAnimationFrame(step)
+
+    animationFrame = requestAnimationFrame(step)
   })
 }
 
+/**
+ * Scroll the page so the table is positioned at the top of the viewport.
+ * Finds the nearest scrollable parent or scrolls the window if needed.
+ */
 export function scrollTableIntoView(
   tableRootElement: HTMLElement,
   borderless: boolean,
@@ -67,6 +104,7 @@ export function scrollTableIntoView(
   const rect = tableRootElement.getBoundingClientRect()
   const actualBorderSize = borderless ? 0 : borderSize
 
+  // Try to find a scrollable parent container
   let scrollableParent = tableRootElement.parentElement
   while (scrollableParent) {
     const overflowY = window.getComputedStyle(scrollableParent).overflowY
@@ -82,6 +120,7 @@ export function scrollTableIntoView(
     scrollableParent = scrollableParent.parentElement
   }
 
+  // No scrollable parent found, scroll the window
   const windowScrollTop = rect.top + window.scrollY - actualBorderSize
   return smoothScrollTo(window, windowScrollTop)
 }

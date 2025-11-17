@@ -4,9 +4,9 @@ import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
 import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
-import { type VirtualRow, calculateStaggerContext, getRowContentStyle, useTableLoadingAnimation } from '../composables/TableLoadingAnimation'
-import { scrollTableIntoView } from '../composables/TableSmoothScroll'
+import { type VirtualRow, useTableAnimation } from '../composables/TableAnimation'
 import { smartComputed } from '../support/Reactivity'
+import { scrollTableIntoView } from '../support/Scroll'
 import { getTextSize } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
@@ -27,13 +27,15 @@ const row = useTemplateRef<HTMLElement>('row')
 
 // Animation system
 const {
-  showSkeleton,
-  shouldFadeIn,
-  displayedRecords,
-  config: animationConfig,
-  startLoadingState,
-  endLoadingState
-} = useTableLoadingAnimation()
+  isSkeletonVisible,
+  isAnimating,
+  startLoading,
+  endLoading,
+  getRowStyle
+} = useTableAnimation(
+  () => virtualItems.value,
+  () => body.value
+)
 
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
@@ -127,10 +129,18 @@ const classes = computed(() => ({
 }))
 
 const recordsWithSummary = computed(() => {
-  const records = displayedRecords.value ?? unref(props.options.records) ?? []
+  const records = unref(props.options.records) ?? []
   const summary = unref(props.options.summary)
 
   return summary ? [...records, summary] : records
+})
+
+const shouldShowRecords = computed(() => {
+  const hasRecords = unref(props.options.records)?.length
+  // Note: if skeleton isn't visible yet (i.e., the first few milliseconds),
+  // we should retain the previous records for a better UX.
+  const canShowRecords = !unref(props.options.loading) || !isSkeletonVisible.value
+  return hasRecords && canShowRecords
 })
 
 const indexes = smartComputed(() => {
@@ -188,12 +198,6 @@ const virtualizerOptions = computed(() => ({
 
 const rowVirtualizer = useVirtualizer(virtualizerOptions)
 const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
-const staggerContext = computed(() =>
-  calculateStaggerContext(
-    virtualItems.value,
-    body.value
-  )
-)
 
 let isSyncingHead = false
 let isSyncingBody = false
@@ -286,19 +290,10 @@ function getVirtualRowStyle(item: VirtualRow): CSSProperties {
   }
 }
 
-function getRowStyles(item: VirtualRow): CSSProperties & Record<string, string> {
-  return getRowContentStyle(
-    item,
-    shouldFadeIn.value,
-    staggerContext.value,
-    animationConfig
-  )
-}
-
 watch(() => unref(props.options.loading), (newValue, oldValue) => {
   if (newValue && !oldValue) {
     const currentRecords = unref(props.options.records) ?? []
-    startLoadingState(currentRecords)
+    startLoading(currentRecords)
 
     const element = tableRoot.value
     if (element) {
@@ -311,7 +306,7 @@ watch(() => unref(props.options.loading), (newValue, oldValue) => {
   }
 
   if (!newValue && oldValue) {
-    endLoadingState(head.value, body.value)
+    endLoading(head.value, body.value)
   }
 }, { immediate: true })
 
@@ -496,10 +491,10 @@ function getStyles(key: string) {
         </div>
 
         <div
-          v-if="(!unref(options.loading) || !showSkeleton) && unref(options.records)?.length"
+          v-if="shouldShowRecords"
           ref="body"
           class="container body"
-          :class="{ 'fade-in': shouldFadeIn }"
+          :class="{ 'fade-in': isAnimating }"
           @scroll="syncBodyScroll"
         >
           <div
@@ -519,7 +514,7 @@ function getStyles(key: string) {
                 :class="isSummaryOrLastClass(item.index)"
                 :style="getVirtualRowStyle(item)"
               >
-                <div class="row-content" :style="getRowStyles(item)">
+                <div class="row-content" :style="getRowStyle(item)">
                   <STableItem
                     v-for="key in ordersToShow"
                     :key
@@ -564,7 +559,7 @@ function getStyles(key: string) {
         <p class="missing-text">No results matched your search.</p>
       </div>
 
-      <div v-if="showSkeleton" class="loading">
+      <div v-if="isSkeletonVisible" class="loading">
         <div class="loading-skeleton">
           <div
             v-for="i in 50"
