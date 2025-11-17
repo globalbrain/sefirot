@@ -2,8 +2,10 @@
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import { computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
+import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
+import { type VirtualRow, calculateStaggerContext, getRowContentStyle, useTableLoadingAnimation } from '../composables/TableLoadingAnimation'
+import { scrollTableIntoView } from '../composables/TableSmoothScroll'
 import { smartComputed } from '../support/Reactivity'
 import { getTextSize } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
@@ -22,6 +24,16 @@ const head = useTemplateRef<HTMLElement>('head')
 const body = useTemplateRef<HTMLElement>('body')
 const block = useTemplateRef<HTMLElement>('block')
 const row = useTemplateRef<HTMLElement>('row')
+
+// Animation system
+const {
+  showSkeleton,
+  shouldFadeIn,
+  displayedRecords,
+  config: animationConfig,
+  startLoadingState,
+  endLoadingState
+} = useTableLoadingAnimation()
 
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
@@ -115,7 +127,7 @@ const classes = computed(() => ({
 }))
 
 const recordsWithSummary = computed(() => {
-  const records = unref(props.options.records) ?? []
+  const records = displayedRecords.value ?? unref(props.options.records) ?? []
   const summary = unref(props.options.summary)
 
   return summary ? [...records, summary] : records
@@ -176,6 +188,12 @@ const virtualizerOptions = computed(() => ({
 
 const rowVirtualizer = useVirtualizer(virtualizerOptions)
 const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
+const staggerContext = computed(() =>
+  calculateStaggerContext(
+    virtualItems.value,
+    body.value
+  )
+)
 
 let isSyncingHead = false
 let isSyncingBody = false
@@ -257,98 +275,45 @@ watch(actionsColumnWidth, (newValue) => {
   }
 }, { immediate: true, flush: 'post' })
 
-function easeOutCubic(t: number): number {
-  return 1 - (1 - t) ** 3
+function getVirtualRowStyle(item: VirtualRow): CSSProperties {
+  return {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    width: '100%',
+    height: `${item.size}px`,
+    transform: `translateY(${item.start}px)`
+  }
 }
 
-function smoothScrollTo(
-  element: HTMLElement | Window,
-  targetY: number,
-  duration = 200
-): Promise<void> {
-  let startTimestamp: number | null = null
-  const from = element instanceof Window ? element.scrollY : element.scrollTop
-  const delta = targetY - from
-  const controller = new AbortController()
-  const cancel = () => controller.abort()
-  const opts = { passive: true, once: true } as const
-
-  const target = element instanceof Window ? window : element
-  target.addEventListener('wheel', cancel, opts)
-  target.addEventListener('touchstart', cancel, opts)
-  target.addEventListener('mousedown', cancel, opts)
-  target.addEventListener('keydown', cancel, opts)
-
-  return new Promise<void>((resolve) => {
-    function step(currentTimestamp: number): void {
-      if (controller.signal.aborted) {
-        return resolve()
-      }
-      if (startTimestamp == null) {
-        startTimestamp = currentTimestamp
-      }
-      const progress = Math.min(1, (currentTimestamp - startTimestamp) / duration)
-      const eased = easeOutCubic(progress)
-      const position = from + delta * eased
-
-      if (element instanceof Window) {
-        element.scrollTo({ top: position, left: 0 })
-      } else {
-        element.scrollTop = position
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(step)
-      } else {
-        resolve()
-      }
-    }
-    requestAnimationFrame(step)
-  })
+function getRowStyles(item: VirtualRow): CSSProperties & Record<string, string> {
+  return getRowContentStyle(
+    item,
+    shouldFadeIn.value,
+    staggerContext.value,
+    animationConfig
+  )
 }
 
 watch(() => unref(props.options.loading), (newValue, oldValue) => {
-  if (!newValue || oldValue || !tableRoot.value) {
-    return
-  }
+  if (newValue && !oldValue) {
+    const currentRecords = unref(props.options.records) ?? []
+    startLoadingState(currentRecords)
 
-  // Loading started - reset horizontal scroll and scroll to top
-  if (head.value) {
-    head.value.scrollLeft = 0
-  }
-  if (body.value) {
-    body.value.scrollLeft = 0
-  }
-
-  const element = tableRoot.value
-  const rect = element.getBoundingClientRect()
-
-  // Account for border size
-  const borderSize = unref(props.options.borderless)
-    ? 0
-    : (unref(props.options.borderSize) ?? 1)
-
-  // Find the first scrollable parent and scroll it to bring the table into view
-  let scrollableParent = element.parentElement
-  while (scrollableParent) {
-    const overflowY = window.getComputedStyle(scrollableParent).overflowY
-    const isScrollable = overflowY === 'auto' || overflowY === 'scroll'
-
-    if (isScrollable) {
-      const parentRect = scrollableParent.getBoundingClientRect()
-      const relativeTop = rect.top - parentRect.top
-      const targetScrollTop = scrollableParent.scrollTop + relativeTop - borderSize
-      smoothScrollTo(scrollableParent, targetScrollTop)
-      return
+    const element = tableRoot.value
+    if (element) {
+      scrollTableIntoView(
+        element,
+        unref(props.options.borderless) ?? false,
+        unref(props.options.borderSize) ?? 1
+      )
     }
-
-    scrollableParent = scrollableParent.parentElement
   }
 
-  // No scrollable parent found - scroll the window instead
-  const windowScrollTop = rect.top + window.scrollY - borderSize
-  smoothScrollTo(window, windowScrollTop)
-})
+  if (!newValue && oldValue) {
+    endLoadingState(head.value, body.value)
+  }
+}, { immediate: true })
 
 function stopObserving() {
   const orders = ordersToShow.value
@@ -482,7 +447,7 @@ function getStyles(key: string) {
 </script>
 
 <template>
-  <div class="STable" :class="classes" ref="tableRoot">
+  <div ref="tableRoot" class="STable" :class="classes">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -531,9 +496,10 @@ function getStyles(key: string) {
         </div>
 
         <div
-          v-if="!unref(options.loading) && unref(options.records)?.length"
+          v-if="(!unref(options.loading) || !showSkeleton) && unref(options.records)?.length"
           ref="body"
           class="container body"
+          :class="{ 'fade-in': shouldFadeIn }"
           @scroll="syncBodyScroll"
         >
           <div
@@ -544,52 +510,50 @@ function getStyles(key: string) {
               position: 'relative'
             }"
           >
-            <div v-for="{ index: i, key: __key, size, start } in virtualItems" :key="__key">
+            <div
+              v-for="item in virtualItems"
+              :key="item.key"
+            >
               <div
                 class="row"
-                :class="isSummaryOrLastClass(i)"
-                :style="{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: `${size}px`,
-                  transform: `translateY(${start}px)`
-                }"
+                :class="isSummaryOrLastClass(item.index)"
+                :style="getVirtualRowStyle(item)"
               >
-                <STableItem
-                  v-for="key in ordersToShow"
-                  :key
-                  :name="key"
-                  :class-name="unref(options.columns)[key]?.className"
-                  :style="getStyles(key)"
-                  :width="colWidths[key]"
-                >
-                  <STableCell
+                <div class="row-content" :style="getRowStyles(item)">
+                  <STableItem
+                    v-for="key in ordersToShow"
+                    :key
                     :name="key"
-                    :class="isSummary(i) && 'summary'"
                     :class-name="unref(options.columns)[key]?.className"
-                    :cell="getCell(key, i)"
-                    :value="recordsWithSummary[i][key]"
-                    :record="recordsWithSummary[i]"
-                    :records="unref(options.records)!"
+                    :style="getStyles(key)"
+                    :width="colWidths[key]"
                   >
-                    <template v-if="key === '__select' && !isSummary(i)">
-                      <SInputCheckbox
-                        v-if="Array.isArray(selected)"
-                        :model-value="selected.includes(indexes[i])"
-                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
-                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[i])"
-                      />
-                      <SInputRadio
-                        v-else
-                        :model-value="selected === indexes[i]"
-                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
-                        @update:model-value="(c) => updateSelected(c ? indexes[i] : null)"
-                      />
-                    </template>
-                  </STableCell>
-                </STableItem>
+                    <STableCell
+                      :name="key"
+                      :class="isSummary(item.index) && 'summary'"
+                      :class-name="unref(options.columns)[key]?.className"
+                      :cell="getCell(key, item.index)"
+                      :value="recordsWithSummary[item.index][key]"
+                      :record="recordsWithSummary[item.index]"
+                      :records="unref(options.records)!"
+                    >
+                      <template v-if="key === '__select' && !isSummary(item.index)">
+                        <SInputCheckbox
+                          v-if="Array.isArray(selected)"
+                          :model-value="selected.includes(indexes[item.index])"
+                          :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
+                          @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[item.index])"
+                        />
+                        <SInputRadio
+                          v-else
+                          :model-value="selected === indexes[item.index]"
+                          :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
+                          @update:model-value="(c) => updateSelected(c ? indexes[item.index] : null)"
+                        />
+                      </template>
+                    </STableCell>
+                  </STableItem>
+                </div>
               </div>
             </div>
           </div>
@@ -600,7 +564,7 @@ function getStyles(key: string) {
         <p class="missing-text">No results matched your search.</p>
       </div>
 
-      <div v-if="unref(options.loading)" class="loading">
+      <div v-if="showSkeleton" class="loading">
         <div class="loading-skeleton">
           <div
             v-for="i in 50"
@@ -699,6 +663,27 @@ function getStyles(key: string) {
   }
 }
 
+.body.fade-in :deep(.row-content) {
+  animation: rowEnter 160ms cubic-bezier(0.3, 0, 0.5, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--row-fade-delay, 0ms);
+}
+
+.body.fade-in :deep(.row) {
+  overflow: hidden;
+}
+
+@keyframes rowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--row-enter-offset, 0px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .block {
   display: inline-block;
   min-width: 100%;
@@ -712,6 +697,13 @@ function getStyles(key: string) {
 :deep(.row.last),
 :deep(.row.summary) {
   border-bottom: 0;
+}
+
+:deep(.row-content) {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateY(0);
 }
 
 .missing {

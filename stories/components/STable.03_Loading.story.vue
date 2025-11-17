@@ -157,7 +157,7 @@ const dropdownCreatedAt = createDropdown([
   }
 ])
 
-const fullData = Array(199)
+const fullData = Array.from({ length: 199 })
   .fill([
     {
       name: 'Artwork 001',
@@ -445,11 +445,11 @@ function updateTagsFilter(value: string) {
   <Story :title source="Not available" auto-props-disabled>
     <template #controls>
       <HstSlider
+        v-model="loadingDelay"
         title="loading delay (ms)"
         :min="0"
         :max="8000"
-        :step="100"
-        v-model="loadingDelay" />
+        :step="100" />
     </template>
     <Board :title :docs>
       <SCard>
