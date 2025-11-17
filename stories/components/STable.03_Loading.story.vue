@@ -16,7 +16,7 @@ import STable from 'sefirot/components/STable.vue'
 import { createDropdown } from 'sefirot/composables/Dropdown'
 import { useTable } from 'sefirot/composables/Table'
 import { day } from 'sefirot/support/Day'
-import { computed, reactive, ref, shallowRef } from 'vue'
+import { computed, onMounted, reactive, ref, shallowRef } from 'vue'
 
 interface Sort {
   by: string
@@ -158,7 +158,7 @@ const dropdownCreatedAt = createDropdown([
 ])
 
 const fullData = shallowRef(
-  Array(40)
+  Array(100)
     .fill([
       {
         name: 'Artwork 001',
@@ -237,22 +237,29 @@ const fullData = shallowRef(
 const perPage = shallowRef(50)
 const page = shallowRef(1)
 
-const loading = shallowRef(false)
-function gotoNextPage() {
-  page.value += 1
+const loadingDelay = shallowRef(500)
+const loading = shallowRef(true)
 
-  loading.value = true
+onMounted(() => {
+  // Simulate initial loading
   setTimeout(() => {
     loading.value = false
-  }, 500)
+  }, loadingDelay.value)
+})
+
+function gotoNextPage() {
+  loading.value = true
+  setTimeout(() => {
+    page.value += 1
+    loading.value = false
+  }, loadingDelay.value)
 }
 function gotoPrevPage() {
-  page.value -= 1
-
   loading.value = true
   setTimeout(() => {
+    page.value -= 1
     loading.value = false
-  }, 500)
+  }, loadingDelay.value)
 }
 
 const filteredData = computed(() => {
@@ -430,6 +437,14 @@ function updateTagsFilter(value: string) {
 
 <template>
   <Story :title source="Not available" auto-props-disabled>
+    <template #controls>
+      <HstSlider
+        title="loading delay (ms)"
+        :min="0"
+        :max="8000"
+        :step="100"
+        v-model="loadingDelay" />
+    </template>
     <Board :title :docs>
       <SCard>
         <SCardBlock size="medium" class="s-px-12">
@@ -470,6 +485,11 @@ function updateTagsFilter(value: string) {
 </template>
 
 <style scoped lang="postcss">
+.table {
+  --table-head-position: sticky;
+  --table-head-top: 0;
+}
+
 .table :deep(.col-name) {
   --table-col-width: 144px;
 }
