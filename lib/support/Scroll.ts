@@ -98,11 +98,22 @@ function smoothScrollTo(
  */
 export function scrollTableIntoView(
   tableRootElement: HTMLElement,
+  headElement: HTMLElement | null,
+  bodyElement: HTMLElement | null,
   borderless: boolean,
   borderSize: number
 ): Promise<void> {
   const rect = tableRootElement.getBoundingClientRect()
   const actualBorderSize = borderless ? 0 : borderSize
+
+  const resetScrollPositions = () => {
+    if (headElement) {
+      headElement.scrollLeft = 0
+    }
+    if (bodyElement) {
+      bodyElement.scrollLeft = 0
+    }
+  }
 
   // Try to find a scrollable parent container
   let scrollableParent = tableRootElement.parentElement
@@ -113,8 +124,11 @@ export function scrollTableIntoView(
     if (isScrollable) {
       const parentRect = scrollableParent.getBoundingClientRect()
       const relativeTop = rect.top - parentRect.top
-      const targetScrollTop = scrollableParent.scrollTop + relativeTop - actualBorderSize
-      return smoothScrollTo(scrollableParent, targetScrollTop)
+      const targetScrollTop
+        = scrollableParent.scrollTop + relativeTop - actualBorderSize
+      return smoothScrollTo(scrollableParent, targetScrollTop).then(
+        resetScrollPositions
+      )
     }
 
     scrollableParent = scrollableParent.parentElement
@@ -122,5 +136,5 @@ export function scrollTableIntoView(
 
   // No scrollable parent found, scroll the window
   const windowScrollTop = rect.top + window.scrollY - actualBorderSize
-  return smoothScrollTo(window, windowScrollTop)
+  return smoothScrollTo(window, windowScrollTop).then(resetScrollPositions)
 }

@@ -299,6 +299,8 @@ watch(() => unref(props.options.loading), (newValue, oldValue) => {
     if (element) {
       scrollTableIntoView(
         element,
+        head.value,
+        body.value,
         unref(props.options.borderless) ?? false,
         unref(props.options.borderSize) ?? 1
       )
@@ -306,7 +308,7 @@ watch(() => unref(props.options.loading), (newValue, oldValue) => {
   }
 
   if (!newValue && oldValue) {
-    endLoading(head.value, body.value)
+    endLoading()
   }
 }, { immediate: true })
 

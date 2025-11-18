@@ -92,24 +92,13 @@ export function useTableAnimation(
     }
   }
 
-  function endLoading(
-    headElement: HTMLElement | null,
-    bodyElement: HTMLElement | null
-  ) {
+  function endLoading() {
     clearSkeletonTimer()
 
     isSkeletonVisible.value = false
 
     // Trigger fade-in animation
     triggerFadeIn()
-
-    // Reset horizontal scroll position
-    if (headElement) {
-      headElement.scrollLeft = 0
-    }
-    if (bodyElement) {
-      bodyElement.scrollLeft = 0
-    }
   }
 
   function cleanup() {
