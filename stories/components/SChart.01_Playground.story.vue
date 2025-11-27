@@ -37,7 +37,7 @@ const dataWithNegative = ref<KV[]>([
   { key: '2025', value: 45 }
 ])
 
-const colors = computed(() => dataWithNegative.value.map((d) => d.value < 0 ? 'tomato' : 'green'))
+const colors = computed(() => dataWithNegative.value.map((d) => (d.value < 0 ? 'tomato' : 'green')))
 
 const barRef = ref()
 const pieRef = ref()

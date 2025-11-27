@@ -45,9 +45,7 @@ export function useGrid(options: UseGridOptions = {}): Grid {
   })
 
   function adjustSpacer() {
-    container.value?.querySelectorAll(`${toClassSelector(spacerClass)}`)
-      .forEach((n) => n.remove())
-
+    container.value?.querySelectorAll(`${toClassSelector(spacerClass)}`).forEach((n) => n.remove())
     const track = container.value?.firstElementChild
 
     const containerWidth = container.value?.clientWidth ?? 0
@@ -59,7 +57,6 @@ export function useGrid(options: UseGridOptions = {}): Grid {
     const lack = mod !== 0 ? perRow - mod : 0
 
     const fragment = createSpacers(lack, spacerTag, spacerClass, type)
-
     container.value?.appendChild(fragment)
   }
 
