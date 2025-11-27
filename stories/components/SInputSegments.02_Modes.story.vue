@@ -22,8 +22,8 @@ const value = ref('default')
   <Story :title source="Not available" auto-props-disabled>
     <Board :title :docs>
       <SInputSegments
-        :options
         v-model="value"
+        :options
       />
     </Board>
   </Story>

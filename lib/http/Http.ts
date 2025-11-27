@@ -120,8 +120,8 @@ export class Http {
       throw new Error('No blob')
     }
 
-    const { filename = 'download' }
-      = parseContentDisposition(headers.get('Content-Disposition') || '')?.parameters || {}
+    const { filename = 'download' } =
+      parseContentDisposition(headers.get('Content-Disposition') || '')?.parameters || {}
 
     FileSaver.saveAs(blob, filename as string)
   }

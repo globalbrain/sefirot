@@ -38,9 +38,7 @@ const emit = defineEmits<{
 }>()
 
 const _value = computed(() => {
-  const v = props.modelValue !== undefined
-    ? props.modelValue
-    : props.value
+  const v = props.modelValue !== undefined ? props.modelValue : props.value
 
   if (v === undefined) {
     throw new Error('[sefirot] SInputSegments: `value` or `modelValue` is required.')
@@ -72,14 +70,14 @@ function onSelect(value: T) {
   >
     <div class="box">
       <SInputSegmentsOption
-        v-for="option, index in options"
-        :key="index"
+        v-for="(option, i) in options"
+        :key="i"
         :size="size ?? 'small'"
         :label="option.label"
         :value="option.value"
         :mode="option.mode ?? 'default'"
         :active="_value === option.value"
-        :disabled="disabled ? true : option.disabled ?? false"
+        :disabled="disabled ? true : (option.disabled ?? false)"
         @click="onSelect(option.value)"
       />
     </div>

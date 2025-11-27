@@ -30,7 +30,7 @@ function onClick(e: MouseEvent) {
 <template>
   <Teleport to="#sefirot-modals">
     <Transition name="fade">
-      <div v-if="open" class="SModal" ref="el" @mousedown="onClick">
+      <div v-if="open" ref="el" class="SModal" @mousedown="onClick">
         <slot />
       </div>
     </Transition>
@@ -45,7 +45,7 @@ function onClick(e: MouseEvent) {
   bottom: 0;
   left: 0;
   z-index: var(--z-index-backdrop);
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0, 0, 0, 0.8);
   transition: opacity 0.25s;
   overflow: hidden;
   overflow-y: auto;

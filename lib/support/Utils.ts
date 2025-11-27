@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
-// @ts-ignore internal
+// @ts-expect-error internal
 import baseGetTag from 'lodash-es/_baseGetTag'
 
 import _isDate from 'lodash-es/isDate'

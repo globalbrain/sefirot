@@ -44,7 +44,9 @@ const isIndeterminate = computed(() => {
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue === true
-    : props.value !== undefined ? props.value === true : false
+    : props.value !== undefined
+      ? props.value === true
+      : false
 })
 
 function onClick() {
@@ -74,8 +76,8 @@ function onClick() {
         class="input"
         :class="{ on: _value || isIndeterminate }"
         role="button"
-        @click="onClick"
         :aria-disabled="disabled"
+        @click="onClick"
       >
         <div class="box">
           <div class="check">
@@ -141,7 +143,7 @@ function onClick() {
   height: 16px;
   opacity: 0;
   transform: scale(0);
-  transition: opacity .25s, transform .1s;
+  transition: opacity 0.25s, transform 0.1s;
 }
 
 .check-icon {

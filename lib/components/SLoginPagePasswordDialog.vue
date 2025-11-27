@@ -57,19 +57,19 @@ async function onSubmit() {
           <p>Invalid email or password.</p>
         </SAlert>
         <SInputText
+          v-model="data.email"
           name="email"
           type="email"
           label="Email"
           placeholder="john.doe@example.com"
-          v-model="data.email"
           :validation="validation.email"
         />
         <SInputText
+          v-model="data.password"
           name="password"
           type="password"
           label="Password"
           placeholder="Password"
-          v-model="data.password"
           :validation="validation.password"
         />
       </SDoc>

@@ -123,7 +123,7 @@ const table = useTable({
           </SControl>
         </SCardBlock>
         <SCardBlock>
-          <STable class="table" :options="table" v-model:selected="selected" />
+          <STable v-model:selected="selected" class="table" :options="table" />
         </SCardBlock>
         <SCardBlock size="medium" class="s-px-12">
           <SControl>

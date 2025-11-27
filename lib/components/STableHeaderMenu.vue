@@ -9,15 +9,15 @@ const props = defineProps<{
 
 const normalizedMenu = computed(() => {
   return Array.isArray(props.menu[0])
-    ? props.menu as TableMenu[][]
-    : [props.menu] as TableMenu[][]
+    ? (props.menu as TableMenu[][])
+    : ([props.menu] as TableMenu[][])
 })
 </script>
 
 <template>
   <div class="STableHeaderMenu">
-    <div v-for="items, index in normalizedMenu" :key="index" class="group">
-      <div v-if="index > 0" class="divider" />
+    <div v-for="(items, i) in normalizedMenu" :key="i" class="group">
+      <div v-if="i > 0" class="divider" />
       <div v-for="item in items" :key="item.label" class="item">
         <STableHeaderMenuItem
           :label="item.label"
