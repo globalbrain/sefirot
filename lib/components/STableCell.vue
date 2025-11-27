@@ -25,9 +25,7 @@ const props = defineProps<{
 }>()
 
 const computedCell = computed<TableCell | undefined>(() =>
-  typeof props.cell === 'function'
-    ? props.cell(props.value, props.record)
-    : props.cell
+  typeof props.cell === 'function' ? props.cell(props.value, props.record) : props.cell
 )
 </script>
 

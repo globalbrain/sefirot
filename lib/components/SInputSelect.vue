@@ -36,7 +36,9 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const isFocused = ref(false)
@@ -103,11 +105,11 @@ function emitChange(e: any): void {
         </option>
 
         <option
-          v-for="option, index in options"
+          v-for="(option, i) in options"
           :key="JSON.stringify(option)"
           :style="{ display: option.disabled ? 'none' : undefined }"
           class="option"
-          :value="index"
+          :value="i"
           :selected="isSelectedOption(option)"
         >
           {{ option.label }}

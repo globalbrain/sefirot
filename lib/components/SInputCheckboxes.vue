@@ -43,7 +43,9 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : []
+    : props.value !== undefined
+      ? props.value
+      : []
 })
 
 function isChecked(value: Value): boolean {

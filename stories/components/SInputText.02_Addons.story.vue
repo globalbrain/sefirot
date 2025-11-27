@@ -42,8 +42,8 @@ const dropdown1 = createDropdown([
     search: true,
     selected: dropdown1SelectedValue,
     options: [
-      { label: '¥', value: 1, onClick: (value: number) => dropdown1SelectedValue.value = value },
-      { label: '$', value: 2, onClick: (value: number) => dropdown1SelectedValue.value = value }
+      { label: '¥', value: 1, onClick: (value: number) => (dropdown1SelectedValue.value = value) },
+      { label: '$', value: 2, onClick: (value: number) => (dropdown1SelectedValue.value = value) }
     ]
   }
 ])
@@ -52,8 +52,8 @@ const dropdown2 = createDropdown([
   {
     type: 'menu',
     options: [
-      { label: 'Generate', onClick: () => data.password3 = generatePassword() },
-      { label: 'Reset', onClick: () => data.password3 = null }
+      { label: 'Generate', onClick: () => (data.password3 = generatePassword()) },
+      { label: 'Reset', onClick: () => (data.password3 = null) }
     ]
   }
 ])
@@ -154,7 +154,10 @@ function initState() {
                 :unit-after="state.unitAfter"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconLightbulb" @click="data.password2 = generatePassword()" />
+                  <SInputAddon
+                    :label="IconLightbulb"
+                    @click="data.password2 = generatePassword()"
+                  />
                 </template>
               </SInputText>
             </div>
@@ -188,7 +191,11 @@ function initState() {
                 :unit-after="state.unitAfter"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+                  <SInputAddon
+                    :label="IconDotsThree"
+                    :dropdown="dropdown2"
+                    :dropdown-caret="false"
+                  />
                 </template>
               </SInputText>
             </div>

@@ -101,12 +101,12 @@ function initState() {
 
             <div class="grid">
               <SButton
-                v-for="(i, index) in icons"
-                :key="index"
+                v-for="(icon, i) in icons"
+                :key="i"
                 :size="state.size"
                 :type="v.type"
                 :mode="state.mode"
-                :icon="i"
+                :icon
                 :icon-mode="state.iconMode"
                 :label="state.label"
                 :label-mode="state.labelMode"

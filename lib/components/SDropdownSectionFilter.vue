@@ -2,7 +2,10 @@
 import IconCheck from '~icons/ph/check'
 import Fuse from 'fuse.js'
 import { type MaybeRef, computed, onMounted, ref, unref } from 'vue'
-import { type DropdownSectionFilterOption, type DropdownSectionFilterSelectedValue } from '../composables/Dropdown'
+import {
+  type DropdownSectionFilterOption,
+  type DropdownSectionFilterSelectedValue
+} from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
@@ -36,7 +39,7 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  return (!props.search || !query.value)
+  return !props.search || !query.value
     ? unref(enabledOptions)
     : fuse.value.search(query.value).map((r) => r.item)
 })
@@ -47,10 +50,7 @@ onMounted(() => {
 
 function isActive(value: any) {
   const selected = unref(props.selected)
-
-  return Array.isArray(selected)
-    ? selected.includes(value)
-    : selected === value
+  return Array.isArray(selected) ? selected.includes(value) : selected === value
 }
 
 function focusPrev(event: any) {

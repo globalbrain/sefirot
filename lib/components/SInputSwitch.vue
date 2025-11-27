@@ -36,7 +36,9 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : false
+    : props.value !== undefined
+      ? props.value
+      : false
 })
 
 const classes = computed(() => [
