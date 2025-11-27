@@ -1,5 +1,4 @@
-// eslint-disable-next-line ts/ban-ts-comment
-// @ts-ignore internal
+// @ts-expect-error internal
 import baseGetTag from 'lodash-es/_baseGetTag'
 
 import _isDate from 'lodash-es/isDate'
