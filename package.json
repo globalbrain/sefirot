@@ -85,7 +85,7 @@
     "unplugin-icons": "^22.5.0"
   },
   "devDependencies": {
-    "@globalbrain/eslint-config": "^2.0.2",
+    "@globalbrain/eslint-config": "^2.1.0",
     "@histoire/plugin-vue": "0.16.5",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/ri": "^1.2.6",
