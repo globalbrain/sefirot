@@ -216,7 +216,7 @@ function emitChange(e: any): void {
 }
 
 .option {
-  color: initial;
+  background-color: var(--input-bg-color);
 }
 
 .icon {
