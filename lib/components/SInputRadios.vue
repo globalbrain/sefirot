@@ -13,9 +13,7 @@ import SInputRadio from './SInputRadio.vue'
 
 export type { Color, Size }
 
-export interface Option<
-  ValueType extends string | number | boolean = string | number | boolean
-> {
+export interface Option<ValueType extends string | number | boolean = string | number | boolean> {
   label: string
   value: ValueType
   disabled?: boolean
@@ -53,7 +51,9 @@ const emit = defineEmits<{
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 function isChecked(value: ValueType) {
@@ -100,7 +100,7 @@ function onChange(value: ValueType) {
   >
     <div class="container">
       <div class="row">
-        <div v-for="(option, index) in options" :key="index" class="col">
+        <div v-for="(option, i) in options" :key="i" class="col">
           <SInputRadio
             size="sm"
             :text="option.label"

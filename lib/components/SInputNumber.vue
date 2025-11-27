@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { isString } from '../support/Utils'
 import { type Props as BaseProps } from './SInputBase.vue'
 import SInputText from './SInputText.vue'
 
@@ -29,9 +28,11 @@ const emit = defineEmits<{
 }>()
 
 const _value = computed(() => {
-  return (props.modelValue !== undefined)
+  return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const _textColor = computed(() => {
@@ -39,7 +40,7 @@ const _textColor = computed(() => {
     return 'neutral'
   }
 
-  if (isString(props.textColor)) {
+  if (typeof props.textColor === 'string') {
     return props.textColor
   }
 
@@ -61,9 +62,7 @@ const displayValue = computed(() => {
     return props.displayValue
   }
 
-  return (!props.separator || valueWithSeparator.value == null)
-    ? null
-    : valueWithSeparator.value
+  return !props.separator || valueWithSeparator.value == null ? null : valueWithSeparator.value
 })
 
 function emitUpdate(value: string | null) {

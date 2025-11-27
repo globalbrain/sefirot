@@ -27,8 +27,8 @@ const count = computed(() => {
 <template>
   <div class="SAvatarStack" :class="size">
     <SAvatar
-      v-for="(avatar, index) in avatars"
-      :key="index"
+      v-for="(avatar, i) in avatars"
+      :key="i"
       :size
       :avatar="avatar.image"
       :name="avatar.name"
@@ -49,11 +49,11 @@ const count = computed(() => {
     overflow: hidden;
   }
 
-  &.mini > :deep(*):not(:last-child)   { margin-right: -6px }
-  &.small > :deep(*):not(:last-child)  { margin-right: -8px }
-  &.medium > :deep(*):not(:last-child) { margin-right: -8px }
-  &.large > :deep(*):not(:last-child)  { margin-right: -12px }
-  &.jumbo > :deep(*):not(:last-child)  { margin-right: -16px }
+  &.mini > :deep(*):not(:last-child)   { margin-right: -6px; }
+  &.small > :deep(*):not(:last-child)  { margin-right: -8px; }
+  &.medium > :deep(*):not(:last-child) { margin-right: -8px; }
+  &.large > :deep(*):not(:last-child)  { margin-right: -12px; }
+  &.jumbo > :deep(*):not(:last-child)  { margin-right: -16px; }
 }
 
 .more {
@@ -69,10 +69,10 @@ const count = computed(() => {
   z-index: 1;
   height: 100%;
 
-  .mini &   { font-size: 10px }
-  .small &  { font-size: 10px }
-  .medium & { font-size: 12px }
-  .large &  { font-size: 12px }
-  .jumbo &  { font-size: 14px }
+  .mini &   { font-size: 10px; }
+  .small &  { font-size: 10px; }
+  .medium & { font-size: 12px; }
+  .large &  { font-size: 12px; }
+  .jumbo &  { font-size: 14px; }
 }
 </style>

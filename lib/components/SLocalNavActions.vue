@@ -26,7 +26,7 @@ defineProps<{
 
 <template>
   <div class="SLocalNavActions">
-    <div v-for="action, i in actions" :key="i" class="action">
+    <div v-for="(action, i) in actions" :key="i" class="action">
       <SButton
         size="small"
         :tag="action.tag"

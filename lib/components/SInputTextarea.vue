@@ -39,7 +39,9 @@ const sizePaddingYDict = {
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : null
+    : props.value !== undefined
+      ? props.value
+      : null
 })
 
 const classes = computed(() => [
@@ -58,7 +60,9 @@ const style = computed(() => {
   const fontSize = 24
 
   const minHeight = `min-height: ${rows * fontSize + padding}px;`
-  const maxHeight = props.autoResize === true ? '' : `max-height: calc(${props.autoResize}lh + ${padding}px);`
+  const maxHeight = props.autoResize === true
+    ? ''
+    : `max-height: calc(${props.autoResize}lh + ${padding}px);`
 
   return `field-sizing:content;${minHeight}${maxHeight}`
 })

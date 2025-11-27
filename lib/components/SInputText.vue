@@ -53,6 +53,11 @@ const showDisplay = computed(() => {
   return !isFocused.value && props.displayValue
 })
 
+const inputClasses = computed(() => [
+  textColor.value,
+  { hide: showDisplay.value }
+])
+
 function focus(): void {
   input.value?.focus()
 }
@@ -60,11 +65,6 @@ function focus(): void {
 function onFocus(): void {
   isFocused.value = true
 }
-
-const inputClasses = computed(() => [
-  textColor.value,
-  { hide: showDisplay.value }
-])
 
 function emitBlur(e: FocusEvent): void {
   const value = getValue(e)

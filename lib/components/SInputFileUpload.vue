@@ -70,7 +70,7 @@ const { t } = useTrans({
   en: {
     button_text: 'Choose File',
     empty_text: 'No file selected',
-    selected_files: (c: number) => c === 1 ? `${c} file` : `${c} files`
+    selected_files: (c: number) => (c === 1 ? `${c} file` : `${c} files`)
   },
   ja: {
     button_text: 'ファイルを選択',
@@ -89,7 +89,9 @@ const { isOverDropZone } = useDropZone(dropZoneEl, {
 const _value = computed(() => {
   return props.modelValue !== undefined
     ? props.modelValue
-    : props.value !== undefined ? props.value : [] as ModelValue<T>[]
+    : props.value !== undefined
+      ? props.value
+      : ([] as ModelValue<T>[])
 })
 
 const input = ref<HTMLInputElement | null>(null)
@@ -105,7 +107,7 @@ const totalFileCountText = computed(() => {
 })
 
 const totalFileSizeText = computed(() => {
-  const files = _value.value.map((file) => file instanceof File ? file : file.file)
+  const files = _value.value.map((file) => (file instanceof File ? file : file.file))
   return formatSize(files)
 })
 
@@ -150,7 +152,7 @@ function append(files: File[]) {
 }
 
 function toFileObjects(files: File[]) {
-  return files.map((file) => ({ file } as ModelValue<T>))
+  return files.map((file) => ({ file }) as ModelValue<T>)
 }
 </script>
 
@@ -211,7 +213,7 @@ function toFileObjects(files: File[]) {
         </SCardBlock>
         <template v-if="_value.length">
           <SInputFileUploadItem
-            v-for="file, i in _value"
+            v-for="(file, i) in _value"
             :key="i"
             :file
             :rules
