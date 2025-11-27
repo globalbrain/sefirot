@@ -178,7 +178,7 @@ function toFileObjects(files: File[]) {
         @change="onChange"
       >
       <SCard :mode="hasError ? 'danger' : undefined">
-        <SCardBlock v-if="droppable" class="drop-zone" ref="dropZoneEl" @click="open">
+        <SCardBlock v-if="droppable" ref="dropZoneEl" class="drop-zone" @click="open">
           <div class="drop-zone-box">
             <STrans lang="en">
               <div class="drop-zone-text">

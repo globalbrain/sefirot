@@ -26,24 +26,24 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           sm: 'sm',
           md: 'md'
         }"
-        v-model="state.size"
       />
     </template>
 
     <template #default="{ state }">
       <Board :title>
         <SInputDropdown
+          v-model="value"
           :size="state.size"
           label="Users"
           placeholder="Select users"
           :options
           nullable
-          v-model="value"
         />
       </Board>
     </template>

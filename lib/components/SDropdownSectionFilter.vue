@@ -70,7 +70,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
 <template>
   <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
-      <input class="input" :placeholder="t.i_ph" ref="input" v-model="query">
+      <input ref="input" v-model="query" class="input" :placeholder="t.i_ph">
     </div>
 
     <ul v-if="filteredOptions.length" class="list">

@@ -18,10 +18,10 @@ function initState() {
 <template>
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
-      <HstText title="cols" v-model="state.cols" />
-      <HstText title="gap" v-model="state.gap" />
-      <HstText title="gap-col" v-model="state.gapCol" />
-      <HstText title="gap-row" v-model="state.gapRow" />
+      <HstText v-model="state.cols" title="cols" />
+      <HstText v-model="state.gap" title="gap" />
+      <HstText v-model="state.gapCol" title="gap-col" />
+      <HstText v-model="state.gapRow" title="gap-row" />
     </template>
 
     <template #default="{ state }">

@@ -30,25 +30,25 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           sm: 'sm',
           md: 'md'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.position"
         title="position"
         :options="{
           '': 'auto',
           'top': 'top',
           'bottom': 'bottom'
         }"
-        v-model="state.position"
       />
       <HstCheckbox
-        title="nullable"
         v-model="state.nullable"
+        title="nullable"
       />
     </template>
 
@@ -56,22 +56,22 @@ function initState() {
       <Board :title>
         <div class="s-flex s-flex-col s-gap-24">
           <SInputDropdown
+            v-model="singleValue"
             :size="state.size"
             :position="state.position || undefined"
             label="Single select"
             placeholder="Select a framework"
             :options
             :nullable="state.nullable"
-            v-model="singleValue"
           />
           <SInputDropdown
+            v-model="multiValue"
             :size="state.size"
             :position="state.position || undefined"
             label="Multi select"
             placeholder="Select frameworks"
             :options
             :nullable="state.nullable"
-            v-model="multiValue"
           />
         </div>
       </Board>

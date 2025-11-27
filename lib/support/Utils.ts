@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+// eslint-disable-next-line ts/ban-ts-comment
 // @ts-ignore internal
 import baseGetTag from 'lodash-es/_baseGetTag'
 

@@ -37,11 +37,6 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
-const inputClasses = computed(() => [
-  textColor.value,
-  { hide: showDisplay.value }
-])
-
 const textColor = computed(() => {
   if (!props.textColor) {
     return 'neutral'
@@ -65,6 +60,11 @@ function focus(): void {
 function onFocus(): void {
   isFocused.value = true
 }
+
+const inputClasses = computed(() => [
+  textColor.value,
+  { hide: showDisplay.value }
+])
 
 function emitBlur(e: FocusEvent): void {
   const value = getValue(e)
@@ -125,20 +125,20 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
       <div class="value">
         <div v-if="unitBefore" class="unit before">
           <span v-if="isString(unitBefore)" class="unit-text">{{ unitBefore }}</span>
-          <component v-else :is="unitBefore" class="unit-icon" />
+          <component :is="unitBefore" v-else class="unit-icon" />
         </div>
 
         <div class="area">
           <input
+            :id="name"
+            ref="input"
             class="input entity"
             :class="inputClasses"
-            :id="name"
             :type="type ?? 'text'"
             :placeholder
             :disabled
             :tabindex
             :value="modelValue"
-            ref="input"
             @focus="onFocus"
             @blur="emitBlur"
             @input="emitInput"
@@ -151,7 +151,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
         <div v-if="unitAfter" class="unit after">
           <span v-if="isString(unitAfter)" class="unit-text">{{ unitAfter }}</span>
-          <component v-else :is="unitAfter" class="unit-icon" />
+          <component :is="unitAfter" v-else class="unit-icon" />
         </div>
       </div>
 

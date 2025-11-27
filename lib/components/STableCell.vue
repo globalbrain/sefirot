@@ -120,8 +120,8 @@ const computedCell = computed<TableCell | undefined>(() =>
       v-else-if="computedCell.type === 'empty'"
     />
     <component
-      v-else-if="computedCell.type === 'component'"
       :is="computedCell.component"
+      v-else-if="computedCell.type === 'component'"
       :value
       :record
       v-bind="computedCell.props"

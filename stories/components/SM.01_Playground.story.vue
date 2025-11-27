@@ -20,28 +20,28 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstText
-        title="opacity"
         v-model="state.opacity"
+        title="opacity"
       />
       <HstText
-        title="x"
         v-model="state.x"
+        title="x"
       />
       <HstText
-        title="y"
         v-model="state.y"
+        title="y"
       />
       <HstText
-        title="duration"
         v-model="state.duration"
+        title="duration"
       />
       <HstText
-        title="delay"
         v-model="state.delay"
+        title="delay"
       />
       <HstCheckbox
-        title="once"
         v-model="state.once"
+        title="once"
       />
     </template>
 

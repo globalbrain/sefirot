@@ -28,8 +28,7 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName('+')).toBe(false)
     expect(slackChannelName('|')).toBe(false)
     expect(slackChannelName('・')).toBe(false)
-    // eslint-disable-next-line @typescript-eslint/quotes
-    expect(slackChannelName("'")).toBe(false)
+    expect(slackChannelName('\'')).toBe(false)
     expect(slackChannelName('`')).toBe(false)
     expect(slackChannelName('~')).toBe(false)
     expect(slackChannelName('/')).toBe(false)

@@ -18,8 +18,8 @@ const value = ref('active-1')
   <Story :title source="Not available" auto-props-disabled>
     <Board :title :docs>
       <SInputSegments
-        :options
         v-model="value"
+        :options
       />
     </Board>
   </Story>
