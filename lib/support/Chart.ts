@@ -46,7 +46,6 @@ export function getColor(...colors: (ChartColor | string | null | undefined)[]):
   return chartColors[color as keyof typeof chartColors] || color || chartColors.blue
 }
 
-// eslint-disable-next-line ts/no-unused-vars
 const { gray: _gray, ...rest } = chartColors
 
 export function scheme<T extends { key: string; color?: ChartColor }>(
