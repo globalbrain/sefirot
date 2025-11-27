@@ -64,7 +64,9 @@ validation.value.$touch()
         </div>
         <p class="name-text">{{ _file.name }}</p>
       </div>
-      <p v-if="_file.errorMessage" class="error">{{ _file.errorMessage }}</p>
+      <p v-if="_file.errorMessage" class="error">
+        {{ _file.errorMessage }}
+      </p>
       <p v-else-if="validation.$errors.length" class="error">
         {{ validation.$errors[0]?.$message }}
       </p>
