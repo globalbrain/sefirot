@@ -1,6 +1,7 @@
 /// <reference lib="esnext" />
 /// <reference types="vitest" />
 
+import { stripVTControlCharacters } from 'node:util'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from './config/vite'
 
@@ -35,8 +36,7 @@ export default defineConfig({
     onConsoleLog(log, type) {
       if (type !== 'stderr') { return }
       ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      // eslint-disable-next-line no-control-regex
-      if (log.replace(/\u001B\[.*?m/g, '').trim() === '') { return false }
+      if (stripVTControlCharacters(log).trim() === '') { return false }
     }
   }
 })

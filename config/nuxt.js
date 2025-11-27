@@ -10,6 +10,7 @@ export const baseConfig = {
   app: { teleportId: 'sefirot-modals' },
   modules: [
     /**
+     * @this {any}
      * @param {any} _
      * @param {any} nuxt
      */

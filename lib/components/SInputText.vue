@@ -65,6 +65,11 @@ function onFocus(): void {
   isFocused.value = true
 }
 
+const inputClasses = computed(() => [
+  textColor.value,
+  { hide: showDisplay.value }
+])
+
 function emitBlur(e: FocusEvent): void {
   const value = getValue(e)
 
