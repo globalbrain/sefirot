@@ -22,6 +22,7 @@ const head = shallowRef<HTMLElement | null>(null)
 const body = shallowRef<HTMLElement | null>(null)
 const block = shallowRef<HTMLElement | null>(null)
 const row = shallowRef<HTMLElement | null>(null)
+const table = shallowRef<HTMLElement | null>(null)
 
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
@@ -60,6 +61,12 @@ const cellOfColToGrow = computed(() => {
 
 const colWidths = reactive<Record<string, string>>({})
 const blockWidth = ref<number | undefined>()
+
+const resizeState = ref<{
+  columnName: string
+  startX: number
+  indicatorX: number
+} | null>(null)
 
 watch(() => unref(props.options.columns), (columns) => {
   Object.keys(columns).forEach((key) => {
@@ -387,6 +394,30 @@ function getStyles(key: string) {
     '--table-col-left': widthSum ? `calc(${widthSum})` : '0px'
   }
 }
+
+function handleResizeStart(data: { columnName: string; startX: number; initialX: number }) {
+  const tableRect = table.value?.getBoundingClientRect()
+  const scrollLeft = head.value?.scrollLeft ?? 0
+  const tableLeft = tableRect?.left ?? 0
+  const indicatorX = data.initialX - tableLeft + scrollLeft
+
+  resizeState.value = {
+    columnName: data.columnName,
+    startX: indicatorX,
+    indicatorX
+  }
+}
+
+function handleResizeMove(data: { deltaX: number }) {
+  if (resizeState.value) {
+    resizeState.value.indicatorX = resizeState.value.startX + data.deltaX
+  }
+}
+
+function handleResizeEnd(data: { columnName: string; finalWidth: string }) {
+  updateColWidth(data.columnName, data.finalWidth, true)
+  resizeState.value = null
+}
 </script>
 
 <template>
@@ -402,7 +433,13 @@ function getStyles(key: string) {
         :selected="Array.isArray(selected) ? selected : undefined"
       />
 
-      <div class="table" role="grid">
+      <div class="table" role="grid" ref="table">
+        <div
+          v-if="resizeState"
+          class="resize-indicator"
+          :style="{ left: `${resizeState.indicatorX}px` }"
+        />
+
         <div class="container head" ref="head" @scroll="syncHeadScroll">
           <div class="block" ref="block">
             <div class="row" ref="row">
@@ -421,7 +458,9 @@ function getStyles(key: string) {
                   :dropdown="unref(options.columns)[key]?.dropdown"
                   :has-header="showHeader"
                   :resizable="unref(options.columns)[key]?.resizable"
-                  @resize="(value) => updateColWidth(key, value, true)"
+                  @resize-start="handleResizeStart"
+                  @resize-move="handleResizeMove"
+                  @resize-end="handleResizeEnd"
                 >
                   <SInputCheckbox
                     v-if="
@@ -635,6 +674,16 @@ function getStyles(key: string) {
   width: 48px;
   height: 48px;
   color: var(--c-text-1);
+}
+
+.resize-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--c-border-info-1);
+  z-index: 200;
+  pointer-events: none;
 }
 
 .STable .col-__select {

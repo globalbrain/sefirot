@@ -17,13 +17,16 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  resize: [value: string]
+  'resize-start': [data: { columnName: string; startX: number; initialX: number }]
+  'resize-move': [data: { deltaX: number }]
+  'resize-end': [data: { columnName: string; finalWidth: string }]
 }>()
 
 const { container, isOpen, toggle } = useFlyout()
 
 let startWidth = 0
 let startPoint = 0
+let originalUserSelect = ''
 
 const column = ref<HTMLElement | null>(null)
 const dialog = ref<HTMLElement | null>(null)
@@ -67,24 +70,40 @@ watch(isOpen, (value) => {
   value ? adjustDialogPosition() : stopDialogPositionListener()
 })
 
-function grip(e: any) {
+function grip(e: MouseEvent) {
   startWidth = column.value?.offsetWidth ?? 0
   startPoint = e.pageX
 
+  emit('resize-start', {
+    columnName: props.name,
+    startX: e.pageX,
+    initialX: e.pageX
+  })
+
+  originalUserSelect = document.body.style.userSelect
+  document.body.style.userSelect = 'none'
   document.addEventListener('mousemove', resize)
   document.addEventListener('mouseup', stopResizeListener)
 }
 
 function resize(e: MouseEvent) {
-  const movedWidth = e.pageX - startPoint
-  const resized = startWidth + movedWidth
-
-  emit('resize', resized > -1 ? `${resized}px` : 'var(--table-col-width)')
+  const deltaX = e.pageX - startPoint
+  emit('resize-move', { deltaX })
 }
 
-function stopResizeListener() {
+function stopResizeListener(e: MouseEvent) {
   document.removeEventListener('mousemove', resize)
   document.removeEventListener('mouseup', stopResizeListener)
+  document.body.style.userSelect = originalUserSelect
+
+  const movedWidth = e.pageX - startPoint
+  const resized = startWidth + movedWidth
+  const finalWidth = resized > -1 ? `${resized}px` : 'var(--table-col-width)'
+
+  emit('resize-end', {
+    columnName: props.name,
+    finalWidth
+  })
 }
 
 async function adjustDialogPosition() {
@@ -139,6 +158,7 @@ function stopDialogPositionListener() {
         </div>
 
         <div v-if="resizable" class="grip" @mousedown="grip" />
+        <div v-if="resizable" class="resize-indicator" />
       </slot>
     </div>
   </div>
