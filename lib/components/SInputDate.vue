@@ -42,7 +42,9 @@ function emitInput(date?: string) {
 }
 
 function onBlur() {
-  props.validation && props.validation.$touch()
+  setTimeout(() => {
+    props.validation && props.validation.$touch()
+  }, 100)
 }
 </script>
 
