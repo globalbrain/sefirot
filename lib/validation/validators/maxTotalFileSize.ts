@@ -23,7 +23,7 @@ export function maxTotalFileSize(value: unknown, size: string): boolean {
 
   const total = value.reduce((total, file) => total + file.size, 0)
 
-  return total <= factor * +size.replace(/[^\d\.]/g, '')
+  return total <= factor * +size.replace(/[^\d.]/g, '')
 }
 
 function isArrayOfFiles(value: unknown): value is File[] {

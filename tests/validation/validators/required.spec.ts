@@ -23,7 +23,7 @@ describe('validation/validators/required', () => {
   })
 })
 
-describe('validation/validators/required', () => {
+describe('validation/validators/_required', () => {
   test('validates if the value is valid', () => {
     expect(_required('  ')).toBe(true)
   })

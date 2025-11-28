@@ -1,8 +1,15 @@
 /// <reference lib="esnext" />
 /// <reference types="vitest" />
 
+import { stripVTControlCharacters } from 'node:util'
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from './config/vite'
+
+const ignore = [
+  '[Vue warn]: inject() can only be used inside setup() or functional components.',
+  '[Vue Router warn]: No match found for location with path "about"',
+  '[Vue Router warn]: No match found for location with path "https://example.com"'
+]
 
 export default defineConfig({
   plugins: [vue()],
@@ -29,14 +36,7 @@ export default defineConfig({
     onConsoleLog(log, type) {
       if (type !== 'stderr') { return }
       ignore.forEach((s) => (log = log.replaceAll(s, '')))
-      // eslint-disable-next-line no-control-regex
-      if (log.replace(/\u001B\[.*?m/g, '').trim() === '') { return false }
+      if (stripVTControlCharacters(log).trim() === '') { return false }
     }
   }
 })
-
-const ignore = [
-  '[Vue warn]: inject() can only be used inside setup() or functional components.',
-  '[Vue Router warn]: No match found for location with path "about"',
-  '[Vue Router warn]: No match found for location with path "https://example.com"'
-]

@@ -78,8 +78,8 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
         }
       }
     }
-    name
-      = inferFromRegistry(
+    name =
+      inferFromRegistry(
         // @ts-expect-error internal api
         instance.components || (instance.parent.type as ComponentOptions).components
       ) || inferFromRegistry(instance.appContext.components)
@@ -102,8 +102,8 @@ function getComponentTrace(currentVNode: VNode | null): ComponentTraceStack {
     } else {
       normalizedStack.push({ vnode: currentVNode, recurseCount: 0 })
     }
-    const parentInstance: ComponentInternalInstance | null
-      = currentVNode.component && currentVNode.component.parent
+    const parentInstance: ComponentInternalInstance | null =
+      currentVNode.component && currentVNode.component.parent
     currentVNode = parentInstance && parentInstance.vnode
   }
 

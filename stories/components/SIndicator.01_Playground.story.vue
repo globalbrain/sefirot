@@ -17,6 +17,7 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           nano: 'nano',
@@ -26,9 +27,9 @@ function initState() {
           large: 'large',
           jumbo: 'jumbo'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.state"
         title="state"
         :options="{
           pending: 'pending',
@@ -39,15 +40,14 @@ function initState() {
           failed: 'failed',
           aborted: 'aborted'
         }"
-        v-model="state.state"
       />
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="{
           colored: 'colored',
           monochrome: 'monochrome'
         }"
-        v-model="state.mode"
       />
     </template>
 

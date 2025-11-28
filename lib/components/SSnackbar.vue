@@ -28,7 +28,7 @@ function close() {
     </p>
 
     <div v-if="actions" class="actions">
-      <div v-for="(action, index) in actions" :key="index" class="action">
+      <div v-for="(action, i) in actions" :key="i" class="action">
         <SButton
           size="medium"
           type="text"
@@ -87,7 +87,7 @@ function close() {
   width: 16px;
   height: 16px;
   color: var(--c-text-3);
-  transition: color .25s;
+  transition: color 0.25s;
 }
 
 .content {

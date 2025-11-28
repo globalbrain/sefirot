@@ -20,6 +20,7 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
@@ -27,17 +28,17 @@ function initState() {
           medium: 'medium',
           large: 'large'
         }"
-        v-model="state.size"
       />
       <HstSelect
+        v-model="state.type"
         title="type"
         :options="{
           dimm: 'dimm',
           fill: 'fill'
         }"
-        v-model="state.type"
       />
       <HstSelect
+        v-model="state.mode"
         title="mode"
         :options="{
           default: 'default',
@@ -48,15 +49,14 @@ function initState() {
           warning: 'warning',
           danger: 'danger'
         }"
-        v-model="state.mode"
       />
       <HstText
-        title="label"
         v-model="state.label"
+        title="label"
       />
       <HstCheckbox
-        title="clickable"
         v-model="state.clickable"
+        title="clickable"
       />
     </template>
 

@@ -17,8 +17,9 @@ const rendered = computed(() => markdown(props.content))
 </script>
 
 <template>
-  <component v-if="$slots.default" :is="tag" class="SMarkdown-container">
+  <component :is="tag" v-if="$slots.default" class="SMarkdown-container">
     <slot v-bind="{ rendered }" />
   </component>
-  <component v-else :is="tag" class="SMarkdown-container" v-html="rendered" />
+  <!-- eslint-disable-next-line vue/no-v-text-v-html-on-component -->
+  <component :is="tag" v-else class="SMarkdown-container" v-html="rendered" />
 </template>

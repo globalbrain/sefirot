@@ -25,9 +25,7 @@ const props = defineProps<{
 }>()
 
 const computedCell = computed<TableCell | undefined>(() =>
-  typeof props.cell === 'function'
-    ? props.cell(props.value, props.record)
-    : props.cell
+  typeof props.cell === 'function' ? props.cell(props.value, props.record) : props.cell
 )
 </script>
 
@@ -120,8 +118,8 @@ const computedCell = computed<TableCell | undefined>(() =>
       v-else-if="computedCell.type === 'empty'"
     />
     <component
-      v-else-if="computedCell.type === 'component'"
       :is="computedCell.component"
+      v-else-if="computedCell.type === 'component'"
       :value
       :record
       v-bind="computedCell.props"

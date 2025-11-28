@@ -5,7 +5,7 @@ describe('validation/validators/minLength', () => {
     const length = 10
 
     expect(minLength('1'.repeat(10), length)).toBe(true)
-    expect(minLength(Array(10).fill('1'), length)).toBe(true)
+    expect(minLength(Array.from({ length: 10 }).fill('1'), length)).toBe(true)
 
     expect(minLength(undefined, length)).toBe(false)
     expect(minLength(null, length)).toBe(false)
@@ -15,7 +15,7 @@ describe('validation/validators/minLength', () => {
     expect(minLength('', length)).toBe(false)
     expect(minLength('1'.repeat(9), length)).toBe(false)
     expect(minLength([], length)).toBe(false)
-    expect(minLength(Array(9).fill('1'), length)).toBe(false)
+    expect(minLength(Array.from({ length: 9 }).fill('1'), length)).toBe(false)
     expect(minLength({}, length)).toBe(false)
     expect(minLength({ length: 10 }, length)).toBe(false)
   })

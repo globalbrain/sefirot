@@ -7,7 +7,8 @@ defineProps<{
 }>()
 
 const labelWidthProp = inject<() => string | number | undefined>(
-  'sefirot-desc-label-width', () => undefined
+  'sefirot-desc-label-width',
+  () => undefined
 )
 
 const labelWidth = computed(() => {
