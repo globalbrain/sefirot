@@ -43,19 +43,19 @@ const selectedOptionLabel = computed(() => {
 const { isOpen, open } = useFlyout(container)
 const { position, update: updatePosition } = useManualDropdownPosition(container)
 
-function handleFocus() {
+function onFocus() {
   if (!props.disabled) {
     isFocused.value = true
   }
 }
 
-function handleBlur() {
+function onBlur() {
   if (!props.disabled) {
     isFocused.value = false
   }
 }
 
-function handleClickButton() {
+function onClickButton() {
   if (!props.disabled) {
     emit('click')
 
@@ -73,9 +73,9 @@ function handleClickButton() {
       :is="clickable ? 'button' : 'div'"
       class="action"
       :disabled="clickable ? props.disabled : null"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @click="handleClickButton"
+      @focus="onFocus"
+      @blur="onBlur"
+      @click="onClickButton"
     >
       <span class="action-label">
         <component

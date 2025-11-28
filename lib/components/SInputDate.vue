@@ -41,10 +41,8 @@ function emitInput(date?: string) {
   emit('update:model-value', date ? day(date) : null)
 }
 
-function emitBlur() {
-  setTimeout(() => {
-    props.validation && props.validation.$touch()
-  }, 100)
+function onBlur() {
+  props.validation && props.validation.$touch()
 }
 </script>
 
@@ -86,7 +84,7 @@ function emitBlur() {
           :disabled
           :tabindex
           v-on="disabled ? {} : inputEvents"
-          @blur="emitBlur"
+          @blur="onBlur"
         >
       </DatePicker>
     </div>
