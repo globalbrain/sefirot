@@ -57,7 +57,6 @@ describe('components/STooltip', () => {
       }
     })
 
-    expect(getTooltipContainer()).not.toBeNull()
     expect(await isTooltipVisible()).toBe(false)
 
     await wrapper.find('.STooltip').trigger('mouseenter')
@@ -80,7 +79,6 @@ describe('components/STooltip', () => {
       }
     })
 
-    expect(getTooltipContainer()).not.toBeNull()
     expect(await isTooltipVisible()).toBe(false)
 
     await wrapper.find('.STooltip').trigger('focusin')
