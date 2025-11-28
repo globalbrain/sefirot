@@ -9,6 +9,7 @@ export function slackChannelName(
   return (
     typeof value === 'string'
     && /^[\p{L}\p{N}\p{M}_-]+$/u.test(value)
+    && /\p{L}|\p{N}/u.test(value)
     && value.length <= 80 - offset
     && value.toLowerCase() === value
   )

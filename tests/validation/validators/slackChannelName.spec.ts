@@ -72,7 +72,7 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName('TEAM')).toBe(false)
   })
 
-  it.skip('rejects strings made only of combining marks', () => {
+  it('rejects strings made only of combining marks', () => {
     const onlyCombining = '\u0301\u0302\u0308'
     expect(slackChannelName(onlyCombining)).toBe(false)
   })
