@@ -124,8 +124,8 @@ export function scrollTableIntoView(
     if (isScrollable) {
       const parentRect = scrollableParent.getBoundingClientRect()
       const relativeTop = rect.top - parentRect.top
-      const targetScrollTop
-        = scrollableParent.scrollTop + relativeTop - actualBorderSize
+      const targetScrollTop =
+        scrollableParent.scrollTop + relativeTop - actualBorderSize
       return smoothScrollTo(scrollableParent, targetScrollTop).then(
         resetScrollPositions
       )
