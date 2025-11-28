@@ -25,6 +25,27 @@ const body = useTemplateRef<HTMLElement>('body')
 const block = useTemplateRef<HTMLElement>('block')
 const row = useTemplateRef<HTMLElement>('row')
 
+// Animation system
+const {
+  isSkeletonVisible,
+  isAnimating,
+  startLoading,
+  endLoading,
+  getRowStyle
+} = useTableAnimation(
+  // eslint-disable-next-line ts/no-use-before-define
+  () => virtualItems.value,
+  () => body.value
+)
+
+const shouldShowRecords = computed(() => {
+  const hasRecords = unref(props.options.records)?.length
+  // Note: if skeleton isn't visible yet (i.e., the first few milliseconds),
+  // we should retain the previous records for a better UX.
+  const canShowRecords = !unref(props.options.loading) || !isSkeletonVisible.value
+  return hasRecords && canShowRecords
+})
+
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
     const show = unref(props.options.columns)[key]?.show
@@ -178,26 +199,6 @@ const virtualizerOptions = computed(() => ({
 
 const rowVirtualizer = useVirtualizer(virtualizerOptions)
 const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
-
-// Animation system
-const {
-  isSkeletonVisible,
-  isAnimating,
-  startLoading,
-  endLoading,
-  getRowStyle
-} = useTableAnimation(
-  () => virtualItems.value,
-  () => body.value
-)
-
-const shouldShowRecords = computed(() => {
-  const hasRecords = unref(props.options.records)?.length
-  // Note: if skeleton isn't visible yet (i.e., the first few milliseconds),
-  // we should retain the previous records for a better UX.
-  const canShowRecords = !unref(props.options.loading) || !isSkeletonVisible.value
-  return hasRecords && canShowRecords
-})
 
 let isSyncingHead = false
 let isSyncingBody = false
