@@ -7,7 +7,7 @@ export function useTheme(): WritableComputedRef<Theme> {
   const _isDark = useDark()
 
   return computed({
-    get: () => _isDark.value ? 'dark' : 'light',
+    get: () => (_isDark.value ? 'dark' : 'light'),
     set: (v) => { _isDark.value = v === 'dark' }
   })
 }

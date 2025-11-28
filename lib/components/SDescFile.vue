@@ -15,16 +15,14 @@ const props = defineProps<{
 }>()
 
 const items = computed(() => {
-  return props.item
-    ? Array.isArray(props.item) ? props.item : [props.item]
-    : null
+  return props.item ? (Array.isArray(props.item) ? props.item : [props.item]) : null
 })
 </script>
 
 <template>
   <div v-if="items && items.length" class="SDescFile">
     <div class="value">
-      <div v-for="item, index in items" :key="index" class="item">
+      <div v-for="(item, i) in items" :key="i" class="item">
         <div class="data">
           <div class="icon"><IconFileText class="icon-svg" /></div>
           <div class="name">{{ item.name }}</div>

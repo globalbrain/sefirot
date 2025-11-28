@@ -44,8 +44,8 @@ const dropdown1 = createDropdown([
     search: true,
     selected: dropdown1SelectedValue,
     options: [
-      { label: '¥', value: 1, onClick: (value: number) => dropdown1SelectedValue.value = value },
-      { label: '$', value: 2, onClick: (value: number) => dropdown1SelectedValue.value = value }
+      { label: '¥', value: 1, onClick: (value: number) => (dropdown1SelectedValue.value = value) },
+      { label: '$', value: 2, onClick: (value: number) => (dropdown1SelectedValue.value = value) }
     ]
   }
 ])
@@ -54,8 +54,8 @@ const dropdown2 = createDropdown([
   {
     type: 'menu',
     options: [
-      { label: 'Generate', onClick: () => data.amount3 = generate7DigitNumbers() },
-      { label: 'Reset', onClick: () => data.amount3 = null }
+      { label: 'Generate', onClick: () => (data.amount3 = generate7DigitNumbers()) },
+      { label: 'Reset', onClick: () => (data.amount3 = null) }
     ]
   }
 ])
@@ -73,21 +73,21 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
+        v-model="state.size"
         title="size"
         :options="{
           mini: 'mini',
           small: 'small',
           medium: 'medium'
         }"
-        v-model="state.size"
       />
       <HstText
-        title="unit-before"
         v-model="state.unitBefore"
+        title="unit-before"
       />
       <HstText
-        title="unit-after"
         v-model="state.unitAfter"
+        title="unit-after"
       />
     </template>
 
@@ -98,12 +98,12 @@ function initState() {
             <div class="title">Addon Text (Before)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.amount1"
                 :size="state.size"
                 placeholder="1,000"
                 separator
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.amount1"
               >
                 <template #addon-before>
                   <SInputAddon label="¥" :clickable="false" />
@@ -116,12 +116,12 @@ function initState() {
             <div class="title">Addon Text (After)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.amount2"
                 :size="state.size"
                 placeholder="1,000"
                 separator
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.amount2"
               >
                 <template #addon-after>
                   <SInputAddon label="yen" :clickable="false" />
@@ -134,11 +134,11 @@ function initState() {
             <div class="title">Addon Button (Before / Text)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.lottery1"
                 :size="state.size"
                 placeholder="1000000"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.lottery1"
               >
                 <template #addon-before>
                   <SInputAddon label="Generate" @click="data.lottery1 = generate7DigitNumbers()" />
@@ -151,14 +151,17 @@ function initState() {
             <div class="title">Addon Button (After / Icon)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.lottery2"
                 :size="state.size"
                 placeholder="1000000"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.lottery2"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconLightbulb" @click="data.lottery2 = generate7DigitNumbers()" />
+                  <SInputAddon
+                    :label="IconLightbulb"
+                    @click="data.lottery2 = generate7DigitNumbers()"
+                  />
                 </template>
               </SInputNumber>
             </div>
@@ -168,12 +171,12 @@ function initState() {
             <div class="title">Addon Dropdown (Before / Single Select Dropdown)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.currency"
                 :size="state.size"
                 separator
                 placeholder="1,000,000"
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.currency"
               >
                 <template #addon-before>
                   <SInputAddon :dropdown="dropdown1" />
@@ -186,15 +189,19 @@ function initState() {
             <div class="title">Addon Dropdown (After / Dropdown Menu)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.amount3"
                 :size="state.size"
                 placeholder="1,000,000"
                 separator
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
-                v-model="data.amount3"
               >
                 <template #addon-after>
-                  <SInputAddon :label="IconDotsThree" :dropdown="dropdown2" :dropdown-caret="false" />
+                  <SInputAddon
+                    :label="IconDotsThree"
+                    :dropdown="dropdown2"
+                    :dropdown-caret="false"
+                  />
                 </template>
               </SInputNumber>
             </div>
@@ -204,13 +211,13 @@ function initState() {
             <div class="title">Addon Dropdown (Before / After / Disabled)</div>
             <div class="grid">
               <SInputNumber
+                v-model="data.amount4"
                 :size="state.size"
                 placeholder="1,000,000"
                 separator
                 :unit-before="state.unitBefore"
                 :unit-after="state.unitAfter"
                 disabled
-                v-model="data.amount4"
               >
                 <template #addon-before>
                   <SInputAddon :label="IconDotsThree" disabled />

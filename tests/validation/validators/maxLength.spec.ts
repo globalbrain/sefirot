@@ -7,7 +7,7 @@ describe('validation/validators/maxLength', () => {
     expect(maxLength('', length)).toBe(true)
     expect(maxLength('1'.repeat(10), length)).toBe(true)
     expect(maxLength([], length)).toBe(true)
-    expect(maxLength(Array(10).fill('1'), length)).toBe(true)
+    expect(maxLength(Array.from({ length: 10 }).fill('1'), length)).toBe(true)
 
     expect(maxLength(undefined, length)).toBe(false)
     expect(maxLength(null, length)).toBe(false)
@@ -16,6 +16,6 @@ describe('validation/validators/maxLength', () => {
     expect(maxLength('1'.repeat(11), length)).toBe(false)
     expect(maxLength({}, length)).toBe(false)
     expect(maxLength({ length: 10 }, length)).toBe(false)
-    expect(maxLength(Array(11).fill('1'), length)).toBe(false)
+    expect(maxLength(Array.from({ length: 11 }).fill('1'), length)).toBe(false)
   })
 })

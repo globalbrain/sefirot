@@ -85,10 +85,7 @@ export function useVNotification(): VNotification {
   const snackbars = useSnackbars()
 
   function notify(message?: Snackbar): void {
-    snackbars.push(message ?? {
-      mode: 'danger',
-      text: t.notify
-    })
+    snackbars.push(message ?? { mode: 'danger', text: t.notify })
   }
 
   return {
