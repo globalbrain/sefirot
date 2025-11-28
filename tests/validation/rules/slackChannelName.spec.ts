@@ -47,7 +47,7 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  it.skip('validates the value with an offset', () => {
+  it('validates the value with an offset', () => {
     const rule = slackChannelName({
       offset: 10
     })
@@ -65,12 +65,12 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  it.skip('shows the default error message', () => {
+  it('shows the default error message', () => {
     const rule = slackChannelName()
     expect(rule.$message({ $params: {} })).toBe('The slack channel name is invalid.')
   })
 
-  it.skip('uses the custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = slackChannelName({}, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })
