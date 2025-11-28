@@ -157,7 +157,18 @@ const dropdownCreatedAt = createDropdown([
   }
 ])
 
-const fullData = Array.from({ length: 199 })
+type DataItem = {
+  name: string
+  link: string
+  status: string
+  type: string
+  width: number
+  authors: { image: string; name: string }[]
+  createdAt: ReturnType<typeof day>
+  tags: string[]
+}
+
+const fullData = Array.from<DataItem[]>({ length: 199 })
   .fill([
     {
       name: 'Artwork 001',
