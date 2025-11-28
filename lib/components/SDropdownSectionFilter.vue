@@ -61,7 +61,7 @@ function focusNext(event: any) {
   event.target.parentNode.nextElementSibling?.firstElementChild?.focus()
 }
 
-function handleClick(option: DropdownSectionFilterOption, value: any) {
+function onClick(option: DropdownSectionFilterOption, value: any) {
   option.onClick && option.onClick(value)
   props.onClick && props.onClick(value)
 }
@@ -81,7 +81,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
-          @click="handleClick(option, option.value)"
+          @click="onClick(option, option.value)"
         >
           <span v-if="Array.isArray(unref(selected))" class="checkbox">
             <span class="checkbox-box">

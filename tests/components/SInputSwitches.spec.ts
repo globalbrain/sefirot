@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SInputSwitches from 'sefirot/components/SInputSwitches.vue'
 
 describe('components/SInputSwitches', () => {
-  it('should emit on click', () => {
+  it('emits on click', () => {
     const wrapper = mount(SInputSwitches, {
       propsData: {
         options: [

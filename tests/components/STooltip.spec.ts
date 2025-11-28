@@ -1,35 +1,53 @@
 import { mount } from '@vue/test-utils'
 import STooltip from 'sefirot/components/STooltip.vue'
+import { nextTick } from 'vue'
 
 describe('components/STooltip', () => {
-  test('tag is set to `span` by default', () => {
+  const getTooltipContainer = () => {
+    return document.body.querySelector('#sefirot-modals .container') as HTMLElement | null
+  }
+
+  const getTooltipContent = () => {
+    const container = getTooltipContainer()
+    return container?.querySelector('.tip')?.textContent || null
+  }
+
+  const isTooltipVisible = async () => {
+    vi.runAllTimers()
+    await nextTick()
+    vi.runAllTimers()
+    await nextTick()
+    const container = getTooltipContainer()
+    return !!container && getComputedStyle(container).display !== 'none'
+  }
+
+  it('sets tag to `span` by default', () => {
     const wrapper = mount(STooltip)
 
     expect(wrapper.find('.STooltip').element.tagName).toBe('SPAN')
   })
 
-  test('shows `text` slot content', () => {
+  it('shows `text` slot content', () => {
     mount(STooltip, {
       slots: {
         text: 'Example text.'
       }
     })
 
-    expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Example text.')
+    expect(getTooltipContent()).toBe('Example text.')
   })
 
-  test('shows `text` prop content', () => {
+  it('shows `text` prop content', () => {
     mount(STooltip, {
       props: {
         text: 'Example text.'
       }
     })
 
-    expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Example text.')
+    expect(getTooltipContent()).toBe('Example text.')
   })
 
-  // FIXME: .
-  test.skip('shows tooltip on hover', async () => {
+  it('shows tooltip on hover', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {
@@ -39,23 +57,18 @@ describe('components/STooltip', () => {
       }
     })
 
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(false)
+    expect(await isTooltipVisible()).toBe(false)
 
     await wrapper.find('.STooltip').trigger('mouseenter')
-    vi.advanceTimersByTime(1)
-    await wrapper.vm.$nextTick()
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(true)
+    expect(await isTooltipVisible()).toBe(true)
 
     await wrapper.find('.STooltip').trigger('mouseleave')
-    vi.advanceTimersByTime(1)
-    await wrapper.vm.$nextTick()
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(false)
+    expect(await isTooltipVisible()).toBe(false)
 
     vi.useRealTimers()
   })
 
-  // FIXME: .
-  test.skip('shows tooltip on focus', async () => {
+  it('shows tooltip on focus', async () => {
     vi.useFakeTimers()
 
     const wrapper = mount(STooltip, {
@@ -66,17 +79,13 @@ describe('components/STooltip', () => {
       }
     })
 
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(false)
+    expect(await isTooltipVisible()).toBe(false)
 
     await wrapper.find('.STooltip').trigger('focusin')
-    vi.advanceTimersByTime(1)
-    await wrapper.vm.$nextTick()
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(true)
+    expect(await isTooltipVisible()).toBe(true)
 
     await wrapper.find('.STooltip').trigger('focusout')
-    vi.advanceTimersByTime(1)
-    await wrapper.vm.$nextTick()
-    expect(wrapper.find('.STooltip .tip').isVisible()).toBe(false)
+    expect(await isTooltipVisible()).toBe(false)
 
     vi.useRealTimers()
   })

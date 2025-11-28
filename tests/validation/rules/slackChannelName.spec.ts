@@ -1,7 +1,7 @@
 import { slackChannelName } from 'sefirot/validation/rules'
 
 describe('validation/rules/slackChannelName', () => {
-  test('it validates whether the value is valid', () => {
+  it('validates Slack channel names', () => {
     const rule = slackChannelName()
 
     expect(rule.$validator('1'.repeat(80), null, null)).toBe(true)
@@ -47,7 +47,7 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('it validates whether the value is valid with offset', () => {
+  it('validates the value with an offset', () => {
     const rule = slackChannelName({
       offset: 10
     })
@@ -65,12 +65,12 @@ describe('validation/rules/slackChannelName', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = slackChannelName()
     expect(rule.$message({ $params: {} })).toBe('The slack channel name is invalid.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = slackChannelName({}, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

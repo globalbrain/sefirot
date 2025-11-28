@@ -1,7 +1,7 @@
 import { requiredHms } from 'sefirot/validation/rules'
 
 describe('validation/rules/requiredHms', () => {
-  test('validates if the hours, minutes, and seconds are present', () => {
+  it('validates if the hours, minutes, and seconds are present', () => {
     const rule = requiredHms()
 
     expect(rule.$validator({ hour: '01', minute: '02', second: '03' }, null, null)).toBe(true)
@@ -20,7 +20,7 @@ describe('validation/rules/requiredHms', () => {
     expect(rule.$validator([], null, null)).toBe(false)
   })
 
-  test('validates only given types', () => {
+  it('validates only given types', () => {
     const rule = requiredHms(['h', 'm'])
 
     expect(rule.$validator({ hour: '01', minute: '02', second: null }, null, null)).toBe(true)
@@ -39,12 +39,12 @@ describe('validation/rules/requiredHms', () => {
     expect(rule.$validator([], null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = requiredHms()
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = requiredHms(['h', 'm', 's'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

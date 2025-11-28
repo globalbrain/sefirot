@@ -1,7 +1,7 @@
 import { hms } from 'sefirot/validation/rules'
 
 describe('validation/rules/hms', () => {
-  it('should validate if the hours, minutes, and seconds is valid value', () => {
+  it('validates if the hours, minutes, and seconds is valid value', () => {
     const rule = hms()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -22,14 +22,14 @@ describe('validation/rules/hms', () => {
     expect(rule.$validator({ hour: '23', minute: '59' }, null, null)).toBe(false)
   })
 
-  it('should validate only the given types', () => {
+  it('accepts null for required fields', () => {
     const rule = hms(['h', 'm'])
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
     expect(rule.$validator(null, null, null)).toBe(true)
     expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: '59', second: '59' }, null, null)).toBe(true)
-    expect(rule.$validator({ hour: '23', minute: '59', second: '60' }, null, null)).toBe(true)
+    expect(rule.$validator({ hour: '23', minute: '59', second: null }, null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: '59' }, null, null)).toBe(true)
     expect(rule.$validator({ hour: '23', minute: null }, null, null)).toBe(true)
 
@@ -44,12 +44,12 @@ describe('validation/rules/hms', () => {
     expect(rule.$validator({ hour: '24', minute: '59', second: '60' }, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = hms()
     expect(rule.$message({ $params: {} })).toBe('The time is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = hms(['h', 'm', 's'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

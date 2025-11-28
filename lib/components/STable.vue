@@ -36,7 +36,7 @@ const ordersToShow = smartComputed(() => {
   return ['__select', ...orders]
 })
 
-watch(() => ordersToShow.value, handleResize)
+watch(() => ordersToShow.value, onResize)
 
 const colToGrowAdjusted = ref(false)
 
@@ -209,7 +209,7 @@ useResizeObserver(block, ([entry]) => {
   blockWidth.value = entry.contentRect.width
 })
 
-const resizeObserver = useResizeObserver(head, handleResize)
+const resizeObserver = useResizeObserver(head, onResize)
 
 const font = typeof document !== 'undefined'
   ? `500 12px ${getComputedStyle(document.body).fontFamily}`
@@ -266,7 +266,7 @@ function stopObserving() {
   resizeObserver.stop()
 }
 
-async function handleResize() {
+async function onResize() {
   if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) {
     stopObserving()
     return

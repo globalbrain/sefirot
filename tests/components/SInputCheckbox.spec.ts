@@ -3,7 +3,7 @@ import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputCheckbox', () => {
-  test('accepts `:value`', async () => {
+  it('accepts `:value`', async () => {
     const wrapper = mount(SInputCheckbox, {
       props: {
         value: true
@@ -13,7 +13,7 @@ describe('components/SInputCheckbox', () => {
     expect(wrapper.find('.SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('accepts `:modelValue`', () => {
+  it('accepts `:modelValue`', () => {
     const wrapper = mount(SInputCheckbox, {
       props: {
         modelValue: true
@@ -23,13 +23,13 @@ describe('components/SInputCheckbox', () => {
     expect(wrapper.find('.SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('value defaults to `false` when both `:value` and `:modelValue` is missing', () => {
+  it('defaults to `false` when both `:value` and `:modelValue` are missing', () => {
     const wrapper = mount(SInputCheckbox)
 
     expect(wrapper.find('.SInputCheckbox .input').classes('on')).toBe(false)
   })
 
-  test('emits on click', async () => {
+  it('emits on click', async () => {
     const wrapper = mount(SInputCheckbox, {
       props: {
         value: false
@@ -42,7 +42,7 @@ describe('components/SInputCheckbox', () => {
     assertEmitted(wrapper, 'change', 1, true)
   })
 
-  test('does not emit on click when `:disabled`', async () => {
+  it('does not emit on click when `:disabled`', async () => {
     const wrapper = mount(SInputCheckbox, {
       props: {
         value: false,

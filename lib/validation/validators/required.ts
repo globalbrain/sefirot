@@ -1,29 +1,6 @@
-import { isDate, isString } from '../../support/Utils'
-
-export function required(value: unknown): boolean {
-  if (isString(value)) {
-    value = value.trim()
-  }
-
-  return _required(value)
-}
-
-export function _required(value: unknown): boolean {
-  if (Array.isArray(value)) {
-    return !!value.length
-  }
-
-  if (value == null) {
-    return false
-  }
-
-  if (value === false) {
-    return true
-  }
-
-  if (isDate(value)) {
-    return !Number.isNaN(value.getTime())
-  }
-
-  return !!String(value).length
+export function required(value: unknown, trim = true): boolean {
+  if (value == null) { return false }
+  if (typeof value === 'number' || value instanceof Date) { return !Number.isNaN(+value) }
+  if (Array.isArray(value)) { return !!value.length }
+  return trim ? !!String(value).trim() : !!String(value)
 }

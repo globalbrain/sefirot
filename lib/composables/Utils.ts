@@ -7,7 +7,6 @@ import {
   toValue,
   useSlots
 } from 'vue'
-import { isString } from '../support/Utils'
 
 export type WhenCondition<T> = MaybeRefOrGetter<T>
 
@@ -76,7 +75,7 @@ export function useSlotValue(name = 'default'): ComputedRef<string | null> {
 
   return computed(() => {
     const c = slots[name]?.()[0]?.children
-    const v = isString(c) ? c.trim() : null
+    const v = typeof c === 'string' ? c.trim() : null
     return v !== '' ? v : null
   })
 }

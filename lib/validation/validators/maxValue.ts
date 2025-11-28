@@ -1,9 +1,5 @@
-import { isDate, isNumber, isString } from '../../support/Utils'
+import { decimal } from './decimal'
 
 export function maxValue(value: unknown, max: number) {
-  if (isNumber(value) || isString(value) || isDate(value)) {
-    return +value <= max
-  }
-
-  return false
+  return (decimal(value) || value instanceof Date) && Number(value) <= max
 }

@@ -1,5 +1,8 @@
 import { createRule } from '../Rule'
-import { type SlackChannelNameOptions, slackChannelName as baseSlackChannelName } from '../validators'
+import {
+  type SlackChannelNameOptions,
+  slackChannelName as baseSlackChannelName
+} from '../validators'
 
 export const message = {
   en: 'The slack channel name is invalid.',
