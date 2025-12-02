@@ -396,9 +396,8 @@ function getStyles(key: string) {
 
 function handleResizeStart(data: { columnName: string; startX: number; initialX: number }) {
   const tableRect = table.value?.getBoundingClientRect()
-  const scrollLeft = head.value?.scrollLeft ?? 0
   const tableLeft = tableRect?.left ?? 0
-  const indicatorX = data.initialX - tableLeft + scrollLeft
+  const indicatorX = data.initialX - tableLeft
 
   resizeState.value = {
     columnName: data.columnName,
