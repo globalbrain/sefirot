@@ -26,7 +26,7 @@ const { container, isOpen, toggle } = useFlyout()
 
 let startWidth = 0
 let startPoint = 0
-let originalUserSelect = ''
+let originalUserSelect = ''; let originalPointerEvents = ''
 
 const column = ref<HTMLElement | null>(null)
 const dialog = ref<HTMLElement | null>(null)
@@ -81,7 +81,9 @@ function grip(e: MouseEvent) {
   })
 
   originalUserSelect = document.body.style.userSelect
+  originalPointerEvents = document.body.style.pointerEvents
   document.body.style.userSelect = 'none'
+  document.body.style.pointerEvents = 'none'
   document.addEventListener('mousemove', resize)
   document.addEventListener('mouseup', stopResizeListener)
 }
@@ -95,6 +97,7 @@ function stopResizeListener(e: MouseEvent) {
   document.removeEventListener('mousemove', resize)
   document.removeEventListener('mouseup', stopResizeListener)
   document.body.style.userSelect = originalUserSelect
+  document.body.style.pointerEvents = originalPointerEvents
 
   const movedWidth = e.pageX - startPoint
   const resized = startWidth + movedWidth
