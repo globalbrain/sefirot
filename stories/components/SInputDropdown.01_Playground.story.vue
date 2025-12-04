@@ -6,6 +6,7 @@ const title = 'Components / SInputDropdown / 01. Playground'
 
 const singleValue = ref<string | null>(null)
 const multiValue = ref<string[]>([])
+const inlineValue = ref<string[]>([])
 
 const options: OptionText[] = [
   { label: 'Vue.js', value: 'vuejs' },
@@ -72,6 +73,16 @@ function initState() {
             placeholder="Select frameworks"
             :options
             :nullable="state.nullable"
+          />
+          <SInputDropdown
+            v-model="inlineValue"
+            :size="state.size"
+            :position="state.position || undefined"
+            label="Inline search (autocomplete)"
+            placeholder="Type a framework and hit enter"
+            :options
+            :nullable="state.nullable"
+            search="inline"
           />
         </div>
       </Board>

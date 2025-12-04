@@ -21,6 +21,8 @@ defineProps<{
     :search="section.search"
     :selected="section.selected"
     :options="section.options"
+    :query="section.query"
+    :active="section.active"
     :on-click="section.onClick"
   />
   <SDropdownSectionDateRange

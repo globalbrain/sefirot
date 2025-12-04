@@ -10,9 +10,11 @@ import { useTrans } from '../composables/Lang'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
 const props = defineProps<{
-  search?: boolean
+  search?: boolean | 'inline'
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
+  query?: string
+  active?: any
   onClick?(value: any): void
 }>()
 
@@ -30,6 +32,8 @@ const { t } = useTrans({
 const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
+const isInlineSearch = computed(() => props.search === 'inline')
+
 const enabledOptions = computed(() => {
   return unref(props.options).filter((o) => !o.disabled)
 })
@@ -39,18 +43,30 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  return !props.search || !query.value
-    ? unref(enabledOptions)
-    : fuse.value.search(query.value).map((r) => r.item)
+  if (isInlineSearch.value) {
+    return unref(props.options).filter((o) => !o.disabled)
+  }
+
+  if (!props.search || !query.value) {
+    return unref(enabledOptions)
+  }
+
+  return fuse.value.search(query.value).map((r) => r.item)
 })
 
 onMounted(() => {
-  input.value?.focus()
+  if (props.search === true) {
+    input.value?.focus()
+  }
 })
 
 function isActive(value: any) {
   const selected = unref(props.selected)
   return Array.isArray(selected) ? selected.includes(value) : selected === value
+}
+
+function isFocused(value: any) {
+  return props.active === value
 }
 
 function focusPrev(event: any) {
@@ -69,7 +85,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
 
 <template>
   <div class="SDropdownSectionFilter">
-    <div v-if="search" class="search">
+    <div v-if="search === true" class="search">
       <input ref="input" v-model="query" class="input" :placeholder="t.i_ph">
     </div>
 
@@ -77,7 +93,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
       <li v-for="option in filteredOptions" :key="option.label" class="item">
         <button
           class="button"
-          :class="{ active: isActive(option.value) }"
+          :class="{ active: isActive(option.value), focused: isFocused(option.value) }"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
@@ -150,6 +166,10 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   transition: color 0.25s, background-color 0.25s;
 
   &:hover {
+    background-color: var(--c-bg-mute-1);
+  }
+
+  &.focused {
     background-color: var(--c-bg-mute-1);
   }
 }
