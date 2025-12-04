@@ -62,7 +62,6 @@
     "pinia": "^3.0.4",
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
-    "v-calendar": "3.0.1",
     "vue": "^3.5.25",
     "vue-router": "^4.6.3"
   },
@@ -117,7 +116,6 @@
     "punycode": "^2.3.1",
     "release-it": "^19.0.6",
     "typescript": "~5.9.3",
-    "v-calendar": "3.0.1",
     "vite": "^6.4.1",
     "vitepress": "^2.0.0-alpha.15",
     "vitest": "^3.2.4",

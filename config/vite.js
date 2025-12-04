@@ -60,7 +60,6 @@ export const baseConfig = {
       'ofetch',
       'pinia',
       'qs',
-      'v-calendar',
       'vue',
       'vue-router'
     ]

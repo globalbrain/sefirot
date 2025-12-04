@@ -5,6 +5,7 @@ import { ref } from 'vue'
 const title = 'Components / SInputDate / 01. Playground'
 
 const value = ref(null)
+const rangeValue = ref<[any, any] | null>(null)
 
 function initState() {
   return {
@@ -36,6 +37,14 @@ function initState() {
         <SInputDate
           v-model="value"
           label="Label"
+          :size="state.size"
+          :tabindex="state.tabindex"
+        />
+        <br>
+        <SInputDate
+          v-model="rangeValue"
+          label="Range"
+          type="range"
           :size="state.size"
           :tabindex="state.tabindex"
         />
