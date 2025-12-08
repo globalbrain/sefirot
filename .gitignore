@@ -12,3 +12,4 @@
 .cache
 *.timestamp-*.mjs
 .idea
+package-lock.json
