@@ -37,9 +37,12 @@ export interface DropdownSectionMenu extends DropdownSectionBase {
 
 export interface DropdownSectionFilter extends DropdownSectionBase {
   type: 'filter'
-  search?: boolean
+  search?: boolean | 'inline'
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
+  query?: string
+  active?: DropdownSectionFilterSelectedValue
+  optionIdPrefix?: string
   onClick?(value: any): void
 }
 

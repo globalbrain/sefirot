@@ -7,12 +7,15 @@ import {
   type DropdownSectionFilterSelectedValue
 } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
+import { smartComputed } from '../support/Reactivity'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
 const props = defineProps<{
-  search?: boolean
+  search?: boolean | 'inline'
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
+  active?: DropdownSectionFilterSelectedValue
+  optionIdPrefix?: string
   onClick?(value: any): void
 }>()
 
@@ -30,27 +33,33 @@ const { t } = useTrans({
 const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
-const enabledOptions = computed(() => {
+const enabledOptions = smartComputed(() => {
   return unref(props.options).filter((o) => !o.disabled)
 })
 
 const fuse = computed(() => {
-  return new Fuse(unref(enabledOptions), { keys: ['label'] })
+  return new Fuse(enabledOptions.value, { keys: ['label'] })
 })
 
 const filteredOptions = computed(() => {
-  return !props.search || !query.value
-    ? unref(enabledOptions)
+  return props.search !== true || !query.value
+    ? enabledOptions.value
     : fuse.value.search(query.value).map((r) => r.item)
 })
 
 onMounted(() => {
-  input.value?.focus()
+  if (props.search === true) {
+    input.value?.focus()
+  }
 })
 
-function isActive(value: any) {
+function isSelected(value: any) {
   const selected = unref(props.selected)
   return Array.isArray(selected) ? selected.includes(value) : selected === value
+}
+
+function isActive(value: any) {
+  return props.active === value
 }
 
 function focusPrev(event: any) {
@@ -65,25 +74,32 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   option.onClick && option.onClick(value)
   props.onClick && props.onClick(value)
 }
+
+function getOptionId(index: number) {
+  return props.optionIdPrefix ? `${props.optionIdPrefix}-${index}` : undefined
+}
 </script>
 
 <template>
   <div class="SDropdownSectionFilter">
-    <div v-if="search" class="search">
+    <div v-if="search === true" class="search">
       <input ref="input" v-model="query" class="input" :placeholder="t.i_ph">
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
-      <li v-for="option in filteredOptions" :key="option.label" class="item">
+      <li v-for="(option, i) in filteredOptions" :key="option.label" class="item">
         <button
+          :id="getOptionId(i)"
           class="button"
-          :class="{ active: isActive(option.value) }"
+          :class="{ selected: isSelected(option.value), active: isActive(option.value) }"
+          :role="optionIdPrefix ? 'option' : undefined"
+          :aria-selected="optionIdPrefix ? isSelected(option.value) : undefined"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
           @click="handleClick(option, option.value)"
         >
-          <span v-if="Array.isArray(unref(selected))" class="checkbox">
+          <span v-if="Array.isArray(selected)" class="checkbox">
             <span class="checkbox-box">
               <IconCheck class="checkbox-icon" />
             </span>
@@ -149,7 +165,8 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   text-align: left;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: var(--c-bg-mute-1);
   }
 }
@@ -171,7 +188,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   background-color: var(--input-bg-color);
   transition: border-color 0.1s, background-color 0.1s;
 
-  .button.active & {
+  .button.selected & {
     border-color: var(--c-fg-info-1);
     background-color: var(--c-fg-info-1);
   }
@@ -185,7 +202,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   opacity: 0;
   transition: opacity 0.25s;
 
-  .button.active & {
+  .button.selected & {
     opacity: 1;
   }
 }
@@ -202,7 +219,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   background-color: var(--input-bg-color);
   transition: border-color 0.25s;
 
-  .button.active & {
+  .button.selected & {
     border-color: var(--c-border-info-1);
   }
 }
@@ -223,7 +240,7 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;
 
-  .button.active & {
+  .button.selected & {
     opacity: 1;
     transform: scale(0.6);
   }

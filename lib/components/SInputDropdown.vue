@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
+import IconX from '~icons/ph/x'
+import Fuse from 'fuse.js'
 import xor from 'lodash-es/xor'
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, useId, watch } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { smartComputed } from '../support/Reactivity'
+import SAvatar from './SAvatar.vue'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
 export type { Color, Size } from './SInputBase.vue'
+
 export interface Props extends BaseProps {
   placeholder?: string
   options: Option[]
   position?: 'top' | 'bottom'
+  /** @deprecated use :search="false" */
   noSearch?: boolean
   nullable?: boolean
   closeOnClick?: boolean
   disabled?: boolean
+  search?: boolean | 'inline'
+  insertOnSpace?: boolean
 }
 
 export type PrimitiveValue = any
@@ -44,34 +52,76 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  search: true,
+  insertOnSpace: true
+})
 
 const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
 const { t } = useTrans({
   en: {
-    ph: 'Select items'
+    ph: 'Select items',
+    remove: 'Remove'
   },
   ja: {
-    ph: '項目を選択してください'
+    ph: '項目を選択してください',
+    remove: '削除'
   }
 })
 
 const container = ref<HTMLDivElement>()
+const inlineInput = ref<HTMLInputElement>()
+const inlineQuery = ref('')
+const inlineActiveIndex = ref(-1)
 
-const { isOpen, open } = useFlyout(container)
+const dropdownId = useId()
+
+const { isOpen, open, close } = useFlyout(container)
 const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
+
+const isInlineSearch = computed(() => props.search === 'inline')
 
 const classes = computed(() => [
   props.size ?? 'small',
   { disabled: props.disabled }
 ])
 
+const inlineEnabledOptions = smartComputed(() => {
+  return props.options.filter((o) => !o.disabled)
+})
+
+const inlineFuse = computed(() => {
+  return new Fuse(inlineEnabledOptions.value, { keys: ['label'], threshold: 0.4 })
+})
+
+const inlineFilteredOptions = computed(() => {
+  if (!isInlineSearch.value) {
+    return inlineEnabledOptions.value
+  }
+
+  if (!inlineQuery.value) {
+    return inlineEnabledOptions.value
+  }
+
+  return inlineFuse.value.search(inlineQuery.value).map((r) => r.item)
+})
+
+const inlineActiveOption = computed(() => {
+  if (!isInlineSearch.value || inlineActiveIndex.value === -1) {
+    return null
+  }
+
+  return inlineFilteredOptions.value[inlineActiveIndex.value] ?? null
+})
+
 const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   type: 'filter',
-  search: props.noSearch === undefined ? true : !props.noSearch,
+  search: props.search === true && !props.noSearch ? true : isInlineSearch.value ? 'inline' : undefined,
   selected: model.value,
-  options: props.options,
+  options: isInlineSearch.value ? inlineFilteredOptions.value : props.options,
+  active: inlineActiveOption.value?.value,
+  optionIdPrefix: isInlineSearch.value ? `${dropdownId}-option` : undefined,
   onClick: handleSelect
 }])
 
@@ -97,6 +147,49 @@ const removable = computed(() => {
   return !!props.nullable
 })
 
+const selectedChips = computed(() => {
+  if (Array.isArray(selected.value)) {
+    return selected.value
+  }
+
+  return selected.value ? [selected.value] : []
+})
+
+const ariaActiveDescendant = computed(() => {
+  if (!isInlineSearch.value || !inlineActiveOption.value) {
+    return undefined
+  }
+
+  return `${dropdownId}-option-${inlineActiveIndex.value}`
+})
+
+watch(inlineQuery, (value) => {
+  if (!isInlineSearch.value) {
+    return
+  }
+
+  if (!isOpen.value) {
+    handleOpen()
+  }
+
+  inlineActiveIndex.value = value ? (inlineFilteredOptions.value.length ? 0 : -1) : -1
+})
+
+watch(inlineFilteredOptions, (options) => {
+  if (!isInlineSearch.value) {
+    return
+  }
+
+  if (!options.length) {
+    inlineActiveIndex.value = -1
+    return
+  }
+
+  if (inlineActiveIndex.value >= options.length) {
+    inlineActiveIndex.value = options.length - 1
+  }
+})
+
 async function handleOpen() {
   if (!props.disabled) {
     updatePosition()
@@ -104,10 +197,32 @@ async function handleOpen() {
   }
 }
 
+function handleBoxClick() {
+  if (props.disabled) {
+    return
+  }
+
+  if (isInlineSearch.value) {
+    focusInlineInput()
+  }
+
+  handleOpen()
+}
+
+function handleBoxKeyOpen() {
+  if (!isInlineSearch.value && !props.disabled) {
+    handleOpen()
+  }
+}
+
 function handleSelect(value: OptionValue) {
   props.validation?.$touch()
 
   Array.isArray(model.value) ? handleArray(value) : handlePrimitive(value)
+
+  if (isInlineSearch.value) {
+    resetInlineSearch()
+  }
 }
 
 function handlePrimitive(value: OptionValue) {
@@ -126,6 +241,154 @@ function handleArray(value: OptionValue) {
   }
 
   model.value = difference
+}
+
+function handleInlineFocus() {
+  if (props.disabled) {
+    return
+  }
+
+  handleOpen()
+  focusInlineInput()
+}
+
+function handleInlineKeydown(event: KeyboardEvent) {
+  if (!isInlineSearch.value || props.disabled) {
+    return
+  }
+
+  if (event.key === 'Tab' && event.shiftKey) {
+    return
+  }
+
+  if (event.key === 'Escape') {
+    if (inlineQuery.value) {
+      inlineQuery.value = ''
+      inlineActiveIndex.value = -1
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+      close()
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    return
+  }
+
+  if (event.key === 'ArrowDown') {
+    event.preventDefault()
+    event.stopPropagation()
+    handleOpen()
+    moveInlineActive(1)
+    return
+  }
+
+  if (event.key === 'ArrowUp') {
+    event.preventDefault()
+    event.stopPropagation()
+    handleOpen()
+    moveInlineActive(-1)
+    return
+  }
+
+  if (event.key === 'Enter' || event.key === 'Tab') {
+    handleInlineSelect(event)
+    return
+  }
+
+  if (props.insertOnSpace && (event.key === ' ' || event.key === 'Spacebar')) {
+    handleInlineSelect(event)
+    return
+  }
+
+  if (
+    event.key === 'Backspace'
+    && !inlineQuery.value
+    && removable.value
+  ) {
+    if (Array.isArray(model.value) && (model.value as ArrayValue).length) {
+      const values = model.value as ArrayValue
+      handleSelect(values[values.length - 1])
+      event.preventDefault()
+      return
+    }
+
+    if (!Array.isArray(model.value) && model.value) {
+      handleSelect(model.value)
+      event.preventDefault()
+    }
+  }
+}
+
+function moveInlineActive(delta: number) {
+  const options = inlineFilteredOptions.value
+
+  if (!options.length) {
+    inlineActiveIndex.value = -1
+    return
+  }
+
+  if (inlineActiveIndex.value === -1) {
+    inlineActiveIndex.value = 0
+    return
+  }
+
+  const next = inlineActiveIndex.value + delta
+  const lastIndex = options.length - 1
+
+  if (next > lastIndex) {
+    inlineActiveIndex.value = 0
+    return
+  }
+
+  if (next < 0) {
+    inlineActiveIndex.value = lastIndex
+    return
+  }
+
+  inlineActiveIndex.value = next
+}
+
+function selectInlineActive() {
+  const options = inlineFilteredOptions.value
+  const hasInlineValue = inlineQuery.value || inlineActiveIndex.value !== -1
+
+  if (!options.length || !hasInlineValue) {
+    return false
+  }
+
+  const index = inlineActiveIndex.value === -1 ? 0 : inlineActiveIndex.value
+  const option = options[index]
+
+  if (!option) {
+    return false
+  }
+
+  handleSelect(option.value)
+
+  return true
+}
+
+function handleInlineSelect(event: KeyboardEvent) {
+  const selected = selectInlineActive()
+
+  if (selected) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
+}
+
+function resetInlineSearch() {
+  inlineQuery.value = ''
+  inlineActiveIndex.value = -1
+
+  nextTick(() => {
+    focusInlineInput()
+  })
+}
+
+function focusInlineInput() {
+  inlineInput.value?.focus()
 }
 </script>
 
@@ -147,24 +410,70 @@ function handleArray(value: OptionValue) {
     <div ref="container" class="container">
       <div
         class="box"
-        role="button"
-        tabindex="0"
-        @click="handleOpen"
+        :class="{ 'inline-search': isInlineSearch }"
+        :role="isInlineSearch ? 'combobox' : 'button'"
+        :aria-expanded="isInlineSearch ? isOpen : undefined"
+        :aria-controls="isInlineSearch ? dropdownId : undefined"
+        :aria-activedescendant="isInlineSearch ? ariaActiveDescendant : undefined"
+        :tabindex="isInlineSearch ? undefined : 0"
+        @click="handleBoxClick"
         @keydown.down.prevent
-        @keyup.enter="handleOpen"
-        @keyup.down="handleOpen"
+        @keyup.enter="handleBoxKeyOpen"
+        @keyup.down="handleBoxKeyOpen"
       >
-        <div class="box-content">
-          <SInputDropdownItem
-            v-if="hasSelected"
-            :item="selected!"
-            :size="size ?? 'small'"
-            :removable
-            :disabled="disabled ?? false"
-            @remove="handleSelect"
-          />
+        <div class="box-content" :class="{ inline: isInlineSearch }">
+          <template v-if="isInlineSearch">
+            <div
+              v-for="(item, i) in selectedChips"
+              :key="item.value ?? i"
+              class="inline-chip"
+              :class="{ avatar: item.type === 'avatar' }"
+            >
+              <template v-if="item.type === 'avatar'">
+                <div class="inline-chip-avatar">
+                  <SAvatar size="fill" :avatar="item.image" />
+                </div>
+                <div class="inline-chip-label">{{ item.label }}</div>
+              </template>
+              <template v-else>
+                <div class="inline-chip-label">{{ item.label }}</div>
+              </template>
+              <button
+                v-if="removable"
+                type="button"
+                class="inline-chip-close"
+                :aria-label="`${t.remove} ${item.label}`"
+                :disabled="disabled ?? false"
+                @click.stop="handleSelect(item.value)"
+              >
+                <IconX class="inline-chip-close-icon" />
+              </button>
+            </div>
 
-          <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>
+            <input
+              ref="inlineInput"
+              v-model="inlineQuery"
+              class="inline-input"
+              :placeholder="!hasSelected ? (placeholder ?? t.ph) : ''"
+              :disabled="disabled ?? false"
+              autocomplete="off"
+              @focus="handleInlineFocus"
+              @click.stop="handleInlineFocus"
+              @keydown="handleInlineKeydown"
+            >
+          </template>
+
+          <template v-else>
+            <SInputDropdownItem
+              v-if="hasSelected"
+              :item="selected!"
+              :size="size ?? 'small'"
+              :removable
+              :disabled="disabled ?? false"
+              @remove="handleSelect"
+            />
+            <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>
+          </template>
         </div>
 
         <div class="box-icon">
@@ -174,7 +483,11 @@ function handleArray(value: OptionValue) {
       </div>
 
       <div v-if="isOpen" class="dropdown" :style="inset">
-        <div class="dropdown-content">
+        <div
+          :id="isInlineSearch ? dropdownId : undefined"
+          class="dropdown-content"
+          :role="isInlineSearch ? 'listbox' : undefined"
+        >
           <SDropdown :sections="dropdownOptions" />
         </div>
       </div>
@@ -201,6 +514,10 @@ function handleArray(value: OptionValue) {
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 
+  &.inline-search {
+    cursor: text;
+  }
+
   &:hover {
     border-color: var(--input-hover-border-color);
   }
@@ -211,6 +528,12 @@ function handleArray(value: OptionValue) {
   align-items: center;
   flex-grow: 1;
   max-width: 100%;
+
+  &.inline {
+    flex-wrap: wrap;
+    gap: 6px;
+    cursor: text;
+  }
 }
 
 .box-placeholder {
@@ -237,6 +560,79 @@ function handleArray(value: OptionValue) {
   margin-bottom: -4px;
 }
 
+.inline-input {
+  flex: 1 0 120px;
+  min-width: 80px;
+  border: none;
+  padding: 0;
+  line-height: 24px;
+  font-size: inherit;
+  font-family: var(--input-value-font-family);
+  background: transparent;
+  color: var(--input-text);
+  outline: none;
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.inline-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--c-divider);
+  border-radius: 12px;
+  padding: 0 10px;
+  height: 24px;
+  background-color: var(--input-bg-color);
+
+  &.avatar {
+    gap: 6px;
+    padding: 1px 8px 1px 1px;
+  }
+}
+
+.inline-chip-avatar {
+  width: 20px;
+  height: 20px;
+}
+
+.inline-chip-label {
+  line-height: 20px;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.inline-chip-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: var(--c-text-2);
+  transition: color 0.25s;
+
+  &:hover {
+    color: var(--c-text-1);
+  }
+
+  &:disabled {
+    color: var(--c-text-3);
+    cursor: not-allowed;
+  }
+}
+
+.inline-chip-close-icon {
+  width: 16px;
+  height: 16px;
+}
+
 .dropdown {
   position: fixed;
   z-index: var(--z-index-dropdown);
@@ -254,6 +650,7 @@ function handleArray(value: OptionValue) {
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
+  .box-content.inline,
   .box-placeholder {
     padding-left: 10px;
   }
@@ -275,6 +672,7 @@ function handleArray(value: OptionValue) {
     font-size: var(--input-font-size, 14px);
   }
 
+  .box-content.inline,
   .box-placeholder {
     padding-left: 10px;
   }
@@ -296,6 +694,7 @@ function handleArray(value: OptionValue) {
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
+  .box-content.inline,
   .box-placeholder {
     padding-left: 12px;
   }
@@ -317,6 +716,7 @@ function handleArray(value: OptionValue) {
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
+  .box-content.inline,
   .box-placeholder {
     padding-left: 16px;
   }
