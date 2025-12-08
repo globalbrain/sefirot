@@ -389,6 +389,7 @@ function focusInlineInput() {
                 </template>
                 <button
                   v-if="removable"
+                  type="button"
                   class="inline-chip-close"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(item.value)"
@@ -410,6 +411,7 @@ function focusInlineInput() {
                 </template>
                 <button
                   v-if="removable"
+                  type="button"
                   class="inline-chip-close"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(selected.value)"
