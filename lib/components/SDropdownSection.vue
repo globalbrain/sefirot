@@ -23,6 +23,7 @@ defineProps<{
     :options="section.options"
     :query="section.query"
     :active="section.active"
+    :option-id-prefix="section.optionIdPrefix"
     :on-click="section.onClick"
   />
   <SDropdownSectionDateRange
