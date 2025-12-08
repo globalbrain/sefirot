@@ -14,7 +14,7 @@ const props = defineProps<{
   search?: boolean | 'inline'
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
-  active?: any
+  active?: DropdownSectionFilterSelectedValue
   optionIdPrefix?: string
   onClick?(value: any): void
 }>()
