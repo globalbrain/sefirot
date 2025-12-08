@@ -24,6 +24,13 @@ export interface Props extends BaseProps {
   closeOnClick?: boolean
   disabled?: boolean
   search?: boolean | 'inline'
+  /**
+   * Controls whether the Space key triggers option selection in inline search mode.
+   * When `true` (default), pressing Space selects the active option.
+   * When `false`, Space inserts a space character in the input, allowing searches with spaces.
+   * Only applies when `search="inline"`.
+   */
+  insertOnSpace?: boolean
 }
 
 export type PrimitiveValue = any
@@ -49,7 +56,7 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = withDefaults(defineProps<Props>(), { search: true })
+const props = withDefaults(defineProps<Props>(), { search: true, insertOnSpace: true })
 
 const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
@@ -286,14 +293,13 @@ function handleInlineKeydown(event: KeyboardEvent) {
     return
   }
 
-  if (event.key === 'Enter' || event.key === 'Tab' || event.key === ' ' || event.key === 'Spacebar') {
-    const selected = selectInlineActive()
+  if (event.key === 'Enter' || event.key === 'Tab') {
+    handleInlineSelect(event)
+    return
+  }
 
-    if (selected) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-
+  if (props.insertOnSpace && (event.key === ' ' || event.key === 'Spacebar')) {
+    handleInlineSelect(event)
     return
   }
 
@@ -363,6 +369,15 @@ function selectInlineActive() {
   handleSelect(option.value)
 
   return true
+}
+
+function handleInlineSelect(event: KeyboardEvent) {
+  const selected = selectInlineActive()
+
+  if (selected) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
 }
 
 function resetInlineSearch() {
