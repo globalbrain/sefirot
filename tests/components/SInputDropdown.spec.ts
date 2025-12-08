@@ -18,35 +18,53 @@ describe('components/SInputDropdown', () => {
         }
       })
 
+      // Open dropdown
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
       const input = wrapper.find('.inline-input')
       await input.setValue('ap')
       await nextTick()
 
       // Should filter to only Apple and Apricot using fuzzy search
-      const dropdown = wrapper.find('.dropdown')
-      expect(dropdown.exists()).toBe(true)
+      const items = wrapper.findAll('.dropdown .button')
+      const labels = items.map((i) => i.text())
+
+      expect(labels).toContain('Apple')
+      expect(labels).toContain('Apricot')
+      expect(labels).not.toContain('Banana')
+      expect(labels).not.toContain('Cherry')
     })
 
     it('should return all options when query is empty', async () => {
+      const options = [
+        { label: 'Apple', value: 1 },
+        { label: 'Banana', value: 2 },
+        { label: 'Cherry', value: 3 }
+      ]
+
       const wrapper = mount(SInputDropdown, {
         props: {
           search: 'inline',
-          options: [
-            { label: 'Apple', value: 1 },
-            { label: 'Banana', value: 2 },
-            { label: 'Cherry', value: 3 }
-          ],
+          options,
           modelValue: []
         }
       })
 
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
       const input = wrapper.find('.inline-input')
+      await input.setValue('ap')
+      await nextTick()
+
+      // Clear query
       await input.setValue('')
       await nextTick()
 
       // All options should be available when query is empty
-      // This is tested indirectly by checking the component state
-      expect((input.element as HTMLInputElement).value).toBe('')
+      const items = wrapper.findAll('.dropdown .button')
+      expect(items).toHaveLength(options.length)
     })
 
     it('should handle no matches gracefully', async () => {
@@ -61,12 +79,17 @@ describe('components/SInputDropdown', () => {
         }
       })
 
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
       const input = wrapper.find('.inline-input')
       await input.setValue('xyz')
       await nextTick()
 
       // Component should still render even with no matches
-      expect(input.exists()).toBe(true)
+      const empty = wrapper.find('.empty')
+      expect(empty.exists()).toBe(true)
+      expect(wrapper.findAll('.dropdown .button')).toHaveLength(0)
     })
 
     it('should exclude disabled options from filtering', async () => {
@@ -82,12 +105,19 @@ describe('components/SInputDropdown', () => {
         }
       })
 
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
       const input = wrapper.find('.inline-input')
       await input.setValue('a')
       await nextTick()
 
+      const items = wrapper.findAll('.dropdown .button')
+      const labels = items.map((i) => i.text())
+
       // Disabled options should not appear in filtered results
-      expect(input.exists()).toBe(true)
+      expect(labels).toContain('Apple')
+      expect(labels).not.toContain('Banana')
     })
   })
 

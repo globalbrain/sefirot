@@ -94,7 +94,7 @@ const inlineEnabledOptions = smartComputed(() => {
 })
 
 const inlineFuse = computed(() => {
-  return new Fuse(inlineEnabledOptions.value, { keys: ['label'] })
+  return new Fuse(inlineEnabledOptions.value, { keys: ['label'], threshold: 0.4 })
 })
 
 const inlineFilteredOptions = computed(() => {
