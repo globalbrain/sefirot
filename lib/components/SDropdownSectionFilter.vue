@@ -42,11 +42,9 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  if (props.search !== true || !query.value) {
-    return enabledOptions.value
-  }
-
-  return fuse.value.search(query.value).map((r) => r.item)
+  return props.search !== true || !query.value
+    ? unref(enabledOptions)
+    : fuse.value.search(query.value).map((r) => r.item)
 })
 
 onMounted(() => {
