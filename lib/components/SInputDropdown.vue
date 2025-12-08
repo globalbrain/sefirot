@@ -15,6 +15,7 @@ import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
 export type { Color, Size } from './SInputBase.vue'
+
 export interface Props extends BaseProps {
   placeholder?: string
   options: Option[]
@@ -25,12 +26,6 @@ export interface Props extends BaseProps {
   closeOnClick?: boolean
   disabled?: boolean
   search?: boolean | 'inline'
-  /**
-   * Controls whether the Space key triggers option selection in inline search mode.
-   * When `true` (default), pressing Space selects the active option.
-   * When `false`, Space inserts a space character in the input, allowing searches with spaces.
-   * Only applies when `search="inline"`.
-   */
   insertOnSpace?: boolean
 }
 
@@ -57,7 +52,10 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = withDefaults(defineProps<Props>(), { search: true, insertOnSpace: true })
+const props = withDefaults(defineProps<Props>(), {
+  search: true,
+  insertOnSpace: true
+})
 
 const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
@@ -162,7 +160,6 @@ const ariaActiveDescendant = computed(() => {
     return undefined
   }
 
-  // Generate an ID for the active option based on its index
   return `${dropdownId}-option-${inlineActiveIndex.value}`
 })
 
@@ -475,7 +472,6 @@ function focusInlineInput() {
               :disabled="disabled ?? false"
               @remove="handleSelect"
             />
-
             <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>
           </template>
         </div>
@@ -654,10 +650,7 @@ function focusInlineInput() {
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
 
-  .box-content.inline {
-    padding-left: 10px;
-  }
-
+  .box-content.inline,
   .box-placeholder {
     padding-left: 10px;
   }
@@ -679,10 +672,7 @@ function focusInlineInput() {
     font-size: var(--input-font-size, 14px);
   }
 
-  .box-content.inline {
-    padding-left: 10px;
-  }
-
+  .box-content.inline,
   .box-placeholder {
     padding-left: 10px;
   }
@@ -704,10 +694,7 @@ function focusInlineInput() {
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
 
-  .box-content.inline {
-    padding-left: 12px;
-  }
-
+  .box-content.inline,
   .box-placeholder {
     padding-left: 12px;
   }
@@ -729,10 +716,7 @@ function focusInlineInput() {
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
 
-  .box-content.inline {
-    padding-left: 16px;
-  }
-
+  .box-content.inline,
   .box-placeholder {
     padding-left: 16px;
   }
