@@ -258,13 +258,11 @@ function handleInlineKeydown(event: KeyboardEvent) {
 
   if (event.key === 'Escape') {
     if (inlineQuery.value) {
-      // Clear the search query if it exists
       inlineQuery.value = ''
       inlineActiveIndex.value = -1
       event.preventDefault()
       event.stopPropagation()
     } else {
-      // Close the dropdown if query is empty
       close()
       event.preventDefault()
       event.stopPropagation()
