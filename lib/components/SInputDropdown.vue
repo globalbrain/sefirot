@@ -471,8 +471,8 @@ function focusInlineInput() {
 
       <div v-if="isOpen" class="dropdown" :style="inset">
         <div
-          class="dropdown-content"
           :id="isInlineSearch ? dropdownId : undefined"
+          class="dropdown-content"
           :role="isInlineSearch ? 'listbox' : undefined"
         >
           <SDropdown :sections="dropdownOptions" />

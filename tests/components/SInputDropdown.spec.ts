@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
-import { nextTick } from 'vue'
 import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
+import { nextTick } from 'vue'
 
 describe('components/SInputDropdown', () => {
   describe('ARIA attributes for inline search', () => {
