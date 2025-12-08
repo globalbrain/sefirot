@@ -55,10 +55,12 @@ const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
 const { t } = useTrans({
   en: {
-    ph: 'Select items'
+    ph: 'Select items',
+    remove: 'Remove'
   },
   ja: {
-    ph: '項目を選択してください'
+    ph: '項目を選択してください',
+    remove: '削除'
   }
 })
 
@@ -406,7 +408,7 @@ function focusInlineInput() {
                   v-if="removable"
                   type="button"
                   class="inline-chip-close"
-                  :aria-label="`Remove ${item.label}`"
+                  :aria-label="`${t.remove} ${item.label}`"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(item.value)"
                 >
@@ -429,7 +431,7 @@ function focusInlineInput() {
                   v-if="removable"
                   type="button"
                   class="inline-chip-close"
-                  :aria-label="`Remove ${selected.label}`"
+                  :aria-label="`${t.remove} ${selected.label}`"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(selected.value)"
                 >
