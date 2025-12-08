@@ -4,7 +4,7 @@ import IconCaretUp from '~icons/ph/caret-up'
 import IconX from '~icons/ph/x'
 import Fuse from 'fuse.js'
 import xor from 'lodash-es/xor'
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, useId, watch } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
@@ -67,6 +67,8 @@ const inlineInput = ref<HTMLInputElement>()
 const inlineQuery = ref('')
 const inlineActiveIndex = ref(-1)
 
+const dropdownId = useId()
+
 const { isOpen, open } = useFlyout(container)
 const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
 
@@ -111,6 +113,7 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   selected: model.value,
   options: isInlineSearch.value ? inlineFilteredOptions.value : props.options,
   active: inlineActiveOption.value?.value,
+  optionIdPrefix: isInlineSearch.value ? `${dropdownId}-option` : undefined,
   onClick: handleSelect
 }])
 
@@ -134,6 +137,15 @@ const removable = computed(() => {
   }
 
   return !!props.nullable
+})
+
+const ariaActiveDescendant = computed(() => {
+  if (!isInlineSearch.value || !inlineActiveOption.value) {
+    return undefined
+  }
+
+  // Generate an ID for the active option based on its index
+  return `${dropdownId}-option-${inlineActiveIndex.value}`
 })
 
 watch(inlineQuery, (value) => {
@@ -363,6 +375,9 @@ function focusInlineInput() {
         class="box"
         :class="{ 'inline-search': isInlineSearch }"
         :role="isInlineSearch ? 'combobox' : 'button'"
+        :aria-expanded="isInlineSearch ? isOpen : undefined"
+        :aria-controls="isInlineSearch ? dropdownId : undefined"
+        :aria-activedescendant="isInlineSearch ? ariaActiveDescendant : undefined"
         :tabindex="isInlineSearch ? undefined : 0"
         @click="handleBoxClick"
         @keydown.down.prevent
@@ -455,7 +470,11 @@ function focusInlineInput() {
       </div>
 
       <div v-if="isOpen" class="dropdown" :style="inset">
-        <div class="dropdown-content">
+        <div
+          class="dropdown-content"
+          :id="isInlineSearch ? dropdownId : undefined"
+          :role="isInlineSearch ? 'listbox' : undefined"
+        >
           <SDropdown :sections="dropdownOptions" />
         </div>
       </div>

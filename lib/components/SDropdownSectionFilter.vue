@@ -14,6 +14,7 @@ const props = defineProps<{
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
   active?: any
+  optionIdPrefix?: string
   onClick?(value: any): void
 }>()
 
@@ -80,6 +81,10 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
   option.onClick && option.onClick(value)
   props.onClick && props.onClick(value)
 }
+
+function getOptionId(index: number) {
+  return props.optionIdPrefix ? `${props.optionIdPrefix}-${index}` : undefined
+}
 </script>
 
 <template>
@@ -89,10 +94,13 @@ function handleClick(option: DropdownSectionFilterOption, value: any) {
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
-      <li v-for="option in filteredOptions" :key="option.label" class="item">
+      <li v-for="(option, index) in filteredOptions" :key="option.label" class="item">
         <button
+          :id="getOptionId(index)"
           class="button"
           :class="{ active: isActive(option.value), focused: isFocused(option.value) }"
+          :role="optionIdPrefix ? 'option' : undefined"
+          :aria-selected="optionIdPrefix ? isActive(option.value) : undefined"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
