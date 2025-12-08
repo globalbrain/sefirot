@@ -343,11 +343,11 @@ describe('components/SInputDropdown', () => {
       })
 
       const input = wrapper.find('.inline-input')
-      
+
       // Type to open dropdown and filter options - this sets active index to 0
       await input.setValue('Option')
       await nextTick()
-      
+
       // Press Enter to select first option
       await input.trigger('keydown', { key: 'Enter' })
       await nextTick()
@@ -369,11 +369,11 @@ describe('components/SInputDropdown', () => {
       })
 
       const input = wrapper.find('.inline-input')
-      
+
       // Type to open dropdown and filter - this sets active index to 0
       await input.setValue('Option 1')
       await nextTick()
-      
+
       // Press Enter to toggle first option (deselect it)
       await input.trigger('keydown', { key: 'Enter' })
       await nextTick()
@@ -395,11 +395,11 @@ describe('components/SInputDropdown', () => {
       })
 
       const input = wrapper.find('.inline-input')
-      
+
       // Type to open dropdown and filter - this sets active index to 0
       await input.setValue('Option')
       await nextTick()
-      
+
       // Press Enter to select first option
       await input.trigger('keydown', { key: 'Enter' })
       await nextTick()
@@ -423,7 +423,7 @@ describe('components/SInputDropdown', () => {
       const input = wrapper.find('.inline-input')
       await input.setValue('Option 2')
       await nextTick()
-      
+
       // Press Enter to select the filtered option (Option 2)
       await input.trigger('keydown', { key: 'Enter' })
       await nextTick()
