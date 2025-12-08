@@ -71,7 +71,7 @@ const inlineActiveIndex = ref(-1)
 
 const dropdownId = useId()
 
-const { isOpen, open } = useFlyout(container)
+const { isOpen, open, close } = useFlyout(container)
 const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
 
 const isInlineSearch = computed(() => props.search === 'inline')
@@ -253,6 +253,20 @@ function handleInlineKeydown(event: KeyboardEvent) {
   }
 
   if (event.key === 'Tab' && event.shiftKey) {
+    return
+  }
+
+  if (event.key === 'Escape') {
+    if (inlineQuery.value) {
+      inlineQuery.value = ''
+      inlineActiveIndex.value = -1
+      event.preventDefault()
+      event.stopPropagation()
+    } else {
+      close()
+      event.preventDefault()
+      event.stopPropagation()
+    }
     return
   }
 
