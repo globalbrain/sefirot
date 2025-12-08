@@ -141,6 +141,14 @@ const removable = computed(() => {
   return !!props.nullable
 })
 
+const selectedChips = computed(() => {
+  if (Array.isArray(selected.value)) {
+    return selected.value
+  }
+
+  return selected.value ? [selected.value] : []
+})
+
 const ariaActiveDescendant = computed(() => {
   if (!isInlineSearch.value || !inlineActiveOption.value) {
     return undefined
@@ -388,57 +396,32 @@ function focusInlineInput() {
       >
         <div class="box-content" :class="{ inline: isInlineSearch }">
           <template v-if="isInlineSearch">
-            <template v-if="Array.isArray(selected)">
-              <div
-                v-for="(item, i) in selected"
-                :key="item.value ?? i"
-                class="inline-chip"
-                :class="{ avatar: item.type === 'avatar' }"
+            <div
+              v-for="(item, i) in selectedChips"
+              :key="item.value ?? i"
+              class="inline-chip"
+              :class="{ avatar: item.type === 'avatar' }"
+            >
+              <template v-if="item.type === 'avatar'">
+                <div class="inline-chip-avatar">
+                  <SAvatar size="fill" :avatar="item.image" />
+                </div>
+                <div class="inline-chip-label">{{ item.label }}</div>
+              </template>
+              <template v-else>
+                <div class="inline-chip-label">{{ item.label }}</div>
+              </template>
+              <button
+                v-if="removable"
+                type="button"
+                class="inline-chip-close"
+                :aria-label="`${t.remove} ${item.label}`"
+                :disabled="disabled ?? false"
+                @click.stop="handleSelect(item.value)"
               >
-                <template v-if="item.type === 'avatar'">
-                  <div class="inline-chip-avatar">
-                    <SAvatar size="fill" :avatar="item.image" />
-                  </div>
-                  <div class="inline-chip-label">{{ item.label }}</div>
-                </template>
-                <template v-else>
-                  <div class="inline-chip-label">{{ item.label }}</div>
-                </template>
-                <button
-                  v-if="removable"
-                  type="button"
-                  class="inline-chip-close"
-                  :aria-label="`${t.remove} ${item.label}`"
-                  :disabled="disabled ?? false"
-                  @click.stop="handleSelect(item.value)"
-                >
-                  <IconX class="inline-chip-close-icon" />
-                </button>
-              </div>
-            </template>
-            <template v-else-if="selected">
-              <div class="inline-chip" :class="{ avatar: selected.type === 'avatar' }">
-                <template v-if="selected.type === 'avatar'">
-                  <div class="inline-chip-avatar">
-                    <SAvatar size="fill" :avatar="selected.image" />
-                  </div>
-                  <div class="inline-chip-label">{{ selected.label }}</div>
-                </template>
-                <template v-else>
-                  <div class="inline-chip-label">{{ selected.label }}</div>
-                </template>
-                <button
-                  v-if="removable"
-                  type="button"
-                  class="inline-chip-close"
-                  :aria-label="`${t.remove} ${selected.label}`"
-                  :disabled="disabled ?? false"
-                  @click.stop="handleSelect(selected.value)"
-                >
-                  <IconX class="inline-chip-close-icon" />
-                </button>
-              </div>
-            </template>
+                <IconX class="inline-chip-close-icon" />
+              </button>
+            </div>
 
             <input
               ref="inlineInput"
