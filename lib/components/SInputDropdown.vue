@@ -406,6 +406,7 @@ function focusInlineInput() {
                   v-if="removable"
                   type="button"
                   class="inline-chip-close"
+                  :aria-label="`Remove ${item.label}`"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(item.value)"
                 >
@@ -428,6 +429,7 @@ function focusInlineInput() {
                   v-if="removable"
                   type="button"
                   class="inline-chip-close"
+                  :aria-label="`Remove ${selected.label}`"
                   :disabled="disabled ?? false"
                   @click.stop="handleSelect(selected.value)"
                 >
