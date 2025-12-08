@@ -128,4 +128,111 @@ describe('components/SInputDropdown', () => {
       expect(box.attributes('aria-activedescendant')).toBeUndefined()
     })
   })
+
+  describe('Escape key handling for inline search', () => {
+    it('should clear search query when Escape is pressed with text', async () => {
+      const wrapper = mount(SInputDropdown, {
+        props: {
+          search: 'inline',
+          options: [
+            { label: 'Option 1', value: 1 },
+            { label: 'Option 2', value: 2 },
+            { label: 'Option 3', value: 3 }
+          ],
+          modelValue: []
+        }
+      })
+
+      // Open dropdown
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
+      const input = wrapper.find('.inline-input')
+
+      // Type to create a search query
+      await input.setValue('Option')
+      await nextTick()
+
+      // Verify query exists
+      expect((input.element as HTMLInputElement).value).toBe('Option')
+
+      // Press Escape
+      await input.trigger('keydown', { key: 'Escape' })
+      await nextTick()
+
+      // Query should be cleared
+      expect((input.element as HTMLInputElement).value).toBe('')
+
+      // Dropdown should still be open
+      const box = wrapper.find('.box')
+      expect(box.attributes('aria-expanded')).toBe('true')
+    })
+
+    it('should close dropdown when Escape is pressed with empty query', async () => {
+      const wrapper = mount(SInputDropdown, {
+        props: {
+          search: 'inline',
+          options: [
+            { label: 'Option 1', value: 1 },
+            { label: 'Option 2', value: 2 }
+          ],
+          modelValue: []
+        }
+      })
+
+      // Open dropdown
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
+      const box = wrapper.find('.box')
+      expect(box.attributes('aria-expanded')).toBe('true')
+
+      const input = wrapper.find('.inline-input')
+
+      // Press Escape with empty query
+      await input.trigger('keydown', { key: 'Escape' })
+      await nextTick()
+
+      // Dropdown should be closed
+      expect(box.attributes('aria-expanded')).toBe('false')
+    })
+
+    it('should clear query then close dropdown on consecutive Escape presses', async () => {
+      const wrapper = mount(SInputDropdown, {
+        props: {
+          search: 'inline',
+          options: [
+            { label: 'Option 1', value: 1 },
+            { label: 'Option 2', value: 2 }
+          ],
+          modelValue: []
+        }
+      })
+
+      // Open dropdown
+      await wrapper.find('.box').trigger('click')
+      await nextTick()
+
+      const input = wrapper.find('.inline-input')
+
+      // Type to create a search query
+      await input.setValue('Opt')
+      await nextTick()
+
+      const box = wrapper.find('.box')
+
+      // First Escape: clear query
+      await input.trigger('keydown', { key: 'Escape' })
+      await nextTick()
+
+      expect((input.element as HTMLInputElement).value).toBe('')
+      expect(box.attributes('aria-expanded')).toBe('true')
+
+      // Second Escape: close dropdown
+      await input.trigger('keydown', { key: 'Escape' })
+      await nextTick()
+
+      expect(box.attributes('aria-expanded')).toBe('false')
+    })
+  })
 })
