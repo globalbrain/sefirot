@@ -94,9 +94,9 @@ function getOptionId(index: number) {
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
-      <li v-for="(option, index) in filteredOptions" :key="option.label" class="item">
+      <li v-for="(option, i) in filteredOptions" :key="option.label" class="item">
         <button
-          :id="getOptionId(index)"
+          :id="getOptionId(i)"
           class="button"
           :class="{ active: isActive(option.value), focused: isFocused(option.value) }"
           :role="optionIdPrefix ? 'option' : undefined"
