@@ -41,7 +41,7 @@ export interface DropdownSectionFilter extends DropdownSectionBase {
   selected: MaybeRef<DropdownSectionFilterSelectedValue>
   options: MaybeRef<DropdownSectionFilterOption[]>
   query?: string
-  active?: any
+  active?: DropdownSectionFilterSelectedValue
   optionIdPrefix?: string
   onClick?(value: any): void
 }
