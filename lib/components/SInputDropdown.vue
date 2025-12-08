@@ -8,6 +8,7 @@ import { computed, nextTick, ref, useId, watch } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { smartComputed } from '../support/Reactivity'
 import SAvatar from './SAvatar.vue'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
@@ -88,7 +89,7 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
-const inlineEnabledOptions = computed(() => {
+const inlineEnabledOptions = smartComputed(() => {
   return props.options.filter((o) => !o.disabled)
 })
 
