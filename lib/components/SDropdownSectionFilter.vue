@@ -7,6 +7,7 @@ import {
   type DropdownSectionFilterSelectedValue
 } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
+import { smartComputed } from '../support/Reactivity'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
 const props = defineProps<{
@@ -32,9 +33,7 @@ const { t } = useTrans({
 const input = ref<HTMLElement | null>(null)
 const query = ref('')
 
-const isInlineSearch = computed(() => props.search === 'inline')
-
-const enabledOptions = computed(() => {
+const enabledOptions = smartComputed(() => {
   return unref(props.options).filter((o) => !o.disabled)
 })
 
@@ -43,12 +42,8 @@ const fuse = computed(() => {
 })
 
 const filteredOptions = computed(() => {
-  if (isInlineSearch.value) {
-    return unref(props.options).filter((o) => !o.disabled)
-  }
-
-  if (!props.search || !query.value) {
-    return unref(enabledOptions)
+  if (props.search !== true || !query.value) {
+    return enabledOptions.value
   }
 
   return fuse.value.search(query.value).map((r) => r.item)
@@ -172,10 +167,7 @@ function getOptionId(index: number) {
   text-align: left;
   transition: color 0.25s, background-color 0.25s;
 
-  &:hover {
-    background-color: var(--c-bg-mute-1);
-  }
-
+  &:hover,
   &.focused {
     background-color: var(--c-bg-mute-1);
   }
