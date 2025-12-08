@@ -24,6 +24,7 @@ export interface Props extends BaseProps {
   closeOnClick?: boolean
   disabled?: boolean
   search?: boolean | 'inline'
+  insertOnSpace?: boolean
 }
 
 export type PrimitiveValue = any
@@ -49,7 +50,7 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-const props = withDefaults(defineProps<Props>(), { search: true })
+const props = withDefaults(defineProps<Props>(), { search: true, insertOnSpace: true })
 
 const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
 
@@ -272,7 +273,18 @@ function handleInlineKeydown(event: KeyboardEvent) {
     return
   }
 
-  if (event.key === 'Enter' || event.key === 'Tab' || event.key === ' ' || event.key === 'Spacebar') {
+  if (event.key === 'Enter' || event.key === 'Tab') {
+    const selected = selectInlineActive()
+
+    if (selected) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+
+    return
+  }
+
+  if (props.insertOnSpace && (event.key === ' ' || event.key === 'Spacebar')) {
     const selected = selectInlineActive()
 
     if (selected) {
