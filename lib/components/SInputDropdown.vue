@@ -24,6 +24,12 @@ export interface Props extends BaseProps {
   closeOnClick?: boolean
   disabled?: boolean
   search?: boolean | 'inline'
+  /**
+   * Controls whether the Space key triggers option selection in inline search mode.
+   * When `true` (default), pressing Space selects the active option.
+   * When `false`, Space inserts a space character in the input, allowing searches with spaces.
+   * Only applies when `search="inline"`.
+   */
   insertOnSpace?: boolean
 }
 
@@ -274,24 +280,12 @@ function handleInlineKeydown(event: KeyboardEvent) {
   }
 
   if (event.key === 'Enter' || event.key === 'Tab') {
-    const selected = selectInlineActive()
-
-    if (selected) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-
+    handleInlineSelect(event)
     return
   }
 
   if (props.insertOnSpace && (event.key === ' ' || event.key === 'Spacebar')) {
-    const selected = selectInlineActive()
-
-    if (selected) {
-      event.preventDefault()
-      event.stopPropagation()
-    }
-
+    handleInlineSelect(event)
     return
   }
 
@@ -361,6 +355,15 @@ function selectInlineActive() {
   handleSelect(option.value)
 
   return true
+}
+
+function handleInlineSelect(event: KeyboardEvent) {
+  const selected = selectInlineActive()
+
+  if (selected) {
+    event.preventDefault()
+    event.stopPropagation()
+  }
 }
 
 function resetInlineSearch() {
