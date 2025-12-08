@@ -38,12 +38,12 @@ const enabledOptions = smartComputed(() => {
 })
 
 const fuse = computed(() => {
-  return new Fuse(unref(enabledOptions), { keys: ['label'] })
+  return new Fuse(enabledOptions.value, { keys: ['label'] })
 })
 
 const filteredOptions = computed(() => {
   return props.search !== true || !query.value
-    ? unref(enabledOptions)
+    ? enabledOptions.value
     : fuse.value.search(query.value).map((r) => r.item)
 })
 
@@ -53,12 +53,12 @@ onMounted(() => {
   }
 })
 
-function isActive(value: any) {
+function isSelected(value: any) {
   const selected = unref(props.selected)
   return Array.isArray(selected) ? selected.includes(value) : selected === value
 }
 
-function isFocused(value: any) {
+function isActive(value: any) {
   return props.active === value
 }
 
@@ -91,15 +91,15 @@ function getOptionId(index: number) {
         <button
           :id="getOptionId(i)"
           class="button"
-          :class="{ active: isActive(option.value), focused: isFocused(option.value) }"
+          :class="{ selected: isSelected(option.value), active: isActive(option.value) }"
           :role="optionIdPrefix ? 'option' : undefined"
-          :aria-selected="optionIdPrefix ? isActive(option.value) : undefined"
+          :aria-selected="optionIdPrefix ? isSelected(option.value) : undefined"
           tabindex="0"
           @keyup.up.prevent="focusPrev"
           @keyup.down.prevent="focusNext"
           @click="handleClick(option, option.value)"
         >
-          <span v-if="Array.isArray(unref(selected))" class="checkbox">
+          <span v-if="Array.isArray(selected)" class="checkbox">
             <span class="checkbox-box">
               <IconCheck class="checkbox-icon" />
             </span>
@@ -166,7 +166,7 @@ function getOptionId(index: number) {
   transition: color 0.25s, background-color 0.25s;
 
   &:hover,
-  &.focused {
+  &.active {
     background-color: var(--c-bg-mute-1);
   }
 }
@@ -188,7 +188,7 @@ function getOptionId(index: number) {
   background-color: var(--input-bg-color);
   transition: border-color 0.1s, background-color 0.1s;
 
-  .button.active & {
+  .button.selected & {
     border-color: var(--c-fg-info-1);
     background-color: var(--c-fg-info-1);
   }
@@ -202,7 +202,7 @@ function getOptionId(index: number) {
   opacity: 0;
   transition: opacity 0.25s;
 
-  .button.active & {
+  .button.selected & {
     opacity: 1;
   }
 }
@@ -219,7 +219,7 @@ function getOptionId(index: number) {
   background-color: var(--input-bg-color);
   transition: border-color 0.25s;
 
-  .button.active & {
+  .button.selected & {
     border-color: var(--c-border-info-1);
   }
 }
@@ -240,7 +240,7 @@ function getOptionId(index: number) {
   transform: scale(0);
   transition: opacity 0.25s, transform 0.1s;
 
-  .button.active & {
+  .button.selected & {
     opacity: 1;
     transform: scale(0.6);
   }
