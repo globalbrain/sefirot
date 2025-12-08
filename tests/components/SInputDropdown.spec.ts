@@ -46,7 +46,7 @@ describe('components/SInputDropdown', () => {
 
       // All options should be available when query is empty
       // This is tested indirectly by checking the component state
-      expect(input.element.value).toBe('')
+      expect((input.element as HTMLInputElement).value).toBe('')
     })
 
     it('should handle no matches gracefully', async () => {
@@ -273,7 +273,7 @@ describe('components/SInputDropdown', () => {
       })
 
       const input = wrapper.find('.inline-input')
-      expect(input.element.value).toBe('')
+      expect((input.element as HTMLInputElement).value).toBe('')
 
       // Press Backspace with empty query
       await input.trigger('keydown', { key: 'Backspace' })
@@ -475,7 +475,7 @@ describe('components/SInputDropdown', () => {
       await nextTick()
       await nextTick() // Wait for reset
 
-      expect(input.element.value).toBe('')
+      expect((input.element as HTMLInputElement).value).toBe('')
     })
 
     it('should reset active index after selection', async () => {
