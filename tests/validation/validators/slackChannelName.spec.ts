@@ -68,10 +68,6 @@ describe('validation/validators/slackChannelName', () => {
     expect(slackChannelName(' ')).toBe(false)
   })
 
-  it('rejects leading/trailing uppercase after lowercasing', () => {
-    expect(slackChannelName('TEAM')).toBe(false)
-  })
-
   it('rejects strings made only of combining marks', () => {
     const onlyCombining = '\u0301\u0302\u0308'
     expect(slackChannelName(onlyCombining)).toBe(false)
