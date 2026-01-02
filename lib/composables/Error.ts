@@ -141,6 +141,26 @@ const ignoreErrors = [
   /\[Cloudflare Turnstile\] Error: (?:10[2-46]|1106[02]|[36]00)/
 ]
 
+const stringifiers: readonly ((e: unknown) => string | false)[] = [
+  (e) => typeof e === 'string' && e,
+  (e) => e instanceof Error && (e.message || e.name),
+  (e) => {
+    const json = JSON.stringify(e)
+    return json !== '{}' && json
+  },
+  (e) => String(e)
+]
+
+function getErrorMessage(error: unknown | undefined): string {
+  for (const stringify of stringifiers) {
+    try {
+      const s = stringify(error)
+      if (s) { return s }
+    } catch { /* continue */ }
+  }
+  return 'unknown error'
+}
+
 export function useErrorHandler({
   dsn,
   environment,
@@ -217,23 +237,4 @@ export function useErrorHandler({
 
     set(e)
   }
-}
-
-function getErrorMessage(error: unknown | undefined): string {
-  let str
-  if (!str && typeof error === 'string') { str = error }
-  if (!str && error instanceof Error) { str = error.message }
-  if (!str) {
-    try {
-      const s = JSON.stringify(error)
-      if (s && s !== '{}') { str = s }
-    } catch {}
-  }
-  if (!str) {
-    try {
-      const s = String(error)
-      if (s) { str = s }
-    } catch {}
-  }
-  return str || 'unknown error'
 }
