@@ -62,8 +62,8 @@ function focusNext(event: any) {
 }
 
 function onClick(option: DropdownSectionFilterOption, value: any) {
-  option.onClick && option.onClick(value)
-  props.onClick && props.onClick(value)
+  option.onClick?.(value)
+  props.onClick?.(value)
 }
 </script>
 

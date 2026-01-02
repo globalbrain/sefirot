@@ -394,7 +394,7 @@ function getStyles(key: string) {
   }
 }
 
-function handleResizeStart(data: { columnName: string; startX: number; initialX: number }) {
+function onResizeStart(data: { columnName: string; startX: number; initialX: number }) {
   const tableRect = table.value?.getBoundingClientRect()
   const tableLeft = tableRect?.left ?? 0
   const indicatorX = data.initialX - tableLeft
@@ -406,13 +406,13 @@ function handleResizeStart(data: { columnName: string; startX: number; initialX:
   }
 }
 
-function handleResizeMove(data: { deltaX: number }) {
+function onResizeMove(data: { deltaX: number }) {
   if (resizeState.value) {
     resizeState.value.indicatorX = resizeState.value.startX + data.deltaX
   }
 }
 
-function handleResizeEnd(data: { columnName: string; finalWidth: string }) {
+function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   updateColWidth(data.columnName, data.finalWidth, true)
   resizeState.value = null
 }
@@ -456,9 +456,9 @@ function handleResizeEnd(data: { columnName: string; finalWidth: string }) {
                   :dropdown="unref(options.columns)[key]?.dropdown"
                   :has-header="showHeader"
                   :resizable="unref(options.columns)[key]?.resizable"
-                  @resize-start="handleResizeStart"
-                  @resize-move="handleResizeMove"
-                  @resize-end="handleResizeEnd"
+                  @resize-start="onResizeStart"
+                  @resize-move="onResizeMove"
+                  @resize-end="onResizeEnd"
                 >
                   <SInputCheckbox
                     v-if="
