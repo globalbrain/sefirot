@@ -1,6 +1,6 @@
 import { type YmdType } from '../../support/Day'
 import { createRule } from '../Rule'
-import { requiredYmd as baseRequiredYmd } from '../validators/requiredYmd'
+import { ymd as baseYmd } from '../validators/ymd'
 
 export const message = {
   en: 'The field is required.',
@@ -10,6 +10,6 @@ export const message = {
 export function requiredYmd(required?: YmdType[], msg?: string) {
   return createRule({
     message: ({ lang }) => msg ?? message[lang],
-    validation: (value) => baseRequiredYmd(value, required)
+    validation: (value) => baseYmd(value, required, true)
   })
 }

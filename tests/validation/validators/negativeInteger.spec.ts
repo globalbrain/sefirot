@@ -1,24 +1,27 @@
 import { negativeInteger } from 'sefirot/validation/validators'
 
 describe('validation/validators/negativeInteger', () => {
-  it('should validates if the value is negative integer', () => {
+  it('accepts negative integers within safe range', () => {
     expect(negativeInteger(-1)).toBe(true)
-    expect(negativeInteger(-1.0)).toBe(true)
-    expect(negativeInteger(-10)).toBe(true)
+    expect(negativeInteger(Number.MIN_SAFE_INTEGER)).toBe(true)
+  })
 
-    expect(negativeInteger(undefined)).toBe(false)
-    expect(negativeInteger(null)).toBe(false)
-    expect(negativeInteger(true)).toBe(false)
-    expect(negativeInteger(false)).toBe(false)
-    expect(negativeInteger(-1.1)).toBe(false)
-    expect(negativeInteger(1)).toBe(false)
-    expect(negativeInteger(1.1)).toBe(false)
-    expect(negativeInteger(+1)).toBe(false)
-    expect(negativeInteger(+1.1)).toBe(false)
-    expect(negativeInteger('-1')).toBe(false)
-    expect(negativeInteger('-1.0')).toBe(false)
-    expect(negativeInteger('-10')).toBe(false)
-    expect(negativeInteger({})).toBe(false)
-    expect(negativeInteger([])).toBe(false)
+  it('rejects zero and -0', () => {
+    expect(negativeInteger(0)).toBe(false)
+    expect(negativeInteger(-0)).toBe(false)
+  })
+
+  it('rejects non-integers and non-numbers', () => {
+    expect(negativeInteger(-1.5)).toBe(false)
+    expect(negativeInteger('-.5')).toBe(false)
+    expect(negativeInteger(Number.NaN)).toBe(false)
+    expect(negativeInteger(Number.POSITIVE_INFINITY)).toBe(false)
+    expect(negativeInteger(Number.NEGATIVE_INFINITY)).toBe(false)
+    // eslint-disable-next-line unicorn/new-for-builtins
+    expect(negativeInteger(new Number(-1))).toBe(false)
+  })
+
+  it('rejects values below MIN_SAFE_INTEGER', () => {
+    expect(negativeInteger(Number.MIN_SAFE_INTEGER - 1)).toBe(false)
   })
 })

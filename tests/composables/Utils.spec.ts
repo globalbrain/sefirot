@@ -3,13 +3,11 @@ import { ref } from 'vue'
 
 describe('composables/Utils', () => {
   describe('computedWhen', () => {
-    test('it creates computed value only when the condition is met', () => {
+    it('creates computed value only when the condition is met', () => {
       const condition = ref(false)
       const state = ref('initial')
 
-      const c = Utils.computedWhen(condition, () => {
-        return state.value
-      }, 'default')
+      const c = Utils.computedWhen(condition, () => state.value, 'default')
 
       // Default value.
       expect(c.value).toBe('default')
@@ -23,13 +21,13 @@ describe('composables/Utils', () => {
       expect(c.value).toBe('updated')
     })
 
-    test('when omitted, the default value when condition is false is `undefined`', () => {
+    it('defaults to `undefined` when condition is false and no default is provided', () => {
       const c = Utils.computedWhen(false, () => true)
 
       expect(c.value).toBe(undefined)
     })
 
-    test('it passes non-nullable value of condition to the closure arg', () => {
+    it('passes the non-nullable condition value to the closure', () => {
       const value = ref<string | null>(null)
 
       const c = Utils.computedWhen(value, (v) => v)
@@ -43,7 +41,7 @@ describe('composables/Utils', () => {
   })
 
   describe('computedArray', () => {
-    test('computed array can be created', () => {
+    it('creates a computed array', () => {
       const state = ref(true)
 
       const arr = Utils.computedArray<string>((arr) => {

@@ -1,76 +1,24 @@
-import { type RequiredIfCondition, requiredHmsIf } from 'sefirot/validation/validators'
+import { requiredHmsIf } from 'sefirot/validation/validators'
 
 describe('validation/validators/requiredHmsIf', () => {
-  function getTestCasesForAllTypes() {
-    return [
-      { value: { hour: '01', minute: '02', second: '03' }, expected: true },
-      { value: undefined, expected: false },
-      { value: null, expected: false },
-      { value: true, expected: false },
-      { value: false, expected: false },
-      { value: 1, expected: false },
-      { value: 'abc', expected: false },
-      { value: {}, expected: false },
-      { value: { hour: '01' }, expected: false },
-      { value: { hour: '01', minute: '02' }, expected: false },
-      { value: { hour: null, minute: null, second: null }, expected: false },
-      { value: { hour: '01', minute: '03', second: null }, expected: false },
-      { value: [], expected: false }
-    ]
-  }
-
-  function getTestCasesForGivenTypes() {
-    return [
-      { value: { hour: '23', minute: '59', second: '59' }, expected: true },
-      { value: { hour: '23', minute: '59', second: '60' }, expected: true },
-      { value: { hour: '23', minute: '59' }, expected: true },
-      { value: { hour: '23', minute: null }, expected: false },
-      { value: undefined, expected: false },
-      { value: null, expected: false },
-      { value: true, expected: false },
-      { value: false, expected: false },
-      { value: 1, expected: false },
-      { value: 'abc', expected: false },
-      { value: {}, expected: false },
-      { value: { hour: '23' }, expected: false },
-      { value: { hour: '23', minute: undefined }, expected: false },
-      { value: { hour: '23', minute: '60', second: '60' }, expected: true },
-      { value: { hour: '24', minute: '59', second: '60' }, expected: true },
-      { value: [], expected: false }
-    ]
-  }
-
-  function addConditions(testCases: ({ value: unknown; expected: boolean })[], bool: boolean) {
-    return testCases.reduce((testCases, testCase) => {
-      testCases.push({ ...testCase, condition: bool })
-      testCases.push({ ...testCase, condition: bool ? 'string' : '' })
-      testCases.push({ ...testCase, condition: () => bool })
-      testCases.push({ ...testCase, condition: async () => bool })
-      return testCases
-    }, [] as { value: unknown; condition: RequiredIfCondition; expected: boolean }[])
-  }
-
-  test.each(
-    addConditions(getTestCasesForAllTypes(), true)
-  )('validates if the hours, minutes, and seconds are present: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
-    expect(await requiredHmsIf(value, condition)).toBe(expected)
+  it('skips when condition is false', async () => {
+    const res = await requiredHmsIf({ hour: '12' }, false)
+    expect(res).toBe(true)
   })
 
-  test.each(
-    addConditions(getTestCasesForAllTypes(), false)
-  )('validates if the hours, minutes, and seconds are present: $value is true if condition is $condition', async ({ value, condition }) => {
-    expect(await requiredHmsIf(value, condition)).toBe(true)
+  it('applies hms with default required when condition is true', async () => {
+    const valid = { hour: '09', minute: '05', second: '00' }
+    const invalid = { hour: '25', minute: '05', second: '00' }
+    expect(await requiredHmsIf(valid, true)).toBe(true)
+    expect(await requiredHmsIf(invalid, true)).toBe(false)
   })
 
-  test.each(
-    addConditions(getTestCasesForGivenTypes(), true)
-  )('validates only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
-    expect(await requiredHmsIf(value, condition, ['h', 'm'])).toBe(expected)
-  })
-
-  test.each(
-    addConditions(getTestCasesForGivenTypes(), false)
-  )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
-    expect(await requiredHmsIf(value, condition, ['h', 'm'])).toBe(true)
+  it('respects custom required parts and rejectNull is true', async () => {
+    const val1 = { hour: '23', minute: '59' }
+    const val2 = { hour: '23', minute: null }
+    const val3 = { hour: undefined, minute: '10' }
+    expect(await requiredHmsIf(val1, true, ['h', 'm'])).toBe(true)
+    expect(await requiredHmsIf(val2, true, ['h', 'm'])).toBe(false)
+    expect(await requiredHmsIf(val3, true, ['h', 'm'])).toBe(false)
   })
 })

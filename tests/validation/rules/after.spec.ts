@@ -2,7 +2,7 @@ import { day } from 'sefirot/support/Day'
 import { after } from 'sefirot/validation/rules'
 
 describe('validation/rules/after', () => {
-  it('should validate if the date is after the specified date', () => {
+  it('validates if the date is after the specified date', () => {
     const rule = after(day('2020-01-02'))
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -13,12 +13,12 @@ describe('validation/rules/after', () => {
     expect(rule.$validator(day('2020-01-01'), null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = after(day('2020-01-02'))
     expect(rule.$message({ $params: {} })).toBe('Date must be after 2020-01-02.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = after(day('2020-01-02'), 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

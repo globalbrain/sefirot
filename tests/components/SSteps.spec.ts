@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SSteps from 'sefirot/components/SSteps.vue'
 
 describe('components/SSteps', () => {
-  it('should display correct statuses', () => {
+  it('displays correct statuses', () => {
     const wrapper = mount(SSteps, {
       propsData: {
         steps: [

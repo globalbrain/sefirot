@@ -5,8 +5,8 @@ import { requiredIf } from 'sefirot/validation/rules'
 import { ref } from 'vue'
 
 describe('validation/rules/requiredIf', () => {
-  test('validates if the value is valid', () => {
-    [
+  it('validates if the value is valid', () => {
+    ;[
       { condition: true, result: true },
       { condition: false, result: false },
       { condition: 'string', result: true },
@@ -40,7 +40,7 @@ describe('validation/rules/requiredIf', () => {
     })
   })
 
-  test('condition can be reactive', async () => {
+  it('supports reactive conditions', async () => {
     const condition = ref(false)
 
     const { data } = useData({
@@ -55,18 +55,18 @@ describe('validation/rules/requiredIf', () => {
 
     condition.value = true
 
-    // Await since this is async validator.
+    // await since this is async validator.
     await flushPromises()
 
     expect(validation.value.$invalid).toBe(true)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = requiredIf(true)
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = requiredIf(true, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })
