@@ -15,7 +15,6 @@ const props = defineProps<{
   onClick?(value: any, record: any): void
 }>()
 
-const _value = computed(() => props.text ?? props.value)
 const _color = computed(() => props.color ?? 'neutral')
 const _iconColor = computed(() => props.iconColor ?? _color.value)
 
@@ -29,7 +28,7 @@ const classes = computed(() => [
 <template>
   <div class="STableCellText" :class="classes">
     <SLink
-      v-if="_value != null"
+      v-if="text != null"
       class="container"
       :href="link"
       :role="onClick ? 'button' : null"
@@ -39,7 +38,7 @@ const classes = computed(() => [
         <component :is="icon" class="svg" />
       </div>
       <div class="text" :class="_color">
-        {{ _value }}
+        {{ text }}
       </div>
     </SLink>
   </div>
