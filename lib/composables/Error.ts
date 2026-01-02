@@ -1,8 +1,8 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/5e1e791880238380a1038ae2c505e206ceb34d77/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/b50eb68c50f3b94dca2e96f706c3e96ab864df24/packages/runtime-core/src/component.ts
  * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
- * @see https://github.com/getsentry/sentry-javascript/blob/ce46ffccfc21b308ea64e3baf1a4a0c1a228f799/packages/vue/src/errorhandler.ts
+ * @see https://github.com/getsentry/sentry-javascript/blob/fbadeb81d23c03c3d852531c2deef59a3a992def/packages/vue/src/errorhandler.ts
  *
  * Original licenses:
  *
@@ -18,8 +18,8 @@ import { createSentryPiniaPlugin } from '@sentry/vue'
 import { pauseTracking, resetTracking } from '@vue/reactivity'
 import { getActivePinia } from 'pinia'
 import {
+  type Component,
   type ComponentInternalInstance,
-  type ComponentOptions,
   type ComponentPublicInstance,
   type ConcreteComponent,
   type MaybeRefOrGetter,
@@ -65,18 +65,20 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
     }
   }
 
-  if (!name && instance && instance.parent) {
-    const inferFromRegistry = (registry: Record<string, unknown> | undefined) => {
+  if (!name && instance) {
+    const inferFromRegistry = (registry?: Record<string, Component>) => {
       for (const key in registry) {
         if (registry[key] === Component) {
           return key
         }
       }
     }
-    name = inferFromRegistry(
-      // @ts-expect-error internal api
-      instance.components || (instance.parent.type as ComponentOptions).components
-    ) || inferFromRegistry(instance.appContext.components)
+    name =
+      // @ts-expect-error internal API
+      inferFromRegistry(instance.components)
+      // @ts-expect-error internal API
+      || inferFromRegistry(instance.parent?.type.components)
+      || inferFromRegistry(instance.appContext.components)
   }
 
   return name ? classify(name) : isRoot ? 'App' : 'Anonymous'
