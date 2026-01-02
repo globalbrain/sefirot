@@ -1,4 +1,4 @@
-const units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB']
+const units = ['B', 'kB', 'MB', 'GB'] as const
 
 /**
  * Formats the file size in bytes to a human-readable format. It also accepts
