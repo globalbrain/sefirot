@@ -4,7 +4,7 @@ describe('validation/validators/decimal', () => {
   it('accepts valid integer strings', () => {
     expect(decimal('0')).toBe(true)
     expect(decimal('123')).toBe(true)
-    expect(decimal('-42')).toBe(true)
+    expect(decimal('-40')).toBe(true)
   })
 
   it('accepts valid decimal strings', () => {
