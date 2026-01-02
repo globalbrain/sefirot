@@ -1,13 +1,4 @@
-const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
-
-/**
- * Get extension of the given file.
- */
-export function getExtension(file: File): string {
-  const basename = file.name.trim().toLowerCase().split(/\/|\\/).pop()!.split(/[?#]/)[0]
-  const pos = basename.lastIndexOf('.')
-  return basename.endsWith('~') || pos < 1 ? '' : basename.slice(pos + 1)
-}
+const units = ['B', 'kB', 'MB', 'GB', 'TB', 'PB']
 
 /**
  * Formats the file size in bytes to a human-readable format. It also accepts
