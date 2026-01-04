@@ -69,6 +69,7 @@ function emitChange(): void {
     :check-color
     :help
     :hide-error
+    :validation
   >
     <div class="container">
       <div class="input" :class="{ on: _value }" role="button" @click="emitChange">

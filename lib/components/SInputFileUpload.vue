@@ -46,7 +46,6 @@ const props = withDefaults(defineProps<{
   placeholder?: string
   emptyText?: string
   accept?: string
-  multiple?: boolean
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
@@ -81,10 +80,7 @@ const { t } = useTrans({
 
 const dropZoneEl = ref<HTMLDivElement | null>(null)
 
-const { isOverDropZone } = useDropZone(dropZoneEl, {
-  multiple: true,
-  onDrop: (files) => onDrop(files)
-})
+const { isOverDropZone } = useDropZone(dropZoneEl, { onDrop })
 
 const _value = computed(() => {
   return props.modelValue !== undefined

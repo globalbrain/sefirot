@@ -21,7 +21,6 @@ const props = defineProps<{
   cell?: any
   value: any
   record: any
-  records: Record<string, any>
 }>()
 
 const computedCell = computed<TableCell | undefined>(() =>

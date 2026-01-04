@@ -84,7 +84,6 @@ const showHeader = computed(() => {
 
   return (
     unref(props.options.total) != null
-    || !!unref(props.options.reset)
     || !!unref(props.options.menu)
   )
 })
@@ -424,10 +423,8 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
       <STableHeader
         v-if="showHeader"
         :total="unref(options.total)"
-        :reset="unref(options.reset)"
         :menu="unref(options.menu)"
         :borderless="unref(options.borderless)"
-        :on-reset="options.onReset"
         :selected="Array.isArray(selected) ? selected : undefined"
       />
 
@@ -517,7 +514,6 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
                     :cell="getCell(key, i)"
                     :value="recordsWithSummary[i][key]"
                     :record="recordsWithSummary[i]"
-                    :records="unref(options.records)!"
                   >
                     <template v-if="key === '__select' && !isSummary(i)">
                       <SInputCheckbox

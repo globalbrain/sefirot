@@ -59,8 +59,11 @@ const { t } = useTrans({
 
 const container = ref<HTMLDivElement>()
 
-const { isOpen, open } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
+const { isOpen, open, close } = useFlyout(container)
+const { inset, update: updatePosition } = useManualDropdownPosition(
+  container,
+  () => props.position
+)
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -119,6 +122,8 @@ function onSelect(value: OptionValue) {
       model.value = null
     }
   }
+
+  props.closeOnClick && close()
 }
 </script>
 

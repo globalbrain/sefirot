@@ -88,6 +88,7 @@ function onChange(value: ValueType) {
     class="SInputRadios"
     :class="[size ?? 'small']"
     :size
+    :name
     :label
     :note
     :info
