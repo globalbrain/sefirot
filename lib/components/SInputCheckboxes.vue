@@ -79,6 +79,8 @@ function onChange(value: Value): void {
     :check-icon
     :check-text
     :check-color
+    :validation
+    :hide-error
   >
     <div class="container">
       <div class="row">

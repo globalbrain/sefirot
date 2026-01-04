@@ -45,6 +45,7 @@ function onClick() {
     class="SInputRadio"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info

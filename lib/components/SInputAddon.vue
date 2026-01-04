@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
   clickable?: boolean
   dropdown?: DropdownSection[]
   dropdownCaret?: boolean
-  dropdowpPosition?: 'top' | 'bottom'
+  dropdownPosition?: 'top' | 'bottom'
   disabled?: boolean
 }>(), {
   clickable: true,
@@ -41,7 +41,10 @@ const selectedOptionLabel = computed(() => {
 })
 
 const { isOpen, open } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(container)
+const { position, update: updatePosition } = useManualDropdownPosition(
+  container,
+  () => props.dropdownPosition
+)
 
 function onFocus() {
   if (!props.disabled) {

@@ -63,6 +63,7 @@ function onChange(value: any): void {
     :check-text
     :check-color
     :hide-error
+    :validation
   >
     <div class="container">
       <div class="row">
@@ -70,6 +71,7 @@ function onChange(value: any): void {
           <SInputSwitch
             size="sm"
             :text="option.label"
+            :disabled
             :model-value="isChecked(option.value)"
             @update:model-value="onChange(option.value)"
           />

@@ -8,7 +8,6 @@ const props = defineProps<{
   total?: number | null
   menu?: TableMenu[] | TableMenu[][]
   borderless?: boolean
-  onReset?(): void
   selected?: unknown[]
 }>()
 

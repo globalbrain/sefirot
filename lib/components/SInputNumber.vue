@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { type Props as BaseProps } from './SInputBase.vue'
 import SInputText from './SInputText.vue'
 
 export interface Props extends BaseProps {
   placeholder?: string
-  unitBefore?: any
-  unitAfter?: any
+  unitBefore?: Component | string
+  unitAfter?: Component | string
   textColor?: TextColor | ((value: number | null) => TextColor)
   separator?: boolean
   align?: Align
