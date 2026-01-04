@@ -80,9 +80,7 @@ const { t } = useTrans({
 
 const dropZoneEl = ref<HTMLDivElement | null>(null)
 
-const { isOverDropZone } = useDropZone(dropZoneEl, {
-  onDrop: (files) => onDrop(files)
-})
+const { isOverDropZone } = useDropZone(dropZoneEl, { onDrop })
 
 const _value = computed(() => {
   return props.modelValue !== undefined
