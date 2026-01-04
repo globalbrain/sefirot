@@ -1,7 +1,6 @@
 import { HstVue as hstVue } from '@histoire/plugin-vue'
 import { defaultColors, defineConfig } from 'histoire'
 import MagicString from 'magic-string'
-import { baseConfig } from './config/vite'
 
 function getDocsHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
@@ -23,11 +22,12 @@ export default defineConfig({
   ],
 
   vite: {
-    ...baseConfig,
     define: {
       __DOCS_HOST__: JSON.stringify(getDocsHost())
     },
-    optimizeDeps: { ...baseConfig.optimizeDeps, noDiscovery: true }, // vite 6 compat
+    optimizeDeps: {
+      noDiscovery: true // vite 6 compat
+    },
     plugins: [
       {
         name: 'revert-vue-core-12141',
