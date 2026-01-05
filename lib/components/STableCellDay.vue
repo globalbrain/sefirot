@@ -10,10 +10,11 @@ const props = defineProps<{
 }>()
 
 const formatted = computed(() => {
-  if (!props.day) { return null }
-  const { $D, $H, $M, $m, $ms, $s, $y } = props.day as any // hack for histoire
-  const date = new Date($y, $M, $D, $H, $m, $s, $ms)
-  return day(date).format(props.format ?? 'YYYY-MM-DD HH:mm:ss')
+  if (props.day) {
+    return day(props.day).format(props.format ?? 'YYYY-MM-DD HH:mm:ss')
+  }
+
+  return null
 })
 </script>
 

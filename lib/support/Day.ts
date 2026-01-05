@@ -33,6 +33,12 @@ export interface Hms {
 export type HmsType = 'h' | 'm' | 's'
 
 export function day(input?: Input): Day {
+  // hack for histoire
+  if (input && typeof input === 'object' && !(input instanceof Date)) {
+    const { $D, $H, $M, $m, $ms, $s, $y } = input as any
+    input = new Date($y, $M, $D, $H, $m, $s, $ms)
+  }
+
   return dayjs(input)
 }
 

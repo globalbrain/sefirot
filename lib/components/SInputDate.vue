@@ -34,7 +34,7 @@ const classes = computed(() => [
 ])
 
 const value = computed(() => {
-  return props.modelValue ? props.modelValue.format('YYYY-MM-DD') : null
+  return props.modelValue ? day(props.modelValue).format('YYYY-MM-DD') : null
 })
 
 function emitInput(date?: string) {
