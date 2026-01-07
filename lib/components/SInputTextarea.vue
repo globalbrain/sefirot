@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+
+import SControl from './SControl.vue'
+import SControlRight from './SControlRight.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSegments from './SInputSegments.vue'
 
@@ -103,8 +106,9 @@ const isPreview = ref(false)
     :hide-warning
   >
     <div class="box">
-      <div v-if="preview !== undefined" class="control">
+      <div v-if="preview !== undefined || $slots.actions" class="control">
         <SInputSegments
+          v-if="preview !== undefined"
           v-model="isPreview"
           :options="[
             { label: writeLabel ?? 'Write', value: false },
@@ -112,6 +116,12 @@ const isPreview = ref(false)
           ]"
           size="mini"
         />
+
+        <SControl v-if="$slots.actions && !isPreview" class="control">
+          <SControlRight>
+            <slot name="actions" />
+          </SControlRight>
+        </SControl>
       </div>
       <textarea
         v-show="!isPreview"
