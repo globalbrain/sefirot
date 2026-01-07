@@ -115,7 +115,7 @@
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
     "punycode": "^2.3.1",
-    "release-it": "^19.2.2",
+    "release-it": "^19.2.3",
     "typescript": "~5.9.3",
     "v-calendar": "3.0.1",
     "vite": "^6.4.1",
@@ -123,6 +123,6 @@
     "vitest": "^3.2.4",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.2"
   }
 }

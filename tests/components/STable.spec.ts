@@ -157,12 +157,7 @@ describe('components/STable', () => {
       const table = useTable({
         orders: ['num'],
         columns: {
-          num: {
-            label: 'Name',
-            cell: {
-              type: 'number'
-            }
-          }
+          num: { label: 'Name', cell: { type: 'number' } }
         },
         records: [
           { num: 0 }
@@ -185,7 +180,7 @@ describe('components/STable', () => {
         orders: ['name', 'amount'],
         columns: {
           name: { label: 'Name' },
-          amount: { label: 'Amount' }
+          amount: { label: 'Amount', cell: { type: 'number' } }
         },
         records: [
           { name: 'Item 1', amount: 10 },
@@ -202,8 +197,8 @@ describe('components/STable', () => {
         }
       })
 
-      expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
-      expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+      expect(wrapper.find('.summary .col-name').text()).toBe('Total')
+      expect(wrapper.find('.summary .col-amount').text()).toBe('100')
     })
   })
 
