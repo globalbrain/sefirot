@@ -20,6 +20,7 @@ const props = defineProps<{ options: Table }>()
 const selected = defineModel<S>('selected')
 
 const tableRoot = useTemplateRef<HTMLElement>('tableRoot')
+const table = useTemplateRef<HTMLElement>('table')
 const head = useTemplateRef<HTMLElement>('head')
 const body = useTemplateRef<HTMLElement>('body')
 const block = useTemplateRef<HTMLElement>('block')
@@ -59,7 +60,7 @@ const ordersToShow = smartComputed(() => {
   return ['__select', ...orders]
 })
 
-watch(() => ordersToShow.value, handleResize)
+watch(() => ordersToShow.value, onResize)
 
 const colToGrowAdjusted = ref(false)
 
@@ -84,6 +85,12 @@ const cellOfColToGrow = computed(() => {
 const colWidths = reactive<Record<string, string>>({})
 const blockWidth = ref<number | undefined>()
 
+const resizeState = ref<{
+  columnName: string
+  startX: number
+  indicatorX: number
+} | null>(null)
+
 watch(() => unref(props.options.columns), (columns) => {
   Object.keys(columns).forEach((key) => {
     const width = columns[key]?.width
@@ -100,7 +107,6 @@ const showHeader = computed(() => {
 
   return (
     unref(props.options.total) != null
-    || !!unref(props.options.reset)
     || !!unref(props.options.menu)
   )
 })
@@ -232,7 +238,7 @@ useResizeObserver(block, ([entry]) => {
   blockWidth.value = entry.contentRect.width
 })
 
-const resizeObserver = useResizeObserver(head, handleResize)
+const resizeObserver = useResizeObserver(head, onResize)
 
 const font = typeof document !== 'undefined'
   ? `500 12px ${getComputedStyle(document.body).fontFamily}`
@@ -322,7 +328,7 @@ function stopObserving() {
   resizeObserver.stop()
 }
 
-async function handleResize() {
+async function onResize() {
   if (colToGrow.value < 0 || !cellOfColToGrow.value || !row.value) {
     stopObserving()
     return
@@ -442,6 +448,29 @@ function getStyles(key: string) {
     '--table-col-left': widthSum ? `calc(${widthSum})` : '0px'
   }
 }
+
+function onResizeStart(data: { columnName: string; startX: number; initialX: number }) {
+  const tableRect = table.value?.getBoundingClientRect()
+  const tableLeft = tableRect?.left ?? 0
+  const indicatorX = data.initialX - tableLeft
+
+  resizeState.value = {
+    columnName: data.columnName,
+    startX: indicatorX,
+    indicatorX
+  }
+}
+
+function onResizeMove(data: { deltaX: number }) {
+  if (resizeState.value) {
+    resizeState.value.indicatorX = resizeState.value.startX + data.deltaX
+  }
+}
+
+function onResizeEnd(data: { columnName: string; finalWidth: string }) {
+  updateColWidth(data.columnName, data.finalWidth, true)
+  resizeState.value = null
+}
 </script>
 
 <template>
@@ -450,14 +479,18 @@ function getStyles(key: string) {
       <STableHeader
         v-if="showHeader"
         :total="unref(options.total)"
-        :reset="unref(options.reset)"
         :menu="unref(options.menu)"
         :borderless="unref(options.borderless)"
-        :on-reset="options.onReset"
         :selected="Array.isArray(selected) ? selected : undefined"
       />
 
-      <div class="table" role="grid">
+      <div ref="table" class="table" role="grid">
+        <div
+          v-if="resizeState"
+          class="resize-indicator"
+          :style="{ left: `${resizeState.indicatorX}px` }"
+        />
+
         <div ref="head" class="container head" @scroll="syncHeadScroll">
           <div ref="block" class="block">
             <div ref="row" class="row">
@@ -476,7 +509,9 @@ function getStyles(key: string) {
                   :dropdown="unref(options.columns)[key]?.dropdown"
                   :has-header="showHeader"
                   :resizable="unref(options.columns)[key]?.resizable"
-                  @resize="(value) => updateColWidth(key, value, true)"
+                  @resize-start="onResizeStart"
+                  @resize-move="onResizeMove"
+                  @resize-end="onResizeEnd"
                 >
                   <SInputCheckbox
                     v-if="
@@ -771,6 +806,16 @@ function getStyles(key: string) {
   100% {
     background-position: -100% 0;
   }
+}
+
+.resize-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--c-border-info-1);
+  z-index: 200;
+  pointer-events: none;
 }
 
 .STable .col-__select {

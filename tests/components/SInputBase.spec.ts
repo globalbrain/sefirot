@@ -3,7 +3,7 @@ import SInputBase from 'sefirot/components/SInputBase.vue'
 import { createValidatable } from 'tests/Utils'
 
 describe('components/SInputBase', () => {
-  test('it shows label and note', () => {
+  it('shows label and note', () => {
     const wrapper = mount(SInputBase, {
       props: {
         name: 'Input',
@@ -16,7 +16,7 @@ describe('components/SInputBase', () => {
     expect(wrapper.find('.label-note').text()).toBe('Some note.')
   })
 
-  test('it prefers info slot over prop', () => {
+  it('prefers info slot over prop', () => {
     mount(SInputBase, {
       props: {
         label: 'Label for input.',
@@ -30,7 +30,7 @@ describe('components/SInputBase', () => {
     expect(document.body.querySelector('#sefirot-modals .tip')?.textContent).toBe('Info in slot.')
   })
 
-  test('it shows error message and help text if validation fails', () => {
+  it('shows error message and help text if validation fails', () => {
     const wrapper = mount(SInputBase, {
       props: {
         name: 'Input',
@@ -49,7 +49,7 @@ describe('components/SInputBase', () => {
     expect(wrapper.find('.help-text').text()).toBe('Enter some data.')
   })
 
-  test('it does not show error message when validation fails but do not contain error messages', () => {
+  it('does not show error message when validation fails but do not contain error messages', () => {
     const wrapper = mount(SInputBase, {
       props: {
         name: 'Input',
@@ -65,7 +65,7 @@ describe('components/SInputBase', () => {
     expect(wrapper.find('.help-error').exists()).toBe(false)
   })
 
-  test('it shows info', () => {
+  it('shows info', () => {
     mount(SInputBase, {
       props: {
         label: 'Label for input.',

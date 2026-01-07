@@ -3,7 +3,7 @@ import SDropdownSectionFilter from 'sefirot/components/SDropdownSectionFilter.vu
 
 describe('components/SDropdown', () => {
   describe('SDropdownSectionFilter', () => {
-    test('shows avatar type filter', async () => {
+    it('shows avatar type filter', async () => {
       const wrapper = mount(SDropdownSectionFilter, {
         props: {
           selected: 1,
@@ -18,7 +18,7 @@ describe('components/SDropdown', () => {
       expect(wrapper.findAll('.SDropdownSectionFilterItemAvatar').length).toBe(3)
     })
 
-    test('hide disabled options', async () => {
+    it('hides disabled options', async () => {
       const wrapper = mount(SDropdownSectionFilter, {
         props: {
           selected: 1,

@@ -59,8 +59,11 @@ const { t } = useTrans({
 
 const container = ref<HTMLDivElement>()
 
-const { isOpen, open } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(container, () => props.position)
+const { isOpen, open, close } = useFlyout(container)
+const { inset, update: updatePosition } = useManualDropdownPosition(
+  container,
+  () => props.position
+)
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -72,7 +75,7 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   search: props.noSearch === undefined ? true : !props.noSearch,
   selected: model.value,
   options: props.options,
-  onClick: handleSelect
+  onClick: onSelect
 }])
 
 const selected = computed(() => {
@@ -97,35 +100,30 @@ const removable = computed(() => {
   return !!props.nullable
 })
 
-async function handleOpen() {
+async function onOpen() {
   if (!props.disabled) {
     updatePosition()
     open()
   }
 }
 
-function handleSelect(value: OptionValue) {
+function onSelect(value: OptionValue) {
   props.validation?.$touch()
 
-  Array.isArray(model.value) ? handleArray(value) : handlePrimitive(value)
-}
-
-function handlePrimitive(value: OptionValue) {
-  if (value !== model.value) {
-    model.value = value
-  } else if (props.nullable) {
-    model.value = null
-  }
-}
-
-function handleArray(value: OptionValue) {
-  const difference = xor(model.value as ArrayValue, [value])
-
-  if (!props.nullable && difference.length === 0) {
-    return
+  if (Array.isArray(model.value)) {
+    const toggled = xor(model.value, [value])
+    if (toggled.length !== 0 || props.nullable) {
+      model.value = toggled
+    }
+  } else {
+    if (value !== model.value) {
+      model.value = value
+    } else if (props.nullable) {
+      model.value = null
+    }
   }
 
-  model.value = difference
+  props.closeOnClick && close()
 }
 </script>
 
@@ -149,10 +147,10 @@ function handleArray(value: OptionValue) {
         class="box"
         role="button"
         tabindex="0"
-        @click="handleOpen"
+        @click="onOpen"
         @keydown.down.prevent
-        @keyup.enter="handleOpen"
-        @keyup.down="handleOpen"
+        @keyup.enter="onOpen"
+        @keyup.down="onOpen"
       >
         <div class="box-content">
           <SInputDropdownItem
@@ -161,7 +159,7 @@ function handleArray(value: OptionValue) {
             :size="size ?? 'small'"
             :removable
             :disabled="disabled ?? false"
-            @remove="handleSelect"
+            @remove="onSelect"
           />
 
           <div v-else class="box-placeholder">{{ placeholder ?? t.ph }}</div>

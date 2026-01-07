@@ -1,7 +1,7 @@
 import { minValue } from 'sefirot/validation/rules'
 
 describe('validation/rules/minValue', () => {
-  test('it validates whether the value is valid string', () => {
+  it('validates values greater than or equal to the minimum', () => {
     const rule = minValue(10)
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -19,7 +19,7 @@ describe('validation/rules/minValue', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('it validates whether the value is valid date', () => {
+  it('validates Date values greater than or equal to the minimum', () => {
     const minDate = new Date('Fri Jan 19 2024 14:55:28 GMT+0900 (Japan Standard Time)')
     const invalidDate = new Date('Fri Jan 19 2024 14:55:27 GMT+0900 (Japan Standard Time)')
     const rule = minValue(+minDate)
@@ -32,12 +32,12 @@ describe('validation/rules/minValue', () => {
     expect(rule.$validator(invalidDate, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = minValue(10)
     expect(rule.$message({ $params: {} })).toBe('The value must be greater than or equal to 10.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = minValue(10, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

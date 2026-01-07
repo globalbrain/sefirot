@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useSlotValue } from '../composables/Utils'
-import { type Day } from '../support/Day'
+import { type Day, day } from '../support/Day'
 import SDescEmpty from './SDescEmpty.vue'
 
 const props = defineProps<{
@@ -17,7 +17,7 @@ const _value = computed(() => {
   }
 
   if (props.value) {
-    return props.value.format(props.format ?? 'YYYY-MM-DD HH:mm:ss')
+    return day(props.value).format(props.format ?? 'YYYY-MM-DD HH:mm:ss')
   }
 
   return null

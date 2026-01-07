@@ -1,7 +1,7 @@
 import { fileExtension } from 'sefirot/validation/rules'
 
 describe('vaidation/rules/fileExtension', () => {
-  it('should validate if the file has valid extension', () => {
+  it('validates if the file has valid extension', () => {
     const file = new File(['foo'], 'foo.txt', { type: 'text/plain' })
 
     expect(fileExtension(['txt']).$validator(undefined, null, null)).toBe(true)
@@ -18,7 +18,7 @@ describe('vaidation/rules/fileExtension', () => {
     expect(fileExtension(['png']).$validator(file, null, null)).toBe(false)
   })
 
-  it('should treat `jpg` extension with extra care', () => {
+  it('treats `jpg` extension with extra care', () => {
     const jpg = new File(['foo'], 'foo.jpg', { type: 'text/plain' })
     const jpeg = new File(['foo'], 'foo.jpeg', { type: 'text/plain' })
     const JPG = new File(['foo'], 'foo.JPG', { type: 'text/plain' })
@@ -33,12 +33,12 @@ describe('vaidation/rules/fileExtension', () => {
     expect(fileExtension(['jpg']).$validator(JPEG, null, null)).toBe(true)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = fileExtension(['txt'])
     expect(rule.$message({ $params: {} })).toBe('The file extension is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = fileExtension(['txt'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

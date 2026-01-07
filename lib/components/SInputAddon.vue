@@ -7,7 +7,6 @@ import {
   useManualDropdownPosition
 } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
-import { isString } from '../support/Utils'
 import SDropdown from './SDropdown.vue'
 
 const props = withDefaults(defineProps<{
@@ -15,7 +14,7 @@ const props = withDefaults(defineProps<{
   clickable?: boolean
   dropdown?: DropdownSection[]
   dropdownCaret?: boolean
-  dropdowpPosition?: 'top' | 'bottom'
+  dropdownPosition?: 'top' | 'bottom'
   disabled?: boolean
 }>(), {
   clickable: true,
@@ -42,21 +41,24 @@ const selectedOptionLabel = computed(() => {
 })
 
 const { isOpen, open } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(container)
+const { position, update: updatePosition } = useManualDropdownPosition(
+  container,
+  () => props.dropdownPosition
+)
 
-function handleFocus() {
+function onFocus() {
   if (!props.disabled) {
     isFocused.value = true
   }
 }
 
-function handleBlur() {
+function onBlur() {
   if (!props.disabled) {
     isFocused.value = false
   }
 }
 
-function handleClickButton() {
+function onClickButton() {
   if (!props.disabled) {
     emit('click')
 
@@ -74,14 +76,14 @@ function handleClickButton() {
       :is="clickable ? 'button' : 'div'"
       class="action"
       :disabled="clickable ? props.disabled : null"
-      @focus="handleFocus"
-      @blur="handleBlur"
-      @click="handleClickButton"
+      @focus="onFocus"
+      @blur="onBlur"
+      @click="onClickButton"
     >
       <span class="action-label">
         <component
           :is="props.label"
-          v-if="props.label && !isString(props.label)"
+          v-if="props.label && (typeof props.label !== 'string')"
           class="action-icon"
         />
         <span v-else>

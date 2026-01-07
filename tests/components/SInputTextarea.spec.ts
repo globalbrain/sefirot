@@ -3,7 +3,7 @@ import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { assertEmitted, createValidatable, getInputValue } from 'tests/Utils'
 
 describe('components/SInputTextarea', () => {
-  test('accepts `value` prop', async () => {
+  it('accepts `value` prop', async () => {
     const wrapper = mount(SInputTextarea, {
       props: { value: 'Text' }
     })
@@ -11,13 +11,13 @@ describe('components/SInputTextarea', () => {
     expect(getInputValue(wrapper.find('.SInputTextarea .input'))).toBe('Text')
   })
 
-  test('sets value to `null` when nither `value` or `modelValue` is set', async () => {
+  it('sets value to `null` when nither `value` or `modelValue` is set', async () => {
     const wrapper = mount(SInputTextarea)
 
     expect(getInputValue(wrapper.find('.SInputTextarea .input'))).toBe('')
   })
 
-  test('emits input event', async () => {
+  it('emits input event', async () => {
     const wrapper = mount(SInputTextarea, {
       propsData: {
         modelValue: null
@@ -37,7 +37,7 @@ describe('components/SInputTextarea', () => {
     assertEmitted(wrapper, 'input', 3, '0')
   })
 
-  it('should emit blur event', async () => {
+  it('emits blur event', async () => {
     const wrapper = mount(SInputTextarea, {
       props: {
         modelValue: null
@@ -54,7 +54,7 @@ describe('components/SInputTextarea', () => {
     assertEmitted(wrapper, 'blur', 2, 'text')
   })
 
-  test('touches validation on blur', async () => {
+  it('touches validation on blur', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputTextarea, {

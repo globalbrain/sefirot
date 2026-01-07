@@ -3,7 +3,7 @@ import SInputText from 'sefirot/components/SInputText.vue'
 import { assertEmitted, createValidatable } from 'tests/Utils'
 
 describe('components/SInputText', () => {
-  it('should apply color when `textColor` prop is set as value', async () => {
+  it('applies color when `textColor` prop is set as value', async () => {
     const wrapper = mount(SInputText, {
       props: {
         textColor: 'info',
@@ -14,10 +14,10 @@ describe('components/SInputText', () => {
     expect(wrapper.find('.SInputText .input').classes()).toContain('info')
   })
 
-  it('should apply color when `textColor` prop is set as callback', async () => {
+  it('applies color when `textColor` prop is set as callback', async () => {
     const wrapper = mount(SInputText, {
       props: {
-        textColor: (value: string | null) => value === 'text' ? 'success' : 'danger',
+        textColor: (value: string | null) => (value === 'text' ? 'success' : 'danger'),
         modelValue: 'text'
       }
     })
@@ -31,7 +31,7 @@ describe('components/SInputText', () => {
     expect(input.classes()).toContain('danger')
   })
 
-  it('should emit input event', async () => {
+  it('emits input event', async () => {
     const wrapper = mount(SInputText, {
       propsData: {
         modelValue: null
@@ -48,7 +48,7 @@ describe('components/SInputText', () => {
     assertEmitted(wrapper, 'update:model-value', 3, '0')
   })
 
-  it('should emit blur event', async () => {
+  it('emits blur event', async () => {
     const wrapper = mount(SInputText, {
       props: {
         modelValue: 'text'
@@ -60,7 +60,7 @@ describe('components/SInputText', () => {
     assertEmitted(wrapper, 'blur', 1, 'text')
   })
 
-  it('should emit enter event', async () => {
+  it('emits enter event', async () => {
     const wrapper = mount(SInputText, {
       props: {
         modelValue: 'text'
@@ -115,7 +115,7 @@ describe('components/SInputText', () => {
     expect(wrapper.find('.SInputText .input').element).toBe(document.activeElement)
   })
 
-  test('touches validation on blur', async () => {
+  it('touches validation on blur', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputText, {
@@ -131,7 +131,7 @@ describe('components/SInputText', () => {
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
-  test('touches validation on enter', async () => {
+  it('touches validation on enter', async () => {
     const spy = vi.fn()
 
     const wrapper = mount(SInputText, {

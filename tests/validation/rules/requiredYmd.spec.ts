@@ -1,7 +1,7 @@
 import { requiredYmd } from 'sefirot/validation/rules'
 
 describe('validation/rules/requiredYmd', () => {
-  test('validates if the hours, minutes, and seconds are present', () => {
+  it('validates if the hours, minutes, and seconds are present', () => {
     const rule = requiredYmd()
 
     expect(rule.$validator({ year: 2000, month: 12, date: 31 }, null, null)).toBe(true)
@@ -20,7 +20,7 @@ describe('validation/rules/requiredYmd', () => {
     expect(rule.$validator([], null, null)).toBe(false)
   })
 
-  test('validates only given types', () => {
+  it('validates only given types', () => {
     const rule = requiredYmd(['y', 'm'])
 
     expect(rule.$validator({ year: 2000, month: 12, date: null }, null, null)).toBe(true)
@@ -39,12 +39,12 @@ describe('validation/rules/requiredYmd', () => {
     expect(rule.$validator([], null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = requiredYmd()
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = requiredYmd(['y', 'm', 'd'], 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

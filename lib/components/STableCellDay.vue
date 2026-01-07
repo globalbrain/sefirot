@@ -1,19 +1,26 @@
 <script setup lang="ts">
-import { type Day } from '../support/Day'
+import { computed } from 'vue'
+import { type Day, day } from '../support/Day'
 
-defineProps<{
+const props = defineProps<{
   day?: Day | null
   align?: 'left' | 'center' | 'right'
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
 }>()
+
+const formatted = computed(() => {
+  if (props.day) {
+    return day(props.day).format(props.format ?? 'YYYY-MM-DD HH:mm:ss')
+  }
+
+  return null
+})
 </script>
 
 <template>
   <div class="STableCellDay" :class="[align ?? 'left', color ?? 'neutral']">
-    <div v-if="day" class="value">
-      {{ day.format(format ?? 'YYYY-MM-DD HH:mm:ss') }}
-    </div>
+    <div v-if="formatted" class="value">{{ formatted }}</div>
   </div>
 </template>
 

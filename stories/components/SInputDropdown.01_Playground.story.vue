@@ -21,7 +21,9 @@ function initState() {
   return {
     size: 'md',
     position: '',
-    nullable: true
+    nullable: true,
+    closeOnClick: false,
+    disabled: false
   }
 }
 </script>
@@ -50,6 +52,14 @@ function initState() {
         v-model="state.nullable"
         title="nullable"
       />
+      <HstCheckbox
+        v-model="state.closeOnClick"
+        title="closeOnClick"
+      />
+      <HstCheckbox
+        v-model="state.disabled"
+        title="disabled"
+      />
     </template>
 
     <template #default="{ state }">
@@ -63,6 +73,8 @@ function initState() {
             placeholder="Select a framework"
             :options
             :nullable="state.nullable"
+            :close-on-click="state.closeOnClick"
+            :disabled="state.disabled"
           />
           <SInputDropdown
             v-model="multiValue"
@@ -72,6 +84,8 @@ function initState() {
             placeholder="Select frameworks"
             :options
             :nullable="state.nullable"
+            :close-on-click="state.closeOnClick"
+            :disabled="state.disabled"
           />
         </div>
       </Board>

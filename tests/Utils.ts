@@ -38,11 +38,11 @@ export function setupRouter(): void {
 }
 
 export function getInputValue(wrapper: DOMWrapper<any>): string {
-  return (wrapper.element).value
+  return wrapper.element.value
 }
 
 export function getInputPlaceholder(wrapper: DOMWrapper<any>): string {
-  return (wrapper.element).placeholder
+  return wrapper.element.placeholder
 }
 
 export function createValidatable(params: Partial<Validatable> = {}): Validatable {
@@ -71,4 +71,8 @@ export function assertEmitted(
 
 export function assertNotEmitted(wrapper: VueWrapper<any>, event: string): void {
   expect(wrapper.emitted(event)).toBe(undefined)
+}
+
+export function f(bytes: number): File {
+  return new File([new Uint8Array(bytes)], 'foo.txt', { type: 'text/plain' })
 }

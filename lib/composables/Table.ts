@@ -25,11 +25,9 @@ export interface Table<
   total?: MaybeRef<number | null | undefined>
   page?: MaybeRef<number | null | undefined>
   perPage?: MaybeRef<number | null | undefined>
-  reset?: MaybeRef<boolean | undefined>
   borderSize?: MaybeRef<number | undefined>
   onPrev?(): void
   onNext?(): void
-  onReset?(): void
 }
 
 export type TableColumns<

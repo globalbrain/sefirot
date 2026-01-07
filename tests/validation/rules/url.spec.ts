@@ -23,12 +23,12 @@ describe('validation/rules/ymd', () => {
     expect(rule.$validator(urlString, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = url()
     expect(rule.$message({ $params: {} })).toBe('The URL is invalid.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = url('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

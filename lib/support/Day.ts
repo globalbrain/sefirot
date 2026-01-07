@@ -2,7 +2,6 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
 import PluginRelativeTime from 'dayjs/plugin/relativeTime'
 import PluginTimezone from 'dayjs/plugin/timezone'
 import PluginUtc from 'dayjs/plugin/utc'
-import { isNumber, isObject, isString } from './Utils'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
@@ -22,12 +21,6 @@ export interface Ymd {
 
 export type YmdType = 'y' | 'm' | 'd'
 
-export const YmdMap = {
-  y: 'year',
-  m: 'month',
-  d: 'date'
-} as const
-
 /**
  * The hour, minute, and second object interface.
  */
@@ -39,13 +32,13 @@ export interface Hms {
 
 export type HmsType = 'h' | 'm' | 's'
 
-export const HmsMap = {
-  h: 'hour',
-  m: 'minute',
-  s: 'second'
-} as const
-
 export function day(input?: Input): Day {
+  // hack for histoire
+  if (input && typeof input === 'object' && !(input instanceof Date)) {
+    const { $D, $H, $M, $m, $ms, $s, $y } = input as any
+    input = new Date($y, $M, $D, $H, $m, $s, $ms)
+  }
+
   return dayjs(input)
 }
 
@@ -67,19 +60,9 @@ export function createYmd(
   month: number | null = null,
   date: number | null = null
 ): Ymd {
-  if (isNumber(yearOrDay) || yearOrDay == null) {
-    return {
-      year: yearOrDay,
-      month,
-      date
-    }
-  }
-
-  return {
-    year: yearOrDay.year(),
-    month: yearOrDay.month() + 1,
-    date: yearOrDay.date()
-  }
+  return isDay(yearOrDay)
+    ? { year: yearOrDay.year(), month: yearOrDay.month() + 1, date: yearOrDay.date() }
+    : { year: yearOrDay, month, date }
 }
 
 /**
@@ -92,45 +75,9 @@ export function createHms(
   minute: string | null = null,
   second: string | null = null
 ): Hms {
-  if (isString(hourOrDay) || hourOrDay == null) {
-    return {
-      hour: hourOrDay,
-      minute,
-      second
-    }
-  }
-
-  return {
-    hour: hourOrDay.format('HH'),
-    minute: hourOrDay.format('mm'),
-    second: hourOrDay.format('ss')
-  }
-}
-
-export function isYmd(value: unknown, required: YmdType[] = ['y', 'm', 'd']): value is Ymd {
-  if (value == null || !isObject(value)) {
-    return false
-  }
-
-  return required
-    .reduce<string[]>((keys, type) => {
-      keys.push(YmdMap[type])
-      return keys
-    }, [])
-    .every((key) => value[key] === null || isNumber(value[key]))
-}
-
-export function isHms(value: unknown, required: HmsType[] = ['h', 'm', 's']): value is Hms {
-  if (value == null || !isObject(value)) {
-    return false
-  }
-
-  return required
-    .reduce<string[]>((keys, type) => {
-      keys.push(HmsMap[type])
-      return keys
-    }, [])
-    .every((key) => value[key] === null || isString(value[key]))
+  return isDay(hourOrDay)
+    ? { hour: hourOrDay.format('HH'), minute: hourOrDay.format('mm'), second: hourOrDay.format('ss') }
+    : { hour: hourOrDay, minute, second }
 }
 
 export function isDay(value: unknown): value is Day {

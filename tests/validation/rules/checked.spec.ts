@@ -1,7 +1,7 @@
 import { checked } from 'sefirot/validation/rules'
 
 describe('validation/rules/checked', () => {
-  test('it validates whether the value is true', () => {
+  it('validates if the value is true', () => {
     const rule = checked()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -15,12 +15,12 @@ describe('validation/rules/checked', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = checked()
     expect(rule.$message({ $params: {} })).toBe('You must check the field.')
   })
 
-  test('custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = checked('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

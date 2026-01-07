@@ -1,6 +1,5 @@
 import { isClient } from '@vueuse/core'
 import { type MaybeRefOrGetter, type Ref, ref, toValue, watchEffect } from 'vue'
-import { isFile, isString } from '../support/Utils'
 
 export interface ImageSrcFromFile {
   src: Ref<string | null>
@@ -34,12 +33,12 @@ export function useImageSrcFromFile(
   function read(): void {
     const f = toValue(file)
 
-    if (isFile(f)) {
+    if (f instanceof Blob) {
       reader.readAsDataURL(f)
       return
     }
 
-    if (isString(f)) {
+    if (typeof f === 'string') {
       src.value = f
       return
     }

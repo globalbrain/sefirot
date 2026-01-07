@@ -1,9 +1,5 @@
-import { isDate, isNumber, isString } from '../../support/Utils'
+import { decimal } from './decimal'
 
 export function minValue(value: unknown, min: number) {
-  if (isNumber(value) || isString(value) || isDate(value)) {
-    return +value >= min
-  }
-
-  return false
+  return (decimal(value) || value instanceof Date) && Number(value) >= min
 }

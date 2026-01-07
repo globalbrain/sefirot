@@ -1,7 +1,7 @@
 import { month } from 'sefirot/validation/rules'
 
 describe('validation/rules/month', () => {
-  test('it validates given month is valid month', () => {
+  it('validates given month is valid month', () => {
     const rule = month()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -19,12 +19,12 @@ describe('validation/rules/month', () => {
     expect(rule.$validator({}, null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = month()
     expect(rule.$message({ $params: {} })).toBe('The month is invalid.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = month('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

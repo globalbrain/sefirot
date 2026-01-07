@@ -299,7 +299,7 @@ A helper component that creates `<SInputText>` component with a magnifying glass
 ```ts
 interface Props {
   placeholder?: string
-  unitAfter?: any
+  unitAfter?: Component | string
   textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean

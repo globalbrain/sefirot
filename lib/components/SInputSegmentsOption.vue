@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T extends string | number | boolean">
+<script setup lang="ts">
 import { type Size } from './SInputBase.vue'
 
 export type { Size }
@@ -7,7 +7,6 @@ export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warnin
 const props = defineProps<{
   size: Size
   label: string
-  value: T
   mode: Mode
   active: boolean
   disabled: boolean

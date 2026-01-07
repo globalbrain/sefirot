@@ -113,7 +113,7 @@ describe('SActionMenu Viewport Alignment', () => {
   })
 
   describe('Top-Left Position', () => {
-    it('should keep left alignment when there is space on the right', async () => {
+    it('keeps left alignment when there is space on the right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -126,16 +126,12 @@ describe('SActionMenu Viewport Alignment', () => {
       await wrapper.find('button').trigger('click')
 
       // Should maintain left alignment (plenty of space on right: 1024 - 50 = 974 > 288)
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('left')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('left')
       // Dropdown should be positioned at the bottom
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('bottom')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('bottom')
     })
 
-    it('should flip to left alignment even when preferring right', async () => {
+    it('flips to left alignment even when preferring right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -148,18 +144,14 @@ describe('SActionMenu Viewport Alignment', () => {
       await wrapper.find('button').trigger('click')
 
       // Should flip to left (only 150px space on left, but 974px on right)
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('left')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('left')
       // Dropdown should be positioned at the bottom
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('bottom')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('bottom')
     })
   })
 
   describe('Top-Right Position', () => {
-    it('should flip to right alignment when insufficient space on right', async () => {
+    it('flips to right alignment when insufficient space on right', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -172,16 +164,12 @@ describe('SActionMenu Viewport Alignment', () => {
       await wrapper.find('button').trigger('click')
 
       // Should flip to right (only 124px space on right: 1024 - 900 = 124 < 288)
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('right')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('right')
       // Dropdown should be positioned at the bottom
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('bottom')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('bottom')
     })
 
-    it('should keep right alignment when space is available on left', async () => {
+    it('keeps right alignment when space is available on left', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -194,18 +182,14 @@ describe('SActionMenu Viewport Alignment', () => {
       await wrapper.find('button').trigger('click')
 
       // Should keep right (1000px space on left > 288px needed)
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('right')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('right')
       // Dropdown should be positioned at the bottom
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('bottom')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('bottom')
     })
   })
 
   describe('Bottom-Left Position', () => {
-    it('should keep left alignment', async () => {
+    it('keeps left alignment', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -217,16 +201,12 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('left')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('left')
       // Dropdown should be positioned at the top
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('top')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('top')
     })
 
-    it('should flip to left alignment when right preferred but insufficient space', async () => {
+    it('flips to left alignment when right preferred but insufficient space', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -238,18 +218,14 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('left')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('left')
       // Dropdown should be positioned at the top
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('top')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('top')
     })
   })
 
   describe('Bottom-Right Position', () => {
-    it('should flip to right alignment when left preferred but insufficient space', async () => {
+    it('flips to right alignment when left preferred but insufficient space', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -261,16 +237,12 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('right')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('right')
       // Dropdown should be positioned at the top
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('top')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('top')
     })
 
-    it('should keep right alignment when space is available', async () => {
+    it('keeps right alignment when space is available', async () => {
       const wrapper = mount(SActionMenu, {
         props: {
           options: mockOptions,
@@ -282,13 +254,9 @@ describe('SActionMenu Viewport Alignment', () => {
 
       await wrapper.find('button').trigger('click')
 
-      await expect
-        .poll(() => wrapper.find('.SActionMenu').classes())
-        .toContain('right')
+      await expect.poll(() => wrapper.find('.SActionMenu').classes()).toContain('right')
       // Dropdown should be positioned at the top
-      await expect
-        .poll(() => wrapper.find('.SActionMenu .dropdown').classes())
-        .toContain('top')
+      await expect.poll(() => wrapper.find('.SActionMenu .dropdown').classes()).toContain('top')
     })
   })
 })
