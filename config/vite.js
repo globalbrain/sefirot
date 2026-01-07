@@ -56,11 +56,11 @@ export const baseConfig = {
       'html2canvas',
       'lodash-es',
       'markdown-it',
+      'maska',
       'normalize.css',
       'ofetch',
       'pinia',
       'qs',
-      'v-calendar',
       'vue',
       'vue-router'
     ]
