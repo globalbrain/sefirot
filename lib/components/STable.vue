@@ -2,13 +2,14 @@
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import xor from 'lodash-es/xor'
-import { computed, nextTick, reactive, ref, shallowRef, toValue, unref, watch } from 'vue'
+import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
+import { type VirtualRow, useTableAnimation } from '../composables/TableAnimation'
 import { smartComputed } from '../support/Reactivity'
+import { scrollTableIntoView } from '../support/Scroll'
 import { getTextSize } from '../support/Text'
 import SInputCheckbox from './SInputCheckbox.vue'
 import SInputRadio from './SInputRadio.vue'
-import SSpinner from './SSpinner.vue'
 import STableCell from './STableCell.vue'
 import STableColumn from './STableColumn.vue'
 import STableFooter from './STableFooter.vue'
@@ -18,11 +19,33 @@ import STableItem from './STableItem.vue'
 const props = defineProps<{ options: Table }>()
 const selected = defineModel<S>('selected')
 
-const head = shallowRef<HTMLElement | null>(null)
-const body = shallowRef<HTMLElement | null>(null)
-const block = shallowRef<HTMLElement | null>(null)
-const row = shallowRef<HTMLElement | null>(null)
-const table = shallowRef<HTMLElement | null>(null)
+const tableRoot = useTemplateRef<HTMLElement>('tableRoot')
+const table = useTemplateRef<HTMLElement>('table')
+const head = useTemplateRef<HTMLElement>('head')
+const body = useTemplateRef<HTMLElement>('body')
+const block = useTemplateRef<HTMLElement>('block')
+const row = useTemplateRef<HTMLElement>('row')
+
+// Animation system
+const {
+  isSkeletonVisible,
+  isAnimating,
+  startLoading,
+  endLoading,
+  getRowStyle
+} = useTableAnimation(
+  // eslint-disable-next-line ts/no-use-before-define
+  () => virtualItems.value,
+  () => body.value
+)
+
+const shouldShowRecords = computed(() => {
+  const hasRecords = unref(props.options.records)?.length
+  // Note: if skeleton isn't visible yet (i.e., the first few milliseconds),
+  // we should retain the previous records for a better UX.
+  const canShowRecords = !unref(props.options.loading) || !isSkeletonVisible.value
+  return hasRecords && canShowRecords
+})
 
 const ordersToShow = smartComputed(() => {
   const orders = unref(props.options.orders).filter((key) => {
@@ -263,6 +286,39 @@ watch(actionsColumnWidth, (newValue) => {
   }
 }, { immediate: true, flush: 'post' })
 
+function getVirtualRowStyle(item: VirtualRow): CSSProperties {
+  return {
+    position: 'absolute',
+    top: '0px',
+    left: '0px',
+    width: '100%',
+    height: `${item.size}px`,
+    transform: `translateY(${item.start}px)`
+  }
+}
+
+watch(() => unref(props.options.loading), (newValue, oldValue) => {
+  if (newValue && !oldValue) {
+    const currentRecords = unref(props.options.records) ?? []
+    startLoading(currentRecords)
+
+    const element = tableRoot.value
+    if (element) {
+      scrollTableIntoView(
+        element,
+        head.value,
+        body.value,
+        unref(props.options.borderless) ?? false,
+        unref(props.options.borderSize) ?? 1
+      )
+    }
+  }
+
+  if (!newValue && oldValue) {
+    endLoading()
+  }
+}, { immediate: true })
+
 function stopObserving() {
   const orders = ordersToShow.value
   const lastOrder = orders[orders.length - 1] === 'actions'
@@ -418,7 +474,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 </script>
 
 <template>
-  <div class="STable" :class="classes">
+  <div ref="tableRoot" class="STable" :class="classes">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -473,9 +529,10 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
         </div>
 
         <div
-          v-if="!unref(options.loading) && unref(options.records)?.length"
+          v-if="shouldShowRecords"
           ref="body"
           class="container body"
+          :class="{ 'fade-in': isAnimating }"
           @scroll="syncBodyScroll"
         >
           <div
@@ -486,51 +543,50 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
               position: 'relative'
             }"
           >
-            <div v-for="{ index: i, key: __key, size, start } in virtualItems" :key="__key">
+            <div
+              v-for="item in virtualItems"
+              :key="item.key"
+            >
               <div
                 class="row"
-                :class="isSummaryOrLastClass(i)"
-                :style="{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: `${size}px`,
-                  transform: `translateY(${start}px)`
-                }"
+                :class="isSummaryOrLastClass(item.index)"
+                :style="getVirtualRowStyle(item)"
               >
-                <STableItem
-                  v-for="key in ordersToShow"
-                  :key
-                  :name="key"
-                  :class-name="unref(options.columns)[key]?.className"
-                  :style="getStyles(key)"
-                  :width="colWidths[key]"
-                >
-                  <STableCell
+                <div class="row-content" :style="getRowStyle(item)">
+                  <STableItem
+                    v-for="key in ordersToShow"
+                    :key
                     :name="key"
-                    :class="isSummary(i) && 'summary'"
                     :class-name="unref(options.columns)[key]?.className"
-                    :cell="getCell(key, i)"
-                    :value="recordsWithSummary[i][key]"
-                    :record="recordsWithSummary[i]"
+                    :style="getStyles(key)"
+                    :width="colWidths[key]"
                   >
-                    <template v-if="key === '__select' && !isSummary(i)">
-                      <SInputCheckbox
-                        v-if="Array.isArray(selected)"
-                        :model-value="selected.includes(indexes[i])"
-                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
-                        @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[i])"
-                      />
-                      <SInputRadio
-                        v-else
-                        :model-value="selected === indexes[i]"
-                        :disabled="options.disableSelection?.(recordsWithSummary[i]) === true"
-                        @update:model-value="(c) => updateSelected(c ? indexes[i] : null)"
-                      />
-                    </template>
-                  </STableCell>
-                </STableItem>
+                    <STableCell
+                      :name="key"
+                      :class="isSummary(item.index) && 'summary'"
+                      :class-name="unref(options.columns)[key]?.className"
+                      :cell="getCell(key, item.index)"
+                      :value="recordsWithSummary[item.index][key]"
+                      :record="recordsWithSummary[item.index]"
+                      :records="unref(options.records)!"
+                    >
+                      <template v-if="key === '__select' && !isSummary(item.index)">
+                        <SInputCheckbox
+                          v-if="Array.isArray(selected)"
+                          :model-value="selected.includes(indexes[item.index])"
+                          :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
+                          @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[item.index])"
+                        />
+                        <SInputRadio
+                          v-else
+                          :model-value="selected === indexes[item.index]"
+                          :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
+                          @update:model-value="(c) => updateSelected(c ? indexes[item.index] : null)"
+                        />
+                      </template>
+                    </STableCell>
+                  </STableItem>
+                </div>
               </div>
             </div>
           </div>
@@ -541,9 +597,27 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
         <p class="missing-text">No results matched your search.</p>
       </div>
 
-      <div v-if="unref(options.loading)" class="loading">
-        <div class="loading-icon">
-          <SSpinner class="loading-svg" />
+      <div v-if="isSkeletonVisible" class="loading">
+        <div class="loading-skeleton">
+          <div
+            v-for="i in (unref(options.perPage) || 50)"
+            :key="`skeleton-${i}`"
+            class="skeleton-row"
+            :class="{ last: i === (unref(options.perPage) || 50) }"
+          >
+            <STableItem
+              v-for="key in ordersToShow"
+              :key
+              :name="key"
+              :class-name="unref(options.columns)[key]?.className"
+              :style="getStyles(key)"
+              :width="colWidths[key]"
+            >
+              <div class="skeleton-cell">
+                <div class="skeleton-shimmer" />
+              </div>
+            </STableItem>
+          </div>
         </div>
       </div>
 
@@ -622,6 +696,27 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   }
 }
 
+.body.fade-in :deep(.row-content) {
+  animation: rowEnter 160ms cubic-bezier(0.3, 0, 0.5, 1);
+  animation-fill-mode: both;
+  animation-delay: var(--row-fade-delay, 0ms);
+}
+
+.body.fade-in :deep(.row) {
+  overflow: hidden;
+}
+
+@keyframes rowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--row-enter-offset, 0px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .block {
   display: inline-block;
   min-width: 100%;
@@ -635,6 +730,13 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 :deep(.row.last),
 :deep(.row.summary) {
   border-bottom: 0;
+}
+
+:deep(.row-content) {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transform: translateY(0);
 }
 
 .missing {
@@ -654,20 +756,56 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 
 .loading {
   border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
-  padding: 64px 32px;
   background-color: var(--c-bg-elv-3);
+  overflow: hidden;
+
+  .has-footer & {
+    border-radius: 0;
+  }
 }
 
-.loading-icon {
-  margin: 0 auto;
-  width: 48px;
-  height: 48px;
+.loading-skeleton {
+  width: 100%;
 }
 
-.loading-svg {
-  width: 48px;
-  height: 48px;
-  color: var(--c-text-1);
+.skeleton-row {
+  display: flex;
+  border-bottom: 1px solid var(--c-gutter);
+
+  &.last {
+    border-bottom: 0;
+  }
+}
+
+.skeleton-cell {
+  padding: 12px 16px;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.skeleton-shimmer {
+  width: 100%;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--c-bg-mute-1) 25%,
+    var(--c-bg-mute-2) 37%,
+    var(--c-bg-mute-1) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.5s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 .resize-indicator {
