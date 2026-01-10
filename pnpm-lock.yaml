@@ -5,7 +5,8 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  '@docsearch/react': '-'
+  '@docsearch/css': 4.3.1
+  '@docsearch/js': 4.3.1
   vite: 6.4.1
 
 importers:
@@ -311,11 +312,11 @@ packages:
       conventional-commits-parser:
         optional: true
 
-  '@docsearch/css@4.4.0':
-    resolution: {integrity: sha512-e9vPgtih6fkawakmYo0Y6V4BKBmDV7Ykudn7ADWXUs5b6pmtBRwDbpSG/WiaUG63G28OkJDEnsMvgIAnZgGwYw==}
+  '@docsearch/css@4.3.1':
+    resolution: {integrity: sha512-Jnct7LKOi/+Oxbmq215YPYASkMdZqtyyDCkma8Cj4sCcbBuybL6fvyBaX7uJoM6kVF7aIpBA38RhHAyN5ByCHg==}
 
-  '@docsearch/js@4.4.0':
-    resolution: {integrity: sha512-vCiKzjYD54bugUIMZA6YzuLDilkD3TNH/kfbvqsnzxiLTMu8F13psD+hdMSEOn7j+dFJOaf49fZ+gwr+rXctMw==}
+  '@docsearch/js@4.3.1':
+    resolution: {integrity: sha512-Xi2OztaQqTnNj0HGTcS/RtoXe4ASOgKRuH8hAKKqISqv13oUxpVBIBUHpvPIU4qgmJRZN2gA2gdjdn+VuvrvRQ==}
 
   '@es-joy/jsdoccomment@0.76.0':
     resolution: {integrity: sha512-g+RihtzFgGTx2WYCuTHbdOXJeAlGnROws0TeALx9ow/ZmOROOZkVg5wp/B44n0WJgI4SQFP1eWM2iRPlU2Y14w==}
@@ -4545,9 +4546,9 @@ snapshots:
       conventional-commits-filter: 5.0.0
       conventional-commits-parser: 6.2.1
 
-  '@docsearch/css@4.4.0': {}
+  '@docsearch/css@4.3.1': {}
 
-  '@docsearch/js@4.4.0':
+  '@docsearch/js@4.3.1':
     dependencies:
       htm: 3.1.1
 
@@ -8886,8 +8887,8 @@ snapshots:
 
   vitepress@2.0.0-alpha.15(@types/node@25.0.3)(change-case@5.4.4)(fuse.js@7.1.0)(jiti@2.6.1)(postcss@8.5.6)(typescript@5.9.3)(yaml@2.8.2):
     dependencies:
-      '@docsearch/css': 4.4.0
-      '@docsearch/js': 4.4.0
+      '@docsearch/css': 4.3.1
+      '@docsearch/js': 4.3.1
       '@iconify-json/simple-icons': 1.2.65
       '@shikijs/core': 3.21.0
       '@shikijs/transformers': 3.21.0
