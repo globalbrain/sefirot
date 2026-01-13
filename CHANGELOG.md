@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.32.1](https://github.com/globalbrain/sefirot/compare/v4.32.0...v4.32.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* **markdown:** run dompurify hooks on ssr too ([16c8e1e](https://github.com/globalbrain/sefirot/commit/16c8e1e552302d619b00875d19cae713c9de973e))
+
 # [4.32.0](https://github.com/globalbrain/sefirot/compare/v4.31.0...v4.32.0) (2026-01-13)
 
 
