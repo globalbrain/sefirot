@@ -1,4 +1,4 @@
-import DOMPurify, { type Config } from 'dompurify'
+import DOMPurify, { type Config } from 'isomorphic-dompurify'
 import MarkdownIt from 'markdown-it'
 
 export type UseMarkdown = (source: string, inline?: boolean) => string
