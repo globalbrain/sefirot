@@ -1,7 +1,7 @@
 import { positiveInteger } from 'sefirot/validation/rules'
 
 describe('validation/rules/positiveInteger', () => {
-  it('should validates if the value is positive integer', () => {
+  it('validates if the value is positive integer', () => {
     const rule = positiveInteger()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -26,12 +26,12 @@ describe('validation/rules/positiveInteger', () => {
     expect(rule.$validator('+10', null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = positiveInteger()
-    expect(rule.$message({ $params: {} })).toBe('The value must be valid positive integer.')
+    expect(rule.$message({ $params: {} })).toBe('The value must be a valid positive integer.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = positiveInteger('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

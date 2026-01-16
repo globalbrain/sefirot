@@ -40,7 +40,7 @@ function isChecked(value: any): boolean {
   return props.modelValue.includes(value)
 }
 
-function handleChange(value: any): void {
+function onChange(value: any): void {
   const difference = props.modelValue
     .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
@@ -63,6 +63,7 @@ function handleChange(value: any): void {
     :check-text
     :check-color
     :hide-error
+    :validation
   >
     <div class="container">
       <div class="row">
@@ -70,8 +71,9 @@ function handleChange(value: any): void {
           <SInputSwitch
             size="sm"
             :text="option.label"
+            :disabled
             :model-value="isChecked(option.value)"
-            @update:model-value="handleChange(option.value)"
+            @update:model-value="onChange(option.value)"
           />
         </div>
       </div>

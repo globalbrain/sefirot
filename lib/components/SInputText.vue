@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
-import { isString } from '../support/Utils'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export type { Color, Size } from './SInputBase.vue'
@@ -42,7 +41,7 @@ const textColor = computed(() => {
     return 'neutral'
   }
 
-  if (isString(props.textColor)) {
+  if (typeof props.textColor === 'string') {
     return props.textColor
   }
 
@@ -78,9 +77,10 @@ function emitBlur(e: FocusEvent): void {
 }
 
 function emitInput(e: Event): void {
-  const v = getValue(e)
-  emit('update:model-value', v)
-  emit('input', v)
+  const value = getValue(e)
+
+  emit('update:model-value', value)
+  emit('input', value)
 }
 
 function emitEnter(e: KeyboardEvent): void {
@@ -124,7 +124,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 
       <div class="value">
         <div v-if="unitBefore" class="unit before">
-          <span v-if="isString(unitBefore)" class="unit-text">{{ unitBefore }}</span>
+          <span v-if="typeof unitBefore === 'string'" class="unit-text">{{ unitBefore }}</span>
           <component :is="unitBefore" v-else class="unit-icon" />
         </div>
 
@@ -150,7 +150,7 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
         </div>
 
         <div v-if="unitAfter" class="unit after">
-          <span v-if="isString(unitAfter)" class="unit-text">{{ unitAfter }}</span>
+          <span v-if="typeof unitAfter === 'string'" class="unit-text">{{ unitAfter }}</span>
           <component :is="unitAfter" v-else class="unit-icon" />
         </div>
       </div>

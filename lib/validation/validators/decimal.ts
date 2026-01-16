@@ -1,11 +1,9 @@
-import { isNumber, isString } from '../../support/Utils'
-
-const regExp = /^-?\d*(?:\.\d+)?$/
-
 export function decimal(value: unknown): boolean {
-  if (!(isString(value) || isNumber(value))) {
-    return false
-  }
-
-  return regExp.test(String(value))
+  const num = Number(value)
+  return (
+    !Number.isNaN(num)
+    && num >= Number.MIN_SAFE_INTEGER
+    && num <= Number.MAX_SAFE_INTEGER
+    && num.toString() === value?.toString().replace(/(?:(\.\d*[1-9])|\.)0+$/, '$1')
+  )
 }

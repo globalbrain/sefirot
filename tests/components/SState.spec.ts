@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import SState from 'sefirot/components/SState.vue'
 
 describe('components/SState', () => {
-  test('tag is set to `span` by default', () => {
+  it('sets tag to `span` by default', () => {
     const wrapper = mount(SState, {
       props: {
         label: 'Label'
@@ -12,7 +12,7 @@ describe('components/SState', () => {
     expect(wrapper.find('.SState').element.tagName).toBe('SPAN')
   })
 
-  test('`:as` sets html tag', () => {
+  it('sets the HTML tag via `:as`', () => {
     const wrapper = mount(SState, {
       props: {
         as: 'div',

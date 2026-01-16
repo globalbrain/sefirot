@@ -94,7 +94,7 @@ const hasTooltip = computed(() => {
   )
 })
 
-function handleClick(): void {
+function onClick(): void {
   if (!props.loading) {
     props.disabled ? emit('disabled-click') : emit('click')
   }
@@ -119,7 +119,7 @@ function handleClick(): void {
       :class="classes"
       :href
       role="button"
-      @click="handleClick"
+      @click="onClick"
     >
       <span class="content">
         <span v-if="_leadIcon" class="icon" :class="iconMode">

@@ -1,7 +1,7 @@
 import { email } from 'sefirot/validation/rules'
 
 describe('validation/rules/email', () => {
-  test('it validates whether the value is email', () => {
+  it('validates email addresses', () => {
     const rule = email()
 
     expect(rule.$validator(undefined, null, null)).toBe(true)
@@ -10,16 +10,12 @@ describe('validation/rules/email', () => {
     expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator('someone@gmail.com', null, null)).toBe(true)
     expect(rule.$validator('someone@g-mail.com', null, null)).toBe(true)
-    expect(rule.$validator('some!one@gmail.com', null, null)).toBe(true)
     expect(rule.$validator('soMe12_one@gmail.com', null, null)).toBe(true)
     expect(rule.$validator('someone@gmail.co', null, null)).toBe(true)
     expect(rule.$validator('someone@g.cn', null, null)).toBe(true)
     expect(rule.$validator('someone@g.accountants', null, null)).toBe(true)
-    expect(rule.$validator('"some@one"@gmail.com', null, null)).toBe(true)
-    expect(rule.$validator('"some one"@gmail.com', null, null)).toBe(true)
-    expect(rule.$validator('user.name+tag+sorting@example.com', null, null)).toBe(true)
-    expect(rule.$validator('"john..doe"@example.org', null, null)).toBe(true)
     expect(rule.$validator('someone@Example.com', null, null)).toBe(true)
+    expect(rule.$validator('user.name+tag+sorting@example.com', null, null)).toBe(true)
 
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
@@ -32,6 +28,7 @@ describe('validation/rules/email', () => {
     expect(rule.$validator('someone@gmail', null, null)).toBe(false)
     expect(rule.$validator('someone@gmail.', null, null)).toBe(false)
     expect(rule.$validator('someone@gmail.c', null, null)).toBe(false)
+    expect(rule.$validator('some!one@gmail.com', null, null)).toBe(false)
     expect(rule.$validator('gmail.com', null, null)).toBe(false)
     expect(rule.$validator('@gmail.com', null, null)).toBe(false)
     expect(rule.$validator('someone@g~mail.com', null, null)).toBe(false)
@@ -44,14 +41,17 @@ describe('validation/rules/email', () => {
     expect(rule.$validator('someone@gmail.com    ', null, null)).toBe(false)
     expect(rule.$validator(' someone@gmail.com', null, null)).toBe(false)
     expect(rule.$validator('some one@gmail.com', null, null)).toBe(false)
+    expect(rule.$validator('"some@one"@gmail.com', null, null)).toBe(false)
+    expect(rule.$validator('"some one"@gmail.com', null, null)).toBe(false)
+    expect(rule.$validator('"john..doe"@example.org', null, null)).toBe(false)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = email()
-    expect(rule.$message({ $params: {} })).toBe('The Email is invalid.')
+    expect(rule.$message({ $params: {} })).toBe('The email is invalid.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = email('Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

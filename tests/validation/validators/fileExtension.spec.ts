@@ -1,35 +1,47 @@
 import { fileExtension } from 'sefirot/validation/validators'
 
 describe('vaidation/validators/fileExtension', () => {
-  it('should validate if the file has valid extension', () => {
-    const file = new File(['foo'], 'foo.txt', { type: 'text/plain' })
-
-    expect(fileExtension(file, ['txt'])).toBe(true)
-    expect(fileExtension(file, ['txt', 'png'])).toBe(true)
-
-    expect(fileExtension(undefined, ['txt'])).toBe(false)
-    expect(fileExtension(null, ['txt'])).toBe(false)
-    expect(fileExtension(true, ['txt'])).toBe(false)
-    expect(fileExtension(false, ['txt'])).toBe(false)
-    expect(fileExtension(1, ['txt'])).toBe(false)
-    expect(fileExtension('abc', ['txt'])).toBe(false)
-    expect(fileExtension({}, ['txt'])).toBe(false)
-    expect(fileExtension([], ['txt'])).toBe(false)
-    expect(fileExtension(file, ['png'])).toBe(false)
+  it('returns false when value is not a File', () => {
+    expect(fileExtension(undefined, ['png'])).toBe(false)
+    expect(fileExtension(null, ['png'])).toBe(false)
+    expect(fileExtension({}, ['png'])).toBe(false)
+    expect(fileExtension(new Blob([]), ['txt'])).toBe(false)
   })
 
-  it('should treat `jpg` extension with extra care', () => {
-    const jpg = new File(['foo'], 'foo.jpg', { type: 'text/plain' })
-    const jpeg = new File(['foo'], 'foo.jpeg', { type: 'text/plain' })
-    const JPG = new File(['foo'], 'foo.JPG', { type: 'text/plain' })
-    const JPEG = new File(['foo'], 'foo.JPEG', { type: 'text/plain' })
+  it('accepts matching extension (lowercase)', () => {
+    expect(fileExtension(new File([], 'image.png'), ['png'])).toBe(true)
+  })
 
-    expect(fileExtension(jpg, ['jpg'])).toBe(true)
-    expect(fileExtension(jpeg, ['jpg'])).toBe(true)
-    expect(fileExtension(JPG, ['jpg'])).toBe(true)
-    expect(fileExtension(JPEG, ['jpg'])).toBe(true)
+  it('accepts jpg/jpeg variants when "jpg" is allowed', () => {
+    expect(fileExtension(new File([], 'photo.jpg'), ['jpg'])).toBe(true)
+    expect(fileExtension(new File([], 'photo.jpeg'), ['jpg'])).toBe(true)
+    expect(fileExtension(new File([], 'photo.JPG'), ['jpg'])).toBe(true)
+    expect(fileExtension(new File([], 'photo.JPEG'), ['jpg'])).toBe(true)
+  })
 
-    expect(fileExtension(undefined, ['jpg'])).toBe(false)
-    expect(fileExtension(null, ['jpg'])).toBe(false)
+  it('rejects non-matching extension', () => {
+    expect(fileExtension(new File([], 'vector.svg'), ['png', 'jpg'])).toBe(false)
+  })
+
+  it('handles multiple dots correctly', () => {
+    expect(fileExtension(new File([], 'archive.tar.gz'), ['gz'])).toBe(true)
+    expect(fileExtension(new File([], 'archive.tar.gz'), ['tar'])).toBe(false)
+  })
+
+  it('returns false for files without an extension', () => {
+    expect(fileExtension(new File([], 'README'), ['txt'])).toBe(false)
+  })
+
+  it('returns false when allowed list is empty', () => {
+    expect(fileExtension(new File([], 'image.png'), [])).toBe(false)
+  })
+
+  it('treats option extensions case-insensitively', () => {
+    expect(fileExtension(new File([], 'image.png'), ['PNG'])).toBe(true)
+  })
+
+  it('treats "jpeg" option as equivalent to "jpg"', () => {
+    expect(fileExtension(new File([], 'photo.jpg'), ['jpeg'])).toBe(true)
+    expect(fileExtension(new File([], 'photo.jpeg'), ['jpeg'])).toBe(true)
   })
 })

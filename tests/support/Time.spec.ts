@@ -1,11 +1,17 @@
 import * as Time from 'sefirot/support/Time'
 
 describe('support/Time', () => {
-  describe('sleep', () => {
-    test('sleep for 500ms by default', async () => {
-      expect.assertions(1)
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
 
-      vi.useFakeTimers()
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  describe('sleep', () => {
+    it('sleeps for 500ms by default', async () => {
+      expect.assertions(1)
 
       Time.sleep().then(() => {
         expect(true).toBe(true)
@@ -14,10 +20,8 @@ describe('support/Time', () => {
       vi.advanceTimersByTime(500)
     })
 
-    test('sleep for a given time', async () => {
+    it('sleeps for a given time', async () => {
       expect.assertions(1)
-
-      vi.useFakeTimers()
 
       Time.sleep(1000).then(() => {
         expect(true).toBe(true)
@@ -28,10 +32,8 @@ describe('support/Time', () => {
   })
 
   describe('delay', () => {
-    test('delay callback execution for 500ms by default', async () => {
+    it('delays callback execution for 500ms by default', async () => {
       expect.assertions(1)
-
-      vi.useFakeTimers()
 
       Time.delay([]).then(() => {
         expect(true).toBe(true)
@@ -40,10 +42,8 @@ describe('support/Time', () => {
       vi.advanceTimersByTime(500)
     })
 
-    test('delay callback execution for given time', async () => {
+    it('delays callback execution for a given time', async () => {
       expect.assertions(1)
-
-      vi.useFakeTimers()
 
       Time.delay([], 1000).then(() => {
         expect(true).toBe(true)

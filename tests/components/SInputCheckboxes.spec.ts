@@ -3,7 +3,7 @@ import SInputCheckboxes from 'sefirot/components/SInputCheckboxes.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputCheckboxes', () => {
-  test('accepts `:value`', async () => {
+  it('accepts `:value`', async () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }],
@@ -14,7 +14,7 @@ describe('components/SInputCheckboxes', () => {
     expect(wrapper.find('.SInputCheckboxes .SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('accepts `:modelValue`', () => {
+  it('accepts `:modelValue`', () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }],
@@ -25,7 +25,7 @@ describe('components/SInputCheckboxes', () => {
     expect(wrapper.find('.SInputCheckboxes .SInputCheckbox .input').classes('on')).toBe(true)
   })
 
-  test('value defaults to empty array when both `:value` and `:modelValue` is missing', () => {
+  it('defaults to an empty array when both `:value` and `:modelValue` are missing', () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }]
@@ -35,7 +35,7 @@ describe('components/SInputCheckboxes', () => {
     expect(wrapper.find('.SInputCheckboxes .SInputCheckbox .input').classes('on')).toBe(false)
   })
 
-  test('emits on click', async () => {
+  it('emits on click', async () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }],
@@ -49,7 +49,7 @@ describe('components/SInputCheckboxes', () => {
     assertEmitted(wrapper, 'change', 1, [1])
   })
 
-  test('does not emit when value becomes empty and `:nullable` is set to `false`', async () => {
+  it('does not emit when value becomes empty and `:nullable` is set to `false`', async () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }],
@@ -64,7 +64,7 @@ describe('components/SInputCheckboxes', () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('does not emit on click when `:disabled`', async () => {
+  it('does not emit on click when `:disabled`', async () => {
     const wrapper = mount(SInputCheckboxes, {
       props: {
         options: [{ label: 'Item 01', value: 1 }],

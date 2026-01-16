@@ -1,5 +1,29 @@
 # Changelog
 
+## [4.32.1](https://github.com/globalbrain/sefirot/compare/v4.32.0...v4.32.1) (2026-01-13)
+
+
+### Bug Fixes
+
+* **markdown:** run dompurify hooks on ssr too ([16c8e1e](https://github.com/globalbrain/sefirot/commit/16c8e1e552302d619b00875d19cae713c9de973e))
+
+# [4.32.0](https://github.com/globalbrain/sefirot/compare/v4.31.0...v4.32.0) (2026-01-13)
+
+
+### Bug Fixes
+
+* **input-select:** explicit bg color to ensure legibility on Windows ([#654](https://github.com/globalbrain/sefirot/issues/654)) ([b774be5](https://github.com/globalbrain/sefirot/commit/b774be56994c1186e45c594f1ecc8a0727ac3641))
+* **lang:** prevent erroneous type widening ([#647](https://github.com/globalbrain/sefirot/issues/647)) ([a0fe446](https://github.com/globalbrain/sefirot/commit/a0fe4468c334f4427ad3c4f2d6e2956b1892b86d))
+* **markdown:** ssr support ([4bc3997](https://github.com/globalbrain/sefirot/commit/4bc3997fa51200b2a3fc2a0e82141e1cac9503f7))
+* remove unused props ([#671](https://github.com/globalbrain/sefirot/issues/671)) ([24b380c](https://github.com/globalbrain/sefirot/commit/24b380c7834a9fa9baaff7236c2269f47df4a3d4))
+* **table:** consistently use values as fallbacks in cells ([#660](https://github.com/globalbrain/sefirot/issues/660)) ([a1d3a9e](https://github.com/globalbrain/sefirot/commit/a1d3a9e37fb66bd915fd63a6ad54a49bf82b6187))
+
+
+### Features
+
+* rewrite validators and tests ([#648](https://github.com/globalbrain/sefirot/issues/648)) ([e1d8859](https://github.com/globalbrain/sefirot/commit/e1d88596c3c5497f4668f653fdb53bbe18ccefd2))
+* **STable:** use resize indicator during column drag for better perf ([#658](https://github.com/globalbrain/sefirot/issues/658)) ([139c391](https://github.com/globalbrain/sefirot/commit/139c39156bdb8303c53609e428dc982eb10a8a72))
+
 # [4.31.0](https://github.com/globalbrain/sefirot/compare/v4.30.1...v4.31.0) (2025-08-20)
 
 

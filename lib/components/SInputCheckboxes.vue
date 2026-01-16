@@ -52,7 +52,7 @@ function isChecked(value: Value): boolean {
   return _value.value.includes(value)
 }
 
-function handleChange(value: Value): void {
+function onChange(value: Value): void {
   const distinct = _value.value
     .filter((v) => v !== value)
     .concat(_value.value.includes(value) ? [] : [value])
@@ -79,6 +79,8 @@ function handleChange(value: Value): void {
     :check-icon
     :check-text
     :check-color
+    :validation
+    :hide-error
   >
     <div class="container">
       <div class="row">
@@ -88,7 +90,7 @@ function handleChange(value: Value): void {
             :text="option.label"
             :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"
-            @update:model-value="handleChange(option.value)"
+            @update:model-value="onChange(option.value)"
           />
         </div>
       </div>

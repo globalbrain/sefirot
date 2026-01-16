@@ -1,20 +1,16 @@
 /**
  * Adapted from
- * @see https://github.com/vuejs/core/blob/1755ac0a108ba3486bd8397e56d3bdcd69196594/packages/runtime-core/src/component.ts
+ * @see https://github.com/vuejs/core/blob/b50eb68c50f3b94dca2e96f706c3e96ab864df24/packages/runtime-core/src/component.ts
  * @see https://github.com/vuejs/core/blob/ac9e7e8bfa55432a73a10864805fdf48bda2ff73/packages/runtime-core/src/warning.ts
- * @see https://github.com/getsentry/sentry-javascript/blob/04711c20246f7cdaac2305286fec783ab1859a18/packages/vue/src/errorhandler.ts
- * @see https://github.com/vercel/ai/blob/d544886d4f61440bacd6e44c86144bfac7c98282/packages/provider-utils/src/get-error-message.ts
+ * @see https://github.com/getsentry/sentry-javascript/blob/fbadeb81d23c03c3d852531c2deef59a3a992def/packages/vue/src/errorhandler.ts
  *
  * Original licenses:
  *
- * (c) 2018-present Yuxi (Evan) You and Vue contributors
+ * Copyright (c) 2018-present, Yuxi (Evan) You
  * @license MIT
  *
- * (c) 2012-2024 Functional Software, Inc. dba Sentry
+ * Copyright (c) 2019 Functional Software, Inc. dba Sentry
  * @license MIT
- *
- * (c) 2023 Vercel, Inc.
- * @license Apache-2.0
  */
 
 import * as Sentry from '@sentry/browser'
@@ -22,8 +18,8 @@ import { createSentryPiniaPlugin } from '@sentry/vue'
 import { pauseTracking, resetTracking } from '@vue/reactivity'
 import { getActivePinia } from 'pinia'
 import {
+  type Component,
   type ComponentInternalInstance,
-  type ComponentOptions,
   type ComponentPublicInstance,
   type ConcreteComponent,
   type MaybeRefOrGetter,
@@ -31,7 +27,6 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
-import { isError } from '../support/Utils'
 
 export interface User {
   id?: string | number
@@ -43,7 +38,7 @@ type TraceEntry = { vnode: VNode; recurseCount: number }
 
 type ComponentTraceStack = TraceEntry[]
 
-const classifyRE = /(?:^|[-_])(\w)/g
+const classifyRE = /(?:^|[-_])\w/g
 function classify(str: string): string {
   return str.replace(classifyRE, (c) => c.toUpperCase()).replace(/[-_]/g, '')
 }
@@ -70,8 +65,8 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
     }
   }
 
-  if (!name && instance && instance.parent) {
-    const inferFromRegistry = (registry: Record<string, unknown> | undefined) => {
+  if (!name && instance) {
+    const inferFromRegistry = (registry?: Record<string, Component>) => {
       for (const key in registry) {
         if (registry[key] === Component) {
           return key
@@ -79,10 +74,11 @@ function formatComponentName(instance: ComponentInternalInstance | null): string
       }
     }
     name =
-      inferFromRegistry(
-        // @ts-expect-error internal api
-        instance.components || (instance.parent.type as ComponentOptions).components
-      ) || inferFromRegistry(instance.appContext.components)
+      // @ts-expect-error internal API
+      inferFromRegistry(instance.components)
+      // @ts-expect-error internal API
+      || inferFromRegistry(instance.parent?.type.components)
+      || inferFromRegistry(instance.appContext.components)
   }
 
   return name ? classify(name) : isRoot ? 'App' : 'Anonymous'
@@ -147,6 +143,26 @@ const ignoreErrors = [
   /\[Cloudflare Turnstile\] Error: (?:10[2-46]|1106[02]|[36]00)/
 ]
 
+const stringifiers: readonly ((e: unknown) => string | false)[] = [
+  (e) => typeof e === 'string' && e,
+  (e) => e instanceof Error && (e.message || e.name),
+  (e) => {
+    const json = JSON.stringify(e)
+    return json !== '{}' && json
+  },
+  (e) => String(e)
+]
+
+function getErrorMessage(error: unknown | undefined): string {
+  for (const stringify of stringifiers) {
+    try {
+      const s = stringify(error)
+      if (s) { return s }
+    } catch { /* continue */ }
+  }
+  return 'unknown error'
+}
+
 export function useErrorHandler({
   dsn,
   environment,
@@ -204,7 +220,7 @@ export function useErrorHandler({
           componentName: formatComponentName($),
           lifecycleHook: info,
           trace: formatTrace($),
-          propsData: $ && $.props
+          propsData: $.props
         }
 
         setTimeout(() => {
@@ -223,20 +239,4 @@ export function useErrorHandler({
 
     set(e)
   }
-}
-
-function getErrorMessage(error: unknown | undefined) {
-  if (error == null) {
-    return 'unknown error'
-  }
-
-  if (typeof error === 'string') {
-    return error
-  }
-
-  if (isError(error)) {
-    return error.message
-  }
-
-  return JSON.stringify(error)
 }

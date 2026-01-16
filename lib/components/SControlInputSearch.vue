@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
-import { computed } from 'vue'
+import { type Component, computed } from 'vue'
 import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
@@ -8,7 +8,7 @@ import SInputText, { type Align, type TextColor } from './SInputText.vue'
 
 const props = defineProps<{
   placeholder?: string
-  unitAfter?: any
+  unitAfter?: Component | string
   textColor?: TextColor | ((value: string | null) => TextColor)
   align?: Align
   disabled?: boolean
@@ -52,7 +52,12 @@ const _value = computed(() => {
       type="search"
       :placeholder="placeholder ?? t.placeholder"
       :unit-before="IconMagnifyingGlass"
+      :unit-after
+      :text-color
+      :align
+      :disabled
       :model-value="_value"
+      :display-value
       :validation
       hide-error
       @update:model-value="$emit('update:model-value', $event)"

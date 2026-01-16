@@ -28,7 +28,7 @@ describe('validation/rules/requiredHmsIf', () => {
   function getTestCasesForGivenTypes() {
     return [
       { value: { hour: '23', minute: '59', second: '59' }, expected: true },
-      { value: { hour: '23', minute: '59', second: '60' }, expected: true },
+      { value: { hour: '23', minute: '59', second: null }, expected: true },
       { value: { hour: '23', minute: '59' }, expected: true },
       { value: { hour: '23', minute: null }, expected: false },
       { value: undefined, expected: false },
@@ -40,8 +40,6 @@ describe('validation/rules/requiredHmsIf', () => {
       { value: {}, expected: false },
       { value: { hour: '23' }, expected: false },
       { value: { hour: '23', minute: undefined }, expected: false },
-      { value: { hour: '23', minute: '60', second: '60' }, expected: true },
-      { value: { hour: '24', minute: '59', second: '60' }, expected: true },
       { value: [], expected: false }
     ]
   }
@@ -56,35 +54,35 @@ describe('validation/rules/requiredHmsIf', () => {
     }, [] as { value: unknown; condition: RequiredIfCondition; expected: boolean }[])
   }
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForAllTypes(), true)
   )('validates if the hours, minutes, and seconds are present: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
     const rule = requiredHmsIf(condition)
     expect(await rule.$validator(value, null, null)).toBe(expected)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForAllTypes(), false)
   )('validates if the hours, minutes, and seconds are present: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredHmsIf(condition)
     expect(await rule.$validator(value, null, null)).toBe(true)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForGivenTypes(), true)
-  )('validates only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
+  )('requires only given types: $value is $expected if condition is $condition', async ({ value, condition, expected }) => {
     const rule = requiredHmsIf(condition, ['h', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(expected)
   })
 
-  test.each(
+  it.each(
     addConditions(getTestCasesForGivenTypes(), false)
-  )('validates only given types: $value is true if condition is $condition', async ({ value, condition }) => {
+  )('requires only given types: $value is true if condition is $condition', async ({ value, condition }) => {
     const rule = requiredHmsIf(condition, ['h', 'm'])
     expect(await rule.$validator(value, null, null)).toBe(true)
   })
 
-  test('condition can be reactive', async () => {
+  it('supports reactive conditions', async () => {
     const condition = ref(false)
 
     const { data } = useData({
@@ -99,18 +97,18 @@ describe('validation/rules/requiredHmsIf', () => {
 
     condition.value = true
 
-    // Await since this is async validator.
+    // await since this is async validator.
     await flushPromises()
 
     expect(validation.value.$invalid).toBe(true)
   })
 
-  test('default error message', () => {
+  it('shows the default error message', () => {
     const rule = requiredHmsIf(true)
     expect(rule.$message({ $params: {} })).toBe('The field is required.')
   })
 
-  test('it can set custom error message', () => {
+  it('uses the custom error message', () => {
     const rule = requiredHmsIf(true, undefined, 'Custom message.')
     expect(rule.$message({ $params: {} })).toBe('Custom message.')
   })

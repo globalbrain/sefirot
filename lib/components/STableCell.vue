@@ -21,7 +21,6 @@ const props = defineProps<{
   cell?: any
   value: any
   record: any
-  records: Record<string, any>
 }>()
 
 const computedCell = computed<TableCell | undefined>(() =>
@@ -37,7 +36,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record
       :align="computedCell?.align"
       :icon="computedCell?.icon"
-      :text="computedCell?.value"
+      :text="computedCell?.value ?? value"
       :link="computedCell?.link"
       :color="computedCell?.color"
       :icon-color="computedCell?.iconColor"
@@ -49,7 +48,7 @@ const computedCell = computed<TableCell | undefined>(() =>
       :record
       :align="computedCell.align"
       :icon="computedCell.icon"
-      :number="computedCell.value"
+      :number="computedCell.value ?? value"
       :separator="computedCell.separator"
       :link="computedCell.link"
       :color="computedCell.color"
@@ -58,47 +57,47 @@ const computedCell = computed<TableCell | undefined>(() =>
     />
     <STableCellPath
       v-else-if="computedCell.type === 'path'"
-      :segments="computedCell.segments"
+      :segments="computedCell.segments ?? value"
     />
     <STableCellDay
       v-else-if="computedCell.type === 'day'"
       :align="computedCell.align"
-      :day="computedCell.value"
+      :day="computedCell.value ?? value"
       :format="computedCell.format"
       :color="computedCell.color"
     />
     <STableCellPill
       v-else-if="computedCell.type === 'pill'"
-      :pill="computedCell.value"
+      :pill="computedCell.value ?? value"
       :color="computedCell.color"
     />
     <STableCellPills
       v-else-if="computedCell.type === 'pills'"
-      :pills="computedCell.pills"
+      :pills="computedCell.pills ?? value"
     />
     <STableCellState
       v-else-if="computedCell.type === 'state'"
-      :state="computedCell.label"
+      :state="computedCell.label ?? value"
       :mode="computedCell.mode"
     />
     <STableCellIndicator
       v-else-if="computedCell.type === 'indicator'"
-      :state="computedCell.state"
+      :state="computedCell.state ?? value"
       :label="computedCell.label"
     />
     <STableCellAvatar
       v-else-if="computedCell.type === 'avatar'"
       :value
       :record
-      :image="computedCell.image"
-      :name="computedCell.name"
+      :image="computedCell.image ?? (value as string).includes('/') ? value : null"
+      :name="computedCell.name ?? (value as string).includes('/') ? null : value"
       :link="computedCell.link"
       :color="computedCell.color"
       :on-click="computedCell.onClick"
     />
     <STableCellAvatars
       v-else-if="computedCell.type === 'avatars'"
-      :avatars="computedCell.avatars"
+      :avatars="computedCell.avatars ?? value"
       :color="computedCell.color"
       :avatar-count="computedCell.avatarCount"
       :name-count="computedCell.nameCount"
@@ -107,7 +106,7 @@ const computedCell = computed<TableCell | undefined>(() =>
     <STableCellActions
       v-else-if="computedCell.type === 'actions'"
       :record
-      :actions="computedCell.actions"
+      :actions="computedCell.actions ?? value"
     />
     <STableCellCustom
       v-else-if="computedCell.type === 'custom'"

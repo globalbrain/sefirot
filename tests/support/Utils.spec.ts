@@ -2,7 +2,7 @@ import * as Utils from 'sefirot/support/Utils'
 
 describe('support/Utils', () => {
   describe('isString', () => {
-    test('check if the given value is string', () => {
+    it('checks if the given value is a string', () => {
       expect(Utils.isString(undefined)).toEqual(false)
       expect(Utils.isString(null)).toEqual(false)
       expect(Utils.isString(1)).toEqual(false)
@@ -12,7 +12,7 @@ describe('support/Utils', () => {
   })
 
   describe('isNumber', () => {
-    test('check if the given value is number', () => {
+    it('checks if the given value is a number', () => {
       expect(Utils.isNumber(undefined)).toEqual(false)
       expect(Utils.isNumber(null)).toEqual(false)
       expect(Utils.isNumber(1)).toEqual(true)
@@ -22,7 +22,7 @@ describe('support/Utils', () => {
   })
 
   describe('isObject', () => {
-    test('check if the given value is object', () => {
+    it('checks if the given value is an object', () => {
       expect(Utils.isObject(undefined)).toEqual(false)
       expect(Utils.isObject(null)).toEqual(false)
       expect(Utils.isObject(1)).toEqual(false)

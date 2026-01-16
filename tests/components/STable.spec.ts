@@ -9,7 +9,7 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
 
 describe('components/STable', () => {
   describe('basics', () => {
-    test('it displays columns in order', () => {
+    it('displays columns in order', () => {
       const table = useTable({
         orders: ['item_1', 'item_2', 'item_3'],
         columns: {
@@ -32,7 +32,7 @@ describe('components/STable', () => {
   })
 
   describe('menu', () => {
-    test('menu items is displayed in the header when `:menu` is set', () => {
+    it('displays menu items in the header when `:menu` is set', () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -59,7 +59,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenuItem .label').text()).toBe('Option A')
     })
 
-    test('displays divider when multiple group of menus are passed', async () => {
+    it('displays a divider when multiple groups of menus are passed', async () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -93,7 +93,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenu .divider').exists()).toBe(true)
     })
 
-    test('display indicator icon when the state is set to `indicate`', () => {
+    it('displays an indicator icon when the state is `indicate`', () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -122,7 +122,7 @@ describe('components/STable', () => {
       expect(wrapper.find('.STableHeaderMenuItem .caret').exists()).toBe(false)
     })
 
-    test('opens dropdown dialog when clicking the menu item', async () => {
+    it('opens dropdown dialog when clicking the menu item', async () => {
       const table = useTable({
         orders: ['name'],
         columns: {
@@ -153,16 +153,11 @@ describe('components/STable', () => {
   })
 
   describe('cell number', () => {
-    test('it displays `0` value', () => {
+    it('displays `0` value', () => {
       const table = useTable({
         orders: ['num'],
         columns: {
-          num: {
-            label: 'Name',
-            cell: {
-              type: 'number'
-            }
-          }
+          num: { label: 'Name', cell: { type: 'number' } }
         },
         records: [
           { num: 0 }
@@ -180,12 +175,12 @@ describe('components/STable', () => {
   })
 
   describe('summary', () => {
-    test('it displays summary row at bottom', () => {
+    it('displays a summary row at the bottom', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {
           name: { label: 'Name' },
-          amount: { label: 'Amount' }
+          amount: { label: 'Amount', cell: { type: 'number' } }
         },
         records: [
           { name: 'Item 1', amount: 10 },
@@ -202,13 +197,13 @@ describe('components/STable', () => {
         }
       })
 
-      expect(wrapper.findAll('.summary .text')[0].text()).toBe('Total')
-      expect(wrapper.findAll('.summary .text')[1].text()).toBe('100')
+      expect(wrapper.find('.summary .col-name').text()).toBe('Total')
+      expect(wrapper.find('.summary .col-amount').text()).toBe('100')
     })
   })
 
   describe('conditional hide', () => {
-    test('it hides column when `show` is set to `false`', () => {
+    it('hides column when `show` is set to `false`', () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {

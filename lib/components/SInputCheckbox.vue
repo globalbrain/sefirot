@@ -70,6 +70,7 @@ function onClick() {
     :check-text
     :check-color
     :validation
+    :hide-error
   >
     <div class="container">
       <div

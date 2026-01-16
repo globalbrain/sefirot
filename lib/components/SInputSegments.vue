@@ -58,6 +58,7 @@ function onSelect(value: T) {
     class="SInputSegments"
     :class="[size ?? 'small', { block }]"
     :size
+    :name
     :label
     :note
     :info
@@ -74,7 +75,6 @@ function onSelect(value: T) {
         :key="i"
         :size="size ?? 'small'"
         :label="option.label"
-        :value="option.value"
         :mode="option.mode ?? 'default'"
         :active="_value === option.value"
         :disabled="disabled ? true : (option.disabled ?? false)"

@@ -3,7 +3,7 @@ import SInputRadios from 'sefirot/components/SInputRadios.vue'
 import { assertEmitted, assertNotEmitted } from 'tests/Utils'
 
 describe('components/SInputRadios', () => {
-  test('accepts `:value`', () => {
+  it('accepts `:value`', () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -20,7 +20,7 @@ describe('components/SInputRadios', () => {
     expect(input.classes('on')).toBe(true)
   })
 
-  test('accepts `:modelValue`', async () => {
+  it('accepts `:modelValue`', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -37,7 +37,7 @@ describe('components/SInputRadios', () => {
     expect(input.classes('on')).toBe(true)
   })
 
-  test('sets value to `null` when neither `value` or `modelValue` is set', async () => {
+  it('sets value to `null` when neither `value` or `modelValue` is set', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -53,7 +53,7 @@ describe('components/SInputRadios', () => {
     expect(input.classes('on')).toBe(false)
   })
 
-  test('emits `update:model-value` and `change` events when item is selected', async () => {
+  it('emits `update:model-value` and `change` events when item is selected', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -70,7 +70,7 @@ describe('components/SInputRadios', () => {
     assertEmitted(wrapper, 'change', 1, 2)
   })
 
-  test('does not emit on click when `:disabled`', async () => {
+  it('does not emit on click when `:disabled`', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -88,7 +88,7 @@ describe('components/SInputRadios', () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('does not allow deselecting item when `nullable` is set to `false`', async () => {
+  it('does not allow deselecting item when `nullable` is set to `false`', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [
@@ -107,7 +107,7 @@ describe('components/SInputRadios', () => {
     assertNotEmitted(wrapper, 'change')
   })
 
-  test('allows deselecting item when `nullable` is set to `true`', async () => {
+  it('allows deselecting item when `nullable` is set to `true`', async () => {
     const wrapper = mount(SInputRadios, {
       props: {
         options: [

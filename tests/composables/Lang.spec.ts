@@ -3,7 +3,7 @@ import { setup } from 'tests/Utils'
 
 describe('composables/Lang', () => {
   describe('useLang', () => {
-    test('it returns the default language', () => {
+    it('returns the default language', () => {
       const vm = setup(() => ({
         lang: useLang()
       }))
@@ -11,7 +11,7 @@ describe('composables/Lang', () => {
       expect(vm.lang).toBe('en')
     })
 
-    test('it returns the language provided by provideLang', () => {
+    it('returns the language provided by provideLang', () => {
       const vm = setup(() => ({
         lang: useLang()
       }), {
@@ -27,7 +27,7 @@ describe('composables/Lang', () => {
   })
 
   describe('useTrans', () => {
-    test('it returns the current translations', () => {
+    it('returns the current translations', () => {
       const vm = setup(() => ({
         trans: useTrans({
           en: { msg: 'English' },

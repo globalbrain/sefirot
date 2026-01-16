@@ -1,19 +1,36 @@
 import { maxFileSize } from 'sefirot/validation/validators'
+import { f } from '../../Utils'
 
 describe('validation/validators/maxFileSize', () => {
-  test('it validates whether the file is smaller than size', () => {
-    const size = '5 KB'
+  it('returns false when value is not a File', () => {
+    expect(maxFileSize(null, '1MB')).toBe(false)
+    expect(maxFileSize({}, '1MB')).toBe(false)
+    expect(maxFileSize('not a file', '1MB')).toBe(false)
+  })
 
-    expect(maxFileSize(new File([new ArrayBuffer(5_000)], 'foo.txt', { type: 'text/plain' }), size)).toBe(true)
+  it('treats plain numbers as bytes', () => {
+    expect(maxFileSize(f(500), '500')).toBe(true)
+    expect(maxFileSize(f(501), '500')).toBe(false)
+  })
 
-    expect(maxFileSize(undefined, size)).toBe(false)
-    expect(maxFileSize(null, size)).toBe(false)
-    expect(maxFileSize(true, size)).toBe(false)
-    expect(maxFileSize(false, size)).toBe(false)
-    expect(maxFileSize(1, size)).toBe(false)
-    expect(maxFileSize('abc', size)).toBe(false)
-    expect(maxFileSize({}, size)).toBe(false)
-    expect(maxFileSize([], size)).toBe(false)
-    expect(maxFileSize(new File([new ArrayBuffer(10_000)], 'foo.txt', { type: 'text/plain' }), size)).toBe(false)
+  it('accepts KB/MB', () => {
+    expect(maxFileSize(f(1000), '1kb')).toBe(true)
+    expect(maxFileSize(f(1001), '1KB')).toBe(false)
+    expect(maxFileSize(f(1_500_000), '1.5MB')).toBe(true)
+    expect(maxFileSize(f(1_500_001), '1.5mb')).toBe(false)
+  })
+
+  it('respects equality boundary', () => {
+    expect(maxFileSize(f(1_000_000), '1MB')).toBe(true)
+  })
+
+  it('returns false for invalid size strings', () => {
+    expect(maxFileSize(f(0), 'abc')).toBe(false)
+    expect(maxFileSize(f(10), 'abc')).toBe(false)
+  })
+
+  it('accepts sizes with decimal points', () => {
+    expect(maxFileSize(f(1500), '1.5KB')).toBe(true)
+    expect(maxFileSize(f(1501), '1.5KB')).toBe(false)
   })
 })
