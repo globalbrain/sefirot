@@ -1,8 +1,8 @@
 {
   "name": "@globalbrain/sefirot",
   "type": "module",
-  "version": "4.31.0",
-  "packageManager": "pnpm@10.27.0",
+  "version": "4.32.1",
+  "packageManager": "pnpm@10.28.0",
   "description": "Vue Components for Global Brain Design System.",
   "author": "Kia Ishii <ka.ishii@globalbrains.com>",
   "license": "MIT",
@@ -55,6 +55,7 @@
     "@vueuse/core": "^12 || ^13 || ^14",
     "body-scroll-lock": "4.0.0-beta.0",
     "dayjs": "^1.11.19",
+    "dompurify": "^3.3.1",
     "fuse.js": "^7.1.0",
     "lodash-es": "^4.17.22",
     "markdown-it": "^14.1.0",
@@ -67,8 +68,8 @@
     "vue-router": "^4.6.4"
   },
   "dependencies": {
-    "@sentry/browser": "^10.32.1",
-    "@sentry/vue": "^10.32.1",
+    "@sentry/browser": "^10.33.0",
+    "@sentry/vue": "^10.33.0",
     "@tanstack/vue-virtual": "3.0.0-beta.62",
     "@tinyhttp/content-disposition": "^2.2.2",
     "@tinyhttp/cookie": "^2.1.1",
@@ -76,9 +77,9 @@
     "@types/file-saver": "^2.0.7",
     "@types/qs": "^6.14.0",
     "d3": "^7.9.0",
-    "dompurify": "^3.3.1",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "isomorphic-dompurify": "^2.35.0",
     "magic-string": "^0.30.21",
     "ofetch": "^1.5.1",
     "qs": "^6.14.1",
@@ -94,7 +95,7 @@
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash-es": "^4.17.12",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^25.0.3",
+    "@types/node": "^25.0.7",
     "@vitejs/plugin-vue": "^6.0.3",
     "@vitest/coverage-v8": "^3.2.4",
     "@vue/reactivity": "^3.5.26",
@@ -104,9 +105,10 @@
     "@vueuse/core": "^14.1.0",
     "body-scroll-lock": "4.0.0-beta.0",
     "dayjs": "^1.11.19",
+    "dompurify": "^3.3.1",
     "eslint": "^9.39.2",
     "fuse.js": "^7.1.0",
-    "happy-dom": "^20.0.11",
+    "happy-dom": "^20.1.0",
     "histoire": "0.16.5",
     "lodash-es": "^4.17.22",
     "markdown-it": "^14.1.0",
@@ -115,7 +117,7 @@
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
     "punycode": "^2.3.1",
-    "release-it": "^19.2.2",
+    "release-it": "^19.2.3",
     "typescript": "~5.9.3",
     "v-calendar": "3.0.1",
     "vite": "^6.4.1",
@@ -123,6 +125,6 @@
     "vitest": "^3.2.4",
     "vue": "^3.5.26",
     "vue-router": "^4.6.4",
-    "vue-tsc": "^3.2.1"
+    "vue-tsc": "^3.2.2"
   }
 }

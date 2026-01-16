@@ -77,9 +77,10 @@ function emitBlur(e: FocusEvent): void {
 }
 
 function emitInput(e: Event): void {
-  const v = getValue(e)
-  emit('update:model-value', v)
-  emit('input', v)
+  const value = getValue(e)
+
+  emit('update:model-value', value)
+  emit('input', value)
 }
 
 function emitEnter(e: KeyboardEvent): void {
