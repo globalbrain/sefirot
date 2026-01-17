@@ -134,11 +134,11 @@ function onClick(): void {
         </span>
       </span>
 
-      <transition name="fade">
+      <Transition name="fade">
         <span v-if="loading" key="loading" class="loader">
           <SSpinner class="loader-icon" />
         </span>
-      </transition>
+      </Transition>
     </component>
   </SFragment>
 </template>
