@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.34.0](https://github.com/globalbrain/sefirot/compare/v4.33.0...v4.34.0) (2026-01-19)
+
+
+### Features
+
+* expose dompurify ([472cad7](https://github.com/globalbrain/sefirot/commit/472cad7e528d53031588523ffabf76f402ed0774))
+
 # [4.33.0](https://github.com/globalbrain/sefirot/compare/v4.32.1...v4.33.0) (2026-01-18)
 
 
