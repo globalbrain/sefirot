@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.34.1](https://github.com/globalbrain/sefirot/compare/v4.34.0...v4.34.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* **vite:** configure dep optimizer properly ([1761263](https://github.com/globalbrain/sefirot/commit/176126337566662b0c8320c9f426425367d4f786))
+
 # [4.34.0](https://github.com/globalbrain/sefirot/compare/v4.33.0...v4.34.0) (2026-01-19)
 
 
