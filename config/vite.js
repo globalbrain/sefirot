@@ -54,7 +54,6 @@ export const baseConfig = {
       'file-saver',
       'fuse.js',
       'html2canvas',
-      'isomorphic-dompurify',
       'lodash-es',
       'markdown-it',
       'normalize.css',
@@ -71,13 +70,13 @@ export const baseConfig = {
 
   optimizeDeps: {
     include: [
+      '@globalbrain/sefirot/dompurify',
       'dayjs',
       'dayjs/plugin/relativeTime',
       'dayjs/plugin/timezone',
       'dayjs/plugin/utc',
       'dompurify',
       'file-saver',
-      'isomorphic-dompurify',
       'markdown-it > argparse',
       'markdown-it > entities'
     ],
