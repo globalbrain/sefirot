@@ -25,7 +25,15 @@ export const baseConfig = {
     resolve: { ...baseViteConfig.resolve, alias: {} },
     plugins: baseViteConfig.plugins?.filter(
       (plugin) => plugin && 'name' in plugin && plugin.name !== 'unplugin-icons'
-    )
+    ),
+    optimizeDeps: {
+      ...(baseViteConfig.optimizeDeps || {}),
+      exclude: [
+        ...(baseViteConfig.optimizeDeps?.exclude || []),
+        '@vue/devtools-core',
+        '@vue/devtools-kit'
+      ]
+    }
   },
   nitro: {
     rollupConfig: {
