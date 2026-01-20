@@ -2,13 +2,12 @@
 /// <reference lib="esnext" />
 
 import { glob } from 'node:fs/promises'
-import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import MagicString from 'magic-string'
 import icons from 'unplugin-icons/vite'
 import * as vite from 'vite'
 
-const lib = `${path.resolve(import.meta.dirname, '../lib/')}/`
+const lib = fileURLToPath(new URL('../lib/', import.meta.url))
 // eslint-disable-next-line antfu/no-top-level-await
 const files = (await Array.fromAsync(glob(`**/*.ts`, { cwd: lib })))
   .filter((file) => !file.endsWith('.d.ts'))
@@ -41,7 +40,7 @@ export const baseConfig = {
 
   resolve: {
     alias: {
-      'sefirot/': fileURLToPath(new URL('../lib/', import.meta.url))
+      'sefirot/': lib
     },
 
     // list the client-side direct dependencies/peerDependencies which get bundled
