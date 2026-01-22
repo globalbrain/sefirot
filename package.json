@@ -19,24 +19,14 @@
   "author": "Kia Ishii <ka.ishii@globalbrains.com>",
   "type": "module",
   "exports": {
-    "./client": {
-      "types": "./client.d.ts"
-    },
-    "./config/nuxt": {
-      "types": "./config/nuxt.d.ts",
-      "import": "./config/nuxt.js"
-    },
-    "./config/vite": {
-      "types": "./config/vite.d.ts",
-      "import": "./config/vite.js"
-    },
+    "./client": "./client.d.ts",
+    "./shared": "./shared.d.ts",
+    "./config/nuxt": "./config/nuxt.js",
+    "./config/vite": "./config/vite.js",
     "./dompurify": {
       "types": "./lib/dompurify/index.d.ts",
       "browser": "./lib/dompurify/browser.js",
       "default": "./lib/dompurify/node.js"
-    },
-    "./shared": {
-      "types": "./shared.d.ts"
     },
     "./*": "./*"
   },
