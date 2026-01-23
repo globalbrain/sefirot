@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import IconLink from '~icons/ph/link-bold'
 import IconYouTubeLogo from '~icons/ph/youtube-logo-bold'
-import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
-import SControlActionBarButton from 'sefirot/components/SControlActionBarButton.vue'
-
+import SButton from 'sefirot/components/SButton.vue'
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { useMarkdown } from 'sefirot/composables/Markdown'
 import { ref } from 'vue'
@@ -101,10 +99,8 @@ function alert(message: string) {
           :preview
         >
           <template #actions>
-            <SControlActionBar>
-              <SControlActionBarButton :icon="IconLink" @click="alert('Action link clicked')" />
-              <SControlActionBarButton :icon="IconYouTubeLogo" @click="alert('Action YouTube clicked')" />
-            </SControlActionBar>
+            <SButton type="text" size="sm" mode="mute" :icon="IconLink" @click="alert('Action link clicked')" />
+            <SButton type="text" size="sm" mode="mute" :icon="IconYouTubeLogo" @click="alert('Action YouTube clicked')" />
           </template>
         </SInputTextarea>
       </Board>

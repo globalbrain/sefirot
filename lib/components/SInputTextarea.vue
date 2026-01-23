@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-
-import SControl from './SControl.vue'
-import SControlRight from './SControlRight.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSegments from './SInputSegments.vue'
 
@@ -107,21 +104,21 @@ const isPreview = ref(false)
   >
     <div class="box">
       <div v-if="preview !== undefined || $slots.actions" class="control">
-        <SInputSegments
-          v-if="preview !== undefined"
-          v-model="isPreview"
-          :options="[
-            { label: writeLabel ?? 'Write', value: false },
-            { label: previewLabel ?? 'Preview', value: true }
-          ]"
-          size="mini"
-        />
+        <div class="preview">
+          <SInputSegments
+            v-if="preview !== undefined"
+            v-model="isPreview"
+            :options="[
+              { label: writeLabel ?? 'Write', value: false },
+              { label: previewLabel ?? 'Preview', value: true }
+            ]"
+            size="mini"
+          />
+        </div>
 
-        <SControl v-if="$slots.actions && !isPreview" class="control">
-          <SControlRight>
-            <slot name="actions" />
-          </SControlRight>
-        </SControl>
+        <div v-if="$slots.actions && !isPreview" class="actions">
+          <slot name="actions" />
+        </div>
       </div>
       <textarea
         v-show="!isPreview"
@@ -172,9 +169,20 @@ const isPreview = ref(false)
 .control {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   padding: 0 8px;
   height: 48px;
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
+}
+
+.preview {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .input,
