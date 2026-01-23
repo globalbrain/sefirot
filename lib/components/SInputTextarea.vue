@@ -103,15 +103,22 @@ const isPreview = ref(false)
     :hide-warning
   >
     <div class="box">
-      <div v-if="preview !== undefined" class="control">
-        <SInputSegments
-          v-model="isPreview"
-          :options="[
-            { label: writeLabel ?? 'Write', value: false },
-            { label: previewLabel ?? 'Preview', value: true }
-          ]"
-          size="mini"
-        />
+      <div v-if="preview !== undefined || $slots.actions" class="control">
+        <div class="preview">
+          <SInputSegments
+            v-if="preview !== undefined"
+            v-model="isPreview"
+            :options="[
+              { label: writeLabel ?? 'Write', value: false },
+              { label: previewLabel ?? 'Preview', value: true }
+            ]"
+            size="mini"
+          />
+        </div>
+
+        <div v-if="$slots.actions && !isPreview" class="actions">
+          <slot name="actions" />
+        </div>
       </div>
       <textarea
         v-show="!isPreview"
@@ -162,9 +169,20 @@ const isPreview = ref(false)
 .control {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   padding: 0 8px;
   height: 48px;
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
+}
+
+.preview {
+  flex-grow: 1;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .input,
