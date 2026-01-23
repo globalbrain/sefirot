@@ -1,5 +1,31 @@
 # Changelog
 
+## [4.34.1](https://github.com/globalbrain/sefirot/compare/v4.34.0...v4.34.1) (2026-01-19)
+
+
+### Bug Fixes
+
+* **vite:** configure dep optimizer properly ([1761263](https://github.com/globalbrain/sefirot/commit/176126337566662b0c8320c9f426425367d4f786))
+
+# [4.34.0](https://github.com/globalbrain/sefirot/compare/v4.33.0...v4.34.0) (2026-01-19)
+
+
+### Features
+
+* expose dompurify ([472cad7](https://github.com/globalbrain/sefirot/commit/472cad7e528d53031588523ffabf76f402ed0774))
+
+# [4.33.0](https://github.com/globalbrain/sefirot/compare/v4.32.1...v4.33.0) (2026-01-18)
+
+
+### Bug Fixes
+
+* **vite:** add dompurify as peer dep ([a490f20](https://github.com/globalbrain/sefirot/commit/a490f20cc7d40461a8de63fe8b0578a063d96b1c))
+
+
+### Features
+
+* **types:** move shared types to separate entry and enable ts-reset by default ([78859e2](https://github.com/globalbrain/sefirot/commit/78859e22b8c4a8de84ce7e056be777def7bbbefd))
+
 ## [4.32.1](https://github.com/globalbrain/sefirot/compare/v4.32.0...v4.32.1) (2026-01-13)
 
 

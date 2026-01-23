@@ -152,11 +152,11 @@ function stopDialogPositionListener() {
             <IconDotsThree class="icon" />
           </button>
 
-          <transition name="fade">
+          <Transition name="fade">
             <div v-if="isOpen" ref="dialog" class="dialog" :style="{ top, left }">
               <SDropdown :sections="dropdown" />
             </div>
-          </transition>
+          </Transition>
         </div>
 
         <div v-if="resizable" class="grip" @mousedown="grip" />

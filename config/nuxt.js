@@ -2,7 +2,7 @@
 
 import { fileURLToPath } from 'node:url'
 import icons from 'unplugin-icons/nuxt'
-import { mergeConfig } from 'vite'
+import * as vite from 'vite'
 import { baseConfig as baseViteConfig } from './vite.js'
 
 export const baseConfig = {
@@ -25,10 +25,36 @@ export const baseConfig = {
     resolve: { ...baseViteConfig.resolve, alias: {} },
     plugins: baseViteConfig.plugins?.filter(
       (plugin) => plugin && 'name' in plugin && plugin.name !== 'unplugin-icons'
-    )
+    ),
+    optimizeDeps: {
+      ...(baseViteConfig.optimizeDeps || {}),
+      exclude: [
+        ...(baseViteConfig.optimizeDeps?.exclude || []),
+        '@vue/devtools-core',
+        '@vue/devtools-kit'
+      ]
+    }
+  },
+  nitro: {
+    rollupConfig: {
+      plugins: [{
+        name: 'custom:transpile-ts',
+        /**
+         * @param {string} code
+         * @param {string} id
+         */
+        transform(code, id) {
+          if (id.endsWith('.ts')) {
+            // @ts-ignore
+            if (vite.rolldownVersion) { return vite.transformWithOxc(code, id, { sourcemap: true }) }
+            return vite.transformWithEsbuild(code, id, { sourcemap: true, loader: 'ts' })
+          }
+        }
+      }]
+    }
   }
 }
 
 export function defineConfig(config = {}) {
-  return mergeConfig(baseConfig, config)
+  return vite.mergeConfig(baseConfig, config)
 }
