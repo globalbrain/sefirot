@@ -6,9 +6,9 @@ const snackbars = useSnackbars()
 </script>
 
 <template>
-  <transition name="fade">
+  <Transition name="fade">
     <div v-if="snackbars.items.length" class="SSnackbars">
-      <transition-group name="fade-up">
+      <TransitionGroup name="fade-up">
         <div v-for="item in snackbars.items" :key="item.id" class="item">
           <SSnackbar
             :id="item.id"
@@ -17,9 +17,9 @@ const snackbars = useSnackbars()
             :actions="item.actions"
           />
         </div>
-      </transition-group>
+      </TransitionGroup>
     </div>
-  </transition>
+  </Transition>
 </template>
 
 <style lang="postcss" scoped>
