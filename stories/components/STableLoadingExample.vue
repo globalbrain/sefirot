@@ -502,6 +502,10 @@ function updateTagsFilter(value: string) {
   --table-head-top: 0;
 }
 
+.table :deep(.container.body) {
+  max-height: calc(100vh - 56px * 2 - 41px - 32px * 2 - 56px);
+}
+
 .table :deep(.col-name) {
   --table-col-width: 144px;
 }
@@ -525,7 +529,7 @@ function updateTagsFilter(value: string) {
 }
 
 .table :deep(.col-actions) {
-  --table-col-position: sticky;
+  /* --table-col-position: sticky; */
   --table-col-z-index: 50;
   --table-col-left: auto;
   --table-col-right: 0px;
