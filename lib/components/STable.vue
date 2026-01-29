@@ -240,6 +240,27 @@ useResizeObserver(block, ([entry]) => {
 
 const resizeObserver = useResizeObserver(head, onResize)
 
+const scrollbarWidth = ref(0)
+
+// Calculate and update scrollbar width
+function updateScrollbarWidth() {
+  if (body.value) {
+    scrollbarWidth.value = body.value.offsetWidth - body.value.clientWidth
+  }
+}
+
+// Watch for body changes to recalculate scrollbar width
+watch([body, () => recordsWithSummary.value.length], () => {
+  nextTick(() => {
+    updateScrollbarWidth()
+  })
+}, { flush: 'post', immediate: true })
+
+// Also update on resize
+useResizeObserver(body, () => {
+  updateScrollbarWidth()
+})
+
 const font = typeof document !== 'undefined'
   ? `500 12px ${getComputedStyle(document.body).fontFamily}`
   : '500 12px Inter'
@@ -491,7 +512,12 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
           :style="{ left: `${resizeState.indicatorX}px` }"
         />
 
-        <div ref="head" class="container head" @scroll="syncHeadScroll">
+        <div
+          ref="head"
+          class="container head"
+          :style="{ paddingRight: scrollbarWidth > 0 ? `${scrollbarWidth}px` : undefined }"
+          @scroll="syncHeadScroll"
+        >
           <div ref="block" class="block">
             <div ref="row" class="row">
               <STableItem
