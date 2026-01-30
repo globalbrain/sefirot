@@ -56,5 +56,48 @@ export const baseConfig = {
 }
 
 export function defineConfig(config = {}) {
-  return vite.mergeConfig(baseConfig, config)
+  return mergeConfig(baseConfig, config)
+}
+
+/**
+ * @template T
+ * @param {T} a
+ * @param {Partial<T>} b
+ * @see https://github.com/vuejs/vitepress/blob/d4796a0373eb486766cf48e63fdf461681424d43/src/node/config.ts#L291
+ */
+function mergeConfig(a, b, isRoot = true) {
+  const merged = /** @type {any} */ ({ ...a })
+  for (const key in b) {
+    const value = /** @type {any} */ (b[key])
+    if (value == null) {
+      continue
+    }
+    const existing = merged[key]
+    if (Array.isArray(existing) && Array.isArray(value)) {
+      merged[key] = [...existing, ...value]
+      continue
+    }
+    if (isObject(existing) && isObject(value)) {
+      if (isRoot && key === 'vite') {
+        merged[key] = vite.mergeConfig(existing, value)
+      } else {
+        merged[key] = mergeConfig(existing, value, false)
+      }
+      continue
+    }
+    merged[key] = value
+  }
+  return merged
+}
+
+/**
+ * @param {unknown} value
+ * @return {value is Record<PropertyKey, unknown>}
+ * @see file://./../lib/support/Utils.ts#isObject
+ */
+function isObject(value) {
+  if (value == null || typeof value !== 'object') { return false }
+
+  const proto = Object.getPrototypeOf(value)
+  return proto === null || proto === Object.prototype
 }
