@@ -503,6 +503,7 @@ function updateTagsFilter(value: string) {
 }
 
 .table :deep(.container.body) {
+  /* keep the table body inside the viewport to be scrollable */
   max-height: calc(100vh - 56px * 2 - 41px - 32px * 2 - 56px);
 }
 
@@ -529,7 +530,7 @@ function updateTagsFilter(value: string) {
 }
 
 .table :deep(.col-actions) {
-  /* --table-col-position: sticky; */
+  --table-col-position: sticky;
   --table-col-z-index: 50;
   --table-col-left: auto;
   --table-col-right: 0px;
