@@ -502,6 +502,19 @@ function updateTagsFilter(value: string) {
   --table-head-top: 0;
 }
 
+.table :deep(.container.body) {
+  /* Keep the table body inside the viewport to be scrollable */
+  max-height: calc(100vh -
+      /* Table control + pagination, both 56px height */
+      56px * 2 -
+      /* Table content header, 41px height (including border) */
+      41px -
+      /* Vertical paddings of Story <Board /> */
+      32px * 2 -
+      /* Height of Story nav header */
+      56px);
+}
+
 .table :deep(.col-name) {
   --table-col-width: 144px;
 }
