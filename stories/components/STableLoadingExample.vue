@@ -503,8 +503,16 @@ function updateTagsFilter(value: string) {
 }
 
 .table :deep(.container.body) {
-  /* keep the table body inside the viewport to be scrollable */
-  max-height: calc(100vh - 56px * 2 - 41px - 32px * 2 - 56px);
+  /* Keep the table body inside the viewport to be scrollable */
+  max-height: calc(100vh -
+      /* Table control + pagination, both 56px height */
+      56px * 2 -
+      /* Table content header, 41px height (including border) */
+      41px -
+      /* Vertical paddings of Story <Board /> */
+      32px * 2 -
+      /* Height of Story nav header */
+      56px);
 }
 
 .table :deep(.col-name) {
