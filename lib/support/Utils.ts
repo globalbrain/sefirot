@@ -3,7 +3,7 @@ export function isNumber(value: unknown): value is number {
   return Number.isFinite(value)
 }
 
-export function isObject(value: unknown): value is Record<string, unknown> {
+export function isObject(value: unknown): value is Record<PropertyKey, unknown> {
   if (value == null || typeof value !== 'object') { return false }
 
   const proto = Object.getPrototypeOf(value)

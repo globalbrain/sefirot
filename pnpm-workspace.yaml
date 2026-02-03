@@ -1,8 +1,7 @@
 autoInstallPeers: false
 
 overrides:
-  '@docsearch/react': '-'
-  vite: 6.4.1
+  vite: ^6
 
 onlyBuiltDependencies:
   - esbuild

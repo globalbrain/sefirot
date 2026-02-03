@@ -11,12 +11,17 @@ export default defineConfig([
   await globalbrain({
     rules: {
       'antfu/consistent-list-newline': 'off',
-      'vue/no-template-shadow': 'off',
-      'vue/no-unused-properties': 'warn',
       'no-console': 'warn',
       'no-new-wrappers': 'off', // unicorn/new-for-builtins already handles this
       'unused-imports/no-unused-imports': 'warn',
-      'unused-imports/no-unused-vars': 'warn'
+      'unused-imports/no-unused-vars': 'warn',
+      'vue/component-name-in-template-casing': [
+        'error',
+        'PascalCase',
+        { registeredComponentsOnly: false }
+      ],
+      'vue/no-template-shadow': 'off',
+      'vue/no-unused-properties': 'warn'
     }
   })
 ])

@@ -1,4 +1,4 @@
-import DOMPurify, { type Config } from 'dompurify'
+import { type DOMPurifyConfig, type DOMPurifyI, createDompurify } from '@globalbrain/sefirot/dompurify'
 import MarkdownIt from 'markdown-it'
 
 export type UseMarkdown = (source: string, inline?: boolean) => string
@@ -70,12 +70,17 @@ export interface UseMarkdownOptions extends MarkdownItOptions {
   config?: (md: MarkdownIt) => void
   /** @default false */
   inline?: boolean
-  domPurifyOptions?: Config
+  domPurifyInstance?: DOMPurifyI
+  domPurifyOptions?: DOMPurifyConfig
 }
 
 const EXTERNAL_URL_RE = /^(?:[a-z]+:|\/\/)/i
 
-if (typeof document !== 'undefined') {
+let DOMPurify: DOMPurifyI | undefined
+
+export function getDomPurifySingleton(): DOMPurifyI {
+  if (DOMPurify) { return DOMPurify }
+  DOMPurify = createDompurify()
   DOMPurify.addHook('afterSanitizeAttributes', (node) => {
     if (node.tagName === 'A') {
       const target = node.getAttribute('target')
@@ -92,11 +97,13 @@ if (typeof document !== 'undefined') {
       node.classList.add('SMarkdown-link')
     }
   })
+  return DOMPurify
 }
 
 export function useMarkdown({
   config,
   inline: _inline,
+  domPurifyInstance,
   domPurifyOptions,
   ...options
 }: UseMarkdownOptions = {}): UseMarkdown {
@@ -117,7 +124,7 @@ export function useMarkdown({
 
   return (source, inline = _inline) => {
     const html = inline ? md.renderInline(source) : md.render(source)
-    return DOMPurify.sanitize(html, {
+    return (domPurifyInstance || getDomPurifySingleton()).sanitize(html, {
       USE_PROFILES: { html: true },
       ADD_ATTR: ['target'],
       ...domPurifyOptions

@@ -1,27 +1,40 @@
 {
   "name": "@globalbrain/sefirot",
-  "type": "module",
-  "version": "4.31.0",
-  "packageManager": "pnpm@10.27.0",
+  "version": "4.34.1",
   "description": "Vue Components for Global Brain Design System.",
-  "author": "Kia Ishii <ka.ishii@globalbrains.com>",
-  "license": "MIT",
+  "keywords": [
+    "vue",
+    "vue3",
+    "components",
+    "design-system",
+    "ui-library",
+    "globalbrain"
+  ],
+  "homepage": "https://sefirot.globalbrains.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:globalbrain/sefirot.git"
+    "url": "git+https://github.com/globalbrain/sefirot.git"
   },
-  "bugs": {
-    "url": "https://github.com/globalbrain/sefirot/issues"
+  "license": "MIT",
+  "author": "Kia Ishii <ka.ishii@globalbrains.com>",
+  "type": "module",
+  "exports": {
+    "./client": "./client.d.ts",
+    "./shared": "./shared.d.ts",
+    "./config/nuxt": "./config/nuxt.js",
+    "./config/vite": "./config/vite.js",
+    "./dompurify": {
+      "types": "./lib/dompurify/index.d.ts",
+      "browser": "./lib/dompurify/browser.js",
+      "default": "./lib/dompurify/node.js"
+    },
+    "./*": "./*"
   },
-  "keywords": [
-    "sefirot",
-    "vue",
-    "vue component"
-  ],
   "files": [
     "lib",
     "config",
-    "client.d.ts"
+    "client.d.ts",
+    "shared.d.ts"
   ],
   "scripts": {
     "docs": "pnpm docs:dev",
@@ -44,33 +57,34 @@
   },
   "peerDependencies": {
     "@iconify-json/ph": "^1.2.2",
-    "@iconify-json/ri": "^1.2.7",
+    "@iconify-json/ri": "^1.2.9",
     "@popperjs/core": "^2.11.8",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash-es": "^4.17.12",
     "@types/markdown-it": "^14.1.2",
-    "@vue/reactivity": "^3.5.26",
+    "@vue/reactivity": "^3.5.27",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "@vueuse/core": "^12 || ^13 || ^14",
+    "@vueuse/core": "^14.2.0",
     "body-scroll-lock": "4.0.0-beta.0",
     "dayjs": "^1.11.19",
     "fuse.js": "^7.1.0",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "markdown-it": "^14.1.0",
     "normalize.css": "^8.0.1",
     "pinia": "^3.0.4",
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4"
+    "vue": "^3.5.27",
+    "vue-router": "^5.0.2"
   },
   "dependencies": {
-    "@sentry/browser": "^10.32.1",
-    "@sentry/vue": "^10.32.1",
+    "@sentry/browser": "^10.38.0",
+    "@sentry/vue": "^10.38.0",
     "@tanstack/vue-virtual": "3.0.0-beta.62",
-    "@tinyhttp/content-disposition": "^2.2.2",
+    "@tinyhttp/content-disposition": "^2.2.4",
     "@tinyhttp/cookie": "^2.1.1",
+    "@total-typescript/ts-reset": "^0.6.1",
     "@types/d3": "^7.4.3",
     "@types/file-saver": "^2.0.7",
     "@types/qs": "^6.14.0",
@@ -78,50 +92,53 @@
     "dompurify": "^3.3.1",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
+    "jsdom": "^28.0.0",
     "magic-string": "^0.30.21",
     "maska": "^3.2.0",
     "ofetch": "^1.5.1",
     "qs": "^6.14.1",
-    "unplugin-icons": "^22.5.0"
+    "unplugin-icons": "^23.0.1"
   },
   "devDependencies": {
-    "@globalbrain/eslint-config": "^2.1.0",
+    "@globalbrain/eslint-config": "^3.0.1",
     "@histoire/plugin-vue": "0.16.5",
     "@iconify-json/ph": "^1.2.2",
-    "@iconify-json/ri": "^1.2.7",
+    "@iconify-json/ri": "^1.2.9",
     "@popperjs/core": "^2.11.8",
     "@release-it/conventional-changelog": "^10.0.4",
     "@types/body-scroll-lock": "^3.1.2",
+    "@types/jsdom": "^27.0.0",
     "@types/lodash-es": "^4.17.12",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^25.0.3",
-    "@vitejs/plugin-vue": "^6.0.3",
+    "@types/node": "^25.2.0",
+    "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/coverage-v8": "^3.2.4",
-    "@vue/reactivity": "^3.5.26",
+    "@vue/reactivity": "^3.5.27",
     "@vue/test-utils": "^2.4.6",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "@vueuse/core": "^14.1.0",
+    "@vueuse/core": "^14.2.0",
     "body-scroll-lock": "4.0.0-beta.0",
     "dayjs": "^1.11.19",
     "eslint": "^9.39.2",
     "fuse.js": "^7.1.0",
-    "happy-dom": "^20.0.11",
+    "happy-dom": "^20.5.0",
     "histoire": "0.16.5",
-    "lodash-es": "^4.17.22",
+    "lodash-es": "^4.17.23",
     "markdown-it": "^14.1.0",
     "normalize.css": "^8.0.1",
     "pinia": "^3.0.4",
     "postcss": "^8.5.6",
     "postcss-nested": "^7.0.2",
     "punycode": "^2.3.1",
-    "release-it": "^19.2.3",
+    "release-it": "^19.2.4",
     "typescript": "~5.9.3",
     "vite": "^6.4.1",
-    "vitepress": "^2.0.0-alpha.15",
+    "vitepress": "^2.0.0-alpha.16",
     "vitest": "^3.2.4",
-    "vue": "^3.5.26",
-    "vue-router": "^4.6.4",
-    "vue-tsc": "^3.2.2"
-  }
+    "vue": "^3.5.27",
+    "vue-router": "^5.0.2",
+    "vue-tsc": "^3.2.4"
+  },
+  "packageManager": "pnpm@10.28.2"
 }
