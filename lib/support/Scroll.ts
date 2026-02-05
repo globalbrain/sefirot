@@ -93,8 +93,44 @@ function smoothScrollTo(
 }
 
 /**
+ * Detect fixed or sticky elements at the top of the viewport and calculate
+ * the total height they occupy.
+ */
+function detectTopOffset(): number {
+  if (typeof document === 'undefined') {
+    return 0
+  }
+
+  let maxBottom = 0
+  const elements = document.querySelectorAll('*')
+
+  for (const el of elements) {
+    const styles = window.getComputedStyle(el)
+    const position = styles.position
+
+    // Only consider fixed or sticky elements
+    if (position !== 'fixed' && position !== 'sticky') {
+      continue
+    }
+
+    const rect = el.getBoundingClientRect()
+
+    // Check if element is positioned at or near the top (within 10px tolerance)
+    // and is visible
+    if (rect.top <= 10 && rect.height > 0 && rect.width > 0) {
+      // Track the furthest bottom edge
+      maxBottom = Math.max(maxBottom, rect.bottom)
+    }
+  }
+
+  // Add a small padding (16px) for better spacing
+  return maxBottom > 0 ? maxBottom + 16 : 16
+}
+
+/**
  * Scroll the page so the table is positioned at the top of the viewport.
  * Finds the nearest scrollable parent or scrolls the window if needed.
+ * Automatically accounts for fixed/sticky headers at the top.
  */
 export function scrollTableIntoView(
   tableRootElement: HTMLElement,
@@ -105,6 +141,7 @@ export function scrollTableIntoView(
 ): Promise<void> {
   const rect = tableRootElement.getBoundingClientRect()
   const actualBorderSize = borderless ? 0 : borderSize
+  const topOffset = detectTopOffset()
 
   const resetScrollPositions = () => {
     if (headElement) {
@@ -125,7 +162,7 @@ export function scrollTableIntoView(
       const parentRect = scrollableParent.getBoundingClientRect()
       const relativeTop = rect.top - parentRect.top
       const targetScrollTop =
-        scrollableParent.scrollTop + relativeTop - actualBorderSize
+        scrollableParent.scrollTop + relativeTop - actualBorderSize - topOffset
       return smoothScrollTo(scrollableParent, targetScrollTop).then(
         resetScrollPositions
       )
@@ -135,6 +172,6 @@ export function scrollTableIntoView(
   }
 
   // No scrollable parent found, scroll the window
-  const windowScrollTop = rect.top + window.scrollY - actualBorderSize
+  const windowScrollTop = rect.top + window.scrollY - actualBorderSize - topOffset
   return smoothScrollTo(window, windowScrollTop).then(resetScrollPositions)
 }
