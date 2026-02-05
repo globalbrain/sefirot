@@ -5,6 +5,10 @@
 const MIN_SCROLL_DURATION = 100
 const MAX_SCROLL_DURATION = 160
 const DURATION_SCALE_FACTOR = 0.15
+const TOP_OFFSET_TOLERANCE_PX = 10
+type ScrollTarget = HTMLElement | Window
+
+const topOffsetCache = new WeakMap<HTMLElement, number>()
 
 function easeOutCubic(t: number): number {
   return 1 - (1 - t) ** 3
@@ -20,15 +24,28 @@ function calculateScrollDuration(distance: number): number {
   return Math.min(MAX_SCROLL_DURATION, Math.max(MIN_SCROLL_DURATION, scaled))
 }
 
+function getScrollTop(target: ScrollTarget): number {
+  return target instanceof Window ? target.scrollY : target.scrollTop
+}
+
+function setScrollTop(target: ScrollTarget, value: number): void {
+  if (target instanceof Window) {
+    target.scrollTo(0, value)
+  } else {
+    target.scrollTop = value
+  }
+}
+
+function getEventTarget(target: ScrollTarget): EventTarget {
+  return target instanceof Window ? window : target
+}
+
 /**
  * Smoothly scroll an element to a target Y position with adaptive duration.
  * The animation can be interrupted by user interaction (wheel, touch, mouse, keyboard).
  */
-function smoothScrollTo(
-  element: HTMLElement | Window,
-  targetY: number
-): Promise<void> {
-  const from = element instanceof Window ? element.scrollY : element.scrollTop
+function smoothScrollTo(target: ScrollTarget, targetY: number): Promise<void> {
+  const from = getScrollTop(target)
   const delta = targetY - from
 
   // Skip animation for very small distances
@@ -39,29 +56,44 @@ function smoothScrollTo(
   const duration = calculateScrollDuration(delta)
   let startTime: number | null = null
   let animationFrame: number | null = null
+  let resolvePromise: () => void = () => undefined
+  let settled = false
 
   // Allow user to interrupt the scroll
   const controller = new AbortController()
-  const cancel = () => {
+  const finishScroll = () => {
+    if (settled) {
+      return
+    }
+    settled = true
     if (animationFrame !== null) {
       cancelAnimationFrame(animationFrame)
       animationFrame = null
     }
     controller.abort()
+    resolvePromise()
+  }
+  const cancel = () => {
+    if (controller.signal.aborted) {
+      return
+    }
+    finishScroll()
   }
 
   const opts = { passive: true, signal: controller.signal } as const
 
-  const target = element instanceof Window ? window : element
-  target.addEventListener('wheel', cancel, opts)
-  target.addEventListener('touchstart', cancel, opts)
-  target.addEventListener('mousedown', cancel, opts)
-  target.addEventListener('keydown', cancel, opts)
+  const eventTarget = getEventTarget(target)
+  eventTarget.addEventListener('wheel', cancel, opts)
+  eventTarget.addEventListener('touchstart', cancel, opts)
+  eventTarget.addEventListener('mousedown', cancel, opts)
+  eventTarget.addEventListener('keydown', cancel, opts)
 
   return new Promise<void>((resolve) => {
+    resolvePromise = resolve
+
     function step(currentTime: number): void {
       if (controller.signal.aborted) {
-        resolve()
+        finishScroll()
         return
       }
 
@@ -74,17 +106,13 @@ function smoothScrollTo(
       const eased = easeOutCubic(progress)
       const position = from + delta * eased
 
-      if (element instanceof Window) {
-        element.scrollTo(0, position)
-      } else {
-        element.scrollTop = position
-      }
+      setScrollTop(target, position)
 
       if (progress < 1) {
         animationFrame = requestAnimationFrame(step)
       } else {
         animationFrame = null
-        resolve()
+        finishScroll()
       }
     }
 
@@ -96,9 +124,13 @@ function smoothScrollTo(
  * Detect fixed or sticky elements at the top of the viewport and calculate
  * the total height they occupy.
  */
-function detectTopOffset(): number {
+function detectTopOffset(tableRootElement: HTMLElement): number {
   if (typeof document === 'undefined') {
     return 0
+  }
+
+  if (topOffsetCache.has(tableRootElement)) {
+    return topOffsetCache.get(tableRootElement) ?? 0
   }
 
   let maxBottom = 0
@@ -115,15 +147,40 @@ function detectTopOffset(): number {
 
     const rect = el.getBoundingClientRect()
 
-    // Check if element is positioned at or near the top (within 10px tolerance)
+    // Check if element is positioned at or near the top
     // and is visible
-    if (rect.top <= 10 && rect.height > 0 && rect.width > 0) {
+    if (
+      rect.top <= TOP_OFFSET_TOLERANCE_PX
+      && rect.height > 0
+      && rect.width > 0
+    ) {
       // Track the furthest bottom edge
       maxBottom = Math.max(maxBottom, rect.bottom)
     }
   }
 
-  return maxBottom > 0 ? maxBottom : 0
+  const computed = maxBottom > 0 ? maxBottom : 0
+  topOffsetCache.set(tableRootElement, computed)
+  return computed
+}
+
+function isAlreadyVisible(
+  relativeTop: number,
+  containerHeight: number,
+  topOffset: number
+): boolean {
+  const isNotCoveredByHeader = relativeTop >= topOffset
+  const isInView = relativeTop < containerHeight
+  return isNotCoveredByHeader && isInView
+}
+
+function getTargetScrollTop(
+  currentScrollTop: number,
+  relativeTop: number,
+  borderOffset: number,
+  topOffset: number
+): number {
+  return currentScrollTop + relativeTop - borderOffset - topOffset
 }
 
 /**
@@ -139,10 +196,10 @@ export function scrollTableIntoView(
   borderSize: number
 ): Promise<void> {
   const rect = tableRootElement.getBoundingClientRect()
-  const actualBorderSize = borderless ? 0 : borderSize
-  const topOffset = detectTopOffset()
+  const borderOffset = borderless ? 0 : borderSize
+  const topOffset = detectTopOffset(tableRootElement)
 
-  const resetScrollPositions = () => {
+  const resetHorizontalScroll = () => {
     if (headElement) {
       headElement.scrollLeft = 0
     }
@@ -152,9 +209,15 @@ export function scrollTableIntoView(
   }
 
   // Smooth scroll the table body to the top
-  const scrollBodyPromise = bodyElement
+  const bodyScrollToTop = bodyElement
     ? smoothScrollTo(bodyElement, 0)
     : Promise.resolve()
+  const resetAfterBodyScrollToTop = () =>
+    bodyScrollToTop.then(() => resetHorizontalScroll())
+  const runContainerScrollAndReset = (containerScrollToTable: Promise<void>) =>
+    Promise.all([containerScrollToTable, bodyScrollToTop]).then(() =>
+      resetHorizontalScroll()
+    )
 
   // Try to find a scrollable parent container
   let scrollableParent = tableRootElement.parentElement
@@ -166,22 +229,19 @@ export function scrollTableIntoView(
       const parentRect = scrollableParent.getBoundingClientRect()
       const relativeTop = rect.top - parentRect.top
 
-      // Check if table is already visible in the scrollable parent
-      // Don't scroll if it's not covered by header and is in view
-      const isNotCoveredByHeader = relativeTop >= topOffset
-      const isInView = relativeTop < parentRect.height
-      const isAlreadyVisible = isNotCoveredByHeader && isInView
-
-      if (isAlreadyVisible) {
-        return scrollBodyPromise.then(() => resetScrollPositions())
+      if (isAlreadyVisible(relativeTop, parentRect.height, topOffset)) {
+        return resetAfterBodyScrollToTop()
       }
 
-      const targetScrollTop =
-        scrollableParent.scrollTop + relativeTop - actualBorderSize - topOffset
-      return Promise.all([
-        smoothScrollTo(scrollableParent, targetScrollTop),
-        scrollBodyPromise
-      ]).then(() => resetScrollPositions())
+      const targetScrollTop = getTargetScrollTop(
+        scrollableParent.scrollTop,
+        relativeTop,
+        borderOffset,
+        topOffset
+      )
+      return runContainerScrollAndReset(
+        smoothScrollTo(scrollableParent, targetScrollTop)
+      )
     }
 
     scrollableParent = scrollableParent.parentElement
@@ -189,19 +249,15 @@ export function scrollTableIntoView(
 
   // No scrollable parent found, check window scroll
 
-  // Check if table is already visible in the viewport
-  // Don't scroll if it's not covered by header and is in view
-  const isNotCoveredByHeader = rect.top >= topOffset
-  const isInView = rect.top < window.innerHeight
-  const isAlreadyVisible = isNotCoveredByHeader && isInView
-
-  if (isAlreadyVisible) {
-    return scrollBodyPromise.then(() => resetScrollPositions())
+  if (isAlreadyVisible(rect.top, window.innerHeight, topOffset)) {
+    return resetAfterBodyScrollToTop()
   }
 
-  const windowScrollTop = rect.top + window.scrollY - actualBorderSize - topOffset
-  return Promise.all([
-    smoothScrollTo(window, windowScrollTop),
-    scrollBodyPromise
-  ]).then(() => resetScrollPositions())
+  const windowScrollTop = getTargetScrollTop(
+    window.scrollY,
+    rect.top,
+    borderOffset,
+    topOffset
+  )
+  return runContainerScrollAndReset(smoothScrollTo(window, windowScrollTop))
 }
