@@ -323,15 +323,26 @@ watch(() => unref(props.options.loading), (newValue, oldValue) => {
     const currentRecords = unref(props.options.records) ?? []
     startLoading(currentRecords)
 
-    const element = tableRoot.value
-    if (element) {
-      scrollTableIntoView(
-        element,
-        head.value,
-        body.value,
-        unref(props.options.borderless) ?? false,
-        unref(props.options.borderSize) ?? 1
-      )
+    // Only scroll on page flip (when there were existing records)
+    const isPageFlip = currentRecords.length > 0
+
+    if (isPageFlip) {
+      // Scroll the table body to the top
+      if (body.value) {
+        body.value.scrollTop = 0
+      }
+
+      // Scroll the table into view
+      const element = tableRoot.value
+      if (element) {
+        scrollTableIntoView(
+          element,
+          head.value,
+          body.value,
+          unref(props.options.borderless) ?? false,
+          unref(props.options.borderSize) ?? 1
+        )
+      }
     }
   }
 
