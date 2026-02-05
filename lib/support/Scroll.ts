@@ -123,8 +123,7 @@ function detectTopOffset(): number {
     }
   }
 
-  // Add a small padding (16px) for better spacing
-  return maxBottom > 0 ? maxBottom + 16 : 16
+  return maxBottom > 0 ? maxBottom : 0
 }
 
 /**
@@ -152,6 +151,11 @@ export function scrollTableIntoView(
     }
   }
 
+  // Smooth scroll the table body to the top
+  const scrollBodyPromise = bodyElement
+    ? smoothScrollTo(bodyElement, 0)
+    : Promise.resolve()
+
   // Try to find a scrollable parent container
   let scrollableParent = tableRootElement.parentElement
   while (scrollableParent) {
@@ -161,17 +165,43 @@ export function scrollTableIntoView(
     if (isScrollable) {
       const parentRect = scrollableParent.getBoundingClientRect()
       const relativeTop = rect.top - parentRect.top
+
+      // Check if table is already visible in the scrollable parent
+      // Don't scroll if it's not covered by header and is in view
+      const isNotCoveredByHeader = relativeTop >= topOffset
+      const isInView = relativeTop < parentRect.height
+      const isAlreadyVisible = isNotCoveredByHeader && isInView
+
+      if (isAlreadyVisible) {
+        return scrollBodyPromise.then(() => resetScrollPositions())
+      }
+
       const targetScrollTop =
         scrollableParent.scrollTop + relativeTop - actualBorderSize - topOffset
-      return smoothScrollTo(scrollableParent, targetScrollTop).then(
-        resetScrollPositions
-      )
+      return Promise.all([
+        smoothScrollTo(scrollableParent, targetScrollTop),
+        scrollBodyPromise
+      ]).then(() => resetScrollPositions())
     }
 
     scrollableParent = scrollableParent.parentElement
   }
 
-  // No scrollable parent found, scroll the window
+  // No scrollable parent found, check window scroll
+
+  // Check if table is already visible in the viewport
+  // Don't scroll if it's not covered by header and is in view
+  const isNotCoveredByHeader = rect.top >= topOffset
+  const isInView = rect.top < window.innerHeight
+  const isAlreadyVisible = isNotCoveredByHeader && isInView
+
+  if (isAlreadyVisible) {
+    return scrollBodyPromise.then(() => resetScrollPositions())
+  }
+
   const windowScrollTop = rect.top + window.scrollY - actualBorderSize - topOffset
-  return smoothScrollTo(window, windowScrollTop).then(resetScrollPositions)
+  return Promise.all([
+    smoothScrollTo(window, windowScrollTop),
+    scrollBodyPromise
+  ]).then(() => resetScrollPositions())
 }

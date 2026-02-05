@@ -327,12 +327,6 @@ watch(() => unref(props.options.loading), (newValue, oldValue) => {
     const isPageFlip = currentRecords.length > 0
 
     if (isPageFlip) {
-      // Scroll the table body to the top
-      if (body.value) {
-        body.value.scrollTop = 0
-      }
-
-      // Scroll the table into view
       const element = tableRoot.value
       if (element) {
         scrollTableIntoView(
