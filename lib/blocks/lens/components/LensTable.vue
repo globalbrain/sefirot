@@ -13,10 +13,8 @@ import { useFieldFactory } from '../composables/FieldFactory'
 const props = defineProps<{
   result?: LensResult
   overrides?: Record<string, Partial<FieldData>>
-  indexField?: string | null
   loading: boolean
   selected?: number[]
-  clickableFields?: string[]
 }>()
 
 const emit = defineEmits<{

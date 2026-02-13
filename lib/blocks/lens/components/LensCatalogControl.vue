@@ -20,7 +20,6 @@ export interface Props {
   selected?: number[]
   showQuery?: boolean
   showFilters?: boolean
-  showSort?: boolean
   isConditionActive?: boolean
   isConditionDisabled?: boolean
 }
