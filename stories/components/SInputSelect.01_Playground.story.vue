@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SInputSelect from 'sefirot/components/SInputSelect.vue'
+import SInputSelect, { type Size } from 'sefirot/components/SInputSelect.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputSelect / 01. Playground'
@@ -24,8 +24,20 @@ function initState() {
     help: 'This is a help text.',
     nullable: false,
     disabled: false,
-    error: false
-  } as const
+    error: false,
+    tabindex: 0
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    placeholder: string
+    help: string
+    nullable: boolean
+    disabled: boolean
+    error: boolean
+    tabindex: -1 | 0 | number
+  }
 }
 </script>
 

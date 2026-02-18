@@ -2,7 +2,7 @@
 import IconCheckCircle from '~icons/ph/check-circle-bold'
 import IconXCircle from '~icons/ph/x-circle-bold'
 import SButton from 'sefirot/components/SButton.vue'
-import SInputText from 'sefirot/components/SInputText.vue'
+import SInputText, { type Align, type Size, type TextColor } from 'sefirot/components/SInputText.vue'
 import SSpinner from 'sefirot/components/SSpinner.vue'
 import { useData } from 'sefirot/composables/Data'
 import { useValidation } from 'sefirot/composables/Validation'
@@ -74,8 +74,24 @@ function initState() {
     align: 'left',
     separator: true,
     disabled: false,
-    error: false
-  } as const
+    error: false,
+    tabindex: 0
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    placeholder: string
+    unitBefore: string
+    unitAfter: string
+    help: string
+    textColor: TextColor
+    align: Align
+    separator: boolean
+    disabled: boolean
+    error: boolean
+    tabindex: -1 | 0 | number
+  }
 }
 </script>
 

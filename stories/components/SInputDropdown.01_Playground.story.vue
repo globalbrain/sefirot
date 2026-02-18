@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputDropdown, { type OptionText } from 'sefirot/components/SInputDropdown.vue'
+import SInputDropdown, { type OptionText, type Size } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 01. Playground'
@@ -24,6 +24,12 @@ function initState() {
     nullable: true,
     closeOnClick: false,
     disabled: false
+  } satisfies {
+    size: Size
+    position: '' | 'top' | 'bottom'
+    nullable: boolean
+    closeOnClick: boolean
+    disabled: boolean
   }
 }
 </script>
@@ -68,7 +74,7 @@ function initState() {
           <SInputDropdown
             v-model="singleValue"
             :size="state.size"
-            :position="state.position || undefined"
+            :position="state.position === '' ? undefined : state.position"
             label="Single select"
             placeholder="Select a framework"
             :options
@@ -79,7 +85,7 @@ function initState() {
           <SInputDropdown
             v-model="multiValue"
             :size="state.size"
-            :position="state.position || undefined"
+            :position="state.position === '' ? undefined : state.position"
             label="Multi select"
             placeholder="Select frameworks"
             :options

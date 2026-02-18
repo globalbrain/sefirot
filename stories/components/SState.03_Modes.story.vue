@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SState from 'sefirot/components/SState.vue'
+import SState, { type Size } from 'sefirot/components/SState.vue'
 
 const title = 'Components / SState / 03. Types'
 const docs = '/components/state'
@@ -10,6 +10,9 @@ function initState() {
   return {
     size: 'small',
     label: 'State'
+  } satisfies {
+    size: Size
+    label: string
   }
 }
 </script>

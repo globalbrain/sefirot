@@ -2,7 +2,7 @@
 import IconLink from '~icons/ph/link-bold'
 import IconYouTubeLogo from '~icons/ph/youtube-logo-bold'
 import SButton from 'sefirot/components/SButton.vue'
-import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import SInputTextarea, { type Size } from 'sefirot/components/SInputTextarea.vue'
 import { useMarkdown } from 'sefirot/composables/Markdown'
 import { ref } from 'vue'
 
@@ -22,6 +22,16 @@ function initState() {
     rows: 5,
     disabled: false,
     error: false
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    placeholder: string
+    help: string
+    rows: number
+    disabled: boolean
+    error: boolean
   }
 }
 

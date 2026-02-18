@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SButton from 'sefirot/components/SButton.vue'
+import SButton, { type Mode, type Size, type Type } from 'sefirot/components/SButton.vue'
 
 const title = 'Components / SButton / 01. Playground'
 const docs = '/components/button'
@@ -26,7 +26,7 @@ const sizes = [
 ]
 
 const contentModes = [
-  { label: 'undefined', value: null },
+  { label: 'undefined', value: undefined },
   { label: 'default', value: 'default' },
   { label: 'mute', value: 'mute' },
   { label: 'neutral', value: 'neutral' },
@@ -43,7 +43,7 @@ function initState() {
     size: 'md',
     type: 'fill',
     mode: 'default',
-    labelMode: null,
+    labelMode: undefined,
     label: 'Button',
     count: undefined,
     loading: false,
@@ -53,6 +53,21 @@ function initState() {
       position: 'top',
       trigger: 'both',
       timeout: 0
+    }
+  } satisfies {
+    size: Size
+    type: Type
+    mode: Mode
+    labelMode?: Mode
+    label: string
+    count?: number
+    loading: boolean
+    disabled: boolean
+    tooltip: {
+      text: string
+      position: 'top' | 'right' | 'bottom' | 'left'
+      trigger: 'hover' | 'focus' | 'both'
+      timeout: number
     }
   }
 }

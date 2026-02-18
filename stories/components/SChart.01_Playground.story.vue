@@ -85,6 +85,39 @@ function initState() {
     pieLegendFontSize: undefined,
     pieLabels: false,
     pieLabelFontSize: undefined
+  } satisfies {
+    barType: 'horizontal' | 'vertical'
+    barDebug: boolean
+    barMarginTop?: number
+    barMarginRight?: number
+    barMarginBottom?: number
+    barMarginLeft?: number
+    barTicks?: number
+    barTickFontSize?: number
+    barMaxBandwidth?: number
+    barAnimate: boolean
+    barTooltip: boolean
+    barXLabel?: string
+    barYLabel?: string
+    barXLabelTickGap?: number
+    barYLabelTickGap?: number
+    barXLabelFontSize?: number
+    barYLabelFontSize?: number
+    pieType: 'pie' | 'donut'
+    pieHalf: boolean
+    pieDebug: boolean
+    pieMarginTop?: number
+    pieMarginRight?: number
+    pieMarginBottom?: number
+    pieMarginLeft?: number
+    pieAnimate: boolean
+    pieTooltip: boolean
+    pieActiveKey?: string
+    pieLegend: boolean
+    pieLegendPadding?: number
+    pieLegendFontSize?: number
+    pieLabels: boolean
+    pieLabelFontSize?: number
   }
 }
 </script>

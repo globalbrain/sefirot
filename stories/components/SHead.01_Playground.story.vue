@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SHead from 'sefirot/components/SHead.vue'
 import SHeadLead from 'sefirot/components/SHeadLead.vue'
-import SHeadTitle from 'sefirot/components/SHeadTitle.vue'
+import SHeadTitle, { type Mode } from 'sefirot/components/SHeadTitle.vue'
 
 const title = 'Components / SHead / 01. Playground'
 const docs = '/components/head'
@@ -11,6 +11,10 @@ function initState() {
     mode: 'neutral',
     title: 'The head title',
     lead: 'Lorem ipsum dolor sit, amet consectetur.'
+  } satisfies {
+    mode: Mode
+    title: string
+    lead: string
   }
 }
 </script>

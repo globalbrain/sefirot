@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
+import SInputTextarea, { type Size } from 'sefirot/components/SInputTextarea.vue'
 import { useData } from 'sefirot/composables/Data'
 import { useValidation } from 'sefirot/composables/Validation'
 import { maxLength } from 'sefirot/validation/rules'
@@ -28,7 +28,20 @@ function initState() {
     rows: 5,
     disabled: false,
     error: false,
-    autoResize: 0
+    autoResize: 0,
+    tabindex: 0
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    placeholder: string
+    help: string
+    rows: number
+    disabled: boolean
+    error: boolean
+    autoResize: number
+    tabindex: -1 | 0 | number
   }
 }
 </script>
@@ -101,6 +114,7 @@ function initState() {
           :rows="state.rows"
           :auto-resize="state.autoResize"
           :disabled="state.disabled"
+          :tabindex="state.tabindex"
           :validation="validation.text"
         />
       </Board>

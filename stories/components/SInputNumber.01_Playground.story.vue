@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SInputNumber from 'sefirot/components/SInputNumber.vue'
+import SInputNumber, { type Align, type TextColor } from 'sefirot/components/SInputNumber.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputNumber / 01. Playground'
@@ -22,8 +22,24 @@ function initState() {
     align: 'left',
     separator: true,
     disabled: false,
-    error: false
-  } as const
+    error: false,
+    tabindex: 0
+  } satisfies {
+    size: 'sm' | 'md'
+    label: string
+    info: string
+    note: string
+    placeholder: string
+    unitBefore: string
+    unitAfter: string
+    help: string
+    textColor: TextColor
+    align: Align
+    separator: boolean
+    disabled: boolean
+    error: boolean
+    tabindex: -1 | 0 | number
+  }
 }
 
 function onInput(value: number | null) {

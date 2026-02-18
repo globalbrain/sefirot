@@ -2,7 +2,7 @@
 import IconCheckCircle from '~icons/ph/check-circle'
 import IconImageSquare from '~icons/ph/image-square'
 import IconMagnifyingGlass from '~icons/ph/magnifying-glass'
-import SButton from 'sefirot/components/SButton.vue'
+import SButton, { type Mode, type Size } from 'sefirot/components/SButton.vue'
 
 const title = 'Components / SButton / 04. Icons'
 const docs = '/components/button'
@@ -26,7 +26,7 @@ const modes = [
 ]
 
 const contentModes = [
-  { label: 'null', value: null },
+  { label: 'undefined', value: undefined },
   { label: 'neutral', value: 'neutral' },
   { label: 'mute', value: 'mute' },
   { label: 'white', value: 'white' },
@@ -47,10 +47,18 @@ function initState() {
   return {
     size: 'md',
     mode: 'default',
-    iconMode: null,
-    labelMode: null,
-    label: 'Button'
-  } as const
+    iconMode: undefined,
+    labelMode: undefined,
+    label: 'Button',
+    disabled: false
+  } satisfies {
+    size: Size
+    mode: Mode
+    iconMode?: Mode
+    labelMode?: Mode
+    label: string
+    disabled: boolean
+  }
 }
 </script>
 

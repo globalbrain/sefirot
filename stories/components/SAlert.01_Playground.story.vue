@@ -7,6 +7,8 @@ const docs = '/components/alert'
 function initState() {
   return {
     mode: 'info'
+  } satisfies {
+    mode: 'info' | 'success' | 'warning' | 'danger'
   }
 }
 </script>

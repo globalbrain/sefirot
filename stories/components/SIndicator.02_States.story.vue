@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SIndicator from 'sefirot/components/SIndicator.vue'
+import SIndicator, { type Mode, type Size } from 'sefirot/components/SIndicator.vue'
 
 const title = 'Components / SIndicator / 02. States'
 const docs = '/components/indicator'
@@ -18,6 +18,9 @@ function initState() {
   return {
     size: 'medium',
     mode: 'colored'
+  } satisfies {
+    size: Size
+    mode: Mode
   }
 }
 </script>
