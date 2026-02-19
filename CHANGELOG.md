@@ -1,5 +1,21 @@
 # Changelog
 
+# [4.35.0](https://github.com/globalbrain/sefirot/compare/v4.34.1...v4.35.0) (2026-02-19)
+
+
+### Bug Fixes
+
+* merge nuxt config properly ([ac75c3d](https://github.com/globalbrain/sefirot/commit/ac75c3dae0106e9482a3808c6e55d5a4eb10a68f))
+* **table:** account for scrollbar width in table header padding when body is scrollable ([#674](https://github.com/globalbrain/sefirot/issues/674)) ([e64645b](https://github.com/globalbrain/sefirot/commit/e64645bfe5121b0f4a09794e2710c2ab516c4a89))
+* **table:** fix scroll behaviors on page change ([#675](https://github.com/globalbrain/sefirot/issues/675)) ([7777893](https://github.com/globalbrain/sefirot/commit/77778933ee26d1941b4e6a50adc21adc212a71cb))
+
+
+### Features
+
+* **input-textarea:** add an "actions" slot to display action bar ([#655](https://github.com/globalbrain/sefirot/issues/655)) ([96f1c65](https://github.com/globalbrain/sefirot/commit/96f1c65f008dae2282972b6592a46bd30d48bc98))
+* **lens:** introduce lens ([#676](https://github.com/globalbrain/sefirot/issues/676)) ([f2c2add](https://github.com/globalbrain/sefirot/commit/f2c2add0b929ae8ef578910b9e4b5c0e783fc3e8))
+* **table:** better loading animation with skeleton screen ([#656](https://github.com/globalbrain/sefirot/issues/656)) ([64c3555](https://github.com/globalbrain/sefirot/commit/64c3555f0fac9115207fc879294127f904f65a3a))
+
 ## [4.34.1](https://github.com/globalbrain/sefirot/compare/v4.34.0...v4.34.1) (2026-01-19)
 
 
