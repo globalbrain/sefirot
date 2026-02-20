@@ -8,19 +8,19 @@ import { type FilterInput } from '../filter-inputs/FilterInput'
 import { Field } from './Field'
 
 export class ContentField extends Field<ContentFieldData> {
-  tableCell(_v: any, _r: any): TableCell {
+  override tableCell(_v: any, _r: any): TableCell {
     return { type: 'empty' }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     return {}
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return null
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     return this.defineFormInputComponent((_props, _ctx) => {
       return () => h(SMarkdown, {
         content: this.ctx.lang === 'ja' ? this.data.bodyJa : this.data.bodyEn

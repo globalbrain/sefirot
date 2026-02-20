@@ -6,14 +6,14 @@ import { NumberFilterInput } from '../filter-inputs/NumberFilterInput'
 import { Field } from './Field'
 
 export class NumberField extends Field<NumberFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'number',
       value: v
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const number = new NumberFilterInput()
 
     return {
@@ -22,11 +22,11 @@ export class NumberField extends Field<NumberFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     throw new Error('Not implemented.')
   }
 
-  formInputComponent() {
+  override formInputComponent() {
     throw new Error('Not implemented.')
   }
 }

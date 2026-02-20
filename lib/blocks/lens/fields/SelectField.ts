@@ -30,7 +30,7 @@ export class SelectField extends Field<SelectFieldData> {
     }
   }
 
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     if (v === null) {
       return { type: 'text', value: null }
     }
@@ -70,7 +70,7 @@ export class SelectField extends Field<SelectFieldData> {
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const options = this.data.options.map((o) => ({
       label: this.labelForOption(o),
       value: o.value
@@ -86,7 +86,7 @@ export class SelectField extends Field<SelectFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       if (value === null) {
         return null
@@ -124,11 +124,11 @@ export class SelectField extends Field<SelectFieldData> {
     return this.optionsForValues(value).map((o) => this.labelForOption(o)).join(', ')
   }
 
-  inputEmptyValue(): any {
+  override inputEmptyValue(): any {
     return this.data.multiple ? [] : null
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     switch (this.data.inputAs) {
       case 'dropdown':
         return this.defineDropdownInputComponent()

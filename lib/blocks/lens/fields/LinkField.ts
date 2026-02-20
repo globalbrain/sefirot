@@ -9,7 +9,7 @@ import { TextFilterInput } from '../filter-inputs/TextFilterInput'
 import { Field } from './Field'
 
 export class LinkField extends Field<LinkFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'text',
       value: v,
@@ -18,7 +18,7 @@ export class LinkField extends Field<LinkFieldData> {
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
     return {
@@ -27,7 +27,7 @@ export class LinkField extends Field<LinkFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       return h(SLink, { href: value }, () => value)
     }, {
@@ -35,7 +35,7 @@ export class LinkField extends Field<LinkFieldData> {
     })
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputText, {
         'size': 'md',

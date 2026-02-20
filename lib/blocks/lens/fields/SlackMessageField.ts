@@ -7,7 +7,7 @@ import { type FilterInput } from '../filter-inputs/FilterInput'
 import { Field } from './Field'
 
 export class SlackMessageField extends Field<SlackMessageFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'text',
       value: v,
@@ -16,11 +16,11 @@ export class SlackMessageField extends Field<SlackMessageFieldData> {
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     return {}
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       return h(SLink, { href: value }, () => value)
     }, {
@@ -28,7 +28,7 @@ export class SlackMessageField extends Field<SlackMessageFieldData> {
     })
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     throw new Error('Not implemented.')
   }
 }

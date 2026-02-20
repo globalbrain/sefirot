@@ -9,7 +9,7 @@ import { TextFilterInput } from '../filter-inputs/TextFilterInput'
 import { Field } from './Field'
 
 export class DateField extends Field<DateFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'day',
       value: v ? day(v) : null,
@@ -17,7 +17,7 @@ export class DateField extends Field<DateFieldData> {
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
     return {
@@ -26,13 +26,13 @@ export class DateField extends Field<DateFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       return value ? day(value).format('YYYY-MM-DD') : ''
     })
   }
 
-  inputToPayload(value: any): any {
+  override inputToPayload(value: any): any {
     if (value === null) {
       return null
     }
@@ -40,7 +40,7 @@ export class DateField extends Field<DateFieldData> {
     return value.format('YYYY-MM-DD')
   }
 
-  payloadToInput(value: any): any {
+  override payloadToInput(value: any): any {
     if (value === null) {
       return null
     }
@@ -48,7 +48,7 @@ export class DateField extends Field<DateFieldData> {
     return day(value)
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputDate, {
         'size': 'md',
