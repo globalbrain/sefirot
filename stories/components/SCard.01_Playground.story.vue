@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconLink from '~icons/ph/arrow-square-out'
 import IconPlus from '~icons/ph/plus'
-import SCard from 'sefirot/components/SCard.vue'
+import SCard, { type Mode } from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
 import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
@@ -19,6 +19,9 @@ function initState() {
   return {
     cardMode: 'neutral',
     titleMode: 'neutral'
+  } satisfies {
+    cardMode: Mode
+    titleMode: Mode
   }
 }
 </script>

@@ -7,11 +7,17 @@ const docs = '/components/button-group'
 
 function initState() {
   return {
-    size: 'md' as Size,
-    mode: 'mute' as Mode,
+    size: 'md',
+    mode: 'mute',
     labelA: 'Left',
     labelB: 'Middle',
     labelC: 'Right'
+  } satisfies {
+    size: Size
+    mode: Mode
+    labelA: string
+    labelB: string
+    labelC: string
   }
 }
 </script>

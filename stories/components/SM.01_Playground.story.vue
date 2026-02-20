@@ -19,7 +19,7 @@ function initState() {
 <template>
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
-      <HstText
+      <HstNumber
         v-model="state.opacity"
         title="opacity"
       />

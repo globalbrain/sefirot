@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputFile from 'sefirot/components/SInputFile.vue'
+import SInputFile, { type Size } from 'sefirot/components/SInputFile.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputFile / 01. Playground'
@@ -16,8 +16,19 @@ function initState() {
     text: 'Choose File',
     placeholder: 'No file chosen',
     help: 'This is a help text.',
-    error: false
-  } as const
+    error: false,
+    tabindex: 0
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    text: string
+    placeholder: string
+    help: string
+    error: boolean
+    tabindex: -1 | 0 | number
+  }
 }
 </script>
 

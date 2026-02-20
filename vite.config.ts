@@ -1,5 +1,5 @@
 /// <reference lib="esnext" />
-/// <reference types="vitest" />
+/// <reference types="vitest/config" />
 
 import { stripVTControlCharacters } from 'node:util'
 import vue from '@vitejs/plugin-vue'
@@ -28,7 +28,6 @@ export default defineConfig({
 
     coverage: {
       provider: 'v8',
-      all: true,
       include: ['lib'],
       reporter: ['html', 'json', 'lcov', 'text-summary']
     },

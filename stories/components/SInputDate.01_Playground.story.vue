@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputDate from 'sefirot/components/SInputDate.vue'
+import SInputDate, { type Size } from 'sefirot/components/SInputDate.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDate / 01. Playground'
@@ -8,7 +8,11 @@ const value = ref(null)
 
 function initState() {
   return {
-    size: 'md'
+    size: 'md',
+    tabindex: 0
+  } satisfies {
+    size: Size
+    tabindex: -1 | 0 | number
   }
 }
 </script>

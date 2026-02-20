@@ -22,6 +22,10 @@ function initState() {
     xAxis: 32,
     yAxis: 32,
     dropdownAlign: 'left'
+  } satisfies {
+    xAxis: number
+    yAxis: number
+    dropdownAlign: 'left' | 'right'
   }
 }
 </script>

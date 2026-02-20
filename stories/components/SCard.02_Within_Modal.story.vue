@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SButton from 'sefirot/components/SButton.vue'
-import SCard from 'sefirot/components/SCard.vue'
+import SCard, { type Mode, type Size } from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'
 import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
@@ -22,6 +22,10 @@ function initState() {
     cardSize: 'small',
     cardMode: 'neutral',
     titleMode: 'neutral'
+  } satisfies {
+    cardSize: Size
+    cardMode: Mode
+    titleMode: Mode
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputSegments from 'sefirot/components/SInputSegments.vue'
+import SInputSegments, { type Size } from 'sefirot/components/SInputSegments.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputSegments / 01. Playground'
@@ -24,6 +24,15 @@ function initState() {
     block: false,
     disabled: false,
     error: false
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    help: string
+    block: boolean
+    disabled: boolean
+    error: boolean
   }
 }
 </script>
