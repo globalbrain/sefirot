@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.35.1](https://github.com/globalbrain/sefirot/compare/v4.35.0...v4.35.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* **lens:** add override modifiers to field subclasses ([#680](https://github.com/globalbrain/sefirot/issues/680)) ([949bf13](https://github.com/globalbrain/sefirot/commit/949bf13394e851941c36ec52f69bb2744a0847b4))
+
 # [4.35.0](https://github.com/globalbrain/sefirot/compare/v4.34.1...v4.35.0) (2026-02-19)
 
 
