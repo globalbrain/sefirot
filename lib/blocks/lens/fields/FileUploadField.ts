@@ -16,18 +16,18 @@ export class FileUploadField extends Field<FileUploadFieldData> {
     this.downloader = downloader
   }
 
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'text',
       value: v
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     return {}
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       if (value === null) {
         return null
@@ -41,11 +41,11 @@ export class FileUploadField extends Field<FileUploadFieldData> {
     })
   }
 
-  inputEmptyValue(): any {
+  override inputEmptyValue(): any {
     return []
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputFileUpload, {
         'size': 'mini',

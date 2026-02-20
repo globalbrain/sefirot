@@ -14,7 +14,7 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     this.fetcher = fetcher
   }
 
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'pills',
       pills: v.map((item: any) => ({
@@ -24,7 +24,7 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const method = this.data.resourceEndpointMethod
     const url = this.data.resourceEndpointPath
     const key = this.data.resourceEndpointDataKey
@@ -52,11 +52,11 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     throw new Error('Not implemented.')
   }
 
-  formInputComponent() {
+  override formInputComponent() {
     throw new Error('Not implemented.')
   }
 }

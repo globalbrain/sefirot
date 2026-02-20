@@ -7,14 +7,14 @@ import { TextFilterInput } from '../filter-inputs/TextFilterInput'
 import { Field } from './Field'
 
 export class DatetimeField extends Field<DatetimeFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'day',
       value: v ? day(v) : null
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
     return {
@@ -23,13 +23,13 @@ export class DatetimeField extends Field<DatetimeFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       return value ? day(value).format('YYYY-MM-DD') : ''
     })
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     throw new Error('Not implemented.')
   }
 }

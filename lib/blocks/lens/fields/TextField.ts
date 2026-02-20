@@ -8,14 +8,14 @@ import { TextFilterInput } from '../filter-inputs/TextFilterInput'
 import { Field } from './Field'
 
 export class TextField extends Field<TextFieldData> {
-  tableCell(v: any, _r: any): TableCell {
+  override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'text',
       value: v
     }
   }
 
-  availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
+  override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
     return {
@@ -24,11 +24,11 @@ export class TextField extends Field<TextFieldData> {
     }
   }
 
-  dataListItemComponent(): any {
+  override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => value)
   }
 
-  formInputComponent(): any {
+  override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputText, {
         'size': 'md',
