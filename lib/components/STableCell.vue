@@ -89,8 +89,8 @@ const computedCell = computed<TableCell | undefined>(() =>
       v-else-if="computedCell.type === 'avatar'"
       :value
       :record
-      :image="computedCell.image ?? (value as string).includes('/') ? value : null"
-      :name="computedCell.name ?? (value as string).includes('/') ? null : value"
+      :image="computedCell.image ?? ((value as string).includes('/') ? value : null)"
+      :name="computedCell.name ?? ((value as string).includes('/') ? null : value)"
       :link="computedCell.link"
       :color="computedCell.color"
       :on-click="computedCell.onClick"
