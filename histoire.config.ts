@@ -25,9 +25,6 @@ export default defineConfig({
     define: {
       __DOCS_HOST__: JSON.stringify(getDocsHost())
     },
-    optimizeDeps: {
-      noDiscovery: true // vite 6 compat
-    },
     plugins: [
       {
         name: 'revert-vue-core-12141',
@@ -36,6 +33,16 @@ export default defineConfig({
             const s = new MagicString(code)
             s.replace(/(isOldValueReadonly.*?)return true;/s, '$1return false;')
             return { code: s.toString(), map: s.generateMap() }
+          }
+        }
+      },
+      {
+        name: 'prevent-unnecessary-reloads',
+        config() {
+          return {
+            optimizeDeps: {
+              noDiscovery: true
+            }
           }
         }
       }

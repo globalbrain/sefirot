@@ -599,7 +599,6 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
                       :cell="getCell(key, item.index)"
                       :value="recordsWithSummary[item.index][key]"
                       :record="recordsWithSummary[item.index]"
-                      :records="unref(options.records)!"
                     >
                       <template v-if="key === '__select' && !isSummary(item.index)">
                         <SInputCheckbox
@@ -695,6 +694,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   width: 100%;
   min-width: 100%;
   overflow-x: auto;
+  overscroll-behavior: none;
 }
 
 .container.head {
