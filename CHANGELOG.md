@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.35.4](https://github.com/globalbrain/sefirot/compare/v4.35.3...v4.35.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* **http:** ofetch types in nuxt ([9f669fb](https://github.com/globalbrain/sefirot/commit/9f669fb24e3cf407531d2995253f1af8448f451c))
+
 ## [4.35.3](https://github.com/globalbrain/sefirot/compare/v4.35.2...v4.35.3) (2026-02-23)
 
 ## [4.35.2](https://github.com/globalbrain/sefirot/compare/v4.35.1...v4.35.2) (2026-02-23)
