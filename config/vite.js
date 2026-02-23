@@ -41,37 +41,7 @@ export const baseConfig = {
   resolve: {
     alias: {
       'sefirot/': lib
-    },
-
-    // list the client-side direct dependencies/peerDependencies which get bundled
-    dedupe: [
-      '@popperjs/core',
-      '@sentry/browser',
-      '@sentry/vue',
-      '@tanstack/vue-virtual',
-      '@tinyhttp/content-disposition',
-      '@tinyhttp/cookie',
-      '@vue/reactivity',
-      '@vuelidate/core',
-      '@vuelidate/validators',
-      '@vueuse/core',
-      'body-scroll-lock',
-      'd3',
-      'dayjs',
-      'dompurify',
-      'file-saver',
-      'fuse.js',
-      'html2canvas',
-      'lodash-es',
-      'markdown-it',
-      'normalize.css',
-      'ofetch',
-      'pinia',
-      'qs',
-      'v-calendar',
-      'vue',
-      'vue-router'
-    ]
+    }
   },
 
   ssr: {
@@ -102,6 +72,7 @@ export const baseConfig = {
   },
 
   optimizeDeps: {
+    // @keep-sorted
     include: [
       ...files,
       '@globalbrain/sefirot/dompurify',
@@ -115,11 +86,13 @@ export const baseConfig = {
       'markdown-it > entities',
       'qs'
     ],
+    // @keep-sorted
     exclude: [
       '@vueuse/core',
       'fuse.js',
       'lodash-es',
-      'markdown-it'
+      'markdown-it',
+      'vue-draggable-plus'
     ]
   }
 }
@@ -128,6 +101,6 @@ export const baseConfig = {
  * @param {import('vite').UserConfigExport} config
  */
 export function defineConfig(config = {}) {
-  return async (/** @type {import("vite").ConfigEnv} */ configEnv) =>
+  return async (/** @type {import('vite').ConfigEnv} */ configEnv) =>
     vite.mergeConfig(baseConfig, await (typeof config === 'function' ? config(configEnv) : config))
 }
