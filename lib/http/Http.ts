@@ -61,7 +61,9 @@ export class Http {
   }
 
   private async performRequestRaw<T>(url: string, options: FetchOptions = {}): Promise<FetchResponse<T>> {
-    return this.config.client.raw(...(await this.buildRequest(url, options)))
+    // 'raw' is unavailable in useRequestFetch() during SSR, but performRequestRaw is only
+    // called by download, which runs client-side, so asserting raw's existence is safe
+    return this.config.client.raw!(...(await this.buildRequest(url, options)))
   }
 
   async get<T = any>(url: string, options?: FetchOptions): Promise<T> {

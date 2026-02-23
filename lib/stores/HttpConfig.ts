@@ -8,7 +8,7 @@ type Awaitable<T> = T | PromiseLike<T>
 
 export interface HttpClient {
   (request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<any>
-  raw(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<any>>
+  raw?(request: FetchRequest, options?: Omit<FetchOptions, 'method'>): Promise<FetchResponse<any>>
 }
 
 export interface HttpOptions {
