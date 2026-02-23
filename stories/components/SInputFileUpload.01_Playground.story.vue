@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SInputFileUpload from 'sefirot/components/SInputFileUpload.vue'
+import SInputFileUpload, { type Size } from 'sefirot/components/SInputFileUpload.vue'
 import { useData } from 'sefirot/composables/Data'
 import { maxFileSize } from 'sefirot/validation/rules'
 
@@ -18,15 +18,26 @@ function initState() {
   return {
     size: 'small',
     label: 'Label',
-    info: null,
-    note: null,
+    info: undefined,
+    note: undefined,
     text: undefined,
     placeholder: '1MB max per file.',
-    emptyText: null,
-    help: null,
-    accept: null,
+    emptyText: undefined,
+    help: undefined,
+    accept: undefined,
     droppable: true
-  } as const
+  } satisfies {
+    size: Size
+    label: string
+    info?: string
+    note?: string
+    text?: string
+    placeholder: string
+    emptyText?: string
+    help?: string
+    accept?: string
+    droppable: boolean
+  }
 }
 </script>
 

@@ -9,15 +9,25 @@ const on = ref(false)
 
 function initState() {
   return {
-    size: 'md' as Size,
+    size: 'md',
     label: 'Label',
     info: 'Some helpful information.',
     note: 'Note text',
     help: 'This is a help text.',
     text: 'Text for the switch',
-    color: 'info' as ActiveColor,
+    color: 'info',
     disabled: false,
     error: false
+  } satisfies {
+    size: Size
+    label: string
+    info: string
+    note: string
+    help: string
+    text: string
+    color: ActiveColor
+    disabled: boolean
+    error: boolean
   }
 }
 </script>

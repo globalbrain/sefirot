@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import SState from 'sefirot/components/SState.vue'
+import SState, { type Mode, type Size } from 'sefirot/components/SState.vue'
 
 const title = 'Components / SState / 01. Playground'
 const docs = '/components/state'
@@ -9,6 +9,10 @@ function initState() {
     size: 'small',
     mode: 'default',
     label: 'State'
+  } satisfies {
+    size: Size
+    mode: Mode
+    label: string
   }
 }
 </script>

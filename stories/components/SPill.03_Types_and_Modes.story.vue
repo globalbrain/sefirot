@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SPill from 'sefirot/components/SPill.vue'
+import SPill, { type Size } from 'sefirot/components/SPill.vue'
 
 const title = 'Components / SPill / 03. Types and Modes'
 const docs = '/components/pill'
@@ -17,6 +17,10 @@ function initState() {
     size: 'small',
     label: 'Pill',
     clickable: false
+  } satisfies {
+    size: Size
+    label: string
+    clickable: boolean
   }
 }
 </script>

@@ -14,8 +14,11 @@ const options: Record<string, Position> = {
 
 function initState() {
   return {
-    position: 'top' as Position,
+    position: 'top',
     text: 'This is a tooltip message.'
+  } satisfies {
+    position: Position
+    text: string
   }
 }
 </script>
