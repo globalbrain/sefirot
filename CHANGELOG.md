@@ -1,5 +1,7 @@
 # Changelog
 
+## [4.35.2](https://github.com/globalbrain/sefirot/compare/v4.35.1...v4.35.2) (2026-02-23)
+
 ## [4.35.1](https://github.com/globalbrain/sefirot/compare/v4.35.0...v4.35.1) (2026-02-20)
 
 
@@ -71,7 +73,7 @@
 ### Features
 
 * rewrite validators and tests ([#648](https://github.com/globalbrain/sefirot/issues/648)) ([e1d8859](https://github.com/globalbrain/sefirot/commit/e1d88596c3c5497f4668f653fdb53bbe18ccefd2))
-* **STable:** use resize indicator during column drag for better perf ([#658](https://github.com/globalbrain/sefirot/issues/658)) ([139c391](https://github.com/globalbrain/sefirot/commit/139c39156bdb8303c53609e428dc982eb10a8a72))
+* **table:** use resize indicator during column drag for better perf ([#658](https://github.com/globalbrain/sefirot/issues/658)) ([139c391](https://github.com/globalbrain/sefirot/commit/139c39156bdb8303c53609e428dc982eb10a8a72))
 
 # [4.31.0](https://github.com/globalbrain/sefirot/compare/v4.30.1...v4.31.0) (2025-08-20)
 
