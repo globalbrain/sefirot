@@ -39,6 +39,9 @@ export class SelectFilterInput extends FilterInput {
   }
 
   protected castValueMany(value: any): any {
+    if (value == null) {
+      return []
+    }
     if (Array.isArray(value)) {
       return value
     }
