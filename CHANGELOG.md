@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.36.0](https://github.com/globalbrain/sefirot/compare/v4.35.4...v4.36.0) (2026-02-24)
+
+
+### Features
+
+* **lens:** add table filter option to related many field ([#686](https://github.com/globalbrain/sefirot/issues/686)) ([85c6e4d](https://github.com/globalbrain/sefirot/commit/85c6e4d394a5f852fd513d75bf116945d1312a0b))
+
 ## [4.35.4](https://github.com/globalbrain/sefirot/compare/v4.35.3...v4.35.4) (2026-02-23)
 
 
