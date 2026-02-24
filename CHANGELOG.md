@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.36.1](https://github.com/globalbrain/sefirot/compare/v4.36.0...v4.36.1) (2026-02-24)
+
+
+### Bug Fixes
+
+* **lens:** cast null value as empty array on select filter input ([#687](https://github.com/globalbrain/sefirot/issues/687)) ([ecf622f](https://github.com/globalbrain/sefirot/commit/ecf622fd6df3addab71edc5c9bc0f1a2f6696179))
+
 # [4.36.0](https://github.com/globalbrain/sefirot/compare/v4.35.4...v4.36.0) (2026-02-24)
 
 
