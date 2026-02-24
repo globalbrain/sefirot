@@ -1,3 +1,5 @@
+import { xor } from 'lodash-es'
+import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type RelatedManyFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
@@ -12,6 +14,34 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
   constructor(ctx: any, data: RelatedManyFieldData, fetcher: ResourceFetcher) {
     super(ctx, data)
     this.fetcher = fetcher
+  }
+
+  override async tableFilterMenu(filters: any[], onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
+    const method = this.data.resourceEndpointMethod
+    const url = this.data.resourceEndpointPath
+    const key = this.data.resourceEndpointDataKey
+
+    if (!url) {
+      return null
+    }
+
+    const selected = this.inFilterValueFor(this.data.key, filters)
+
+    const res = await this.fetcher(method, url)
+    const data = key ? res[key] : res
+
+    const options = data.map((item: any) => ({
+      label: item[this.data.resourceTitle],
+      value: item[this.data.filterKey]
+    }))
+
+    return {
+      type: 'filter',
+      search: true,
+      selected,
+      options,
+      onClick: (v) => { onFilterUpdated?.([this.data.key, 'in', xor(selected, [v])]) }
+    }
   }
 
   override tableCell(v: any, _r: any): TableCell {
