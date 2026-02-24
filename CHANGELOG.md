@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.37.0](https://github.com/globalbrain/sefirot/compare/v4.36.1...v4.37.0) (2026-02-24)
+
+
+### Features
+
+* **lens:** add `settings` to lens query ([#681](https://github.com/globalbrain/sefirot/issues/681)) ([c33c985](https://github.com/globalbrain/sefirot/commit/c33c985ee2bde8075d4ccb041c256eda134ed8a0))
+
 ## [4.36.1](https://github.com/globalbrain/sefirot/compare/v4.36.0...v4.36.1) (2026-02-24)
 
 
