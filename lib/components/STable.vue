@@ -694,7 +694,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   width: 100%;
   min-width: 100%;
   overflow-x: auto;
-  overscroll-behavior: none;
+  overscroll-behavior-x: none;
 }
 
 .container.head {
