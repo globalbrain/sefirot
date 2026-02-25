@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.37.1](https://github.com/globalbrain/sefirot/compare/v4.37.0...v4.37.1) (2026-02-25)
+
+
+### Bug Fixes
+
+* **table:** disable overscroll only on x-axis ([5b16403](https://github.com/globalbrain/sefirot/commit/5b164038117b9686bfaacf6fe5cf74613932ed87))
+
 # [4.37.0](https://github.com/globalbrain/sefirot/compare/v4.36.1...v4.37.0) (2026-02-24)
 
 
