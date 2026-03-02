@@ -433,24 +433,8 @@ function getCell(key: string, index: number) {
   return isSummary(index) && col?.summaryCell ? col?.summaryCell : col?.cell
 }
 
-function isObjectLike(value: unknown): value is Record<string, any> {
-  return value !== null && typeof value === 'object'
-}
-
-function equalsSelection(a: unknown, b: unknown): boolean {
-  if (Object.is(a, b)) {
-    return true
-  }
-
-  if (isObjectLike(a) && isObjectLike(b)) {
-    return isEqual(a, b)
-  }
-
-  return false
-}
-
 function includesSelection(items: unknown[], target: unknown): boolean {
-  return items.some((item) => equalsSelection(item, target))
+  return items.some((item) => isEqual(item, target))
 }
 
 function updateSelected(items: any) {
@@ -472,7 +456,7 @@ function addSelected(item: any) {
 }
 
 function removeSelected(item: any) {
-  updateSelected((selected.value as any[]).filter((i) => !equalsSelection(i, item)))
+  updateSelected((selected.value as any[]).filter((i) => !isEqual(i, item)))
 }
 
 function getColWidth(key: string) {
@@ -637,7 +621,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
                         />
                         <SInputRadio
                           v-else
-                          :model-value="equalsSelection(selected, indexes[item.index])"
+                          :model-value="isEqual(selected, indexes[item.index])"
                           :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
                           @update:model-value="(c) => updateSelected(c ? indexes[item.index] : null)"
                         />
