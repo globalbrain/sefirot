@@ -17,7 +17,7 @@ import { useTrans } from '../../../composables/Lang'
 export interface Props {
   queryPh?: string
   filterPresets?: FilterPresets[]
-  selected?: number[]
+  selected?: any[]
   showQuery?: boolean
   showFilters?: boolean
   isConditionActive?: boolean
