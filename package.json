@@ -53,7 +53,7 @@
     "coverage": "vitest run --coverage",
     "test": "pnpm run type && pnpm run lint && pnpm run coverage",
     "test:fail": "pnpm run type && pnpm run lint:fail && pnpm run coverage",
-    "release": "release-it"
+    "release": "pnpm whoami >/dev/null 2>&1 || pnpm login && release-it"
   },
   "dependencies": {
     "@iconify-json/ph": "^1.2.2",
