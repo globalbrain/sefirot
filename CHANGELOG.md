@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.38.0](https://github.com/globalbrain/sefirot/compare/v4.37.1...v4.38.0) (2026-03-02)
+
+
+### Bug Fixes
+
+* avatar cell's value prop could be absent ([#688](https://github.com/globalbrain/sefirot/issues/688)) ([a31cb5e](https://github.com/globalbrain/sefirot/commit/a31cb5e7f480679b43be7ccc8505520102a277d8))
+
+
+### Features
+
+* **table:** handle arbitrary selection types for Lens table ([#690](https://github.com/globalbrain/sefirot/issues/690)) ([f365a12](https://github.com/globalbrain/sefirot/commit/f365a127465616673bbf94ebc45cbc88b117c8e1))
+
 ## [4.37.1](https://github.com/globalbrain/sefirot/compare/v4.37.0...v4.37.1) (2026-02-25)
 
 
