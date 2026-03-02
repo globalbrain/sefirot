@@ -168,7 +168,10 @@ const control = computed({
         return false
       }
 
-      if (indexes.value.every((index) => includesSelection(selected.value as any[], index))) {
+      if (
+        indexes.value.length > 0 &&
+        indexes.value.every((index) => includesSelection(selected.value as any[], index))
+      ) {
         return true
       }
     }
@@ -187,7 +190,7 @@ const control = computed({
 
 watch(indexes, (newValue) => {
   if (Array.isArray(selected.value)) {
-    updateSelected(selected.value.filter((item) => includesSelection(newValue, item)))
+    updateSelected(newValue.filter((item) => includesSelection(selected.value as any[], item)))
   }
 })
 

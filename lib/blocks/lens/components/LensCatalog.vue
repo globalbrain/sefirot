@@ -342,8 +342,8 @@ defineExpose({
   /**
    * Retrieve the current records in the catalog. This method is required when
    * the parent component needs to access the records directly, for example, to
-   * handle mapping for selected records. But as the same as `updateRecords`,
-   * this is also a hacky method and should be avoided if possible.
+   * handle mapping for selected records. Like `updateRecords`, this is also a
+   * hacky method and should be avoided if possible.
    */
   records(): Record<string, any>[] {
     return result.value?.data ?? []
