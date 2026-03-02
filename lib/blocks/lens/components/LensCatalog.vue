@@ -97,7 +97,7 @@ const props = withDefaults(defineProps<Props>(), {
   canSort: true
 })
 
-const selected = defineModel<number[]>('selected')
+const selected = defineModel<any[]>('selected')
 const hideConditions = defineModel<boolean>('hideConditions', { default: false })
 
 const emit = defineEmits<{
@@ -320,7 +320,7 @@ function onViewUpdated(newSelect: string[], newSelectable: string[], overrides: 
   emit('overrides-updated', _overrides.value)
 }
 
-function onUpdateSelected(value: number[]) {
+function onUpdateSelected(value: any[]) {
   selected.value = value
 }
 
@@ -339,6 +339,16 @@ function onNext() {
 }
 
 defineExpose({
+  /**
+   * Retrieve the current records in the catalog. This method is required when
+   * the parent component needs to access the records directly, for example, to
+   * handle mapping for selected records. Like `updateRecords`, this is also a
+   * hacky method and should be avoided if possible.
+   */
+  records(): Record<string, any>[] {
+    return result.value?.data ?? []
+  },
+
   /**
    * Mutates the fetched records directly. This exposed method can be used to
    * do in-place updates of records from the parent component. However, it's

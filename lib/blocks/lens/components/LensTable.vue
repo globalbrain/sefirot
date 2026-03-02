@@ -14,11 +14,12 @@ const props = defineProps<{
   result?: LensResult
   overrides?: Record<string, Partial<FieldData>>
   loading: boolean
-  selected?: number[]
+  selected?: any[]
+  indexField?: string
 }>()
 
 const emit = defineEmits<{
-  'update:selected': [value: number[]]
+  'update:selected': [value: any[]]
   'filter-updated': [filter: any[]]
   'sort-updated': [sort: LensQuerySort]
   'cell-clicked': [value: any, record: any]
@@ -87,10 +88,11 @@ const table = useTable({
   records,
   orders,
   columns,
+  indexField: props.indexField,
   borderless: true
 })
 
-function onSelect(value?: number[]) {
+function onSelect(value?: any[]) {
   emit('update:selected', value ?? [])
 }
 

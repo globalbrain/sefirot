@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="S extends any = undefined">
 import { useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
-import xor from 'lodash-es/xor'
+import isEqual from 'lodash-es/isEqual'
 import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
 import { type VirtualRow, useTableAnimation } from '../composables/TableAnimation'
@@ -185,10 +185,9 @@ const control = computed({
   }
 })
 
-watch(indexes, (newValue, oldValue) => {
+watch(indexes, (newValue) => {
   if (Array.isArray(selected.value)) {
-    const removed = xor(newValue, oldValue)
-    updateSelected(selected.value.filter((item) => !removed.includes(item)))
+    updateSelected(newValue.filter((item) => includesSelection(selected.value as any[], item)))
   }
 })
 
@@ -431,6 +430,10 @@ function getCell(key: string, index: number) {
   return isSummary(index) && col?.summaryCell ? col?.summaryCell : col?.cell
 }
 
+function includesSelection(items: unknown[], target: unknown): boolean {
+  return items.some((item) => isEqual(item, target))
+}
+
 function updateSelected(items: any) {
   if (Array.isArray(selected.value)) {
     selected.value = [...items] as any
@@ -440,11 +443,17 @@ function updateSelected(items: any) {
 }
 
 function addSelected(item: any) {
-  updateSelected([...(selected.value as any), item])
+  const items = selected.value as any[]
+
+  if (includesSelection(items, item)) {
+    return
+  }
+
+  updateSelected([...items, item])
 }
 
 function removeSelected(item: any) {
-  updateSelected((selected.value as any[]).filter((i) => i !== item))
+  updateSelected((selected.value as any[]).filter((i) => !isEqual(i, item)))
 }
 
 function getColWidth(key: string) {
@@ -603,13 +612,13 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
                       <template v-if="key === '__select' && !isSummary(item.index)">
                         <SInputCheckbox
                           v-if="Array.isArray(selected)"
-                          :model-value="selected.includes(indexes[item.index])"
+                          :model-value="includesSelection(selected, indexes[item.index])"
                           :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
                           @update:model-value="(c) => (c ? addSelected : removeSelected)(indexes[item.index])"
                         />
                         <SInputRadio
                           v-else
-                          :model-value="selected === indexes[item.index]"
+                          :model-value="isEqual(selected, indexes[item.index])"
                           :disabled="options.disableSelection?.(recordsWithSummary[item.index]) === true"
                           @update:model-value="(c) => updateSelected(c ? indexes[item.index] : null)"
                         />
