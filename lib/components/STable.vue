@@ -168,7 +168,7 @@ const control = computed({
         return false
       }
 
-      if (indexes.value.every((index) => includesSelection(selected.value as any[], index))) {
+      if (selected.value.length === indexes.value.length) {
         return true
       }
     }
