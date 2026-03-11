@@ -5,6 +5,11 @@ export function objectToFormData(
   onlyFiles = false
 ): FormData {
   const fd = form || new FormData()
+
+  if (obj == null) {
+    return fd
+  }
+
   let formKey: string
 
   Object.keys(obj).forEach((property) => {
