@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.38.1](https://github.com/globalbrain/sefirot/compare/v4.38.0...v4.38.1) (2026-03-11)
+
+
+### Bug Fixes
+
+* **http:** fix nested key generation in objectToFormData ([#691](https://github.com/globalbrain/sefirot/issues/691)) ([70cfb9f](https://github.com/globalbrain/sefirot/commit/70cfb9f5edb4eda1efbee36a10e1874630f0a573))
+
 # [4.38.0](https://github.com/globalbrain/sefirot/compare/v4.37.1...v4.38.0) (2026-03-02)
 
 
