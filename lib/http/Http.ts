@@ -3,6 +3,7 @@ import { parse as parseCookie } from '@tinyhttp/cookie'
 import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
 import { stringify } from 'qs'
+import { objectToFormData } from '../support/Http'
 
 type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
 
@@ -87,7 +88,7 @@ export class Http {
       })
 
       if (hasFile) {
-        const formData = this.objectToFormData(body, undefined, undefined, true)
+        const formData = objectToFormData(body, undefined, undefined, true)
         formData.append(this.config.payloadKey, payload)
         body = formData
       } else {
@@ -111,7 +112,7 @@ export class Http {
   }
 
   async upload<T = any>(url: string, body?: any, options?: FetchOptions): Promise<T> {
-    return this.post<T>(url, this.objectToFormData(body), options)
+    return this.post<T>(url, objectToFormData(body), options)
   }
 
   async download(url: string, options?: FetchOptions): Promise<void> {
@@ -131,43 +132,6 @@ export class Http {
     FileSaver.saveAs(blob, filename as string)
   }
 
-  private objectToFormData(
-    obj: any,
-    form?: FormData,
-    namespace?: string,
-    onlyFiles = false
-  ): FormData {
-    const fd = form || new FormData()
-    let formKey: string
-
-    Object.keys(obj).forEach((property) => {
-      if (namespace) {
-        formKey = `${namespace}[${property}]`
-      } else {
-        formKey = property
-      }
-
-      if (obj[property] === undefined) {
-        return
-      }
-
-      if (
-        typeof obj[property] === 'object'
-        && !(obj[property] instanceof Blob)
-        && obj[property] !== null
-      ) {
-        this.objectToFormData(obj[property], fd, property, onlyFiles)
-      } else {
-        const value = obj[property] === null ? '' : obj[property]
-        if (onlyFiles && !(value instanceof Blob)) {
-          return
-        }
-        fd.append(formKey, value)
-      }
-    })
-
-    return fd
-  }
 }
 
 export function isFetchError(e: unknown): e is FetchError {
