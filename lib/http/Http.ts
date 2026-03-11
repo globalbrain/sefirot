@@ -131,7 +131,6 @@ export class Http {
 
     FileSaver.saveAs(blob, filename as string)
   }
-
 }
 
 export function isFetchError(e: unknown): e is FetchError {
