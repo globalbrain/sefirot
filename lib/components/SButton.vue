@@ -152,11 +152,12 @@ function onClick(): void {
   letter-spacing: 0;
   text-align: center;
   border: 1px solid var(--button-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--button-text-color);
   background-color: var(--button-bg-color);
   overflow: hidden;
   white-space: nowrap;
+  box-shadow: var(--button-box-shadow, none);
   transition: color 0.25s, border-color 0.25s, background-color 0.25s;
 
   &:hover {
@@ -356,6 +357,7 @@ function onClick(): void {
     --button-text-color: var(--button-fill-default-text-color);
     --button-bg-color: var(--button-fill-default-bg-color);
     --button-count-bg-color: var(--button-fill-default-count-bg-color);
+    --button-box-shadow: var(--button-fill-default-box-shadow);
     --button-hover-border-color: var(--button-fill-default-hover-border-color);
     --button-hover-text-color: var(--button-fill-default-hover-text-color);
     --button-hover-bg-color: var(--button-fill-default-hover-bg-color);

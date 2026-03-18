@@ -15,13 +15,13 @@ const open = ref(false)
 
 function initState() {
   return {
-    cardSize: 'small',
-    cardMode: 'neutral',
-    titleMode: 'neutral'
+    size: 'small',
+    mode: 'neutral',
+    muted: false
   } satisfies {
-    cardSize: Size
-    cardMode: Mode
-    titleMode: Mode
+    size: Size
+    mode: Mode
+    muted: boolean
   }
 }
 </script>
@@ -30,8 +30,8 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
-        v-model="state.cardSize"
-        title="Card size"
+        v-model="state.size"
+        title="size"
         :options="{
           small: 'small',
           medium: 'medium',
@@ -41,8 +41,8 @@ function initState() {
         }"
       />
       <HstSelect
-        v-model="state.cardMode"
-        title="Card mode"
+        v-model="state.mode"
+        title="mode"
         :options="{
           neutral: 'neutral',
           info: 'info',
@@ -51,6 +51,10 @@ function initState() {
           danger: 'danger'
         }"
       />
+      <HstCheckbox
+        v-model="state.muted"
+        title="muted"
+      />
     </template>
 
     <template #default="{ state }">
@@ -58,7 +62,7 @@ function initState() {
         <SButton size="md" mode="info" label="Open dialog" @click="open = true" />
 
         <SModal :open @close="open = false">
-          <SCard :size="state.cardSize" :mode="state.cardMode">
+          <SCard :size="state.size" :mode="state.mode" :muted="state.muted">
             <SCardClose @click="open = false" />
             <SCardBlock class="s-pt-20 s-px-24 s-pb-24">
               <SContent>

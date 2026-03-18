@@ -186,10 +186,11 @@ function emitChange(e: any): void {
 .box {
   position: relative;
   border: 1px solid var(--input-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
   color: var(--input-value-color);
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 

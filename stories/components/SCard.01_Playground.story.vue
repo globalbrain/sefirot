@@ -10,11 +10,11 @@ const docs = '/components/card'
 
 function initState() {
   return {
-    cardMode: 'neutral',
-    titleMode: 'neutral'
+    mode: 'neutral',
+    muted: false
   } satisfies {
-    cardMode: Mode
-    titleMode: Mode
+    mode: Mode
+    muted: boolean
   }
 }
 </script>
@@ -23,8 +23,8 @@ function initState() {
   <Story :title :init-state source="Not available" auto-props-disabled>
     <template #controls="{ state }">
       <HstSelect
-        v-model="state.cardMode"
-        title="Card mode"
+        v-model="state.mode"
+        title="mode"
         :options="{
           neutral: 'neutral',
           info: 'info',
@@ -33,12 +33,16 @@ function initState() {
           danger: 'danger'
         }"
       />
+      <HstCheckbox
+        v-model="state.muted"
+        title="muted"
+      />
     </template>
 
     <template #default="{ state }">
       <Board :title :docs>
         <div class="s-max-w-512">
-          <SCard :mode="state.cardMode">
+          <SCard :mode="state.mode" :muted="state.muted">
             <SCardBlock class="s-py-20 s-px-24">
               <SContent>
                 <h2>Consectetur adipisicing</h2>

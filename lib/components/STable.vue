@@ -711,7 +711,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   top: var(--table-head-top, auto);
   z-index: 100;
   border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
-  background-color: var(--bg-elv-2);
+  background-color: var(--c-bg-1);
   scrollbar-width: none;
   line-height: 0;
 
@@ -764,7 +764,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 
 :deep(.row) {
   display: flex;
-  border-bottom: 1px solid var(--c-gutter);
+  border-bottom: 1px solid var(--c-divider);
 }
 
 :deep(.row.last),
@@ -783,7 +783,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding: 48px 32px;
   text-align: center;
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
   line-height: 24px;
   font-size: 14px;
   font-weight: 500;
@@ -796,7 +796,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 
 .loading {
   border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
   overflow: hidden;
 
   .has-footer & {
@@ -863,7 +863,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 
   :deep(.input) {
     align-items: center;
-    padding: 0 16px;
+    padding: 0 16px 0 15px;
     min-height: 40px;
     user-select: none;
   }

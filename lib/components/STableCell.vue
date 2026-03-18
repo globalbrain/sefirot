@@ -132,20 +132,20 @@ const valueIsImagePath = computed(() => {
 
 <style scoped lang="postcss">
 .STableCell {
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
   transition: background-color 0.1s;
   overflow: hidden;
 
   :where(.row:has(.input.on)) & {
-    background-color: var(--c-bg-elv-4);
+    background-color: var(--c-bg-2);
   }
 
   .row:hover & {
-    background-color: var(--c-bg-elv-4);
+    background-color: var(--c-bg-2);
   }
 
   .summary & {
-    background-color: var(--c-bg-elv-4);
+    background-color: var(--c-bg-2);
   }
 
   .STableItem:first-child & {

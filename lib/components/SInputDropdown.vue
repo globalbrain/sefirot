@@ -192,10 +192,11 @@ function onSelect(value: OptionValue) {
   display: flex;
   align-items: center;
   border: 1px solid var(--input-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
   color: var(--input-text);
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   cursor: pointer;
   transition: border-color 0.25s, background-color 0.25s;
 

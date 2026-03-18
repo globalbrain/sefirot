@@ -30,8 +30,8 @@ const classes = computed(() => [
   z-index: var(--table-col-z-index, auto);
   flex-shrink: 0;
   flex-grow: 1;
-  border-left: var(--table-col-border-left, 0px) solid var(--c-gutter);
-  border-right: 1px solid var(--c-gutter);
+  border-left: var(--table-col-border-left, 0px) solid var(--c-divider);
+  border-right: 1px solid var(--c-divider);
   margin-left: calc(var(--table-col-border-left, 0px) * -1);
   min-width: var(--table-col-width);
   max-width: var(--table-col-width);

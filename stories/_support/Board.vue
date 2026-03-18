@@ -30,7 +30,6 @@ const href = computed(() => {
           v-if="href"
           class="b-button"
           size="mini"
-          mode="mute"
           label="View Documentation"
           :href
         />
@@ -48,15 +47,17 @@ const href = computed(() => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  background-color: var(--c-bg-1);
 }
 
 .b-menu {
   display: grid;
   grid-template-columns: minmax(0, 1fr) min-content;
   gap: 24px;
-  padding: 12px 16px;
-  border-bottom: 4px solid var(--c-bg-elv-1);
-  background-color: var(--c-bg-elv-2);
+  padding: 12px 16px 11px;
+  border-bottom: 1px solid var(--c-border);
 }
 
 .b-title {
@@ -72,6 +73,5 @@ const href = computed(() => {
 .b-page {
   flex-grow: 1;
   padding: 32px;
-  background-color: var(--c-bg-elv-2);
 }
 </style>

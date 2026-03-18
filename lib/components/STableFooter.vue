@@ -63,11 +63,11 @@ const hasNext = computed(() => {
 
 <style scoped lang="postcss">
 .STableFooter {
-  border-top: 1px solid var(--c-gutter);
+  border-top: 1px solid var(--c-divider);
   border-radius: 0 0 calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px);
   padding-right: var(--table-padding-right);
   padding-left: var(--table-padding-left);
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
 
   &.borderless {
     border-radius: 0;
@@ -117,7 +117,7 @@ const hasNext = computed(() => {
   }
 
   &.active:hover {
-    background-color: var(--c-bg-elv-1);
+    background-color: var(--c-bg-1);
   }
 }
 

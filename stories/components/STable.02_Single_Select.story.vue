@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import IconImageSquare from '~icons/ph/image-square-bold'
+import IconImageSquare from '~icons/ph/image-square'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
 import SControl from 'sefirot/components/SControl.vue'

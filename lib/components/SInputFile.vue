@@ -203,6 +203,7 @@ function onChange(e: Event) {
   border: 1px solid var(--input-border-color);
   border-radius: 6px;
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   cursor: pointer;
   transition: border-color 0.25s;
 
@@ -211,8 +212,7 @@ function onChange(e: Event) {
   }
 
   &:hover .button {
-    border-color: var(--c-border-mute-2);
-    background-color: var(--c-bg-mute-2);
+    background-color: var(--button-fill-default-hover-bg-color);
   }
 }
 
@@ -221,10 +221,11 @@ function onChange(e: Event) {
 }
 
 .button {
-  border: 1px solid var(--c-border-mute-1);
+  border: 1px solid var(--button-fill-default-border-color);
   border-radius: 3px;
   color: var(--c-text-1);
-  background-color: var(--c-bg-mute-1);
+  background-color: var(--button-fill-default-bg-color);
+  box-shadow: var(--button-fill-default-box-shadow);
   transition: border-color 0.25s, background-color 0.25s;
 }
 

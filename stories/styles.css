@@ -14,7 +14,7 @@ body {
   position: relative;
   height: 100vh;
   min-height: 100vh;
-  background-color: var(--c-bg-elv-1);
+  background-color: var(--c-bg-1);
   overflow: unset !important;
 }
 

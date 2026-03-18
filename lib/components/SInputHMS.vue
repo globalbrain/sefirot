@@ -308,8 +308,9 @@ function createRequiredTouched(): boolean[] {
 .container {
   display: inline-flex;
   border: 1px solid var(--input-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   transition: border-color 0.25s;
 
   &:hover { border-color: var(--input-hover-border-color); }

@@ -55,8 +55,6 @@ const hasNext = computed(() => {
   <div class="SPagination" :class="[size, align]">
     <div class="button prev">
       <SButton
-        type="outline"
-        mode="mute"
         :size
         :lead-icon="IconCaretLeft"
         :label="t.prev"
@@ -69,8 +67,6 @@ const hasNext = computed(() => {
     </div>
     <div class="button next">
       <SButton
-        type="outline"
-        mode="mute"
         :size
         :trail-icon="IconCaretRight"
         :label="t.next"

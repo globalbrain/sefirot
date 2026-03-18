@@ -42,7 +42,7 @@ const stats = computed(() => {
   border-radius: calc(var(--table-border-radius) - 1px) calc(var(--table-border-radius) - 1px) 0 0;
   padding-right: var(--table-padding-right);
   padding-left: var(--table-padding-left);
-  background-color: var(--c-bg-elv-4);
+  background-color: var(--c-bg-1);
 
   &.borderless {
     border-radius: 0;
