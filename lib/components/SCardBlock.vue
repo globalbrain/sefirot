@@ -5,6 +5,9 @@ import { type CardBlockSize, provideCardBlockSize } from '../composables/Card'
 export type { CardBlockSize as Size }
 
 export type Bg =
+  | '1'
+  | '2'
+  | '3'
   | 'elv-1'
   | 'elv-2'
   | 'elv-3'
@@ -15,7 +18,7 @@ const props = withDefaults(defineProps<{
   size?: CardBlockSize
   bg?: Bg
 }>(), {
-  bg: 'elv-3'
+  bg: '1'
 })
 
 const _bg = computed(() => {
@@ -31,21 +34,11 @@ provideCardBlockSize(computed(() => props.size ?? null))
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SCardBlock {
   &.compact { padding: 12px; }
   &.wide    { padding: 16px; }
   &.xwide   { padding: 24px; }
-}
-
-.SCard > .SCardBlock:first-child {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.SCard > .SCardBlock:last-child {
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
 }
 
 .SCardBlock.xsmall,

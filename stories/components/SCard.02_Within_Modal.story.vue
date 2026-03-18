@@ -2,13 +2,9 @@
 import SButton from 'sefirot/components/SButton.vue'
 import SCard, { type Mode, type Size } from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
-import SControl from 'sefirot/components/SControl.vue'
-import SControlActionBar from 'sefirot/components/SControlActionBar.vue'
-import SControlActionBarClose from 'sefirot/components/SControlActionBarClose.vue'
-import SControlButton from 'sefirot/components/SControlButton.vue'
-import SControlLeft from 'sefirot/components/SControlLeft.vue'
-import SControlRight from 'sefirot/components/SControlRight.vue'
-import SControlText from 'sefirot/components/SControlText.vue'
+import SCardClose from 'sefirot/components/SCardClose.vue'
+import SCardFooter from 'sefirot/components/SCardFooter.vue'
+import SContent from 'sefirot/components/SContent.vue'
 import SModal from 'sefirot/components/SModal.vue'
 import { ref } from 'vue'
 
@@ -59,40 +55,21 @@ function initState() {
 
     <template #default="{ state }">
       <Board :title :docs>
-        <SButton mode="info" label="Open dialog" @click="open = true" />
+        <SButton size="md" mode="info" label="Open dialog" @click="open = true" />
 
         <SModal :open @close="open = false">
-          <SCard :size="state.cardSize" :mode="state.cardMode">
-            <SCardBlock class="s-py-8 s-pl-24 s-pr-8">
-              <SControl size="sm">
-                <SControlLeft>
-                  <SControlText class="s-font-w-600">
-                    Header title
-                  </SControlText>
-                </SControlLeft>
-                <SControlRight>
-                  <SControlActionBar>
-                    <SControlActionBarClose @click="open = false" />
-                  </SControlActionBar>
-                </SControlRight>
-              </SControl>
+          <SCard size="small" :mode="state.cardMode">
+            <SCardClose @click="open = false" />
+            <SCardBlock class="s-pt-20 s-px-24 s-pb-24">
+              <SContent>
+                <h2>Consectetur adipisicing</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+              </SContent>
             </SCardBlock>
-            <SCardBlock class="s-p-24">
-              <p class="s-text-14">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat.
-              </p>
-            </SCardBlock>
-            <SCardBlock class="s-py-16 s-px-24">
-              <SControl size="md">
-                <SControlRight>
-                  <SControlButton label="Cancel" @click="open = false" />
-                  <SControlButton mode="info" label="Submit" @click="open = false" />
-                </SControlRight>
-              </SControl>
-            </SCardBlock>
+            <SCardFooter class="s-py-16 s-px-24">
+              <SButton size="md" label="Cancel" @click="open = false" />
+              <SButton size="md" mode="info" label="Save changes" @click="open = false" />
+            </SCardFooter>
           </SCard>
         </SModal>
       </Board>
