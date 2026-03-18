@@ -146,7 +146,7 @@
 }
 
 .SContent :deep(table tr:hover td) {
-  background-color: var(--c-bg-1);
+  background-color: var(--c-bg-2);
 }
 
 .SContent :deep(table thead > tr > th) {
@@ -160,7 +160,6 @@
   height: 40px;
   vertical-align: top;
   text-wrap: pretty;
-  background-color: var(--c-bg-1);
   overflow-wrap: break-word;
 }
 

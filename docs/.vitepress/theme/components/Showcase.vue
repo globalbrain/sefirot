@@ -20,9 +20,7 @@ const computedStory = computed(() => {
   <div class="Showcase">
     <div class="header">
       <p class="path">{{ computedPath }}</p>
-      <a v-if="story" class="button" :href="computedStory" target="_blank">
-        <SButton size="sm" label="View in Histoire" />
-      </a>
+      <SButton v-if="story" size="xs" label="View in Histoire" :href="computedStory" />
     </div>
 
     <div class="main vp-raw">
@@ -50,15 +48,19 @@ const computedStory = computed(() => {
   align-items: center;
   border-bottom: 1px solid var(--c-divider);
   border-radius: 11px 11px 0 0;
-  padding: 12px 12px 11px 16px;
+  padding: 8px 8px 7px 12px;
   background-color: var(--c-bg-2);
+}
+
+.header :deep(.SButton) {
+  text-decoration: none;
 }
 
 .path {
   margin: 0;
   padding-right: 24px;
   line-height: 24px;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
   color: var(--c-text-2);
   white-space: nowrap;
