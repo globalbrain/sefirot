@@ -85,6 +85,7 @@
 .s-py-8  { padding-top: 8px; padding-bottom: 8px; }
 .s-py-12 { padding-top: 12px; padding-bottom: 12px; }
 .s-py-16 { padding-top: 16px; padding-bottom: 16px; }
+.s-py-20 { padding-top: 20px; padding-bottom: 20px; }
 .s-py-24 { padding-top: 24px; padding-bottom: 24px; }
 .s-py-32 { padding-top: 32px; padding-bottom: 32px; }
 .s-py-48 { padding-top: 48px; padding-bottom: 48px; }
@@ -94,6 +95,7 @@
 .s-px-8  { padding-right: 8px; padding-left: 8px; }
 .s-px-12 { padding-right: 12px; padding-left: 12px; }
 .s-px-16 { padding-right: 16px; padding-left: 16px; }
+.s-px-20 { padding-right: 20px; padding-left: 20px; }
 .s-px-24 { padding-right: 24px; padding-left: 24px; }
 .s-px-32 { padding-right: 32px; padding-left: 32px; }
 .s-px-48 { padding-right: 48px; padding-left: 48px; }
@@ -103,6 +105,7 @@
 .s-pt-8  { padding-top: 8px; }
 .s-pt-12 { padding-top: 12px; }
 .s-pt-16 { padding-top: 16px; }
+.s-pt-20 { padding-top: 20px; }
 .s-pt-24 { padding-top: 24px; }
 .s-pt-32 { padding-top: 32px; }
 .s-pt-48 { padding-top: 48px; }
@@ -112,6 +115,7 @@
 .s-pr-8  { padding-right: 8px; }
 .s-pr-12 { padding-right: 12px; }
 .s-pr-16 { padding-right: 16px; }
+.s-pr-20 { padding-right: 20px; }
 .s-pr-24 { padding-right: 24px; }
 .s-pr-32 { padding-right: 32px; }
 .s-pr-48 { padding-right: 48px; }
@@ -121,6 +125,7 @@
 .s-pb-8  { padding-bottom: 8px; }
 .s-pb-12 { padding-bottom: 12px; }
 .s-pb-16 { padding-bottom: 16px; }
+.s-pb-20 { padding-bottom: 20px; }
 .s-pb-24 { padding-bottom: 24px; }
 .s-pb-32 { padding-bottom: 32px; }
 .s-pb-48 { padding-bottom: 48px; }
@@ -130,6 +135,7 @@
 .s-pl-8  { padding-left: 8px; }
 .s-pl-12 { padding-left: 12px; }
 .s-pl-16 { padding-left: 16px; }
+.s-pl-20 { padding-left: 20px; }
 .s-pl-24 { padding-left: 24px; }
 .s-pl-32 { padding-left: 32px; }
 .s-pl-48 { padding-left: 48px; }
@@ -209,6 +215,10 @@
 /**
  * Backgrounds
  * -------------------------------------------------------------------------- */
+
+.s-bg-1 { background-color: var(--c-bg-1); }
+.s-bg-2 { background-color: var(--c-bg-2); }
+.s-bg-3 { background-color: var(--c-bg-3); }
 
 .s-bg-elv-1 { background-color: var(--c-bg-elv-1); }
 .s-bg-elv-2 { background-color: var(--c-bg-elv-2); }

@@ -230,7 +230,7 @@
 
 :root {
   --c-bg-1: var(--c-white);
-  --c-bg-2: var(--c-gray-3);
+  --c-bg-2: var(--c-gray-2);
   --c-bg-3: var(--c-gray-4);
 
   --c-bg-elv-1: #ffffff;
@@ -269,7 +269,7 @@
 
 .dark {
   --c-bg-1: var(--c-gray-1);
-  --c-bg-2: var(--c-gray-3);
+  --c-bg-2: var(--c-gray-2);
   --c-bg-3: var(--c-gray-4);
 
   --c-bg-elv-1: #000000;

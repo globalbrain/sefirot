@@ -37,7 +37,7 @@ function onClick(e: MouseEvent) {
   </Teleport>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SModal {
   position: fixed;
   top: 0;
@@ -54,5 +54,64 @@ function onClick(e: MouseEvent) {
 .SModal.fade-enter-from,
 .SModal.fade-leave-to {
   opacity: 0;
+}
+
+.SModal :deep(> .SCard) {
+  margin: 12px 12px 128px;
+  box-shadow: var(--shadow-depth-3);
+  transition: opacity 0.25s, transform 0.25s;
+
+  @media (min-width: 512px) {
+    margin: 24px 24px 128px;
+  }
+
+  @media (min-width: 768px) {
+    margin: 48px 48px 128px;
+  }
+
+  &.small {
+    @media (min-width: 560px) {
+      margin: 24px auto 128px;
+      max-width: 512px;
+    }
+
+    @media (min-width: 768px) {
+      margin: 48px auto 128px;
+    }
+  }
+
+  &.medium {
+    @media (min-width: 736px) {
+      margin: 48px auto 128px;
+      max-width: 640px;
+    }
+  }
+
+  &.large {
+    @media (min-width: 864px) {
+      margin: 48px auto 128px;
+      max-width: 768px;
+    }
+  }
+
+  &.xlarge {
+    @media (min-width: 1056px) {
+      margin: 48px auto 128px;
+      max-width: 960px;
+    }
+  }
+
+  &.xxlarge {
+    @media (min-width: 1248px) {
+      margin: 48px auto 128px;
+      max-width: 1152px;
+    }
+  }
+}
+
+.SModal.fade-enter-from :deep(> .SCard),
+.SModal.fade-leave-to :deep(> .SCard) {
+  opacity: 0;
+  transform: translateY(8px);
 }
 </style>

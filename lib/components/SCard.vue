@@ -25,14 +25,15 @@ const classes = computed(() => [
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SCard {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1px;
   border: 1px solid transparent;
-  border-radius: 6px;
-  background-color: var(--c-gutter);
+  border-radius: 12px;
+  background-color: var(--c-divider);
 }
 
 .SCard.neutral { border-color: var(--c-divider); }
@@ -46,62 +47,21 @@ const classes = computed(() => [
   overflow: hidden;
 }
 
-.SModal > .SCard {
-  margin: 12px 12px 128px;
-  box-shadow: var(--shadow-depth-3);
-  transition: opacity 0.25s, transform 0.25s;
-
-  @media (min-width: 512px) {
-    margin: 24px 24px 128px;
-  }
-
-  @media (min-width: 768px) {
-    margin: 48px 48px 128px;
-  }
-
-  &.small {
-    @media (min-width: 560px) {
-      margin: 24px auto 128px;
-      max-width: 512px;
-    }
-
-    @media (min-width: 768px) {
-      margin: 48px auto 128px;
-    }
-  }
-
-  &.medium {
-    @media (min-width: 736px) {
-      margin: 48px auto 128px;
-      max-width: 640px;
-    }
-  }
-
-  &.large {
-    @media (min-width: 864px) {
-      margin: 48px auto 128px;
-      max-width: 768px;
-    }
-  }
-
-  &.xlarge {
-    @media (min-width: 1056px) {
-      margin: 48px auto 128px;
-      max-width: 960px;
-    }
-  }
-
-  &.xxlarge {
-    @media (min-width: 1248px) {
-      margin: 48px auto 128px;
-      max-width: 1152px;
-    }
-  }
+.SCard :deep(> .SCardBlock:first-child),
+.SCard :deep(> .SCardClose + .SCardBlock) {
+  border-top-left-radius: 11px;
+  border-top-right-radius: 11px;
 }
 
-.SModal.fade-enter-from > .SCard,
-.SModal.fade-leave-to > .SCard {
-  opacity: 0;
-  transform: translateY(8px);
+.SCard :deep(> .SCardBlock:last-child) {
+  border-bottom-right-radius: 11px;
+  border-bottom-left-radius: 11px;
+}
+
+.SCard :deep(> .SCardClose) {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
 }
 </style>

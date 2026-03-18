@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SContent {
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   max-width: 720px;
   line-height: 36px;
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--c-text-1);
 }
 
@@ -27,9 +27,9 @@
   margin: 16px 0 0;
   padding: 0;
   max-width: 720px;
-  line-height: 32px;
+  line-height: 28px;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--c-text-1);
 }
 
@@ -38,9 +38,20 @@
   margin: 16px 0 0;
   padding: 0;
   max-width: 720px;
-  line-height: 28px;
+  line-height: 30px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--c-text-1);
+}
+
+.SContent :deep(h4),
+.SContent :deep(.h4) {
+  margin: 16px 0 0;
+  padding: 0;
+  max-width: 720px;
+  line-height: 28px;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--c-text-1);
 }
 
@@ -49,7 +60,9 @@
 .SContent :deep(h2:first-child),
 .SContent :deep(.h2:first-child),
 .SContent :deep(h3:first-child),
-.SContent :deep(.h3:first-child) {
+.SContent :deep(.h3:first-child),
+.SContent :deep(h4:first-child),
+.SContent :deep(.h4:first-child) {
   margin-top: 0;
 }
 
