@@ -58,7 +58,7 @@ function initState() {
         <SButton size="md" mode="info" label="Open dialog" @click="open = true" />
 
         <SModal :open @close="open = false">
-          <SCard size="small" :mode="state.cardMode">
+          <SCard :size="state.cardSize" :mode="state.cardMode">
             <SCardClose @click="open = false" />
             <SCardBlock class="s-pt-20 s-px-24 s-pb-24">
               <SContent>
