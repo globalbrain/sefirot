@@ -449,7 +449,6 @@
   --button-fill-mute-content-color: var(--c-text-2);
   --button-fill-mute-bg-color: var(--button-fill-default-bg-color);
   --button-fill-mute-count-bg-color: var(--c-gray-6);
-  --button-fill-default-count-bg-color: var(--c-gray-7);
   --button-fill-mute-loader-color: var(--c-text-2);
   --button-fill-mute-hover-border-color: var(--input-border-color);
   --button-fill-mute-hover-text-color: var(--c-text-2);
