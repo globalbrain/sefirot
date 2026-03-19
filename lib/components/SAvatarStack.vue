@@ -42,11 +42,12 @@ const count = computed(() => {
 .SAvatarStack {
   display: flex;
 
-  :slotted(.SAvatar), :deep(.SAvatar), .more {
+  :slotted(.SAvatar),
+  :deep(.SAvatar),
+  .more {
     flex-shrink: 0;
-    border: 2px solid var(--c-bg-elv-2);
-    border-radius: 50%;
     overflow: hidden;
+    box-shadow: 0 0 0 2px var(--c-bg-1);
   }
 
   &.mini > :deep(*):not(:last-child)   { margin-right: -6px; }
@@ -62,7 +63,7 @@ const count = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--c-bg-mute-1);
+  background-color: var(--c-bg-3);
   border-radius: 50%;
   line-height: 1;
   color: var(--c-text-2);

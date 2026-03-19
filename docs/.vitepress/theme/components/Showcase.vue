@@ -20,9 +20,7 @@ const computedStory = computed(() => {
   <div class="Showcase">
     <div class="header">
       <p class="path">{{ computedPath }}</p>
-      <a v-if="story" class="button" :href="computedStory" target="_blank">
-        <SButton size="mini" mode="mute" label="View in Histoire" />
-      </a>
+      <SButton v-if="story" size="xs" label="View in Histoire" :href="computedStory" />
     </div>
 
     <div class="main vp-raw">
@@ -35,7 +33,7 @@ const computedStory = computed(() => {
 .Showcase {
   margin: 0 -12px;
   border: 1px solid var(--c-divider);
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 @media (min-width: 640px) {
@@ -47,29 +45,33 @@ const computedStory = computed(() => {
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid var(--c-divider);
-  border-radius: 6px 6px 0 0;
-  padding: 12px 12px 12px 16px;
-  background-color: var(--c-bg-elv-4);
+  border-radius: 11px 11px 0 0;
+  padding: 8px 8px 7px 12px;
+  background-color: var(--c-bg-2);
+}
+
+.header :deep(.SButton) {
+  text-decoration: none;
 }
 
 .path {
   margin: 0;
   padding-right: 24px;
-  line-height: 28px;
+  line-height: 24px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--c-text-2);
-  transform: translateY(1px);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .main {
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 11px 11px;
   padding: 24px;
-  background-color: var(--c-bg-elv-2);
+  background-color: var(--c-bg-1);
 }
 
 @media (min-width: 640px) {

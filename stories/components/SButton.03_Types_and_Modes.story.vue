@@ -49,7 +49,7 @@ function initState() {
               <SButton
                 v-for="m in modes"
                 :key="m"
-                size="medium"
+                size="md"
                 :type="v.type"
                 :mode="m"
                 :label="state.label"

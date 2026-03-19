@@ -55,7 +55,7 @@ const tooltipPosition = computed(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--c-bg-elv-1);
+  background-color: var(--c-bg-1);
   border-radius: 50%;
   overflow: hidden;
 }
@@ -115,6 +115,11 @@ const tooltipPosition = computed(() => {
 }
 
 .SAvatar.no-image {
-  border: 1px solid var(--c-border-mute-1);
+  border: 1px solid var(--c-border);
+  background-color: var(--c-bg-3);
+
+  .dark & {
+    border-color: transparent;
+  }
 }
 </style>

@@ -168,10 +168,10 @@ function stopDialogPositionListener() {
 
 <style scoped lang="postcss">
 .STableColumn {
-  background-color: var(--c-bg-elv-3);
+  background-color: var(--c-bg-1);
 
   &.has-header {
-    border-top: 1px solid var(--c-gutter);
+    border-top: 1px solid var(--c-divider);
   }
 
   .STableItem:first-child & {
@@ -197,7 +197,7 @@ function stopDialogPositionListener() {
   line-height: 40px;
   text-align: left;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--c-text-2);
   white-space: nowrap;
   overflow: hidden;
@@ -228,7 +228,7 @@ function stopDialogPositionListener() {
 
   &:hover {
     color: var(--c-text-1);
-    background-color: var(--c-bg-mute-1);
+    background-color: var(--button-fill-default-hover-bg-color);
   }
 
   &.active {

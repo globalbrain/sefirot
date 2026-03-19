@@ -2,19 +2,26 @@
 import { computed } from 'vue'
 import { provideCardState } from '../composables/Card'
 
+export interface Props {
+  size?: Size
+  mode?: Mode
+  muted?: boolean
+}
+
 export type Size = 'small' | 'medium' | 'large' | 'xlarge' | 'xxlarge'
 export type Mode = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps<{
-  size?: Size
-  mode?: Mode
-}>()
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+  mode: 'neutral'
+})
 
 const { isCollapsed } = provideCardState()
 
 const classes = computed(() => [
   props.size,
-  props.mode ?? 'neutral',
+  props.mode,
+  { muted: props.muted },
   { collapsed: isCollapsed.value }
 ])
 </script>
@@ -28,15 +35,15 @@ const classes = computed(() => [
 <style scoped>
 .SCard {
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 1px;
   border: 1px solid transparent;
   border-radius: 12px;
   background-color: var(--c-divider);
 }
 
-.SCard.neutral { border-color: var(--c-divider); }
+.SCard.neutral { border-color: var(--c-border); }
 .SCard.info    { border-color: var(--c-border-info-1); }
 .SCard.success { border-color: var(--c-border-success-1); }
 .SCard.warning { border-color: var(--c-border-warning-1); }
@@ -56,6 +63,10 @@ const classes = computed(() => [
 .SCard :deep(> .SCardBlock:last-child) {
   border-bottom-right-radius: 11px;
   border-bottom-left-radius: 11px;
+}
+
+.SCard.muted :deep(> .SCardBlock) {
+  background-color: var(--c-bg-2);
 }
 
 .SCard :deep(> .SCardClose) {

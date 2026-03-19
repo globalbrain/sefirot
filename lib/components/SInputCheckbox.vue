@@ -132,6 +132,7 @@ function onClick() {
   width: 16px;
   height: 16px;
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   transition: border-color 0.25s, background-color 0.25s;
 }
 

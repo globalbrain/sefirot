@@ -404,9 +404,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   flex-grow: 1;
   max-width: 100%;
   border: 1px solid var(--input-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: var(--input-bg-color);
-  transition: border-color 0.25s;
+  box-shadow: var(--input-box-shadow);
+  transition: border-color 0.25s, background-color 0.25s;
 
   &:hover {
     border-color: var(--input-hover-border-color);

@@ -265,7 +265,7 @@ function toFileObjects(files: File[]) {
   align-items: center;
   gap: 16px;
   border: 1px dashed var(--c-border-mute-1);
-  border-radius: 3px;
+  border-radius: 8px;
   padding: 24px 0;
   min-height: 192px;
   text-align: center;

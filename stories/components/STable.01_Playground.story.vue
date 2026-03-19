@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import IconCheck from '~icons/ph/check-bold'
-import IconImageSquare from '~icons/ph/image-square-bold'
-import IconNotePencil from '~icons/ph/note-pencil-bold'
-import IconTrash from '~icons/ph/trash-bold'
+import IconCheck from '~icons/ph/check'
+import IconImageSquare from '~icons/ph/image-square'
+import IconNotePencil from '~icons/ph/note-pencil'
+import IconTrash from '~icons/ph/trash'
 import { orderBy, xor } from 'lodash-es'
 import SCard from 'sefirot/components/SCard.vue'
 import SCardBlock from 'sefirot/components/SCardBlock.vue'
@@ -360,8 +360,6 @@ const selected = ref<string[]>([])
             <SControlLeft>
               <SControlInputSearch class="s-max-w-320" :model-value="null" />
               <SControlButton
-                type="outline"
-                mode="mute"
                 label="Reset filters"
                 @click="resetFilters"
               />

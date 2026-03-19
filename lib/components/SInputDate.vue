@@ -113,7 +113,7 @@ function onBlur() {
 .SInputDate.md {
   .input {
     padding: 6px 10px;
-    max-width: 120px;
+    max-width: 128px;
     height: 36px;
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
@@ -165,11 +165,12 @@ function onBlur() {
 .input {
   display: block;
   border: 1px solid var(--input-border-color);
-  border-radius: 6px;
+  border-radius: 8px;
   width: 100%;
   font-weight: 400;
   font-feature-settings: 'tnum';
   background-color: var(--input-bg-color);
+  box-shadow: var(--input-box-shadow);
   transition: border-color 0.25s, background-color 0.25s;
 
   &::placeholder {
