@@ -157,13 +157,13 @@
 :root {
   --c-border: #dddddd;
   --c-divider: #dddddd;
-  --c-gutter: #e2e2e3;
+  --c-gutter: #dddddd;
 }
 
 .dark {
   --c-border: #262626;
   --c-divider: #262626;
-  --c-gutter: #000000;
+  --c-gutter: #262626;
 }
 
 /**
