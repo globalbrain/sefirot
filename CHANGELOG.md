@@ -1,5 +1,13 @@
 # Changelog
 
+# [4.39.0](https://github.com/globalbrain/sefirot/compare/v4.38.1...v4.39.0) (2026-03-19)
+
+
+### Features
+
+* **card:** refine `<SCard>` component ([#693](https://github.com/globalbrain/sefirot/issues/693)) ([c8c023b](https://github.com/globalbrain/sefirot/commit/c8c023bd7b8eed91ca9c656d3efb37bd21e9b0f2))
+* refine entire styles ([#694](https://github.com/globalbrain/sefirot/issues/694)) ([1c20a91](https://github.com/globalbrain/sefirot/commit/1c20a91954c75c7967ce46bdddefb0fec041d571))
+
 ## [4.38.1](https://github.com/globalbrain/sefirot/compare/v4.38.0...v4.38.1) (2026-03-11)
 
 
