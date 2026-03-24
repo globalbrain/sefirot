@@ -33,8 +33,8 @@ const emit = defineEmits<{
 const sizePaddingYDict = {
   sm: 6,
   md: 10,
-  mini: 12,
-  small: 14,
+  mini: 6,
+  small: 10,
   medium: 22
 }
 
@@ -227,6 +227,7 @@ function emitBlur(e: FocusEvent): void {
   border-radius: 8px;
   width: 100%;
   box-shadow: var(--input-box-shadow);
+  background-color: var(--input-bg-color);
   overflow: hidden;
   transition: border-color 0.25s;
 
@@ -265,20 +266,14 @@ function emitBlur(e: FocusEvent): void {
   width: 100%;
   font-family: var(--input-value-font-family);
   font-weight: 400;
-  background-color: var(--input-bg-color);
+  background-color: transparent;
 }
 
-.input {
-  &::placeholder {
-    color: var(--input-placeholder-color);
-  }
+.input::placeholder {
+  color: var(--input-placeholder-color);
 }
 
-.prose {
-  background-color: var(--input-bg-color);
-
-  &.empty {
-    color: var(--input-placeholder-color);
-  }
+.prose.empty {
+  color: var(--input-placeholder-color);
 }
 </style>

@@ -51,7 +51,7 @@ const message = ref<string | null>(null)
 ## Anatomy
 
 - Label row: Optional `label`, `info`, `note`.
-- Input box: The textarea itself, including disabled, error, warning, fill-height, and auto-resize behavior.
+- Input box: The textarea itself, including disabled, error, warning, fill mode (`rows="fill"`), and auto-resize behavior.
 - Toolbar: Optional top row for the write/preview toggle and `#actions` content.
 - Help area: Validation errors, warnings, and helper text rendered below the field.
 
