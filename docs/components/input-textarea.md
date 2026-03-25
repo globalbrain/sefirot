@@ -1,360 +1,259 @@
+---
+outline: deep
+---
+
 <script setup lang="ts">
 import { ref } from 'vue'
 import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 
-const input = ref<string | null>(null)
+const value = ref<string | null>(null)
 </script>
 
 # SInputTextarea
 
-`<SInputTextarea>` is a input component for `textarea`.
+`<SInputTextarea>` is a multiline text input.
 
 <Showcase
   path="/components/SInputTextarea.vue"
   story="/stories-components-sinputtextarea-01-playground-story-vue"
 >
-  <SInputTextarea placeholder="Placeholder text" v-model="input" />
+  <div style="max-width: 480px;">
+    <SInputTextarea
+      v-model="value"
+      label="Description"
+      placeholder="Write your message here"
+    />
+  </div>
 </Showcase>
 
 ## Usage
 
-Import `<SInputTextarea>` component and pass in the `:value` prop.
+Use `v-model` for the textarea value.
 
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import SInputTextarea from '@globalbrain/sefirot/lib/components/SInputTextarea.vue'
 
-const input = ref<string | null>(null)
+const message = ref<string | null>(null)
 </script>
 
 <template>
-  <SInputTextarea placeholder="Placeholder text" v-model="input" />
+  <SInputTextarea
+    v-model="message"
+    name="message"
+    label="Message"
+    placeholder="Write your message here"
+  />
 </template>
 ```
 
-## Props
+## Anatomy
 
-Here are the list of props you may pass to the component.
+- Label row: Optional `label`, `info`, `note`.
+- Input box: The textarea itself, including disabled, error, warning, fill mode (`rows="fill"`), and auto-resize behavior.
+- Toolbar: Optional top row for the write/preview toggle and `#actions` content.
+- Help area: Validation errors, warnings, and helper text rendered below the field.
 
-### `:size`
+## `<SInputTextarea>`
 
-Defines the size of the input. The default is `'small'`.
+`<SInputTextarea>` is the root component. It accepts the shared input-base props plus textarea-specific layout and preview props.
 
-```ts
-interface Props {
-  size?: 'mini' | 'small' | 'medium'
-}
-```
-
-```vue-html
-<SInputTextarea size="small" v-model="..." />
-```
-
-### `:name`
-
-Defines the `name` attribute of the underlining `<input>` element.
+### Props
 
 ```ts
+import type { Component } from 'vue'
+import type { Validatable } from 'sefirot/composables/Validation'
+
 interface Props {
+  /**
+   * Controls the field sizing and typography.
+   *
+   * @default 'small'
+   */
+  size?: 'sm' | 'md' | 'mini' | 'small' | 'medium'
+
+  /**
+   * Used for the textarea `id` and the label `for` attribute.
+   */
   name?: string
-}
-```
 
-```vue-html
-<SInputTextarea name="message" v-model="..." />
-```
-
-### `:label`
-
-Defines the label text of the input.
-
-```ts
-interface Props {
+  /**
+   * Optional field label shown above the textarea.
+   */
   label?: string
-}
-```
 
-```vue-html
-<SInputTextarea label="Message" v-model="..." />
-```
-
-### `:info`
-
-Shows help icon after the label and shows info in a tooltip when the user hovers the label.
-
-```ts
-interface Props {
+  /**
+   * Tooltip text shown next to the label.
+   * Use the `#info` slot for richer content.
+   */
   info?: string
-}
-```
 
-```vue-html
-<SInputTextarea
-  label="Message"
-  info="Some helpful information."
-  v-model="..."
-/>
-```
-
-### `:note`
-
-Adds small help text after the label. Best used along with `:label`.
-
-```ts
-interface Props {
+  /**
+   * Secondary inline text displayed next to the label.
+   */
   note?: string
-}
-```
 
-```vue-html
-<SInputTextarea label="Message" note="Optional" v-model="..." />
-```
+  /**
+   * Helper text shown below the field.
+   */
+  help?: string
 
-### `:placeholder`
-
-Defines the placeholder text to show when the value is empty.
-
-```ts
-interface Props {
-  placeholder?: string
-}
-```
-
-```vue-html
-<SInputTextarea placeholder="Placeholder text" v-model="..." />
-```
-
-### `:check-icon`
-
-Icon to display at corner right of label. Useful to show the status of a particular input.
-
-```ts
-interface Props {
+  /**
+   * Status indicator displayed at the right edge of the label row.
+   */
   checkIcon?: Component
-}
-```
-
-```vue-html
-<SInputTextarea :check-icon="IconCheckCircle" v-model="..." />
-```
-
-### `:check-text`
-
-Text to display alongside `:check-icon`.
-
-```ts
-interface Props {
   checkText?: string
-}
-```
 
-```vue-html
-<SInputTextarea :check-text="Saved" v-model="..." />
-```
+  /**
+   * Color of the status indicator.
+   *
+   * @default 'neutral'
+   */
+  checkColor?: 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
-### `:check-color`
-
-Defines the color of `:check-icon` and `:check-text`. The default is `'neutral'`.
-
-```ts
-interface Props {
-  checkColor?: Color
-}
-
-type Color =
-  | 'neutral'
-  | 'mute'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-```
-
-```vue-html
-<SInputTextarea
-  :check-icon="IconCheckCircle"
-  check-text="Uploaded"
-  check-color="success"
-  v-model="..."
-/>
-```
-
-### `:rows`
-
-Defines the height of the input. The default is `3`.
-
-If you pass `'fill'`, the input will fill the available space defined by the parent container. Setting this to `'fill'` needs `display: flex` on the parent container.
-
-```ts
-interface Props {
-  rows?: number | 'fill'
-}
-```
-
-```vue-html
-<SInputTextarea :rows="8" v-model="..." />
-```
-
-### `:auto-resize`
-
-Automatically resize the height of the input based on the content. The default is `false`.
-
-When this prop is set, the `:rows` will be treated as `min-height`. For example, `:rows="5"` will set the minimum height of the input to 5 rows, and auto resize from there based on the content.
-
-If you pass a number, it will be the maximum number of rows before it starts to scroll. If you pass `true`, no maximum height will be set. This feature uses [`field-sizing`](https://caniuse.com/mdn-css_properties_field-sizing_content) CSS property.
-
-```ts
-interface Props {
-  autoResize?: boolean | number
-}
-```
-
-```vue-html
-<SInputTextarea :auto-resize="10" v-model="..." />
-```
-
-### `:disabled`
-
-Mark input as disabled. When this prop is set, users may not be able to focus the element not trigger any events.
-
-```ts
-interface Props {
-  disabled?: boolean
-}
-```
-
-```vue-html
-<SInputTextarea disabled v-model="..." />
-```
-
-### `:value`
-
-Sets the input value. When `:model-value` prop is set (e.g. via `v-model` directive), this prop gets ignored.
-
-```ts
-interface Props {
-  value?: string | null
-}
-```
-
-```vue-html
-<SInputTextarea :value="Lorem ipsum..." />
-```
-
-### `:model-value`
-
-The `v-model` binding for the input.
-
-```ts
-interface Props {
-  modelValue?: string | null
-}
-```
-
-```vue-html
-<SInputTextarea v-model="Lorem ipsum..." />
-```
-
-### `:validation`
-
-The validation object for the input. It accepts [Vuelidate](https://vuelidate-next.netlify.app/) like validation object and displays error if there're any.
-
-```ts
-import { Ref } from 'vue'
-
-interface Props {
+  /**
+   * Validation state object used to show error styling and error text.
+   */
   validation?: Validatable
-}
 
-export interface Validatable {
-  readonly $dirty: boolean
-  readonly $invalid: boolean
-  readonly $errors: ValidatableError[]
-  readonly $touch: () => void
-}
+  /**
+   * Warning text shown below the field.
+   */
+  warning?: string
 
-export interface ValidatableError {
-  readonly $message: string | Ref<string>
-}
-```
-
-```vue-html
-<SInputTextarea v-model="..." :validation />
-```
-
-### `:hide-error`
-
-Stop showing validation error message even when there are errors. This prop will not prevent the error color from appearing.
-
-```ts
-interface Props {
+  /**
+   * Hides the validation message while preserving error styling.
+   *
+   * @default false
+   */
   hideError?: boolean
+
+  /**
+   * Hides the warning message.
+   *
+   * @default false
+   */
+  hideWarning?: boolean
+
+  /**
+   * Placeholder text for the textarea.
+   */
+  placeholder?: string
+
+  /**
+   * Disables the textarea.
+   *
+   * @default false
+   */
+  disabled?: boolean
+
+  /**
+   * Sets the textarea tabindex.
+   */
+  tabindex?: 0 | -1 | number
+
+  /**
+   * Sets the initial row count or makes the field fill the available height.
+   * Use `'fill'` only inside a flex container with a defined height.
+   *
+   * @default 3
+   */
+  rows?: number | 'fill'
+
+  /**
+   * Enables automatic height growth based on content.
+   * `true` removes the max height, and a number sets the maximum row count
+   * before scrolling starts.
+   *
+   * @default false
+   */
+  autoResize?: boolean | number
+
+  /**
+   * Uncontrolled value. Ignored when `modelValue` is provided.
+   */
+  value?: string | null
+
+  /**
+   * Controlled value used by `v-model`.
+   */
+  modelValue?: string | null
+
+  /**
+   * Enables write/preview mode. Return an HTML string for the preview panel.
+   */
+  preview?: (value: string | null) => string
+
+  /**
+   * Custom label for the preview toggle.
+   */
+  previewLabel?: string
+
+  /**
+   * Custom label for the write toggle.
+   */
+  writeLabel?: string
 }
 ```
 
-```vue-html
-<SInputTextarea
-  v-model="..."
-  :validation
-  hide-error
-/>
-```
+### Slots
 
-## Slots
+- `actions`: Optional toolbar actions rendered on the right side of the control row. Hidden while preview mode is active.
+- `info`: Rich tooltip content that overrides the plain `info` prop.
 
-Here are the list of slots you may define within the component.
-
-### `#info` {#info-slot}
-
-Same as `:info` prop. When `:info` prop and this slot are defined at the same time, this slot will take precedence.
-
-```vue-html
-<SInputTextarea label="Message" v-model="...">
-  <template #info>
-    Learn more about this field <SLink href="...">here</SLink>.
-  </template>
-</SInputTextarea>
-```
-
-## Events
-
-Here are the list of events the component may emit.
-
-### `@update:model-value`
-
-Emits when the user inputs value, and when the focus is out. This event is always emitted together with `@input` and `@blur` event.
+### Events
 
 ```ts
 interface Emits {
   'update:model-value': [value: string | null]
-}
-```
-
-### `@input`
-
-Emits when the user inputs any value. This event is always emitted together with `@update:model-value` event.
-
-```ts
-interface Emits {
   input: [value: string | null]
-}
-```
-
-### `@blur`
-
-Emits when the input lose its focus. This event is always emitted together with `@update:model-value` event.
-
-```ts
-interface Emits {
   blur: [value: string | null]
 }
 ```
 
-## Styles
+- `update:model-value`: Emitted on every input and again on blur with the latest value.
+- `input`: Emitted whenever the textarea value changes.
+- `blur`: Emitted when the field loses focus. This also calls `validation?.$touch()`.
 
-You may customize the styles by overriding `--input` prefixed CSS variables.
+### Special use cases
 
-### Global input styles
+Use `:preview` to build a write/preview editor. When you also provide `#actions`, the component renders a toolbar above the textarea.
 
-You may customize the various styles of the component via global input related CSS variables. Please refer to [Styles: Input Styles](../styles/input-styles) page.
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import SButton from '@globalbrain/sefirot/lib/components/SButton.vue'
+import SInputTextarea from '@globalbrain/sefirot/lib/components/SInputTextarea.vue'
+import { useMarkdown } from '@globalbrain/sefirot/lib/composables/Markdown'
+
+const body = ref('')
+const renderMarkdown = useMarkdown()
+
+function preview(value: string | null) {
+  return value ? renderMarkdown(value) : '<p>Nothing to preview</p>'
+}
+</script>
+
+<template>
+  <SInputTextarea
+    v-model="body"
+    label="Body"
+    :rows="8"
+    :preview
+    preview-label="Preview"
+    write-label="Write"
+  >
+    <template #actions>
+      <SButton type="text" size="sm" mode="mute" label="Attach link" />
+    </template>
+  </SInputTextarea>
+</template>
+```
+
+### Behavior notes
+
+- `modelValue` takes precedence over `value`.
+- With `autoResize` enabled, `rows` becomes the minimum visible height.
+- `rows="fill"` makes the field grow to the available height, so the parent should be a flex container with a constrained height.
+- The string returned from `preview()` is rendered with `v-html`, so sanitize untrusted content before returning it.

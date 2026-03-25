@@ -84,6 +84,7 @@ export const baseConfig = {
       'file-saver',
       'markdown-it > argparse',
       'markdown-it > entities',
+      'pinia',
       'qs'
     ],
     // @keep-sorted
