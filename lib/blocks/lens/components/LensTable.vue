@@ -117,7 +117,7 @@ function onSortUpdated(sort: LensQuerySort) {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensTable {
   display: flex;
   flex-direction: column;
@@ -132,8 +132,6 @@ function onSortUpdated(sort: LensQuerySort) {
    * but it is quite tricky to scope the desired field in CSS at the moment.
    */
   font-feature-settings: "tnum";
-
-  --c-bg-elv-3: var(--c-bg-1);
 }
 
 .LensTable.is-loading,

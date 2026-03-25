@@ -175,7 +175,7 @@ async function resolveInput() {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensFormSearchCondition {
   display: grid;
   grid-template-columns: 256px 160px minmax(0, 1fr) 32px;

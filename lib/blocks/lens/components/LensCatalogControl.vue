@@ -81,7 +81,7 @@ function createFilterPresetOptions(): ActionList {
 </script>
 
 <template>
-  <SCardBlock class="LensCatalogControl">
+  <div class="LensCatalogControl">
     <template v-if="!selected || selected.length === 0">
       <div class="main">
         <SInputText
@@ -95,7 +95,6 @@ function createFilterPresetOptions(): ActionList {
         />
         <SActionMenu
           v-if="filterPresets?.length"
-          type="outline"
           size="sm"
           :icon="IconLightning"
           :label="t.a_filter_preset"
@@ -103,14 +102,12 @@ function createFilterPresetOptions(): ActionList {
         />
         <SButton
           v-if="showFilters"
-          type="outline"
           size="sm"
           :icon="IconFunnelSimple"
           :label="t.a_filter"
           @click="$emit('filter')"
         />
         <SButton
-          type="outline"
           size="sm"
           :icon="IconSlidersHorizontal"
           :label="t.a_view"
@@ -120,7 +117,6 @@ function createFilterPresetOptions(): ActionList {
       <div class="sub">
         <slot name="sub-left" />
         <SButton
-          type="outline"
           size="sm"
           :icon="isConditionActive ? IconBookOpenText : IconBook"
           :disabled="isConditionDisabled"
@@ -142,16 +138,16 @@ function createFilterPresetOptions(): ActionList {
         </div>
       </div>
     </template>
-  </SCardBlock>
+  </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogControl {
   display: flex;
   align-items: center;
-  border-radius: 5px 5px 0 0;
   padding: var(--lens-catalog-control-padding, 0 12px);
-  height: 48px;
+  height: 56px;
+  background-color: var(--c-bg-1);
 }
 
 .main {
