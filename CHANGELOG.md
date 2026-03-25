@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.40.0](https://github.com/globalbrain/sefirot/compare/v4.39.0...v4.40.0) (2026-03-25)
+
+
+### Bug Fixes
+
+* **input-textarea:** fix styles ([#695](https://github.com/globalbrain/sefirot/issues/695)) ([09fd997](https://github.com/globalbrain/sefirot/commit/09fd9970512698011840d92df9daf452df1a2b72))
+
+
+### Features
+
+* **lens:** update styles to latest ([#696](https://github.com/globalbrain/sefirot/issues/696)) ([927676d](https://github.com/globalbrain/sefirot/commit/927676d740d4422a57351ba61e660beb4610017c))
+
 # [4.39.0](https://github.com/globalbrain/sefirot/compare/v4.38.1...v4.39.0) (2026-03-19)
 
 
