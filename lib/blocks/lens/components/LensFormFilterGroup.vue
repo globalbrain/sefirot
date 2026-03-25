@@ -129,7 +129,7 @@ function onAddGroup() {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensFormFilterGroup {
   display: flex;
   flex-direction: column;

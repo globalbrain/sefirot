@@ -8,7 +8,14 @@ import { cloneDeep } from 'lodash-es'
 import { computed, ref } from 'vue'
 import { useDraggable } from 'vue-draggable-plus'
 import SButton from '../../../components/SButton.vue'
+import SCard from '../../../components/SCard.vue'
+import SCardBlock from '../../../components/SCardBlock.vue'
+import SCardClose from '../../../components/SCardClose.vue'
+import SCardFooter from '../../../components/SCardFooter.vue'
+import SContent from '../../../components/SContent.vue'
+import SDoc from '../../../components/SDoc.vue'
 import SInputCheckbox from '../../../components/SInputCheckbox.vue'
+import SModal from '../../../components/SModal.vue'
 import { useLang, useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
 import { type FieldData } from '../FieldData'
@@ -149,6 +156,7 @@ async function onApply() {
 
 <template>
   <SCard class="LensFormView" size="medium">
+    <SCardClose @click="$emit('cancel')" />
     <SCardBlock class="s-p-32">
       <SDoc>
         <SContent>
@@ -217,21 +225,19 @@ async function onApply() {
         </div>
       </SDoc>
     </SCardBlock>
-    <SCardBlock class="s-py-16 s-px-32">
-      <SControl size="md">
-        <SControlRight>
-          <SControlButton
-            :label="t.a_cancel"
-            @click="$emit('cancel')"
-          />
-          <SControlButton
-            mode="info"
-            :label="t.a_apply"
-            @click="onApply"
-          />
-        </SControlRight>
-      </SControl>
-    </SCardBlock>
+    <SCardFooter class="s-py-16 s-px-32">
+      <SButton
+        size="md"
+        :label="t.a_cancel"
+        @click="$emit('cancel')"
+      />
+      <SButton
+        size="md"
+        mode="info"
+        :label="t.a_apply"
+        @click="onApply"
+      />
+    </SCardFooter>
 
     <SModal :open="editDialog.state.value" @close="editDialog.off()">
       <LensFormOverride
@@ -246,12 +252,7 @@ async function onApply() {
   </SCard>
 </template>
 
-<style scoped lang="postcss">
-.LensFormView {
-  --c-bg-elv-2: var(--c-bg-1);
-  --c-bg-elv-3: var(--c-bg-1);
-}
-
+<style scoped>
 .main {
   display: flex;
   flex-direction: column;
@@ -286,15 +287,13 @@ async function onApply() {
 .input {
   display: flex;
   flex-grow: 1;
-  gap: 1px;
-  border: 1px dashed var(--c-divider);
+  border: 1px dashed var(--input-border-color);
   border-radius: 6px;
-  background-color: var(--c-gutter);
   overflow: hidden;
   transition: border-color 0.25s;
 
   &:hover {
-    border-color: var(--c-border-mute-2);
+    border-color: var(--input-hover-border-color);
   }
 }
 
@@ -318,7 +317,7 @@ async function onApply() {
   display: flex;
   align-items: center;
   flex-grow: 1;
-  padding: 0 8px;
+  padding: 0 8px 0 0;
   background-color: var(--c-bg-1);
 }
 

@@ -88,7 +88,7 @@ function isConnector(value: any): value is '$and' | '$or' {
 </script>
 
 <template>
-  <SCardBlock class="LensCatalogStateFilter">
+  <div class="LensCatalogStateFilter">
     <div v-if="!isOpen" class="closed">
       <span class="filter-count">{{ t.filter_count(group.count) }}</span>
     </div>
@@ -111,10 +111,10 @@ function isConnector(value: any): value is '$and' | '$or' {
         </span>
       </button>
     </div>
-  </SCardBlock>
+  </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogStateFilter {
   display: flex;
   gap: 16px;

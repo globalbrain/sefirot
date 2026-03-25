@@ -50,7 +50,7 @@ function getOrderText(sort: LensQuerySort): string {
 </script>
 
 <template>
-  <SCardBlock class="LensCatalogStateSort">
+  <div class="LensCatalogStateSort">
     <div v-if="!isOpen" class="closed">
       <span class="sort-count">{{ t.sort_count(sorts.length) }}</span>
     </div>
@@ -72,10 +72,10 @@ function getOrderText(sort: LensQuerySort): string {
         </span>
       </button>
     </div>
-  </SCardBlock>
+  </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogStateSort {
   display: flex;
   gap: 16px;

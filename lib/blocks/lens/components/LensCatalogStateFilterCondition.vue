@@ -54,7 +54,7 @@ const valueText = computedAsync(async () => {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogStateFilterCondition {
   display: flex;
   gap: 1px;

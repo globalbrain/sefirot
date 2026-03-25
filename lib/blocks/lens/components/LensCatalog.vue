@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn, useElementSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
+import SDivider from '../../../components/SDivider.vue'
 import { useQuery } from '../../../composables/Api'
 import { usePower } from '../../../composables/Power'
 import { type FieldData } from '../FieldData'
@@ -67,7 +68,7 @@ export interface Props {
   clickableFields?: string[]
 
   // Whether to show border around the catalog.
-  border?: boolean
+  showBorder?: boolean
 
   // Padding to add around various blocks in the catalog. This padding only
   // applies to the X axis (left and right). The default is `16px`.
@@ -181,13 +182,20 @@ const hasConditions = computed(() => {
 })
 
 const borderWidth = computed(() => {
-  return props.border ? 'var(--lens-catalog-border-width, 1px)' : '0'
+  return props.showBorder ? 'var(--lens-catalog-border-width, 1px)' : '0'
+})
+
+const containerClasses = computed(() => {
+  return {
+    'show-empty-state': _showEmptyState.value,
+    'has-border': props.showBorder
+  }
 })
 
 const paddings = computed(() => ({
   '--lens-catalog-control-padding': `0 ${props.padding ?? '16px'}`,
-  '--lens-catalog-filters-block-padding': `12px ${props.padding ?? '16px'}`,
-  '--lens-catalog-sorts-block-padding': `12px ${props.padding ?? '16px'}`,
+  '--lens-catalog-filters-block-padding': `8px ${props.padding ?? '16px'}`,
+  '--lens-catalog-sorts-block-padding': `8px ${props.padding ?? '16px'}`,
   '--lens-catalog-footer-padding': `0 ${props.padding ?? '16px'}`,
   '--table-padding-left': `calc(${props.padding ?? '16px'} - 16px)`
 }))
@@ -195,7 +203,7 @@ const paddings = computed(() => ({
 const conditionBlocksSize = useElementSize(conditionBlocksEl)
 
 const headerHeight = 'var(--lens-catalog-global-height-offset)'
-const controlHeight = '48px - 1px'
+const controlHeight = '56px - 1px'
 const conditionBlocksHeight = computed(() => conditionBlocksSize.height.value > 0 ? `${conditionBlocksSize.height.value}px - 1px` : '0px')
 const columnsHeight = '40px - 1px'
 const footerHeight = '56px - 1px'
@@ -364,7 +372,7 @@ defineExpose({
 </script>
 
 <template>
-  <SCard class="LensCatalog" :class="{ 'show-empty-state': _showEmptyState }" :style="containerStyles">
+  <div class="LensCatalog" :class="containerClasses" :style="containerStyles">
     <template v-if="_showEmptyState">
       <slot name="empty-state" />
     </template>
@@ -397,20 +405,25 @@ defineExpose({
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
       <div v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)" ref="conditionBlocksEl" class="condition-blocks">
-        <LensCatalogStateFilter
-          v-if="_filters.length > 0"
-          :filters="_filters"
-          :fields="result.fields"
-          @reset="onResetFilters"
-        />
-        <LensCatalogStateSort
-          v-if="_sort.length > 0"
-          :fields="result.fields"
-          :sorts="_sort"
-          @reset="onResetSorts"
-        />
+        <template v-if="_filters.length > 0">
+          <SDivider />
+          <LensCatalogStateFilter
+            :filters="_filters"
+            :fields="result.fields"
+            @reset="onResetFilters"
+          />
+        </template>
+        <template v-if="_sort.length > 0">
+          <SDivider />
+          <LensCatalogStateSort
+            :fields="result.fields"
+            :sorts="_sort"
+            @reset="onResetSorts"
+          />
+        </template>
       </div>
-      <SCardBlock class="list" :style="tableMaxHeight">
+      <SDivider />
+      <div class="list" :style="tableMaxHeight">
         <LensTable
           :result
           :loading
@@ -430,7 +443,7 @@ defineExpose({
           @prev="onPrev"
           @next="onNext"
         />
-      </SCardBlock>
+      </div>
     </div>
 
     <SModal :open="filterDialog.state.value" @close="filterDialog.off">
@@ -455,16 +468,15 @@ defineExpose({
         @apply="onViewUpdated"
       />
     </SModal>
-  </SCard>
+  </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalog {
-  --c-bg-elv-2: var(--c-bg-1);
-  --c-bg-elv-3: var(--c-bg-1);
-  --c-bg-elv-4: var(--c-bg-2);
-
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  background-color: var(--c-bg-1);
 }
 
 .LensCatalog.show-empty-state {
@@ -472,10 +484,25 @@ defineExpose({
   background-color: var(--c-bg-1);
 }
 
+.LensCatalog.has-border {
+  .container {
+    border: 1px solid var(--c-border);
+    border-radius: 12px;
+  }
+
+  :deep(.LensCatalogControl) {
+    border-radius: 11px 11px 0 0;
+  }
+
+  :deep(.LensCatalogFooter) {
+    border-radius: 0 0 11px 11px;
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  flex-grow: 1;
   min-height: 100%;
 }
 
@@ -483,18 +510,10 @@ defineExpose({
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border-radius: 0 0 5px 5px;
 }
 
 .control-skeleton {
   height: 48px;
   background-color: var(--c-bg-1);
-}
-
-.condition-blocks {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  background-color: var(--c-gutter);
 }
 </style>

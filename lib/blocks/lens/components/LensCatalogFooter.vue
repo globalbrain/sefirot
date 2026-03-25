@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SPagination from '../../../components/SPagination.vue'
 import { type LensResult } from '../LensResult'
 
 defineProps<{
@@ -14,28 +15,27 @@ defineEmits<{
 
 <template>
   <div class="LensCatalogFooter">
-    <SControl>
-      <SControlRight>
-        <SControlPagination
-          :total="result.pagination.total"
-          :page="result.pagination.page"
-          :per-page="result.pagination.perPage"
-          :disabled="loading"
-          @prev="$emit('prev')"
-          @next="$emit('next')"
-        />
-      </SControlRight>
-    </SControl>
+    <SPagination
+      size="small"
+      align="right"
+      :total="result.pagination.total"
+      :page="result.pagination.page"
+      :per-page="result.pagination.perPage"
+      :disabled="loading"
+      @prev="$emit('prev')"
+      @next="$emit('next')"
+    />
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogFooter {
   position: relative;
   z-index: 10;
   display: flex;
-  flex-shrink: 0;
+  justify-content: flex-end;
   align-items: center;
+  flex-shrink: 0;
   margin-top: -1px;
   border-top: 1px solid var(--c-gutter);
   border-radius: 0 0 5px 5px;

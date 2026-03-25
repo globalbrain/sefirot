@@ -1,5 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import SButton from '../../../components/SButton.vue'
+import SCard from '../../../components/SCard.vue'
+import SCardBlock from '../../../components/SCardBlock.vue'
+import SCardClose from '../../../components/SCardClose.vue'
+import SCardFooter from '../../../components/SCardFooter.vue'
+import SContent from '../../../components/SContent.vue'
+import SDoc from '../../../components/SDoc.vue'
 import { useData } from '../../../composables/Data'
 import { useLang, useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
@@ -129,6 +136,7 @@ async function onApply() {
 
 <template>
   <SCard class="LensFormFilters" size="xlarge">
+    <SCardClose @click="$emit('cancel')" />
     <SCardBlock class="s-p-32">
       <SDoc>
         <SContent>
@@ -143,27 +151,18 @@ async function onApply() {
         />
       </SDoc>
     </SCardBlock>
-    <SCardBlock class="s-py-16 s-px-32">
-      <SControl size="md">
-        <SControlRight>
-          <SControlButton
-            :label="t.a_cancel"
-            @click="$emit('cancel')"
-          />
-          <SControlButton
-            mode="info"
-            :label="t.a_apply"
-            @click="onApply"
-          />
-        </SControlRight>
-      </SControl>
-    </SCardBlock>
+    <SCardFooter class="s-py-16 s-px-32">
+      <SButton
+        size="md"
+        :label="t.a_cancel"
+        @click="$emit('cancel')"
+      />
+      <SButton
+        size="md"
+        mode="info"
+        :label="t.a_apply"
+        @click="onApply"
+      />
+    </SCardFooter>
   </SCard>
 </template>
-
-<style scoped lang="postcss">
-.LensFormFilters {
-  --c-bg-elv-2: var(--c-bg-1);
-  --c-bg-elv-3: var(--c-bg-1);
-}
-</style>

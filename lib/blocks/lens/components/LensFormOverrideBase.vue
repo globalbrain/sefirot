@@ -1,4 +1,11 @@
 <script setup lang="ts">
+import SButton from '../../../components/SButton.vue'
+import SCard from '../../../components/SCard.vue'
+import SCardBlock from '../../../components/SCardBlock.vue'
+import SCardClose from '../../../components/SCardClose.vue'
+import SCardFooter from '../../../components/SCardFooter.vue'
+import SContent from '../../../components/SContent.vue'
+import SDoc from '../../../components/SDoc.vue'
 import SInputCheckbox from '../../../components/SInputCheckbox.vue'
 import SInputNumber from '../../../components/SInputNumber.vue'
 import SInputText from '../../../components/SInputText.vue'
@@ -91,6 +98,7 @@ async function onSave() {
 
 <template>
   <SCard class="LensFormOverrideBase" size="large">
+    <SCardClose @click="$emit('cancel')" />
     <SCardBlock class="s-p-32">
       <SDoc>
         <SContent>
@@ -147,30 +155,23 @@ async function onSave() {
         </div>
       </SDoc>
     </SCardBlock>
-    <SCardBlock class="s-py-16 s-px-32">
-      <SControl size="md">
-        <SControlRight>
-          <SControlButton
-            :label="t.a_cancel"
-            @click="$emit('cancel')"
-          />
-          <SControlButton
-            mode="info"
-            :label="t.a_apply"
-            @click="onSave"
-          />
-        </SControlRight>
-      </SControl>
-    </SCardBlock>
+    <SCardFooter class="s-py-16 s-px-32">
+      <SButton
+        size="md"
+        :label="t.a_cancel"
+        @click="$emit('cancel')"
+      />
+      <SButton
+        size="md"
+        mode="info"
+        :label="t.a_apply"
+        @click="onSave"
+      />
+    </SCardFooter>
   </SCard>
 </template>
 
-<style scoped lang="postcss">
-.LensFormOverrideBase {
-  --c-bg-elv-2: var(--c-bg-1);
-  --c-bg-elv-3: var(--c-bg-1);
-}
-
+<style scoped>
 .fieldset {
   display: flex;
   flex-direction: column;

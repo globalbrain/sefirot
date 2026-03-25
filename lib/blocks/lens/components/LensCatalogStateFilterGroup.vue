@@ -49,7 +49,7 @@ const connectorTextDict = {
   </div>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .LensCatalogStateFilterGroup {
   display: flex;
   flex-direction: column;
