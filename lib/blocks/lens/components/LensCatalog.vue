@@ -181,10 +181,6 @@ const hasConditions = computed(() => {
   return _filters.value.length > 0 || _sort.value.length > 0
 })
 
-const borderWidth = computed(() => {
-  return props.showBorder ? 'var(--lens-catalog-border-width, 1px)' : '0'
-})
-
 const containerClasses = computed(() => {
   return {
     'show-empty-state': _showEmptyState.value,
@@ -220,7 +216,6 @@ const containerMinHeight = computed(() => {
 
 const containerStyles = computed(() => {
   return {
-    borderWidth: borderWidth.value,
     ...paddings.value,
     ...(containerMinHeight.value ?? {})
   }
@@ -513,7 +508,7 @@ defineExpose({
 }
 
 .control-skeleton {
-  height: 48px;
+  height: 56px;
   background-color: var(--c-bg-1);
 }
 </style>
