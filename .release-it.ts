@@ -21,6 +21,6 @@ export default {
     }
   },
   hooks: {
-    'before:init': 'pnpm test:fail'
+    'before:init': 'pnpm run test:fail'
   }
 } satisfies Config

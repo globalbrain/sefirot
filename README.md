@@ -45,7 +45,7 @@ $ pnpm run lint
 Lint files using a rule of Standard JS.
 
 ```bash
-$ pnpm test
+$ pnpm run test
 ```
 
 Run the tests.

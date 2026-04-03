@@ -37,11 +37,11 @@
     "./*": "./*"
   },
   "scripts": {
-    "docs": "pnpm docs:dev",
+    "docs": "pnpm run docs:dev",
     "docs:dev": "vitepress dev docs --port 4011",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress serve docs --port 4011",
-    "story": "pnpm story:dev",
+    "story": "pnpm run story:dev",
     "story:dev": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire dev --port 4010",
     "story:build": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire build",
     "story:preview": "NODE_NO_WARNINGS=1 VITE_CJS_IGNORE_WARNING=1 histoire preview --port 4010",
