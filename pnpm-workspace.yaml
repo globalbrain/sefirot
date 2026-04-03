@@ -1,8 +1,8 @@
 autoInstallPeers: false
 
-onlyBuiltDependencies:
-  - esbuild
-  - vue-demi
+allowBuilds:
+  esbuild: true
+  vue-demi: false
 
 overrides:
   jsdom: latest
