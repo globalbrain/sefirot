@@ -51,9 +51,9 @@ provideCardBlockSize(computed(() => props.size ?? null))
   width: 100%;
 }
 
-.SCardBlock.xsmall { height: 40px; }
-.SCardBlock.small  { height: 48px; }
-.SCardBlock.medium { height: 56px; }
-.SCardBlock.large  { height: 64px; }
-.SCardBlock.xlarge { height: 80px; }
+.SCardBlock.xsmall { height: 40px; min-height: 40px; }
+.SCardBlock.small  { height: 48px; min-height: 48px; }
+.SCardBlock.medium { height: 56px; min-height: 56px; }
+.SCardBlock.large  { height: 64px; min-height: 64px; }
+.SCardBlock.xlarge { height: 80px; min-height: 80px; }
 </style>
