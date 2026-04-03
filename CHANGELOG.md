@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.40.1](https://github.com/globalbrain/sefirot/compare/v4.40.0...v4.40.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* **card:** fix style issue on card collapse ([#701](https://github.com/globalbrain/sefirot/issues/701)) ([a36c345](https://github.com/globalbrain/sefirot/commit/a36c3456feee7f394f9ca79ba3ee2fea2fda7201))
+
 # [4.40.0](https://github.com/globalbrain/sefirot/compare/v4.39.0...v4.40.0) (2026-03-25)
 
 
