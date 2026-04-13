@@ -165,7 +165,7 @@ function getErrorMsg(validation: Validatable) {
     transition: color 0.25s;
   }
 
-  &:hover, &:focus, &:focus-within {
+  &:is(:hover, :focus, :focus-within) {
     .label-info-icon {
       color: var(--c-text-info-1);
     }
