@@ -13,6 +13,13 @@ const files = (await Array.fromAsync(glob(`**/*.ts`, { cwd: lib })))
   .filter((file) => !file.endsWith('.d.ts'))
   .map((file) => `sefirot/${file}`.replace(/(?:\/index)?\.ts$/, ''))
 
+// @ts-ignore
+const isRolldown = !!vite.rolldownVersion
+
+const define = {
+  'navigator.userAgent': '""'
+}
+
 /** @type {import('vite').UserConfig} */
 export const baseConfig = {
   plugins: [
@@ -20,17 +27,17 @@ export const baseConfig = {
     {
       enforce: 'pre',
       name: 'sefirot:patch-linkify-it',
-      transform(code, id) {
-        if (id.includes('linkify-it/lib/re.mjs')) {
+      transform: {
+        filter: {
+          id: /linkify-it[\\/]lib[\\/]re\.m?js(?:$|\?)/
+        },
+        handler(code, id) {
           const s = new MagicString(code)
 
           const search = 'const text_separators = \'[><\\uff5c]\''
           const replace = 'const text_separators = \'[><\\uff00-\\uffef]\''
 
-          const index = code.indexOf(search)
-          if (index !== -1) {
-            s.overwrite(index, index + search.length, replace)
-          }
+          s.replace(search, replace)
 
           return { code: s.toString(), map: s.generateMap({ source: id }) }
         }
@@ -53,21 +60,9 @@ export const baseConfig = {
         'file-saver'
       ],
       // @ts-ignore
-      // eslint-disable-next-line style/multiline-ternary
-      esbuildOptions: vite.rolldownVersion ? undefined : {
-        define: {
-          'navigator.userAgent': '""'
-        }
-      },
+      esbuildOptions: isRolldown ? undefined : { define },
       // @ts-ignore
-      // eslint-disable-next-line style/multiline-ternary
-      rolldownOptions: vite.rolldownVersion ? {
-        transform: {
-          define: {
-            'navigator.userAgent': '""'
-          }
-        }
-      } : undefined
+      rolldownOptions: isRolldown ? { transform: { define } } : undefined
     }
   },
 
