@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.40.2](https://github.com/globalbrain/sefirot/compare/v4.40.1...v4.40.2) (2026-04-13)
+
+
+### Bug Fixes
+
+* workaround for vitejs/vite-plugin-vue#763 ([6d99db1](https://github.com/globalbrain/sefirot/commit/6d99db12a14da3f2d4843595f6b77dda75250bd7))
+
 ## [4.40.1](https://github.com/globalbrain/sefirot/compare/v4.40.0...v4.40.1) (2026-04-03)
 
 
