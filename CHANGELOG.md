@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.40.3](https://github.com/globalbrain/sefirot/compare/v4.40.2...v4.40.3) (2026-04-13)
+
+
+### Performance Improvements
+
+* optimize linkify patch plugin ([ccdad48](https://github.com/globalbrain/sefirot/commit/ccdad48087fa8684791592295b2502c8c93d3392))
+
 ## [4.40.2](https://github.com/globalbrain/sefirot/compare/v4.40.1...v4.40.2) (2026-04-13)
 
 
