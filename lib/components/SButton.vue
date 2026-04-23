@@ -119,6 +119,7 @@ function onClick(): void {
       :class="classes"
       :href
       role="button"
+      :tabindex="props.disabled ? -1 : 0"
       @click="onClick"
     >
       <span class="content">
