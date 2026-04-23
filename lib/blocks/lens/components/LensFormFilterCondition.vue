@@ -8,7 +8,7 @@ import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { required } from '../../../validation/rules'
 import { type FieldData } from '../FieldData'
-import { type FilterOperator, FilterOperatorOptionDict } from '../FilterOperator'
+import { type FilterOperator, FilterOperatorLabelDict } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 
@@ -53,7 +53,7 @@ const field = computed(() => {
 
 const operatorOptions = computed(() => {
   return field.value?.availableFilterOperators().map((op) => {
-    return FilterOperatorOptionDict[op]
+    return { label: FilterOperatorLabelDict[op], value: op }
   }) ?? []
 })
 

@@ -2,7 +2,7 @@
 import { computedAsync } from '@vueuse/core'
 import { computed } from 'vue'
 import { type FieldData } from '../FieldData'
-import { type FilterOperator, FilterOperatorTextDict } from '../FilterOperator'
+import { type FilterOperator, FilterOperatorLabelDict } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 
 export interface Props {
@@ -33,7 +33,7 @@ const fieldText = computed(() => {
 })
 
 const operatorText = computed(() => {
-  return FilterOperatorTextDict[props.condition.operator]
+  return FilterOperatorLabelDict[props.condition.operator]
 })
 
 const valueText = computedAsync(async () => {
