@@ -48,11 +48,10 @@
     "type": "vue-tsc --noEmit",
     "lint": "eslint --fix",
     "lint:fail": "eslint --max-warnings 0",
-    "vitest": "vitest",
-    "vitest:run": "vitest run",
-    "coverage": "vitest run --coverage",
-    "test": "pnpm run type && pnpm run lint && pnpm run coverage",
-    "test:fail": "pnpm run type && pnpm run lint:fail && pnpm run coverage",
+    "test": "vitest",
+    "test:fail": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check": "pnpm run type && pnpm run lint:fail && pnpm run test:fail",
     "release": "pnpm whoami >/dev/null 2>&1 || pnpm login && release-it"
   },
   "dependencies": {

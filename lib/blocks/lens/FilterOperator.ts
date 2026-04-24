@@ -6,6 +6,9 @@ export type FilterOperator =
   | '<'
   | '<='
   | 'in'
+  | 'contains'
+  | 'startsWith'
+  | 'endsWith'
 
 export const FilterOperatorLabelDict: Record<FilterOperator, string> = {
   '=': 'is',
@@ -14,5 +17,8 @@ export const FilterOperatorLabelDict: Record<FilterOperator, string> = {
   '>=': 'greater or equal',
   '<': 'less',
   '<=': 'less or equal',
-  'in': 'in'
+  'in': 'in',
+  'contains': 'contains',
+  'startsWith': 'starts with',
+  'endsWith': 'ends with'
 }
