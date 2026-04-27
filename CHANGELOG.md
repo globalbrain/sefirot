@@ -1,5 +1,19 @@
 # Changelog
 
+# [4.41.0](https://github.com/globalbrain/sefirot/compare/v4.40.3...v4.41.0) (2026-04-27)
+
+
+### Bug Fixes
+
+* disable focusing disabled buttons ([663de25](https://github.com/globalbrain/sefirot/commit/663de258ee764e11cc6a4a4013aef39a8d97c844)), closes [#682](https://github.com/globalbrain/sefirot/issues/682)
+* lowercase labels in filters ([c4add50](https://github.com/globalbrain/sefirot/commit/c4add50e20eb48a2af5c0b147941eda7af5b44e7)), closes [#684](https://github.com/globalbrain/sefirot/issues/684)
+
+
+### Features
+
+* add before/after date rules to lens RuleMapper ([#708](https://github.com/globalbrain/sefirot/issues/708)) ([bd7c601](https://github.com/globalbrain/sefirot/commit/bd7c60184e9cfdf3987a0b40fce0553b87480c44))
+* add lens text pattern filters ([#705](https://github.com/globalbrain/sefirot/issues/705)) ([f6da527](https://github.com/globalbrain/sefirot/commit/f6da527b82179adbbe01cf511e52a45e0ebeb7db))
+
 ## [4.40.3](https://github.com/globalbrain/sefirot/compare/v4.40.2...v4.40.3) (2026-04-13)
 
 
