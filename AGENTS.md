@@ -7,3 +7,4 @@
 - Keep commit subjects short, imperative, and focused on the user-visible change.
 - When asked to open or create a PR, create it as a draft PR unless your human explicitly asks for a ready PR.
 - Use a conventional commit style for the PR title as well, for example `feat: did this and that` or `fix: make that and this`.
+- Always write PR descriptions in English, even if the conversation with your human is in another language.
