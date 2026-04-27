@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.41.1](https://github.com/globalbrain/sefirot/compare/v4.41.0...v4.41.1) (2026-04-27)
+
+
+### Bug Fixes
+
+* **button:** set sm size font-size to 12px ([#709](https://github.com/globalbrain/sefirot/issues/709)) ([4f90739](https://github.com/globalbrain/sefirot/commit/4f9073972f9deddf59d5a567b15c30cc8d207c86))
+
 # [4.41.0](https://github.com/globalbrain/sefirot/compare/v4.40.3...v4.41.0) (2026-04-27)
 
 
