@@ -43,24 +43,53 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.after_or_equal.$validator(day('2026-01-01'), null, null)).toBe(false)
   })
 
-  it('resolves the today keyword to the start of the current day', () => {
-    const args = map([{ type: 'after_or_equal', date: 'today' }]) as any
-    const startOfToday = day().startOf('day')
+  describe('relative date keywords', () => {
+    beforeEach(() => {
+      vi.useFakeTimers()
+      vi.setSystemTime(new Date('2026-06-15T12:34:56Z'))
+    })
 
-    expect(args.after_or_equal.$validator(startOfToday, null, null)).toBe(true)
-    expect(args.after_or_equal.$validator(startOfToday.subtract(1, 'day'), null, null)).toBe(false)
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+
+    it('resolves the now keyword to the current instant', () => {
+      const args = map([{ type: 'after', date: 'now' }]) as any
+      const now = day()
+
+      expect(args.after.$validator(now.add(1, 'day'), null, null)).toBe(true)
+      expect(args.after.$validator(now.subtract(1, 'day'), null, null)).toBe(false)
+    })
+
+    it('resolves the today keyword to the start of the current day', () => {
+      const args = map([{ type: 'after_or_equal', date: 'today' }]) as any
+      const startOfToday = day().startOf('day')
+
+      expect(args.after_or_equal.$validator(startOfToday, null, null)).toBe(true)
+      expect(args.after_or_equal.$validator(startOfToday.subtract(1, 'day'), null, null)).toBe(false)
+    })
+
+    it('resolves tomorrow and yesterday keywords', () => {
+      const tomorrow = map([{ type: 'after_or_equal', date: 'tomorrow' }]) as any
+      const yesterday = map([{ type: 'before', date: 'yesterday' }]) as any
+
+      const startOfToday = day().startOf('day')
+
+      expect(tomorrow.after_or_equal.$validator(startOfToday.add(1, 'day'), null, null)).toBe(true)
+      expect(tomorrow.after_or_equal.$validator(startOfToday, null, null)).toBe(false)
+
+      expect(yesterday.before.$validator(startOfToday.subtract(2, 'day'), null, null)).toBe(true)
+      expect(yesterday.before.$validator(startOfToday.subtract(1, 'day'), null, null)).toBe(false)
+    })
   })
 
-  it('resolves tomorrow and yesterday keywords', () => {
-    const tomorrow = map([{ type: 'after_or_equal', date: 'tomorrow' }]) as any
-    const yesterday = map([{ type: 'before', date: 'yesterday' }]) as any
+  it('throws on an invalid date string', () => {
+    expect(() => map([{ type: 'before', date: 'not-a-date' }]))
+      .toThrow('Invalid date string in validation rule: "not-a-date"')
+  })
 
-    const startOfToday = day().startOf('day')
-
-    expect(tomorrow.after_or_equal.$validator(startOfToday.add(1, 'day'), null, null)).toBe(true)
-    expect(tomorrow.after_or_equal.$validator(startOfToday, null, null)).toBe(false)
-
-    expect(yesterday.before.$validator(startOfToday.subtract(2, 'day'), null, null)).toBe(true)
-    expect(yesterday.before.$validator(startOfToday.subtract(1, 'day'), null, null)).toBe(false)
+  it('throws on an unsupported rule type', () => {
+    expect(() => map([{ type: 'unknown_rule' } as any]))
+      .toThrow('Unsupported rule type: unknown_rule')
   })
 })

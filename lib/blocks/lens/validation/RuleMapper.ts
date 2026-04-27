@@ -27,6 +27,10 @@ function mapRule(rule: Rule): ValidationRuleWithParams {
       return after(resolveDate(rule.date))
     case 'after_or_equal':
       return afterOrEqual(resolveDate(rule.date))
+    default: {
+      const _exhaustive: never = rule
+      throw new Error(`Unsupported rule type: ${(_exhaustive as Rule).type}`)
+    }
   }
 }
 
@@ -45,7 +49,12 @@ function resolveDate(date: string): Day {
       return day().add(1, 'day').startOf('day')
     case 'yesterday':
       return day().subtract(1, 'day').startOf('day')
-    default:
-      return day(date)
+    default: {
+      const parsed = day(date)
+      if (!parsed.isValid()) {
+        throw new Error(`Invalid date string in validation rule: "${date}"`)
+      }
+      return parsed
+    }
   }
 }
