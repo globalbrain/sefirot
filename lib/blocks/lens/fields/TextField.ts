@@ -20,7 +20,10 @@ export class TextField extends Field<TextFieldData> {
 
     return {
       '=': text,
-      '!=': text
+      '!=': text,
+      'contains': text,
+      'startsWith': text,
+      'endsWith': text
     }
   }
 

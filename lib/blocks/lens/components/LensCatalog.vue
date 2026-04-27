@@ -135,7 +135,7 @@ const queryFilter = computed(() => {
     return []
   }
   return ['$or', props.queryKeys.map((key) => {
-    return [key, 'like', `%${query.value}%`]
+    return [key, 'contains', query.value]
   })]
 })
 
