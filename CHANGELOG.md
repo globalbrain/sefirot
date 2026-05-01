@@ -1,5 +1,7 @@
 # Changelog
 
+## [4.41.2](https://github.com/globalbrain/sefirot/compare/v4.41.1...v4.41.2) (2026-05-01)
+
 ## [4.41.1](https://github.com/globalbrain/sefirot/compare/v4.41.0...v4.41.1) (2026-04-27)
 
 
