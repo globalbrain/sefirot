@@ -30,9 +30,18 @@ const classes = computed(() => [
 // thread `useGrouping` and `maximumFractionDigits` through the same
 // `toLocaleString` call. `Num.format` is kept for callers that just
 // want the default separator-on / unbounded-digits behavior.
+//
+// When neither `separator` nor `maximumFractionDigits` is requested we
+// return the raw number and let Vue's template interpolation stringify
+// it. `toLocaleString` would otherwise round very small numbers to
+// `"0"` (e.g. `1e-25` → `"0"` at 20 digits), losing information that
+// the plain `String(number)` form preserves via scientific notation.
 const formatted = computed(() => {
   if (props.number == null) {
     return ''
+  }
+  if (!props.separator && props.maximumFractionDigits == null) {
+    return props.number
   }
   return props.number.toLocaleString('en-US', {
     useGrouping: props.separator === true,
