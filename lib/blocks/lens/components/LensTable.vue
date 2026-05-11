@@ -55,7 +55,7 @@ const columns = computedAsync(async () => {
     }
   }
 
-  // Build the lest of columns based on the resolved column key list.
+  // Build the list of columns based on the resolved column key list.
   for (const i in columnKeys.value) {
     const key = columnKeys.value[i]
 
