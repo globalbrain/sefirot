@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.42.0](https://github.com/globalbrain/sefirot/compare/v4.41.2...v4.42.0) (2026-05-11)
+
+
+### Features
+
+* auto-fetch and hide the lens indexField column ([#715](https://github.com/globalbrain/sefirot/issues/715)) ([8a2761a](https://github.com/globalbrain/sefirot/commit/8a2761a4f0719e02c77f8b440b54b135611a63be))
+
 ## [4.41.2](https://github.com/globalbrain/sefirot/compare/v4.41.1...v4.41.2) (2026-05-01)
 
 ## [4.41.1](https://github.com/globalbrain/sefirot/compare/v4.41.0...v4.41.1) (2026-04-27)
