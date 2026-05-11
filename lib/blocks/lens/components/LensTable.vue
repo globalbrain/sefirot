@@ -14,6 +14,11 @@ const props = defineProps<{
   result?: LensResult
   overrides?: Record<string, Partial<FieldData>>
   loading: boolean
+  // The list of field keys to actually render as columns, in order.
+  // Falls back to `result.query.select` if not provided. The catalog
+  // uses this to control whether an auto-fetched `indexField` shows up
+  // as a column.
+  select?: string[]
   selected?: any[]
   indexField?: string
 }>()
@@ -29,8 +34,10 @@ const fieldFactory = useFieldFactory()
 
 const records = computed(() => props.result?.data ?? [])
 
+const columnKeys = computed(() => props.select ?? props.result?.query.select ?? [])
+
 const orders = computed(() => [
-  ...(props.result?.query.select ?? []),
+  ...columnKeys.value,
   '__last_empty__'
 ])
 
@@ -48,9 +55,9 @@ const columns = computedAsync(async () => {
     }
   }
 
-  // Build the lest of columns based on selected fields.
-  for (const i in r.query.select) {
-    const key = r.query.select[i]
+  // Build the lest of columns based on the resolved column key list.
+  for (const i in columnKeys.value) {
+    const key = columnKeys.value[i]
 
     const _fieldData = cloneDeep(r.fields[key])
 
