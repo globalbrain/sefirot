@@ -115,6 +115,12 @@ export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   icon?: Component
   value?: number | null
   separator?: boolean
+  /**
+   * Caps the displayed fractional digits using
+   * `Intl.NumberFormat`-style "maximum fractional digits" semantics.
+   * `null` / `undefined` shows the value as-is (no rounding).
+   */
+  maximumFractionDigits?: number | null
   link?: string | null
   color?: TableCellValueColor
   iconColor?: TableCellValueColor

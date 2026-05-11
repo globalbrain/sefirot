@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type TableCellValueColor } from '../composables/Table'
-import { format } from '../support/Num'
 import SLink from './SLink.vue'
 
 const props = defineProps<{
@@ -11,6 +10,7 @@ const props = defineProps<{
   icon?: Component
   number?: number | null
   separator?: boolean
+  maximumFractionDigits?: number | null
   color?: TableCellValueColor
   iconColor?: TableCellValueColor
   link?: string | null
@@ -25,6 +25,20 @@ const classes = computed(() => [
   _color,
   { link: !!(props.link || props.onClick) }
 ])
+
+// We format the value inline (rather than via `Num.format`) so we can
+// thread `useGrouping` and `maximumFractionDigits` through the same
+// `toLocaleString` call. `Num.format` is kept for callers that just
+// want the default separator-on / unbounded-digits behavior.
+const formatted = computed(() => {
+  if (props.number == null) {
+    return ''
+  }
+  return props.number.toLocaleString('en-US', {
+    useGrouping: props.separator === true,
+    maximumFractionDigits: props.maximumFractionDigits ?? 20
+  })
+})
 </script>
 
 <template>
@@ -40,7 +54,7 @@ const classes = computed(() => [
         <component :is="icon" class="svg" />
       </div>
       <div class="value" :class="_color">
-        {{ separator ? format(number) : number }}
+        {{ formatted }}
       </div>
     </SLink>
   </div>
