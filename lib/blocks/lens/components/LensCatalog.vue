@@ -61,7 +61,18 @@ export interface Props {
   // Whether to hide the condition blocks.
   hideConditions?: boolean
 
-  // Field name to be used as index field for selection.
+  // Field name to be used as the row identifier. When set, the field is
+  // automatically included in the request `select` so every row carries
+  // its value, and the corresponding column is hidden from the rendered
+  // table — *unless* the caller explicitly listed it in `select`, in
+  // which case the caller's intent wins and the column is shown
+  // normally. The value remains accessible via `record[indexField]` in
+  // `cell-clicked` events and through the `selected` model regardless.
+  //
+  // If the caller's `select` is empty or `null` (i.e. "use server
+  // defaults"), the index field is **not** auto-appended — that would
+  // narrow the result to just that single column on backends that treat
+  // an empty `select` as "use defaults".
   indexField?: string
 
   // Fields that are clickable to emit `cell-clicked` event when clicked.
@@ -125,6 +136,11 @@ const hasInitialResults = ref(false)
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
 
+// `_select` carries the caller's intent. The index field is preserved
+// here if it was listed explicitly so the corresponding column gets
+// rendered, and is only added to the request payload separately (see
+// `withIndexField`). When `_select` is empty, the auto-fetched index
+// field is stripped out of the table's column list further down.
 const _select = ref(props.select ?? [])
 const _selectable = ref(props.selectable ?? props.select ?? [])
 
@@ -152,7 +168,7 @@ const perPage = ref(100)
 const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   const input = {
     entity: props.entity ?? '__no_entity__',
-    select: _select.value,
+    select: withIndexField(_select.value),
     filters: createInputFilters(queryFilter.value, _filters.value),
     sort: _sort.value.length > 0 ? _sort.value : defaultSort.value ?? [],
     page: page.value,
@@ -231,18 +247,54 @@ const tableMaxHeight = computed(() => {
   return `--table-max-height: calc(${props.height} - ${controlHeight} - ${conditionBlocksHeight.value} - ${columnsHeight} - ${footerHeight})`
 })
 
-// Initial setup when the result is loaded for the first time.
+// Initial setup when the result is loaded for the first time. When the
+// caller didn't pass a `select`, we initialise from the response, but
+// we strip out the index field — anything pulled in by `withIndexField`
+// on the way out shouldn't pretend to be caller-declared on the way
+// back in.
 watch(result, (res) => {
   if (!hasInitialResults.value && res!.data.length > 0) {
     hasInitialResults.value = true
   }
   if (_select.value.length === 0) {
-    _select.value = res!.query.select
+    _select.value = withoutIndexField(res!.query.select)
   }
   if (_selectable.value.length === 0) {
-    _selectable.value = res!.query.select
+    _selectable.value = withoutIndexField(res!.query.select)
   }
 }, { once: true })
+
+// Columns to render in the table. We always defer to `_select` (caller
+// or user intent) once we have it; before the first response we use the
+// raw response select with the index field filtered out so an
+// auto-fetched index field doesn't accidentally appear as a column.
+const tableSelect = computed(() => {
+  if (_select.value.length > 0) {
+    return _select.value
+  }
+  return withoutIndexField(result.value?.query.select ?? [])
+})
+
+// The `indexField` is appended to the request `select` so the server
+// returns its value on every row, but it is kept out of the internal
+// `_select` / `_selectable` state so the caller-facing concept of
+// "selected columns" stays clean (the index field is a row identifier,
+// not a column the user picked). The corresponding column is also
+// hidden from the rendered table by `LensTable`.
+//
+// When the caller has no concrete select list, the index field is
+// *not* added either — leaving the request empty lets the server use
+// its own defaults. See `indexField` prop docs above.
+function withIndexField(fields: string[]): string[] {
+  if (fields.length === 0) { return [] }
+  if (!props.indexField || fields.includes(props.indexField)) { return [...fields] }
+  return [...fields, props.indexField]
+}
+
+function withoutIndexField(fields: string[]): string[] {
+  if (!props.indexField) { return [...fields] }
+  return fields.filter((f) => f !== props.indexField)
+}
 
 // Create lens filters option by combining query (free search) filters,
 // user selected filters, and fixed filters.
@@ -313,6 +365,8 @@ function onResetSorts() {
 }
 
 function onViewUpdated(newSelect: string[], newSelectable: string[], overrides: Record<string, Partial<FieldData>>) {
+  // Treat updates from the view form as deliberate user intent: if the
+  // user picked the index field on purpose, surface its column.
   _select.value = newSelect
   _selectable.value = newSelectable
   _overrides.value = overrides
@@ -423,6 +477,7 @@ defineExpose({
           :result
           :loading
           :overrides="_overrides"
+          :select="tableSelect"
           :index-field
           :selected
           :clickable-fields
