@@ -19,7 +19,7 @@ function make(overrides: Partial<NumberFieldData> = {}): NumberField {
     required: false,
     rules: [],
     align: null,
-    separator: false,
+    separator: null,
     abbr: null,
     fractionDigits: null,
     ...overrides

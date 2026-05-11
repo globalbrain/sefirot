@@ -19,7 +19,7 @@ function make(overrides: Partial<DecimalFieldData> = {}): DecimalField {
     required: false,
     rules: [],
     align: null,
-    separator: false,
+    separator: null,
     abbr: null,
     fractionDigits: null,
     ...overrides

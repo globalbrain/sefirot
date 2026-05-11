@@ -87,33 +87,12 @@ export interface LinkFieldData extends FieldDataBase {
   helpJa: string | null
 }
 
-/**
- * Common formatting options shared by `number` and `decimal` field types.
- * All four are `null` by default — set them on the server side to opt in
- * to specific rendering behavior:
- *
- * - `align`: cell text alignment. `null` falls back to the table default
- *   (left). Numbers are often right-aligned, but the spec does not assume
- *   that — callers/servers decide per field.
- * - `separator`: when `true`, the integer portion is rendered with
- *   thousand separators (e.g. `1,000,000`). Only applies when `abbr` is
- *   `null` (abbreviation already produces compact output).
- * - `abbr`: switches the cell to abbreviated rendering using the given
- *   locale's compact notation — `en` → `1K`, `1M`, `1B`; `ja` → `1万`,
- *   `1億`, `1兆`. `null` renders the raw number.
- * - `fractionDigits`: max number of fractional digits to show. Applies
- *   to both plain and abbreviated rendering. `null` means "show as-is"
- *   for plain rendering and "default to 1 digit" for abbreviation.
- */
-export interface NumberFieldFormatting {
+export interface NumberFieldData extends FieldDataBase {
+  type: 'number'
   align: 'left' | 'center' | 'right' | null
-  separator: boolean
+  separator: boolean | null
   abbr: 'en' | 'ja' | null
   fractionDigits: number | null
-}
-
-export interface NumberFieldData extends FieldDataBase, NumberFieldFormatting {
-  type: 'number'
 }
 
 /**
@@ -122,8 +101,12 @@ export interface NumberFieldData extends FieldDataBase, NumberFieldFormatting {
  * precision (e.g. sending the value as a string instead of a JS number)
  * without losing the type-level signal at the spec layer.
  */
-export interface DecimalFieldData extends FieldDataBase, NumberFieldFormatting {
+export interface DecimalFieldData extends FieldDataBase {
   type: 'decimal'
+  align: 'left' | 'center' | 'right' | null
+  separator: boolean | null
+  abbr: 'en' | 'ja' | null
+  fractionDigits: number | null
 }
 
 export interface SelectFieldData extends FieldDataBase {

@@ -4,7 +4,7 @@ import { type FilterOperator } from '../FilterOperator'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { NumberFilterInput } from '../filter-inputs/NumberFilterInput'
 import { Field } from './Field'
-import { renderNumberLikeTableCell } from './NumberField'
+import { renderNumberLikeTableCell } from './support/Renderers'
 
 /**
  * A decimal field is rendered identically to a number field on the
