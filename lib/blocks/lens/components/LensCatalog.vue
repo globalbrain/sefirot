@@ -286,7 +286,7 @@ const tableSelect = computed(() => {
 // *not* added either — leaving the request empty lets the server use
 // its own defaults. See `indexField` prop docs above.
 function withIndexField(fields: string[]): string[] {
-  if (fields.length === 0) { return [...fields] }
+  if (fields.length === 0) { return [] }
   if (!props.indexField || fields.includes(props.indexField)) { return [...fields] }
   return [...fields, props.indexField]
 }
