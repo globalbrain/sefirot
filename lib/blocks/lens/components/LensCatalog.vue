@@ -445,6 +445,12 @@ defineExpose({
         @reset-selection="onResetSelection"
         @toggle-conditions="hideConditions = !hideConditions"
       >
+        <template v-if="$slots['controls-main-left']" #main-left>
+          <slot name="controls-main-left" />
+        </template>
+        <template v-if="$slots['controls-main-right']" #main-right>
+          <slot name="controls-main-right" />
+        </template>
         <template v-if="$slots['controls-sub-left']" #sub-left>
           <slot name="controls-sub-left" />
         </template>
