@@ -85,7 +85,7 @@ function onSelect(value: T) {
   </SInputBase>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SInputSegments.sm,
 .SInputSegments.mini {
   .box {
@@ -129,9 +129,9 @@ function onSelect(value: T) {
 
 .box {
   display: inline-flex;
-  border: 1px solid var(--input-border-color);
-  border-radius: 6px;
-  background-color: var(--input-bg-color);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background-color: var(--c-bg-2);
   transition: border-color 0.25s;
 }
 </style>
