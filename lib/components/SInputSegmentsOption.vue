@@ -35,7 +35,7 @@ function onClick() {
   </button>
 </template>
 
-<style scoped lang="postcss">
+<style scoped>
 .SInputSegmentsOption {
   position: relative;
   display: block;
@@ -43,11 +43,10 @@ function onClick() {
   justify-content: center;
   align-items: center;
   border: 1px solid transparent;
-  border-radius: 3px;
+  border-radius: 6px;
   width: 100%;
   height: 100%;
   text-align: center;
-  font-size: 14px;
   color: var(--c-text-2);
   white-space: nowrap;
   transition: border-color 0.25s, color 0.25s, background-color 0.25s;
@@ -60,76 +59,43 @@ function onClick() {
     color: var(--c-text-3);
     cursor: not-allowed;
   }
-
-  .SInputSegmentsOption + &::before {
-    position: absolute;
-    left: -1px;
-    display: block;
-    width: 1px;
-    height: 16px;
-    border-radius: 4px;
-    background-color: var(--c-divider);
-    content: "";
-    transition: opacity 0.25s;
-  }
-
-  .SInputSegmentsOption.active + &::before,
-  &.active::before {
-    opacity: 0;
-  }
 }
 
-.SInputSegmentsOption.sm,
-.SInputSegmentsOption.mini {
-  .SInputSegmentsOption + &::before {
-    top: 4px;
-  }
-
-  .label {
-    padding: 0 12px;
-  }
+.SInputSegmentsOption.sm .label,
+.SInputSegmentsOption.mini .label {
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
-.SInputSegmentsOption.md {
-  .SInputSegmentsOption + &::before {
-    top: 6px;
-  }
-
-  .label {
-    padding: 0 12px;
-  }
+.SInputSegmentsOption.md .label {
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.SInputSegmentsOption.small {
-  .SInputSegmentsOption + &::before {
-    top: 7px;
-  }
-
-  .label {
-    padding: 0 12px;
-  }
+.SInputSegmentsOption.small .label {
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
-.SInputSegmentsOption.medium {
-  .SInputSegmentsOption + &::before {
-    top: 10px;
-  }
-
-  .label {
-    padding: 0 16px;
-  }
+.SInputSegmentsOption.medium .label {
+  padding: 0 16px;
 }
 
 .SInputSegmentsOption.default.active {
   border-color: var(--button-fill-default-border-color);
   color: var(--button-fill-default-text-color);
   background-color: var(--button-fill-default-bg-color);
+  box-shadow: var(--shadow-depth-1);
 }
 
 .SInputSegmentsOption.mute.active {
   border-color: var(--button-fill-mute-border-color);
   color: var(--button-fill-mute-text-color);
   background-color: var(--button-fill-mute-bg-color);
+  box-shadow: var(--shadow-depth-1);
 }
 
 .SInputSegmentsOption.neutral.active {
