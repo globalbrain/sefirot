@@ -1,6 +1,8 @@
+import { defineComponent, h } from 'vue'
 import { type TableCell } from '../../../composables/Table'
 import { type NumberFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
+import LensFormOverrideNumber from '../components/LensFormOverrideNumber.vue'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { NumberFilterInput } from '../filter-inputs/NumberFilterInput'
 import { Field } from './Field'
@@ -18,6 +20,27 @@ export class NumberField extends Field<NumberFieldData> {
       '=': number,
       '!=': number
     }
+  }
+
+  /**
+   * Renders the override form with extra inputs for `align`,
+   * `separator`, `abbr` and `fractionDigits` on top of the base
+   * label / width / freeze controls.
+   */
+  override overrideForm(): any {
+    return defineComponent((props) => {
+      return () => h(LensFormOverrideNumber, {
+        name: props.name,
+        field: props.field,
+        override: props.override
+      })
+    }, {
+      props: [
+        'name',
+        'field',
+        'override'
+      ]
+    })
   }
 
   override dataListItemComponent(): any {
