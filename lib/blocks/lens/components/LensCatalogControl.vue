@@ -84,6 +84,7 @@ function createFilterPresetOptions(): ActionList {
   <div class="LensCatalogControl">
     <template v-if="!selected || selected.length === 0">
       <div class="main">
+        <slot name="main-left" />
         <SInputText
           v-if="showQuery"
           class="s-w-320"
@@ -113,6 +114,7 @@ function createFilterPresetOptions(): ActionList {
           :label="t.a_view"
           @click="$emit('view')"
         />
+        <slot name="main-right" />
       </div>
       <div class="sub">
         <slot name="sub-left" />
