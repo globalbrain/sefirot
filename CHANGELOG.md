@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.43.1](https://github.com/globalbrain/sefirot/compare/v4.43.0...v4.43.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **input-lens:** add missing template slot ([17d1b35](https://github.com/globalbrain/sefirot/commit/17d1b354ea15484db9caf0cd10561728d8becdd6))
+
 # [4.43.0](https://github.com/globalbrain/sefirot/compare/v4.42.0...v4.43.0) (2026-05-12)
 
 
