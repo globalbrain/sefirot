@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.43.0](https://github.com/globalbrain/sefirot/compare/v4.42.0...v4.43.0) (2026-05-12)
+
+
+### Features
+
+* **lens:** add main left/right slot ([#718](https://github.com/globalbrain/sefirot/issues/718)) ([0583d72](https://github.com/globalbrain/sefirot/commit/0583d727dca1c6195d02c27013e820da43e2132c))
+
 # [4.42.0](https://github.com/globalbrain/sefirot/compare/v4.41.2...v4.42.0) (2026-05-11)
 
 
