@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.43.3](https://github.com/globalbrain/sefirot/compare/v4.43.2...v4.43.3) (2026-05-15)
+
+
+### Features
+
+* **error:** export getHttpStatusCode from support and handle more cases ([56ee096](https://github.com/globalbrain/sefirot/commit/56ee09612ab0d8a59612fbfb02572b9ff476c749))
+
 ## [4.43.2](https://github.com/globalbrain/sefirot/compare/v4.43.1...v4.43.2) (2026-05-15)
 
 
