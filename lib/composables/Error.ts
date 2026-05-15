@@ -214,7 +214,9 @@ export function useErrorHandler({
         userValue = null
       }
 
-      if (![403, 404].includes(e?.cause?.statusCode)) {
+      const status = e?.statusCode || e?.cause?.status || e?.cause?.statusCode
+
+      if (![403, 404].includes(status)) {
         const $ = instance && instance.$
         const metadata = $ && {
           componentName: formatComponentName($),
