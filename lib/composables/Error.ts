@@ -27,6 +27,7 @@ import {
   toValue
 } from 'vue'
 import { useError } from '../stores/Error'
+import { getHttpStatusCode } from '../support/Http'
 
 export interface User {
   id?: string | number
@@ -214,9 +215,10 @@ export function useErrorHandler({
         userValue = null
       }
 
-      const status = e?.statusCode || e?.cause?.status || e?.cause?.statusCode
+      const statusCode = getHttpStatusCode(e)
+      if (!statusCode || statusCode < 400 || statusCode >= 500) {
+        //
 
-      if (![403, 404].includes(status)) {
         const $ = instance && instance.$
         const metadata = $ && {
           componentName: formatComponentName($),
