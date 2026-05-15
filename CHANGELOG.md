@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.43.2](https://github.com/globalbrain/sefirot/compare/v4.43.1...v4.43.2) (2026-05-15)
+
+
+### Bug Fixes
+
+* improve status code heuristics in error composable ([6cce274](https://github.com/globalbrain/sefirot/commit/6cce274b44132fadd47f622d777ade67a4fde923))
+
 ## [4.43.1](https://github.com/globalbrain/sefirot/compare/v4.43.0...v4.43.1) (2026-05-12)
 
 
