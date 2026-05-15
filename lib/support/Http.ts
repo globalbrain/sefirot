@@ -42,22 +42,11 @@ export function objectToFormData(
 }
 
 export function getHttpStatusCode(error: any): number | undefined {
-  const candidates = [
-    error?.status,
-    error?.statusCode,
-    error?.response?.status,
-    error?.response?.statusCode,
-    error?.error?.status,
-    error?.error?.statusCode,
-    error?.details?.status,
-    error?.details?.statusCode,
-    error?.cause?.status,
-    error?.cause?.statusCode,
-    error?.cause?.response?.status,
-    error?.cause?.response?.statusCode,
-    error?.code,
-    error?.cause?.code
-  ]
+  const sources = [error, error?.cause, error?.details, error?.error]
+    .filter((s) => s && typeof s === 'object')
 
-  return candidates.map(Number).find((n) => Number.isInteger(n) && n >= 100 && n <= 599)
+  return sources
+    .flatMap((s) => [s.status, s.statusCode, s.response?.status, s.response?.statusCode, s.code])
+    .map(Number)
+    .find((n) => Number.isInteger(n) && n >= 100 && n <= 599)
 }
