@@ -34,7 +34,21 @@ const fieldFactory = useFieldFactory()
 
 const records = computed(() => props.result?.data ?? [])
 
-const columnKeys = computed(() => props.select ?? props.result?.query.select ?? [])
+// Resolve the list of columns to render. We intersect the caller's
+// requested `select` with what the latest response actually fetched so
+// that toggling a column on through "Manage table view" doesn't surface
+// a new column synchronously against still-stale records. Without this,
+// fields like `SelectField` blow up trying to render `undefined` for
+// the brand-new column before the refresh response lands.
+const columnKeys = computed(() => {
+  const requested = props.select ?? props.result?.query.select ?? []
+  const fetched = props.result?.query.select
+  if (!fetched) {
+    return requested
+  }
+  const fetchedSet = new Set(fetched)
+  return requested.filter((k) => fetchedSet.has(k))
+})
 
 const orders = computed(() => [
   ...columnKeys.value,
@@ -48,6 +62,14 @@ const columns = computedAsync(async () => {
     return {}
   }
 
+  // Snapshot the column keys at the start of the run. `columnKeys` is a
+  // computed off reactive props; if it changes mid-await (e.g. the user
+  // toggles a column off in "Manage table view"), subsequent reads
+  // through the live ref would jump to the new, shorter array and
+  // produce `undefined` for indices past the new length — crashing
+  // `Object.assign(_fieldData, ...)` below.
+  const keys = [...columnKeys.value]
+
   // Prepare base columns that has `__last_empty__` to fill the end space.
   const columns: TableColumns<any, any, any> = {
     __last_empty__: {
@@ -56,10 +78,12 @@ const columns = computedAsync(async () => {
   }
 
   // Build the list of columns based on the resolved column key list.
-  for (const i in columnKeys.value) {
-    const key = columnKeys.value[i]
-
+  for (const key of keys) {
     const _fieldData = cloneDeep(r.fields[key])
+
+    if (!_fieldData) {
+      continue
+    }
 
     const overriddenFieldData = Object.assign(
       _fieldData,
