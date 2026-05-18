@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.43.5](https://github.com/globalbrain/sefirot/compare/v4.43.4...v4.43.5) (2026-05-18)
+
+
+### Bug Fixes
+
+* **lens:** stabilize LensTable columns against in-flight refresh ([#719](https://github.com/globalbrain/sefirot/issues/719)) ([b4b0aa4](https://github.com/globalbrain/sefirot/commit/b4b0aa4766dae495b7c9708fa1220a12b9a601a9))
+
 ## [4.43.4](https://github.com/globalbrain/sefirot/compare/v4.43.3...v4.43.4) (2026-05-15)
 
 ## [4.43.3](https://github.com/globalbrain/sefirot/compare/v4.43.2...v4.43.3) (2026-05-15)
