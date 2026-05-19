@@ -3,6 +3,21 @@ import { abbreviate } from '../../../../support/Num'
 import { type DecimalFieldData, type NumberFieldData } from '../../FieldData'
 
 /**
+ * `Intl.NumberFormat`'s `maximumFractionDigits` accepts integers in
+ * the range `0..20` (inclusive) and throws `RangeError` outside it.
+ * The override UI can in principle accept any number — including
+ * negative values via `SInputNumber` — so we clamp defensively on
+ * the rendering path. `null` / `undefined` stays untouched so the
+ * cell component can route through the "no formatting" path.
+ */
+function clampFractionDigits(digits: number | null | undefined): number | null {
+  if (digits == null) {
+    return null
+  }
+  return Math.max(0, Math.min(20, Math.trunc(digits)))
+}
+
+/**
  * Renders a `number` or `decimal` field as a table cell. The two share
  * the same rendering rules so this helper covers both.
  *
@@ -20,13 +35,14 @@ export function renderNumberLikeTableCell(
   v: any
 ): TableCell {
   const num = v != null ? Number(v) : null
+  const cap = clampFractionDigits(data.fractionDigits)
 
   if (data.abbr != null) {
     return {
       type: 'text',
       align: data.align ?? 'left',
       value: num != null
-        ? abbreviate(num, data.fractionDigits ?? 1, data.abbr)
+        ? abbreviate(num, cap ?? 1, data.abbr)
         : null
     }
   }
@@ -36,6 +52,6 @@ export function renderNumberLikeTableCell(
     align: data.align ?? 'left',
     value: num,
     separator: data.separator ?? false,
-    maximumFractionDigits: data.fractionDigits
+    maximumFractionDigits: cap
   }
 }

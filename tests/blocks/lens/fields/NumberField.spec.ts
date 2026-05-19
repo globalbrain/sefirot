@@ -77,5 +77,29 @@ describe('blocks/lens/fields/NumberField', () => {
       const cell = make({ abbr: 'en' }).tableCell(12345, {}) as any
       expect(cell.value).toBe('12.3K')
     })
+
+    it('clamps out-of-range fractionDigits to avoid Intl RangeError', () => {
+      // `Intl.NumberFormat`'s `maximumFractionDigits` only accepts
+      // 0..20 — a stray negative or huge override (saved through the
+      // form before validation tightens) would otherwise crash the
+      // catalog table mid-render.
+      const negative = make({ fractionDigits: -1 }).tableCell(1.234, {}) as any
+      expect(negative.maximumFractionDigits).toBe(0)
+
+      const huge = make({ fractionDigits: 999 }).tableCell(1.234, {}) as any
+      expect(huge.maximumFractionDigits).toBe(20)
+
+      // Fractional override values are truncated to ints before the
+      // clamp so we don't accidentally emit a non-integer cap.
+      const fractional = make({ fractionDigits: 2.7 as any }).tableCell(1.234, {}) as any
+      expect(fractional.maximumFractionDigits).toBe(2)
+    })
+
+    it('clamps out-of-range fractionDigits in the abbreviation path too', () => {
+      const cell = make({ abbr: 'en', fractionDigits: -3 }).tableCell(12345, {}) as any
+      // Negative cap collapses to 0 — `Num.abbreviate` then renders
+      // without fractional digits (`12K` instead of `12.345K`).
+      expect(cell.value).toBe('12K')
+    })
   })
 })

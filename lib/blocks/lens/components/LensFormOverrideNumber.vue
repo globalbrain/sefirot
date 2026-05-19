@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="T extends DecimalFieldData | NumberFieldData">
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import SInputCheckbox from '../../../components/SInputCheckbox.vue'
 import SInputNumber from '../../../components/SInputNumber.vue'
 import SInputSelect from '../../../components/SInputSelect.vue'
@@ -37,11 +37,27 @@ const { t } = useTrans({
 // (label, width, freeze) keep their own state inside
 // `LensFormOverrideBase`; we receive their changes via the `saved`
 // event and merge in our four extras here.
+//
+// `separator` keeps its original `boolean | null` value so a no-op
+// submit (user opens the modal and clicks Finish without touching
+// the checkbox) doesn't promote `null` to `false`. The
+// `separatorModel` computed below adapts `null` to `false` only for
+// the `SInputCheckbox` v-model.
 const data = reactive({
   align: props.override.align,
-  separator: props.override.separator ?? false,
+  separator: props.override.separator,
   abbr: props.override.abbr,
   fractionDigits: props.override.fractionDigits
+})
+
+// `SInputCheckbox` accepts `boolean | 'indeterminate' | undefined`
+// (not `null`), so adapt at the binding boundary. The model writes
+// the user's `true`/`false` straight into `data.separator`, while
+// `null` from the field-level default stays `null` until the user
+// actually flips the checkbox.
+const separatorModel = computed({
+  get: () => data.separator ?? false,
+  set: (v) => { data.separator = v }
 })
 
 const { t: alignOptions } = useTrans({
@@ -120,7 +136,7 @@ function onSaved(override: Partial<T>): void {
     <div class="item">
       <div class="key">{{ t.i_separator_text }}</div>
       <div class="value">
-        <SInputCheckbox v-model="data.separator" />
+        <SInputCheckbox v-model="separatorModel" />
       </div>
     </div>
     <div class="item">
