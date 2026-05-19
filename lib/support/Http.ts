@@ -40,3 +40,13 @@ export function objectToFormData(
 
   return fd
 }
+
+export function getHttpStatusCode(error: any): number | undefined {
+  const sources = [error, error?.cause, error?.details, error?.error]
+    .filter((s) => s && typeof s === 'object')
+
+  return sources
+    .flatMap((s) => [s.status, s.statusCode, s.response?.status, s.response?.statusCode, s.code])
+    .map(Number)
+    .find((n) => Number.isInteger(n) && n >= 100 && n <= 599)
+}

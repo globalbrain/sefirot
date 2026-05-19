@@ -1,5 +1,35 @@
 # Changelog
 
+## [4.43.5](https://github.com/globalbrain/sefirot/compare/v4.43.4...v4.43.5) (2026-05-18)
+
+
+### Bug Fixes
+
+* **lens:** stabilize LensTable columns against in-flight refresh ([#719](https://github.com/globalbrain/sefirot/issues/719)) ([b4b0aa4](https://github.com/globalbrain/sefirot/commit/b4b0aa4766dae495b7c9708fa1220a12b9a601a9))
+
+## [4.43.4](https://github.com/globalbrain/sefirot/compare/v4.43.3...v4.43.4) (2026-05-15)
+
+## [4.43.3](https://github.com/globalbrain/sefirot/compare/v4.43.2...v4.43.3) (2026-05-15)
+
+
+### Features
+
+* **error:** export getHttpStatusCode from support and handle more cases ([56ee096](https://github.com/globalbrain/sefirot/commit/56ee09612ab0d8a59612fbfb02572b9ff476c749))
+
+## [4.43.2](https://github.com/globalbrain/sefirot/compare/v4.43.1...v4.43.2) (2026-05-15)
+
+
+### Bug Fixes
+
+* improve status code heuristics in error composable ([6cce274](https://github.com/globalbrain/sefirot/commit/6cce274b44132fadd47f622d777ade67a4fde923))
+
+## [4.43.1](https://github.com/globalbrain/sefirot/compare/v4.43.0...v4.43.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **input-lens:** add missing template slot ([17d1b35](https://github.com/globalbrain/sefirot/commit/17d1b354ea15484db9caf0cd10561728d8becdd6))
+
 # [4.43.0](https://github.com/globalbrain/sefirot/compare/v4.42.0...v4.43.0) (2026-05-12)
 
 
