@@ -1,0 +1,124 @@
+import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
+import { type NumberFieldData } from 'sefirot/blocks/lens/FieldData'
+import { NumberField } from 'sefirot/blocks/lens/fields/NumberField'
+
+function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
+  return { lang }
+}
+
+function make(overrides: Partial<NumberFieldData> = {}): NumberField {
+  const data: NumberFieldData = {
+    type: 'number',
+    key: 'amount',
+    labelEn: 'Amount',
+    labelJa: '金額',
+    filterKey: 'amount',
+    sortable: true,
+    freeze: false,
+    width: 0,
+    required: false,
+    rules: [],
+    align: null,
+    separator: null,
+    abbr: null,
+    fractionDigits: null,
+    ...overrides
+  }
+  return new NumberField(ctx(), data)
+}
+
+describe('blocks/lens/fields/NumberField', () => {
+  describe('tableCell', () => {
+    it('renders a plain number cell when abbr is null', () => {
+      const cell = make().tableCell(1234, {}) as any
+      expect(cell.type).toBe('number')
+      expect(cell.value).toBe(1234)
+      expect(cell.align).toBe('left')
+      expect(cell.separator).toBe(false)
+      expect(cell.maximumFractionDigits).toBeNull()
+    })
+
+    it('passes through align / separator / fractionDigits to the cell', () => {
+      const cell = make({
+        align: 'right',
+        separator: true,
+        fractionDigits: 2
+      }).tableCell(1234.5678, {}) as any
+      expect(cell.type).toBe('number')
+      expect(cell.value).toBe(1234.5678)
+      expect(cell.align).toBe('right')
+      expect(cell.separator).toBe(true)
+      expect(cell.maximumFractionDigits).toBe(2)
+    })
+
+    it('coerces string values to numbers (e.g. decimal-as-string)', () => {
+      const cell = make().tableCell('1234.5', {}) as any
+      expect(cell.value).toBe(1234.5)
+    })
+
+    it('keeps null values null', () => {
+      const cell = make().tableCell(null, {}) as any
+      expect(cell.value).toBeNull()
+    })
+
+    it('renders blank for empty / whitespace strings instead of coercing to 0', () => {
+      // `Number('')` and `Number(' ')` both return `0`, which would
+      // make blank cells in legacy data look like a real zero. Keep
+      // the cell empty in those cases so the table matches pre-spec
+      // behavior for missing values.
+      expect((make().tableCell('', {}) as any).value).toBeNull()
+      expect((make().tableCell('   ', {}) as any).value).toBeNull()
+      expect((make().tableCell('\t\n', {}) as any).value).toBeNull()
+    })
+
+    it('renders blank for non-numeric strings instead of NaN', () => {
+      // `Number('abc')` is `NaN`. Without a guard the cell would
+      // render the literal string `"NaN"` (and the abbreviation path
+      // would emit `NaN` as the compact-notation result).
+      expect((make().tableCell('abc', {}) as any).value).toBeNull()
+      const abbrCell = make({ abbr: 'en' }).tableCell('abc', {}) as any
+      expect(abbrCell.value).toBeNull()
+    })
+
+    it('switches to a text cell with en abbreviation when abbr=en', () => {
+      const cell = make({ abbr: 'en', fractionDigits: 1 }).tableCell(12345, {}) as any
+      expect(cell.type).toBe('text')
+      expect(cell.value).toBe('12.3K')
+    })
+
+    it('switches to a text cell with ja abbreviation when abbr=ja', () => {
+      const cell = make({ abbr: 'ja', fractionDigits: 1 }).tableCell(12345, {}) as any
+      expect(cell.type).toBe('text')
+      expect(cell.value).toBe('1.2万')
+    })
+
+    it('defaults abbr precision to 1 digit when fractionDigits is null', () => {
+      const cell = make({ abbr: 'en' }).tableCell(12345, {}) as any
+      expect(cell.value).toBe('12.3K')
+    })
+
+    it('clamps out-of-range fractionDigits to avoid Intl RangeError', () => {
+      // `Intl.NumberFormat`'s `maximumFractionDigits` only accepts
+      // 0..20 — a stray negative or huge override (saved through the
+      // form before validation tightens) would otherwise crash the
+      // catalog table mid-render.
+      const negative = make({ fractionDigits: -1 }).tableCell(1.234, {}) as any
+      expect(negative.maximumFractionDigits).toBe(0)
+
+      const huge = make({ fractionDigits: 999 }).tableCell(1.234, {}) as any
+      expect(huge.maximumFractionDigits).toBe(20)
+
+      // Fractional override values are truncated to ints before the
+      // clamp so we don't accidentally emit a non-integer cap.
+      const fractional = make({ fractionDigits: 2.7 as any }).tableCell(1.234, {}) as any
+      expect(fractional.maximumFractionDigits).toBe(2)
+    })
+
+    it('clamps out-of-range fractionDigits in the abbreviation path too', () => {
+      const cell = make({ abbr: 'en', fractionDigits: -3 }).tableCell(12345, {}) as any
+      // Negative cap collapses to 0 — `Num.abbreviate` then renders
+      // without fractional digits (`12K` instead of `12.345K`).
+      expect(cell.value).toBe('12K')
+    })
+  })
+})

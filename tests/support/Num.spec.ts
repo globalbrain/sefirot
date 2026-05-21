@@ -24,5 +24,17 @@ describe('support/Num', () => {
       expect(Num.abbreviate(123456, 2)).toEqual('123.46K')
       expect(Num.abbreviate(1234567, 2)).toEqual('1.23M')
     })
+
+    it('abbreviates a given number in Japanese style', () => {
+      expect(Num.abbreviate(100, 0, 'ja')).toEqual('100')
+      expect(Num.abbreviate(10000, 0, 'ja')).toEqual('1万')
+      expect(Num.abbreviate(100000000, 0, 'ja')).toEqual('1億')
+      expect(Num.abbreviate(1000000000000, 0, 'ja')).toEqual('1兆')
+    })
+
+    it('abbreviates a given number in Japanese with precision', () => {
+      expect(Num.abbreviate(12345, 2, 'ja')).toEqual('1.23万')
+      expect(Num.abbreviate(123456789, 2, 'ja')).toEqual('1.23億')
+    })
   })
 })

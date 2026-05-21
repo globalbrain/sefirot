@@ -152,6 +152,12 @@ async function onSave() {
               <SInputCheckbox v-model="freeze" />
             </div>
           </div>
+          <!--
+            Default slot — field-specific override forms (e.g. number /
+            decimal) inject their own `.item` rows here so they line up
+            visually with the base inputs.
+          -->
+          <slot />
         </div>
       </SDoc>
     </SCardBlock>

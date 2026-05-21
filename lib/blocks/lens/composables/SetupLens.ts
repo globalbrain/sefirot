@@ -4,6 +4,7 @@ import { provideFieldRegistry } from '../composables/FieldRegistry'
 import { ContentField } from '../fields/ContentField'
 import { DateField } from '../fields/DateField'
 import { DatetimeField } from '../fields/DatetimeField'
+import { DecimalField } from '../fields/DecimalField'
 import { FileUploadField } from '../fields/FileUploadField'
 import { IdField } from '../fields/IdField'
 import { LinkField } from '../fields/LinkField'
@@ -34,6 +35,7 @@ export function useSetupLens(): SetupLens {
     fieldRegistry.register('content', (ctx, field) => new ContentField(ctx, field))
     fieldRegistry.register('date', (ctx, field) => new DateField(ctx, field))
     fieldRegistry.register('datetime', (ctx, field) => new DatetimeField(ctx, field))
+    fieldRegistry.register('decimal', (ctx, field) => new DecimalField(ctx, field))
     fieldRegistry.register('file_upload', (ctx, field) => new FileUploadField(ctx, field, fileDownloader))
     fieldRegistry.register('link', (ctx, field) => new LinkField(ctx, field))
     fieldRegistry.register('number', (ctx, field) => new NumberField(ctx, field))

@@ -54,6 +54,7 @@ const valueIsImagePath = computed(() => {
       :icon="computedCell.icon"
       :number="computedCell.value ?? value"
       :separator="computedCell.separator"
+      :maximum-fraction-digits="computedCell.maximumFractionDigits"
       :link="computedCell.link"
       :color="computedCell.color"
       :icon-color="computedCell.iconColor"

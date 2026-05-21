@@ -20,6 +20,7 @@ export interface FieldDataRegistry {
   content: ContentFieldData
   date: DateFieldData
   datetime: DatetimeFieldData
+  decimal: DecimalFieldData
   file_upload: FileUploadFieldData
   id: IdFieldData
   link: LinkFieldData
@@ -88,6 +89,24 @@ export interface LinkFieldData extends FieldDataBase {
 
 export interface NumberFieldData extends FieldDataBase {
   type: 'number'
+  align: 'left' | 'center' | 'right' | null
+  separator: boolean | null
+  abbr: 'en' | 'ja' | null
+  fractionDigits: number | null
+}
+
+/**
+ * A `decimal` field is rendered identically to a `number` field on the
+ * client. The distinction exists so backends can preserve arbitrary
+ * precision (e.g. sending the value as a string instead of a JS number)
+ * without losing the type-level signal at the spec layer.
+ */
+export interface DecimalFieldData extends FieldDataBase {
+  type: 'decimal'
+  align: 'left' | 'center' | 'right' | null
+  separator: boolean | null
+  abbr: 'en' | 'ja' | null
+  fractionDigits: number | null
 }
 
 export interface SelectFieldData extends FieldDataBase {
