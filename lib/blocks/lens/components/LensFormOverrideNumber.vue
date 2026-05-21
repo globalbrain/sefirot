@@ -93,7 +93,14 @@ const { t: abbrOptions } = useTrans({
 function onSaved(override: Partial<T>): void {
   // Only include keys whose value diverged from the underlying field
   // definition — matches what `LensFormOverrideBase` does for the
-  // base inputs.
+  // base inputs. We mutate the payload from the base in place rather
+  // than re-allocating so any keys it already populated (label,
+  // width, freeze) carry through unchanged.
+  //
+  // Plain `!==` (not the base's `isNotNullOrSame`) is intentional: the
+  // four formatting options are tri-state, so clearing a previous
+  // `align: 'right'` back to `null` must actually persist `align: null`
+  // rather than silently inherit the field-level default.
   const o = override as Record<string, any>
   if (data.align !== props.field.align) {
     o.align = data.align
@@ -107,7 +114,7 @@ function onSaved(override: Partial<T>): void {
   if (data.fractionDigits !== props.field.fractionDigits) {
     o.fractionDigits = data.fractionDigits
   }
-  emit('saved', override)
+  emit('saved', o as Partial<T>)
 }
 </script>
 

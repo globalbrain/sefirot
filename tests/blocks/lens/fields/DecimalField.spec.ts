@@ -58,5 +58,16 @@ describe('blocks/lens/fields/DecimalField', () => {
       const cell = make().tableCell(null, {}) as any
       expect(cell.value).toBeNull()
     })
+
+    it('renders blank for empty / whitespace / non-numeric strings', () => {
+      // Matches `NumberField`'s behavior — see the corresponding test
+      // there for the rationale. Especially relevant for `DecimalField`
+      // since its wire format is typically string, and a blank cell in
+      // the source DB column tends to surface as `''` rather than
+      // `null`.
+      expect((make().tableCell('', {}) as any).value).toBeNull()
+      expect((make().tableCell('   ', {}) as any).value).toBeNull()
+      expect((make().tableCell('abc', {}) as any).value).toBeNull()
+    })
   })
 })

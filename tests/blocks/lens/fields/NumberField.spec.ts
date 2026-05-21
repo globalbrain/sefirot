@@ -61,6 +61,25 @@ describe('blocks/lens/fields/NumberField', () => {
       expect(cell.value).toBeNull()
     })
 
+    it('renders blank for empty / whitespace strings instead of coercing to 0', () => {
+      // `Number('')` and `Number(' ')` both return `0`, which would
+      // make blank cells in legacy data look like a real zero. Keep
+      // the cell empty in those cases so the table matches pre-spec
+      // behavior for missing values.
+      expect((make().tableCell('', {}) as any).value).toBeNull()
+      expect((make().tableCell('   ', {}) as any).value).toBeNull()
+      expect((make().tableCell('\t\n', {}) as any).value).toBeNull()
+    })
+
+    it('renders blank for non-numeric strings instead of NaN', () => {
+      // `Number('abc')` is `NaN`. Without a guard the cell would
+      // render the literal string `"NaN"` (and the abbreviation path
+      // would emit `NaN` as the compact-notation result).
+      expect((make().tableCell('abc', {}) as any).value).toBeNull()
+      const abbrCell = make({ abbr: 'en' }).tableCell('abc', {}) as any
+      expect(abbrCell.value).toBeNull()
+    })
+
     it('switches to a text cell with en abbreviation when abbr=en', () => {
       const cell = make({ abbr: 'en', fractionDigits: 1 }).tableCell(12345, {}) as any
       expect(cell.type).toBe('text')
