@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.44.0](https://github.com/globalbrain/sefirot/compare/v4.43.5...v4.44.0) (2026-05-22)
+
+
+### Features
+
+* **lens:** add formatting options to number field and introduce decimal field ([#716](https://github.com/globalbrain/sefirot/issues/716)) ([55b889e](https://github.com/globalbrain/sefirot/commit/55b889e25dec47ab519f830f3665e43708731e1c))
+
 ## [4.43.5](https://github.com/globalbrain/sefirot/compare/v4.43.4...v4.43.5) (2026-05-18)
 
 
