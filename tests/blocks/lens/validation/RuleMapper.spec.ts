@@ -15,6 +15,20 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.max_length.$validator('12345678901', null, null)).toBe(false)
   })
 
+  it('maps slack_channel_name rule', () => {
+    const args = map([{ type: 'slack_channel_name', offset: 0 }]) as any
+
+    expect(args.slack_channel_name.$validator('my-channel', null, null)).toBe(true)
+    expect(args.slack_channel_name.$validator('Invalid Channel', null, null)).toBe(false)
+  })
+
+  it('applies the offset when mapping slack_channel_name rule', () => {
+    const args = map([{ type: 'slack_channel_name', offset: 2 }]) as any
+
+    expect(args.slack_channel_name.$validator('a'.repeat(78), null, null)).toBe(true)
+    expect(args.slack_channel_name.$validator('a'.repeat(79), null, null)).toBe(false)
+  })
+
   it('maps before rule with an absolute date', () => {
     const args = map([{ type: 'before', date: '2026-01-02' }]) as any
 

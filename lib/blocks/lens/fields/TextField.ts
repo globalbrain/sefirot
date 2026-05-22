@@ -38,6 +38,8 @@ export class TextField extends Field<TextFieldData> {
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,
+        'unitBefore': this.data.unitBefore || undefined,
+        'unitAfter': this.data.unitAfter || undefined,
         'modelValue': props.modelValue,
         'validation': props.validation,
         'onUpdate:modelValue': (value: any) => {
