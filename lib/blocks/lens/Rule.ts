@@ -1,6 +1,7 @@
 export type Rule =
   | MaxLengthRule
   | RequiredRule
+  | SlackChannelNameRule
   | BeforeRule
   | BeforeOrEqualRule
   | AfterRule
@@ -13,6 +14,11 @@ export interface MaxLengthRule {
 
 export interface RequiredRule {
   type: 'required'
+}
+
+export interface SlackChannelNameRule {
+  type: 'slack_channel_name'
+  offset: number
 }
 
 export interface BeforeRule {

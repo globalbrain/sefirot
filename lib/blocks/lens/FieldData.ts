@@ -147,6 +147,8 @@ export interface TextFieldData extends FieldDataBase {
   placeholderJa: string | null
   helpEn: string | null
   helpJa: string | null
+  unitBefore: string | null
+  unitAfter: string | null
 }
 
 export interface TextareaFieldData extends FieldDataBase {
