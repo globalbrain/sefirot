@@ -17,6 +17,7 @@ import { type Rule } from './Rule'
  * }
  */
 export interface FieldDataRegistry {
+  boolean: BooleanFieldData
   content: ContentFieldData
   date: DateFieldData
   datetime: DatetimeFieldData
@@ -46,6 +47,14 @@ export interface FieldDataBase {
   width: number
   required: boolean
   rules: Rule[]
+}
+
+export interface BooleanFieldData extends FieldDataBase {
+  type: 'boolean'
+  labelTrueEn: string | null
+  labelTrueJa: string | null
+  labelFalseEn: string | null
+  labelFalseJa: string | null
 }
 
 export interface ContentFieldData extends FieldDataBase {
