@@ -30,10 +30,19 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     const res = await this.fetcher(method, url)
     const data = key ? res[key] : res
 
-    const options = data.map((item: any) => ({
-      label: item[this.data.resourceTitle],
-      value: item[this.data.filterKey]
-    }))
+    const isAvatar = this.data.displayAs === 'avatars'
+
+    const options = data.map((item: any) => isAvatar
+      ? {
+          type: 'avatar' as const,
+          label: item[this.data.resourceTitle],
+          image: this.data.resourceImage ? item[this.data.resourceImage] : null,
+          value: item[this.data.filterKey]
+        }
+      : {
+          label: item[this.data.resourceTitle],
+          value: item[this.data.filterKey]
+        })
 
     return {
       type: 'filter',
@@ -45,9 +54,24 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
   }
 
   override tableCell(v: any, _r: any): TableCell {
+    const items = (v ?? []) as any[]
+
+    if (this.data.displayAs === 'avatars') {
+      return {
+        type: 'avatars',
+        avatars: items.map((item) => ({
+          image: this.data.image ? item[this.data.image] : null,
+          name: item[this.data.title]
+        })),
+        avatarCount: 6,
+        nameCount: 0,
+        tooltip: true
+      }
+    }
+
     return {
       type: 'pills',
-      pills: v.map((item: any) => ({
+      pills: items.map((item) => ({
         label: item[this.data.title],
         value: item[this.data.filterKey]
       }))

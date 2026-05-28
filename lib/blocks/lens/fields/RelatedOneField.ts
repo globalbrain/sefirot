@@ -30,10 +30,19 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
     const res = await this.fetcher(method, url)
     const data = key ? res[key] : res
 
-    const options = data.map((item: any) => ({
-      label: item[this.data.resourceTitle],
-      value: item[this.data.filterKey]
-    }))
+    const isAvatar = this.data.displayAs === 'avatar'
+
+    const options = data.map((item: any) => isAvatar
+      ? {
+          type: 'avatar' as const,
+          label: item[this.data.resourceTitle],
+          image: this.data.resourceImage ? item[this.data.resourceImage] : null,
+          value: item[this.data.filterKey]
+        }
+      : {
+          label: item[this.data.resourceTitle],
+          value: item[this.data.filterKey]
+        })
 
     return {
       type: 'filter',
@@ -46,8 +55,20 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
 
   override tableCell(v: any, _r: any): TableCell {
     if (v === null || v === undefined) {
+      if (this.data.displayAs === 'avatar') {
+        return { type: 'avatar', image: null, name: null }
+      }
       return { type: 'text', value: null }
     }
+
+    if (this.data.displayAs === 'avatar') {
+      return {
+        type: 'avatar',
+        image: this.data.image ? (v[this.data.image] ?? null) : null,
+        name: v[this.data.title] ?? null
+      }
+    }
+
     return {
       type: 'text',
       value: v[this.data.title] ?? null

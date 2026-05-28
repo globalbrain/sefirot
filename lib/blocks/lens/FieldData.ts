@@ -141,19 +141,25 @@ export interface SelectFieldDataOption {
 export interface RelatedManyFieldData extends FieldDataBase {
   type: 'related_many'
   title: string
+  image: string | null
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
   resourceEndpointDataKey: string | null
   resourceTitle: string
+  resourceImage: string | null
+  displayAs: 'pills' | 'avatars' | null
 }
 
 export interface RelatedOneFieldData extends FieldDataBase {
   type: 'related_one'
   title: string
+  image: string | null
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
   resourceEndpointDataKey: string | null
   resourceTitle: string
+  resourceImage: string | null
+  displayAs: 'text' | 'avatar' | null
 }
 
 export interface SlackMessageFieldData extends FieldDataBase {
