@@ -27,6 +27,7 @@ export interface FieldDataRegistry {
   link: LinkFieldData
   number: NumberFieldData
   related_many: RelatedManyFieldData
+  related_one: RelatedOneFieldData
   select: SelectFieldData
   slack_message: SlackMessageFieldData
   text: TextFieldData
@@ -139,6 +140,15 @@ export interface SelectFieldDataOption {
 
 export interface RelatedManyFieldData extends FieldDataBase {
   type: 'related_many'
+  title: string
+  resourceEndpointMethod: 'get' | 'post'
+  resourceEndpointPath: string
+  resourceEndpointDataKey: string | null
+  resourceTitle: string
+}
+
+export interface RelatedOneFieldData extends FieldDataBase {
+  type: 'related_one'
   title: string
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
