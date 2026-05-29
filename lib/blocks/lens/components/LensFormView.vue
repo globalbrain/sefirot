@@ -92,12 +92,17 @@ useDraggable(el, selectOptions, {
 })
 
 function createSelectOptions(): SelectOption[] {
+  // Spacer columns all share the `__empty__` key, so `_selectDict` can't
+  // distinguish them. Mark spacer rows selected positionally — as many as
+  // `select` actually contains — rather than all-or-nothing.
+  let remainingEmpty = _select.value.filter((s) => s === '__empty__').length
   return _selectable.value.map((s) => {
+    const isEmpty = s === '__empty__'
     return {
       uid: _uid++,
       key: s,
-      value: _selectDict.value[s],
-      isEmpty: s === '__empty__',
+      value: isEmpty ? remainingEmpty-- > 0 : !!_selectDict.value[s],
+      isEmpty,
       field: props.fields[s],
       override: _overrides[s] || {}
     }
