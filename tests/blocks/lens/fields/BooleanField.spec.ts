@@ -82,9 +82,9 @@ describe('blocks/lens/fields/BooleanField', () => {
   })
 
   describe('availableFilters', () => {
-    it('exposes "=" and "!=" operators', () => {
+    it('exposes the "in" operator (matching the inline filter menu)', () => {
       const filters = make().availableFilters()
-      expect(Object.keys(filters).sort()).toEqual(['!=', '='])
+      expect(Object.keys(filters)).toEqual(['in'])
     })
   })
 

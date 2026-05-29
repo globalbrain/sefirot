@@ -33,10 +33,13 @@ export class BooleanField extends Field<BooleanFieldData> {
   }
 
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
-    const selectOne = new SelectFilterInput().options(() => Promise.resolve(this.filterOptions()))
+    // Use `in` to match the operator the inline column menu emits, and
+    // `.multiple()` so the value stays a boolean array — the single-value
+    // cast would stringify `true` to `'true'`, breaking option matching
+    // and the backend boolean comparison.
+    const selectMany = new SelectFilterInput().options(() => Promise.resolve(this.filterOptions())).multiple()
     return {
-      '=': selectOne,
-      '!=': selectOne
+      in: selectMany
     }
   }
 

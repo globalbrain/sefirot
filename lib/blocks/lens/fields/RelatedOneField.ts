@@ -71,7 +71,10 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
 
     return {
       type: 'text',
-      value: v[this.data.title] ?? null
+      // Empty string (not null) when the title is missing: the table
+      // renderer falls back to the raw row value on a null cell value,
+      // which would render the relation object as `[object Object]`.
+      value: v[this.data.title] ?? ''
     }
   }
 
