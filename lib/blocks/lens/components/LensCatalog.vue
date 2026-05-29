@@ -430,6 +430,12 @@ function onNext() {
 // server-side changes — e.g. after a bulk action mutates rows — without
 // remounting the component.
 async function refreshCatalog(): Promise<void> {
+  // A refresh is requested precisely when server-side data may have
+  // changed while the query input did not (e.g. after a bulk action).
+  // Clear the memoized input so the equality shortcut in the fetcher
+  // misses and a real request is issued instead of returning the stale
+  // cached result.
+  prevFetchInput = null
   await doRefresh()
 }
 
