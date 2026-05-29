@@ -86,11 +86,21 @@ describe('blocks/lens/fields/RelatedOneField', () => {
       expect(cell.image).toBe('https://example.com/a.png')
     })
 
-    it('emits a null avatar cell when the row value is null', () => {
+    it('emits an empty avatar cell when the row value is null', () => {
       const cell = make({ displayAs: 'avatar', image: 'avatarUrl' }).tableCell(null, {}) as any
       expect(cell.type).toBe('avatar')
       expect(cell.image).toBeNull()
-      expect(cell.name).toBeNull()
+      expect(cell.name).toBe('')
+    })
+
+    it('uses an empty name (not null) when the title is missing', () => {
+      const cell = make({ displayAs: 'avatar', image: 'avatarUrl' }).tableCell(
+        { id: 1, avatarUrl: 'https://example.com/a.png' },
+        {}
+      ) as any
+      expect(cell.type).toBe('avatar')
+      expect(cell.name).toBe('')
+      expect(cell.image).toBe('https://example.com/a.png')
     })
 
     it('falls back to null image when the `image` data field is not set', () => {
