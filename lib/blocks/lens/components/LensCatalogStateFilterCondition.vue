@@ -21,15 +21,21 @@ const props = defineProps<Props>()
 const fieldFactory = useFieldFactory()
 
 const field = computed(() => {
-  return fieldFactory.make(props.fields[props.condition.field])
+  const fieldData = props.fields[props.condition.field]
+  // A still-applied filter can reference a field that's no longer in the
+  // field set (e.g. a stale saved filter). Keep the chip rendering rather
+  // than crashing on `make(undefined)`, so the active filter stays
+  // visible and counted instead of silently filtering the table.
+  return fieldData ? fieldFactory.make(fieldData) : null
 })
 
 const input = computed(() => {
-  return field.value.filterInputByOperator(props.condition.operator)
+  return field.value?.filterInputByOperator(props.condition.operator) ?? null
 })
 
 const fieldText = computed(() => {
-  return field.value.label()
+  // Fall back to the raw field key when the field has no definition.
+  return field.value ? field.value.label() : props.condition.field
 })
 
 const operatorText = computed(() => {
@@ -37,6 +43,9 @@ const operatorText = computed(() => {
 })
 
 const valueText = computedAsync(async () => {
+  if (!input.value) {
+    return String(props.condition.value ?? '')
+  }
   return input.value.valueToText(props.condition.value)
 }, '...')
 </script>
@@ -45,10 +54,7 @@ const valueText = computedAsync(async () => {
   <div class="LensCatalogStateFilterCondition">
     <div class="field">{{ fieldText }}</div>
     <div class="operator">{{ operatorText }}</div>
-    <div v-if="input === null" class="value">
-      ...
-    </div>
-    <div v-else class="value">
+    <div class="value">
       {{ valueText }}
     </div>
   </div>
