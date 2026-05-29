@@ -426,9 +426,8 @@ function onNext() {
 
 // Re-runs the current query against the endpoint, preserving the
 // catalog's in-memory state (select / filters / sort / page). Exposed
-// (and passed to the `selected-actions` slot) so callers can reflect
-// server-side changes — e.g. after a bulk action mutates rows — without
-// remounting the component.
+// so callers can reflect server-side changes — e.g. after a bulk action
+// mutates rows — without remounting the component.
 async function refreshCatalog(): Promise<void> {
   // A refresh is requested precisely when server-side data may have
   // changed while the query input did not (e.g. after a bulk action).
@@ -504,7 +503,7 @@ defineExpose({
           <slot name="controls-sub-right" />
         </template>
         <template v-if="$slots['selected-actions']" #selected-actions>
-          <slot name="selected-actions" :refresh="refreshCatalog" :selected="selected ?? []" />
+          <slot name="selected-actions" />
         </template>
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
