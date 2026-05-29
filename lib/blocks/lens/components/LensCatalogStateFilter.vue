@@ -53,12 +53,6 @@ function lensFiltersToGroup(filters: any[], connector: '$and' | '$or', count: Co
     const [fieldOrConnector, operatorOrFilters, value] = filter
 
     if (!isConnector(fieldOrConnector)) {
-      // Skip a condition whose field is absent from the current field set
-      // (e.g. a stale saved filter). It has no definition to render and
-      // would crash `fieldFactory.make(undefined)` in the state chip.
-      if (!props.fields[fieldOrConnector]) {
-        continue
-      }
       group.conditions.push({
         field: fieldOrConnector,
         operator: operatorOrFilters,
