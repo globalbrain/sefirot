@@ -56,7 +56,7 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
   override tableCell(v: any, _r: any): TableCell {
     if (v === null || v === undefined) {
       if (this.data.displayAs === 'avatar') {
-        return { type: 'avatar', image: null, name: null }
+        return { type: 'avatar', image: null, name: '' }
       }
       return { type: 'text', value: null }
     }
@@ -65,7 +65,10 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
       return {
         type: 'avatar',
         image: this.data.image ? (v[this.data.image] ?? null) : null,
-        name: v[this.data.title] ?? null
+        // Empty string (not null) for the same reason as the text branch
+        // below — a null name falls back to the raw row value in the cell
+        // renderer and breaks SAvatar.
+        name: v[this.data.title] ?? ''
       }
     }
 
