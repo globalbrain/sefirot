@@ -57,6 +57,12 @@ const { validateAndNotify } = useValidation()
 const fieldOptions = computed(() => {
   return props.filterable.filter((key) => {
     const fieldData = props.fields[key]
+    // Skip keys with no field definition — e.g. `__empty__` spacer
+    // columns that appear in `select` / `selectable` but carry no field
+    // metadata. Without this guard `make(undefined)` throws.
+    if (!fieldData) {
+      return false
+    }
     const field = fieldFactory.make(fieldData)
     return field.availableFilterOperators().length > 0
   }).map((key) => {
