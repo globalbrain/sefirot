@@ -17,9 +17,16 @@ export class DatetimeField extends Field<DatetimeFieldData> {
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
+    // Comparison operators (`>`, `>=`, `<`, `<=`) back datetime-range
+    // filters. The value is an ISO datetime string, edited as text — the
+    // same input the `=` / `!=` operators already use for this field.
     return {
       '=': text,
-      '!=': text
+      '!=': text,
+      '>': text,
+      '>=': text,
+      '<': text,
+      '<=': text
     }
   }
 

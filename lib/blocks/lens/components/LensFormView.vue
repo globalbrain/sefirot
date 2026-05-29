@@ -52,14 +52,16 @@ const { t } = useTrans({
     a_select_all: 'Select all',
     a_clear_all: 'Clear all',
     a_cancel: 'Cancel',
-    a_apply: 'Apply changes'
+    a_apply: 'Apply changes',
+    empty_column: '(Empty column)'
   },
   ja: {
     title: 'テーブルの表示を更新する',
     a_select_all: 'すべて選択',
     a_clear_all: 'すべて解除',
     a_cancel: 'キャンセル',
-    a_apply: '変更を適用'
+    a_apply: '変更を適用',
+    empty_column: '(空列)'
   }
 })
 
@@ -103,6 +105,11 @@ function createSelectOptions(): SelectOption[] {
 }
 
 function getName(s: SelectOption): string {
+  // Empty spacer columns carry no field definition; show a localized
+  // placeholder label so the row is identifiable in the view editor.
+  if (s.isEmpty) {
+    return t.empty_column
+  }
   return lang === 'ja'
     ? s.override.labelJa || s.field?.labelJa || ''
     : s.override.labelEn || s.field?.labelEn || ''

@@ -48,6 +48,12 @@ const field = computed(() => {
     return null
   }
   const fieldData = props.fields[model.value.field]
+  // Guard against a condition referencing a key with no field
+  // definition (e.g. a stale saved filter, or a spacer key) so
+  // `make(undefined)` doesn't throw.
+  if (!fieldData) {
+    return null
+  }
   return fieldFactory.make(fieldData)
 })
 
