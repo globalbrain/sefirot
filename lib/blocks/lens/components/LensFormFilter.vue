@@ -95,12 +95,25 @@ const fieldOptions = computed(() => {
 //   ]
 // }
 function lensFiltersToGroup() {
+  const conditions = props.filters.length > 0
+    ? pruneMissingFields(props.filters.map(lensConditionToCondition))
+    : []
+
   return {
     connector: '$and' as const,
-    conditions: props.filters.length > 0
-      ? props.filters.map(lensConditionToCondition)
-      : [createEmptyCondition()]
+    conditions: conditions.length > 0 ? conditions : [createEmptyCondition()]
   }
+}
+
+// Drop conditions that reference a field absent from `props.fields` (for
+// example a stale saved filter pointing at a field that no longer
+// exists). Such a condition can't be rendered or edited, and would
+// otherwise pass validation with a null input and silently re-emit the
+// stale filter on Apply. Groups left empty by pruning are removed too.
+function pruneMissingFields(conditions: any[]): any[] {
+  return conditions
+    .map((c) => ('connector' in c ? { ...c, conditions: pruneMissingFields(c.conditions) } : c))
+    .filter((c) => ('connector' in c ? c.conditions.length > 0 : c.field === null || props.fields[c.field]))
 }
 
 function lensConditionToCondition(filter: any[]) {
