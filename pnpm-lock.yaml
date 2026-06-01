@@ -53,9 +53,6 @@ importers:
       '@types/qs':
         specifier: ^6.15.1
         version: 6.15.1
-      '@types/wicg-file-system-access':
-        specifier: 2023.10.7
-        version: 2023.10.7
       '@vitejs/plugin-vue':
         specifier: ^6.0.7
         version: 6.0.7(vite@7.3.3(@types/node@25.9.1)(jiti@2.7.0)(yaml@2.9.0))(vue@3.5.35(typescript@6.0.3))
@@ -1434,9 +1431,6 @@ packages:
 
   '@types/whatwg-mimetype@3.0.2':
     resolution: {integrity: sha512-c2AKvDT8ToxLIOUlN51gTiHXflsfIFisS4pO7pDPoKouJCESkhZnEy623gwP9laCy5lnLDAw1vAzu2vM2YLOrA==}
-
-  '@types/wicg-file-system-access@2023.10.7':
-    resolution: {integrity: sha512-g49ijasEJvCd7ifmAY2D0wdEtt1xRjBbA33PJTiv8mKBr7DoMsPeISoJ8oQOTopSRi+FBWPpPW5ouDj2QPKtGA==}
 
   '@types/ws@8.18.1':
     resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
@@ -5673,8 +5667,6 @@ snapshots:
   '@types/web-bluetooth@0.0.21': {}
 
   '@types/whatwg-mimetype@3.0.2': {}
-
-  '@types/wicg-file-system-access@2023.10.7': {}
 
   '@types/ws@8.18.1':
     dependencies:

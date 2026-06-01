@@ -23,24 +23,6 @@ export async function saveAs(blob: Blob | undefined, filename: string | undefine
     throw new TypeError('The first argument must be a Blob.')
   }
 
-  if (typeof window.showSaveFilePicker === 'function') {
-    try {
-      const ext = filename?.slice(filename.lastIndexOf('.'))
-      const handle = await window.showSaveFilePicker({
-        suggestedName: filename,
-        types: blob.type
-          ? [{ accept: { [blob.type]: startsWith(ext, '.') ? [ext] : [] } }]
-          : undefined
-      })
-      const writable = await handle.createWritable()
-      await writable.write(blob)
-      await writable.close()
-      return
-    } catch (err) {
-      if (err instanceof DOMException && err.name === 'AbortError') { return }
-    }
-  }
-
   const url = URL.createObjectURL(blob)
   const anchor = document.createElement('a')
   anchor.href = url
@@ -55,8 +37,4 @@ export async function saveAs(blob: Blob | undefined, filename: string | undefine
     anchor.remove()
     URL.revokeObjectURL(url)
   }, 0)
-}
-
-function startsWith<T extends string>(str: string | undefined, prefix: T): str is `${T}${string}` {
-  return !!(str?.startsWith(prefix))
 }
