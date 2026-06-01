@@ -1,6 +1,6 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import SInputFileUpload from 'sefirot/components/SInputFileUpload.vue'
-import { required } from 'sefirot/validation/rules'
+import { maxFileSize, required } from 'sefirot/validation/rules'
 import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputFileUpload', () => {
@@ -62,5 +62,31 @@ describe('components/SInputFileUpload', () => {
 
     expect(wrapper.find('.SInputFileUploadItem').exists()).toBe(true)
     expect(wrapper.find('.SInputFileUploadItem .error').exists()).toBe(false)
+  })
+
+  it('keeps validating a file that shifts into a reused index slot', async () => {
+    // Items are keyed by index, so removing the leading string reference
+    // reuses its component instance for the File that shifts down. The
+    // File must still be validated (rules react to the identity change).
+    const big = new File([new ArrayBuffer(2_000_000)], 'big.pdf')
+
+    const wrapper = mount(SInputFileUpload, {
+      props: {
+        modelValue: ['a.pdf', big],
+        rules: { maxFileSize: maxFileSize('1mb') }
+      }
+    })
+
+    let items = wrapper.findAll('.SInputFileUploadItem')
+    expect(items[0].find('.error').exists()).toBe(false) // string ref: skipped
+    expect(items[1].find('.error').exists()).toBe(true) // oversized File
+
+    // Remove the string; the File moves into index 0's reused instance.
+    await wrapper.setProps({ modelValue: [big] })
+    await flushPromises()
+
+    items = wrapper.findAll('.SInputFileUploadItem')
+    expect(items).toHaveLength(1)
+    expect(items[0].find('.error').exists()).toBe(true)
   })
 })

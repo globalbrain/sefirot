@@ -2,7 +2,7 @@
 import IconFileText from '~icons/ph/file-text'
 import IconTrash from '~icons/ph/trash'
 import { type ValidationRuleWithParams } from '@vuelidate/core'
-import { type Component, computed } from 'vue'
+import { type Component, computed, watch } from 'vue'
 import { useValidation } from '../composables/Validation'
 import { formatSize } from '../support/File'
 import SButton, { type Mode as ButtonMode } from './SButton.vue'
@@ -75,13 +75,24 @@ const _file = computed(() => {
   }
 })
 
+// Rules are passed as a getter so validation reacts when the item's
+// identity changes — the parent keys items by index, so a single instance
+// can be reused for a different item after a removal. Per-file rules apply
+// to newly selected `File`s only; an already-uploaded `string` reference
+// has no local file to validate, so it's skipped (the server validates it).
 const { validation } = useValidation(() => ({
   file: _file.value.file
-}), {
-  file: props.rules ?? {}
-})
+}), () => ({
+  file: typeof props.file === 'string' ? {} : (props.rules ?? {})
+}))
 
-validation.value.$touch()
+// Surface validation immediately, and re-touch whenever the item changes:
+// when an index-keyed instance is reused for a different item, switching
+// rules resets the dirty state, so a post-flush re-touch is needed to keep
+// the new item's errors visible.
+watch(() => props.file, () => {
+  validation.value.$touch()
+}, { immediate: true, flush: 'post' })
 </script>
 
 <template>

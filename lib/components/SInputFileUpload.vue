@@ -227,7 +227,7 @@ function toFileObjects(files: File[]) {
             v-for="(file, i) in _value"
             :key="i"
             :file
-            :rules="typeof file === 'string' ? undefined : rules"
+            :rules
             @remove="() => { onRemove(i) }"
           />
         </template>
