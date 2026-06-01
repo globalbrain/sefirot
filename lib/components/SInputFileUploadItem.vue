@@ -27,7 +27,7 @@ export interface Action {
 }
 
 const props = defineProps<{
-  file: File | FileObject
+  file: File | FileObject | string
   rules?: Record<string, ValidationRuleWithParams>
 }>()
 
@@ -35,15 +35,45 @@ defineEmits<{
   remove: []
 }>()
 
-const _file = computed(() => ({
-  name: props.file instanceof File ? props.file.name : props.file.file.name,
-  file: props.file instanceof File ? props.file : props.file.file,
-  size: formatSize(props.file instanceof File ? props.file : props.file.file),
-  indicatorState: props.file instanceof File ? null : props.file.indicatorState,
-  canRemove: props.file instanceof File ? true : (props.file.canRemove ?? true),
-  action: props.file instanceof File ? null : props.file.action,
-  errorMessage: props.file instanceof File ? null : props.file.errorMessage
-}))
+const _file = computed(() => {
+  const value = props.file
+
+  if (value instanceof File) {
+    return {
+      name: value.name,
+      file: value as File | null,
+      size: formatSize(value) as string | null,
+      indicatorState: null as IndicatorState | null,
+      canRemove: true,
+      action: null as Action | null,
+      errorMessage: null as string | null
+    }
+  }
+
+  // A plain string references an already-uploaded file: show its basename
+  // and skip the size (unknown for server-side files).
+  if (typeof value === 'string') {
+    return {
+      name: value.split('/').pop() || value,
+      file: null,
+      size: null,
+      indicatorState: null,
+      canRemove: true,
+      action: null,
+      errorMessage: null
+    }
+  }
+
+  return {
+    name: value.file.name,
+    file: value.file as File | null,
+    size: formatSize(value.file) as string | null,
+    indicatorState: value.indicatorState ?? null,
+    canRemove: value.canRemove ?? true,
+    action: value.action ?? null,
+    errorMessage: value.errorMessage ?? null
+  }
+})
 
 const { validation } = useValidation(() => ({
   file: _file.value.file
@@ -84,7 +114,7 @@ validation.value.$touch()
       />
     </div>
     <div class="meta">
-      <div class="size">
+      <div v-if="_file.size" class="size">
         {{ _file.size }}
       </div>
       <div class="delete">
