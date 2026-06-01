@@ -27,4 +27,4 @@ jobs:
         with:
           cache: true
           run_install: true
-      - run: pnpm check
+      - run: pnpm check:fail
