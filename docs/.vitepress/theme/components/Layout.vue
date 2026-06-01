@@ -9,8 +9,10 @@ if (import.meta.env.DEV) {
     document.body.appendChild(el)
   }
 }
+
+const { Layout } = DefaultTheme
 </script>
 
 <template>
-  <DefaultTheme.Layout />
+  <Layout />
 </template>

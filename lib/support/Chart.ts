@@ -6,8 +6,8 @@
  *     https://github.com/radix-ui/colors/blob/main/LICENSE
  */
 
-import FileSaver from 'file-saver'
 import html2canvas from 'html2canvas'
+import { saveAs } from './File'
 
 export const c = {
   text1: 'light-dark(#1c2024, #edeef0)',
@@ -86,6 +86,11 @@ export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): 
     }
   })
 
-  const dataUrl = canvas.toDataURL('image/png')
-  FileSaver.saveAs(dataUrl, fileName)
+  canvas.toBlob((blob) => {
+    if (blob) {
+      saveAs(blob, fileName)
+    } else {
+      throw new Error('Failed to export chart as PNG: unable to create blob from canvas')
+    }
+  }, 'image/png')
 }

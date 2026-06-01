@@ -27,31 +27,31 @@ Sefirot follows the official [Vue Style Guide](https://v3.vuejs.org/style-guide/
 ### Development
 
 ```bash
-$ pnpm run story
+$ pnpm story
 ```
 
 Serve Histoire at http://localhost:4010.
 
 ```bash
-$ pnpm run docs
+$ pnpm docs
 ```
 
 Serve documentation website at http://localhost:4011.
 
 ```bash
-$ pnpm run lint
+$ pnpm lint
 ```
 
 Lint files using a rule of Standard JS.
 
 ```bash
-$ pnpm run test
+$ pnpm test
 ```
 
 Run the tests.
 
 ```bash
-$ pnpm run coverage
+$ pnpm coverage
 ```
 
 Output test coverage in `coverage` directory.

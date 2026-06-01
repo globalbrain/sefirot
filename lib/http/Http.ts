@@ -1,8 +1,8 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
-import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
 import { stringify } from 'qs'
+import { saveAs } from '../support/File'
 import { objectToFormData } from '../support/Http'
 
 type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
@@ -122,14 +122,8 @@ export class Http {
       ...options
     })
 
-    if (!blob) {
-      throw new Error('No blob')
-    }
-
-    const { filename = 'download' } =
-      parseContentDisposition(headers.get('Content-Disposition') || '')?.parameters || {}
-
-    FileSaver.saveAs(blob, filename as string)
+    const { filename } = parseContentDisposition(headers.get('Content-Disposition') || '').parameters
+    saveAs(blob, filename as string | undefined)
   }
 }
 

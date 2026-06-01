@@ -1,7 +1,7 @@
-import dayjs, { type ConfigType, type Dayjs } from 'dayjs'
-import PluginRelativeTime from 'dayjs/plugin/relativeTime'
-import PluginTimezone from 'dayjs/plugin/timezone'
-import PluginUtc from 'dayjs/plugin/utc'
+import dayjs, { type ConfigType, type Dayjs } from 'dayjs/esm'
+import PluginRelativeTime from 'dayjs/esm/plugin/relativeTime'
+import PluginTimezone from 'dayjs/esm/plugin/timezone'
+import PluginUtc from 'dayjs/esm/plugin/utc'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)

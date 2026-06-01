@@ -13,13 +13,6 @@ const files = (await Array.fromAsync(glob(`**/*.ts`, { cwd: lib })))
   .filter((file) => !file.endsWith('.d.ts'))
   .map((file) => `sefirot/${file}`.replace(/(?:\/index)?\.ts$/, ''))
 
-// @ts-ignore
-const isRolldown = !!vite.rolldownVersion
-
-const define = {
-  'navigator.userAgent': '""'
-}
-
 /** @type {import('vite').UserConfig} */
 export const baseConfig = {
   plugins: [
@@ -52,18 +45,7 @@ export const baseConfig = {
   },
 
   ssr: {
-    noExternal: [
-      /sentry/
-    ],
-    optimizeDeps: {
-      include: [
-        'file-saver'
-      ],
-      // @ts-ignore
-      esbuildOptions: isRolldown ? undefined : { define },
-      // @ts-ignore
-      rolldownOptions: isRolldown ? { transform: { define } } : undefined
-    }
+    noExternal: [/sentry/]
   },
 
   optimizeDeps: {
@@ -71,12 +53,7 @@ export const baseConfig = {
     include: [
       ...files,
       '@globalbrain/sefirot/dompurify',
-      'dayjs',
-      'dayjs/plugin/relativeTime',
-      'dayjs/plugin/timezone',
-      'dayjs/plugin/utc',
       'dompurify',
-      'file-saver',
       'markdown-it > argparse',
       'markdown-it > entities',
       'pinia',
