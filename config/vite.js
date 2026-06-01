@@ -45,7 +45,7 @@ export const baseConfig = {
   },
 
   ssr: {
-    noExternal: [/sentry/, /dayjs/]
+    noExternal: [/(?:^|\/)dayjs/]
   },
 
   optimizeDeps: {
