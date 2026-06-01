@@ -86,11 +86,10 @@ export async function exportAsPng(_el: any, fileName = 'chart.png', delay = 0): 
     }
   })
 
-  canvas.toBlob((blob) => {
-    if (blob) {
-      saveAs(blob, fileName)
-    } else {
-      throw new Error('Failed to export chart as PNG: unable to create blob from canvas')
-    }
-  }, 'image/png')
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'))
+  if (!blob) {
+    throw new Error('Failed to export chart as PNG: unable to create blob from canvas')
+  }
+
+  saveAs(blob, fileName)
 }
