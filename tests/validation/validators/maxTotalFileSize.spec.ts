@@ -42,4 +42,16 @@ describe('validation/validators/maxTotalFileSize', () => {
     expect(maxTotalFileSize([], 'abc')).toBe(false)
     expect(maxTotalFileSize([f(10)], 'abc')).toBe(false)
   })
+
+  it('allows string references to already-uploaded files', () => {
+    // Only Files count toward the total; string references contribute 0.
+    expect(maxTotalFileSize(['old.pdf'], '1MB')).toBe(true)
+    expect(maxTotalFileSize([f(900_000), 'old.pdf'], '1MB')).toBe(true) // 900k <= 1e6
+    expect(maxTotalFileSize([f(1_100_000), 'old.pdf'], '1MB')).toBe(false) // 1.1M > 1e6
+  })
+
+  it('still rejects arrays with elements that are neither File nor string', () => {
+    expect(maxTotalFileSize([f(100), {}], '1MB')).toBe(false)
+    expect(maxTotalFileSize([f(100), 123], '1MB')).toBe(false)
+  })
 })
