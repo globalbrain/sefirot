@@ -102,6 +102,13 @@ export interface Props {
   // the catalog will hide entire catalog component and renders the given
   // `#empty-state` slot instead.
   showEmptyState?: boolean
+
+  // Whether to populate the selectable column list from every field the
+  // backend exposes for the entity, rather than only the columns passed
+  // in `selectable` / `select`. Use this when the catalog should let the
+  // user add any available column to the view (e.g. a saved-view editor),
+  // not just toggle the ones already selected.
+  loadSelectable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -116,6 +123,7 @@ const emit = defineEmits<{
   'select-updated': [select: string[]]
   'selectable-updated': [selectable: string[]]
   'filters-updated': [filters: any[]]
+  'query-filter-updated': [filter: any[]]
   'sort-updated': [sort: LensQuerySort[]]
   'overrides-updated': [overrides: Record<string, Partial<FieldData>>]
   'cell-clicked': [value: any, record: any]
@@ -153,6 +161,13 @@ const queryFilter = computed(() => {
   return ['$or', props.queryKeys.map((key) => {
     return [key, 'contains', query.value]
   })]
+})
+
+// Surface the free-text query filter so callers can fold it into their
+// own export / side-channel requests (the search box lives inside the
+// catalog, so the parent has no other way to observe it).
+watch(queryFilter, (filter) => {
+  emit('query-filter-updated', filter)
 })
 
 const _filters = ref(props.filters ?? [])
@@ -261,6 +276,20 @@ watch(result, (res) => {
   }
   if (_selectable.value.length === 0) {
     _selectable.value = withoutIndexField(res!.query.select)
+  }
+  // When `loadSelectable` is set, widen the selectable column list to
+  // every field the backend exposes for the entity (minus the index
+  // field), so the column picker can offer columns that aren't part of
+  // the current selection. Existing entries are preserved and order is
+  // kept stable by appending only the not-yet-present keys.
+  if (props.loadSelectable && res!.fields) {
+    const present = new Set(_selectable.value)
+    for (const key of withoutIndexField(Object.keys(res!.fields))) {
+      if (!present.has(key)) {
+        _selectable.value.push(key)
+        present.add(key)
+      }
+    }
   }
 }, { once: true })
 
@@ -395,7 +424,23 @@ function onNext() {
   doRefresh()
 }
 
+// Re-runs the current query against the endpoint, preserving the
+// catalog's in-memory state (select / filters / sort / page). Exposed
+// so callers can reflect server-side changes — e.g. after a bulk action
+// mutates rows — without remounting the component.
+async function refreshCatalog(): Promise<void> {
+  // A refresh is requested precisely when server-side data may have
+  // changed while the query input did not (e.g. after a bulk action).
+  // Clear the memoized input so the equality shortcut in the fetcher
+  // misses and a real request is issued instead of returning the stale
+  // cached result.
+  prevFetchInput = null
+  await doRefresh()
+}
+
 defineExpose({
+  refresh: refreshCatalog,
+
   /**
    * Retrieve the current records in the catalog. This method is required when
    * the parent component needs to access the records directly, for example, to
@@ -456,6 +501,9 @@ defineExpose({
         </template>
         <template v-if="$slots['controls-sub-right']" #sub-right>
           <slot name="controls-sub-right" />
+        </template>
+        <template v-if="$slots['selected-actions']" #selected-actions>
+          <slot name="selected-actions" />
         </template>
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
