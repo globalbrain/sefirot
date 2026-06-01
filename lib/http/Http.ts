@@ -116,16 +116,14 @@ export class Http {
   }
 
   async download(url: string, options?: FetchOptions): Promise<void> {
-    const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
-      method: 'GET',
-      responseType: 'blob',
-      ...options
-    })
+    const { _data: blob, headers } =
+      await this.performRequestRaw<Blob>(url, { method: 'GET', responseType: 'blob', ...options })
 
     let filename
     try {
-      filename = parseContentDisposition(headers.get('Content-Disposition')!).parameters.filename
+      filename = parseContentDisposition(headers.get('Content-Disposition') || '').parameters.filename
     } catch {}
+
     saveAs(blob, filename as string | undefined)
   }
 }
