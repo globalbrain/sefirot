@@ -328,14 +328,21 @@ function onInlineFilterUpdated(filter: any[]) {
   emit('filters-updated', _filters.value)
 }
 
+// A filter value "clears" the filter when it's nullish or an empty
+// array. Scalar operators (e.g. a boolean `=`) carry a single value, so
+// `false` is a real value to keep — only `null` clears.
+function isEmptyFilterValue(value: any): boolean {
+  return value == null || (Array.isArray(value) && value.length === 0)
+}
+
 function applyNewFilter(filter: any[]) {
-  if (filter[2].length > 0) {
+  if (!isEmptyFilterValue(filter[2])) {
     _filters.value.push(filter)
   }
 }
 
 function replaceFilter(index: number, filter: any[]) {
-  if (filter[2].length === 0) {
+  if (isEmptyFilterValue(filter[2])) {
     _filters.value.splice(index, 1)
     return
   }

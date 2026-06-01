@@ -1,4 +1,3 @@
-import { xor } from 'lodash-es'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type BooleanFieldData } from '../FieldData'
@@ -21,25 +20,28 @@ export class BooleanField extends Field<BooleanFieldData> {
   }
 
   override async tableFilterMenu(filters: any[], onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
-    const selected = this.inFilterValueFor(this.data.key, filters)
+    // A boolean has exactly two states, so the inline menu is a single
+    // select on `=`. Re-clicking the active value clears the filter.
+    const selected = this.eqFilterValueFor(this.data.key, filters)
 
     return {
       type: 'filter',
       search: false,
       selected,
       options: this.filterOptions(),
-      onClick: (v) => { onFilterUpdated?.([this.data.key, 'in', xor(selected, [v])]) }
+      onClick: (v) => { onFilterUpdated?.([this.data.key, '=', selected === v ? null : v]) }
     }
   }
 
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
-    // Use `in` to match the operator the inline column menu emits, and
-    // `.multiple()` so the value stays a boolean array — the single-value
-    // cast would stringify `true` to `'true'`, breaking option matching
-    // and the backend boolean comparison.
-    const selectMany = new SelectFilterInput().options(() => Promise.resolve(this.filterOptions())).multiple()
+    // A boolean is a two-state value, so `=` / `!=` express the filter
+    // more naturally than set membership. The single-value cast preserves
+    // the boolean (it no longer stringifies), so option matching and the
+    // backend comparison stay correct.
+    const selectOne = new SelectFilterInput().options(() => Promise.resolve(this.filterOptions()))
     return {
-      in: selectMany
+      '=': selectOne,
+      '!=': selectOne
     }
   }
 

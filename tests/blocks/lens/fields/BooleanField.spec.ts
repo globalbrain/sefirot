@@ -82,9 +82,9 @@ describe('blocks/lens/fields/BooleanField', () => {
   })
 
   describe('availableFilters', () => {
-    it('exposes the "in" operator (matching the inline filter menu)', () => {
+    it('exposes the "=" and "!=" operators', () => {
       const filters = make().availableFilters()
-      expect(Object.keys(filters)).toEqual(['in'])
+      expect(Object.keys(filters).sort()).toEqual(['!=', '='])
     })
   })
 
@@ -99,24 +99,30 @@ describe('blocks/lens/fields/BooleanField', () => {
       ])
     })
 
-    it('passes the current selection through from the filter list', async () => {
-      const filters = [['active', 'in', [true]]]
+    it('passes the current "=" selection through from the filter list', async () => {
+      const filters = [['active', '=', true]]
       const menu = (await make().tableFilterMenu(filters, () => {})) as any
-      expect(menu.selected).toEqual([true])
+      expect(menu.selected).toBe(true)
     })
 
-    it('toggles the selection via xor on click', async () => {
+    it('sets the "=" filter to the clicked value', async () => {
       const captured: any[] = []
-      const onFilterUpdated = (f: any) => { captured.push(f) }
+      const menu = (await make().tableFilterMenu([], (f: any) => { captured.push(f) })) as any
 
-      const filters = [['active', 'in', [true]]]
-      const menu = (await make().tableFilterMenu(filters, onFilterUpdated)) as any
+      menu.onClick(true)
+      expect(captured[0]).toEqual(['active', '=', true])
 
-      menu.onClick(true) // remove true
-      expect(captured[0]).toEqual(['active', 'in', []])
+      menu.onClick(false)
+      expect(captured[1]).toEqual(['active', '=', false])
+    })
 
-      menu.onClick(false) // add false
-      expect(captured[1]).toEqual(['active', 'in', [true, false]])
+    it('clears the filter when the active value is clicked again', async () => {
+      const captured: any[] = []
+      const filters = [['active', '=', true]]
+      const menu = (await make().tableFilterMenu(filters, (f: any) => { captured.push(f) })) as any
+
+      menu.onClick(true)
+      expect(captured[0]).toEqual(['active', '=', null])
     })
   })
 
