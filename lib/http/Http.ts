@@ -122,7 +122,10 @@ export class Http {
       ...options
     })
 
-    const { filename } = parseContentDisposition(headers.get('Content-Disposition') || '').parameters
+    let filename
+    try {
+      filename = parseContentDisposition(headers.get('Content-Disposition')!).parameters.filename
+    } catch {}
     saveAs(blob, filename as string | undefined)
   }
 }
