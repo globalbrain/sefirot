@@ -17,7 +17,14 @@ export type Size = 'mini' | 'small' | 'medium'
 export type { Color }
 
 export type ModelType = 'file' | 'object'
-export type ModelValue<T extends ModelType> = T extends 'file' ? File : FileObject
+
+/**
+ * In `file` mode an item is either a freshly selected `File` or a `string`
+ * referencing a file that was already uploaded (e.g. its stored path or
+ * basename) — mirroring `SInputImage`'s `File | string` model. `object`
+ * mode wraps a `File` with display metadata.
+ */
+export type ModelValue<T extends ModelType> = T extends 'file' ? File | string : FileObject
 
 export interface FileObject {
   file: File
@@ -103,7 +110,11 @@ const totalFileCountText = computed(() => {
 })
 
 const totalFileSizeText = computed(() => {
-  const files = _value.value.map((file) => (file instanceof File ? file : file.file))
+  // Only locally selected files contribute to the total size; already
+  // uploaded files (plain `string` references) have no known size here.
+  const files = _value.value
+    .map((file) => (file instanceof File ? file : typeof file === 'string' ? null : file.file))
+    .filter((file): file is File => file instanceof File)
   return formatSize(files)
 })
 
