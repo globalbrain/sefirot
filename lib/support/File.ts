@@ -14,7 +14,7 @@ export function formatSize(files: File | File[]): string {
   return `${(size / 1000 ** i).toFixed(2)} ${units[i]}`
 }
 
-export async function saveAs(blob: Blob | undefined, filename: string | undefined): Promise<void> {
+export function saveAs(blob: Blob | undefined, filename: string | undefined): void {
   if (typeof window === 'undefined') {
     throw new TypeError('saveAs can only be used in a browser environment.')
   }
