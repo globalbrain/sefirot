@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputFileUpload from 'sefirot/components/SInputFileUpload.vue'
+import { required } from 'sefirot/validation/rules'
 import { assertEmitted } from 'tests/Utils'
 
 describe('components/SInputFileUpload', () => {
@@ -47,5 +48,19 @@ describe('components/SInputFileUpload', () => {
     await wrapper.findAll('.SInputFileUploadItem .delete button')[0].trigger('click')
 
     assertEmitted(wrapper, 'update:model-value', 1, [file])
+  })
+
+  it('does not validate uploaded references against per-file rules', () => {
+    // A string reference is an already-uploaded file; per-file rules such as
+    // `required` apply to newly selected files only and must not flag it.
+    const wrapper = mount(SInputFileUpload, {
+      props: {
+        modelValue: ['a.pdf'],
+        rules: { required: required() }
+      }
+    })
+
+    expect(wrapper.find('.SInputFileUploadItem').exists()).toBe(true)
+    expect(wrapper.find('.SInputFileUploadItem .error').exists()).toBe(false)
   })
 })
