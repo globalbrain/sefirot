@@ -10,13 +10,17 @@ describe('validation/rules/maxTotalFileSize', () => {
     expect(rule.$validator([], null, null)).toBe(true)
     expect(rule.$validator([file1mb, file1mb], null, null)).toBe(true)
 
+    // String references to already-uploaded files are allowed; only Files
+    // count toward the total, so a 1mb File plus a reference is still 1mb.
+    expect(rule.$validator([file1mb, 'file1mb'], null, null)).toBe(true)
+
     expect(rule.$validator(true, null, null)).toBe(false)
     expect(rule.$validator(false, null, null)).toBe(false)
     expect(rule.$validator(1, null, null)).toBe(false)
     expect(rule.$validator('abc', null, null)).toBe(false)
     expect(rule.$validator({}, null, null)).toBe(false)
     expect(rule.$validator([file1mb, file1mb, file1mb], null, null)).toBe(false)
-    expect(rule.$validator([file1mb, 'file1mb'], null, null)).toBe(false)
+    expect(rule.$validator([file1mb, {}], null, null)).toBe(false)
   })
 
   it('shows the default error message', () => {
