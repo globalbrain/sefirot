@@ -13,6 +13,6 @@
     "paths": { "sefirot/*": ["./lib/*"], "*": ["./*"] },
     "types": ["@types/node", "vitest/globals"]
   },
-  "include": ["*.config.ts", "docs", "docs/.vitepress/**/*", "env.d.ts", "lib", "stories", "tests"],
+  "include": ["**/*", "docs/.vitepress/**/*"],
   "exclude": ["**/dist/**", "node_modules"]
 }
