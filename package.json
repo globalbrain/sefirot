@@ -51,7 +51,7 @@
     "test": "vitest",
     "test:fail": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "check": "pnpm type && pnpm lint:fail && pnpm test:fail",
+    "check": "pnpm run --aggregate-output \"/^type|lint:fail|test:fail$/\"",
     "release": "pnpm whoami >/dev/null 2>&1 || pnpm login && release-it"
   },
   "dependencies": {
