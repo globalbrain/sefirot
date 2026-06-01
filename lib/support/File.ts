@@ -36,5 +36,5 @@ export function saveAs(blob: Blob | undefined, filename: string | undefined): vo
   setTimeout(() => {
     anchor.remove()
     URL.revokeObjectURL(url)
-  }, 0)
+  }, 4e4)
 }
