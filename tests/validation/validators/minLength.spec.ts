@@ -29,9 +29,8 @@ describe('validation/validators/minLength', () => {
     expect(minLength(undefined, 3)).toBe(false)
   })
 
-  it('counts UTF-16 code units, not grapheme clusters', () => {
-    expect(minLength('👩‍🚀', 4)).toBe(true)
-    expect(minLength('👩‍🚀', 5)).toBe(true)
-    expect(minLength('👩‍🚀', 6)).toBe(false)
+  it('counts code points, matching the database and backend', () => {
+    expect(minLength('👩‍🚀', 3)).toBe(true)
+    expect(minLength('👩‍🚀', 4)).toBe(false)
   })
 })
