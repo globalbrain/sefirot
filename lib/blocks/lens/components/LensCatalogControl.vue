@@ -138,6 +138,9 @@ function createFilterPresetOptions(): ActionList {
             <IconX class="selected-reset-icon" />
           </button>
         </div>
+        <div v-if="$slots['selected-actions']" class="selected-actions">
+          <slot name="selected-actions" />
+        </div>
       </div>
     </template>
   </div>
@@ -160,6 +163,12 @@ function createFilterPresetOptions(): ActionList {
 }
 
 .selected {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selected-actions {
   display: flex;
   align-items: center;
   gap: 8px;
