@@ -1,8 +1,8 @@
 import { parse as parseContentDisposition } from '@tinyhttp/content-disposition'
 import { parse as parseCookie } from '@tinyhttp/cookie'
-import FileSaver from 'file-saver'
 import { FetchError, type FetchOptions, type FetchResponse } from 'ofetch'
 import { stringify } from 'qs'
+import { saveAs } from '../support/File'
 import { objectToFormData } from '../support/Http'
 
 type Config = ReturnType<typeof import('../stores/HttpConfig').useHttpConfig>
@@ -116,20 +116,15 @@ export class Http {
   }
 
   async download(url: string, options?: FetchOptions): Promise<void> {
-    const { _data: blob, headers } = await this.performRequestRaw<Blob>(url, {
-      method: 'GET',
-      responseType: 'blob',
-      ...options
-    })
+    const { _data: blob, headers } =
+      await this.performRequestRaw<Blob>(url, { method: 'GET', responseType: 'blob', ...options })
 
-    if (!blob) {
-      throw new Error('No blob')
-    }
+    let filename
+    try {
+      filename = parseContentDisposition(headers.get('Content-Disposition') || '').parameters.filename
+    } catch {}
 
-    const { filename = 'download' } =
-      parseContentDisposition(headers.get('Content-Disposition') || '')?.parameters || {}
-
-    FileSaver.saveAs(blob, filename as string)
+    saveAs(blob, filename as string | undefined)
   }
 }
 

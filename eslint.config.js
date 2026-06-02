@@ -3,11 +3,7 @@ import globalbrain from '@globalbrain/eslint-config'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores([
-    'docs/**/*',
-    '!docs/.vitepress/theme/**/*',
-    '!docs/.vitepress/config.ts'
-  ]),
+  globalIgnores(['**/*.md']),
   await globalbrain({
     rules: {
       'antfu/consistent-list-newline': 'off',

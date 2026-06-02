@@ -19,7 +19,7 @@ import * as Day from '@globalbrain/sefirot/lib/support/Day'
 The `Dayjs` type alias.
 
 ```ts
-import { Dayjs } from 'dayjs'
+import { Dayjs } from 'dayjs/esm'
 
 type Day = Dayjs
 ```
@@ -33,7 +33,7 @@ import { type Day } from '@globalbrain/sefirot/lib/support/Day'
 The `ConfigType` alias from Day.js.
 
 ```ts
-import { ConfigType } from 'dayjs'
+import { ConfigType } from 'dayjs/esm'
 
 type Input = ConfigType
 ```
