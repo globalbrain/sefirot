@@ -1,17 +1,17 @@
 import { xor } from 'lodash-es'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
-import { type RelatedManyFieldData } from '../FieldData'
+import { type RelatedOneFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
 import { type ResourceFetcher } from '../ResourceFetcher'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { SelectFilterInput } from '../filter-inputs/SelectFilterInput'
 import { Field } from './Field'
 
-export class RelatedManyField extends Field<RelatedManyFieldData> {
+export class RelatedOneField extends Field<RelatedOneFieldData> {
   fetcher: ResourceFetcher
 
-  constructor(ctx: any, data: RelatedManyFieldData, fetcher: ResourceFetcher) {
+  constructor(ctx: any, data: RelatedOneFieldData, fetcher: ResourceFetcher) {
     super(ctx, data)
     this.fetcher = fetcher
   }
@@ -30,7 +30,7 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     const res = await this.fetcher(method, url)
     const data = key ? res[key] : res
 
-    const isAvatar = this.data.displayAs === 'avatars'
+    const isAvatar = this.data.displayAs === 'avatar'
 
     const options = data.map((item: any) => isAvatar
       ? {
@@ -54,27 +54,30 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
   }
 
   override tableCell(v: any, _r: any): TableCell {
-    const items = (v ?? []) as any[]
+    if (v === null || v === undefined) {
+      if (this.data.displayAs === 'avatar') {
+        return { type: 'avatar', image: null, name: '' }
+      }
+      return { type: 'text', value: null }
+    }
 
-    if (this.data.displayAs === 'avatars') {
+    if (this.data.displayAs === 'avatar') {
       return {
-        type: 'avatars',
-        avatars: items.map((item) => ({
-          image: this.data.image ? item[this.data.image] : null,
-          name: item[this.data.title]
-        })),
-        avatarCount: 6,
-        nameCount: 0,
-        tooltip: true
+        type: 'avatar',
+        image: this.data.image ? (v[this.data.image] ?? null) : null,
+        // Empty string (not null) for the same reason as the text branch
+        // below — a null name falls back to the raw row value in the cell
+        // renderer and breaks SAvatar.
+        name: v[this.data.title] ?? ''
       }
     }
 
     return {
-      type: 'pills',
-      pills: items.map((item) => ({
-        label: item[this.data.title],
-        value: item[this.data.filterKey]
-      }))
+      type: 'text',
+      // Empty string (not null) when the title is missing: the table
+      // renderer falls back to the raw row value on a null cell value,
+      // which would render the relation object as `[object Object]`.
+      value: v[this.data.title] ?? ''
     }
   }
 

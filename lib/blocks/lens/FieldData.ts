@@ -17,6 +17,7 @@ import { type Rule } from './Rule'
  * }
  */
 export interface FieldDataRegistry {
+  boolean: BooleanFieldData
   content: ContentFieldData
   date: DateFieldData
   datetime: DatetimeFieldData
@@ -26,6 +27,7 @@ export interface FieldDataRegistry {
   link: LinkFieldData
   number: NumberFieldData
   related_many: RelatedManyFieldData
+  related_one: RelatedOneFieldData
   select: SelectFieldData
   slack_message: SlackMessageFieldData
   text: TextFieldData
@@ -46,6 +48,14 @@ export interface FieldDataBase {
   width: number
   required: boolean
   rules: Rule[]
+}
+
+export interface BooleanFieldData extends FieldDataBase {
+  type: 'boolean'
+  labelTrueEn: string | null
+  labelTrueJa: string | null
+  labelFalseEn: string | null
+  labelFalseJa: string | null
 }
 
 export interface ContentFieldData extends FieldDataBase {
@@ -131,10 +141,25 @@ export interface SelectFieldDataOption {
 export interface RelatedManyFieldData extends FieldDataBase {
   type: 'related_many'
   title: string
+  image?: string | null
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
   resourceEndpointDataKey: string | null
   resourceTitle: string
+  resourceImage?: string | null
+  displayAs?: 'pills' | 'avatars' | null
+}
+
+export interface RelatedOneFieldData extends FieldDataBase {
+  type: 'related_one'
+  title: string
+  image?: string | null
+  resourceEndpointMethod: 'get' | 'post'
+  resourceEndpointPath: string
+  resourceEndpointDataKey: string | null
+  resourceTitle: string
+  resourceImage?: string | null
+  displayAs?: 'text' | 'avatar' | null
 }
 
 export interface SlackMessageFieldData extends FieldDataBase {

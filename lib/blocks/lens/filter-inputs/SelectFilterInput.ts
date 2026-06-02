@@ -35,7 +35,11 @@ export class SelectFilterInput extends FilterInput {
     if (Array.isArray(value)) {
       return value[0]
     }
-    return this.castValueToStringOrNull(value)
+    // Preserve the value's type. Option values can be non-string (e.g.
+    // numeric related-record ids); stringifying here would break strict
+    // option matching in the dropdown summary and send the wrong type to
+    // the backend.
+    return value ?? null
   }
 
   protected castValueMany(value: any): any {

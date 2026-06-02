@@ -121,6 +121,19 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
+   * Returns the "=" filter value for the given key from the filters
+   * array, or `null` when there is none.
+   */
+  protected eqFilterValueFor(key: string, filters: any[]): any {
+    for (const f of filters) {
+      if (f[0] === key && f[1] === '=') {
+        return f[2]
+      }
+    }
+    return null
+  }
+
+  /**
    * Returns the table cell definition for the field.
    */
   abstract tableCell(v: any, r: any): TableCell
