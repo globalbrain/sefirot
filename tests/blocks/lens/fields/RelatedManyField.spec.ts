@@ -1,0 +1,155 @@
+import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
+import { type RelatedManyFieldData } from 'sefirot/blocks/lens/FieldData'
+import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
+import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
+
+function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
+  return { lang }
+}
+
+function makeFetcher(response: any): ResourceFetcher {
+  return (async () => response) as unknown as ResourceFetcher
+}
+
+function make(
+  overrides: Partial<RelatedManyFieldData> = {},
+  fetcher: ResourceFetcher = makeFetcher([])
+): RelatedManyField {
+  const data: RelatedManyFieldData = {
+    type: 'related_many',
+    key: 'members',
+    labelEn: 'Members',
+    labelJa: 'メンバー',
+    filterKey: 'id',
+    sortable: false,
+    freeze: false,
+    width: 0,
+    required: false,
+    rules: [],
+    title: 'name',
+    image: null,
+    resourceEndpointMethod: 'get',
+    resourceEndpointPath: '/api/members',
+    resourceEndpointDataKey: null,
+    resourceTitle: 'name',
+    resourceImage: null,
+    displayAs: null,
+    ...overrides
+  }
+  return new RelatedManyField(ctx(), data, fetcher)
+}
+
+describe('blocks/lens/fields/RelatedManyField', () => {
+  describe('tableCell (pills mode — default)', () => {
+    it('renders pills with the title property of each row item', () => {
+      const cell = make().tableCell(
+        [{ id: 1, name: 'Alice' }, { id: 2, name: 'Bob' }],
+        {}
+      ) as any
+      expect(cell.type).toBe('pills')
+      expect(cell.pills).toEqual([
+        { label: 'Alice', value: 1 },
+        { label: 'Bob', value: 2 }
+      ])
+    })
+
+    it('honors a custom title key', () => {
+      const cell = make({ title: 'shortName' }).tableCell(
+        [{ id: 1, shortName: 'JP' }, { id: 2, shortName: 'US' }],
+        {}
+      ) as any
+      expect(cell.pills.map((p: any) => p.label)).toEqual(['JP', 'US'])
+    })
+
+    it('keeps null / undefined as an empty list of pills', () => {
+      expect((make().tableCell(null, {}) as any).pills).toEqual([])
+      expect((make().tableCell(undefined, {}) as any).pills).toEqual([])
+    })
+
+    it('renders pills when displayAs is explicitly "pills"', () => {
+      const cell = make({ displayAs: 'pills' }).tableCell(
+        [{ id: 1, name: 'Alice' }],
+        {}
+      ) as any
+      expect(cell.type).toBe('pills')
+    })
+  })
+
+  describe('tableCell (avatars mode)', () => {
+    it('renders an avatars cell when displayAs is "avatars"', () => {
+      const cell = make({
+        displayAs: 'avatars',
+        image: 'avatarUrl'
+      }).tableCell(
+        [
+          { id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' },
+          { id: 2, name: 'Bob', avatarUrl: 'https://example.com/b.png' }
+        ],
+        {}
+      ) as any
+      expect(cell.type).toBe('avatars')
+      expect(cell.avatars).toEqual([
+        { image: 'https://example.com/a.png', name: 'Alice' },
+        { image: 'https://example.com/b.png', name: 'Bob' }
+      ])
+      expect(cell.avatarCount).toBe(6)
+      expect(cell.nameCount).toBe(0)
+      expect(cell.tooltip).toBe(true)
+    })
+
+    it('falls back to null image when the `image` data field is not set', () => {
+      const cell = make({ displayAs: 'avatars' }).tableCell(
+        [{ id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' }],
+        {}
+      ) as any
+      expect(cell.avatars[0].image).toBeNull()
+      expect(cell.avatars[0].name).toBe('Alice')
+    })
+  })
+
+  describe('availableFilters', () => {
+    it('exposes "=", "!=", and "in" operators when an endpoint is configured', () => {
+      const filters = make().availableFilters()
+      expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'in'])
+    })
+
+    it('returns no filters when the resource endpoint is empty', () => {
+      const filters = make({ resourceEndpointPath: '' }).availableFilters()
+      expect(filters).toEqual({})
+    })
+  })
+
+  describe('tableFilterMenu', () => {
+    it('returns null when no endpoint is configured', async () => {
+      const menu = await make({ resourceEndpointPath: '' }).tableFilterMenu([], () => {})
+      expect(menu).toBeNull()
+    })
+
+    it('builds text-style options from the fetched resource list by default', async () => {
+      const fetcher = makeFetcher([
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ])
+      const menu = (await make({}, fetcher).tableFilterMenu([], () => {})) as any
+      expect(menu.options).toEqual([
+        { label: 'Alice', value: 1 },
+        { label: 'Bob', value: 2 }
+      ])
+    })
+
+    it('builds avatar-style options when displayAs is "avatars"', async () => {
+      const fetcher = makeFetcher([
+        { id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' },
+        { id: 2, name: 'Bob', avatarUrl: 'https://example.com/b.png' }
+      ])
+      const menu = (await make(
+        { displayAs: 'avatars', resourceImage: 'avatarUrl' },
+        fetcher
+      ).tableFilterMenu([], () => {})) as any
+      expect(menu.options).toEqual([
+        { type: 'avatar', label: 'Alice', image: 'https://example.com/a.png', value: 1 },
+        { type: 'avatar', label: 'Bob', image: 'https://example.com/b.png', value: 2 }
+      ])
+    })
+  })
+})
