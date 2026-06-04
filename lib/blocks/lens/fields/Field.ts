@@ -11,6 +11,12 @@ import LensFormOverrideBase from '../components/LensFormOverrideBase.vue'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import * as RuleMapper from '../validation/RuleMapper'
 
+/**
+ * Fallback column width (px) used when a field's definition does not
+ * specify one (i.e. `width` is 0). Keeps columns visible by default.
+ */
+const DEFAULT_COLUMN_WIDTH = 168
+
 export abstract class Field<T extends FieldData> {
   /**
    * The field context, that holds global app context
@@ -66,7 +72,11 @@ export abstract class Field<T extends FieldData> {
     return {
       label: this.label(),
       freeze: this.data.freeze,
-      width: `${this.data.width}px`,
+      // A width of 0 means "unset" — fall back to a sensible default so
+      // the column stays visible. Without this, fields whose backend
+      // definition omits an explicit width would render as a 0px (hidden)
+      // column until the user manually drag-resizes it.
+      width: `${this.data.width || DEFAULT_COLUMN_WIDTH}px`,
       cell: (v, r) => this.tableCell(v, r)
     }
   }

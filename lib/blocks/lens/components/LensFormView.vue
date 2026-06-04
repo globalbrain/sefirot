@@ -52,14 +52,16 @@ const { t } = useTrans({
     a_select_all: 'Select all',
     a_clear_all: 'Clear all',
     a_cancel: 'Cancel',
-    a_apply: 'Apply changes'
+    a_apply: 'Apply changes',
+    empty_column: '(Empty column)'
   },
   ja: {
     title: 'テーブルの表示を更新する',
     a_select_all: 'すべて選択',
     a_clear_all: 'すべて解除',
     a_cancel: 'キャンセル',
-    a_apply: '変更を適用'
+    a_apply: '変更を適用',
+    empty_column: '(空列)'
   }
 })
 
@@ -90,12 +92,32 @@ useDraggable(el, selectOptions, {
 })
 
 function createSelectOptions(): SelectOption[] {
+  // `select` is a subsequence of `selectable` (the editor derives both
+  // from the same ordered list), so we walk them in lockstep to recover
+  // which specific `__empty__` spacer was selected. Real fields are keyed
+  // by membership (order-robust); spacers, which share the `__empty__`
+  // key and can't be told apart by `_selectDict`, are matched positionally
+  // via the shared cursor.
+  let cursor = 0
   return _selectable.value.map((s) => {
+    const isEmpty = s === '__empty__'
+    let value: boolean
+    if (isEmpty) {
+      value = _select.value[cursor] === '__empty__'
+      if (value) {
+        cursor++
+      }
+    } else {
+      value = !!_selectDict.value[s]
+      if (_select.value[cursor] === s) {
+        cursor++
+      }
+    }
     return {
       uid: _uid++,
       key: s,
-      value: _selectDict.value[s],
-      isEmpty: s === '__empty__',
+      value,
+      isEmpty,
       field: props.fields[s],
       override: _overrides[s] || {}
     }
@@ -103,6 +125,11 @@ function createSelectOptions(): SelectOption[] {
 }
 
 function getName(s: SelectOption): string {
+  // Empty spacer columns carry no field definition; show a localized
+  // placeholder label so the row is identifiable in the view editor.
+  if (s.isEmpty) {
+    return t.empty_column
+  }
   return lang === 'ja'
     ? s.override.labelJa || s.field?.labelJa || ''
     : s.override.labelEn || s.field?.labelEn || ''

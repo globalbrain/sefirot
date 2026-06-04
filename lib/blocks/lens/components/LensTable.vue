@@ -43,11 +43,16 @@ const records = computed(() => props.result?.data ?? [])
 const columnKeys = computed(() => {
   const requested = props.select ?? props.result?.query.select ?? []
   const fetched = props.result?.query.select
-  if (!fetched) {
-    return requested
-  }
-  const fetchedSet = new Set(fetched)
-  return requested.filter((k) => fetchedSet.has(k))
+  const fetchedSet = fetched ? new Set(fetched) : null
+  const visible = fetchedSet
+    ? requested.filter((k) => fetchedSet.has(k))
+    : requested
+  // Give each `__empty__` spacer a unique render key. The select can
+  // contain several `__empty__` entries (blank spacer columns, also used
+  // to inject empty columns into Excel exports); without unique keys they
+  // would collide on the same `columns` map entry and only render once.
+  let emptyIndex = 0
+  return visible.map((k) => (k === '__empty__' ? `__empty__::${emptyIndex++}` : k))
 })
 
 const orders = computed(() => [
@@ -79,6 +84,14 @@ const columns = computedAsync(async () => {
 
   // Build the list of columns based on the resolved column key list.
   for (const key of keys) {
+    // Render `__empty__` spacer keys (uniquified to `__empty__::N`) as
+    // blank columns, matching the empty columns the backend injects into
+    // Excel exports. These carry no field definition.
+    if (key.startsWith('__empty__')) {
+      columns[key] = { width: '128px', cell: { type: 'empty' } }
+      continue
+    }
+
     const _fieldData = cloneDeep(r.fields[key])
 
     if (!_fieldData) {

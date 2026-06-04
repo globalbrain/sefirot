@@ -20,9 +20,17 @@ export class DateField extends Field<DateFieldData> {
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const text = new TextFilterInput()
 
+    // Comparison operators (`>`, `>=`, `<`, `<=`) back date-range filters
+    // such as `invested_date >= X` AND `invested_date < Y`. The value is
+    // an ISO date string, edited as text — same input the `=` / `!=`
+    // operators already use for this field.
     return {
       '=': text,
-      '!=': text
+      '!=': text,
+      '>': text,
+      '>=': text,
+      '<': text,
+      '<=': text
     }
   }
 
