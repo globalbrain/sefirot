@@ -26,6 +26,14 @@ describe('support/Day', () => {
     })
   })
 
+  describe('locale', () => {
+    it('registers the ja locale on the bundled instance', () => {
+      // 2024-06-02 is a Sunday. Proves `dayjs/esm/locale/ja` is registered
+      // on Sefirot's instance, so `.locale('ja')` works on its dates.
+      expect(Day.day('2024-06-02').locale('ja').format('dddd')).toBe('日曜日')
+    })
+  })
+
   describe('createYmd', () => {
     it('creates a new ymd object', () => {
       const expected = {
