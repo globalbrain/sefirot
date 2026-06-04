@@ -2,6 +2,7 @@ import dayjs, { type ConfigType, type Dayjs } from 'dayjs/esm'
 import PluginRelativeTime from 'dayjs/esm/plugin/relativeTime'
 import PluginTimezone from 'dayjs/esm/plugin/timezone'
 import PluginUtc from 'dayjs/esm/plugin/utc'
+import 'dayjs/esm/locale/ja'
 
 dayjs.extend(PluginUtc)
 dayjs.extend(PluginTimezone)
