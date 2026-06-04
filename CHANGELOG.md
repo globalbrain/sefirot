@@ -1,5 +1,23 @@
 # Changelog
 
+# [4.45.0](https://github.com/globalbrain/sefirot/compare/v4.44.0...v4.45.0) (2026-06-04)
+
+
+### Bug Fixes
+
+* **deps:** use dayjs/esm exports and remove file-saver ([#729](https://github.com/globalbrain/sefirot/issues/729)) ([0add56b](https://github.com/globalbrain/sefirot/commit/0add56b5ba4a68c41f8751a26b5137181611d004))
+* **lens:** table/filter rendering parity fixes ([#727](https://github.com/globalbrain/sefirot/issues/727)) ([a0a671b](https://github.com/globalbrain/sefirot/commit/a0a671b614820883531359fc785f1ee833803bdb))
+* **validation:** sync string length counting with backend ([#730](https://github.com/globalbrain/sefirot/issues/730)) ([e0fd712](https://github.com/globalbrain/sefirot/commit/e0fd712092d89593802b111c2edb8d9255589822))
+
+
+### Features
+
+* **day:** register the Japanese locale by default ([#731](https://github.com/globalbrain/sefirot/issues/731)) ([9a2907d](https://github.com/globalbrain/sefirot/commit/9a2907d7fef12f6935e8d619c00a8595ac040ab7))
+* **file-upload:** accept already-uploaded files as File | string ([#728](https://github.com/globalbrain/sefirot/issues/728)) ([c1a987a](https://github.com/globalbrain/sefirot/commit/c1a987a3f98e0e32df8382ed573d90c1b98b2a60))
+* **lens:** add boolean and related-one field types ([#725](https://github.com/globalbrain/sefirot/issues/725)) ([42930f1](https://github.com/globalbrain/sefirot/commit/42930f15d20b9e4fac2f6f52902e77564265de39))
+* **lens:** add catalog controls for advanced pages ([#726](https://github.com/globalbrain/sefirot/issues/726)) ([f3c674d](https://github.com/globalbrain/sefirot/commit/f3c674d64b9657beac7d9c23dcc69764ed6eb36a))
+* **lens:** add text field unit options and Slack channel name rule ([#722](https://github.com/globalbrain/sefirot/issues/722)) ([6651157](https://github.com/globalbrain/sefirot/commit/6651157796845e46a1ba3c62d3d9f316b5648476))
+
 # [4.44.0](https://github.com/globalbrain/sefirot/compare/v4.43.5...v4.44.0) (2026-05-22)
 
 
