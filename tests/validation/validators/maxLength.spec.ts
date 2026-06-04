@@ -29,7 +29,9 @@ describe('validation/validators/maxLength', () => {
     expect(maxLength(undefined, 3)).toBe(false)
   })
 
-  it('counts UTF-16 code units, not grapheme clusters', () => {
-    expect(maxLength('👩‍🚀', 5)).toBe(true) // 👩 (2) + zwj (1) + 🚀 (2)
+  it('counts code points, matching the database and backend', () => {
+    // 👩‍🚀 = 👩 + ZWJ + 🚀 = 3 code points (not 5 UTF-16 code units)
+    expect(maxLength('👩‍🚀', 3)).toBe(true)
+    expect(maxLength('👩‍🚀', 2)).toBe(false)
   })
 })
