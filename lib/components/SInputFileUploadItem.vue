@@ -2,7 +2,7 @@
 import IconFileText from '~icons/ph/file-text'
 import IconTrash from '~icons/ph/trash'
 import { type ValidationRuleWithParams } from '@vuelidate/core'
-import { type Component, computed } from 'vue'
+import { type Component, computed, watch } from 'vue'
 import { useValidation } from '../composables/Validation'
 import { formatSize } from '../support/File'
 import SButton, { type Mode as ButtonMode } from './SButton.vue'
@@ -27,7 +27,7 @@ export interface Action {
 }
 
 const props = defineProps<{
-  file: File | FileObject
+  file: File | FileObject | string
   rules?: Record<string, ValidationRuleWithParams>
 }>()
 
@@ -35,23 +35,64 @@ defineEmits<{
   remove: []
 }>()
 
-const _file = computed(() => ({
-  name: props.file instanceof File ? props.file.name : props.file.file.name,
-  file: props.file instanceof File ? props.file : props.file.file,
-  size: formatSize(props.file instanceof File ? props.file : props.file.file),
-  indicatorState: props.file instanceof File ? null : props.file.indicatorState,
-  canRemove: props.file instanceof File ? true : (props.file.canRemove ?? true),
-  action: props.file instanceof File ? null : props.file.action,
-  errorMessage: props.file instanceof File ? null : props.file.errorMessage
-}))
+const _file = computed(() => {
+  const value = props.file
 
-const { validation } = useValidation(() => ({
-  file: _file.value.file
-}), {
-  file: props.rules ?? {}
+  if (value instanceof File) {
+    return {
+      name: value.name,
+      file: value as File | null,
+      size: formatSize(value) as string | null,
+      indicatorState: null as IndicatorState | null,
+      canRemove: true,
+      action: null as Action | null,
+      errorMessage: null as string | null
+    }
+  }
+
+  // A plain string references an already-uploaded file: show its basename
+  // and skip the size (unknown for server-side files).
+  if (typeof value === 'string') {
+    return {
+      name: value.split('/').pop() || value,
+      file: null,
+      size: null,
+      indicatorState: null,
+      canRemove: true,
+      action: null,
+      errorMessage: null
+    }
+  }
+
+  return {
+    name: value.file.name,
+    file: value.file as File | null,
+    size: formatSize(value.file) as string | null,
+    indicatorState: value.indicatorState ?? null,
+    canRemove: value.canRemove ?? true,
+    action: value.action ?? null,
+    errorMessage: value.errorMessage ?? null
+  }
 })
 
-validation.value.$touch()
+// Rules are passed as a getter so validation reacts when the item's
+// identity changes — the parent keys items by index, so a single instance
+// can be reused for a different item after a removal. Per-file rules apply
+// to newly selected `File`s only; an already-uploaded `string` reference
+// has no local file to validate, so it's skipped (the server validates it).
+const { validation } = useValidation(() => ({
+  file: _file.value.file
+}), () => ({
+  file: typeof props.file === 'string' ? {} : (props.rules ?? {})
+}))
+
+// Surface validation immediately, and re-touch whenever the item changes:
+// when an index-keyed instance is reused for a different item, switching
+// rules resets the dirty state, so a post-flush re-touch is needed to keep
+// the new item's errors visible.
+watch(() => props.file, () => {
+  validation.value.$touch()
+}, { immediate: true, flush: 'post' })
 </script>
 
 <template>
@@ -84,7 +125,7 @@ validation.value.$touch()
       />
     </div>
     <div class="meta">
-      <div class="size">
+      <div v-if="_file.size" class="size">
         {{ _file.size }}
       </div>
       <div class="delete">
