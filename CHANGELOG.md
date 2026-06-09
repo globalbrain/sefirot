@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.46.0](https://github.com/globalbrain/sefirot/compare/v4.45.0...v4.46.0) (2026-06-09)
+
+
+### Features
+
+* **lens:** include the active language in catalog search requests ([#732](https://github.com/globalbrain/sefirot/issues/732)) ([db2b782](https://github.com/globalbrain/sefirot/commit/db2b782fecf2aefe515fbb57bebded4efcf26833))
+
 # [4.45.0](https://github.com/globalbrain/sefirot/compare/v4.44.0...v4.45.0) (2026-06-04)
 
 
