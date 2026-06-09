@@ -3,6 +3,7 @@ import { useDebounceFn, useElementSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import SDivider from '../../../components/SDivider.vue'
 import { useQuery } from '../../../composables/Api'
+import { useLang } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
@@ -180,12 +181,15 @@ const _overrides = ref(props.overrides ?? {})
 const page = ref(1)
 const perPage = ref(100)
 
+const lang = useLang()
+
 const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   const input = {
     entity: props.entity ?? '__no_entity__',
     select: withIndexField(_select.value),
     filters: createInputFilters(queryFilter.value, _filters.value),
     sort: _sort.value.length > 0 ? _sort.value : defaultSort.value ?? [],
+    settings: { lang },
     page: page.value,
     perPage: perPage.value
   }
