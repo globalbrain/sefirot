@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.47.0](https://github.com/globalbrain/sefirot/compare/v4.46.0...v4.47.0) (2026-06-11)
+
+
+### Features
+
+* **lens:** add slack channel link rule ([#734](https://github.com/globalbrain/sefirot/issues/734)) ([81576fd](https://github.com/globalbrain/sefirot/commit/81576fda00b94f4027a179596feb65866cc13956))
+
 # [4.46.0](https://github.com/globalbrain/sefirot/compare/v4.45.0...v4.46.0) (2026-06-09)
 
 
