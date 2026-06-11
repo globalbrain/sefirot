@@ -15,6 +15,13 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.max_length.$validator('12345678901', null, null)).toBe(false)
   })
 
+  it('maps slack_channel_link rule', () => {
+    const args = map([{ type: 'slack_channel_link' }]) as any
+
+    expect(args.slack_channel_link.$validator('https://acme.slack.com/archives/C0123ABCDEF', null, null)).toBe(true)
+    expect(args.slack_channel_link.$validator('not a link', null, null)).toBe(false)
+  })
+
   it('maps slack_channel_name rule', () => {
     const args = map([{ type: 'slack_channel_name', offset: 0 }]) as any
 
