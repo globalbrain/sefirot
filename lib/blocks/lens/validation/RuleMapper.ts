@@ -1,6 +1,6 @@
 import { type ValidationArgs, type ValidationRuleWithParams } from '@vuelidate/core'
 import { type Day, day } from '../../../support/Day'
-import { after, afterOrEqual, before, beforeOrEqual, maxLength, required, slackChannelName } from '../../../validation/rules'
+import { after, afterOrEqual, before, beforeOrEqual, maxLength, required, slackChannelLink, slackChannelName } from '../../../validation/rules'
 import { type Rule } from '../Rule'
 
 /**
@@ -19,6 +19,8 @@ function mapRule(rule: Rule): ValidationRuleWithParams {
       return maxLength(rule.length)
     case 'required':
       return required()
+    case 'slack_channel_link':
+      return slackChannelLink()
     case 'slack_channel_name':
       return slackChannelName({ offset: rule.offset })
     case 'before':
