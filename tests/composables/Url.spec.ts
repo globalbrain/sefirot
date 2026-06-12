@@ -76,6 +76,77 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
+    it('serializes values to the URL with the serializers option', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        // Clear leftovers from previous tests on the shared router.
+        router.replace({ query: {} })
+
+        const data = reactive({
+          filters: [] as any[]
+        })
+
+        useUrlQuerySync(data, {
+          casts: {
+            filters: (v) => JSON.parse(v)
+          },
+          serializers: {
+            filters: (v) => JSON.stringify(v)
+          }
+        })
+
+        const route = useRoute()
+        return { data, route }
+      })
+
+      // Change the state and check the URL holds the serialized value.
+      vm.data.filters = [['name', '=', 1]]
+
+      await expect.poll(() => vm.route.query.filters).toBe('[["name","=",1]]')
+
+      // Reset to default and check the param is removed.
+      vm.data.filters = []
+
+      await expect.poll(() => vm.route.query.filters).toBeUndefined()
+
+      wrapper.unmount()
+    })
+
+    it('restores serialized values from the URL on initialization', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        router.replace({ query: { filters: '[["name","=",1]]' } })
+
+        const data = reactive({
+          filters: [] as any[]
+        })
+
+        useUrlQuerySync(data, {
+          casts: {
+            filters: (v) => JSON.parse(v)
+          },
+          serializers: {
+            filters: (v) => JSON.stringify(v)
+          }
+        })
+
+        const route = useRoute()
+        return { data, route }
+      })
+
+      // State should hold the deserialized value.
+      await expect.poll(() => vm.data.filters).toEqual([['name', '=', 1]])
+
+      // The URL should keep holding the serialized value as is. This also
+      // verifies that the state and the URL reached a stable point rather
+      // than replacing each other in a loop.
+      expect(vm.route.query.filters).toBe('[["name","=",1]]')
+
+      wrapper.unmount()
+    })
+
     it('excludes specified keys from URL sync', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const data = reactive({

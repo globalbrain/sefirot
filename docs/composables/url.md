@@ -11,6 +11,7 @@ import { type MaybeRefOrGetter } from 'vue'
 
 interface UseUrlQuerySyncOptions {
   casts?: Record<string, (value: string) => any>
+  serializers?: Record<string, (value: any) => string>
   exclude?: string[]
 }
 
@@ -43,6 +44,25 @@ const options = {
 useUrlQuerySync(options, {
   casts: {
     page: (v) => Number(v)
+  }
+})
+```
+
+### Serialize values
+
+You may use `serializers` option to control how state values get written to the URL query. This is useful when a value cannot be represented as a plain query param, such as nested arrays. Define the matching `casts` option to restore the value from the URL.
+
+```ts
+const options = {
+  filters: [['name', '=', 'foo']]
+}
+
+useUrlQuerySync(options, {
+  casts: {
+    filters: (v) => JSON.parse(v)
+  },
+  serializers: {
+    filters: (v) => JSON.stringify(v)
   }
 })
 ```

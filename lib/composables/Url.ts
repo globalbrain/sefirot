@@ -4,6 +4,7 @@ import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 
 export interface UseUrlQuerySyncOptions {
   casts?: Record<string, (value: any) => any>
+  serializers?: Record<string, (value: any) => string>
   exclude?: string[]
 }
 
@@ -16,7 +17,7 @@ export interface UseUrlQuerySyncOptions {
  */
 export function useUrlQuerySync(
   state: MaybeRef<Record<string, any>>,
-  { casts = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
+  { casts = {}, serializers = {}, exclude = [] }: UseUrlQuerySyncOptions = {}
 ): void {
   const route = useRoute()
   const router = useRouter()
@@ -78,9 +79,25 @@ export function useUrlQuerySync(
 
     const currentQuery = normalizeQuery(route.query)
 
+    // Both sides of this comparison hold deserialized values: `newQuery`
+    // carries raw state values and `normalizeQuery` runs `casts` on the
+    // URL params. Serialization must therefore only happen on the final
+    // write below — serializing before the comparison would make a
+    // round-tripped value always look different from the state and cause
+    // an endless replace loop.
     if (!isEqual(newQuery, currentQuery)) {
-      await router.replace({ query: unflattenObject(newQuery) })
+      await router.replace({ query: unflattenObject(serializeQuery(newQuery)) })
     }
+  }
+
+  function serializeQuery(query: Record<string, any>): Record<string, any> {
+    const result: Record<string, any> = {}
+
+    for (const key in query) {
+      result[key] = serializers[key] ? serializers[key](query[key]) : query[key]
+    }
+
+    return result
   }
 
   function normalizeQuery(query: LocationQuery): Record<string, any> {
