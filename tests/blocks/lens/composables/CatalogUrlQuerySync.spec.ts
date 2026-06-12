@@ -100,6 +100,29 @@ describe('blocks/lens/composables/CatalogUrlQuerySync', () => {
     wrapper.unmount()
   })
 
+  it('falls back to the initial state even after in-place filter mutations', async () => {
+    const { wrapper, vm } = setupCatalog({}, [['status', '=', 'open']])
+
+    // Mutate the filters in place, as the catalog's inline filter path
+    // does. This must not drift the fallback snapshot of the initial
+    // filters along with it.
+    vm.filters.push(['name', '=', 'foo'])
+
+    await expect.poll(() => vm.route.query.filters)
+      .toBe('[["status","=","open"],["name","=","foo"]]')
+
+    await vm.router.replace({ query: { filters: 'broken' } })
+
+    // The malformed param falls back to the initial filters, not to the
+    // mutated current value, and drops itself from the URL. Note that the
+    // URL is written back after the state is updated, so it must be the
+    // one to poll on.
+    await expect.poll(() => vm.route.query.filters).toBeUndefined()
+    expect(vm.filters).toEqual([['status', '=', 'open']])
+
+    wrapper.unmount()
+  })
+
   it('rejects filters with an unknown shape or operator', async () => {
     const { wrapper, vm } = setupCatalog({
       filters: '[["name","~","foo"]]'

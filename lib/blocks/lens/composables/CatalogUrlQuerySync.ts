@@ -48,9 +48,13 @@ export function useCatalogUrlQuerySync(
   }
 
   // URL params are user-editable, so anything malformed falls back to
-  // the state's initial value, exactly as if the param was absent.
-  const defaultFilters = state.filters.value
-  const defaultSort = state.sort.value
+  // the state's initial value, exactly as if the param was absent. The
+  // snapshots must be deep clones: the refs' arrays are later mutated in
+  // place (inline filter updates `push`/`splice` into `filters`, and the
+  // URL -> state sync splices arrays as well), which would otherwise
+  // silently drift these "initial" values along with the current state.
+  const defaultFilters = cloneDeep(state.filters.value)
+  const defaultSort = cloneDeep(state.sort.value)
   const defaultPage = state.page.value
 
   const urlState = reactive({
