@@ -8,6 +8,7 @@ import { usePower } from '../../../composables/Power'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
+import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
@@ -110,6 +111,17 @@ export interface Props {
   // user add any available column to the view (e.g. a saved-view editor),
   // not just toggle the ones already selected.
   loadSelectable?: boolean
+
+  // Whether to sync the catalog state with the URL query string so that
+  // it survives page reloads and can be shared as a link. The synced
+  // state is the search query (`q`), `filters`, `sort`, and `page`.
+  //
+  // While enabled, the catalog owns the page's entire query string:
+  // query params other than the above are removed whenever the catalog
+  // state is written back to the URL. For the same reason, at most one
+  // catalog per page may enable this option. The option is read once on
+  // setup, so toggling it afterwards has no effect.
+  urlSync?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -207,6 +219,13 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
 })
 
 const doRefresh = useDebounceFn(refresh, 50)
+
+if (props.urlSync) {
+  useCatalogUrlQuerySync(
+    { query, filters: _filters, sort: _sort, page },
+    doRefresh
+  )
+}
 
 const _showEmptyState = computed(() => {
   return props.showEmptyState && !hasInitialResults.value && result.value?.data.length === 0
