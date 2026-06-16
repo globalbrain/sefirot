@@ -1,9 +1,24 @@
+import { mount } from '@vue/test-utils'
 import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type AvatarFieldData } from 'sefirot/blocks/lens/FieldData'
 import { AvatarField } from 'sefirot/blocks/lens/fields/AvatarField'
+import SAvatar from 'sefirot/components/SAvatar.vue'
+import { DataListStateKey } from 'sefirot/composables/DataList'
+import { computed } from 'vue'
 
 function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
   return { lang }
+}
+
+function mountDataListItem(field: AvatarField, value: any) {
+  return mount(field.dataListItemComponent(), {
+    props: { value },
+    global: {
+      provide: {
+        [DataListStateKey]: { labelWidth: computed(() => '100px') }
+      }
+    }
+  })
 }
 
 function make(
@@ -110,6 +125,19 @@ describe('blocks/lens/fields/AvatarField', () => {
   describe('dataListItemComponent', () => {
     it('returns a component without throwing', () => {
       expect(() => make().dataListItemComponent()).not.toThrow()
+    })
+
+    it('renders the avatar when an image is present', () => {
+      const wrapper = mountDataListItem(make(), 'https://example.com/a.png')
+      expect(wrapper.findComponent(SAvatar).exists()).toBe(true)
+      wrapper.unmount()
+    })
+
+    it('renders the empty placeholder (not an empty avatar) when the value is null', () => {
+      const wrapper = mountDataListItem(make(), null)
+      expect(wrapper.findComponent(SAvatar).exists()).toBe(false)
+      expect(wrapper.find('.empty').exists()).toBe(true)
+      wrapper.unmount()
     })
   })
 

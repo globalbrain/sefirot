@@ -30,7 +30,10 @@ export class AvatarField extends Field<AvatarFieldData> {
 
   override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
-      return h(SAvatar, { size: 'small', avatar: value ?? null })
+      // Render nothing for a missing image so SDataListItem shows its empty
+      // placeholder ("—"), matching the empty table cell and the other
+      // data-list fields, instead of an empty bordered avatar.
+      return value ? h(SAvatar, { size: 'small', avatar: value }) : null
     })
   }
 
