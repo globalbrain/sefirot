@@ -1,0 +1,121 @@
+import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
+import { type AvatarFieldData } from 'sefirot/blocks/lens/FieldData'
+import { AvatarField } from 'sefirot/blocks/lens/fields/AvatarField'
+
+function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
+  return { lang }
+}
+
+function make(
+  overrides: Partial<AvatarFieldData> = {},
+  lang: 'en' | 'ja' = 'en'
+): AvatarField {
+  const data: AvatarFieldData = {
+    type: 'avatar',
+    key: 'avatar',
+    labelEn: 'Avatar',
+    labelJa: 'アバター',
+    filterKey: 'avatar',
+    sortable: false,
+    freeze: false,
+    width: 0,
+    required: false,
+    rules: [],
+    nameEn: null,
+    nameJa: null,
+    ...overrides
+  }
+  return new AvatarField(ctx(lang), data)
+}
+
+describe('blocks/lens/fields/AvatarField', () => {
+  describe('tableCell', () => {
+    it('renders an avatar cell with the row value as the image', () => {
+      const cell = make().tableCell('https://example.com/a.png', {}) as any
+      expect(cell.type).toBe('avatar')
+      expect(cell.image).toBe('https://example.com/a.png')
+      expect(cell.name).toBe('')
+    })
+
+    it('renders an empty avatar cell when the value is null', () => {
+      const cell = make().tableCell(null, {}) as any
+      expect(cell.type).toBe('avatar')
+      expect(cell.image).toBeNull()
+      expect(cell.name).toBe('')
+    })
+
+    it('renders an empty avatar cell when the value is undefined', () => {
+      const cell = make().tableCell(undefined, {}) as any
+      expect(cell.type).toBe('avatar')
+      expect(cell.image).toBeNull()
+      expect(cell.name).toBe('')
+    })
+
+    it('reads the English display name from the companion key on the record', () => {
+      const cell = make({ nameEn: 'fullNameEn' }).tableCell(
+        'https://example.com/a.png',
+        { fullNameEn: 'Alice', fullNameJa: 'アリス' }
+      ) as any
+      expect(cell.image).toBe('https://example.com/a.png')
+      expect(cell.name).toBe('Alice')
+    })
+
+    it('reads the Japanese display name from the companion key when the language is "ja"', () => {
+      const cell = make(
+        { nameEn: 'fullNameEn', nameJa: 'fullNameJa' },
+        'ja'
+      ).tableCell(
+        'https://example.com/a.png',
+        { fullNameEn: 'Alice', fullNameJa: 'アリス' }
+      ) as any
+      expect(cell.name).toBe('アリス')
+    })
+
+    it('falls back to initials (name with a null image) when the image is missing but a name companion is set', () => {
+      const cell = make({ nameEn: 'fullNameEn' }).tableCell(null, { fullNameEn: 'Alice' }) as any
+      expect(cell.image).toBeNull()
+      expect(cell.name).toBe('Alice')
+    })
+
+    it('uses an empty name (not null) when the companion key is missing on the record', () => {
+      const cell = make({ nameEn: 'fullNameEn' }).tableCell('https://example.com/a.png', {}) as any
+      expect(cell.name).toBe('')
+    })
+
+    it('uses an empty name (not null) when no companion key is configured for the active language', () => {
+      const cell = make({ nameEn: 'fullNameEn' }, 'ja').tableCell(
+        'https://example.com/a.png',
+        { fullNameEn: 'Alice' }
+      ) as any
+      expect(cell.name).toBe('')
+    })
+  })
+
+  describe('availableFilters', () => {
+    it('exposes no filter operators', () => {
+      expect(make().availableFilters()).toEqual({})
+    })
+  })
+
+  describe('tableSortMenu', () => {
+    it('is not sortable by default', () => {
+      expect(make().tableSortMenu(() => {})).toBeNull()
+    })
+
+    it('exposes a sort menu when the field opts in via sortable', () => {
+      expect(make({ sortable: true }).tableSortMenu(() => {})).not.toBeNull()
+    })
+  })
+
+  describe('dataListItemComponent', () => {
+    it('returns a component without throwing', () => {
+      expect(() => make().dataListItemComponent()).not.toThrow()
+    })
+  })
+
+  describe('formInputComponent', () => {
+    it('throws because avatars are display-only', () => {
+      expect(() => make().formInputComponent()).toThrow()
+    })
+  })
+})

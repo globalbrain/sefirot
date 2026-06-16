@@ -17,6 +17,7 @@ import { type Rule } from './Rule'
  * }
  */
 export interface FieldDataRegistry {
+  avatar: AvatarFieldData
   boolean: BooleanFieldData
   content: ContentFieldData
   date: DateFieldData
@@ -48,6 +49,18 @@ export interface FieldDataBase {
   width: number
   required: boolean
   rules: Rule[]
+}
+
+export interface AvatarFieldData extends FieldDataBase {
+  type: 'avatar'
+  /**
+   * Optional keys on the record that hold the display name, per language. The
+   * avatar uses the name (resolved against the active language) for the
+   * initials fallback / tooltip when the image is unavailable. The field
+   * value itself is the image URL.
+   */
+  nameEn?: string | null
+  nameJa?: string | null
 }
 
 export interface BooleanFieldData extends FieldDataBase {
