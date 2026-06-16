@@ -1,6 +1,7 @@
 import { type FieldDataType } from '../FieldData'
 import { type FieldDataFor, type FieldProvider, FieldRegistry } from '../FieldRegistry'
 import { provideFieldRegistry } from '../composables/FieldRegistry'
+import { AvatarField } from '../fields/AvatarField'
 import { BooleanField } from '../fields/BooleanField'
 import { ContentField } from '../fields/ContentField'
 import { DateField } from '../fields/DateField'
@@ -34,6 +35,7 @@ export function useSetupLens(): SetupLens {
   registerDefaultFields()
 
   function registerDefaultFields(): void {
+    fieldRegistry.register('avatar', (ctx, field) => new AvatarField(ctx, field))
     fieldRegistry.register('boolean', (ctx, field) => new BooleanField(ctx, field))
     fieldRegistry.register('content', (ctx, field) => new ContentField(ctx, field))
     fieldRegistry.register('date', (ctx, field) => new DateField(ctx, field))
