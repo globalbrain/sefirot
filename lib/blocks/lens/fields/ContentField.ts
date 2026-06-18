@@ -1,4 +1,4 @@
-import { h } from 'vue'
+import { defineComponent, h } from 'vue'
 import SContent from '../../../components/SContent.vue'
 import SMarkdown from '../../../components/SMarkdown.vue'
 import { type TableCell } from '../../../composables/Table'
@@ -24,18 +24,22 @@ export class ContentField extends Field<ContentFieldData> {
   }
 
   override dataListItemComponent(): any {
-    return null
+    // `content` is display-only: render its Markdown body (the same static
+    // block as the create form) so a detail-visible content field shows its
+    // configured instructions instead of an empty value row.
+    return defineComponent(() => () => this.renderBody(), { props: ['value'] })
   }
 
   override formInputComponent(): any {
-    return this.defineFormInputComponent((_props, _ctx) => {
-      return () => h(SMarkdown, {
-        content: this.ctx.lang === 'ja' ? this.data.bodyJa : this.data.bodyEn
-      }, {
-        default: (slot: any) => {
-          return h(SContent, { innerHTML: slot.rendered })
-        }
-      })
+    return this.defineFormInputComponent((_props, _ctx) => () => this.renderBody())
+  }
+
+  /** Render the field's localized Markdown body. */
+  private renderBody(): any {
+    return h(SMarkdown, {
+      content: this.ctx.lang === 'ja' ? this.data.bodyJa : this.data.bodyEn
+    }, {
+      default: (slot: any) => h(SContent, { innerHTML: slot.rendered })
     })
   }
 }

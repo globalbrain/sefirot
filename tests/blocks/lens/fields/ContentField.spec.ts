@@ -39,6 +39,12 @@ describe('blocks/lens/fields/ContentField', () => {
     expect(make().tableCell(null, {})).toEqual({ type: 'empty' })
   })
 
+  it('provides a detail component (renders its body, not an empty row)', () => {
+    // Regression: it previously returned null, so a detail-visible content
+    // field rendered as an empty value row instead of its Markdown body.
+    expect(make().dataListItemComponent()).toBeTruthy()
+  })
+
   it('contrasts with a regular field, which is submittable by default', () => {
     const data: TextFieldData = {
       type: 'text',

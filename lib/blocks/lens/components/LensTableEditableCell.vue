@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
-import { computed, nextTick, ref, shallowRef } from 'vue'
+import { computed, nextTick, onUnmounted, ref, shallowRef } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
@@ -28,6 +28,18 @@ const inline = useLensInlineEdit()
 
 const myKey = computed(() => `${edit?.resolveId(props.record)}:${props.fieldKey}`)
 const editing = computed(() => inline?.activeKey.value === myKey.value)
+
+// STable virtualization can unmount this row (and its teleported editor) while
+// scrolling. If this cell holds the active editor, clear the shared active key
+// on unmount so the state stays consistent — otherwise a later remount would
+// see `editing` true while the local `inputComponent`/`model` are still null
+// (they're only set by `start()`), reopening a blank editor whose Save could
+// submit a null value.
+onUnmounted(() => {
+  if (inline?.activeKey.value === myKey.value) {
+    inline.stop()
+  }
+})
 
 // Reuse the field's own table-cell rendering for the display value so the
 // label mapping (e.g. select option labels) matches the read-only columns.
@@ -144,7 +156,7 @@ function onEditorKeydown(event: KeyboardEvent) {
       <IconPencilSimple class="edit-icon" />
     </button>
 
-    <Teleport v-if="editing" to="#sefirot-modals">
+    <Teleport v-if="editing && inputComponent" to="#sefirot-modals">
       <div ref="editorEl" class="LensTableEditableCellEditor" :style="editorStyle" @keydown="onEditorKeydown">
         <component :is="inputComponent" v-model="model" :validation="validation.input" />
         <div class="actions">

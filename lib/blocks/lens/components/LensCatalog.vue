@@ -525,15 +525,18 @@ function resolveId(record: Record<string, any>): any {
   return v !== null && typeof v === 'object' ? v.value : v
 }
 
+// The write/read CRUD requests carry the same `settings: { lang }` as search
+// so the server re-serializes labels and display values in the active catalog
+// language, not the backend default.
 const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/update`, {
-    entity: props.entity, id, values
+    entity: props.entity, id, values, settings: { lang }
   })
 )
 
 const { execute: executeCreate } = useMutation((http, values: Record<string, any>) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/create`, {
-    entity: props.entity, values
+    entity: props.entity, values, settings: { lang }
   })
 )
 
@@ -546,7 +549,7 @@ const { execute: executeDelete } = useMutation((http, id: any) =>
 // catalog doesn't render as columns (e.g. long-form descriptions).
 const { execute: executeShow } = useMutation((http, id: any) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/show`, {
-    entity: props.entity, id
+    entity: props.entity, id, settings: { lang }
   })
 )
 
