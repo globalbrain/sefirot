@@ -400,6 +400,13 @@ const tableSelect = computed(() => {
   return withoutIndexField(result.value?.query.select ?? [])
 })
 
+// The row-identifier the table uses as its selection key. An explicit
+// `indexField`, or `id` for editable catalogs (which always carry it). Without
+// this, an editable catalog that relies on the default would leave the table on
+// positional selection keys, so an optimistic create/delete that shifts rows
+// would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
+const tableIndexField = computed(() => props.indexField ?? (props.editable ? 'id' : undefined))
+
 // The `indexField` is appended to the request `select` so the server
 // returns its value on every row, but it is kept out of the internal
 // `_select` / `_selectable` state so the caller-facing concept of
@@ -735,17 +742,20 @@ function applyLatest(): void {
 // reflect server-side changes — e.g. after a bulk action mutates rows —
 // without remounting the component.
 async function refreshCatalog(): Promise<void> {
-  // While a write batch is still settling (or its reconcile is in flight), a
-  // read now could return stale pre-write data, so don't refetch or stash
-  // anything behind the refresh banner: a stale stash could outlive a failed
-  // write (whose post-batch reconcile is skipped) — or a failed reconcile — and
-  // then roll the table back to pre-edit data when the banner is clicked. The
-  // post-batch reconcile already refetches the canonical state for the current
-  // query once the batch settles cleanly, which also reflects any server-side
-  // change a caller wanted surfaced; defer to it rather than reading now.
-  if (busy.value) {
+  // While writes are still syncing, a read now could return stale pre-write data
+  // that, stashed behind the refresh banner, could outlive a failed write (whose
+  // post-batch reconcile is skipped) and roll the table back when applied. Defer:
+  // the post-batch reconcile refetches the canonical state once the batch settles
+  // cleanly, which also reflects any server-side change a caller wanted surfaced.
+  if (pendingWrites.value > 0) {
     return
   }
+  // Writes have settled, so reads are fresh again. If a reconcile is still in
+  // flight, its request may predate the change the caller wants surfaced (e.g. a
+  // bulk action that just ran) — invalidate it (token bump + clear its busy flag)
+  // and force a fresh refetch now rather than dropping the refresh.
+  reconcileToken++
+  reconciling.value = false
   // A refresh is requested precisely when server-side data may have changed
   // while the query input did not (e.g. after a bulk action). Clear the
   // memoized input so the equality shortcut in the fetcher misses and a real
@@ -814,11 +824,23 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   const id = resolveId(record)
   Object.assign(record, values)
   // Serialize per record+field so two quick edits to the same cell apply in
-  // order; edits to different fields run concurrently. Assumes callers save a
-  // single field (or disjoint field sets) — overlapping multi-field saves would
-  // share a column without ordering and need a coarser (per-record) key.
-  const key = `${id}:${Object.keys(values).sort().join(',')}`
-  trackWrite(id, key, () => executeUpdate(id, values))
+  // order; edits to disjoint fields run concurrently.
+  const fields = Object.keys(values)
+  const key = `${id}:${[...fields].sort().join(',')}`
+  // Same-cell repeats chain on this key inside trackWrite. But a multi-field save
+  // (e.g. a slot persisting {name,status}) and a later single-field save ({name})
+  // have different keys yet share a column, so without help they'd race — with
+  // the slow API the older one could land last and clobber the newer value. Gate
+  // behind any in-flight write for this record whose fields overlap; disjoint
+  // writes still run concurrently.
+  const prefix = `${id}:`
+  const fieldSet = new Set(fields)
+  const overlapping = [...writeChains.entries()]
+    .filter(([k]) => k !== key && k.startsWith(prefix)
+      && k.slice(prefix.length).split(',').some((f) => fieldSet.has(f)))
+    .map(([, chain]) => chain)
+  const gate = Promise.allSettled(overlapping)
+  trackWrite(id, key, () => gate.then(() => executeUpdate(id, values)))
 }
 
 // Create — blocking. The slow POST runs to completion, then the catalog is
@@ -1097,7 +1119,7 @@ defineExpose({
           :loading
           :overrides="_overrides"
           :select="tableSelect"
-          :index-field
+          :index-field="tableIndexField"
           :selected
           :clickable-fields
           :inline-edit

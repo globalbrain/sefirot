@@ -120,13 +120,13 @@ const columns = computedAsync(async () => {
 
     const column = field.tableColumn()
 
-    // When editing is enabled, clicking the row-identifier id cell opens the
-    // record sheet (view + per-field edit + delete) instead of following a
-    // link. Restrict this to the configured index field so other id-type
-    // columns (e.g. a `company_id` reference link) keep their own navigation.
+    // When editing is enabled, clicking the row-identifier cell opens the record
+    // sheet (view + per-field edit + delete) instead of following a link. Keyed
+    // off the configured index field for any field type — a slug/code identifier
+    // opens the sheet just like an `id` — so other id-type columns (e.g. a
+    // `company_id` reference link) keep their own navigation.
     if (
       edit?.editable
-      && overriddenFieldData.type === 'id'
       && key === edit.indexField
     ) {
       const original = column.cell

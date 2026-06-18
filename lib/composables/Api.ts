@@ -59,11 +59,15 @@ export function useQuery<Data = any>(
   async function execute({ assign = true, silent = false } = {}): Promise<Data> {
     if (!silent) { loading.value = true }
 
-    const res: Data = await req(new Http(httpConfig))
-    if (assign) { data.value = res }
-
-    loading.value = false
-    return res
+    try {
+      const res: Data = await req(new Http(httpConfig))
+      if (assign) { data.value = res }
+      return res
+    } finally {
+      // Always clear loading, even when the request rejects — otherwise a failed
+      // fetch leaves the consumer stuck in its loading/skeleton state.
+      loading.value = false
+    }
   }
 
   return { loading, data, execute }
@@ -79,11 +83,15 @@ export function useMutation<Data = any, Args extends any[] = any[]>(
   async function execute(...args: Args): Promise<Data> {
     loading.value = true
 
-    const res: Data = await req(new Http(httpConfig), ...args)
-    data.value = res
-
-    loading.value = false
-    return res
+    try {
+      const res: Data = await req(new Http(httpConfig), ...args)
+      data.value = res
+      return res
+    } finally {
+      // Always clear loading, even when the request rejects, so a failed
+      // mutation doesn't leave the caller wedged in its loading state.
+      loading.value = false
+    }
   }
 
   return { loading, data, execute }
