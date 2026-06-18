@@ -665,6 +665,12 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
       result.value.pagination.total++
     }
   }
+  // A successful create means the catalog now holds data, even if it first
+  // loaded empty (showEmptyState). Mark it so a later delete or zero-result
+  // filter doesn't fall back to the empty state that hides the whole catalog.
+  if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
+    hasInitialResults.value = true
+  }
   return res.data
 }
 
@@ -750,8 +756,12 @@ function openCreate(): void {
 }
 
 provideLensEdit({
-  editable: !!props.editable,
-  creatable: !!props.creatable,
+  // Getters so the injected context tracks prop changes after mount (e.g.
+  // permissions resolving async, or a flag toggling `editable` off): LensTable
+  // gates inline editing and the id-cell sheet on `edit.editable`, and reading
+  // these in its reactive effects re-runs them when the prop changes.
+  get editable() { return !!props.editable },
+  get creatable() { return !!props.creatable },
   entity: props.entity ?? '',
   indexField: props.indexField ?? 'id',
   resolveId,

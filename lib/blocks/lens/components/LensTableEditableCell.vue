@@ -124,7 +124,12 @@ async function apply() {
     await edit!.save(props.record, {
       [props.fieldKey]: props.field.inputToPayload(model.value)
     })
-    inline?.stop()
+    // Only close the editor if this cell is still the active one: the user may
+    // have started editing another cell while this save was in flight, and an
+    // unconditional stop would clear that new editor's shared key.
+    if (inline?.activeKey.value === myKey.value) {
+      inline.stop()
+    }
   } finally {
     saving.value = false
   }
@@ -136,11 +141,23 @@ function onEditorKeydown(event: KeyboardEvent) {
     cancel()
     return
   }
-  // Enter saves, except in a textarea where it inserts a newline.
-  if (event.key === 'Enter' && (event.target as HTMLElement)?.tagName !== 'TEXTAREA') {
+  // Enter saves only from a plain text-like input. A textarea inserts a
+  // newline, and controls that handle Enter themselves (e.g. a dropdown that
+  // opens its menu on Enter) must keep it — otherwise a keyboard user submits
+  // the old value instead of choosing an option.
+  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
     event.preventDefault()
     apply()
   }
+}
+
+function isTextLikeInput(target: EventTarget | null): boolean {
+  const el = target as HTMLElement | null
+  if (!el || el.tagName !== 'INPUT') {
+    return false
+  }
+  const type = (el as HTMLInputElement).type
+  return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
 }
 </script>
 
