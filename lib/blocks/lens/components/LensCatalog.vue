@@ -213,6 +213,12 @@ const latestState = ref<LensResult | null>(null)
 // for the full optimistic-write strategy this is part of.
 const pendingWrites = ref(0)
 
+// Whether a (blocking) create POST is in flight. Not part of `busy` — the create
+// sheet covers the controls — but it arms the unload guard, and the debounced
+// refetch consults it (declared here for that reason), since a search issued
+// before the new row exists must not assign its rows over the just-created record.
+const creating = ref(false)
+
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
 
@@ -306,12 +312,14 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
 watch(result, (r) => { currentResult = r ?? undefined }, { immediate: true })
 
 const doRefresh = useDebounceFn(() => {
-  // A write may have started during the debounce window: the busy lock guards the
-  // query handlers at click time, but not this deferred fetch. Bail if so —
-  // reading now would return stale pre-write rows and overwrite the optimistic
-  // edit. The post-batch reconcile refetches the (new) query state once writes
-  // settle, surfacing it behind the refresh banner.
-  if (pendingWrites.value > 0) { return }
+  // A write or a blocking create may have started during the debounce window: the
+  // busy lock guards the query handlers at click time, but not this deferred
+  // fetch. Bail if so — reading now would return pre-write / pre-create rows and
+  // overwrite the optimistic edit or the just-created record. The post-batch
+  // reconcile / create path surfaces the canonical state once things settle.
+  // (Deliberate refreshes go through `forceRefresh`, which calls `refresh`
+  // directly to bypass this guard.)
+  if (pendingWrites.value > 0 || creating.value) { return }
   return refresh()
 }, 50)
 
@@ -632,11 +640,6 @@ const sheetError = ref(false)
 const reconciling = ref(false)
 const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 
-// Whether a (blocking) create POST is in flight. Not part of `busy` — the
-// create sheet covers the controls — but it arms the unload guard, since the
-// create write is just as slow and shouldn't be lost to a tab close/reload.
-const creating = ref(false)
-
 // Whether any write in the current in-flight batch failed; when so the reconcile
 // is skipped (the snackbar already told the user to reload).
 let batchErrored = false
@@ -788,14 +791,16 @@ function rebindOpenSheet(): void {
 
 // Core force-refetch: drop the memoized input + any stash, invalidate an in-flight
 // reconcile (its request may predate the change being surfaced), refetch the
-// current query, then rebind an open sheet to the fresh rows. Bypasses the busy
-// guard — callers (the exposed refresh, the create path) gate it themselves.
+// current query, then rebind an open sheet to the fresh rows. Calls `refresh`
+// directly (not the debounced `doRefresh`) so it bypasses the pending-write /
+// creating bail — callers (the exposed refresh, the create path) gate it
+// themselves, and create deliberately refreshes while `creating` is still true.
 async function forceRefresh(): Promise<void> {
   reconcileToken++
   reconciling.value = false
   prevFetchInput = null
   latestState.value = null
-  await doRefresh()
+  await refresh()
   rebindOpenSheet()
 }
 
@@ -911,6 +916,12 @@ function prependCreated(data: Record<string, any>): void {
 
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   creating.value = true
+  // Invalidate any main search already in flight (issued before this create) so
+  // its pre-create rows can't assign over the just-created record when it
+  // resolves — mirrors trackWrite. New searches can't start during the create
+  // (doRefresh bails on `creating`); create's own forceRefresh bypasses that by
+  // calling refresh directly.
+  searchToken++
   try {
     const res = await executeCreate(values)
     // The POST succeeded — the record exists. From here a refresh failure must
