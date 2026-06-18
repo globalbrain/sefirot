@@ -30,8 +30,20 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useTrans({
-  en: { create: 'Create', cancel: 'Cancel', delete: 'Delete', new_record: 'New record', deleting: 'Deleting…' },
-  ja: { create: '作成', cancel: 'キャンセル', delete: '削除', new_record: '新規作成', deleting: '削除中…' }
+  en: {
+    create: 'Create',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    new_record: 'New record',
+    deleting: 'Deleting…'
+  },
+  ja: {
+    create: '作成',
+    cancel: 'キャンセル',
+    delete: '削除',
+    new_record: '新規作成',
+    deleting: '削除中…'
+  }
 })
 
 const edit = useLensEdit()
@@ -137,9 +149,7 @@ async function onDelete() {
 // one-off concerns (avatar upload, social links, linked records) while still
 // letting a page implement them.
 
-const resolvedId = computed(() =>
-  props.record && edit ? edit.resolveId(props.record) : null
-)
+const resolvedId = computed(() => (props.record && edit ? edit.resolveId(props.record) : null))
 
 function saveRecord(values: Record<string, any>): Promise<void> {
   if (!props.record || !edit) {
@@ -199,10 +209,24 @@ const slotProps = computed(() => ({
       <div class="footer">
         <template v-if="mode === 'create'">
           <SButton size="medium" :label="t.cancel" :disabled="saving" @click="emit('close')" />
-          <SButton size="medium" mode="info" :label="t.create" :loading="saving" @click="onCreate" />
+          <SButton
+            size="medium"
+            mode="info"
+            :label="t.create"
+            :loading="saving"
+            @click="onCreate"
+          />
         </template>
         <template v-else-if="record">
-          <SButton size="medium" mode="danger" type="outline" :icon="IconTrash" :label="t.delete" :loading="saving" @click="onDelete" />
+          <SButton
+            size="medium"
+            mode="danger"
+            type="outline"
+            :icon="IconTrash"
+            :label="t.delete"
+            :loading="saving"
+            @click="onDelete"
+          />
         </template>
       </div>
     </div>
