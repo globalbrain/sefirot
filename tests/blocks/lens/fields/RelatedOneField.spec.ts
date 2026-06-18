@@ -11,6 +11,15 @@ function makeFetcher(response: any): ResourceFetcher {
   return (async () => response) as unknown as ResourceFetcher
 }
 
+function captureFetcher(response: any) {
+  const calls: Array<[string, string, any]> = []
+  const fetcher = (async (method: any, url: any, body: any) => {
+    calls.push([method, url, body])
+    return response
+  }) as unknown as ResourceFetcher
+  return { fetcher, calls }
+}
+
 function make(
   overrides: Partial<RelatedOneFieldData> = {},
   fetcher: ResourceFetcher = makeFetcher([])
@@ -182,6 +191,37 @@ describe('blocks/lens/fields/RelatedOneField', () => {
       expect(captured[0]).toEqual(['country', 'in', []])
       menu.onClick(2) // add
       expect(captured[1]).toEqual(['country', 'in', [1, 2]])
+    })
+  })
+
+  describe('resourceEndpointBody forwarding', () => {
+    const body = { entity: 'country', select: ['id', 'name'], perPage: 1000 }
+
+    it('forwards the configured body to the fetcher in tableFilterMenu', async () => {
+      const { fetcher, calls } = captureFetcher([])
+      await make(
+        { resourceEndpointMethod: 'post', resourceEndpointBody: body },
+        fetcher
+      ).tableFilterMenu([], () => {})
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toEqual(['post', '/api/countries', body])
+    })
+
+    it('forwards the configured body to the fetcher in availableFilters', async () => {
+      const { fetcher, calls } = captureFetcher([])
+      const filters = make(
+        { resourceEndpointMethod: 'post', resourceEndpointBody: body },
+        fetcher
+      ).availableFilters()
+      await (filters['='] as any).optionsResolver()
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toEqual(['post', '/api/countries', body])
+    })
+
+    it('passes an undefined body through when none is configured', async () => {
+      const { fetcher, calls } = captureFetcher([])
+      await make({}, fetcher).tableFilterMenu([], () => {})
+      expect(calls[0][2]).toBeUndefined()
     })
   })
 })

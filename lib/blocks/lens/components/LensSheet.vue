@@ -69,12 +69,25 @@ const createFields = computed(() => entries.value.filter((e) => e.fieldData.show
 // `formInputComponent()` inline in the template would mint a brand-new
 // component definition on every render, which breaks Vue's component patching
 // (`instance.update is not a function`).
+//
+// Some field types don't implement a form input (they `throw new
+// Error('Not implemented.')`); resolve defensively and drop those fields from
+// the form rather than letting one unsupported field crash the whole create
+// sheet. The create model, validation, and payload are all derived from this
+// filtered set so we never seed or submit a field that has no input.
 const createFieldViews = computed(() =>
-  createFields.value.map((e) => ({
-    key: e.key,
-    component: e.field.formInputComponent()
-  }))
+  createFields.value
+    .map((e) => ({ key: e.key, field: e.field, component: resolveInput(e.field) }))
+    .filter((v) => v.component != null)
 )
+
+function resolveInput(field: { formInputComponent: () => any }): any {
+  try {
+    return field.formInputComponent()
+  } catch {
+    return null
+  }
+}
 
 const title = computed(() => {
   if (props.mode === 'create') {
@@ -91,14 +104,14 @@ const saving = ref(false)
 
 const { validation, validate, reset } = useValidation(
   () => createModel,
-  () => Object.fromEntries(createFields.value.map((e) => [e.key, e.field.generateValidationRules()]))
+  () => Object.fromEntries(createFieldViews.value.map((e) => [e.key, e.field.generateValidationRules()]))
 )
 
 watch(
   () => [props.open, props.mode] as const,
   ([open, mode]) => {
     if (open && mode === 'create') {
-      for (const { key, field } of createFields.value) {
+      for (const { key, field } of createFieldViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
       reset()
@@ -116,7 +129,7 @@ async function onCreate() {
 
   try {
     const values: Record<string, any> = {}
-    for (const { key, field } of createFields.value) {
+    for (const { key, field } of createFieldViews.value) {
       values[key] = field.inputToPayload(createModel[key])
     }
     await edit!.create(values)

@@ -11,6 +11,7 @@ import { type LensResult } from '../LensResult'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
 import { provideLensInlineEdit } from '../composables/LensInlineEdit'
+import { type Field } from '../fields/Field'
 import LensTableEditableCell from './LensTableEditableCell.vue'
 
 const props = defineProps<{
@@ -132,10 +133,12 @@ const columns = computedAsync(async () => {
           onClick: () => edit.openSheet(r)
         } as TableCell<any, any>
       }
-    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true) {
+    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true && hasFormInput(field)) {
       // Editable fields render a custom cell with a hover edit affordance
       // that opens an inline editor (reusing the field's form input + the
       // edit context's save). Sort/filter menus on the column are kept.
+      // Fields without an input component are skipped above and stay
+      // read-only — see `hasFormInput`.
       column.cell = {
         type: 'component',
         component: editableCellComponent,
@@ -184,6 +187,20 @@ function onFilterUpdated(filter: any[]) {
 
 function onSortUpdated(sort: LensQuerySort) {
   emit('sort-updated', sort)
+}
+
+// Some field types do not implement a form input (they `throw new
+// Error('Not implemented.')`). Mirror the sheet's defensive resolution
+// (`LensSheetField`): only upgrade a cell to the inline editor when the
+// field actually has an input component, otherwise leave it read-only so a
+// backend that marks one of those fields `showOnUpdate` renders a plain
+// cell instead of a pencil that crashes on click.
+function hasFormInput(field: Field<FieldData>): boolean {
+  try {
+    return !!field.formInputComponent()
+  } catch {
+    return false
+  }
 }
 </script>
 

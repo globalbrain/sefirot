@@ -27,7 +27,7 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
 
     const selected = this.inFilterValueFor(this.data.key, filters)
 
-    const res = await this.fetcher(method, url)
+    const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
     const data = key ? res[key] : res
 
     const isAvatar = this.data.displayAs === 'avatar'
@@ -91,7 +91,7 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
     }
 
     const optionsResolver = async () => {
-      const res = await this.fetcher(method, url)
+      const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
       const data = key ? res[key] : res
       return data.map((item: any) => ({
         value: item[this.data.filterKey],

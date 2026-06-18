@@ -361,8 +361,14 @@ const tableSelect = computed(() => {
 // its own defaults. See `indexField` prop docs above.
 function withIndexField(fields: string[]): string[] {
   if (fields.length === 0) { return [] }
-  if (!props.indexField || fields.includes(props.indexField)) { return [...fields] }
-  return [...fields, props.indexField]
+  // Editable catalogs must carry a row identifier so updates / shows /
+  // deletes can address each row. When no `indexField` is configured the
+  // identifier defaults to `id` (matching `resolveId`); fold that default
+  // into a non-empty `select` that omits it so every row still carries the
+  // id even when the caller's columns don't include it.
+  const field = props.indexField ?? (props.editable ? 'id' : null)
+  if (!field || fields.includes(field)) { return [...fields] }
+  return [...fields, field]
 }
 
 function withoutIndexField(fields: string[]): string[] {
@@ -532,20 +538,86 @@ const { execute: executeShow } = useMutation((http, id: any) =>
   })
 )
 
+// Collect every field key referenced by a (possibly nested `$and`/`$or`)
+// filter tree, so an edit can be tested against the active query.
+function collectFilterKeys(filter: any, keys: Set<string>): void {
+  if (!Array.isArray(filter) || filter.length === 0) {
+    return
+  }
+  if ((filter[0] === '$and' || filter[0] === '$or') && Array.isArray(filter[1])) {
+    for (const sub of filter[1]) {
+      collectFilterKeys(sub, keys)
+    }
+    return
+  }
+  if (typeof filter[0] === 'string') {
+    keys.add(filter[0])
+  }
+}
+
+// The field keys the active query filters or sorts by (including fixed and
+// free-text query filters). An edit touching one of these can drop the row
+// from the result set or move it to a different sorted position, so the
+// in-place patch is no longer enough and the query must be re-run.
+function activeQueryKeys(): Set<string> {
+  const keys = new Set<string>()
+  for (const filter of createInputFilters(queryFilter.value, _filters.value)) {
+    collectFilterKeys(filter, keys)
+  }
+  const sort = _sort.value.length > 0 ? _sort.value : defaultSort.value ?? []
+  for (const [key] of sort) {
+    keys.add(key)
+  }
+  return keys
+}
+
+// Whether the current view is narrowed by filters, sort, or pagination. A
+// newly created row cannot be assumed to belong on (or at the top of) such a
+// view, so the query is re-run instead of optimistically prepending it.
+const isQueryActive = computed(() =>
+  createInputFilters(queryFilter.value, _filters.value).length > 0
+  || _sort.value.length > 0
+  || (defaultSort.value?.length ?? 0) > 0
+  || page.value > 1
+)
+
 async function save(record: Record<string, any>, values: Record<string, any>): Promise<void> {
   const res = await executeUpdate(resolveId(record), values)
   // Patch the row in place so the table and sheet reflect the server's
   // re-serialized values without a full refetch.
   Object.assign(record, res.data)
+  // If an edited field participates in the active filters or sort, the row
+  // may no longer match the query, or may now sort elsewhere. Re-run the
+  // search so the view stays consistent instead of showing a stale row. A
+  // field's value is sent under its key, but it may be filtered/sorted by
+  // either its key or its `filterKey`, so check both.
+  const keys = activeQueryKeys()
+  const fields = result.value?.fields ?? {}
+  const reconcile = Object.keys(values).some((key) => {
+    if (keys.has(key)) { return true }
+    const filterKey = fields[key]?.filterKey
+    return filterKey != null && keys.has(filterKey)
+  })
+  if (reconcile) {
+    await refreshCatalog()
+  }
 }
 
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   const res = await executeCreate(values)
-  if (result.value?.data) {
-    result.value.data.unshift(res.data)
-  }
-  if (result.value?.pagination) {
-    result.value.pagination.total++
+  // With active filters / sort / pagination, a blind prepend would surface
+  // the new row where the query may not place it (or where it doesn't belong
+  // at all). Re-run the search so it lands correctly; otherwise optimistically
+  // prepend it to the first page for immediate feedback.
+  if (isQueryActive.value) {
+    await refreshCatalog()
+  } else {
+    if (result.value?.data) {
+      result.value.data.unshift(res.data)
+    }
+    if (result.value?.pagination) {
+      result.value.pagination.total++
+    }
   }
   return res.data
 }
@@ -581,6 +653,13 @@ async function openSheet(record: Record<string, any>): Promise<void> {
 }
 
 function openCreate(): void {
+  // `creatable` is the prop that enables creation. Honor it here even though
+  // this method is exposed (and provided to children) — without the guard an
+  // `editable`-but-not-`creatable` catalog could still open the create sheet
+  // and submit to `/create`, so the prop must enforce the UI contract.
+  if (!props.creatable) {
+    return
+  }
   sheetRecord.value = null
   sheetMode.value = 'create'
   sheet.on()
