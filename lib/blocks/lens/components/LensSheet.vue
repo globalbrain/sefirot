@@ -155,15 +155,19 @@ watch(
 )
 
 async function onCreate() {
-  serverErrors.value = {}
-
-  if (!(await validate())) {
+  // Guard re-entry: set `saving` before the first await so a fast double-click on
+  // Create can't start a second submission (and create a duplicate record) while
+  // the first call's validation is still pending.
+  if (saving.value) {
     return
   }
-
   saving.value = true
+  serverErrors.value = {}
 
   try {
+    if (!(await validate())) {
+      return
+    }
     const values: Record<string, any> = {}
     for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])

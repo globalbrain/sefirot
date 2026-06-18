@@ -207,6 +207,12 @@ const hasInitialResults = ref(false)
 // (ahead of the query handlers that clear it) so they can reference it.
 const latestState = ref<LensResult | null>(null)
 
+// Count of optimistic background writes currently in flight. Declared here
+// (ahead of the debounced refetch that consults it) so a queued refetch can bail
+// when a write started during its debounce window. See the CRUD section below
+// for the full optimistic-write strategy this is part of.
+const pendingWrites = ref(0)
+
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
 
@@ -277,7 +283,15 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   return res
 })
 
-const doRefresh = useDebounceFn(refresh, 50)
+const doRefresh = useDebounceFn(() => {
+  // A write may have started during the debounce window: the busy lock guards the
+  // query handlers at click time, but not this deferred fetch. Bail if so —
+  // reading now would return stale pre-write rows and overwrite the optimistic
+  // edit. The post-batch reconcile refetches the (new) query state once writes
+  // settle, surfacing it behind the refresh banner.
+  if (pendingWrites.value > 0) { return }
+  return refresh()
+}, 50)
 
 if (props.urlSync) {
   // Route URL-driven changes (back/forward, shared links) through `refetch` so
@@ -581,8 +595,8 @@ const sheetError = ref(false)
 // applied to the in-memory result immediately and persisted in the background;
 // the server is never re-read to reconcile until the write settles. While any
 // write is in flight the catalog is "busy": query controls and the refresh
-// affordance are locked and an unload guard is armed.
-const pendingWrites = ref(0)
+// affordance are locked and an unload guard is armed. (`pendingWrites` itself is
+// declared near the top so the debounced refetch can consult it.)
 const reconciling = ref(false)
 const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 
@@ -711,58 +725,63 @@ async function reconcile(): Promise<void> {
 
 function applyLatest(): void {
   if (!latestState.value) { return }
-  const fresh = latestState.value
-  result.value = fresh
+  result.value = latestState.value
   latestState.value = null
   prevFetchInput = null
-  // The table now holds fresh row objects. If a record sheet is open, its
-  // `sheetRecord` still points at the old (replaced) object, so further sheet
-  // edits would mutate an orphan that no longer reflects in the table. Rebind to
-  // the matching fresh row — carrying over any detail-only fields already loaded
-  // via `/show` (the search result omits them) so the sheet keeps showing them —
-  // or close the sheet if the row is no longer present in the fresh results.
-  if (sheet.state.value && sheetMode.value === 'view' && sheetRecord.value) {
-    const id = resolveId(sheetRecord.value)
-    const match = fresh.data.find((r) => resolveId(r) === id)
-    if (match) {
-      for (const key of Object.keys(sheetRecord.value)) {
-        if (!(key in match)) {
-          match[key] = sheetRecord.value[key]
-        }
-      }
-      sheetRecord.value = match
-    } else {
-      sheet.off()
+  rebindOpenSheet()
+}
+
+// When `result` is replaced wholesale (the refresh banner, or a forced refresh),
+// an open record sheet's `sheetRecord` still points at the old (now-orphaned) row
+// object, so later sheet edits would mutate the orphan and stop reflecting in the
+// table. Rebind to the matching fresh row — carrying over any detail-only fields
+// already loaded via `/show` (the search result omits them) so the sheet keeps
+// showing them — or close the sheet if the row is no longer present.
+function rebindOpenSheet(): void {
+  if (!result.value) { return }
+  if (!sheet.state.value || sheetMode.value !== 'view' || !sheetRecord.value) { return }
+  const id = resolveId(sheetRecord.value)
+  const match = result.value.data.find((r) => resolveId(r) === id)
+  if (!match) {
+    sheet.off()
+    return
+  }
+  for (const key of Object.keys(sheetRecord.value)) {
+    if (!(key in match)) {
+      match[key] = sheetRecord.value[key]
     }
   }
+  sheetRecord.value = match
+}
+
+// Core force-refetch: drop the memoized input + any stash, invalidate an in-flight
+// reconcile (its request may predate the change being surfaced), refetch the
+// current query, then rebind an open sheet to the fresh rows. Bypasses the busy
+// guard — callers (the exposed refresh, the create path) gate it themselves.
+async function forceRefresh(): Promise<void> {
+  reconcileToken++
+  reconciling.value = false
+  prevFetchInput = null
+  latestState.value = null
+  await doRefresh()
+  rebindOpenSheet()
 }
 
 // Re-runs the current query against the endpoint, preserving the catalog's
 // in-memory state (select / filters / sort / page). Exposed so callers can
-// reflect server-side changes — e.g. after a bulk action mutates rows —
-// without remounting the component.
+// reflect server-side changes — e.g. after a bulk action mutates rows — without
+// remounting the component.
 async function refreshCatalog(): Promise<void> {
-  // While writes are still syncing, a read now could return stale pre-write data
-  // that, stashed behind the refresh banner, could outlive a failed write (whose
-  // post-batch reconcile is skipped) and roll the table back when applied. Defer:
-  // the post-batch reconcile refetches the canonical state once the batch settles
-  // cleanly, which also reflects any server-side change a caller wanted surfaced.
-  if (pendingWrites.value > 0) {
+  // Defer while a write — or a (blocking) create — is in flight: a read now could
+  // return stale pre-write / pre-create data and clobber the optimistic or
+  // just-created rows (and a stashed stale result could outlive a failed write
+  // whose post-batch reconcile is skipped). The post-batch reconcile / create
+  // path surfaces the canonical state once things settle. When only a reconcile
+  // is in flight (reads are fresh again), forceRefresh supersedes it.
+  if (pendingWrites.value > 0 || creating.value) {
     return
   }
-  // Writes have settled, so reads are fresh again. If a reconcile is still in
-  // flight, its request may predate the change the caller wants surfaced (e.g. a
-  // bulk action that just ran) — invalidate it (token bump + clear its busy flag)
-  // and force a fresh refetch now rather than dropping the refresh.
-  reconcileToken++
-  reconciling.value = false
-  // A refresh is requested precisely when server-side data may have changed
-  // while the query input did not (e.g. after a bulk action). Clear the
-  // memoized input so the equality shortcut in the fetcher misses and a real
-  // request is issued instead of returning the stale cached result.
-  prevFetchInput = null
-  latestState.value = null
-  await doRefresh()
+  await forceRefresh()
 }
 
 // Track an optimistic background write: count it as pending, surface a snackbar
@@ -869,14 +888,12 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
       // full list (via the refresh banner) once they settle.
       prependCreated(res.data)
     } else {
-      // A write batch may have settled during the (slow) POST and kicked off a
-      // reconcile; invalidate it (token bump + busy-flag reset, mirroring
-      // trackWrite) so its possibly-pre-create snapshot can't land behind the
-      // refresh banner after this fresh refetch.
-      reconcileToken++
-      reconciling.value = false
+      // Force a fresh refetch directly (not the exposed refreshCatalog, which
+      // would no-op while `creating` is still true). forceRefresh also invalidates
+      // any reconcile that a batch settling mid-POST kicked off, so a pre-create
+      // snapshot can't land behind the refresh banner.
       try {
-        await refreshCatalog()
+        await forceRefresh()
       } catch {
         prependCreated(res.data)
       }
