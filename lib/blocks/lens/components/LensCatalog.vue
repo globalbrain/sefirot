@@ -310,7 +310,9 @@ const conditionBlocksSize = useElementSize(conditionBlocksEl)
 
 const headerHeight = 'var(--lens-catalog-global-height-offset)'
 const controlHeight = '56px - 1px'
-const conditionBlocksHeight = computed(() => conditionBlocksSize.height.value > 0 ? `${conditionBlocksSize.height.value}px - 1px` : '0px')
+const conditionBlocksHeight = computed(() =>
+  conditionBlocksSize.height.value > 0 ? `${conditionBlocksSize.height.value}px - 1px` : '0px'
+)
 const columnsHeight = '40px - 1px'
 const footerHeight = '56px - 1px'
 
@@ -336,9 +338,13 @@ const tableMaxHeight = computed(() => {
     return undefined
   }
   if (props.height === 'fill') {
-    return `--table-max-height: calc(100vh - ${headerHeight} - ${controlHeight} - ${conditionBlocksHeight.value} - ${columnsHeight} - ${footerHeight} - ${props.heightOffset ?? '0px'})`
+    return '--table-max-height: '
+      + `calc(100vh - ${headerHeight} - ${controlHeight} - ${conditionBlocksHeight.value}`
+      + ` - ${columnsHeight} - ${footerHeight} - ${props.heightOffset ?? '0px'})`
   }
-  return `--table-max-height: calc(${props.height} - ${controlHeight} - ${conditionBlocksHeight.value} - ${columnsHeight} - ${footerHeight})`
+  return '--table-max-height: '
+    + `calc(${props.height} - ${controlHeight} - ${conditionBlocksHeight.value}`
+    + ` - ${columnsHeight} - ${footerHeight})`
 })
 
 // Initial setup when the result is loaded for the first time. When the
@@ -495,7 +501,11 @@ function onResetSorts() {
   emit('sort-updated', _sort.value)
 }
 
-function onViewUpdated(newSelect: string[], newSelectable: string[], overrides: Record<string, Partial<FieldData>>) {
+function onViewUpdated(
+  newSelect: string[],
+  newSelectable: string[],
+  overrides: Record<string, Partial<FieldData>>
+) {
   if (guardBusy()) { return }
   // Treat updates from the view form as deliberate user intent: if the
   // user picked the index field on purpose, surface its column.
@@ -863,7 +873,12 @@ defineExpose({
         </template>
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
-      <div v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)" ref="conditionBlocksEl" class="condition-blocks" :class="{ 'is-busy': busy }">
+      <div
+        v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)"
+        ref="conditionBlocksEl"
+        class="condition-blocks"
+        :class="{ 'is-busy': busy }"
+      >
         <template v-if="_filters.length > 0">
           <SDivider />
           <LensCatalogStateFilter

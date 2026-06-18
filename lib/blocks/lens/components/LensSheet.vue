@@ -118,7 +118,9 @@ const serverErrors = ref<Record<string, string[]>>({})
 
 const { validation, validate, reset } = useValidation(
   () => createModel,
-  () => Object.fromEntries(createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()])),
+  () => Object.fromEntries(
+    createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()])
+  ),
   { $externalResults: serverErrors }
 )
 

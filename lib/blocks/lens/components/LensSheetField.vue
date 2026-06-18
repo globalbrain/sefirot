@@ -59,7 +59,9 @@ const displayValue = computed(() => {
 
 // Display-only fields (e.g. `content`) resolve an input component but render
 // static markup with no value, so they must not gain an edit affordance.
-const canEdit = computed(() => editable.value && !!inputComponent.value && props.field.isSubmittable())
+const canEdit = computed(() =>
+  editable.value && !!inputComponent.value && props.field.isSubmittable()
+)
 
 const editing = ref(false)
 const model = ref<any>(null)

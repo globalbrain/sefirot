@@ -110,7 +110,10 @@ export abstract class Field<T extends FieldData> {
    * Renders the table filter menu for the field. The filter maybe null when
    * the field has no available filters.
    */
-  async tableFilterMenu(_filters: any[], _onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
+  async tableFilterMenu(
+    _filters: any[],
+    _onFilterUpdated: (filters: any[]) => void
+  ): Promise<DropdownSection | null> {
     return null
   }
 

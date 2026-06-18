@@ -168,7 +168,12 @@ function isTextLikeInput(target: EventTarget | null): boolean {
     </button>
 
     <Teleport v-if="editing && inputComponent" to="#sefirot-modals">
-      <div ref="editorEl" class="LensTableEditableCellEditor" :style="editorStyle" @keydown="onEditorKeydown">
+      <div
+        ref="editorEl"
+        class="LensTableEditableCellEditor"
+        :style="editorStyle"
+        @keydown="onEditorKeydown"
+      >
         <component :is="inputComponent" v-model="model" :validation="validation.input" />
         <div class="actions">
           <SButton size="mini" :label="t.cancel" @click="cancel" />

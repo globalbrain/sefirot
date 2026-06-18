@@ -19,7 +19,10 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     this.fetcher = fetcher
   }
 
-  override async tableFilterMenu(filters: any[], onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
+  override async tableFilterMenu(
+    filters: any[],
+    onFilterUpdated: (filters: any[]) => void
+  ): Promise<DropdownSection | null> {
     const method = this.data.resourceEndpointMethod
     const url = this.data.resourceEndpointPath
     const key = this.data.resourceEndpointDataKey

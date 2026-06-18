@@ -124,7 +124,11 @@ const columns = computedAsync(async () => {
     // record sheet (view + per-field edit + delete) instead of following a
     // link. Restrict this to the configured index field so other id-type
     // columns (e.g. a `company_id` reference link) keep their own navigation.
-    if (edit?.editable && overriddenFieldData.type === 'id' && key === edit.indexField) {
+    if (
+      edit?.editable
+      && overriddenFieldData.type === 'id'
+      && key === edit.indexField
+    ) {
       const original = column.cell
       column.cell = (v: any, r: any): TableCell<any, any> => {
         const cell = typeof original === 'function' ? original(v, r) : original
@@ -135,7 +139,13 @@ const columns = computedAsync(async () => {
           onClick: () => edit.openSheet(r)
         } as TableCell<any, any>
       }
-    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true && field.isSubmittable() && hasFormInput(field)) {
+    } else if (
+      props.inlineEdit
+      && edit?.editable
+      && overriddenFieldData.showOnUpdate === true
+      && field.isSubmittable()
+      && hasFormInput(field)
+    ) {
       // Editable fields render a custom cell with a hover edit affordance
       // that opens an inline editor (reusing the field's form input + the
       // edit context's save). Sort/filter menus on the column are kept.
@@ -205,7 +215,10 @@ function hasFormInput(field: Field<FieldData>): boolean {
 </script>
 
 <template>
-  <div class="LensTable" :class="{ 'is-loading': loading, 'is-empty': (result?.data.length ?? 0) === 0 }">
+  <div
+    class="LensTable"
+    :class="{ 'is-loading': loading, 'is-empty': (result?.data.length ?? 0) === 0 }"
+  >
     <STable
       v-if="Object.keys(columns).length > 0"
       class="table"

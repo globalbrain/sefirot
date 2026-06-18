@@ -84,7 +84,7 @@ describe('blocks/lens/fields/RelatedOneField', () => {
       expect((make().tableCell(undefined, {}) as any).value).toBeNull()
     })
 
-    it('renders an empty string (not null) when the title is missing, so the table does not fall back to the raw object', () => {
+    it('renders an empty string (not null) when the title is missing', () => {
       const cell = make().tableCell({ id: 1 }, {}) as any
       expect(cell.value).toBe('')
     })
