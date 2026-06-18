@@ -1,10 +1,25 @@
+import { mount } from '@vue/test-utils'
 import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type RelatedOneFieldData } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
 import { RelatedOneField } from 'sefirot/blocks/lens/fields/RelatedOneField'
+import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
+import { DataListStateKey } from 'sefirot/composables/DataList'
+import { computed } from 'vue'
 
 function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
   return { lang }
+}
+
+function mountDataListItem(field: RelatedOneField, value: any) {
+  return mount(field.dataListItemComponent(), {
+    props: { value },
+    global: {
+      provide: {
+        [DataListStateKey]: { labelWidth: computed(() => '100px') }
+      }
+    }
+  })
 }
 
 function makeFetcher(response: any): ResourceFetcher {
@@ -247,6 +262,31 @@ describe('blocks/lens/fields/RelatedOneField', () => {
       const fetcher = makeFetcher([{ id: 7, name: 'USA' }])
       const menu = (await make({ filterKey: 'id' }, fetcher).tableFilterMenu([], () => {})) as any
       expect(menu.options).toEqual([{ label: 'USA', value: 7 }])
+    })
+  })
+
+  describe('dataListItemComponent', () => {
+    it('renders the title as text by default', () => {
+      const wrapper = mountDataListItem(make(), { id: 1, name: 'Japan' })
+      expect(wrapper.text()).toContain('Japan')
+      wrapper.unmount()
+    })
+
+    it('renders an avatar with the title name when displayAs is "avatar"', () => {
+      const wrapper = mountDataListItem(
+        make({ displayAs: 'avatar', image: 'avatarUrl' }),
+        { id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' }
+      )
+      const desc = wrapper.findComponent(SDescAvatar)
+      expect(desc.exists()).toBe(true)
+      expect(desc.props('avatar')).toEqual({ avatar: 'https://example.com/a.png', name: 'Alice' })
+      wrapper.unmount()
+    })
+
+    it('renders no avatar (empty placeholder) when the value is null', () => {
+      const wrapper = mountDataListItem(make({ displayAs: 'avatar', image: 'avatarUrl' }), null)
+      expect(wrapper.findComponent(SDescAvatar).exists()).toBe(false)
+      wrapper.unmount()
     })
   })
 })

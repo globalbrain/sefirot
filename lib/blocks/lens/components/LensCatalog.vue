@@ -588,7 +588,8 @@ const isQueryActive = computed(() =>
 )
 
 async function save(record: Record<string, any>, values: Record<string, any>): Promise<void> {
-  const res = await executeUpdate(resolveId(record), values)
+  const id = resolveId(record)
+  const res = await executeUpdate(id, values)
   // Patch the row in place so the table and sheet reflect the server's
   // re-serialized values without a full refetch.
   Object.assign(record, res.data)
@@ -606,16 +607,34 @@ async function save(record: Record<string, any>, values: Record<string, any>): P
   })
   if (reconcile) {
     await refreshCatalog()
+    // The refetch replaced result.data with fresh search rows, detaching the
+    // show-enriched object the open sheet points at. Rather than swap the
+    // sheet to a fresh row — which would drop detail-only fields loaded via
+    // /show and break the stale-/show guard's identity check — merge the
+    // refreshed values onto the existing record and put that same object back
+    // into the result. Detail-only fields survive, and table + sheet keep
+    // sharing one object so later edits stay in sync. If the row dropped off
+    // the page it won't be found; leave the sheet on the existing object.
+    if (sheetRecord.value === record && result.value) {
+      const index = result.value.data.findIndex((r) => resolveId(r) === id)
+      if (index !== -1) {
+        Object.assign(record, result.value.data[index])
+        result.value.data[index] = record
+      }
+    }
   }
 }
 
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   const res = await executeCreate(values)
-  // With active filters / sort / pagination, a blind prepend would surface
-  // the new row where the query may not place it (or where it doesn't belong
-  // at all). Re-run the search so it lands correctly; otherwise optimistically
-  // prepend it to the first page for immediate feedback.
-  if (isQueryActive.value) {
+  // Optimistically prepend only on a plain, unfiltered, unsorted first page
+  // that still has room. With active filters / sort / pagination — or a page
+  // already at its `perPage` limit, where the extra row would overflow the
+  // page and belongs on a later one — re-run the search so the view matches
+  // the server's ordering and pagination instead.
+  const pagination = result.value?.pagination
+  const pageIsFull = !!pagination && (result.value?.data.length ?? 0) >= pagination.perPage
+  if (isQueryActive.value || pageIsFull) {
     await refreshCatalog()
   } else {
     if (result.value?.data) {
@@ -648,6 +667,13 @@ async function remove(record: Record<string, any>): Promise<void> {
   if (result.value?.pagination) {
     result.value.pagination.total--
   }
+  // Deleting the last row of a page beyond the first leaves the catalog on a
+  // now-empty (possibly nonexistent) page; step back one page and refetch so
+  // the view stays on a valid, populated page.
+  if ((result.value?.data.length ?? 0) === 0 && page.value > 1) {
+    page.value--
+    await refreshCatalog()
+  }
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
@@ -665,6 +691,13 @@ async function openSheet(record: Record<string, any>): Promise<void> {
   // already present on the row.
   try {
     const res = await executeShow(resolveId(record))
+    // Ignore a response that arrived after the user switched or closed and
+    // reopened the sheet on a different record (or the create form): a slower
+    // /show for a previously opened record must not overwrite the current
+    // one's fields.
+    if (sheetRecord.value !== record) {
+      return
+    }
     Object.assign(record, res.data)
     if (res.fields) {
       sheetFields.value = res.fields

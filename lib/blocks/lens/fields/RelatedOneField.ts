@@ -1,4 +1,6 @@
 import { xor } from 'lodash-es'
+import { h } from 'vue'
+import SDescAvatar from '../../../components/SDescAvatar.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type RelatedOneFieldData } from '../FieldData'
@@ -118,7 +120,29 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
   }
 
   override dataListItemComponent(): any {
-    throw new Error('Not implemented.')
+    return this.defineDataListItemComponent((value) => {
+      // related_one serializes as a single relation object (or null). Read the
+      // display name / image from the same keys `tableCell()` uses, instead of
+      // letting the generic fallback render the raw object as JSON.
+      if (value === null || value === undefined) {
+        return null
+      }
+
+      const name = value[this.data.title] ?? null
+
+      if (this.data.displayAs === 'avatar') {
+        return h(SDescAvatar, {
+          avatar: {
+            avatar: this.data.image ? (value[this.data.image] ?? null) : null,
+            name
+          }
+        })
+      }
+
+      // 'text' (and the null default): render the title as plain text, falling
+      // back to the empty placeholder when the title key is missing.
+      return name
+    })
   }
 
   override formInputComponent() {

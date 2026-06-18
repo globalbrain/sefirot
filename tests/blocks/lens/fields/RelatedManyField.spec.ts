@@ -1,10 +1,26 @@
+import { mount } from '@vue/test-utils'
 import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type RelatedManyFieldData } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
 import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
+import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
+import SDescPill from 'sefirot/components/SDescPill.vue'
+import { DataListStateKey } from 'sefirot/composables/DataList'
+import { computed } from 'vue'
 
 function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
   return { lang }
+}
+
+function mountDataListItem(field: RelatedManyField, value: any) {
+  return mount(field.dataListItemComponent(), {
+    props: { value },
+    global: {
+      provide: {
+        [DataListStateKey]: { labelWidth: computed(() => '100px') }
+      }
+    }
+  })
 }
 
 function makeFetcher(response: any): ResourceFetcher {
@@ -184,6 +200,39 @@ describe('blocks/lens/fields/RelatedManyField', () => {
       await (filters['='] as any).optionsResolver()
       expect(calls).toHaveLength(1)
       expect(calls[0]).toEqual(['post', '/api/members', body])
+    })
+  })
+
+  describe('dataListItemComponent', () => {
+    it('renders one pill per item title by default', () => {
+      const wrapper = mountDataListItem(make(), [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ])
+      const desc = wrapper.findComponent(SDescPill)
+      expect(desc.exists()).toBe(true)
+      expect(desc.props('pill')).toEqual([{ label: 'Alice' }, { label: 'Bob' }])
+      wrapper.unmount()
+    })
+
+    it('renders avatars when displayAs is "avatars"', () => {
+      const wrapper = mountDataListItem(
+        make({ displayAs: 'avatars', image: 'avatarUrl' }),
+        [{ id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' }]
+      )
+      const desc = wrapper.findComponent(SDescAvatar)
+      expect(desc.exists()).toBe(true)
+      expect(desc.props('avatar')).toEqual([
+        { avatar: 'https://example.com/a.png', name: 'Alice' }
+      ])
+      wrapper.unmount()
+    })
+
+    it('renders the empty placeholder for an empty list', () => {
+      const wrapper = mountDataListItem(make(), [])
+      expect(wrapper.findComponent(SDescPill).exists()).toBe(false)
+      expect(wrapper.findComponent(SDescAvatar).exists()).toBe(false)
+      wrapper.unmount()
     })
   })
 })
