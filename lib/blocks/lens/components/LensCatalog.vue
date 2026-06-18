@@ -592,6 +592,16 @@ const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 // is skipped (the snackbar already told the user to reload).
 let batchErrored = false
 
+// In-flight write chains keyed by record+field, so repeated writes to the same
+// cell are serialized (sent in edit order — the last edit wins — even though
+// the UI already shows the latest value optimistically). Writes to different
+// cells run concurrently; the backend persists only the changed columns.
+const writeChains = new Map<string, Promise<unknown>>()
+
+// Count of in-flight writes per record id, so `/show` for a record that's
+// mid-write can avoid overwriting its optimistic values with stale data.
+const pendingByRecord = new Map<any, number>()
+
 // Monotonic token for the in-flight `openSheet` `/show` request, so a newer
 // open (another row, or the create form) supersedes an older one and the stale
 // detail fetch doesn't open over it when it resolves.
@@ -691,17 +701,46 @@ function applyLatest(): void {
 
 // Track an optimistic background write: count it as pending, surface a snackbar
 // on failure, and once the whole batch settles (with no failures) reconcile.
-function trackWrite(run: () => Promise<unknown>): void {
-  // A new write changes the displayed state, so any stashed reconcile result is
-  // now potentially stale; clear it (the post-batch reconcile re-derives it).
+function hasPendingWrite(recordId: any): boolean {
+  return pendingByRecord.has(recordId)
+}
+
+// Track an optimistic background write for `recordId`, serialized per `key` so
+// writes to the same cell reach the server in edit order.
+function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): void {
+  // A new write changes the displayed state. Clear any stashed reconcile result
+  // and invalidate an in-flight reconcile (advance the token so its result is
+  // dropped; clear its busy flag — `pendingWrites` keeps us busy), so neither
+  // can later repopulate the refresh banner with pre-edit data. The post-batch
+  // reconcile re-derives it.
   latestState.value = null
+  reconcileToken++
+  reconciling.value = false
   pendingWrites.value++
-  run()
+  pendingByRecord.set(recordId, (pendingByRecord.get(recordId) ?? 0) + 1)
+
+  // Chain after any in-flight write for the same cell so the requests reach the
+  // server in order (a prior failure must not block the next write).
+  const prev = writeChains.get(key) ?? Promise.resolve()
+  const current = prev.catch(() => {}).then(run)
+  writeChains.set(key, current)
+
+  current
     .catch(() => {
       batchErrored = true
       snackbars.push({ mode: 'danger', text: t.write_error })
     })
     .finally(() => {
+      // Only drop the chain entry if a newer write hasn't replaced it.
+      if (writeChains.get(key) === current) {
+        writeChains.delete(key)
+      }
+      const remaining = (pendingByRecord.get(recordId) ?? 1) - 1
+      if (remaining > 0) {
+        pendingByRecord.set(recordId, remaining)
+      } else {
+        pendingByRecord.delete(recordId)
+      }
       pendingWrites.value--
       if (pendingWrites.value === 0) {
         const errored = batchErrored
@@ -716,8 +755,14 @@ function trackWrite(run: () => Promise<unknown>): void {
 // Update — optimistic. Reflect the change in memory immediately (the catalog
 // row and the open sheet share this object), then persist in the background.
 function save(record: Record<string, any>, values: Record<string, any>): void {
+  const id = resolveId(record)
   Object.assign(record, values)
-  trackWrite(() => executeUpdate(resolveId(record), values))
+  // Serialize per record+field so two quick edits to the same cell apply in
+  // order; edits to different fields run concurrently. Assumes callers save a
+  // single field (or disjoint field sets) — overlapping multi-field saves would
+  // share a column without ordering and need a coarser (per-record) key.
+  const key = `${id}:${Object.keys(values).sort().join(',')}`
+  trackWrite(id, key, () => executeUpdate(id, values))
 }
 
 // Create — blocking. The slow POST runs to completion, then the catalog is
@@ -725,7 +770,26 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
 // The create sheet shows a button spinner meanwhile.
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   const res = await executeCreate(values)
-  await refreshCatalog()
+  if (pendingWrites.value > 0) {
+    // Other optimistic writes are still syncing; a refetch now would read the
+    // backend before they're visible and clobber those rows. Prepend the new
+    // record optimistically instead — the pending writes' reconcile refreshes
+    // the full list (via the refresh banner) once they settle.
+    if (result.value?.data) {
+      result.value.data.unshift(res.data)
+    }
+    if (result.value?.pagination) {
+      result.value.pagination.total++
+    }
+  } else {
+    // A write batch may have settled during the (slow) POST and kicked off a
+    // reconcile; invalidate it (token bump + busy-flag reset, mirroring
+    // trackWrite) so its possibly-pre-create snapshot can't land behind the
+    // refresh banner after this fresh refetch.
+    reconcileToken++
+    reconciling.value = false
+    await refreshCatalog()
+  }
   if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
     hasInitialResults.value = true
   }
@@ -747,7 +811,7 @@ function remove(record: Record<string, any>): void {
       }
     }
   }
-  trackWrite(() => executeDelete(id))
+  trackWrite(id, `${id}:__delete__`, () => executeDelete(id))
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
@@ -755,16 +819,32 @@ async function openSheet(record: Record<string, any>): Promise<void> {
   // the id cell again), then load the full record (detail-only fields not
   // selected as columns) and render it. A newer open (another row, or the
   // create form) supersedes this one via the token.
+  const id = resolveId(record)
   sheetRecord.value = record
   sheetMode.value = 'view'
   sheetLoading.value = true
   sheetError.value = false
   sheet.on()
   const seq = ++showRequestSeq
+  // Snapshot whether the record had a write in flight when `/show` is issued:
+  // the read can return pre-sync data, so even if the write finishes before
+  // `/show` resolves we must not overwrite the optimistic value.
+  const pendingAtIssue = hasPendingWrite(id)
   try {
-    const res = await executeShow(resolveId(record))
+    const res = await executeShow(id)
     if (seq === showRequestSeq) {
-      Object.assign(record, res.data)
+      if (pendingAtIssue || hasPendingWrite(id)) {
+        // The record had/has an in-flight write, so `/show` may have read the
+        // backend before it synced. Don't overwrite the optimistic values
+        // already on the row; only fill in detail-only fields not yet present.
+        for (const k of Object.keys(res.data)) {
+          if (!(k in record)) {
+            record[k] = res.data[k]
+          }
+        }
+      } else {
+        Object.assign(record, res.data)
+      }
     }
   } catch {
     // Detail load failed: surface an error in the sheet rather than render a
