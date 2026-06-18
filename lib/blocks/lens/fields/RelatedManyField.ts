@@ -1,4 +1,7 @@
 import { xor } from 'lodash-es'
+import { h } from 'vue'
+import SDescAvatar from '../../../components/SDescAvatar.vue'
+import SDescPill from '../../../components/SDescPill.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type RelatedManyFieldData } from '../FieldData'
@@ -113,7 +116,32 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
   }
 
   override dataListItemComponent(): any {
-    throw new Error('Not implemented.')
+    return this.defineDataListItemComponent((value) => {
+      // related_many serializes as an array of relation objects (or null).
+      // Read the display name / image from the same keys `tableCell()` uses,
+      // instead of letting the generic fallback render `[object Object]`.
+      const items = (value ?? []) as any[]
+
+      if (items.length === 0) {
+        return null
+      }
+
+      if (this.data.displayAs === 'avatars') {
+        return h(SDescAvatar, {
+          avatar: items.map((item) => ({
+            avatar: this.data.image ? (item[this.data.image] ?? null) : null,
+            name: item[this.data.title] ?? null
+          }))
+        })
+      }
+
+      // 'pills' (and the null default): render one pill per related item.
+      return h(SDescPill, {
+        pill: items.map((item) => ({
+          label: item[this.data.title] ?? ''
+        }))
+      })
+    })
   }
 
   override formInputComponent() {

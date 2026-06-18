@@ -1,4 +1,6 @@
 import { xor } from 'lodash-es'
+import { h } from 'vue'
+import SDescAvatar from '../../../components/SDescAvatar.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type RelatedOneFieldData } from '../FieldData'
@@ -27,7 +29,7 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
 
     const selected = this.inFilterValueFor(this.data.key, filters)
 
-    const res = await this.fetcher(method, url)
+    const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
     const data = key ? res[key] : res
 
     const isAvatar = this.data.displayAs === 'avatar'
@@ -37,11 +39,11 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
           type: 'avatar' as const,
           label: item[this.data.resourceTitle],
           image: this.data.resourceImage ? item[this.data.resourceImage] : null,
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         }
       : {
           label: item[this.data.resourceTitle],
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         })
 
     return {
@@ -91,10 +93,10 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
     }
 
     const optionsResolver = async () => {
-      const res = await this.fetcher(method, url)
+      const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
       const data = key ? res[key] : res
       return data.map((item: any) => ({
-        value: item[this.data.filterKey],
+        value: this.resolveValue(item[this.data.filterKey]),
         label: item[this.data.resourceTitle]
       }))
     }
@@ -109,8 +111,38 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
     }
   }
 
+  // Lens id fields serialize as `{ value, display, path? }`; filters need the
+  // raw scalar. Unwrap that shape, passing plain scalars through untouched.
+  // (Mirrors `RelatedManyField` — relevant when a related-one resource reuses
+  // a Lens search endpoint whose `filterKey` is an id field.)
+  private resolveValue(raw: any): any {
+    return raw !== null && typeof raw === 'object' && 'value' in raw ? raw.value : raw
+  }
+
   override dataListItemComponent(): any {
-    throw new Error('Not implemented.')
+    return this.defineDataListItemComponent((value) => {
+      // related_one serializes as a single relation object (or null). Read the
+      // display name / image from the same keys `tableCell()` uses, instead of
+      // letting the generic fallback render the raw object as JSON.
+      if (value === null || value === undefined) {
+        return null
+      }
+
+      const name = value[this.data.title] ?? null
+
+      if (this.data.displayAs === 'avatar') {
+        return h(SDescAvatar, {
+          avatar: {
+            avatar: this.data.image ? (value[this.data.image] ?? null) : null,
+            name
+          }
+        })
+      }
+
+      // 'text' (and the null default): render the title as plain text, falling
+      // back to the empty placeholder when the title key is missing.
+      return name
+    })
   }
 
   override formInputComponent() {

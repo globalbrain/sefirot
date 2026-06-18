@@ -213,6 +213,16 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
+   * Whether this field contributes a value to create / update payloads. Most
+   * fields do. Display-only fields (e.g. `content`, which renders static
+   * instructions in the form) return false so the sheet renders them but
+   * never seeds, validates, submits, or makes them inline-editable.
+   */
+  isSubmittable(): boolean {
+    return true
+  }
+
+  /**
    * Returns the value should be used when the input is empty.
    */
   inputEmptyValue(): any {

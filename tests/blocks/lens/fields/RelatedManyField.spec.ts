@@ -1,14 +1,39 @@
+import { mount } from '@vue/test-utils'
 import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type RelatedManyFieldData } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
 import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
+import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
+import SDescPill from 'sefirot/components/SDescPill.vue'
+import { DataListStateKey } from 'sefirot/composables/DataList'
+import { computed } from 'vue'
 
 function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
   return { lang }
 }
 
+function mountDataListItem(field: RelatedManyField, value: any) {
+  return mount(field.dataListItemComponent(), {
+    props: { value },
+    global: {
+      provide: {
+        [DataListStateKey]: { labelWidth: computed(() => '100px') }
+      }
+    }
+  })
+}
+
 function makeFetcher(response: any): ResourceFetcher {
   return (async () => response) as unknown as ResourceFetcher
+}
+
+function captureFetcher(response: any) {
+  const calls: Array<[string, string, any]> = []
+  const fetcher = (async (method: any, url: any, body: any) => {
+    calls.push([method, url, body])
+    return response
+  }) as unknown as ResourceFetcher
+  return { fetcher, calls }
 }
 
 function make(
@@ -150,6 +175,64 @@ describe('blocks/lens/fields/RelatedManyField', () => {
         { type: 'avatar', label: 'Alice', image: 'https://example.com/a.png', value: 1 },
         { type: 'avatar', label: 'Bob', image: 'https://example.com/b.png', value: 2 }
       ])
+    })
+  })
+
+  describe('resourceEndpointBody forwarding', () => {
+    const body = { entity: 'topic', select: ['id', 'name'], perPage: 1000 }
+
+    it('forwards the configured body to the fetcher in tableFilterMenu', async () => {
+      const { fetcher, calls } = captureFetcher([])
+      await make(
+        { resourceEndpointMethod: 'post', resourceEndpointBody: body },
+        fetcher
+      ).tableFilterMenu([], () => {})
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toEqual(['post', '/api/members', body])
+    })
+
+    it('forwards the configured body to the fetcher in availableFilters', async () => {
+      const { fetcher, calls } = captureFetcher([])
+      const filters = make(
+        { resourceEndpointMethod: 'post', resourceEndpointBody: body },
+        fetcher
+      ).availableFilters()
+      await (filters['='] as any).optionsResolver()
+      expect(calls).toHaveLength(1)
+      expect(calls[0]).toEqual(['post', '/api/members', body])
+    })
+  })
+
+  describe('dataListItemComponent', () => {
+    it('renders one pill per item title by default', () => {
+      const wrapper = mountDataListItem(make(), [
+        { id: 1, name: 'Alice' },
+        { id: 2, name: 'Bob' }
+      ])
+      const desc = wrapper.findComponent(SDescPill)
+      expect(desc.exists()).toBe(true)
+      expect(desc.props('pill')).toEqual([{ label: 'Alice' }, { label: 'Bob' }])
+      wrapper.unmount()
+    })
+
+    it('renders avatars when displayAs is "avatars"', () => {
+      const wrapper = mountDataListItem(
+        make({ displayAs: 'avatars', image: 'avatarUrl' }),
+        [{ id: 1, name: 'Alice', avatarUrl: 'https://example.com/a.png' }]
+      )
+      const desc = wrapper.findComponent(SDescAvatar)
+      expect(desc.exists()).toBe(true)
+      expect(desc.props('avatar')).toEqual([
+        { avatar: 'https://example.com/a.png', name: 'Alice' }
+      ])
+      wrapper.unmount()
+    })
+
+    it('renders the empty placeholder for an empty list', () => {
+      const wrapper = mountDataListItem(make(), [])
+      expect(wrapper.findComponent(SDescPill).exists()).toBe(false)
+      expect(wrapper.findComponent(SDescAvatar).exists()).toBe(false)
+      wrapper.unmount()
     })
   })
 })
