@@ -133,7 +133,7 @@ const columns = computedAsync(async () => {
           onClick: () => edit.openSheet(r)
         } as TableCell<any, any>
       }
-    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true && hasFormInput(field)) {
+    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true && field.isSubmittable() && hasFormInput(field)) {
       // Editable fields render a custom cell with a hover edit affordance
       // that opens an inline editor (reusing the field's form input + the
       // edit context's save). Sort/filter menus on the column are kept.

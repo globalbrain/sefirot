@@ -224,4 +224,29 @@ describe('blocks/lens/fields/RelatedOneField', () => {
       expect(calls[0][2]).toBeUndefined()
     })
   })
+
+  describe('Lens id option value unwrapping', () => {
+    it('unwraps a `{ value, display }` id object to its scalar in tableFilterMenu', async () => {
+      const fetcher = makeFetcher([
+        { id: { value: 5, display: 'Japan' }, name: 'Japan' }
+      ])
+      const menu = (await make({ filterKey: 'id' }, fetcher).tableFilterMenu([], () => {})) as any
+      expect(menu.options).toEqual([{ label: 'Japan', value: 5 }])
+    })
+
+    it('unwraps a `{ value, display }` id object to its scalar in availableFilters', async () => {
+      const fetcher = makeFetcher([
+        { id: { value: 5, display: 'Japan' }, name: 'Japan' }
+      ])
+      const filters = make({ filterKey: 'id' }, fetcher).availableFilters()
+      const options = await (filters['='] as any).optionsResolver()
+      expect(options).toEqual([{ value: 5, label: 'Japan' }])
+    })
+
+    it('passes a plain scalar option value through untouched', async () => {
+      const fetcher = makeFetcher([{ id: 7, name: 'USA' }])
+      const menu = (await make({ filterKey: 'id' }, fetcher).tableFilterMenu([], () => {})) as any
+      expect(menu.options).toEqual([{ label: 'USA', value: 7 }])
+    })
+  })
 })

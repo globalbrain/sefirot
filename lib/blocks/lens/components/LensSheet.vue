@@ -81,6 +81,15 @@ const createFieldViews = computed(() =>
     .filter((v) => v.component != null)
 )
 
+// The subset of create views that actually contribute a value. Display-only
+// fields (e.g. a `content` field showing instructions) still render via
+// `createFieldViews`, but `formInputComponent()` returns static markup with no
+// value, so they must not be seeded, validated, or submitted — otherwise the
+// payload carries a spurious `null` the backend may reject.
+const createInputViews = computed(() =>
+  createFieldViews.value.filter((v) => v.field.isSubmittable())
+)
+
 function resolveInput(field: { formInputComponent: () => any }): any {
   try {
     return field.formInputComponent()
@@ -104,14 +113,14 @@ const saving = ref(false)
 
 const { validation, validate, reset } = useValidation(
   () => createModel,
-  () => Object.fromEntries(createFieldViews.value.map((e) => [e.key, e.field.generateValidationRules()]))
+  () => Object.fromEntries(createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()]))
 )
 
 watch(
   () => [props.open, props.mode] as const,
   ([open, mode]) => {
     if (open && mode === 'create') {
-      for (const { key, field } of createFieldViews.value) {
+      for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
       reset()
@@ -129,7 +138,7 @@ async function onCreate() {
 
   try {
     const values: Record<string, any> = {}
-    for (const { key, field } of createFieldViews.value) {
+    for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])
     }
     await edit!.create(values)

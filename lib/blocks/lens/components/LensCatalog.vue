@@ -506,6 +506,12 @@ const sheet = usePower()
 const sheetMode = ref<'view' | 'create'>('view')
 const sheetRecord = ref<Record<string, any> | null>(null)
 
+// Field definitions for the open detail sheet. The search response only
+// describes the selected columns, but `/show` returns the full detail field
+// set (including detail-only / updateable fields not selected as columns), so
+// the sheet uses these when available and falls back to the search fields.
+const sheetFields = ref<Record<string, FieldData> | null>(null)
+
 // Resolve a record's identifier, unwrapping the id field's object shape
 // (`{ value, display, path }`) when present.
 function resolveId(record: Record<string, any>): any {
@@ -625,6 +631,14 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
 async function remove(record: Record<string, any>): Promise<void> {
   const id = resolveId(record)
   await executeDelete(id)
+  // When matching records exist on later pages, deleting a row from a full
+  // page would leave it under-filled; re-run the search so the next record
+  // backfills this page instead of diverging from the server's pagination.
+  const pagination = result.value?.pagination
+  if (pagination && pagination.total > pagination.page * pagination.perPage) {
+    await refreshCatalog()
+    return
+  }
   if (result.value?.data) {
     const index = result.value.data.findIndex((r) => resolveId(r) === id)
     if (index !== -1) {
@@ -639,14 +653,22 @@ async function remove(record: Record<string, any>): Promise<void> {
 async function openSheet(record: Record<string, any>): Promise<void> {
   sheetRecord.value = record
   sheetMode.value = 'view'
+  // Reset to the search fields until `/show` returns; a stale set from a
+  // previously opened record must not leak into this one.
+  sheetFields.value = null
   sheet.on()
   // Pull the full record so detail-only fields (not selected as columns)
   // are populated and editable in the sheet. Patch the row in place so the
-  // values persist on the shared record object. Failures are non-fatal: the
-  // sheet falls back to the fields already present on the row.
+  // values persist on the shared record object, and adopt the field set the
+  // detail endpoint describes so those fields actually render / become
+  // editable. Failures are non-fatal: the sheet falls back to the fields
+  // already present on the row.
   try {
     const res = await executeShow(resolveId(record))
     Object.assign(record, res.data)
+    if (res.fields) {
+      sheetFields.value = res.fields
+    }
   } catch {
     // Ignore — keep showing the columns the catalog already fetched.
   }
@@ -662,6 +684,9 @@ function openCreate(): void {
   }
   sheetRecord.value = null
   sheetMode.value = 'create'
+  // Create mode uses the search field set (it has the `showOnCreate` flags);
+  // drop any detail field set adopted by a prior `openSheet`.
+  sheetFields.value = null
   sheet.on()
 }
 
@@ -826,7 +851,7 @@ defineExpose({
       :mode="sheetMode"
       :entity="entity ?? ''"
       :record="sheetRecord"
-      :fields="result.fields"
+      :fields="sheetFields ?? result.fields"
       :index-field="indexField ?? 'id'"
       :width="sheetWidth"
       @close="sheet.off"

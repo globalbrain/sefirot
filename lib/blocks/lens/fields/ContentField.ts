@@ -8,6 +8,13 @@ import { type FilterInput } from '../filter-inputs/FilterInput'
 import { Field } from './Field'
 
 export class ContentField extends Field<ContentFieldData> {
+  // `content` is a display-only field: `formInputComponent()` renders static
+  // Markdown (instructions) rather than an editable input, so it must never be
+  // seeded / validated / submitted as a value, nor made inline-editable.
+  override isSubmittable(): boolean {
+    return false
+  }
+
   override tableCell(_v: any, _r: any): TableCell {
     return { type: 'empty' }
   }
