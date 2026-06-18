@@ -10,6 +10,7 @@ import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
+import { extractServerErrors } from '../validation/ServerErrors'
 import LensSheetField from './LensSheetField.vue'
 
 const props = withDefaults(defineProps<{
@@ -111,9 +112,16 @@ const title = computed(() => {
 const createModel = reactive<Record<string, any>>({})
 const saving = ref(false)
 
+// Backend-only validation errors (e.g. `unique`) returned as a 422. Fed to
+// Vuelidate via `$externalResults` so a rejected create surfaces a fixable
+// per-field message; the create form's keys are the bare field keys, matching
+// the 422 error keys 1:1.
+const serverErrors = ref<Record<string, string[]>>({})
+
 const { validation, validate, reset } = useValidation(
   () => createModel,
-  () => Object.fromEntries(createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()]))
+  () => Object.fromEntries(createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()])),
+  { $externalResults: serverErrors }
 )
 
 watch(
@@ -123,6 +131,7 @@ watch(
       for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
+      serverErrors.value = {}
       reset()
     }
   },
@@ -130,6 +139,9 @@ watch(
 )
 
 async function onCreate() {
+  // Clear stale server errors so they don't keep the form invalid on resubmit.
+  serverErrors.value = {}
+
   if (!(await validate())) {
     return
   }
@@ -143,6 +155,14 @@ async function onCreate() {
     }
     await edit!.create(values)
     emit('close')
+  } catch (e) {
+    // Surface backend validation errors (e.g. a duplicate `unique` value) on
+    // the offending fields; rethrow anything that isn't a 422.
+    const errors = extractServerErrors(e)
+    if (!errors) {
+      throw e
+    }
+    serverErrors.value = errors
   } finally {
     saving.value = false
   }

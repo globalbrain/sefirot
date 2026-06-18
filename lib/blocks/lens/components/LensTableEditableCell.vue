@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
-import { computed, nextTick, onUnmounted, ref, shallowRef } from 'vue'
+import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
@@ -10,6 +10,7 @@ import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
 import { type Field } from '../fields/Field'
+import { extractServerErrors } from '../validation/ServerErrors'
 
 const props = defineProps<{
   field: Field<FieldData>
@@ -85,10 +86,20 @@ const inputComponent = shallowRef<any>(null)
 const model = ref<any>(null)
 const saving = ref(false)
 
+// Backend-only validation errors (e.g. `unique`) surfaced on this inline editor
+// via `$externalResults`. It validates under the lone `input` key, so a 422's
+// bare field key is remapped to `input` on failure.
+const serverErrors = ref<Record<string, string[]>>({})
+
 const { validation, validate, reset } = useValidation(
   () => ({ input: model.value }),
-  () => ({ input: props.field.generateValidationRules() })
+  () => ({ input: props.field.generateValidationRules() }),
+  { $externalResults: serverErrors }
 )
+
+// Clear the server error once the user edits the value so a fixed duplicate no
+// longer blocks resubmit (Vuelidate keeps `$externalResults` until reset).
+watch(model, () => { serverErrors.value = {} })
 
 const editorStyle = computed(() => ({
   ...inset.value,
@@ -98,6 +109,7 @@ const editorStyle = computed(() => ({
 function start() {
   inputComponent.value = props.field.formInputComponent()
   model.value = props.field.payloadToInput(props.value ?? props.field.inputEmptyValue())
+  serverErrors.value = {}
   reset()
   inline?.start(myKey.value)
   nextTick(() => {
@@ -114,6 +126,10 @@ function cancel() {
 }
 
 async function apply() {
+  // Clear stale server errors so the same value can be re-submitted (the
+  // server re-checks) and doesn't keep the editor invalid.
+  serverErrors.value = {}
+
   if (!(await validate())) {
     return
   }
@@ -130,6 +146,16 @@ async function apply() {
     if (inline?.activeKey.value === myKey.value) {
       inline.stop()
     }
+  } catch (e) {
+    // Surface a backend validation error (e.g. a duplicate `unique` value) on
+    // this editor, remapping the 422's bare field key to the lone `input` key.
+    // Rethrow non-422s.
+    const errors = extractServerErrors(e)
+    if (!errors) {
+      throw e
+    }
+    const message = errors[props.fieldKey]
+    serverErrors.value = message ? { input: message } : {}
   } finally {
     saving.value = false
   }

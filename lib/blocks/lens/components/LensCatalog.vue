@@ -506,10 +506,13 @@ const sheet = usePower()
 const sheetMode = ref<'view' | 'create'>('view')
 const sheetRecord = ref<Record<string, any> | null>(null)
 
-// Field definitions for the open detail sheet. The search response only
-// describes the selected columns, but `/show` returns the full detail field
-// set (including detail-only / updateable fields not selected as columns), so
-// the sheet uses these when available and falls back to the search fields.
+// Field definitions for the open detail sheet, adopted from the `/show`
+// response so the sheet's metadata matches exactly what that endpoint
+// serialized. Falls back to the search `result.fields` until `/show` resolves —
+// that fallback is complete on its own: the search response already returns
+// every field definition the entity exposes (its `fields` map is not narrowed
+// by `select`; only the row `data` is), so create mode and the pre-show sheet
+// still see detail-only and create-only fields.
 const sheetFields = ref<Record<string, FieldData> | null>(null)
 
 // Monotonic token for the in-flight `/show` request. Opening a sheet bumps and

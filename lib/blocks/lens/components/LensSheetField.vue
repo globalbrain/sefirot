@@ -1,18 +1,25 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
+import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
+import { extractServerErrors } from '../validation/ServerErrors'
 
 const props = defineProps<{
   field: Field<FieldData>
   fieldKey: string
   record: Record<string, any>
 }>()
+
+const { t } = useTrans({
+  en: { cancel: 'Cancel', apply: 'Apply', edit: 'Edit' },
+  ja: { cancel: 'キャンセル', apply: '適用', edit: '編集' }
+})
 
 const edit = useLensEdit()
 
@@ -62,14 +69,25 @@ const editing = ref(false)
 const saving = ref(false)
 const model = ref<any>(null)
 
+// Backend-only validation errors (e.g. `unique`) surfaced on this single
+// editor via `$externalResults`. This editor validates under the lone `input`
+// key, so the 422's bare field key is remapped to `input` on failure.
+const serverErrors = ref<Record<string, string[]>>({})
+
 const { validation, validate, reset } = useValidation(
   () => ({ input: model.value }),
-  () => ({ input: props.field.generateValidationRules() })
+  () => ({ input: props.field.generateValidationRules() }),
+  { $externalResults: serverErrors }
 )
+
+// Clear the server error once the user edits the value, so a fixed duplicate
+// no longer blocks resubmit (Vuelidate keeps `$externalResults` until reset).
+watch(model, () => { serverErrors.value = {} })
 
 function start() {
   const raw = props.record[props.fieldKey]
   model.value = props.field.payloadToInput(raw ?? props.field.inputEmptyValue())
+  serverErrors.value = {}
   reset()
   editing.value = true
 }
@@ -79,6 +97,10 @@ function cancel() {
 }
 
 async function apply() {
+  // Clear stale server errors so the same value can be re-submitted (the
+  // server re-checks) and doesn't keep the editor invalid.
+  serverErrors.value = {}
+
   if (!(await validate())) {
     return
   }
@@ -90,6 +112,16 @@ async function apply() {
       [props.fieldKey]: props.field.inputToPayload(model.value)
     })
     editing.value = false
+  } catch (e) {
+    // Surface a backend validation error (e.g. a duplicate `unique` value) on
+    // this editor. The 422 is keyed by the bare field key; remap it to the
+    // lone `input` key this editor validates under. Rethrow non-422s.
+    const errors = extractServerErrors(e)
+    if (!errors) {
+      throw e
+    }
+    const message = errors[props.fieldKey]
+    serverErrors.value = message ? { input: message } : {}
   } finally {
     saving.value = false
   }
@@ -108,7 +140,7 @@ async function apply() {
         v-if="canEdit"
         class="edit"
         type="button"
-        :aria-label="`Edit ${field.label()}`"
+        :aria-label="`${t.edit} ${field.label()}`"
         @click="start"
       >
         <IconPencilSimple class="edit-icon" />
@@ -118,8 +150,8 @@ async function apply() {
     <div v-else class="form">
       <component :is="inputComponent" v-model="model" :validation="validation.input" />
       <div class="actions">
-        <SButton size="mini" label="Cancel" :disabled="saving" @click="cancel" />
-        <SButton size="mini" mode="info" label="Apply" :loading="saving" @click="apply" />
+        <SButton size="mini" :label="t.cancel" :disabled="saving" @click="cancel" />
+        <SButton size="mini" mode="info" :label="t.apply" :loading="saving" @click="apply" />
       </div>
     </div>
   </div>
