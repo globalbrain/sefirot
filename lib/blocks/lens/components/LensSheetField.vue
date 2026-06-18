@@ -60,7 +60,13 @@ const displayValue = computed(() => {
 // Display-only fields (e.g. `content`) resolve an input component but render
 // static markup with no value, so they must not gain an edit affordance.
 const canEdit = computed(() =>
-  editable.value && !!inputComponent.value && props.field.isSubmittable()
+  editable.value
+  && !!inputComponent.value
+  && props.field.isSubmittable()
+  // Not until the field's value is actually loaded into the record. A
+  // detail-only field (not a table column) opens before `/show` populates it;
+  // editing the empty placeholder would post null/[] over the real value.
+  && (props.fieldKey in props.record)
 )
 
 const editing = ref(false)

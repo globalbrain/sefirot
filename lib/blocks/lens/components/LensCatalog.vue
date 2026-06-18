@@ -277,6 +277,11 @@ if (props.urlSync) {
   // Route URL-driven changes (back/forward, shared links) through `refetch` so
   // they clear any stashed reconcile result, just like the in-app controls — a
   // refresh button must never apply data fetched for a previous query.
+  //
+  // Known limitation: unlike the in-app controls, this path is not gated by the
+  // busy lock, so a URL change landing mid-write could refetch stale data and
+  // drop an optimistic edit. Unreachable today (no page enables `urlSync` with
+  // `editable`); revisit if one ever does.
   useCatalogUrlQuerySync(
     { query, filters: _filters, sort: _sort, page },
     refetch
@@ -654,9 +659,10 @@ async function reconcile(): Promise<void> {
     if (token !== reconcileToken) {
       return
     }
-    if (result.value && !isSameResult(fresh, result.value)) {
-      latestState.value = fresh
-    }
+    // Authoritative: stash the canonical result when it differs from what's
+    // shown, otherwise clear any (possibly stale) stash — an earlier overlapping
+    // reconcile may have left a pre-edit result behind.
+    latestState.value = result.value && !isSameResult(fresh, result.value) ? fresh : null
   } catch {
     // Ignore — keep the optimistic state, offer no refresh.
   } finally {
@@ -676,6 +682,9 @@ function applyLatest(): void {
 // Track an optimistic background write: count it as pending, surface a snackbar
 // on failure, and once the whole batch settles (with no failures) reconcile.
 function trackWrite(run: () => Promise<unknown>): void {
+  // A new write changes the displayed state, so any stashed reconcile result is
+  // now potentially stale; clear it (the post-batch reconcile re-derives it).
+  latestState.value = null
   pendingWrites.value++
   run()
     .catch(() => {
