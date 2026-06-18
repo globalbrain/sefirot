@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref, shallowRef } from 'vue'
+import { computed, ref } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useValidation } from '../../../composables/Validation'
@@ -22,8 +22,14 @@ const editable = computed(() => !!edit && (props.field as any).data?.showOnUpdat
 // (they `throw new Error('Not implemented.')`). Resolve them defensively so a
 // single unimplemented field never breaks the whole sheet — fall back to a
 // plain label/value row for display, and simply omit the edit affordance.
-const displayComponent = shallowRef(resolve(() => props.field.dataListItemComponent()))
-const inputComponent = shallowRef(resolve(() => props.field.formInputComponent()))
+//
+// Computed off `props.field` so they recompute when the field instance changes
+// — e.g. when /show swaps in `sheetFields` and this row (reused by key) is
+// handed updated metadata (select options, labels, input config). They only
+// re-evaluate on a field change, not every render, so they don't churn the
+// component definition.
+const displayComponent = computed(() => resolve(() => props.field.dataListItemComponent()))
+const inputComponent = computed(() => resolve(() => props.field.formInputComponent()))
 
 function resolve(fn: () => any): any {
   try {

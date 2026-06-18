@@ -39,6 +39,12 @@ const displayValue = computed(() => {
     if (resolved && (resolved.type === 'text' || resolved.type === 'number')) {
       return resolved.value ?? ''
     }
+    // `state` cells (e.g. a select field with displayAs: 'state') carry the
+    // localized label, not the raw payload — show that instead of falling
+    // through to the raw value (which would render e.g. `open`).
+    if (resolved && resolved.type === 'state') {
+      return resolved.label ?? ''
+    }
   } catch {
     // Field types without a text cell fall through to the generic display.
   }

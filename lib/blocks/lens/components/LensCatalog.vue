@@ -512,6 +512,12 @@ const sheetRecord = ref<Record<string, any> | null>(null)
 // the sheet uses these when available and falls back to the search fields.
 const sheetFields = ref<Record<string, FieldData> | null>(null)
 
+// Monotonic token for the in-flight `/show` request. Opening a sheet bumps and
+// captures it; a `save()` (or a newer open) bumps it again, so a slower `/show`
+// generated before an update can't land afterwards and overwrite freshly saved
+// values with stale ones.
+let showRequestSeq = 0
+
 // Resolve a record's identifier, unwrapping the id field's object shape
 // (`{ value, display, path }`) when present.
 function resolveId(record: Record<string, any>): any {
@@ -588,6 +594,14 @@ const isQueryActive = computed(() =>
 )
 
 async function save(record: Record<string, any>, values: Record<string, any>): Promise<void> {
+  // Invalidate an in-flight /show only when it belongs to the record being
+  // saved: its response predates this update and must not overwrite the values
+  // we're about to persist. Scope it to the open sheet's record so a save to a
+  // different row (e.g. an inline edit elsewhere) can't cancel another open
+  // sheet's load.
+  if (sheetRecord.value === record) {
+    showRequestSeq++
+  }
   const id = resolveId(record)
   const res = await executeUpdate(id, values)
   // Patch the row in place so the table and sheet reflect the server's
@@ -599,7 +613,11 @@ async function save(record: Record<string, any>, values: Record<string, any>): P
   // field's value is sent under its key, but it may be filtered/sorted by
   // either its key or its `filterKey`, so check both.
   const keys = activeQueryKeys()
-  const fields = result.value?.fields ?? {}
+  // A detail-only field edited in the sheet has its definition in `sheetFields`
+  // (from /show), not the search `result.fields`; merge both so its `filterKey`
+  // is found and the reconcile check doesn't miss a field the query sorts or
+  // filters by.
+  const fields = { ...(result.value?.fields ?? {}), ...(sheetFields.value ?? {}) }
   const reconcile = Object.keys(values).some((key) => {
     if (keys.has(key)) { return true }
     const filterKey = fields[key]?.filterKey
@@ -662,10 +680,14 @@ async function remove(record: Record<string, any>): Promise<void> {
     const index = result.value.data.findIndex((r) => resolveId(r) === id)
     if (index !== -1) {
       result.value.data.splice(index, 1)
+      // Only adjust the total when a row was actually removed from the current
+      // result. A sheet record already excluded by the active query (e.g. a
+      // prior edit filtered it out) is not counted on this page, so
+      // decrementing would push the total too low.
+      if (result.value.pagination) {
+        result.value.pagination.total--
+      }
     }
-  }
-  if (result.value?.pagination) {
-    result.value.pagination.total--
   }
   // Deleting the last row of a page beyond the first leaves the catalog on a
   // now-empty (possibly nonexistent) page; step back one page and refetch so
@@ -682,6 +704,7 @@ async function openSheet(record: Record<string, any>): Promise<void> {
   // Reset to the search fields until `/show` returns; a stale set from a
   // previously opened record must not leak into this one.
   sheetFields.value = null
+  const seq = ++showRequestSeq
   sheet.on()
   // Pull the full record so detail-only fields (not selected as columns)
   // are populated and editable in the sheet. Patch the row in place so the
@@ -691,11 +714,11 @@ async function openSheet(record: Record<string, any>): Promise<void> {
   // already present on the row.
   try {
     const res = await executeShow(resolveId(record))
-    // Ignore a response that arrived after the user switched or closed and
-    // reopened the sheet on a different record (or the create form): a slower
-    // /show for a previously opened record must not overwrite the current
-    // one's fields.
-    if (sheetRecord.value !== record) {
+    // Drop the response if it has been superseded: by a newer /show (the user
+    // switched or reopened a record — `seq` advanced), by a `save()` to this
+    // record (which also advances `seq`, so a pre-update show can't revert the
+    // saved values), or by switching to the create form (`sheetRecord` reset).
+    if (seq !== showRequestSeq || sheetRecord.value !== record) {
       return
     }
     Object.assign(record, res.data)
