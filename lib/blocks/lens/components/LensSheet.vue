@@ -193,6 +193,19 @@ function onDelete() {
   emit('close')
 }
 
+// Block closing while a create is in flight. The create POST is blocking and
+// slow; closing mid-save would dismiss the sheet while `creating` keeps the
+// catalog controls interactive (create isn't part of the busy lock), letting
+// the user submit a duplicate record or start an edit the create's follow-up
+// refresh could overwrite. The backdrop/Escape paths are gated via SSheet's
+// `closable` prop; this guards the explicit close button (and any stray emit).
+function requestClose() {
+  if (saving.value) {
+    return
+  }
+  emit('close')
+}
+
 // --- Slot context -----------------------------------------------------------
 //
 // Content passed to the `#before` / `#after` slots is declared in the page
@@ -221,11 +234,17 @@ const slotProps = computed(() => ({
 </script>
 
 <template>
-  <SSheet :open :width="width ?? '480px'" @close="emit('close')">
+  <SSheet :open :closable="!saving" :width="width ?? '480px'" @close="requestClose">
     <div class="LensSheet">
       <div class="header">
         <div class="title">{{ title }}</div>
-        <button class="close" type="button" aria-label="Close" @click="emit('close')">
+        <button
+          class="close"
+          type="button"
+          aria-label="Close"
+          :disabled="saving"
+          @click="requestClose"
+        >
           <IconX class="close-icon" />
         </button>
       </div>
@@ -268,7 +287,7 @@ const slotProps = computed(() => ({
 
       <div class="footer">
         <template v-if="mode === 'create'">
-          <SButton size="medium" :label="t.cancel" :disabled="saving" @click="emit('close')" />
+          <SButton size="medium" :label="t.cancel" :disabled="saving" @click="requestClose" />
           <SButton
             size="medium"
             mode="info"
@@ -333,9 +352,14 @@ const slotProps = computed(() => ({
   transition: background-color 0.1s, color 0.1s;
 }
 
-.close:hover {
+.close:hover:not(:disabled) {
   background-color: var(--c-bg-mute-1);
   color: var(--c-text-1);
+}
+
+.close:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .close-icon {

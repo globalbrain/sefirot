@@ -544,21 +544,6 @@ function onNext() {
   refetch()
 }
 
-// Re-runs the current query against the endpoint, preserving the
-// catalog's in-memory state (select / filters / sort / page). Exposed
-// so callers can reflect server-side changes — e.g. after a bulk action
-// mutates rows — without remounting the component.
-async function refreshCatalog(): Promise<void> {
-  // A refresh is requested precisely when server-side data may have
-  // changed while the query input did not (e.g. after a bulk action).
-  // Clear the memoized input so the equality shortcut in the fetcher
-  // misses and a real request is issued instead of returning the stale
-  // cached result.
-  prevFetchInput = null
-  latestState.value = null
-  await doRefresh()
-}
-
 // --- CRUD editing ----------------------------------------------------------
 
 // Derive the CRUD endpoints from the (search) endpoint, e.g.
@@ -704,6 +689,30 @@ function applyLatest(): void {
   prevFetchInput = null
 }
 
+// Re-runs the current query against the endpoint, preserving the catalog's
+// in-memory state (select / filters / sort / page). Exposed so callers can
+// reflect server-side changes — e.g. after a bulk action mutates rows —
+// without remounting the component.
+async function refreshCatalog(): Promise<void> {
+  // While a background write is still syncing, a forced refetch would read
+  // stale (pre-write) data from the slow API and clobber the optimistic edits.
+  // Route through the reconcile flow instead, so any newer server state lands
+  // behind the refresh banner once the writes settle rather than overwriting
+  // the screen. This gives the exposed `refresh` the same guarantee the in-app
+  // controls have: a refresh never drops an in-flight optimistic edit.
+  if (busy.value) {
+    await reconcile()
+    return
+  }
+  // A refresh is requested precisely when server-side data may have changed
+  // while the query input did not (e.g. after a bulk action). Clear the
+  // memoized input so the equality shortcut in the fetcher misses and a real
+  // request is issued instead of returning the stale cached result.
+  prevFetchInput = null
+  latestState.value = null
+  await doRefresh()
+}
+
 // Track an optimistic background write: count it as pending, surface a snackbar
 // on failure, and once the whole batch settles (with no failures) reconcile.
 function hasPendingWrite(recordId: any): boolean {
@@ -832,7 +841,19 @@ function remove(record: Record<string, any>): void {
       }
     }
   }
-  trackWrite(id, `${id}:__delete__`, () => executeDelete(id))
+  // Serialize the delete behind any in-flight updates for the same record. With
+  // the slow write API, a concurrently-issued delete could otherwise reach the
+  // backend before a pending update — the update would then fail against an
+  // already-deleted row (spurious save-failed snackbar) or resurrect/clobber
+  // it. Gate on the record's current write chains (settled, success or not —
+  // the row is being deleted regardless) before issuing the delete.
+  const pendingForRecord = [...writeChains.entries()]
+    .filter(([key]) => key.startsWith(`${id}:`))
+    .map(([, chain]) => chain)
+  // `Promise.allSettled([])` resolves immediately, so this is a no-op gate when
+  // the record has no in-flight writes.
+  const gate = Promise.allSettled(pendingForRecord)
+  trackWrite(id, `${id}:__delete__`, () => gate.then(() => executeDelete(id)))
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
