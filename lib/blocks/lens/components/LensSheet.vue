@@ -215,11 +215,6 @@ const slotProps = computed(() => ({
   flex-direction: column;
   height: 100%;
   background-color: var(--c-bg-1);
-
-  /* Match the collaborator drawer: nested elevated controls sit on the
-     panel surface rather than a darker elevation. */
-  --c-bg-elv-2: var(--c-bg-1);
-  --c-bg-elv-3: var(--c-bg-1);
 }
 
 .header {
