@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref, shallowRef } from 'vue'
+import { computed, ref } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
+import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
@@ -14,6 +15,11 @@ const props = defineProps<{
   record: Record<string, any>
 }>()
 
+const { t } = useTrans({
+  en: { cancel: 'Cancel', apply: 'Apply', edit: 'Edit' },
+  ja: { cancel: 'キャンセル', apply: '適用', edit: '編集' }
+})
+
 const edit = useLensEdit()
 
 const editable = computed(() => !!edit && (props.field as any).data?.showOnUpdate === true)
@@ -22,8 +28,11 @@ const editable = computed(() => !!edit && (props.field as any).data?.showOnUpdat
 // (they `throw new Error('Not implemented.')`). Resolve them defensively so a
 // single unimplemented field never breaks the whole sheet — fall back to a
 // plain label/value row for display, and simply omit the edit affordance.
-const displayComponent = shallowRef(resolve(() => props.field.dataListItemComponent()))
-const inputComponent = shallowRef(resolve(() => props.field.formInputComponent()))
+//
+// Computed off `props.field` so they recompute when the field instance changes
+// (e.g. a refresh swaps in new field metadata for an already-rendered key).
+const displayComponent = computed(() => resolve(() => props.field.dataListItemComponent()))
+const inputComponent = computed(() => resolve(() => props.field.formInputComponent()))
 
 function resolve(fn: () => any): any {
   try {
@@ -48,10 +57,11 @@ const displayValue = computed(() => {
   return String(v)
 })
 
-const canEdit = computed(() => editable.value && !!inputComponent.value)
+// Display-only fields (e.g. `content`) resolve an input component but render
+// static markup with no value, so they must not gain an edit affordance.
+const canEdit = computed(() => editable.value && !!inputComponent.value && props.field.isSubmittable())
 
 const editing = ref(false)
-const saving = ref(false)
 const model = ref<any>(null)
 
 const { validation, validate, reset } = useValidation(
@@ -71,20 +81,18 @@ function cancel() {
 }
 
 async function apply() {
+  // Client-side validation only (required, length, …). Server-only rules such
+  // as `unique` are enforced by the background write, which surfaces a snackbar
+  // on rejection.
   if (!(await validate())) {
     return
   }
 
-  saving.value = true
-
-  try {
-    await edit!.save(props.record, {
-      [props.fieldKey]: props.field.inputToPayload(model.value)
-    })
-    editing.value = false
-  } finally {
-    saving.value = false
-  }
+  // Optimistic: patch + persist in the background, then close immediately.
+  edit!.save(props.record, {
+    [props.fieldKey]: props.field.inputToPayload(model.value)
+  })
+  editing.value = false
 }
 </script>
 
@@ -100,7 +108,7 @@ async function apply() {
         v-if="canEdit"
         class="edit"
         type="button"
-        :aria-label="`Edit ${field.label()}`"
+        :aria-label="`${t.edit} ${field.label()}`"
         @click="start"
       >
         <IconPencilSimple class="edit-icon" />
@@ -110,8 +118,8 @@ async function apply() {
     <div v-else class="form">
       <component :is="inputComponent" v-model="model" :validation="validation.input" />
       <div class="actions">
-        <SButton size="mini" label="Cancel" :disabled="saving" @click="cancel" />
-        <SButton size="mini" mode="info" label="Apply" :loading="saving" @click="apply" />
+        <SButton size="mini" :label="t.cancel" @click="cancel" />
+        <SButton size="mini" mode="info" :label="t.apply" @click="apply" />
       </div>
     </div>
   </div>

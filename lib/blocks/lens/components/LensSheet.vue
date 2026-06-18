@@ -6,10 +6,12 @@ import SButton from '../../../components/SButton.vue'
 import SSheet from '../../../components/SSheet.vue'
 import { provideDataListState } from '../../../composables/DataList'
 import { useTrans } from '../../../composables/Lang'
+import { usePower } from '../../../composables/Power'
 import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
+import { extractServerErrors } from '../validation/ServerErrors'
 import LensSheetField from './LensSheetField.vue'
 
 const props = withDefaults(defineProps<{
@@ -30,8 +32,20 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useTrans({
-  en: { create: 'Create', cancel: 'Cancel', delete: 'Delete', new_record: 'New record', deleting: 'Deleting…' },
-  ja: { create: '作成', cancel: 'キャンセル', delete: '削除', new_record: '新規作成', deleting: '削除中…' }
+  en: {
+    create: 'Create',
+    cancel: 'Cancel',
+    delete: 'Delete',
+    confirm_delete: 'Delete this record?',
+    new_record: 'New record'
+  },
+  ja: {
+    create: '作成',
+    cancel: 'キャンセル',
+    delete: '削除',
+    confirm_delete: 'このレコードを削除しますか？',
+    new_record: '新規作成'
+  }
 })
 
 const edit = useLensEdit()
@@ -57,12 +71,31 @@ const createFields = computed(() => entries.value.filter((e) => e.fieldData.show
 // `formInputComponent()` inline in the template would mint a brand-new
 // component definition on every render, which breaks Vue's component patching
 // (`instance.update is not a function`).
+//
+// Some field types don't implement a form input (they `throw new
+// Error('Not implemented.')`); resolve defensively and drop those from the
+// form rather than letting one unsupported field crash the create sheet.
 const createFieldViews = computed(() =>
-  createFields.value.map((e) => ({
-    key: e.key,
-    component: e.field.formInputComponent()
-  }))
+  createFields.value
+    .map((e) => ({ key: e.key, field: e.field, component: resolveInput(e.field) }))
+    .filter((v) => v.component != null)
 )
+
+// The subset of create views that actually contribute a value. Display-only
+// fields (e.g. a `content` field showing instructions) still render, but
+// `formInputComponent()` returns static markup with no value, so they must not
+// be seeded, validated, or submitted.
+const createInputViews = computed(() =>
+  createFieldViews.value.filter((v) => v.field.isSubmittable())
+)
+
+function resolveInput(field: { formInputComponent: () => any }): any {
+  try {
+    return field.formInputComponent()
+  } catch {
+    return null
+  }
+}
 
 const title = computed(() => {
   if (props.mode === 'create') {
@@ -77,18 +110,31 @@ const title = computed(() => {
 const createModel = reactive<Record<string, any>>({})
 const saving = ref(false)
 
+// Backend-only validation errors (e.g. `unique`) returned by a rejected
+// create, fed to Vuelidate via `$externalResults` so they surface on the
+// offending field. The create form's keys are the bare field keys, matching
+// the 422 error keys 1:1.
+const serverErrors = ref<Record<string, string[]>>({})
+
 const { validation, validate, reset } = useValidation(
   () => createModel,
-  () => Object.fromEntries(createFields.value.map((e) => [e.key, e.field.generateValidationRules()]))
+  () => Object.fromEntries(createInputViews.value.map((e) => [e.key, e.field.generateValidationRules()])),
+  { $externalResults: serverErrors }
 )
 
+const confirmingDelete = usePower()
+
 watch(
-  () => [props.open, props.mode] as const,
+  () => [props.open, props.mode, props.record] as const,
   ([open, mode]) => {
+    // Reset the delete confirmation whenever the sheet opens, switches mode, or
+    // is reused for a different record.
+    confirmingDelete.off()
     if (open && mode === 'create') {
-      for (const { key, field } of createFields.value) {
+      for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
+      serverErrors.value = {}
       reset()
     }
   },
@@ -96,6 +142,8 @@ watch(
 )
 
 async function onCreate() {
+  serverErrors.value = {}
+
   if (!(await validate())) {
     return
   }
@@ -104,27 +152,32 @@ async function onCreate() {
 
   try {
     const values: Record<string, any> = {}
-    for (const { key, field } of createFields.value) {
+    for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])
     }
     await edit!.create(values)
     emit('close')
+  } catch (e) {
+    // Surface backend validation errors (e.g. a duplicate `unique` value) on
+    // the offending fields; rethrow anything that isn't a 422.
+    const errors = extractServerErrors(e)
+    if (!errors) {
+      throw e
+    }
+    serverErrors.value = errors
   } finally {
     saving.value = false
   }
 }
 
-async function onDelete() {
+function onDelete() {
   if (!props.record) {
     return
   }
-  saving.value = true
-  try {
-    await edit!.remove(props.record)
-    emit('close')
-  } finally {
-    saving.value = false
-  }
+  // Optimistic: the row is removed immediately and the delete is persisted in
+  // the background, so close right away.
+  edit!.remove(props.record)
+  emit('close')
 }
 
 // --- Slot context -----------------------------------------------------------
@@ -137,15 +190,13 @@ async function onDelete() {
 // one-off concerns (avatar upload, social links, linked records) while still
 // letting a page implement them.
 
-const resolvedId = computed(() =>
-  props.record && edit ? edit.resolveId(props.record) : null
-)
+const resolvedId = computed(() => (props.record && edit ? edit.resolveId(props.record) : null))
 
 function saveRecord(values: Record<string, any>): Promise<void> {
-  if (!props.record || !edit) {
-    return Promise.resolve()
+  if (props.record && edit) {
+    edit.save(props.record, values)
   }
-  return edit.save(props.record, values)
+  return Promise.resolve()
 }
 
 const slotProps = computed(() => ({
@@ -199,10 +250,29 @@ const slotProps = computed(() => ({
       <div class="footer">
         <template v-if="mode === 'create'">
           <SButton size="medium" :label="t.cancel" :disabled="saving" @click="emit('close')" />
-          <SButton size="medium" mode="info" :label="t.create" :loading="saving" @click="onCreate" />
+          <SButton
+            size="medium"
+            mode="info"
+            :label="t.create"
+            :loading="saving"
+            @click="onCreate"
+          />
         </template>
         <template v-else-if="record">
-          <SButton size="medium" mode="danger" type="outline" :icon="IconTrash" :label="t.delete" :loading="saving" @click="onDelete" />
+          <template v-if="confirmingDelete.state.value">
+            <span class="confirm-text">{{ t.confirm_delete }}</span>
+            <SButton size="medium" :label="t.cancel" @click="confirmingDelete.off" />
+            <SButton size="medium" mode="danger" :label="t.delete" @click="onDelete" />
+          </template>
+          <SButton
+            v-else
+            size="medium"
+            mode="danger"
+            type="outline"
+            :icon="IconTrash"
+            :label="t.delete"
+            @click="confirmingDelete.on"
+          />
         </template>
       </div>
     </div>
@@ -280,5 +350,11 @@ const slotProps = computed(() => ({
   gap: 8px;
   padding: 16px 24px;
   border-top: 1px solid var(--c-divider);
+}
+
+.confirm-text {
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--c-text-2);
 }
 </style>

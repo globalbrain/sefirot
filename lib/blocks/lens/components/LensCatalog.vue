@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { useDebounceFn, useElementSize } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import SButton from '../../../components/SButton.vue'
 import SDivider from '../../../components/SDivider.vue'
 import { useMutation, useQuery } from '../../../composables/Api'
-import { useLang } from '../../../composables/Lang'
+import { useLang, useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
+import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
@@ -164,6 +166,23 @@ const emit = defineEmits<{
   'cell-clicked': [value: any, record: any]
 }>()
 
+const { t } = useTrans({
+  en: {
+    write_error: 'Your latest changes might not be saved. Please reload the page, and contact support if the problem persists.',
+    busy_warning: 'A save is still in progress — changes you make now may not be saved.',
+    refresh_text: 'Newer results are available.',
+    refresh_action: 'Refresh'
+  },
+  ja: {
+    write_error: '最新の変更が保存されていない可能性があります。ページを再読み込みし、問題が解決しない場合はサポートにお問い合わせください。',
+    busy_warning: '保存処理中です。ここでの変更は保存されない可能性があります。',
+    refresh_text: '新しい結果があります。',
+    refresh_action: '更新'
+  }
+})
+
+const snackbars = useSnackbars()
+
 const filterDialog = usePower()
 const viewDialog = usePower()
 
@@ -175,6 +194,12 @@ const conditionBlocksEl = ref<HTMLElement | null>(null)
 // after some data has been loaded once and then resulted in no data
 // due to user filtering.
 const hasInitialResults = ref(false)
+
+// A fresher server result fetched after the optimistic writes settled, awaiting
+// the user's explicit opt-in via the refresh button — never auto-applied (that
+// would momentarily revert the optimistic edits to stale data). Declared here
+// (ahead of the query handlers that clear it) so they can reference it.
+const latestState = ref<LensResult | null>(null)
 
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
@@ -217,8 +242,10 @@ const perPage = ref(100)
 
 const lang = useLang()
 
-const { data: result, execute: refresh, loading } = useQuery(async (http) => {
-  const input = {
+// Build the search request from the catalog's current state. Shared by the
+// main search and the background reconcile fetch so both query identically.
+function buildSearchInput(): LensQuery {
+  return {
     entity: props.entity ?? '__no_entity__',
     select: withIndexField(_select.value),
     filters: createInputFilters(queryFilter.value, _filters.value),
@@ -227,6 +254,10 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
     page: page.value,
     perPage: perPage.value
   }
+}
+
+const { data: result, execute: refresh, loading } = useQuery(async (http) => {
+  const input = buildSearchInput()
 
   if (prevFetchInput && JSON.stringify(prevFetchInput) === JSON.stringify(input)) {
     return prevFetchResult!
@@ -243,9 +274,12 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
 const doRefresh = useDebounceFn(refresh, 50)
 
 if (props.urlSync) {
+  // Route URL-driven changes (back/forward, shared links) through `refetch` so
+  // they clear any stashed reconcile result, just like the in-app controls — a
+  // refresh button must never apply data fetched for a previous query.
   useCatalogUrlQuerySync(
     { query, filters: _filters, sort: _sort, page },
-    doRefresh
+    refetch
   )
 }
 
@@ -356,13 +390,16 @@ const tableSelect = computed(() => {
 // not a column the user picked). The corresponding column is also
 // hidden from the rendered table by `LensTable`.
 //
-// When the caller has no concrete select list, the index field is
-// *not* added either — leaving the request empty lets the server use
-// its own defaults. See `indexField` prop docs above.
+// Editable catalogs must carry a row identifier so updates / deletes can
+// address each row; when no `indexField` is configured the identifier
+// defaults to `id`. When the caller has no concrete select list, nothing
+// is added either — leaving the request empty lets the server use its own
+// defaults. See `indexField` prop docs above.
 function withIndexField(fields: string[]): string[] {
   if (fields.length === 0) { return [] }
-  if (!props.indexField || fields.includes(props.indexField)) { return [...fields] }
-  return [...fields, props.indexField]
+  const field = props.indexField ?? (props.editable ? 'id' : null)
+  if (!field || fields.includes(field)) { return [...fields] }
+  return [...fields, field]
 }
 
 function withoutIndexField(fields: string[]): string[] {
@@ -380,25 +417,35 @@ function createInputFilters(queryFilters: any[], filters: any[]) {
   ].filter((f) => f?.length > 0)
 }
 
-function onQuery(value: string | null) {
-  query.value = value
-  page.value = 1
+// Re-run the search for the new query state, dropping any stashed
+// reconcile result (the refreshed state supersedes it).
+function refetch(): void {
+  latestState.value = null
   doRefresh()
 }
 
+function onQuery(value: string | null) {
+  if (guardBusy()) { return }
+  query.value = value
+  page.value = 1
+  refetch()
+}
+
 function onFiltersUpdated(filters: any[]) {
+  if (guardBusy()) { return }
   _filters.value = filters
   page.value = 1
-  doRefresh()
+  refetch()
   filterDialog.off()
   emit('filters-updated', _filters.value)
 }
 
 function onInlineFilterUpdated(filter: any[]) {
+  if (guardBusy()) { return }
   const sameFilterIndex = _filters.value.findIndex((f) => f[0] === filter[0])
   sameFilterIndex === -1 ? applyNewFilter(filter) : replaceFilter(sameFilterIndex, filter)
   page.value = 1
-  doRefresh()
+  refetch()
   emit('filters-updated', _filters.value)
 }
 
@@ -424,34 +471,38 @@ function replaceFilter(index: number, filter: any[]) {
 }
 
 function onResetFilters() {
+  if (guardBusy()) { return }
   _filters.value = []
   query.value = null
   page.value = 1
-  doRefresh()
+  refetch()
   emit('filters-updated', _filters.value)
 }
 
 function onSortUpdated(sort: LensQuerySort) {
+  if (guardBusy()) { return }
   _sort.value = [sort]
   page.value = 1
-  doRefresh()
+  refetch()
   emit('sort-updated', _sort.value)
 }
 
 function onResetSorts() {
+  if (guardBusy()) { return }
   _sort.value = []
   page.value = 1
-  doRefresh()
+  refetch()
   emit('sort-updated', _sort.value)
 }
 
 function onViewUpdated(newSelect: string[], newSelectable: string[], overrides: Record<string, Partial<FieldData>>) {
+  if (guardBusy()) { return }
   // Treat updates from the view form as deliberate user intent: if the
   // user picked the index field on purpose, surface its column.
   _select.value = newSelect
   _selectable.value = newSelectable
   _overrides.value = overrides
-  doRefresh()
+  refetch()
   viewDialog.off()
   emit('select-updated', _select.value)
   emit('selectable-updated', _selectable.value)
@@ -467,13 +518,15 @@ function onResetSelection() {
 }
 
 function onPrev() {
+  if (guardBusy()) { return }
   page.value--
-  doRefresh()
+  refetch()
 }
 
 function onNext() {
+  if (guardBusy()) { return }
   page.value++
-  doRefresh()
+  refetch()
 }
 
 // Re-runs the current query against the endpoint, preserving the
@@ -487,6 +540,7 @@ async function refreshCatalog(): Promise<void> {
   // misses and a real request is issued instead of returning the stale
   // cached result.
   prevFetchInput = null
+  latestState.value = null
   await doRefresh()
 }
 
@@ -500,6 +554,28 @@ const sheet = usePower()
 const sheetMode = ref<'view' | 'create'>('view')
 const sheetRecord = ref<Record<string, any> | null>(null)
 
+// The slow target API can take a long time to sync a write, and a read during
+// that window returns stale (pre-write) data. So updates and deletes are
+// applied to the in-memory result immediately and persisted in the background;
+// the server is never re-read to reconcile until the write settles. While any
+// write is in flight the catalog is "busy": query controls and the refresh
+// affordance are locked and an unload guard is armed.
+const pendingWrites = ref(0)
+const reconciling = ref(false)
+const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
+
+// Whether any write in the current in-flight batch failed; when so the reconcile
+// is skipped (the snackbar already told the user to reload).
+let batchErrored = false
+
+// Monotonic token for the in-flight `/show` request, so a slow detail fetch
+// that predates an edit (or a record switch) can't overwrite newer data.
+let showRequestSeq = 0
+
+// Monotonic token for the in-flight reconcile fetch, so a newer batch's
+// reconcile supersedes an older one still in flight.
+let reconcileToken = 0
+
 // Resolve a record's identifier, unwrapping the id field's object shape
 // (`{ value, display, path }`) when present.
 function resolveId(record: Record<string, any>): any {
@@ -508,14 +584,14 @@ function resolveId(record: Record<string, any>): any {
 }
 
 const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
-  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/update`, {
-    entity: props.entity, id, values
+  http.post(`${endpointBase.value}/update`, {
+    entity: props.entity, id, values, settings: { lang }
   })
 )
 
 const { execute: executeCreate } = useMutation((http, values: Record<string, any>) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/create`, {
-    entity: props.entity, values
+    entity: props.entity, values, settings: { lang }
   })
 )
 
@@ -528,52 +604,144 @@ const { execute: executeDelete } = useMutation((http, id: any) =>
 // catalog doesn't render as columns (e.g. long-form descriptions).
 const { execute: executeShow } = useMutation((http, id: any) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/show`, {
-    entity: props.entity, id
+    entity: props.entity, id, settings: { lang }
   })
 )
 
-async function save(record: Record<string, any>, values: Record<string, any>): Promise<void> {
-  const res = await executeUpdate(resolveId(record), values)
-  // Patch the row in place so the table and sheet reflect the server's
-  // re-serialized values without a full refetch.
-  Object.assign(record, res.data)
+// Re-run the search without touching the displayed state. Used by the
+// background reconcile so its result can be stashed behind the refresh button
+// rather than replacing the optimistic view.
+const { execute: executeReconcile } = useMutation((http, input: LensQuery) =>
+  http.post<LensResult>(props.endpoint, input)
+)
+
+function guardBusy(): boolean {
+  if (busy.value) {
+    snackbars.push({ mode: 'warning', text: t.busy_warning })
+    return true
+  }
+  return false
 }
 
+// Value-level comparison (rows in order + total) — decides whether a reconcile
+// actually surfaced anything newer than the optimistic state on screen.
+function isSameResult(a: LensResult | null, b: LensResult | null): boolean {
+  if (!a || !b) { return a === b }
+  return a.pagination.total === b.pagination.total
+    && JSON.stringify(a.data) === JSON.stringify(b.data)
+}
+
+// After the last in-flight write settles, fetch the canonical state for the
+// current query and, only if it differs from what's shown, stash it behind the
+// refresh button. The server is fresh by now (the write completed).
+async function reconcile(): Promise<void> {
+  const token = ++reconcileToken
+  reconciling.value = true
+  try {
+    const fresh = await executeReconcile(buildSearchInput())
+    // Drop the result if a newer write batch already kicked off its own
+    // reconcile while this one was in flight.
+    if (token !== reconcileToken) {
+      return
+    }
+    if (result.value && !isSameResult(fresh, result.value)) {
+      latestState.value = fresh
+    }
+  } catch {
+    // Ignore — keep the optimistic state, offer no refresh.
+  } finally {
+    if (token === reconcileToken) {
+      reconciling.value = false
+    }
+  }
+}
+
+function applyLatest(): void {
+  if (!latestState.value) { return }
+  result.value = latestState.value
+  latestState.value = null
+  prevFetchInput = null
+}
+
+// Track an optimistic background write: count it as pending, surface a snackbar
+// on failure, and once the whole batch settles (with no failures) reconcile.
+function trackWrite(run: () => Promise<unknown>): void {
+  pendingWrites.value++
+  run()
+    .catch(() => {
+      batchErrored = true
+      snackbars.push({ mode: 'danger', text: t.write_error })
+    })
+    .finally(() => {
+      pendingWrites.value--
+      if (pendingWrites.value === 0) {
+        const errored = batchErrored
+        batchErrored = false
+        if (!errored) {
+          reconcile()
+        }
+      }
+    })
+}
+
+// Update — optimistic. Reflect the change in memory immediately (the catalog
+// row and the open sheet share this object), then persist in the background.
+function save(record: Record<string, any>, values: Record<string, any>): void {
+  // A pending `/show` for this record predates the edit; invalidate it so it
+  // can't overwrite the optimistic value when it lands.
+  if (sheetRecord.value === record) {
+    showRequestSeq++
+  }
+  Object.assign(record, values)
+  trackWrite(() => executeUpdate(resolveId(record), values))
+}
+
+// Create — blocking. The slow POST runs to completion, then the catalog is
+// refreshed with the now-synced canonical state (preserving the active query).
+// The create sheet shows a button spinner meanwhile.
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   const res = await executeCreate(values)
-  if (result.value?.data) {
-    result.value.data.unshift(res.data)
-  }
-  if (result.value?.pagination) {
-    result.value.pagination.total++
+  await refreshCatalog()
+  if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
+    hasInitialResults.value = true
   }
   return res.data
 }
 
-async function remove(record: Record<string, any>): Promise<void> {
+// Delete — optimistic. Remove from the UI immediately, persist in the
+// background.
+function remove(record: Record<string, any>): void {
   const id = resolveId(record)
-  await executeDelete(id)
   if (result.value?.data) {
     const index = result.value.data.findIndex((r) => resolveId(r) === id)
     if (index !== -1) {
       result.value.data.splice(index, 1)
+      // Only adjust the total when a row was actually removed from the current
+      // page, so a not-found delete can't drift the count below the rows shown.
+      if (result.value.pagination) {
+        result.value.pagination.total--
+      }
     }
   }
-  if (result.value?.pagination) {
-    result.value.pagination.total--
-  }
+  trackWrite(() => executeDelete(id))
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
   sheetRecord.value = record
   sheetMode.value = 'view'
   sheet.on()
-  // Pull the full record so detail-only fields (not selected as columns)
-  // are populated and editable in the sheet. Patch the row in place so the
-  // values persist on the shared record object. Failures are non-fatal: the
-  // sheet falls back to the fields already present on the row.
+  const seq = ++showRequestSeq
+  // Pull the full record so detail-only fields (not selected as columns) are
+  // populated and editable in the sheet. Failures are non-fatal: the sheet
+  // falls back to the columns already on the row.
   try {
     const res = await executeShow(resolveId(record))
+    // Drop the response if it has been superseded — by a record switch, the
+    // create form, or an edit to this record (which bumps the token) — so a
+    // stale detail fetch can't overwrite newer optimistic data.
+    if (seq !== showRequestSeq || sheetRecord.value !== record) {
+      return
+    }
     Object.assign(record, res.data)
   } catch {
     // Ignore — keep showing the columns the catalog already fetched.
@@ -581,14 +749,22 @@ async function openSheet(record: Record<string, any>): Promise<void> {
 }
 
 function openCreate(): void {
+  // `creatable` is the prop that enables creation. Honor it here even though
+  // this method is exposed (and provided to children).
+  if (!props.creatable) {
+    return
+  }
   sheetRecord.value = null
   sheetMode.value = 'create'
   sheet.on()
 }
 
 provideLensEdit({
-  editable: !!props.editable,
-  creatable: !!props.creatable,
+  // Getters so the injected context tracks prop changes after mount (e.g.
+  // permissions resolving async, or a flag toggling `editable` off): LensTable
+  // gates inline editing and the id-cell sheet on `edit.editable`.
+  get editable() { return !!props.editable },
+  get creatable() { return !!props.creatable },
   entity: props.entity ?? '',
   indexField: props.indexField ?? 'id',
   resolveId,
@@ -598,6 +774,18 @@ provideLensEdit({
   openSheet,
   openCreate
 })
+
+// Warn the user (native prompt) if they try to leave while a write is still
+// syncing, since that change might not have been persisted yet.
+function onBeforeUnload(event: BeforeUnloadEvent): void {
+  if (pendingWrites.value > 0) {
+    event.preventDefault()
+    event.returnValue = ''
+  }
+}
+
+onMounted(() => window.addEventListener('beforeunload', onBeforeUnload))
+onBeforeUnmount(() => window.removeEventListener('beforeunload', onBeforeUnload))
 
 defineExpose({
   refresh: refreshCatalog,
@@ -641,6 +829,7 @@ defineExpose({
     <div v-else class="container">
       <LensCatalogControl
         v-if="result"
+        :class="{ 'is-busy': busy }"
         :query
         :query-ph
         :filter-presets
@@ -674,7 +863,7 @@ defineExpose({
         </template>
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
-      <div v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)" ref="conditionBlocksEl" class="condition-blocks">
+      <div v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)" ref="conditionBlocksEl" class="condition-blocks" :class="{ 'is-busy': busy }">
         <template v-if="_filters.length > 0">
           <SDivider />
           <LensCatalogStateFilter
@@ -693,6 +882,10 @@ defineExpose({
         </template>
       </div>
       <SDivider />
+      <div v-if="latestState && !busy" class="refresh-banner">
+        <span class="refresh-banner-text">{{ t.refresh_text }}</span>
+        <SButton size="mini" mode="info" :label="t.refresh_action" @click="applyLatest" />
+      </div>
       <div class="list" :style="tableMaxHeight">
         <LensTable
           :result
@@ -710,6 +903,7 @@ defineExpose({
         />
         <LensCatalogFooter
           v-if="result && result?.pagination.total > 0"
+          :class="{ 'is-busy': busy }"
           :result
           :loading
           @prev="onPrev"
@@ -794,6 +988,29 @@ defineExpose({
   flex-direction: column;
   flex-grow: 1;
   min-height: 100%;
+}
+
+/* While a background write is syncing, lock the query controls so the user
+   can't change filters/sort/page (a refetch then would be stale and would
+   drop the optimistic edits). Editing the rows stays available. */
+.is-busy {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.refresh-banner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--c-gutter);
+  background-color: var(--c-bg-2);
+}
+
+.refresh-banner-text {
+  font-size: 13px;
+  color: var(--c-text-2);
 }
 
 .list {

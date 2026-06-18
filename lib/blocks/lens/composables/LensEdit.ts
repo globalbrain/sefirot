@@ -23,16 +23,23 @@ export interface LensEditContext {
   resolveId: (record: Record<string, any>) => any
 
   /**
-   * Persist a partial update for an existing record and patch it in place.
-   * Resolves once the row reflects the server's re-serialized values.
+   * Apply a partial update to an existing record. Optimistic: patches the
+   * record in memory immediately and persists in the background, so it returns
+   * synchronously without waiting for the (potentially slow) write.
    */
-  save: (record: Record<string, any>, values: Record<string, any>) => Promise<void>
+  save: (record: Record<string, any>, values: Record<string, any>) => void
 
-  /** Create a new record and prepend it to the catalog. */
+  /**
+   * Create a new record. Blocking: resolves once the record is persisted and
+   * the catalog has been refreshed with the canonical state.
+   */
   create: (values: Record<string, any>) => Promise<Record<string, any>>
 
-  /** Delete a record and remove it from the catalog. */
-  remove: (record: Record<string, any>) => Promise<void>
+  /**
+   * Delete a record. Optimistic: removes it from the catalog immediately and
+   * persists in the background, so it returns synchronously.
+   */
+  remove: (record: Record<string, any>) => void
 
   /** Open the record sheet for an existing record (view + per-field edit). */
   openSheet: (record: Record<string, any>) => void

@@ -11,6 +11,7 @@ import { type LensResult } from '../LensResult'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
 import { provideLensInlineEdit } from '../composables/LensInlineEdit'
+import { type Field } from '../fields/Field'
 import LensTableEditableCell from './LensTableEditableCell.vue'
 
 const props = defineProps<{
@@ -119,9 +120,11 @@ const columns = computedAsync(async () => {
 
     const column = field.tableColumn()
 
-    // When editing is enabled, clicking a row's id cell opens the record
-    // sheet (view + per-field edit + delete) instead of following a link.
-    if (edit?.editable && overriddenFieldData.type === 'id') {
+    // When editing is enabled, clicking the row-identifier id cell opens the
+    // record sheet (view + per-field edit + delete) instead of following a
+    // link. Restrict this to the configured index field so other id-type
+    // columns (e.g. a `company_id` reference link) keep their own navigation.
+    if (edit?.editable && overriddenFieldData.type === 'id' && key === edit.indexField) {
       const original = column.cell
       column.cell = (v: any, r: any): TableCell<any, any> => {
         const cell = typeof original === 'function' ? original(v, r) : original
@@ -132,10 +135,11 @@ const columns = computedAsync(async () => {
           onClick: () => edit.openSheet(r)
         } as TableCell<any, any>
       }
-    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true) {
+    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true && field.isSubmittable() && hasFormInput(field)) {
       // Editable fields render a custom cell with a hover edit affordance
       // that opens an inline editor (reusing the field's form input + the
       // edit context's save). Sort/filter menus on the column are kept.
+      // Fields without a real input (or display-only ones) stay read-only.
       column.cell = {
         type: 'component',
         component: editableCellComponent,
@@ -184,6 +188,19 @@ function onFilterUpdated(filter: any[]) {
 
 function onSortUpdated(sort: LensQuerySort) {
   emit('sort-updated', sort)
+}
+
+// Some field types do not implement a form input (they `throw new
+// Error('Not implemented.')`). Only upgrade a cell to the inline editor when
+// the field actually has an input component, otherwise leave it read-only so a
+// backend that marks such a field `showOnUpdate` renders a plain cell instead
+// of a pencil that crashes on click.
+function hasFormInput(field: Field<FieldData>): boolean {
+  try {
+    return !!field.formInputComponent()
+  } catch {
+    return false
+  }
 }
 </script>
 

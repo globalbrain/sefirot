@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
-import { computed, nextTick, ref, shallowRef } from 'vue'
+import { computed, nextTick, onUnmounted, ref, shallowRef } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
@@ -29,6 +29,16 @@ const inline = useLensInlineEdit()
 const myKey = computed(() => `${edit?.resolveId(props.record)}:${props.fieldKey}`)
 const editing = computed(() => inline?.activeKey.value === myKey.value)
 
+// STable virtualization can unmount this row (and its teleported editor) while
+// scrolling. If this cell holds the active editor, clear the shared active key
+// on unmount so a later remount doesn't reopen a blank editor (the local
+// `inputComponent`/`model` are only set by `start()`).
+onUnmounted(() => {
+  if (inline?.activeKey.value === myKey.value) {
+    inline.stop()
+  }
+})
+
 // Reuse the field's own table-cell rendering for the display value so the
 // label mapping (e.g. select option labels) matches the read-only columns.
 // Falls back to a plain representation for non-text displays.
@@ -38,6 +48,11 @@ const displayValue = computed(() => {
     const resolved: any = typeof cell === 'function' ? cell(props.value, props.record) : cell
     if (resolved && (resolved.type === 'text' || resolved.type === 'number')) {
       return resolved.value ?? ''
+    }
+    // `state` cells (e.g. a select with displayAs: 'state') carry the localized
+    // label, not the raw payload — show that rather than falling through.
+    if (resolved && resolved.type === 'state') {
+      return resolved.label ?? ''
     }
   } catch {
     // Field types without a text cell fall through to the generic display.
@@ -65,7 +80,6 @@ const { inset, update } = useManualDropdownPosition(anchor)
 
 const inputComponent = shallowRef<any>(null)
 const model = ref<any>(null)
-const saving = ref(false)
 
 const { validation, validate, reset } = useValidation(
   () => ({ input: model.value }),
@@ -96,19 +110,22 @@ function cancel() {
 }
 
 async function apply() {
+  // Client-side validation only; server-only rules (e.g. `unique`) are enforced
+  // by the background write, which surfaces a snackbar on rejection.
   if (!(await validate())) {
     return
   }
 
-  saving.value = true
+  // Optimistic: patch + persist in the background, then close immediately.
+  edit!.save(props.record, {
+    [props.fieldKey]: props.field.inputToPayload(model.value)
+  })
 
-  try {
-    await edit!.save(props.record, {
-      [props.fieldKey]: props.field.inputToPayload(model.value)
-    })
-    inline?.stop()
-  } finally {
-    saving.value = false
+  // Only close if this cell is still the active one: the user may have started
+  // editing another cell while validating, and an unconditional stop would
+  // clear that new editor's shared key.
+  if (inline?.activeKey.value === myKey.value) {
+    inline.stop()
   }
 }
 
@@ -118,11 +135,23 @@ function onEditorKeydown(event: KeyboardEvent) {
     cancel()
     return
   }
-  // Enter saves, except in a textarea where it inserts a newline.
-  if (event.key === 'Enter' && (event.target as HTMLElement)?.tagName !== 'TEXTAREA') {
+  // Enter saves only from a plain text-like input. A textarea inserts a
+  // newline, and controls that handle Enter themselves (e.g. a dropdown that
+  // opens its menu on Enter) must keep it — otherwise a keyboard user submits
+  // the old value instead of choosing an option.
+  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
     event.preventDefault()
     apply()
   }
+}
+
+function isTextLikeInput(target: EventTarget | null): boolean {
+  const el = target as HTMLElement | null
+  if (!el || el.tagName !== 'INPUT') {
+    return false
+  }
+  const type = (el as HTMLInputElement).type
+  return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
 }
 </script>
 
@@ -138,12 +167,12 @@ function onEditorKeydown(event: KeyboardEvent) {
       <IconPencilSimple class="edit-icon" />
     </button>
 
-    <Teleport v-if="editing" to="#sefirot-modals">
+    <Teleport v-if="editing && inputComponent" to="#sefirot-modals">
       <div ref="editorEl" class="LensTableEditableCellEditor" :style="editorStyle" @keydown="onEditorKeydown">
         <component :is="inputComponent" v-model="model" :validation="validation.input" />
         <div class="actions">
-          <SButton size="mini" :label="t.cancel" :disabled="saving" @click="cancel" />
-          <SButton size="mini" mode="info" :label="t.save" :loading="saving" @click="apply" />
+          <SButton size="mini" :label="t.cancel" @click="cancel" />
+          <SButton size="mini" mode="info" :label="t.save" @click="apply" />
         </div>
       </div>
     </Teleport>
