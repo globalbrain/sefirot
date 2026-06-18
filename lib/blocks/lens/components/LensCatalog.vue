@@ -588,6 +588,11 @@ const pendingWrites = ref(0)
 const reconciling = ref(false)
 const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 
+// Whether a (blocking) create POST is in flight. Not part of `busy` — the
+// create sheet covers the controls — but it arms the unload guard, since the
+// create write is just as slow and shouldn't be lost to a tab close/reload.
+const creating = ref(false)
+
 // Whether any write in the current in-flight batch failed; when so the reconcile
 // is skipped (the snackbar already told the user to reload).
 let batchErrored = false
@@ -768,32 +773,48 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
 // Create — blocking. The slow POST runs to completion, then the catalog is
 // refreshed with the now-synced canonical state (preserving the active query).
 // The create sheet shows a button spinner meanwhile.
+function prependCreated(data: Record<string, any>): void {
+  if (result.value?.data) {
+    result.value.data.unshift(data)
+  }
+  if (result.value?.pagination) {
+    result.value.pagination.total++
+  }
+}
+
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
-  const res = await executeCreate(values)
-  if (pendingWrites.value > 0) {
-    // Other optimistic writes are still syncing; a refetch now would read the
-    // backend before they're visible and clobber those rows. Prepend the new
-    // record optimistically instead — the pending writes' reconcile refreshes
-    // the full list (via the refresh banner) once they settle.
-    if (result.value?.data) {
-      result.value.data.unshift(res.data)
+  creating.value = true
+  try {
+    const res = await executeCreate(values)
+    // The POST succeeded — the record exists. From here a refresh failure must
+    // not reject (the caller would treat the create as failed and re-submit a
+    // duplicate); fall back to showing the new record optimistically.
+    if (pendingWrites.value > 0) {
+      // Other optimistic writes are still syncing; a refetch now would read the
+      // backend before they're visible and clobber those rows. Prepend the new
+      // record optimistically — the pending writes' reconcile refreshes the
+      // full list (via the refresh banner) once they settle.
+      prependCreated(res.data)
+    } else {
+      // A write batch may have settled during the (slow) POST and kicked off a
+      // reconcile; invalidate it (token bump + busy-flag reset, mirroring
+      // trackWrite) so its possibly-pre-create snapshot can't land behind the
+      // refresh banner after this fresh refetch.
+      reconcileToken++
+      reconciling.value = false
+      try {
+        await refreshCatalog()
+      } catch {
+        prependCreated(res.data)
+      }
     }
-    if (result.value?.pagination) {
-      result.value.pagination.total++
+    if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
+      hasInitialResults.value = true
     }
-  } else {
-    // A write batch may have settled during the (slow) POST and kicked off a
-    // reconcile; invalidate it (token bump + busy-flag reset, mirroring
-    // trackWrite) so its possibly-pre-create snapshot can't land behind the
-    // refresh banner after this fresh refetch.
-    reconcileToken++
-    reconciling.value = false
-    await refreshCatalog()
+    return res.data
+  } finally {
+    creating.value = false
   }
-  if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
-    hasInitialResults.value = true
-  }
-  return res.data
 }
 
 // Delete — optimistic. Remove from the UI immediately, persist in the
@@ -894,7 +915,7 @@ provideLensEdit({
 // Warn the user (native prompt) if they try to leave while a write is still
 // syncing, since that change might not have been persisted yet.
 function onBeforeUnload(event: BeforeUnloadEvent): void {
-  if (pendingWrites.value > 0) {
+  if (pendingWrites.value > 0 || creating.value) {
     event.preventDefault()
     event.returnValue = ''
   }

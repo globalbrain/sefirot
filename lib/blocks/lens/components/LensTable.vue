@@ -144,6 +144,7 @@ const columns = computedAsync(async () => {
       && edit?.editable
       && overriddenFieldData.showOnUpdate === true
       && field.isSubmittable()
+      && field.supportsOptimisticUpdate()
       && hasFormInput(field)
     ) {
       // Editable fields render a custom cell with a hover edit affordance

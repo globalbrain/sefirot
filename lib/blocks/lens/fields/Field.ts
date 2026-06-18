@@ -226,6 +226,18 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
+   * Whether this field can be edited in place (inline cell / record sheet) with
+   * an optimistic display. False for fields whose input value isn't the
+   * displayed value and needs a server round-trip first (e.g. a file upload,
+   * which holds raw `File` objects before upload) — patching the row with that
+   * raw value would render incorrectly or crash. Such fields remain editable in
+   * the create form, which is blocking.
+   */
+  supportsOptimisticUpdate(): boolean {
+    return true
+  }
+
+  /**
    * Returns the value should be used when the input is empty.
    */
   inputEmptyValue(): any {
