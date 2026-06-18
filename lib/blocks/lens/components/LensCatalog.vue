@@ -133,6 +133,12 @@ export interface Props {
   // `openCreate()` method / sheet create mode become available. The CRUD
   // endpoints are derived from `endpoint` by replacing the trailing
   // `/search` with `/update`, `/create`, and `/delete`.
+  //
+  // The row identifier (`indexField`, defaulting to `id`) is never
+  // inline- or sheet-editable on an existing row: optimistically changing
+  // a row's id before the slow write settles would re-key the row, so a
+  // follow-up save/delete would address the not-yet-synced new id. It can
+  // still be set on creation (via a `showOnCreate` field).
   editable?: boolean
 
   // Whether new records can be created (enables create mode in the sheet
@@ -648,12 +654,26 @@ function guardBusy(): boolean {
   return false
 }
 
-// Value-level comparison (rows in order + total) — decides whether a reconcile
-// actually surfaced anything newer than the optimistic state on screen.
-function isSameResult(a: LensResult | null, b: LensResult | null): boolean {
-  if (!a || !b) { return a === b }
-  return a.pagination.total === b.pagination.total
-    && JSON.stringify(a.data) === JSON.stringify(b.data)
+// Value-level comparison (rows in order + total) deciding whether a reconcile
+// surfaced anything newer than the optimistic state on screen. `fresh` is the
+// canonical search-shaped result; `shown` is what's displayed, which may carry
+// extra detail-only keys an opened sheet merged in via `/show`. Compare only the
+// keys `fresh` actually has, so that detail-key asymmetry doesn't raise a
+// spurious refresh banner — only genuine changes to the table's own fields count.
+function isSameResult(fresh: LensResult | null, shown: LensResult | null): boolean {
+  if (!fresh || !shown) { return fresh === shown }
+  if (fresh.pagination.total !== shown.pagination.total) { return false }
+  if (fresh.data.length !== shown.data.length) { return false }
+  for (let i = 0; i < fresh.data.length; i++) {
+    const freshRow = fresh.data[i]
+    const shownRow = shown.data[i]
+    for (const key of Object.keys(freshRow)) {
+      if (JSON.stringify(freshRow[key]) !== JSON.stringify(shownRow?.[key])) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 // After the last in-flight write settles, fetch the canonical state for the
@@ -684,9 +704,30 @@ async function reconcile(): Promise<void> {
 
 function applyLatest(): void {
   if (!latestState.value) { return }
-  result.value = latestState.value
+  const fresh = latestState.value
+  result.value = fresh
   latestState.value = null
   prevFetchInput = null
+  // The table now holds fresh row objects. If a record sheet is open, its
+  // `sheetRecord` still points at the old (replaced) object, so further sheet
+  // edits would mutate an orphan that no longer reflects in the table. Rebind to
+  // the matching fresh row — carrying over any detail-only fields already loaded
+  // via `/show` (the search result omits them) so the sheet keeps showing them —
+  // or close the sheet if the row is no longer present in the fresh results.
+  if (sheet.state.value && sheetMode.value === 'view' && sheetRecord.value) {
+    const id = resolveId(sheetRecord.value)
+    const match = fresh.data.find((r) => resolveId(r) === id)
+    if (match) {
+      for (const key of Object.keys(sheetRecord.value)) {
+        if (!(key in match)) {
+          match[key] = sheetRecord.value[key]
+        }
+      }
+      sheetRecord.value = match
+    } else {
+      sheet.off()
+    }
+  }
 }
 
 // Re-runs the current query against the endpoint, preserving the catalog's
@@ -694,14 +735,15 @@ function applyLatest(): void {
 // reflect server-side changes — e.g. after a bulk action mutates rows —
 // without remounting the component.
 async function refreshCatalog(): Promise<void> {
-  // While a background write is still syncing, a forced refetch would read
-  // stale (pre-write) data from the slow API and clobber the optimistic edits.
-  // Route through the reconcile flow instead, so any newer server state lands
-  // behind the refresh banner once the writes settle rather than overwriting
-  // the screen. This gives the exposed `refresh` the same guarantee the in-app
-  // controls have: a refresh never drops an in-flight optimistic edit.
+  // While a write batch is still settling (or its reconcile is in flight), a
+  // read now could return stale pre-write data, so don't refetch or stash
+  // anything behind the refresh banner: a stale stash could outlive a failed
+  // write (whose post-batch reconcile is skipped) — or a failed reconcile — and
+  // then roll the table back to pre-edit data when the banner is clicked. The
+  // post-batch reconcile already refetches the canonical state for the current
+  // query once the batch settles cleanly, which also reflects any server-side
+  // change a caller wanted surfaced; defer to it rather than reading now.
   if (busy.value) {
-    await reconcile()
     return
   }
   // A refresh is requested precisely when server-side data may have changed

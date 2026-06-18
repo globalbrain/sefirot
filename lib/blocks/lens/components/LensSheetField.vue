@@ -58,10 +58,14 @@ const displayValue = computed(() => {
 })
 
 // Display-only fields (e.g. `content`) resolve an input component but render
-// static markup with no value, so they must not gain an edit affordance.
+// static markup with no value, so they must not gain an edit affordance. The
+// row-identifier (`indexField`) is also never editable: optimistically changing
+// the id before the write settles would re-key the row, so a follow-up save /
+// delete would address the not-yet-synced new id instead of the in-flight one.
 const canEdit = computed(() =>
   editable.value
   && !!inputComponent.value
+  && props.fieldKey !== edit?.indexField
   && props.field.isSubmittable()
   && props.field.supportsOptimisticUpdate()
 )

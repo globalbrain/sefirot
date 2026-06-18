@@ -219,9 +219,15 @@ function requestClose() {
 const resolvedId = computed(() => (props.record && edit ? edit.resolveId(props.record) : null))
 
 function saveRecord(values: Record<string, any>): Promise<void> {
-  if (props.record && edit) {
-    edit.save(props.record, values)
+  // Refuse to save until the full record has loaded. The slots render before the
+  // `loading` / `error` branch (so a `#before` header can show during the load),
+  // but saving against the partial row mid-`/show` (or after it failed) could
+  // overwrite a not-yet-loaded detail field with an empty value — the built-in
+  // fields avoid this by not rendering until the record is ready.
+  if (props.loading || props.error || !props.record || !edit) {
+    return Promise.resolve()
   }
+  edit.save(props.record, values)
   return Promise.resolve()
 }
 
@@ -229,6 +235,10 @@ const slotProps = computed(() => ({
   record: props.record ?? null,
   id: resolvedId.value,
   entity: props.entity,
+  // Surfaced so custom editors can disable their save controls until the full
+  // record has loaded; `save` also hard-refuses while loading/error as a guard.
+  loading: props.loading ?? false,
+  error: props.error ?? false,
   save: saveRecord
 }))
 </script>

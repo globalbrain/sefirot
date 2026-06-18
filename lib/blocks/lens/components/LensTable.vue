@@ -142,6 +142,7 @@ const columns = computedAsync(async () => {
     } else if (
       props.inlineEdit
       && edit?.editable
+      && key !== edit.indexField
       && overriddenFieldData.showOnUpdate === true
       && field.isSubmittable()
       && field.supportsOptimisticUpdate()
