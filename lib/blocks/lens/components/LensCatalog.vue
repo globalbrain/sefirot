@@ -216,6 +216,15 @@ const pendingWrites = ref(0)
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
 
+// Monotonic token bumped whenever an optimistic write starts. The main search
+// reads it so a normal search/refetch already past the network boundary when a
+// write begins won't assign its pre-write rows over the optimistic patch — the
+// busy lock guards the handlers, but not a request already in flight.
+let searchToken = 0
+// Mirror of the currently-shown result (kept in sync just below), so the search
+// fetcher can return it — preserving the optimistic state — when superseded.
+let currentResult: LensResult | undefined
+
 // `_select` carries the caller's intent. The index field is preserved
 // here if it was listed explicitly so the corresponding column gets
 // rendered, and is only added to the request payload separately (see
@@ -275,13 +284,26 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
     return prevFetchResult!
   }
 
+  const token = searchToken
   const res = await http.post<LensResult>(props.endpoint, input)
+
+  // A write started while this search was in flight; its rows are pre-write, so
+  // keep the optimistic state on screen rather than clobbering it. The post-batch
+  // reconcile surfaces the canonical state behind the refresh banner instead.
+  if (token !== searchToken) {
+    return currentResult ?? res
+  }
 
   prevFetchInput = input
   prevFetchResult = res
 
   return res
 })
+
+// Keep `currentResult` pointing at the shown result. The reference changes only
+// on a wholesale replace; optimistic in-place edits keep the same object, so this
+// mirror always reflects them.
+watch(result, (r) => { currentResult = r ?? undefined }, { immediate: true })
 
 const doRefresh = useDebounceFn(() => {
   // A write may have started during the debounce window: the busy lock guards the
@@ -461,6 +483,16 @@ function refetch(): void {
   latestState.value = null
   doRefresh()
 }
+
+// When `editable` resolves from false to true after mount (e.g. async
+// permissions), the initial search may have been issued while it was false — so
+// `withIndexField` didn't append the default `id`, leaving the current rows
+// without the identifier that editing and selection now need (`resolveId` would
+// return `undefined`). Refetch so the rows carry it. A no-op when the index field
+// was already present (the request input is unchanged → cached result reused).
+watch(() => props.editable, (now, prev) => {
+  if (now && !prev) { refetch() }
+})
 
 function onQuery(value: string | null) {
   if (guardBusy()) { return }
@@ -800,6 +832,9 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
   // reconcile re-derives it.
   latestState.value = null
   reconcileToken++
+  // Invalidate any main search already in flight so it can't assign its pre-write
+  // rows over the optimistic patch we're about to apply when it resolves.
+  searchToken++
   reconciling.value = false
   pendingWrites.value++
   pendingByRecord.set(recordId, (pendingByRecord.get(recordId) ?? 0) + 1)
@@ -955,18 +990,24 @@ async function openSheet(record: Record<string, any>): Promise<void> {
   const pendingAtIssue = hasPendingWrite(id)
   try {
     const res = await executeShow(id)
-    if (seq === showRequestSeq) {
+    // Merge into the *current* sheet record, not the one captured at call time: a
+    // direct refresh may have rebound `sheetRecord` to a fresh row object while
+    // `/show` was in flight, and the detail must land on the row the sheet is
+    // actually showing (else it renders without the detail-only fields). The seq
+    // guard ensures this is still the same logical record (a newer open bumps it).
+    const target = sheetRecord.value
+    if (seq === showRequestSeq && target) {
       if (pendingAtIssue || hasPendingWrite(id)) {
         // The record had/has an in-flight write, so `/show` may have read the
         // backend before it synced. Don't overwrite the optimistic values
         // already on the row; only fill in detail-only fields not yet present.
         for (const k of Object.keys(res.data)) {
-          if (!(k in record)) {
-            record[k] = res.data[k]
+          if (!(k in target)) {
+            target[k] = res.data[k]
           }
         }
       } else {
-        Object.assign(record, res.data)
+        Object.assign(target, res.data)
       }
     }
   } catch {
