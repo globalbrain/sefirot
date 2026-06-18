@@ -27,7 +27,7 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
 
     const selected = this.inFilterValueFor(this.data.key, filters)
 
-    const res = await this.fetcher(method, url)
+    const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
     const data = key ? res[key] : res
 
     const isAvatar = this.data.displayAs === 'avatars'
@@ -37,11 +37,11 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
           type: 'avatar' as const,
           label: item[this.data.resourceTitle],
           image: this.data.resourceImage ? item[this.data.resourceImage] : null,
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         }
       : {
           label: item[this.data.resourceTitle],
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         })
 
     return {
@@ -88,10 +88,10 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     }
 
     const optionsResolver = async () => {
-      const res = await this.fetcher(method, url)
+      const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
       const data = key ? res[key] : res
       return data.map((item: any) => ({
-        value: item[this.data.filterKey],
+        value: this.resolveValue(item[this.data.filterKey]),
         label: item[this.data.resourceTitle]
       }))
     }
@@ -104,6 +104,12 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
       '!=': selectOne,
       'in': selectMany
     }
+  }
+
+  // Lens id fields serialize as `{ value, display, path? }`; filters need the
+  // raw scalar. Unwrap that shape, passing plain scalars through untouched.
+  private resolveValue(raw: any): any {
+    return raw !== null && typeof raw === 'object' && 'value' in raw ? raw.value : raw
   }
 
   override dataListItemComponent(): any {

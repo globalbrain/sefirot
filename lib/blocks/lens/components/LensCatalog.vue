@@ -2,19 +2,21 @@
 import { useDebounceFn, useElementSize } from '@vueuse/core'
 import { computed, ref, watch } from 'vue'
 import SDivider from '../../../components/SDivider.vue'
-import { useQuery } from '../../../composables/Api'
+import { useMutation, useQuery } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
+import { provideLensEdit } from '../composables/LensEdit'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
 import LensCatalogStateSort from './LensCatalogStateSort.vue'
 import LensFormFilter from './LensFormFilter.vue'
 import LensFormView from './LensFormView.vue'
+import LensSheet from './LensSheet.vue'
 import LensTable from './LensTable.vue'
 
 export interface Props {
@@ -122,6 +124,21 @@ export interface Props {
   // catalog per page may enable this option. The option is read once on
   // setup, so toggling it afterwards has no effect.
   urlSync?: boolean
+
+  // Enable CRUD editing for the catalog. When set, fields the backend
+  // marks `showOnUpdate` become inline-editable, clicking a row's id cell
+  // opens the record sheet (view + per-field edit + delete), and the
+  // `openCreate()` method / sheet create mode become available. The CRUD
+  // endpoints are derived from `endpoint` by replacing the trailing
+  // `/search` with `/update`, `/create`, and `/delete`.
+  editable?: boolean
+
+  // Whether new records can be created (enables create mode in the sheet
+  // and the exposed `openCreate()` method). Requires `editable`.
+  creatable?: boolean
+
+  // Width of the record sheet (any valid CSS width). Defaults to `480px`.
+  sheetWidth?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -468,8 +485,123 @@ async function refreshCatalog(): Promise<void> {
   await doRefresh()
 }
 
+// --- CRUD editing ----------------------------------------------------------
+
+// Derive the CRUD endpoints from the (search) endpoint, e.g.
+// `/api/admin/lens/search` -> `/api/admin/lens/{update,create,delete}`.
+const endpointBase = computed(() => props.endpoint.replace(/\/search$/, ''))
+
+const sheet = usePower()
+const sheetMode = ref<'view' | 'create'>('view')
+const sheetRecord = ref<Record<string, any> | null>(null)
+
+// Resolve a record's identifier, unwrapping the id field's object shape
+// (`{ value, display, path }`) when present.
+function resolveId(record: Record<string, any>): any {
+  const v = record?.[props.indexField ?? 'id']
+  return v !== null && typeof v === 'object' ? v.value : v
+}
+
+const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
+  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/update`, {
+    entity: props.entity, id, values
+  })
+)
+
+const { execute: executeCreate } = useMutation((http, values: Record<string, any>) =>
+  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/create`, {
+    entity: props.entity, values
+  })
+)
+
+const { execute: executeDelete } = useMutation((http, id: any) =>
+  http.post(`${endpointBase.value}/delete`, { entity: props.entity, id })
+)
+
+// Resolve a single record's full detail (every index/detail field, not just
+// the columns in `select`). This lets the sheet show — and edit — fields the
+// catalog doesn't render as columns (e.g. long-form descriptions).
+const { execute: executeShow } = useMutation((http, id: any) =>
+  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/show`, {
+    entity: props.entity, id
+  })
+)
+
+async function save(record: Record<string, any>, values: Record<string, any>): Promise<void> {
+  const res = await executeUpdate(resolveId(record), values)
+  // Patch the row in place so the table and sheet reflect the server's
+  // re-serialized values without a full refetch.
+  Object.assign(record, res.data)
+}
+
+async function create(values: Record<string, any>): Promise<Record<string, any>> {
+  const res = await executeCreate(values)
+  if (result.value?.data) {
+    result.value.data.unshift(res.data)
+  }
+  if (result.value?.pagination) {
+    result.value.pagination.total++
+  }
+  return res.data
+}
+
+async function remove(record: Record<string, any>): Promise<void> {
+  const id = resolveId(record)
+  await executeDelete(id)
+  if (result.value?.data) {
+    const index = result.value.data.findIndex((r) => resolveId(r) === id)
+    if (index !== -1) {
+      result.value.data.splice(index, 1)
+    }
+  }
+  if (result.value?.pagination) {
+    result.value.pagination.total--
+  }
+}
+
+async function openSheet(record: Record<string, any>): Promise<void> {
+  sheetRecord.value = record
+  sheetMode.value = 'view'
+  sheet.on()
+  // Pull the full record so detail-only fields (not selected as columns)
+  // are populated and editable in the sheet. Patch the row in place so the
+  // values persist on the shared record object. Failures are non-fatal: the
+  // sheet falls back to the fields already present on the row.
+  try {
+    const res = await executeShow(resolveId(record))
+    Object.assign(record, res.data)
+  } catch {
+    // Ignore — keep showing the columns the catalog already fetched.
+  }
+}
+
+function openCreate(): void {
+  sheetRecord.value = null
+  sheetMode.value = 'create'
+  sheet.on()
+}
+
+provideLensEdit({
+  editable: !!props.editable,
+  creatable: !!props.creatable,
+  entity: props.entity ?? '',
+  indexField: props.indexField ?? 'id',
+  resolveId,
+  save,
+  create,
+  remove,
+  openSheet,
+  openCreate
+})
+
 defineExpose({
   refresh: refreshCatalog,
+
+  /**
+   * Open the record sheet in create mode. Exposed so a page's "New …"
+   * button can trigger creation through the unified sheet.
+   */
+  openCreate,
 
   /**
    * Retrieve the current records in the catalog. This method is required when
@@ -602,6 +734,25 @@ defineExpose({
         @apply="onViewUpdated"
       />
     </SModal>
+
+    <LensSheet
+      v-if="editable && result?.fields"
+      :open="sheet.state.value"
+      :mode="sheetMode"
+      :entity="entity ?? ''"
+      :record="sheetRecord"
+      :fields="result.fields"
+      :index-field="indexField ?? 'id'"
+      :width="sheetWidth"
+      @close="sheet.off"
+    >
+      <template v-if="$slots['sheet-before']" #before="s">
+        <slot name="sheet-before" v-bind="s" />
+      </template>
+      <template v-if="$slots['sheet-after']" #after="s">
+        <slot name="sheet-after" v-bind="s" />
+      </template>
+    </LensSheet>
   </div>
 </template>
 

@@ -4,11 +4,12 @@ import { cloneDeep } from 'lodash-es'
 import { computed } from 'vue'
 import STable from '../../../components/STable.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
-import { type TableColumns, useTable } from '../../../composables/Table'
+import { type TableCell, type TableColumns, useTable } from '../../../composables/Table'
 import { type FieldData } from '../FieldData'
 import { type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useFieldFactory } from '../composables/FieldFactory'
+import { useLensEdit } from '../composables/LensEdit'
 
 const props = defineProps<{
   result?: LensResult
@@ -31,6 +32,7 @@ const emit = defineEmits<{
 }>()
 
 const fieldFactory = useFieldFactory()
+const edit = useLensEdit()
 
 const records = computed(() => props.result?.data ?? [])
 
@@ -105,7 +107,24 @@ const columns = computedAsync(async () => {
 
     const field = fieldFactory.make(overriddenFieldData)
 
-    columns[key] = field.tableColumn()
+    const column = field.tableColumn()
+
+    // When editing is enabled, clicking a row's id cell opens the record
+    // sheet (view + per-field edit + delete) instead of following a link.
+    if (edit?.editable && overriddenFieldData.type === 'id') {
+      const original = column.cell
+      column.cell = (v: any, r: any): TableCell<any, any> => {
+        const cell = typeof original === 'function' ? original(v, r) : original
+        return {
+          ...(cell as TableCell<any, any>),
+          link: null,
+          color: 'info',
+          onClick: () => edit.openSheet(r)
+        } as TableCell<any, any>
+      }
+    }
+
+    columns[key] = column
 
     const dropdown: DropdownSection[] = []
 
