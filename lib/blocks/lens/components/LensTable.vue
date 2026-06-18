@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computedAsync } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
-import { computed } from 'vue'
+import { computed, markRaw } from 'vue'
 import STable from '../../../components/STable.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell, type TableColumns, useTable } from '../../../composables/Table'
@@ -10,6 +10,8 @@ import { type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
+import { provideLensInlineEdit } from '../composables/LensInlineEdit'
+import LensTableEditableCell from './LensTableEditableCell.vue'
 
 const props = defineProps<{
   result?: LensResult
@@ -22,6 +24,9 @@ const props = defineProps<{
   select?: string[]
   selected?: any[]
   indexField?: string
+  // When set (and editing is enabled), cells for `showOnUpdate` fields
+  // render a hover edit affordance that opens an inline editor.
+  inlineEdit?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -33,6 +38,11 @@ const emit = defineEmits<{
 
 const fieldFactory = useFieldFactory()
 const edit = useLensEdit()
+
+// Track which cell's inline editor is open so opening one closes any other.
+provideLensInlineEdit()
+
+const editableCellComponent = markRaw(LensTableEditableCell)
 
 const records = computed(() => props.result?.data ?? [])
 
@@ -121,6 +131,15 @@ const columns = computedAsync(async () => {
           color: 'info',
           onClick: () => edit.openSheet(r)
         } as TableCell<any, any>
+      }
+    } else if (props.inlineEdit && edit?.editable && overriddenFieldData.showOnUpdate === true) {
+      // Editable fields render a custom cell with a hover edit affordance
+      // that opens an inline editor (reusing the field's form input + the
+      // edit context's save). Sort/filter menus on the column are kept.
+      column.cell = {
+        type: 'component',
+        component: editableCellComponent,
+        props: { field, fieldKey: key }
       }
     }
 

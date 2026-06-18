@@ -133,14 +133,13 @@ async function apply() {
 
 .edit {
   position: absolute;
-  top: 50%;
+  top: 10px;
   right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 28px;
   height: 28px;
-  transform: translateY(-50%);
   border-radius: 6px;
   color: var(--c-text-2);
   opacity: 0;

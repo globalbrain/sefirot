@@ -139,6 +139,11 @@ export interface Props {
 
   // Width of the record sheet (any valid CSS width). Defaults to `480px`.
   sheetWidth?: string
+
+  // Enable inline editing directly in the table: cells for `showOnUpdate`
+  // fields gain a hover edit affordance that opens an inline editor. Requires
+  // `editable` (it reuses the same CRUD edit context as the sheet).
+  inlineEdit?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -697,6 +702,7 @@ defineExpose({
           :index-field
           :selected
           :clickable-fields
+          :inline-edit
           @filter-updated="onInlineFilterUpdated"
           @sort-updated="onSortUpdated"
           @update:selected="onUpdateSelected"
@@ -766,7 +772,6 @@ defineExpose({
 
 .LensCatalog.show-empty-state {
   border-style: dashed;
-  background-color: var(--c-bg-1);
 }
 
 .LensCatalog.has-border {
