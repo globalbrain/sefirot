@@ -569,6 +569,15 @@ const sheet = usePower()
 const sheetMode = ref<'view' | 'create'>('view')
 const sheetRecord = ref<Record<string, any> | null>(null)
 
+// Whether the open detail sheet is still loading its full record via `/show`.
+// The sheet opens immediately (so a click gives instant feedback) and shows a
+// spinner until the record is loaded, rather than rendering partial fields.
+const sheetLoading = ref(false)
+
+// Whether the detail load (`/show`) failed. The sheet then shows an error
+// asking the user to reload, rather than rendering a partial record.
+const sheetError = ref(false)
+
 // The slow target API can take a long time to sync a write, and a read during
 // that window returns stale (pre-write) data. So updates and deletes are
 // applied to the in-memory result immediately and persisted in the background;
@@ -583,8 +592,9 @@ const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 // is skipped (the snackbar already told the user to reload).
 let batchErrored = false
 
-// Monotonic token for the in-flight `/show` request, so a slow detail fetch
-// that predates an edit (or a record switch) can't overwrite newer data.
+// Monotonic token for the in-flight `openSheet` `/show` request, so a newer
+// open (another row, or the create form) supersedes an older one and the stale
+// detail fetch doesn't open over it when it resolves.
 let showRequestSeq = 0
 
 // Monotonic token for the in-flight reconcile fetch, so a newer batch's
@@ -706,11 +716,6 @@ function trackWrite(run: () => Promise<unknown>): void {
 // Update — optimistic. Reflect the change in memory immediately (the catalog
 // row and the open sheet share this object), then persist in the background.
 function save(record: Record<string, any>, values: Record<string, any>): void {
-  // A pending `/show` for this record predates the edit; invalidate it so it
-  // can't overwrite the optimistic value when it lands.
-  if (sheetRecord.value === record) {
-    showRequestSeq++
-  }
   Object.assign(record, values)
   trackWrite(() => executeUpdate(resolveId(record), values))
 }
@@ -746,24 +751,31 @@ function remove(record: Record<string, any>): void {
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
+  // Open immediately with a spinner (instant feedback so the user doesn't click
+  // the id cell again), then load the full record (detail-only fields not
+  // selected as columns) and render it. A newer open (another row, or the
+  // create form) supersedes this one via the token.
   sheetRecord.value = record
   sheetMode.value = 'view'
+  sheetLoading.value = true
+  sheetError.value = false
   sheet.on()
   const seq = ++showRequestSeq
-  // Pull the full record so detail-only fields (not selected as columns) are
-  // populated and editable in the sheet. Failures are non-fatal: the sheet
-  // falls back to the columns already on the row.
   try {
     const res = await executeShow(resolveId(record))
-    // Drop the response if it has been superseded — by a record switch, the
-    // create form, or an edit to this record (which bumps the token) — so a
-    // stale detail fetch can't overwrite newer optimistic data.
-    if (seq !== showRequestSeq || sheetRecord.value !== record) {
-      return
+    if (seq === showRequestSeq) {
+      Object.assign(record, res.data)
     }
-    Object.assign(record, res.data)
   } catch {
-    // Ignore — keep showing the columns the catalog already fetched.
+    // Detail load failed: surface an error in the sheet rather than render a
+    // partial record (the user is asked to reload).
+    if (seq === showRequestSeq) {
+      sheetError.value = true
+    }
+  } finally {
+    if (seq === showRequestSeq) {
+      sheetLoading.value = false
+    }
   }
 }
 
@@ -773,8 +785,13 @@ function openCreate(): void {
   if (!props.creatable) {
     return
   }
+  // Supersede any in-flight openSheet `/show` so it can't open over the create
+  // form when it resolves.
+  showRequestSeq++
   sheetRecord.value = null
   sheetMode.value = 'create'
+  sheetLoading.value = false
+  sheetError.value = false
   sheet.on()
 }
 
@@ -965,6 +982,8 @@ defineExpose({
       :mode="sheetMode"
       :entity="entity ?? ''"
       :record="sheetRecord"
+      :loading="sheetLoading"
+      :error="sheetError"
       :fields="result.fields"
       :index-field="indexField ?? 'id'"
       :width="sheetWidth"

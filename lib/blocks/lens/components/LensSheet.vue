@@ -4,6 +4,7 @@ import IconX from '~icons/ph/x'
 import { computed, reactive, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SSheet from '../../../components/SSheet.vue'
+import SSpinner from '../../../components/SSpinner.vue'
 import { provideDataListState } from '../../../composables/DataList'
 import { useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
@@ -19,6 +20,12 @@ const props = withDefaults(defineProps<{
   mode?: 'view' | 'create'
   entity: string
   record?: Record<string, any> | null
+  // Whether the record's full detail is still loading via `/show`. While true,
+  // the view body shows a spinner instead of partial fields.
+  loading?: boolean
+  // Whether the detail load failed. When true, the view body shows an error
+  // (asking the user to reload) instead of a partial record.
+  error?: boolean
   fields: Record<string, FieldData>
   indexField?: string
   width?: string
@@ -37,14 +44,18 @@ const { t } = useTrans({
     cancel: 'Cancel',
     delete: 'Delete',
     confirm_delete: 'Delete this record?',
-    new_record: 'New record'
+    new_record: 'New record',
+    load_error:
+      'Couldn’t load this record. Please reload the page, and contact support if the problem persists.'
   },
   ja: {
     create: '作成',
     cancel: 'キャンセル',
     delete: '削除',
     confirm_delete: 'このレコードを削除しますか？',
-    new_record: '新規作成'
+    new_record: '新規作成',
+    load_error:
+      'このレコードを読み込めませんでした。ページを再読み込みし、問題が解決しない場合はサポートにお問い合わせください。'
   }
 })
 
@@ -223,7 +234,13 @@ const slotProps = computed(() => ({
         <slot name="before" v-bind="slotProps" />
 
         <template v-if="mode === 'view' && record">
-          <div class="sheet-rows">
+          <div v-if="loading" class="sheet-loading">
+            <SSpinner class="sheet-loading-spinner" />
+          </div>
+          <div v-else-if="error" class="sheet-error">
+            {{ t.load_error }}
+          </div>
+          <div v-else class="sheet-rows">
             <LensSheetField
               v-for="entry in detailFields"
               :key="entry.key"
@@ -260,7 +277,7 @@ const slotProps = computed(() => ({
             @click="onCreate"
           />
         </template>
-        <template v-else-if="record">
+        <template v-else-if="record && !loading && !error">
           <template v-if="confirmingDelete.state.value">
             <span class="confirm-text">{{ t.confirm_delete }}</span>
             <SButton size="medium" :label="t.cancel" @click="confirmingDelete.off" />
@@ -337,6 +354,26 @@ const slotProps = computed(() => ({
 
 .sheet-rows {
   border-top: 1px dashed var(--c-divider);
+}
+
+.sheet-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.sheet-loading-spinner {
+  width: 28px;
+  height: 28px;
+  color: var(--c-text-2);
+}
+
+.sheet-error {
+  padding: 24px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--c-text-2);
 }
 
 .create-form {
