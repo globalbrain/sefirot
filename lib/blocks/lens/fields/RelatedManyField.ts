@@ -1,4 +1,7 @@
 import { xor } from 'lodash-es'
+import { h } from 'vue'
+import SDescAvatar from '../../../components/SDescAvatar.vue'
+import SDescPill from '../../../components/SDescPill.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell } from '../../../composables/Table'
 import { type RelatedManyFieldData } from '../FieldData'
@@ -16,7 +19,10 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     this.fetcher = fetcher
   }
 
-  override async tableFilterMenu(filters: any[], onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
+  override async tableFilterMenu(
+    filters: any[],
+    onFilterUpdated: (filters: any[]) => void
+  ): Promise<DropdownSection | null> {
     const method = this.data.resourceEndpointMethod
     const url = this.data.resourceEndpointPath
     const key = this.data.resourceEndpointDataKey
@@ -27,7 +33,7 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
 
     const selected = this.inFilterValueFor(this.data.key, filters)
 
-    const res = await this.fetcher(method, url)
+    const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
     const data = key ? res[key] : res
 
     const isAvatar = this.data.displayAs === 'avatars'
@@ -37,11 +43,11 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
           type: 'avatar' as const,
           label: item[this.data.resourceTitle],
           image: this.data.resourceImage ? item[this.data.resourceImage] : null,
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         }
       : {
           label: item[this.data.resourceTitle],
-          value: item[this.data.filterKey]
+          value: this.resolveValue(item[this.data.filterKey])
         })
 
     return {
@@ -88,10 +94,10 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     }
 
     const optionsResolver = async () => {
-      const res = await this.fetcher(method, url)
+      const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
       const data = key ? res[key] : res
       return data.map((item: any) => ({
-        value: item[this.data.filterKey],
+        value: this.resolveValue(item[this.data.filterKey]),
         label: item[this.data.resourceTitle]
       }))
     }
@@ -106,8 +112,39 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     }
   }
 
+  // Lens id fields serialize as `{ value, display, path? }`; filters need the
+  // raw scalar. Unwrap that shape, passing plain scalars through untouched.
+  private resolveValue(raw: any): any {
+    return raw !== null && typeof raw === 'object' && 'value' in raw ? raw.value : raw
+  }
+
   override dataListItemComponent(): any {
-    throw new Error('Not implemented.')
+    return this.defineDataListItemComponent((value) => {
+      // related_many serializes as an array of relation objects (or null).
+      // Read the display name / image from the same keys `tableCell()` uses,
+      // instead of letting the generic fallback render `[object Object]`.
+      const items = (value ?? []) as any[]
+
+      if (items.length === 0) {
+        return null
+      }
+
+      if (this.data.displayAs === 'avatars') {
+        return h(SDescAvatar, {
+          avatar: items.map((item) => ({
+            avatar: this.data.image ? (item[this.data.image] ?? null) : null,
+            name: item[this.data.title] ?? null
+          }))
+        })
+      }
+
+      // 'pills' (and the null default): render one pill per related item.
+      return h(SDescPill, {
+        pill: items.map((item) => ({
+          label: item[this.data.title] ?? ''
+        }))
+      })
+    })
   }
 
   override formInputComponent() {

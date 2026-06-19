@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { useDebounceFn, useElementSize } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import SButton from '../../../components/SButton.vue'
 import SDivider from '../../../components/SDivider.vue'
-import { useQuery } from '../../../composables/Api'
-import { useLang } from '../../../composables/Lang'
+import { useMutation, useQuery } from '../../../composables/Api'
+import { useLang, useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
+import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
+import { provideLensEdit } from '../composables/LensEdit'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
 import LensCatalogStateSort from './LensCatalogStateSort.vue'
 import LensFormFilter from './LensFormFilter.vue'
 import LensFormView from './LensFormView.vue'
+import LensSheet from './LensSheet.vue'
 import LensTable from './LensTable.vue'
 
 export interface Props {
@@ -122,6 +126,40 @@ export interface Props {
   // catalog per page may enable this option. The option is read once on
   // setup, so toggling it afterwards has no effect.
   urlSync?: boolean
+
+  // Enable CRUD editing for the catalog. When set, fields the backend
+  // marks `showOnUpdate` become inline-editable, clicking a row's id cell
+  // opens the record sheet (view + per-field edit + delete), and the
+  // `openCreate()` method / sheet create mode become available. The CRUD
+  // endpoints are derived from `endpoint` by replacing the trailing
+  // `/search` with `/update`, `/create`, and `/delete`.
+  //
+  // The row identifier (`indexField`, defaulting to `id`) is never
+  // inline- or sheet-editable on an existing row: optimistically changing
+  // a row's id before the slow write settles would re-key the row, so a
+  // follow-up save/delete would address the not-yet-synced new id. It can
+  // still be set on creation (via a `showOnCreate` field).
+  //
+  // An editable catalog must keep its index field among the rendered columns,
+  // because the row's sheet opener — and therefore the only way to view or
+  // delete a record — is the index-field cell. The default `id` identifier is
+  // kept when `select` is empty (server defaults), so that case works as-is; a
+  // *custom* `indexField`, however, must be listed in `select` explicitly (an
+  // empty/default `select` drops it from the rendered columns, leaving the rows
+  // with no opener).
+  editable?: boolean
+
+  // Whether new records can be created (enables create mode in the sheet
+  // and the exposed `openCreate()` method). Requires `editable`.
+  creatable?: boolean
+
+  // Width of the record sheet (any valid CSS width). Defaults to `480px`.
+  sheetWidth?: string
+
+  // Enable inline editing directly in the table: cells for `showOnUpdate`
+  // fields gain a hover edit affordance that opens an inline editor. Requires
+  // `editable` (it reuses the same CRUD edit context as the sheet).
+  inlineEdit?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -142,6 +180,23 @@ const emit = defineEmits<{
   'cell-clicked': [value: any, record: any]
 }>()
 
+const { t } = useTrans({
+  en: {
+    write_error: 'Your latest changes might not be saved. Please reload the page, and contact support if the problem persists.',
+    busy_warning: 'A save is still in progress — changes you make now may not be saved.',
+    refresh_text: 'Newer results are available.',
+    refresh_action: 'Refresh'
+  },
+  ja: {
+    write_error: '最新の変更が保存されていない可能性があります。ページを再読み込みし、問題が解決しない場合はサポートにお問い合わせください。',
+    busy_warning: '保存処理中です。ここでの変更は保存されない可能性があります。',
+    refresh_text: '新しい結果があります。',
+    refresh_action: '更新'
+  }
+})
+
+const snackbars = useSnackbars()
+
 const filterDialog = usePower()
 const viewDialog = usePower()
 
@@ -154,8 +209,35 @@ const conditionBlocksEl = ref<HTMLElement | null>(null)
 // due to user filtering.
 const hasInitialResults = ref(false)
 
+// A fresher server result fetched after the optimistic writes settled, awaiting
+// the user's explicit opt-in via the refresh button — never auto-applied (that
+// would momentarily revert the optimistic edits to stale data). Declared here
+// (ahead of the query handlers that clear it) so they can reference it.
+const latestState = ref<LensResult | null>(null)
+
+// Count of optimistic background writes currently in flight. Declared here
+// (ahead of the debounced refetch that consults it) so a queued refetch can bail
+// when a write started during its debounce window. See the CRUD section below
+// for the full optimistic-write strategy this is part of.
+const pendingWrites = ref(0)
+
+// Whether a (blocking) create POST is in flight. Not part of `busy` — the create
+// sheet covers the controls — but it arms the unload guard, and the debounced
+// refetch consults it (declared here for that reason), since a search issued
+// before the new row exists must not assign its rows over the just-created record.
+const creating = ref(false)
+
 let prevFetchInput: LensQuery | null = null
 let prevFetchResult: LensResult | null = null
+
+// Monotonic token bumped whenever an optimistic write starts. The main search
+// reads it so a normal search/refetch already past the network boundary when a
+// write begins won't assign its pre-write rows over the optimistic patch — the
+// busy lock guards the handlers, but not a request already in flight.
+let searchToken = 0
+// Mirror of the currently-shown result (kept in sync just below), so the search
+// fetcher can return it — preserving the optimistic state — when superseded.
+let currentResult: LensResult | undefined
 
 // `_select` carries the caller's intent. The index field is preserved
 // here if it was listed explicitly so the corresponding column gets
@@ -195,9 +277,17 @@ const perPage = ref(100)
 
 const lang = useLang()
 
-const { data: result, execute: refresh, loading } = useQuery(async (http) => {
-  const input = {
-    entity: props.entity ?? '__no_entity__',
+// The entity name sent on every request. Falls back to the `__no_entity__`
+// sentinel when the prop is omitted, so the search and the CRUD/detail calls
+// target the same entity — otherwise the search would use the fallback while an
+// omitted-entity CRUD payload would serialize `undefined` away and hit no entity.
+const entityName = computed(() => props.entity ?? '__no_entity__')
+
+// Build the search request from the catalog's current state. Shared by the
+// main search and the background reconcile fetch so both query identically.
+function buildSearchInput(): LensQuery {
+  return {
+    entity: entityName.value,
     select: withIndexField(_select.value),
     filters: createInputFilters(queryFilter.value, _filters.value),
     sort: _sort.value.length > 0 ? _sort.value : defaultSort.value ?? [],
@@ -205,12 +295,24 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
     page: page.value,
     perPage: perPage.value
   }
+}
+
+const { data: result, execute: refresh, loading } = useQuery(async (http) => {
+  const input = buildSearchInput()
 
   if (prevFetchInput && JSON.stringify(prevFetchInput) === JSON.stringify(input)) {
     return prevFetchResult!
   }
 
+  const token = searchToken
   const res = await http.post<LensResult>(props.endpoint, input)
+
+  // A write started while this search was in flight; its rows are pre-write, so
+  // keep the optimistic state on screen rather than clobbering it. The post-batch
+  // reconcile surfaces the canonical state behind the refresh banner instead.
+  if (token !== searchToken) {
+    return currentResult ?? res
+  }
 
   prevFetchInput = input
   prevFetchResult = res
@@ -218,12 +320,35 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   return res
 })
 
-const doRefresh = useDebounceFn(refresh, 50)
+// Keep `currentResult` pointing at the shown result. The reference changes only
+// on a wholesale replace; optimistic in-place edits keep the same object, so this
+// mirror always reflects them.
+watch(result, (r) => { currentResult = r ?? undefined }, { immediate: true })
+
+const doRefresh = useDebounceFn(() => {
+  // A write or a blocking create may have started during the debounce window: the
+  // busy lock guards the query handlers at click time, but not this deferred
+  // fetch. Bail if so — reading now would return pre-write / pre-create rows and
+  // overwrite the optimistic edit or the just-created record. The post-batch
+  // reconcile / create path surfaces the canonical state once things settle.
+  // (Deliberate refreshes go through `forceRefresh`, which calls `refresh`
+  // directly to bypass this guard.)
+  if (pendingWrites.value > 0 || creating.value) { return }
+  return refresh()
+}, 50)
 
 if (props.urlSync) {
+  // Route URL-driven changes (back/forward, shared links) through `refetch` so
+  // they clear any stashed reconcile result, just like the in-app controls — a
+  // refresh button must never apply data fetched for a previous query.
+  //
+  // Known limitation: unlike the in-app controls, this path is not gated by the
+  // busy lock, so a URL change landing mid-write could refetch stale data and
+  // drop an optimistic edit. Unreachable today (no page enables `urlSync` with
+  // `editable`); revisit if one ever does.
   useCatalogUrlQuerySync(
     { query, filters: _filters, sort: _sort, page },
-    doRefresh
+    refetch
   )
 }
 
@@ -254,7 +379,9 @@ const conditionBlocksSize = useElementSize(conditionBlocksEl)
 
 const headerHeight = 'var(--lens-catalog-global-height-offset)'
 const controlHeight = '56px - 1px'
-const conditionBlocksHeight = computed(() => conditionBlocksSize.height.value > 0 ? `${conditionBlocksSize.height.value}px - 1px` : '0px')
+const conditionBlocksHeight = computed(() =>
+  conditionBlocksSize.height.value > 0 ? `${conditionBlocksSize.height.value}px - 1px` : '0px'
+)
 const columnsHeight = '40px - 1px'
 const footerHeight = '56px - 1px'
 
@@ -280,9 +407,13 @@ const tableMaxHeight = computed(() => {
     return undefined
   }
   if (props.height === 'fill') {
-    return `--table-max-height: calc(100vh - ${headerHeight} - ${controlHeight} - ${conditionBlocksHeight.value} - ${columnsHeight} - ${footerHeight} - ${props.heightOffset ?? '0px'})`
+    return '--table-max-height: '
+      + `calc(100vh - ${headerHeight} - ${controlHeight} - ${conditionBlocksHeight.value}`
+      + ` - ${columnsHeight} - ${footerHeight} - ${props.heightOffset ?? '0px'})`
   }
-  return `--table-max-height: calc(${props.height} - ${controlHeight} - ${conditionBlocksHeight.value} - ${columnsHeight} - ${footerHeight})`
+  return '--table-max-height: '
+    + `calc(${props.height} - ${controlHeight} - ${conditionBlocksHeight.value}`
+    + ` - ${columnsHeight} - ${footerHeight})`
 })
 
 // Initial setup when the result is loaded for the first time. When the
@@ -327,6 +458,36 @@ const tableSelect = computed(() => {
   return withoutIndexField(result.value?.query.select ?? [])
 })
 
+// Whether the currently loaded rows actually carry the effective row identifier.
+// Editing / opening a row needs it (`resolveId`), but rows fetched while
+// `editable` was still false — or before an `indexField` change settled — won't
+// have it until the triggered refetch lands. Editing is gated on this (see the
+// `editable` getter) so a quick save in that window can't post `id: undefined`.
+// An empty result has nothing to edit, so it doesn't block.
+const rowsCarryIndexField = computed(() => {
+  const rows = result.value?.data
+  if (!rows || rows.length === 0) { return true }
+  return (props.indexField ?? 'id') in rows[0]
+})
+
+// The row-identifier the table uses as its selection key. An explicit
+// `indexField`, or `id` for editable catalogs (which always carry it). Without
+// this, an editable catalog that relies on the default would leave the table on
+// positional selection keys, so an optimistic create/delete that shifts rows
+// would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
+//
+// Gated on `rowsCarryIndexField`: when `editable` flips true (or `indexField`
+// changes) the on-screen rows don't carry the new key until the triggered refetch
+// lands. Switching STable onto it during that window keys every row's selection to
+// `undefined` — wiping the current selection and making any row-select emit
+// `[undefined]` (so parent bulk actions act on no/wrong records). Stay on the
+// previous positional key until the loaded rows carry it, matching the
+// `edit.editable` gate so selection and editing flip together.
+const tableIndexField = computed(() => {
+  const field = props.indexField ?? (props.editable ? 'id' : undefined)
+  return field && rowsCarryIndexField.value ? field : undefined
+})
+
 // The `indexField` is appended to the request `select` so the server
 // returns its value on every row, but it is kept out of the internal
 // `_select` / `_selectable` state so the caller-facing concept of
@@ -334,13 +495,16 @@ const tableSelect = computed(() => {
 // not a column the user picked). The corresponding column is also
 // hidden from the rendered table by `LensTable`.
 //
-// When the caller has no concrete select list, the index field is
-// *not* added either — leaving the request empty lets the server use
-// its own defaults. See `indexField` prop docs above.
+// Editable catalogs must carry a row identifier so updates / deletes can
+// address each row; when no `indexField` is configured the identifier
+// defaults to `id`. When the caller has no concrete select list, nothing
+// is added either — leaving the request empty lets the server use its own
+// defaults. See `indexField` prop docs above.
 function withIndexField(fields: string[]): string[] {
   if (fields.length === 0) { return [] }
-  if (!props.indexField || fields.includes(props.indexField)) { return [...fields] }
-  return [...fields, props.indexField]
+  const field = props.indexField ?? (props.editable ? 'id' : null)
+  if (!field || fields.includes(field)) { return [...fields] }
+  return [...fields, field]
 }
 
 function withoutIndexField(fields: string[]): string[] {
@@ -358,25 +522,35 @@ function createInputFilters(queryFilters: any[], filters: any[]) {
   ].filter((f) => f?.length > 0)
 }
 
-function onQuery(value: string | null) {
-  query.value = value
-  page.value = 1
+// Re-run the search for the new query state, dropping any stashed
+// reconcile result (the refreshed state supersedes it).
+function refetch(): void {
+  latestState.value = null
   doRefresh()
 }
 
+function onQuery(value: string | null) {
+  if (guardBusy()) { return }
+  query.value = value
+  page.value = 1
+  refetch()
+}
+
 function onFiltersUpdated(filters: any[]) {
+  if (guardBusy()) { return }
   _filters.value = filters
   page.value = 1
-  doRefresh()
+  refetch()
   filterDialog.off()
   emit('filters-updated', _filters.value)
 }
 
 function onInlineFilterUpdated(filter: any[]) {
+  if (guardBusy()) { return }
   const sameFilterIndex = _filters.value.findIndex((f) => f[0] === filter[0])
   sameFilterIndex === -1 ? applyNewFilter(filter) : replaceFilter(sameFilterIndex, filter)
   page.value = 1
-  doRefresh()
+  refetch()
   emit('filters-updated', _filters.value)
 }
 
@@ -402,34 +576,42 @@ function replaceFilter(index: number, filter: any[]) {
 }
 
 function onResetFilters() {
+  if (guardBusy()) { return }
   _filters.value = []
   query.value = null
   page.value = 1
-  doRefresh()
+  refetch()
   emit('filters-updated', _filters.value)
 }
 
 function onSortUpdated(sort: LensQuerySort) {
+  if (guardBusy()) { return }
   _sort.value = [sort]
   page.value = 1
-  doRefresh()
+  refetch()
   emit('sort-updated', _sort.value)
 }
 
 function onResetSorts() {
+  if (guardBusy()) { return }
   _sort.value = []
   page.value = 1
-  doRefresh()
+  refetch()
   emit('sort-updated', _sort.value)
 }
 
-function onViewUpdated(newSelect: string[], newSelectable: string[], overrides: Record<string, Partial<FieldData>>) {
+function onViewUpdated(
+  newSelect: string[],
+  newSelectable: string[],
+  overrides: Record<string, Partial<FieldData>>
+) {
+  if (guardBusy()) { return }
   // Treat updates from the view form as deliberate user intent: if the
   // user picked the index field on purpose, surface its column.
   _select.value = newSelect
   _selectable.value = newSelectable
   _overrides.value = overrides
-  doRefresh()
+  refetch()
   viewDialog.off()
   emit('select-updated', _select.value)
   emit('selectable-updated', _selectable.value)
@@ -445,31 +627,562 @@ function onResetSelection() {
 }
 
 function onPrev() {
+  if (guardBusy()) { return }
   page.value--
-  doRefresh()
+  refetch()
 }
 
 function onNext() {
+  if (guardBusy()) { return }
   page.value++
-  doRefresh()
+  refetch()
 }
 
-// Re-runs the current query against the endpoint, preserving the
-// catalog's in-memory state (select / filters / sort / page). Exposed
-// so callers can reflect server-side changes — e.g. after a bulk action
-// mutates rows — without remounting the component.
-async function refreshCatalog(): Promise<void> {
-  // A refresh is requested precisely when server-side data may have
-  // changed while the query input did not (e.g. after a bulk action).
-  // Clear the memoized input so the equality shortcut in the fetcher
-  // misses and a real request is issued instead of returning the stale
-  // cached result.
-  prevFetchInput = null
-  await doRefresh()
+// --- CRUD editing ----------------------------------------------------------
+
+// Derive the CRUD endpoints from the (search) endpoint, e.g.
+// `/api/admin/lens/search` -> `/api/admin/lens/{update,create,delete}`.
+const endpointBase = computed(() => props.endpoint.replace(/\/search$/, ''))
+
+const sheet = usePower()
+const sheetMode = ref<'view' | 'create'>('view')
+const sheetRecord = ref<Record<string, any> | null>(null)
+
+// Whether the open detail sheet is still loading its full record via `/show`.
+// The sheet opens immediately (so a click gives instant feedback) and shows a
+// spinner until the record is loaded, rather than rendering partial fields.
+const sheetLoading = ref(false)
+
+// Whether the detail load (`/show`) failed. The sheet then shows an error
+// asking the user to reload, rather than rendering a partial record.
+const sheetError = ref(false)
+
+// The slow target API can take a long time to sync a write, and a read during
+// that window returns stale (pre-write) data. So updates and deletes are
+// applied to the in-memory result immediately and persisted in the background;
+// the server is never re-read to reconcile until the write settles. While any
+// write is in flight the catalog is "busy": query controls and the refresh
+// affordance are locked and an unload guard is armed. (`pendingWrites` itself is
+// declared near the top so the debounced refetch can consult it.)
+const reconciling = ref(false)
+const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
+
+// Whether any write in the current in-flight batch failed; when so the reconcile
+// is skipped (the snackbar already told the user to reload).
+let batchErrored = false
+
+// In-flight write chains keyed by record+field, so repeated writes to the same
+// cell are serialized (sent in edit order — the last edit wins — even though
+// the UI already shows the latest value optimistically). Writes to different
+// cells run concurrently; the backend persists only the changed columns.
+const writeChains = new Map<string, Promise<unknown>>()
+
+// Count of in-flight writes per record id, so `/show` for a record that's
+// mid-write can avoid overwriting its optimistic values with stale data.
+const pendingByRecord = new Map<any, number>()
+
+// Monotonic token for the in-flight `openSheet` `/show` request, so a newer
+// open (another row, or the create form) supersedes an older one and the stale
+// detail fetch doesn't open over it when it resolves.
+let showRequestSeq = 0
+
+// Monotonic token for the in-flight reconcile fetch, so a newer batch's
+// reconcile supersedes an older one still in flight.
+let reconcileToken = 0
+
+// Resolve a record's identifier, unwrapping the id field's object shape
+// (`{ value, display, path }`) when present.
+function resolveId(record: Record<string, any>): any {
+  const v = record?.[props.indexField ?? 'id']
+  return v !== null && typeof v === 'object' ? v.value : v
 }
+
+const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
+  http.post(`${endpointBase.value}/update`, {
+    entity: entityName.value, id, values, settings: { lang }
+  })
+)
+
+const { execute: executeCreate } = useMutation((http, values: Record<string, any>) =>
+  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/create`, {
+    entity: entityName.value, values, settings: { lang }
+  })
+)
+
+const { execute: executeDelete } = useMutation((http, id: any) =>
+  http.post(`${endpointBase.value}/delete`, { entity: entityName.value, id })
+)
+
+// Resolve a single record's full detail (every index/detail field, not just
+// the columns in `select`). This lets the sheet show — and edit — fields the
+// catalog doesn't render as columns (e.g. long-form descriptions).
+const { execute: executeShow } = useMutation((http, id: any) =>
+  http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/show`, {
+    entity: entityName.value, id, settings: { lang }
+  })
+)
+
+// Re-run the search without touching the displayed state. Used by the
+// background reconcile so its result can be stashed behind the refresh button
+// rather than replacing the optimistic view.
+const { execute: executeReconcile } = useMutation((http, input: LensQuery) =>
+  http.post<LensResult>(props.endpoint, input)
+)
+
+function guardBusy(): boolean {
+  if (busy.value) {
+    snackbars.push({ mode: 'warning', text: t.busy_warning })
+    return true
+  }
+  return false
+}
+
+// Value-level comparison (rows in order + total) deciding whether a reconcile
+// surfaced anything newer than the optimistic state on screen. `fresh` is the
+// canonical search-shaped result; `shown` is what's displayed, which may carry
+// extra detail-only keys an opened sheet merged in via `/show`. Compare only the
+// keys `fresh` actually has, so that detail-key asymmetry doesn't raise a
+// spurious refresh banner — only genuine changes to the table's own fields count.
+function isSameResult(fresh: LensResult | null, shown: LensResult | null): boolean {
+  if (!fresh || !shown) { return fresh === shown }
+  if (fresh.pagination.total !== shown.pagination.total) { return false }
+  if (fresh.data.length !== shown.data.length) { return false }
+  for (let i = 0; i < fresh.data.length; i++) {
+    const freshRow = fresh.data[i]
+    const shownRow = shown.data[i]
+    for (const key of Object.keys(freshRow)) {
+      if (JSON.stringify(freshRow[key]) !== JSON.stringify(shownRow?.[key])) {
+        return false
+      }
+    }
+  }
+  return true
+}
+
+// After the last in-flight write settles, fetch the canonical state for the
+// current query and, only if it differs from what's shown, stash it behind the
+// refresh button. The server is fresh by now (the write completed).
+async function reconcile(): Promise<void> {
+  const token = ++reconcileToken
+  reconciling.value = true
+  try {
+    const fresh = await executeReconcile(buildSearchInput())
+    // Drop the result if a newer write batch already kicked off its own
+    // reconcile while this one was in flight.
+    if (token !== reconcileToken) {
+      return
+    }
+    // Authoritative: stash the canonical result when it differs from what's
+    // shown, otherwise clear any (possibly stale) stash — an earlier overlapping
+    // reconcile may have left a pre-edit result behind.
+    latestState.value = result.value && !isSameResult(fresh, result.value) ? fresh : null
+  } catch {
+    // Ignore — keep the optimistic state, offer no refresh.
+  } finally {
+    if (token === reconcileToken) {
+      reconciling.value = false
+    }
+  }
+}
+
+function applyLatest(): void {
+  if (!latestState.value) { return }
+  result.value = latestState.value
+  latestState.value = null
+  prevFetchInput = null
+  rebindOpenSheet()
+}
+
+// When `result` is replaced wholesale (the refresh banner, or a forced refresh),
+// an open record sheet's `sheetRecord` still points at the old (now-orphaned) row
+// object, so later sheet edits would mutate the orphan and stop reflecting in the
+// table. Rebind to the matching fresh row — carrying over any detail-only fields
+// already loaded via `/show` (the search result omits them) so the sheet keeps
+// showing them — or close the sheet if the row is no longer present.
+function rebindOpenSheet(): void {
+  if (!result.value) { return }
+  if (!sheet.state.value || sheetMode.value !== 'view' || !sheetRecord.value) { return }
+  const id = resolveId(sheetRecord.value)
+  const match = result.value.data.find((r) => resolveId(r) === id)
+  if (!match) {
+    sheet.off()
+    return
+  }
+  for (const key of Object.keys(sheetRecord.value)) {
+    if (!(key in match)) {
+      match[key] = sheetRecord.value[key]
+    }
+  }
+  sheetRecord.value = match
+}
+
+// Core force-refetch: drop the memoized input + any stash, invalidate an in-flight
+// reconcile (its request may predate the change being surfaced), refetch the
+// current query, then rebind an open sheet to the fresh rows. Calls `refresh`
+// directly (not the debounced `doRefresh`) so it bypasses the pending-write /
+// creating bail — callers (the exposed refresh, the create path) gate it
+// themselves, and create deliberately refreshes while `creating` is still true.
+async function forceRefresh(): Promise<void> {
+  reconcileToken++
+  reconciling.value = false
+  // Supersede any normal search already in flight (e.g. issued by a query change
+  // before an external bulk mutation) so its older rows can't assign over this
+  // fresh result when it resolves — same token mechanism as the write/create
+  // races. This refetch captures the bumped token, so it isn't self-suppressed.
+  searchToken++
+  prevFetchInput = null
+  latestState.value = null
+  await refresh()
+  rebindOpenSheet()
+}
+
+// Re-runs the current query against the endpoint, preserving the catalog's
+// in-memory state (select / filters / sort / page). Exposed so callers can
+// reflect server-side changes — e.g. after a bulk action mutates rows — without
+// remounting the component.
+async function refreshCatalog(): Promise<void> {
+  // Defer while a write — or a (blocking) create — is in flight: a read now could
+  // return stale pre-write / pre-create data and clobber the optimistic or
+  // just-created rows (and a stashed stale result could outlive a failed write
+  // whose post-batch reconcile is skipped). The post-batch reconcile / create
+  // path surfaces the canonical state once things settle. When only a reconcile
+  // is in flight (reads are fresh again), forceRefresh supersedes it.
+  if (pendingWrites.value > 0 || creating.value) {
+    return
+  }
+  await forceRefresh()
+}
+
+// When the effective row identifier appears or changes while editing is enabled,
+// the loaded rows won't carry it until a refetch runs — so refetch here. Two
+// cases: `editable` resolving true after mount (async permissions), so
+// `withIndexField` only now appends the default `id`; or a parent resolving /
+// changing `indexField` from async config. Without this the rows lack the new
+// identifier, `rowsCarryIndexField` keeps editing gated off, and selection keys
+// go `undefined` until an unrelated query change. A no-op when the identifier was
+// already present (same request input → cached result reused).
+//
+// Close an open record sheet first: it was identified under the old field and
+// can't be reliably re-matched to the new one (its row lacks the new key, so
+// `resolveId` would be `undefined`), which would let a delete/save act on the
+// wrong — or no — id during and after the refetch.
+watch(
+  () => (props.editable ? (props.indexField ?? 'id') : null),
+  (field, prev) => {
+    if (!field || field === prev) { return }
+    if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
+    // Supersede any search still in flight under the previous identifier state: it
+    // was issued before the new id/index field, so its rows won't carry the new
+    // key. If it resolved after this refetch it would assign those id-less rows
+    // back into `result`, flipping `rowsCarryIndexField` (and editing) off again
+    // with no watcher to recover. Bumping the token makes the fetcher drop it.
+    searchToken++
+    refetch()
+  }
+)
+
+// Track an optimistic background write: count it as pending, surface a snackbar
+// on failure, and once the whole batch settles (with no failures) reconcile.
+function hasPendingWrite(recordId: any): boolean {
+  return pendingByRecord.has(recordId)
+}
+
+// Track an optimistic background write for `recordId`, serialized per `key` so
+// writes to the same cell reach the server in edit order.
+function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): void {
+  // A new write changes the displayed state. Clear any stashed reconcile result
+  // and invalidate an in-flight reconcile (advance the token so its result is
+  // dropped; clear its busy flag — `pendingWrites` keeps us busy), so neither
+  // can later repopulate the refresh banner with pre-edit data. The post-batch
+  // reconcile re-derives it.
+  latestState.value = null
+  reconcileToken++
+  // Invalidate any main search already in flight so it can't assign its pre-write
+  // rows over the optimistic patch we're about to apply when it resolves.
+  searchToken++
+  reconciling.value = false
+  pendingWrites.value++
+  pendingByRecord.set(recordId, (pendingByRecord.get(recordId) ?? 0) + 1)
+
+  // Chain after any in-flight write for the same cell so the requests reach the
+  // server in order (a prior failure must not block the next write).
+  const prev = writeChains.get(key) ?? Promise.resolve()
+  const current = prev.catch(() => {}).then(run)
+  writeChains.set(key, current)
+
+  current
+    .catch(() => {
+      batchErrored = true
+      snackbars.push({ mode: 'danger', text: t.write_error })
+    })
+    .finally(() => {
+      // Only drop the chain entry if a newer write hasn't replaced it.
+      if (writeChains.get(key) === current) {
+        writeChains.delete(key)
+      }
+      const remaining = (pendingByRecord.get(recordId) ?? 1) - 1
+      if (remaining > 0) {
+        pendingByRecord.set(recordId, remaining)
+      } else {
+        pendingByRecord.delete(recordId)
+      }
+      pendingWrites.value--
+      if (pendingWrites.value === 0) {
+        const errored = batchErrored
+        batchErrored = false
+        if (!errored) {
+          reconcile()
+        }
+      }
+    })
+}
+
+// Update — optimistic. Reflect the change in memory immediately (the catalog
+// row and the open sheet share this object), then persist in the background.
+function save(record: Record<string, any>, values: Record<string, any>): void {
+  const id = resolveId(record)
+  // Never let an update re-key the row. The built-in cell / sheet editors already
+  // refuse to edit the index field, but the sheet-slot `save` helper funnels
+  // through here directly and a custom editor could include it. Changing a row's
+  // identifier optimistically (before the slow write settles) would re-key the
+  // row, so a follow-up save / delete would resolve to the new, not-yet-synced id
+  // and miss the in-flight record. Strip it so the invariant holds for every
+  // caller. (The identifier is still settable on create, which uses `create()`.)
+  const indexField = props.indexField ?? 'id'
+  if (indexField in values) {
+    values = { ...values }
+    delete values[indexField]
+  }
+  if (Object.keys(values).length === 0) { return }
+  Object.assign(record, values)
+  // Serialize per record+field so two quick edits to the same cell apply in
+  // order; edits to disjoint fields run concurrently.
+  const fields = Object.keys(values)
+  const key = `${id}:${[...fields].sort().join(',')}`
+  // Same-cell repeats chain on this key inside trackWrite. But a multi-field save
+  // (e.g. a slot persisting {name,status}) and a later single-field save ({name})
+  // have different keys yet share a column, so without help they'd race — with
+  // the slow API the older one could land last and clobber the newer value. Gate
+  // behind any in-flight write for this record whose fields overlap; disjoint
+  // writes still run concurrently.
+  const prefix = `${id}:`
+  const fieldSet = new Set(fields)
+  const overlapping = [...writeChains.entries()]
+    .filter(([k]) => k !== key && k.startsWith(prefix)
+      && k.slice(prefix.length).split(',').some((f) => fieldSet.has(f)))
+    .map(([, chain]) => chain)
+  const gate = Promise.allSettled(overlapping)
+  trackWrite(id, key, () => gate.then(() => executeUpdate(id, values)))
+}
+
+// Create — blocking. The slow POST runs to completion, then the catalog is
+// refreshed with the now-synced canonical state (preserving the active query).
+// The create sheet shows a button spinner meanwhile.
+function prependCreated(data: Record<string, any>): void {
+  if (result.value?.data) {
+    result.value.data.unshift(data)
+  }
+  if (result.value?.pagination) {
+    result.value.pagination.total++
+  }
+}
+
+async function create(values: Record<string, any>): Promise<Record<string, any>> {
+  creating.value = true
+  try {
+    const res = await executeCreate(values)
+    // The POST succeeded — the record exists. Invalidate any main search already
+    // in flight (issued before this create) so its pre-create rows can't assign
+    // over the just-created record when it resolves — mirrors trackWrite. Bump
+    // only AFTER success: a rejected create doesn't refetch, so suppressing the
+    // search here too would strand the catalog on the old query — leaving it valid
+    // lets it land its (correct, new-query) rows instead. New searches can't start
+    // during the create (doRefresh bails on `creating`); create's own forceRefresh
+    // bypasses that by calling refresh directly.
+    searchToken++
+    // From here a refresh failure must not reject (the caller would treat the
+    // create as failed and re-submit a duplicate); fall back to showing the new
+    // record optimistically.
+    if (pendingWrites.value > 0) {
+      // Other optimistic writes are still syncing; a refetch now would read the
+      // backend before they're visible and clobber those rows. Prepend the new
+      // record optimistically — the pending writes' reconcile refreshes the
+      // full list (via the refresh banner) once they settle.
+      prependCreated(res.data)
+    } else {
+      // Force a fresh refetch directly (not the exposed refreshCatalog, which
+      // would no-op while `creating` is still true). forceRefresh also invalidates
+      // any reconcile that a batch settling mid-POST kicked off, so a pre-create
+      // snapshot can't land behind the refresh banner.
+      try {
+        await forceRefresh()
+      } catch {
+        prependCreated(res.data)
+      }
+    }
+    if (!hasInitialResults.value && (result.value?.data.length ?? 0) > 0) {
+      hasInitialResults.value = true
+    }
+    return res.data
+  } catch (e) {
+    // The create was rejected (e.g. a server `unique` rule). A query/filter/page
+    // change made just before submitting may have scheduled a refresh that the
+    // `creating` bail dropped without issuing a request, leaving the rows on the
+    // previous query. Re-schedule it now: doRefresh fires after `creating` clears,
+    // re-bails if writes are pending, and is a memo no-op when the query is
+    // unchanged (the common case), so it only does work when a query change was
+    // actually stranded.
+    void doRefresh()
+    throw e
+  } finally {
+    creating.value = false
+  }
+}
+
+// Delete — optimistic. Remove from the UI immediately, persist in the
+// background.
+function remove(record: Record<string, any>): void {
+  const id = resolveId(record)
+  if (result.value?.data) {
+    const index = result.value.data.findIndex((r) => resolveId(r) === id)
+    if (index !== -1) {
+      result.value.data.splice(index, 1)
+      // Only adjust the total when a row was actually removed from the current
+      // page, so a not-found delete can't drift the count below the rows shown.
+      if (result.value.pagination) {
+        result.value.pagination.total--
+      }
+    }
+  }
+  // Serialize the delete behind any in-flight updates for the same record. With
+  // the slow write API, a concurrently-issued delete could otherwise reach the
+  // backend before a pending update — the update would then fail against an
+  // already-deleted row (spurious save-failed snackbar) or resurrect/clobber
+  // it. Gate on the record's current write chains (settled, success or not —
+  // the row is being deleted regardless) before issuing the delete.
+  const pendingForRecord = [...writeChains.entries()]
+    .filter(([key]) => key.startsWith(`${id}:`))
+    .map(([, chain]) => chain)
+  // `Promise.allSettled([])` resolves immediately, so this is a no-op gate when
+  // the record has no in-flight writes.
+  const gate = Promise.allSettled(pendingForRecord)
+  trackWrite(id, `${id}:__delete__`, () => gate.then(() => executeDelete(id)))
+}
+
+async function openSheet(record: Record<string, any>): Promise<void> {
+  // Open immediately with a spinner (instant feedback so the user doesn't click
+  // the id cell again), then load the full record (detail-only fields not
+  // selected as columns) and render it. A newer open (another row, or the
+  // create form) supersedes this one via the token.
+  const id = resolveId(record)
+  sheetRecord.value = record
+  sheetMode.value = 'view'
+  sheetLoading.value = true
+  sheetError.value = false
+  sheet.on()
+  const seq = ++showRequestSeq
+  // Snapshot whether the record had a write in flight when `/show` is issued:
+  // the read can return pre-sync data, so even if the write finishes before
+  // `/show` resolves we must not overwrite the optimistic value.
+  const pendingAtIssue = hasPendingWrite(id)
+  try {
+    const res = await executeShow(id)
+    // Merge into the *current* sheet record, not the one captured at call time: a
+    // direct refresh may have rebound `sheetRecord` to a fresh row object while
+    // `/show` was in flight, and the detail must land on the row the sheet is
+    // actually showing (else it renders without the detail-only fields). The seq
+    // guard ensures this is still the same logical record (a newer open bumps it).
+    const target = sheetRecord.value
+    if (seq === showRequestSeq && target) {
+      if (pendingAtIssue || hasPendingWrite(id)) {
+        // The record had/has an in-flight write, so `/show` may have read the
+        // backend before it synced. Don't overwrite the optimistic values
+        // already on the row; only fill in detail-only fields not yet present.
+        for (const k of Object.keys(res.data)) {
+          if (!(k in target)) {
+            target[k] = res.data[k]
+          }
+        }
+      } else {
+        Object.assign(target, res.data)
+      }
+    }
+  } catch {
+    // Detail load failed: surface an error in the sheet rather than render a
+    // partial record (the user is asked to reload).
+    if (seq === showRequestSeq) {
+      sheetError.value = true
+    }
+  } finally {
+    if (seq === showRequestSeq) {
+      sheetLoading.value = false
+    }
+  }
+}
+
+function openCreate(): void {
+  // `creatable` is the prop that enables creation. Honor it here even though
+  // this method is exposed (and provided to children).
+  if (!props.creatable) {
+    return
+  }
+  // Supersede any in-flight openSheet `/show` so it can't open over the create
+  // form when it resolves.
+  showRequestSeq++
+  sheetRecord.value = null
+  sheetMode.value = 'create'
+  sheetLoading.value = false
+  sheetError.value = false
+  sheet.on()
+}
+
+provideLensEdit({
+  // Getters so the injected context tracks prop changes after mount (e.g.
+  // permissions resolving async, or a flag toggling `editable` off): LensTable
+  // gates inline editing and the id-cell sheet on `edit.editable`.
+  //
+  // Also gated on `rowsCarryIndexField`: when `editable` flips true after mount we
+  // trigger a refetch to pull in the identifier, but it lands asynchronously —
+  // keep editing off until the rows actually carry it, so a save in that window
+  // can't `resolveId()` to `undefined`.
+  get editable() { return !!props.editable && rowsCarryIndexField.value },
+  get creatable() { return !!props.creatable },
+  // Use the same `__no_entity__` fallback as the search / CRUD requests so slot
+  // side-channel saves (which read this) target the same entity, not an empty one.
+  get entity() { return entityName.value },
+  // Getter too: `LensTable` / `LensSheetField` read `edit.indexField` to pick the
+  // sheet opener and to block identifier edits, so it must track a prop that
+  // resolves (or changes) after mount — otherwise the new identifier column stays
+  // non-clickable while the old field is still treated as the id.
+  get indexField() { return props.indexField ?? 'id' },
+  resolveId,
+  save,
+  create,
+  remove,
+  openSheet,
+  openCreate
+})
+
+// Warn the user (native prompt) if they try to leave while a write is still
+// syncing, since that change might not have been persisted yet.
+function onBeforeUnload(event: BeforeUnloadEvent): void {
+  if (pendingWrites.value > 0 || creating.value) {
+    event.preventDefault()
+    event.returnValue = ''
+  }
+}
+
+onMounted(() => window.addEventListener('beforeunload', onBeforeUnload))
+onBeforeUnmount(() => window.removeEventListener('beforeunload', onBeforeUnload))
 
 defineExpose({
   refresh: refreshCatalog,
+
+  /**
+   * Open the record sheet in create mode. Exposed so a page's "New …"
+   * button can trigger creation through the unified sheet.
+   */
+  openCreate,
 
   /**
    * Retrieve the current records in the catalog. This method is required when
@@ -504,6 +1217,7 @@ defineExpose({
     <div v-else class="container">
       <LensCatalogControl
         v-if="result"
+        :class="{ 'is-busy': busy }"
         :query
         :query-ph
         :filter-presets
@@ -537,7 +1251,12 @@ defineExpose({
         </template>
       </LensCatalogControl>
       <div v-else class="control-skeleton" />
-      <div v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)" ref="conditionBlocksEl" class="condition-blocks">
+      <div
+        v-if="!hideConditions && result && (_filters.length > 0 || _sort.length > 0)"
+        ref="conditionBlocksEl"
+        class="condition-blocks"
+        :class="{ 'is-busy': busy }"
+      >
         <template v-if="_filters.length > 0">
           <SDivider />
           <LensCatalogStateFilter
@@ -556,15 +1275,20 @@ defineExpose({
         </template>
       </div>
       <SDivider />
+      <div v-if="latestState && !busy" class="refresh-banner">
+        <span class="refresh-banner-text">{{ t.refresh_text }}</span>
+        <SButton size="mini" mode="info" :label="t.refresh_action" @click="applyLatest" />
+      </div>
       <div class="list" :style="tableMaxHeight">
         <LensTable
           :result
           :loading
           :overrides="_overrides"
           :select="tableSelect"
-          :index-field
+          :index-field="tableIndexField"
           :selected
           :clickable-fields
+          :inline-edit
           @filter-updated="onInlineFilterUpdated"
           @sort-updated="onSortUpdated"
           @update:selected="onUpdateSelected"
@@ -572,6 +1296,7 @@ defineExpose({
         />
         <LensCatalogFooter
           v-if="result && result?.pagination.total > 0"
+          :class="{ 'is-busy': busy }"
           :result
           :loading
           @prev="onPrev"
@@ -602,6 +1327,27 @@ defineExpose({
         @apply="onViewUpdated"
       />
     </SModal>
+
+    <LensSheet
+      v-if="editable && result?.fields"
+      :open="sheet.state.value"
+      :mode="sheetMode"
+      :entity="entityName"
+      :record="sheetRecord"
+      :loading="sheetLoading"
+      :error="sheetError"
+      :fields="result.fields"
+      :index-field="indexField ?? 'id'"
+      :width="sheetWidth"
+      @close="sheet.off"
+    >
+      <template v-if="$slots['sheet-before']" #before="s">
+        <slot name="sheet-before" v-bind="s" />
+      </template>
+      <template v-if="$slots['sheet-after']" #after="s">
+        <slot name="sheet-after" v-bind="s" />
+      </template>
+    </LensSheet>
   </div>
 </template>
 
@@ -615,7 +1361,6 @@ defineExpose({
 
 .LensCatalog.show-empty-state {
   border-style: dashed;
-  background-color: var(--c-bg-1);
 }
 
 .LensCatalog.has-border {
@@ -638,6 +1383,29 @@ defineExpose({
   flex-direction: column;
   flex-grow: 1;
   min-height: 100%;
+}
+
+/* While a background write is syncing, lock the query controls so the user
+   can't change filters/sort/page (a refetch then would be stale and would
+   drop the optimistic edits). Editing the rows stays available. */
+.is-busy {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.refresh-banner {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--c-gutter);
+  background-color: var(--c-bg-2);
+}
+
+.refresh-banner-text {
+  font-size: 13px;
+  color: var(--c-text-2);
 }
 
 .list {

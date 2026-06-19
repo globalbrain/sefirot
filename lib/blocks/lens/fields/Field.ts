@@ -110,7 +110,10 @@ export abstract class Field<T extends FieldData> {
    * Renders the table filter menu for the field. The filter maybe null when
    * the field has no available filters.
    */
-  async tableFilterMenu(_filters: any[], _onFilterUpdated: (filters: any[]) => void): Promise<DropdownSection | null> {
+  async tableFilterMenu(
+    _filters: any[],
+    _onFilterUpdated: (filters: any[]) => void
+  ): Promise<DropdownSection | null> {
     return null
   }
 
@@ -210,6 +213,28 @@ export abstract class Field<T extends FieldData> {
     }, {
       props: ['value']
     })
+  }
+
+  /**
+   * Whether this field contributes a value to create / update payloads. Most
+   * fields do. Display-only fields (e.g. `content`, which renders static
+   * instructions in the form) return false so the sheet renders them but
+   * never seeds, validates, submits, or makes them inline-editable.
+   */
+  isSubmittable(): boolean {
+    return true
+  }
+
+  /**
+   * Whether this field can be edited in place (inline cell / record sheet) with
+   * an optimistic display. False for fields whose input value isn't the
+   * displayed value and needs a server round-trip first (e.g. a file upload,
+   * which holds raw `File` objects before upload) — patching the row with that
+   * raw value would render incorrectly or crash. Such fields remain editable in
+   * the create form, which is blocking.
+   */
+  supportsOptimisticUpdate(): boolean {
+    return true
   }
 
   /**

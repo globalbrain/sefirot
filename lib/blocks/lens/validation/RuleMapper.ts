@@ -17,17 +17,25 @@ import { type Rule } from '../Rule'
  */
 export function map(rules: Rule[]): ValidationArgs {
   return rules.reduce((carry: ValidationArgs<any>, rule: Rule) => {
-    carry[rule.type] = mapRule(rule)
+    const mapped = mapRule(rule)
+    if (mapped) {
+      carry[rule.type] = mapped
+    }
     return carry
   }, {})
 }
 
-function mapRule(rule: Rule): ValidationRuleWithParams {
+function mapRule(rule: Rule): ValidationRuleWithParams | null {
   switch (rule.type) {
     case 'max_length':
       return maxLength(rule.length)
     case 'required':
       return required()
+    case 'unique':
+      // Uniqueness can only be verified server-side (it queries the
+      // database). The backend enforces it and returns a 422 with field
+      // errors, so there is no client-side equivalent to apply here.
+      return null
     case 'slack_channel_link':
       return slackChannelLink()
     case 'slack_channel_name':

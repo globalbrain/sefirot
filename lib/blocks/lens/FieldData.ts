@@ -49,6 +49,18 @@ export interface FieldDataBase {
   width: number
   required: boolean
   rules: Rule[]
+  /**
+   * Per-context visibility, mirroring the backend field definition. The
+   * catalog renders `showOnIndex` columns; the record sheet shows
+   * `showOnDetail` rows; the create form shows `showOnCreate` fields; and
+   * `showOnUpdate` marks a field editable (inline in the table and in the
+   * sheet) for an existing record. Optional so read-only catalogs whose
+   * backend predates these flags keep working (treated as index+detail only).
+   */
+  showOnIndex?: boolean
+  showOnDetail?: boolean
+  showOnCreate?: boolean
+  showOnUpdate?: boolean
 }
 
 export interface AvatarFieldData extends FieldDataBase {
@@ -157,6 +169,7 @@ export interface RelatedManyFieldData extends FieldDataBase {
   image?: string | null
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
+  resourceEndpointBody?: Record<string, any> | null
   resourceEndpointDataKey: string | null
   resourceTitle: string
   resourceImage?: string | null
@@ -169,6 +182,7 @@ export interface RelatedOneFieldData extends FieldDataBase {
   image?: string | null
   resourceEndpointMethod: 'get' | 'post'
   resourceEndpointPath: string
+  resourceEndpointBody?: Record<string, any> | null
   resourceEndpointDataKey: string | null
   resourceTitle: string
   resourceImage?: string | null

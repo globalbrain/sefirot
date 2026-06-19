@@ -1,6 +1,7 @@
 export type Rule =
   | MaxLengthRule
   | RequiredRule
+  | UniqueRule
   | SlackChannelLinkRule
   | SlackChannelNameRule
   | BeforeRule
@@ -15,6 +16,10 @@ export interface MaxLengthRule {
 
 export interface RequiredRule {
   type: 'required'
+}
+
+export interface UniqueRule {
+  type: 'unique'
 }
 
 export interface SlackChannelLinkRule {

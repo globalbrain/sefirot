@@ -376,6 +376,7 @@
   --z-index-tooltip: 10;
   --z-index-dropdown: 1000;
   --z-index-backdrop: 2000;
+  --z-index-sheet: 2000;
 }
 
 /**

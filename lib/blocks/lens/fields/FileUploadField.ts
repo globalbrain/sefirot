@@ -16,6 +16,14 @@ export class FileUploadField extends Field<FileUploadFieldData> {
     this.downloader = downloader
   }
 
+  // The form input holds raw `File` objects until they're uploaded, which only
+  // happens server-side; an optimistic patch would store those `File`s on the
+  // row and crash the persisted-path renderer. So file uploads aren't editable
+  // inline / in the sheet (only on create, which is blocking).
+  override supportsOptimisticUpdate(): boolean {
+    return false
+  }
+
   override tableCell(v: any, _r: any): TableCell {
     return {
       type: 'text',
