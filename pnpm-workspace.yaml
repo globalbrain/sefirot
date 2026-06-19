@@ -8,6 +8,7 @@ allowBuilds:
 minimumReleaseAge: 2880
 minimumReleaseAgeExclude:
   - '@globalbrain/*'
+  - '@types/*'
 
 overrides:
   jsdom: latest

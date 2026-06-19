@@ -29,7 +29,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  'update:modelValue': [value: any[]]
+  'update:model-value': [value: any[]]
 }>()
 
 const classes = computed(() => [
@@ -45,7 +45,7 @@ function onChange(value: any): void {
     .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
 
-  emit('update:modelValue', difference)
+  emit('update:model-value', difference)
 }
 </script>
 
