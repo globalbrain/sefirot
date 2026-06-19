@@ -518,15 +518,18 @@ function refetch(): void {
   doRefresh()
 }
 
-// When `editable` resolves from false to true after mount (e.g. async
-// permissions), the initial search may have been issued while it was false — so
-// `withIndexField` didn't append the default `id`, leaving the current rows
-// without the identifier that editing and selection now need (`resolveId` would
-// return `undefined`). Refetch so the rows carry it. A no-op when the index field
-// was already present (the request input is unchanged → cached result reused).
-watch(() => props.editable, (now, prev) => {
-  if (now && !prev) { refetch() }
-})
+// When the effective row identifier appears or changes while editing is enabled,
+// the loaded rows won't carry it until a refetch runs — so refetch here. Two
+// cases: `editable` resolving true after mount (async permissions), so
+// `withIndexField` only now appends the default `id`; or a parent resolving /
+// changing `indexField` from async config. Without this the rows lack the new
+// identifier, `rowsCarryIndexField` keeps editing gated off, and selection keys
+// go `undefined` until an unrelated query change. A no-op when the identifier was
+// already present (same request input → cached result reused).
+watch(
+  () => (props.editable ? (props.indexField ?? 'id') : null),
+  (field, prev) => { if (field && field !== prev) { refetch() } }
+)
 
 function onQuery(value: string | null) {
   if (guardBusy()) { return }
@@ -824,6 +827,11 @@ function rebindOpenSheet(): void {
 async function forceRefresh(): Promise<void> {
   reconcileToken++
   reconciling.value = false
+  // Supersede any normal search already in flight (e.g. issued by a query change
+  // before an external bulk mutation) so its older rows can't assign over this
+  // fresh result when it resolves — same token mechanism as the write/create
+  // races. This refetch captures the bumped token, so it isn't self-suppressed.
+  searchToken++
   prevFetchInput = null
   latestState.value = null
   await refresh()
