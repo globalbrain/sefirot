@@ -15,6 +15,6 @@ describe('components/SInputSwitches', () => {
     })
 
     wrapper.find('.SInputSwitches .input').trigger('click')
-    expect(wrapper.emitted('update:modelValue')).toBeTruthy()
+    expect(wrapper.emitted('update:model-value')).toBeTruthy()
   })
 })
