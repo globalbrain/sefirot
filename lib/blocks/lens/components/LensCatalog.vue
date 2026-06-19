@@ -976,17 +976,20 @@ function prependCreated(data: Record<string, any>): void {
 
 async function create(values: Record<string, any>): Promise<Record<string, any>> {
   creating.value = true
-  // Invalidate any main search already in flight (issued before this create) so
-  // its pre-create rows can't assign over the just-created record when it
-  // resolves — mirrors trackWrite. New searches can't start during the create
-  // (doRefresh bails on `creating`); create's own forceRefresh bypasses that by
-  // calling refresh directly.
-  searchToken++
   try {
     const res = await executeCreate(values)
-    // The POST succeeded — the record exists. From here a refresh failure must
-    // not reject (the caller would treat the create as failed and re-submit a
-    // duplicate); fall back to showing the new record optimistically.
+    // The POST succeeded — the record exists. Invalidate any main search already
+    // in flight (issued before this create) so its pre-create rows can't assign
+    // over the just-created record when it resolves — mirrors trackWrite. Bump
+    // only AFTER success: a rejected create doesn't refetch, so suppressing the
+    // search here too would strand the catalog on the old query — leaving it valid
+    // lets it land its (correct, new-query) rows instead. New searches can't start
+    // during the create (doRefresh bails on `creating`); create's own forceRefresh
+    // bypasses that by calling refresh directly.
+    searchToken++
+    // From here a refresh failure must not reject (the caller would treat the
+    // create as failed and re-submit a duplicate); fall back to showing the new
+    // record optimistically.
     if (pendingWrites.value > 0) {
       // Other optimistic writes are still syncing; a refetch now would read the
       // backend before they're visible and clobber those rows. Prepend the new

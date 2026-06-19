@@ -121,6 +121,11 @@ const title = computed(() => {
 const createModel = reactive<Record<string, any>>({})
 const saving = ref(false)
 
+// Whether creation is currently permitted. Reactive (a getter on the injected
+// edit context) so the Create button disables if `creatable` flips off after the
+// sheet opened; `onCreate` re-checks it too.
+const creatable = computed(() => !!edit?.creatable)
+
 // Backend-only validation errors (e.g. `unique`) returned by a rejected
 // create, fed to Vuelidate via `$externalResults` so they surface on the
 // offending field. The create form's keys are the bare field keys, matching
@@ -167,6 +172,15 @@ async function onCreate() {
   // Create can't start a second submission (and create a duplicate record) while
   // the first call's validation is still pending.
   if (saving.value) {
+    return
+  }
+  // Re-check creation is still permitted: `openCreate()`'s guard runs once, so if
+  // `creatable` flipped off after the sheet opened (async permission change, a
+  // parent disabling creation), the context no longer allows it. Close instead of
+  // POSTing a create the server would reject anyway. The Create button is also
+  // disabled in this state; this guards a flip between render and click.
+  if (!edit?.creatable) {
+    emit('close')
     return
   }
   saving.value = true
@@ -320,6 +334,7 @@ const slotProps = computed(() => ({
             mode="info"
             :label="t.create"
             :loading="saving"
+            :disabled="!creatable"
             @click="onCreate"
           />
         </template>

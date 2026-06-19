@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
@@ -73,6 +73,18 @@ const canEdit = computed(() =>
 const editing = ref(false)
 const model = ref<any>(null)
 
+// If the backing record is replaced/rebound while this editor is open (the
+// refresh banner, a parent `refresh()`, or a `/show` merge filling detail keys),
+// the `model` captured in `start()` is stale; applying it would overwrite the
+// freshly bound value. Close the editor so the user re-opens against the current
+// value. Our own optimistic save also mutates this value, but `apply()` sets
+// `editing = false` synchronously right after, so this async watcher sees it
+// already closed; user typing only touches the local `model`, never the record.
+watch(
+  () => props.record[props.fieldKey],
+  () => { if (editing.value) { editing.value = false } }
+)
+
 const { validation, validate, reset } = useValidation(
   () => ({ input: model.value }),
   () => ({ input: props.field.generateValidationRules() })
@@ -90,10 +102,22 @@ function cancel() {
 }
 
 async function apply() {
+  // Snapshot the value we're editing so we can detect the backing record being
+  // rebound out from under us during validation (checked below).
+  const editedValue = props.record[props.fieldKey]
+
   // Client-side validation only (required, length, …). Server-only rules such
   // as `unique` are enforced by the background write, which surfaces a snackbar
   // on rejection.
   if (!(await validate())) {
+    return
+  }
+
+  // A refresh / rebind can swap the backing record during the validate microtask;
+  // the watcher above closes the editor but flushes asynchronously and can't abort
+  // this already-running apply, so re-check against the snapshot. If the value
+  // changed, `model` is stale — bail rather than overwrite the fresh value.
+  if (props.record[props.fieldKey] !== editedValue) {
     return
   }
 
