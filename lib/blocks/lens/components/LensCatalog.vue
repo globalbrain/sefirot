@@ -463,6 +463,18 @@ const tableSelect = computed(() => {
 // would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
 const tableIndexField = computed(() => props.indexField ?? (props.editable ? 'id' : undefined))
 
+// Whether the currently loaded rows actually carry the effective row identifier.
+// Editing / opening a row needs it (`resolveId`), but rows fetched while
+// `editable` was still false — or before an `indexField` change settled — won't
+// have it until the triggered refetch lands. Editing is gated on this (see the
+// `editable` getter) so a quick save in that window can't post `id: undefined`.
+// An empty result has nothing to edit, so it doesn't block.
+const rowsCarryIndexField = computed(() => {
+  const rows = result.value?.data
+  if (!rows || rows.length === 0) { return true }
+  return (props.indexField ?? 'id') in rows[0]
+})
+
 // The `indexField` is appended to the request `select` so the server
 // returns its value on every row, but it is kept out of the internal
 // `_select` / `_selectable` state so the caller-facing concept of
@@ -1066,7 +1078,12 @@ provideLensEdit({
   // Getters so the injected context tracks prop changes after mount (e.g.
   // permissions resolving async, or a flag toggling `editable` off): LensTable
   // gates inline editing and the id-cell sheet on `edit.editable`.
-  get editable() { return !!props.editable },
+  //
+  // Also gated on `rowsCarryIndexField`: when `editable` flips true after mount we
+  // trigger a refetch to pull in the identifier, but it lands asynchronously —
+  // keep editing off until the rows actually carry it, so a save in that window
+  // can't `resolveId()` to `undefined`.
+  get editable() { return !!props.editable && rowsCarryIndexField.value },
   get creatable() { return !!props.creatable },
   entity: props.entity ?? '',
   // Getter too: `LensTable` / `LensSheetField` read `edit.indexField` to pick the
