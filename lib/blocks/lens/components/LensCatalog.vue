@@ -140,11 +140,13 @@ export interface Props {
   // follow-up save/delete would address the not-yet-synced new id. It can
   // still be set on creation (via a `showOnCreate` field).
   //
-  // An editable catalog must keep its index field among the rendered columns
-  // (i.e. include it in `select`, or leave `select` empty to use server
-  // defaults): the row's sheet opener — and therefore the only way to view or
-  // delete a record — is the index-field cell, so hiding that column leaves the
-  // rows with no opener.
+  // An editable catalog must keep its index field among the rendered columns,
+  // because the row's sheet opener — and therefore the only way to view or
+  // delete a record — is the index-field cell. The default `id` identifier is
+  // kept when `select` is empty (server defaults), so that case works as-is; a
+  // *custom* `indexField`, however, must be listed in `select` explicitly (an
+  // empty/default `select` drops it from the rendered columns, leaving the rows
+  // with no opener).
   editable?: boolean
 
   // Whether new records can be created (enables create mode in the sheet
@@ -1085,7 +1087,9 @@ provideLensEdit({
   // can't `resolveId()` to `undefined`.
   get editable() { return !!props.editable && rowsCarryIndexField.value },
   get creatable() { return !!props.creatable },
-  entity: props.entity ?? '',
+  // Use the same `__no_entity__` fallback as the search / CRUD requests so slot
+  // side-channel saves (which read this) target the same entity, not an empty one.
+  get entity() { return entityName.value },
   // Getter too: `LensTable` / `LensSheetField` read `edit.indexField` to pick the
   // sheet opener and to block identifier edits, so it must track a prop that
   // resolves (or changes) after mount — otherwise the new identifier column stays
@@ -1268,7 +1272,7 @@ defineExpose({
       v-if="editable && result?.fields"
       :open="sheet.state.value"
       :mode="sheetMode"
-      :entity="entity ?? ''"
+      :entity="entityName"
       :record="sheetRecord"
       :loading="sheetLoading"
       :error="sheetError"
