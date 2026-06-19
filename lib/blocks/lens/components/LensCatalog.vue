@@ -518,19 +518,6 @@ function refetch(): void {
   doRefresh()
 }
 
-// When the effective row identifier appears or changes while editing is enabled,
-// the loaded rows won't carry it until a refetch runs — so refetch here. Two
-// cases: `editable` resolving true after mount (async permissions), so
-// `withIndexField` only now appends the default `id`; or a parent resolving /
-// changing `indexField` from async config. Without this the rows lack the new
-// identifier, `rowsCarryIndexField` keeps editing gated off, and selection keys
-// go `undefined` until an unrelated query change. A no-op when the identifier was
-// already present (same request input → cached result reused).
-watch(
-  () => (props.editable ? (props.indexField ?? 'id') : null),
-  (field, prev) => { if (field && field !== prev) { refetch() } }
-)
-
 function onQuery(value: string | null) {
   if (guardBusy()) { return }
   query.value = value
@@ -854,6 +841,28 @@ async function refreshCatalog(): Promise<void> {
   }
   await forceRefresh()
 }
+
+// When the effective row identifier appears or changes while editing is enabled,
+// the loaded rows won't carry it until a refetch runs — so refetch here. Two
+// cases: `editable` resolving true after mount (async permissions), so
+// `withIndexField` only now appends the default `id`; or a parent resolving /
+// changing `indexField` from async config. Without this the rows lack the new
+// identifier, `rowsCarryIndexField` keeps editing gated off, and selection keys
+// go `undefined` until an unrelated query change. A no-op when the identifier was
+// already present (same request input → cached result reused).
+//
+// Close an open record sheet first: it was identified under the old field and
+// can't be reliably re-matched to the new one (its row lacks the new key, so
+// `resolveId` would be `undefined`), which would let a delete/save act on the
+// wrong — or no — id during and after the refetch.
+watch(
+  () => (props.editable ? (props.indexField ?? 'id') : null),
+  (field, prev) => {
+    if (!field || field === prev) { return }
+    if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
+    refetch()
+  }
+)
 
 // Track an optimistic background write: count it as pending, surface a snackbar
 // on failure, and once the whole batch settles (with no failures) reconcile.
