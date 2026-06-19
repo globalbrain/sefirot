@@ -275,11 +275,17 @@ const perPage = ref(100)
 
 const lang = useLang()
 
+// The entity name sent on every request. Falls back to the `__no_entity__`
+// sentinel when the prop is omitted, so the search and the CRUD/detail calls
+// target the same entity — otherwise the search would use the fallback while an
+// omitted-entity CRUD payload would serialize `undefined` away and hit no entity.
+const entityName = computed(() => props.entity ?? '__no_entity__')
+
 // Build the search request from the catalog's current state. Shared by the
 // main search and the background reconcile fetch so both query identically.
 function buildSearchInput(): LensQuery {
   return {
-    entity: props.entity ?? '__no_entity__',
+    entity: entityName.value,
     select: withIndexField(_select.value),
     filters: createInputFilters(queryFilter.value, _filters.value),
     sort: _sort.value.length > 0 ? _sort.value : defaultSort.value ?? [],
@@ -678,18 +684,18 @@ function resolveId(record: Record<string, any>): any {
 
 const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
   http.post(`${endpointBase.value}/update`, {
-    entity: props.entity, id, values, settings: { lang }
+    entity: entityName.value, id, values, settings: { lang }
   })
 )
 
 const { execute: executeCreate } = useMutation((http, values: Record<string, any>) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/create`, {
-    entity: props.entity, values, settings: { lang }
+    entity: entityName.value, values, settings: { lang }
   })
 )
 
 const { execute: executeDelete } = useMutation((http, id: any) =>
-  http.post(`${endpointBase.value}/delete`, { entity: props.entity, id })
+  http.post(`${endpointBase.value}/delete`, { entity: entityName.value, id })
 )
 
 // Resolve a single record's full detail (every index/detail field, not just
@@ -697,7 +703,7 @@ const { execute: executeDelete } = useMutation((http, id: any) =>
 // catalog doesn't render as columns (e.g. long-form descriptions).
 const { execute: executeShow } = useMutation((http, id: any) =>
   http.post<LensResult & { data: Record<string, any> }>(`${endpointBase.value}/show`, {
-    entity: props.entity, id, settings: { lang }
+    entity: entityName.value, id, settings: { lang }
   })
 )
 
