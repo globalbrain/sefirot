@@ -458,13 +458,6 @@ const tableSelect = computed(() => {
   return withoutIndexField(result.value?.query.select ?? [])
 })
 
-// The row-identifier the table uses as its selection key. An explicit
-// `indexField`, or `id` for editable catalogs (which always carry it). Without
-// this, an editable catalog that relies on the default would leave the table on
-// positional selection keys, so an optimistic create/delete that shifts rows
-// would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
-const tableIndexField = computed(() => props.indexField ?? (props.editable ? 'id' : undefined))
-
 // Whether the currently loaded rows actually carry the effective row identifier.
 // Editing / opening a row needs it (`resolveId`), but rows fetched while
 // `editable` was still false — or before an `indexField` change settled — won't
@@ -475,6 +468,24 @@ const rowsCarryIndexField = computed(() => {
   const rows = result.value?.data
   if (!rows || rows.length === 0) { return true }
   return (props.indexField ?? 'id') in rows[0]
+})
+
+// The row-identifier the table uses as its selection key. An explicit
+// `indexField`, or `id` for editable catalogs (which always carry it). Without
+// this, an editable catalog that relies on the default would leave the table on
+// positional selection keys, so an optimistic create/delete that shifts rows
+// would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
+//
+// Gated on `rowsCarryIndexField`: when `editable` flips true (or `indexField`
+// changes) the on-screen rows don't carry the new key until the triggered refetch
+// lands. Switching STable onto it during that window keys every row's selection to
+// `undefined` — wiping the current selection and making any row-select emit
+// `[undefined]` (so parent bulk actions act on no/wrong records). Stay on the
+// previous positional key until the loaded rows carry it, matching the
+// `edit.editable` gate so selection and editing flip together.
+const tableIndexField = computed(() => {
+  const field = props.indexField ?? (props.editable ? 'id' : undefined)
+  return field && rowsCarryIndexField.value ? field : undefined
 })
 
 // The `indexField` is appended to the request `select` so the server
@@ -860,6 +871,12 @@ watch(
   (field, prev) => {
     if (!field || field === prev) { return }
     if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
+    // Supersede any search still in flight under the previous identifier state: it
+    // was issued before the new id/index field, so its rows won't carry the new
+    // key. If it resolved after this refetch it would assign those id-less rows
+    // back into `result`, flipping `rowsCarryIndexField` (and editing) off again
+    // with no watcher to recover. Bumping the token makes the fetcher drop it.
+    searchToken++
     refetch()
   }
 )

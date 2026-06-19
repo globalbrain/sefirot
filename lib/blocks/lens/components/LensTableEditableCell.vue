@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
-import { computed, nextTick, onUnmounted, ref, shallowRef } from 'vue'
+import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
@@ -28,6 +28,19 @@ const inline = useLensInlineEdit()
 
 const myKey = computed(() => `${edit?.resolveId(props.record)}:${props.fieldKey}`)
 const editing = computed(() => inline?.activeKey.value === myKey.value)
+
+// If the backing value is replaced while this editor is open — a refresh banner
+// apply, a parent `refresh()`, or a requery that keeps this row visible — the
+// `model` captured back in `start()` is now stale, and saving it would overwrite
+// the freshly fetched cell. Close the editor so the user re-opens against the
+// current value. Our own optimistic save also mutates `props.value`, but `apply()`
+// calls `inline.stop()` synchronously right after, so `editing` is already false
+// by the time this (async) watcher flushes — it won't fight a normal save. User
+// typing only touches the local `model`, never `props.value`, so it won't trip.
+watch(
+  () => props.value,
+  () => { if (editing.value) { inline?.stop() } }
+)
 
 // STable virtualization can unmount this row (and its teleported editor) while
 // scrolling. If this cell holds the active editor, clear the shared active key
@@ -110,9 +123,23 @@ function cancel() {
 }
 
 async function apply() {
+  // Snapshot the value we're editing so we can detect the backing cell being
+  // replaced out from under us during validation (checked below).
+  const editedValue = props.value
+
   // Client-side validation only; server-only rules (e.g. `unique`) are enforced
   // by the background write, which surfaces a snackbar on rejection.
   if (!(await validate())) {
+    return
+  }
+
+  // A wholesale refresh (refresh banner, a parent `refresh()`, a route change)
+  // can swap the backing row during the validate microtask. If this cell's value
+  // changed, `model` now predates the fresh value and persisting it would clobber
+  // the just-fetched cell — bail. The value watcher above also closes the editor,
+  // but it flushes asynchronously and can't abort this already-running save, so
+  // re-check here against the snapshot rather than relying on its ordering.
+  if (props.value !== editedValue) {
     return
   }
 
