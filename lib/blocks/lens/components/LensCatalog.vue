@@ -139,6 +139,12 @@ export interface Props {
   // a row's id before the slow write settles would re-key the row, so a
   // follow-up save/delete would address the not-yet-synced new id. It can
   // still be set on creation (via a `showOnCreate` field).
+  //
+  // An editable catalog must keep its index field among the rendered columns
+  // (i.e. include it in `select`, or leave `select` empty to use server
+  // defaults): the row's sheet opener — and therefore the only way to view or
+  // delete a record — is the index-field cell, so hiding that column leaves the
+  // rows with no opener.
   editable?: boolean
 
   // Whether new records can be created (enables create mode in the sheet
@@ -1057,7 +1063,11 @@ provideLensEdit({
   get editable() { return !!props.editable },
   get creatable() { return !!props.creatable },
   entity: props.entity ?? '',
-  indexField: props.indexField ?? 'id',
+  // Getter too: `LensTable` / `LensSheetField` read `edit.indexField` to pick the
+  // sheet opener and to block identifier edits, so it must track a prop that
+  // resolves (or changes) after mount — otherwise the new identifier column stays
+  // non-clickable while the old field is still treated as the id.
+  get indexField() { return props.indexField ?? 'id' },
   resolveId,
   save,
   create,

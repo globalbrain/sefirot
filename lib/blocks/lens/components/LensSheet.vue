@@ -137,12 +137,20 @@ const { validation, validate, reset } = useValidation(
 
 const confirmingDelete = usePower()
 
+// Latch for the confirmed delete (see onDelete). Reset only when the sheet
+// (re)opens — not on close — so a double-click during the close transition stays
+// blocked.
+const deleting = ref(false)
+
 watch(
   () => [props.open, props.mode, props.record] as const,
   ([open, mode]) => {
     // Reset the delete confirmation whenever the sheet opens, switches mode, or
     // is reused for a different record.
     confirmingDelete.off()
+    if (open) {
+      deleting.value = false
+    }
     if (open && mode === 'create') {
       for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
@@ -188,9 +196,14 @@ async function onCreate() {
 }
 
 function onDelete() {
-  if (!props.record) {
+  // Latch so a fast double-click — before the sheet's leave transition unmounts
+  // the panel — can't run twice and queue a second DELETE for the same record (a
+  // non-idempotent backend would then show a failure snackbar after the first
+  // delete already succeeded). Reset when the sheet next opens.
+  if (!props.record || deleting.value) {
     return
   }
+  deleting.value = true
   // Optimistic: the row is removed immediately and the delete is persisted in
   // the background, so close right away.
   edit!.remove(props.record)
