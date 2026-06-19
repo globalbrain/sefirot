@@ -941,6 +941,19 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
 // row and the open sheet share this object), then persist in the background.
 function save(record: Record<string, any>, values: Record<string, any>): void {
   const id = resolveId(record)
+  // Never let an update re-key the row. The built-in cell / sheet editors already
+  // refuse to edit the index field, but the sheet-slot `save` helper funnels
+  // through here directly and a custom editor could include it. Changing a row's
+  // identifier optimistically (before the slow write settles) would re-key the
+  // row, so a follow-up save / delete would resolve to the new, not-yet-synced id
+  // and miss the in-flight record. Strip it so the invariant holds for every
+  // caller. (The identifier is still settable on create, which uses `create()`.)
+  const indexField = props.indexField ?? 'id'
+  if (indexField in values) {
+    values = { ...values }
+    delete values[indexField]
+  }
+  if (Object.keys(values).length === 0) { return }
   Object.assign(record, values)
   // Serialize per record+field so two quick edits to the same cell apply in
   // order; edits to disjoint fields run concurrently.
@@ -1011,6 +1024,16 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
       hasInitialResults.value = true
     }
     return res.data
+  } catch (e) {
+    // The create was rejected (e.g. a server `unique` rule). A query/filter/page
+    // change made just before submitting may have scheduled a refresh that the
+    // `creating` bail dropped without issuing a request, leaving the rows on the
+    // previous query. Re-schedule it now: doRefresh fires after `creating` clears,
+    // re-bails if writes are pending, and is a memo no-op when the query is
+    // unchanged (the common case), so it only does work when a query change was
+    // actually stranded.
+    void doRefresh()
+    throw e
   } finally {
     creating.value = false
   }
