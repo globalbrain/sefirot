@@ -1,5 +1,14 @@
 # Changelog
 
+# [4.48.0](https://github.com/globalbrain/sefirot/compare/v4.47.0...v4.48.0) (2026-06-19)
+
+
+### Features
+
+* **lens:** add `url-sync` option to LensCatalog ([#736](https://github.com/globalbrain/sefirot/issues/736)) ([f869d7d](https://github.com/globalbrain/sefirot/commit/f869d7daed5ce4e8a5366208ed3ef7bac050550f))
+* **lens:** add built-in avatar field type ([#737](https://github.com/globalbrain/sefirot/issues/737)) ([c87e50c](https://github.com/globalbrain/sefirot/commit/c87e50cf5ae4085b38a371d95c0b5eb0b9bba308))
+* **lens:** catalog editing (optimistic create/update/delete) ([#741](https://github.com/globalbrain/sefirot/issues/741)) ([8ce5667](https://github.com/globalbrain/sefirot/commit/8ce5667c918d8dbd1e747ff15dd6dfbc74ed11d5))
+
 # [4.47.0](https://github.com/globalbrain/sefirot/compare/v4.46.0...v4.47.0) (2026-06-11)
 
 
