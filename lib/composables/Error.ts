@@ -216,8 +216,8 @@ export function useErrorHandler({
       }
 
       const statusCode = getHttpStatusCode(e)
-      if (!statusCode || statusCode < 400 || statusCode >= 500) {
-        //
+      if (!statusCode || statusCode <= 400 || statusCode >= 500) {
+        // ^ report 400 too because it might be caused by a bug in the frontend code
 
         const $ = instance && instance.$
         const metadata = $ && {
