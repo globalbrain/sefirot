@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.48.1](https://github.com/globalbrain/sefirot/compare/v4.48.0...v4.48.1) (2026-06-20)
+
+
+### Bug Fixes
+
+* **error:** report 400 errors to sentry too ([8b9f2d7](https://github.com/globalbrain/sefirot/commit/8b9f2d76db5783527d35f6cc783096271e98f001))
+
 # [4.48.0](https://github.com/globalbrain/sefirot/compare/v4.47.0...v4.48.0) (2026-06-19)
 
 
