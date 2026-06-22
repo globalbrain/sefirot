@@ -3,6 +3,8 @@ import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
 import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
+import SPill, { type Mode as PillMode } from '../../../components/SPill.vue'
+import SState, { type Mode as StateMode } from '../../../components/SState.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
@@ -54,21 +56,37 @@ onUnmounted(() => {
 
 // Reuse the field's own table-cell rendering for the display value so the
 // label mapping (e.g. select option labels) matches the read-only columns.
-// Falls back to a plain representation for non-text displays.
-const displayValue = computed(() => {
+const resolvedCell = computed<any>(() => {
   try {
     const cell = props.field.tableColumn().cell
-    const resolved: any = typeof cell === 'function' ? cell(props.value, props.record) : cell
-    if (resolved && (resolved.type === 'text' || resolved.type === 'number')) {
-      return resolved.value ?? ''
-    }
-    // `state` cells (e.g. a select with displayAs: 'state') carry the localized
-    // label, not the raw payload — show that rather than falling through.
-    if (resolved && resolved.type === 'state') {
-      return resolved.label ?? ''
-    }
+    return typeof cell === 'function' ? cell(props.value, props.record) : cell
   } catch {
-    // Field types without a text cell fall through to the generic display.
+    // Field types without a usable cell fall through to the generic display.
+    return null
+  }
+})
+
+// A `pills` cell (e.g. a multi-select with displayAs: 'pills') renders as pills
+// rather than text, mirroring the read-only `STableCellPills` column.
+const displayPills = computed<{ label: string; color?: PillMode }[] | null>(() => {
+  const cell = resolvedCell.value
+  return cell && cell.type === 'pills' ? cell.pills : null
+})
+
+// A `state` cell (e.g. a select with displayAs: 'state') renders as a status
+// badge rather than its bare label, mirroring the read-only `STableCellState`
+// column.
+const displayState = computed<{ label: string; mode?: StateMode } | null>(() => {
+  const cell = resolvedCell.value
+  return cell && cell.type === 'state' ? { label: cell.label, mode: cell.mode } : null
+})
+
+// Falls back to a plain representation for non-text displays (pills and state
+// cells are rendered as their own components in the template above).
+const displayValue = computed(() => {
+  const resolved: any = resolvedCell.value
+  if (resolved && (resolved.type === 'text' || resolved.type === 'number')) {
+    return resolved.value ?? ''
   }
 
   const v = props.value
@@ -184,7 +202,22 @@ function isTextLikeInput(target: EventTarget | null): boolean {
 
 <template>
   <div ref="anchor" class="LensTableEditableCell" :class="{ editing }">
-    <span class="value">{{ displayValue }}</span>
+    <div v-if="displayPills" class="pills">
+      <SPill
+        v-for="(pill, i) in displayPills"
+        :key="i"
+        size="mini"
+        :mode="pill.color"
+        :label="pill.label"
+      />
+    </div>
+    <SState
+      v-else-if="displayState"
+      size="mini"
+      :mode="displayState.mode"
+      :label="displayState.label"
+    />
+    <span v-else class="value">{{ displayValue }}</span>
     <button
       class="edit"
       type="button"
@@ -231,6 +264,15 @@ function isTextLikeInput(target: EventTarget | null): boolean {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .edit {

@@ -1,5 +1,6 @@
 import { xor } from 'lodash-es'
 import { h } from 'vue'
+import SDescPill from '../../../components/SDescPill.vue'
 import SInputCheckboxes from '../../../components/SInputCheckboxes.vue'
 import SInputDropdown from '../../../components/SInputDropdown.vue'
 import SInputRadios from '../../../components/SInputRadios.vue'
@@ -38,10 +39,24 @@ export class SelectField extends Field<SelectFieldData> {
     switch (this.data.displayAs) {
       case 'state':
         return this.tableCellState(v, _r)
+      case 'pills':
+        return this.tableCellPills(v, _r)
       case 'text':
         return this.tableCellText(v, _r)
       default:
         throw new Error(`Unknown displayAs type: ${this.data.displayAs}`)
+    }
+  }
+
+  protected tableCellPills(v: any, _r: any): TableCell {
+    v = Array.isArray(v) ? v : [v]
+
+    return {
+      type: 'pills',
+      pills: this.optionsForValues(v).map((o) => ({
+        label: this.labelForOption(o),
+        color: o.mode
+      }))
     }
   }
 
@@ -95,11 +110,24 @@ export class SelectField extends Field<SelectFieldData> {
       switch (this.data.displayAs) {
         case 'state':
           return this.renderDataListItemValueForState(value)
+        case 'pills':
+          return this.renderDataListItemValueForPills(value)
         case 'text':
           return this.renderDataListItemValueForText(value)
         default:
           throw new Error(`Unknown displayAs type: ${this.data.displayAs}`)
       }
+    })
+  }
+
+  protected renderDataListItemValueForPills(value: any): any {
+    value = Array.isArray(value) ? value : [value]
+
+    return h(SDescPill, {
+      pill: this.optionsForValues(value).map((o) => ({
+        label: this.labelForOption(o),
+        mode: o.mode
+      }))
     })
   }
 
