@@ -165,6 +165,17 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.each.$validator(['toolong'], null, null)).toBe(false)
   })
 
+  it('composes multiple each rules instead of keeping only the last', () => {
+    const args = map([
+      { type: 'each', rules: [{ type: 'min_length', length: 2 }] },
+      { type: 'each', rules: [{ type: 'max_length', length: 4 }] }
+    ]) as any
+
+    expect(args.each.$validator(['abc'], null, null)).toBe(true)
+    expect(args.each.$validator(['a'], null, null)).toBe(false)
+    expect(args.each.$validator(['abcde'], null, null)).toBe(false)
+  })
+
   describe('relative date keywords', () => {
     beforeEach(() => {
       vi.useFakeTimers()

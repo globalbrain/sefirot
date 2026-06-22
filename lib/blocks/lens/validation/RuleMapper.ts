@@ -29,12 +29,10 @@ import { type EachRule, type Rule } from '../Rule'
  * Maps field rules to vuelidate validation rules.
  */
 export function map(rules: Rule[]): ValidationArgs {
-  return rules.reduce((carry: ValidationArgs<any>, rule: Rule) => {
-    // `each` validates every element of an array value rather than the value
-    // itself, so it maps to a single validator that runs the nested rules over
-    // each element (see `mapEach`).
+  const carry = rules.reduce((carry: ValidationArgs<any>, rule: Rule) => {
+    // `each` rules are handled separately below so that multiple of them on the
+    // same field compose rather than overwrite.
     if (rule.type === 'each') {
-      carry.each = mapEach(rule)
       return carry
     }
     const mapped = mapRule(rule)
@@ -43,6 +41,18 @@ export function map(rules: Rule[]): ValidationArgs {
     }
     return carry
   }, {})
+
+  // `each` validates every element of an array value rather than the value
+  // itself, so it maps to a single per-element validator (see `mapEach`). If a
+  // field carries more than one `each` rule, merge their child rules so every
+  // wildcard rule runs — the backend accumulates them the same way. A single
+  // `each` is the common case.
+  const eachRules = rules.filter((rule): rule is EachRule => rule.type === 'each')
+  if (eachRules.length) {
+    carry.each = mapEach({ type: 'each', rules: eachRules.flatMap((rule) => rule.rules) })
+  }
+
+  return carry
 }
 
 /**
