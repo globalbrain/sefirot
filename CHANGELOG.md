@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.49.0](https://github.com/globalbrain/sefirot/compare/v4.48.1...v4.49.0) (2026-06-22)
+
+
+### Features
+
+* **lens:** support more validation rules and array-nested rules ([#742](https://github.com/globalbrain/sefirot/issues/742)) ([16073df](https://github.com/globalbrain/sefirot/commit/16073df65461584a3848788b67223490e30f7e7f))
+
 ## [4.48.1](https://github.com/globalbrain/sefirot/compare/v4.48.0...v4.48.1) (2026-06-20)
 
 
