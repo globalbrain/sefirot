@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.50.0](https://github.com/globalbrain/sefirot/compare/v4.49.0...v4.50.0) (2026-06-22)
+
+
+### Features
+
+* **lens:** add pills display for selects and render pills/state in edit cells ([#743](https://github.com/globalbrain/sefirot/issues/743)) ([1679198](https://github.com/globalbrain/sefirot/commit/167919855ade8eb327e8980b8385977380c376c5))
+
 # [4.49.0](https://github.com/globalbrain/sefirot/compare/v4.48.1...v4.49.0) (2026-06-22)
 
 
