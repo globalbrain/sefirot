@@ -146,7 +146,7 @@ export interface DecimalFieldData extends FieldDataBase {
 
 export interface SelectFieldData extends FieldDataBase {
   type: 'select'
-  displayAs: 'text' | 'state'
+  displayAs: 'text' | 'state' | 'pills'
   inputAs: 'dropdown' | 'radio'
   placeholderEn: string | null
   placeholderJa: string | null
