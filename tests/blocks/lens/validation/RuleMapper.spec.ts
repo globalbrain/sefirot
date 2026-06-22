@@ -64,6 +64,107 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.after_or_equal.$validator(day('2026-01-01'), null, null)).toBe(false)
   })
 
+  it('maps min_length rule', () => {
+    const args = map([{ type: 'min_length', length: 3 }]) as any
+
+    expect(args.min_length.$validator('abc', null, null)).toBe(true)
+    expect(args.min_length.$validator('ab', null, null)).toBe(false)
+  })
+
+  it('maps min_value and max_value rules', () => {
+    const args = map([
+      { type: 'min_value', value: 10 },
+      { type: 'max_value', value: 20 }
+    ]) as any
+
+    expect(args.min_value.$validator(10, null, null)).toBe(true)
+    expect(args.min_value.$validator(9, null, null)).toBe(false)
+    expect(args.max_value.$validator(20, null, null)).toBe(true)
+    expect(args.max_value.$validator(21, null, null)).toBe(false)
+  })
+
+  it('maps email rule', () => {
+    const args = map([{ type: 'email' }]) as any
+
+    expect(args.email.$validator('jane@example.com', null, null)).toBe(true)
+    expect(args.email.$validator('not-an-email', null, null)).toBe(false)
+  })
+
+  it('maps url rule', () => {
+    const args = map([{ type: 'url' }]) as any
+
+    expect(args.url.$validator('https://example.com', null, null)).toBe(true)
+    expect(args.url.$validator('not a url', null, null)).toBe(false)
+  })
+
+  it('maps decimal rule', () => {
+    const args = map([{ type: 'decimal' }]) as any
+
+    expect(args.decimal.$validator(3.14, null, null)).toBe(true)
+    expect(args.decimal.$validator('abc', null, null)).toBe(false)
+  })
+
+  it('maps decimal_or_hyphen rule', () => {
+    const args = map([{ type: 'decimal_or_hyphen' }]) as any
+
+    expect(args.decimal_or_hyphen.$validator('-', null, null)).toBe(true)
+    expect(args.decimal_or_hyphen.$validator(3.14, null, null)).toBe(true)
+    expect(args.decimal_or_hyphen.$validator('abc', null, null)).toBe(false)
+  })
+
+  it('maps the integer sign rules', () => {
+    const args = map([
+      { type: 'positive_integer' },
+      { type: 'negative_integer' },
+      { type: 'zero_or_positive_integer' },
+      { type: 'zero_or_negative_integer' }
+    ]) as any
+
+    expect(args.positive_integer.$validator(1, null, null)).toBe(true)
+    expect(args.positive_integer.$validator(0, null, null)).toBe(false)
+    expect(args.negative_integer.$validator(-1, null, null)).toBe(true)
+    expect(args.negative_integer.$validator(0, null, null)).toBe(false)
+    expect(args.zero_or_positive_integer.$validator(0, null, null)).toBe(true)
+    expect(args.zero_or_positive_integer.$validator(-1, null, null)).toBe(false)
+    expect(args.zero_or_negative_integer.$validator(0, null, null)).toBe(true)
+    expect(args.zero_or_negative_integer.$validator(1, null, null)).toBe(false)
+  })
+
+  it('maps checked rule', () => {
+    const args = map([{ type: 'checked' }]) as any
+
+    expect(args.checked.$validator(true, null, null)).toBe(true)
+    expect(args.checked.$validator(false, null, null)).toBe(false)
+  })
+
+  it('maps each rule, validating every array element', () => {
+    const args = map([
+      { type: 'each', rules: [{ type: 'max_length', length: 5 }] }
+    ]) as any
+
+    expect(args.each.$validator(['ok', 'fine'], null, null)).toBe(true)
+    expect(args.each.$validator(['ok', 'toolong'], null, null)).toBe(false)
+    expect(args.each.$validator('not-an-array', null, null)).toBe(false)
+    // An empty array defers to `required`, so the each rule alone passes it.
+    expect(args.each.$validator([], null, null)).toBe(true)
+  })
+
+  it('maps each rule with a required child, rejecting empty elements', () => {
+    const args = map([{ type: 'each', rules: [{ type: 'required' }] }]) as any
+
+    expect(args.each.$validator(['a', 'b'], null, null)).toBe(true)
+    expect(args.each.$validator(['a', ''], null, null)).toBe(false)
+  })
+
+  it('maps each rule, dropping server-only children but keeping the rest', () => {
+    const args = map([
+      { type: 'each', rules: [{ type: 'unique' }, { type: 'max_length', length: 5 }] }
+    ]) as any
+
+    expect(args.each.$validator(['ok'], null, null)).toBe(true)
+    expect(args.each.$validator(['toolong'], null, null)).toBe(false)
+  })
+
   describe('relative date keywords', () => {
     beforeEach(() => {
       vi.useFakeTimers()
