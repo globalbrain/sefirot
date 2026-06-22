@@ -5,30 +5,90 @@ import {
   afterOrEqual,
   before,
   beforeOrEqual,
+  checked,
+  decimal,
+  decimalOrHyphen,
+  email,
   maxLength,
+  maxValue,
+  minLength,
+  minValue,
+  negativeInteger,
+  positiveInteger,
   required,
+  rule,
   slackChannelLink,
-  slackChannelName
+  slackChannelName,
+  url,
+  zeroOrNegativeInteger,
+  zeroOrPositiveInteger
 } from '../../../validation/rules'
-import { type Rule } from '../Rule'
+import { type EachRule, type Rule } from '../Rule'
 
 /**
  * Maps field rules to vuelidate validation rules.
  */
 export function map(rules: Rule[]): ValidationArgs {
-  return rules.reduce((carry: ValidationArgs<any>, rule: Rule) => {
+  const carry = rules.reduce((carry: ValidationArgs<any>, rule: Rule) => {
+    // `each` rules are handled separately below so that multiple of them on the
+    // same field compose rather than overwrite.
+    if (rule.type === 'each') {
+      return carry
+    }
     const mapped = mapRule(rule)
     if (mapped) {
       carry[rule.type] = mapped
     }
     return carry
   }, {})
+
+  // `each` validates every element of an array value rather than the value
+  // itself, so it maps to a single per-element validator (see `mapEach`). If a
+  // field carries more than one `each` rule, merge their child rules so every
+  // wildcard rule runs — the backend accumulates them the same way. A single
+  // `each` is the common case.
+  const eachRules = rules.filter((rule): rule is EachRule => rule.type === 'each')
+  if (eachRules.length) {
+    carry.each = mapEach({ type: 'each', rules: eachRules.flatMap((rule) => rule.rules) })
+  }
+
+  return carry
 }
 
-function mapRule(rule: Rule): ValidationRuleWithParams | null {
+/**
+ * Builds a validator that applies an `each` rule's nested rules to every
+ * element of an array value. vuelidate's `forEach` only handles arrays of
+ * objects, so for the scalar arrays Lens fields hold (multi-select values,
+ * related ids) we run each element through the mapped child validators
+ * directly. Mirrors the backend, which expands the same rules onto Laravel's
+ * `key.*` wildcard. A non-array value fails; an empty/absent value is left to
+ * `required` (the rule is optional on its own).
+ */
+function mapEach(eachRule: EachRule): ValidationRuleWithParams {
+  // Map each child rule straight to a validator rather than through the
+  // type-keyed `map()` object, so two child rules of the same family are both
+  // kept (the backend's `key.*` expansion is additive and de-dupes nothing).
+  // Server-only children (e.g. `unique`) map to null and are dropped.
+  const childValidators = eachRule.rules
+    .map((r) => (r.type === 'each' ? mapEach(r) : mapRule(r)))
+    .filter((v): v is ValidationRuleWithParams => v !== null)
+
+  return rule((value) =>
+    Array.isArray(value)
+    && value.every((item) => childValidators.every((v) => v.$validator(item, {}, {}) === true))
+  )
+}
+
+function mapRule(rule: Exclude<Rule, EachRule>): ValidationRuleWithParams | null {
   switch (rule.type) {
     case 'max_length':
       return maxLength(rule.length)
+    case 'min_length':
+      return minLength(rule.length)
+    case 'min_value':
+      return minValue(rule.value)
+    case 'max_value':
+      return maxValue(rule.value)
     case 'required':
       return required()
     case 'unique':
@@ -36,6 +96,24 @@ function mapRule(rule: Rule): ValidationRuleWithParams | null {
       // database). The backend enforces it and returns a 422 with field
       // errors, so there is no client-side equivalent to apply here.
       return null
+    case 'email':
+      return email()
+    case 'url':
+      return url()
+    case 'decimal':
+      return decimal()
+    case 'decimal_or_hyphen':
+      return decimalOrHyphen()
+    case 'positive_integer':
+      return positiveInteger()
+    case 'negative_integer':
+      return negativeInteger()
+    case 'zero_or_positive_integer':
+      return zeroOrPositiveInteger()
+    case 'zero_or_negative_integer':
+      return zeroOrNegativeInteger()
+    case 'checked':
+      return checked()
     case 'slack_channel_link':
       return slackChannelLink()
     case 'slack_channel_name':
