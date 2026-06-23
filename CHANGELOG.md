@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.51.0](https://github.com/globalbrain/sefirot/compare/v4.50.0...v4.51.0) (2026-06-23)
+
+
+### Features
+
+* **lens:** policy-aware editing controls for LensCatalog ([#744](https://github.com/globalbrain/sefirot/issues/744)) ([32595cb](https://github.com/globalbrain/sefirot/commit/32595cb8d6dccd48c3b20ae78d22f18b0a3c93eb))
+
 # [4.50.0](https://github.com/globalbrain/sefirot/compare/v4.49.0...v4.50.0) (2026-06-22)
 
 
