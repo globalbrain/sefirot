@@ -147,24 +147,47 @@ export interface Props {
   // *custom* `indexField`, however, must be listed in `select` explicitly (an
   // empty/default `select` drops it from the rendered columns, leaving the rows
   // with no opener).
-  editable?: boolean
+  //
+  // Turning this on also enables `creatable`, `deletable`, and `inlineEditable`
+  // by default; pass `false` to any of them to opt out.
+  //
+  // Pass a predicate `(record) => boolean` instead of `true` to allow editing
+  // only some rows (e.g. from a per-record policy): the inline affordance and
+  // the sheet's per-field edit are hidden for the rows it rejects.
+  editable?: boolean | ((record: Record<string, any>) => boolean)
 
-  // Whether new records can be created (enables create mode in the sheet
-  // and the exposed `openCreate()` method). Requires `editable`.
+  // Whether records can be deleted from the sheet. Defaults to enabled for an
+  // editable catalog. Pass `false` to hide the delete button entirely, or a
+  // predicate `(record) => boolean` to allow deleting only some rows (e.g. from
+  // a per-record policy). Delete is reachable only through the sheet, so this
+  // has no effect unless the catalog is `editable`.
+  deletable?: boolean | ((record: Record<string, any>) => boolean)
+
+  // Whether new records can be created (enables create mode in the sheet and
+  // the exposed `openCreate()` method). Defaults to enabled when the catalog is
+  // `editable`; pass `false` to disable.
   creatable?: boolean
 
   // Width of the record sheet (any valid CSS width). Defaults to `480px`.
   sheetWidth?: string
 
-  // Enable inline editing directly in the table: cells for `showOnUpdate`
-  // fields gain a hover edit affordance that opens an inline editor. Requires
-  // `editable` (it reuses the same CRUD edit context as the sheet).
-  inlineEdit?: boolean
+  // Enable inline editing directly in the table: cells for `showOnUpdate` fields
+  // gain a hover edit affordance that opens an inline editor (reusing the sheet's
+  // CRUD edit context). Defaults to enabled when the catalog is `editable`; pass
+  // `false` to restrict editing to the record sheet.
+  inlineEditable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   canFilter: true,
-  canSort: true
+  canSort: true,
+  // Default these on so an editable catalog gets create / delete / inline edit
+  // without opting in to each. A boolean prop can't tell "omitted" from `false`
+  // (Vue casts an absent boolean to `false`), so they default on here and the
+  // resolvers below gate them on `editable`; pass the prop `false` to opt out.
+  creatable: true,
+  deletable: true,
+  inlineEditable: true
 })
 
 const selected = defineModel<any[]>('selected')
@@ -1121,9 +1144,10 @@ async function openSheet(record: Record<string, any>): Promise<void> {
 }
 
 function openCreate(): void {
-  // `creatable` is the prop that enables creation. Honor it here even though
-  // this method is exposed (and provided to children).
-  if (!props.creatable) {
+  // Creation is enabled by `creatable`, which defaults to on for an editable
+  // catalog. Honor it here even though this method is exposed (and provided to
+  // children).
+  if (!props.editable || !props.creatable) {
     return
   }
   // Supersede any in-flight openSheet `/show` so it can't open over the create
@@ -1136,6 +1160,27 @@ function openCreate(): void {
   sheet.on()
 }
 
+// Catalog-level editing gate: `editable` is set (boolean `true` or a predicate)
+// and the rows carry the index field needed to resolve a record's id.
+function editEnabled(): boolean {
+  return !!props.editable && rowsCarryIndexField.value
+}
+
+// Per-record refinement: a predicate `editable`/`deletable` decides each row, a
+// boolean applies to all.
+function canEdit(record: Record<string, any>): boolean {
+  return editEnabled() && (typeof props.editable === 'function' ? props.editable(record) : true)
+}
+
+// Delete is a stronger action than edit and rides the same editable sheet, so a
+// row must be editable before it can be deleted — building on `canEdit` makes a
+// per-record `editable` predicate gate delete too (a row it rejects is never
+// deletable). `deletable` then refines further: on unless explicitly `false`, or
+// its own per-record predicate.
+function canDelete(record: Record<string, any>): boolean {
+  return canEdit(record) && (typeof props.deletable === 'function' ? props.deletable(record) : props.deletable)
+}
+
 provideLensEdit({
   // Getters so the injected context tracks prop changes after mount (e.g.
   // permissions resolving async, or a flag toggling `editable` off): LensTable
@@ -1145,8 +1190,8 @@ provideLensEdit({
   // trigger a refetch to pull in the identifier, but it lands asynchronously —
   // keep editing off until the rows actually carry it, so a save in that window
   // can't `resolveId()` to `undefined`.
-  get editable() { return !!props.editable && rowsCarryIndexField.value },
-  get creatable() { return !!props.creatable },
+  get editable() { return editEnabled() },
+  get creatable() { return !!props.editable && props.creatable },
   // Use the same `__no_entity__` fallback as the search / CRUD requests so slot
   // side-channel saves (which read this) target the same entity, not an empty one.
   get entity() { return entityName.value },
@@ -1155,6 +1200,8 @@ provideLensEdit({
   // resolves (or changes) after mount — otherwise the new identifier column stays
   // non-clickable while the old field is still treated as the id.
   get indexField() { return props.indexField ?? 'id' },
+  canEdit,
+  canDelete,
   resolveId,
   save,
   create,
@@ -1288,7 +1335,7 @@ defineExpose({
           :index-field="tableIndexField"
           :selected
           :clickable-fields
-          :inline-edit
+          :inline-editable
           @filter-updated="onInlineFilterUpdated"
           @sort-updated="onSortUpdated"
           @update:selected="onUpdateSelected"

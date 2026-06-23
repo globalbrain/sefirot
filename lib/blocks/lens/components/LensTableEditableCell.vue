@@ -3,11 +3,13 @@ import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
 import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
+import SLink from '../../../components/SLink.vue'
 import SPill, { type Mode as PillMode } from '../../../components/SPill.vue'
 import SState, { type Mode as StateMode } from '../../../components/SState.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
+import { day } from '../../../support/Day'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -30,6 +32,10 @@ const inline = useLensInlineEdit()
 
 const myKey = computed(() => `${edit?.resolveId(props.record)}:${props.fieldKey}`)
 const editing = computed(() => inline?.activeKey.value === myKey.value)
+
+// A predicate `editable` on the catalog can disable editing per row; hide the
+// affordance and refuse to open the editor when this record is rejected.
+const canEdit = computed(() => !!edit?.canEdit(props.record))
 
 // If the backing value is replaced while this editor is open — a refresh banner
 // apply, a parent `refresh()`, or a requery that keeps this row visible — the
@@ -81,12 +87,32 @@ const displayState = computed<{ label: string; mode?: StateMode } | null>(() => 
   return cell && cell.type === 'state' ? { label: cell.label, mode: cell.mode } : null
 })
 
+// A text cell carrying a `link` (or `onClick`) — e.g. a LinkField — renders as a
+// link rather than bare text, mirroring the read-only STableCellText so a column
+// that was clickable before inline editing was enabled stays clickable instead of
+// degrading to plain text. The text itself comes from `displayValue` below.
+const displayLink = computed<{ link: string | null; onClick?: (v: any, r: any) => void } | null>(() => {
+  const cell = resolvedCell.value
+  if (cell && cell.type === 'text' && (cell.link != null || typeof cell.onClick === 'function')) {
+    return { link: cell.link ?? null, onClick: cell.onClick }
+  }
+  return null
+})
+
 // Falls back to a plain representation for non-text displays (pills and state
 // cells are rendered as their own components in the template above).
 const displayValue = computed(() => {
   const resolved: any = resolvedCell.value
   if (resolved && (resolved.type === 'text' || resolved.type === 'number')) {
     return resolved.value ?? ''
+  }
+
+  // A `day` cell (e.g. a DateField) carries a Day value plus a format; render the
+  // formatted day — mirroring the read-only STableCellDay — so an inline-editable
+  // date column shows e.g. `YYYY-MM-DD` rather than the raw ISO/timestamp string
+  // the generic fallback below would otherwise surface.
+  if (resolved && resolved.type === 'day') {
+    return resolved.value ? day(resolved.value).format(resolved.format ?? 'YYYY-MM-DD HH:mm:ss') : ''
   }
 
   const v = props.value
@@ -123,6 +149,10 @@ const editorStyle = computed(() => ({
 }))
 
 function start() {
+  if (!canEdit.value) {
+    return
+  }
+
   inputComponent.value = props.field.formInputComponent()
   model.value = props.field.payloadToInput(props.value ?? props.field.inputEmptyValue())
   reset()
@@ -158,6 +188,19 @@ async function apply() {
   // but it flushes asynchronously and can't abort this already-running save, so
   // re-check here against the snapshot rather than relying on its ordering.
   if (props.value !== editedValue) {
+    return
+  }
+
+  // A per-record `editable` predicate can flip to reject this row while the editor
+  // is open (e.g. a refresh marks it locked) — `start()` only gates opening, so
+  // re-check before persisting. Without this an already-open editor could save a
+  // row the policy now rejects. Close only if this cell is still the active one
+  // (mirrors the post-save close below) so bailing can't wipe an editor the user
+  // opened on another cell during the `await validate()`.
+  if (!canEdit.value) {
+    if (inline?.activeKey.value === myKey.value) {
+      inline.stop()
+    }
     return
   }
 
@@ -217,8 +260,18 @@ function isTextLikeInput(target: EventTarget | null): boolean {
       :mode="displayState.mode"
       :label="displayState.label"
     />
+    <SLink
+      v-else-if="displayLink"
+      class="value link"
+      :href="displayLink.link"
+      :role="displayLink.onClick ? 'button' : null"
+      @click="() => displayLink?.onClick?.(value, record)"
+    >
+      {{ displayValue }}
+    </SLink>
     <span v-else class="value">{{ displayValue }}</span>
     <button
+      v-if="canEdit"
       class="edit"
       type="button"
       :aria-label="`${t.edit} ${field.label()}`"
@@ -264,6 +317,15 @@ function isTextLikeInput(target: EventTarget | null): boolean {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.value.link {
+  color: var(--c-text-info-1);
+  transition: color 0.1s;
+}
+
+.value.link:hover {
+  color: var(--c-text-info-2);
 }
 
 .pills {

@@ -27,7 +27,7 @@ const props = defineProps<{
   indexField?: string
   // When set (and editing is enabled), cells for `showOnUpdate` fields
   // render a hover edit affordance that opens an inline editor.
-  inlineEdit?: boolean
+  inlineEditable?: boolean
 }>()
 
 const emit = defineEmits<{
@@ -140,7 +140,7 @@ const columns = computedAsync(async () => {
         } as TableCell<any, any>
       }
     } else if (
-      props.inlineEdit
+      props.inlineEditable
       && edit?.editable
       && key !== edit.indexField
       && overriddenFieldData.showOnUpdate === true

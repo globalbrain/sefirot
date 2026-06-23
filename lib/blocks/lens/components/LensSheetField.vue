@@ -22,7 +22,7 @@ const { t } = useTrans({
 
 const edit = useLensEdit()
 
-const editable = computed(() => !!edit && (props.field as any).data?.showOnUpdate === true)
+const editable = computed(() => !!edit?.canEdit(props.record) && (props.field as any).data?.showOnUpdate === true)
 
 // Some field types do not implement a detail renderer or an editable input
 // (they `throw new Error('Not implemented.')`). Resolve them defensively so a
@@ -118,6 +118,14 @@ async function apply() {
   // this already-running apply, so re-check against the snapshot. If the value
   // changed, `model` is stale — bail rather than overwrite the fresh value.
   if (props.record[props.fieldKey] !== editedValue) {
+    return
+  }
+
+  // A per-record `editable` predicate can flip to reject this row while the editor
+  // is open (e.g. a refresh marks it locked). Re-check before persisting so an
+  // already-open editor can't save a row the policy now rejects.
+  if (!canEdit.value) {
+    editing.value = false
     return
   }
 

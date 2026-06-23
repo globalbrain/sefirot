@@ -126,6 +126,11 @@ const saving = ref(false)
 // sheet opened; `onCreate` re-checks it too.
 const creatable = computed(() => !!edit?.creatable)
 
+// Whether the open record may be deleted. Reactive (a getter on the edit
+// context) so the delete button hides if a per-record `deletable` predicate, or
+// a permission change, rejects it after the sheet has opened.
+const deletable = computed(() => !!props.record && !!edit?.canDelete(props.record))
+
 // Backend-only validation errors (e.g. `unique`) returned by a rejected
 // create, fed to Vuelidate via `$externalResults` so they surface on the
 // offending field. The create form's keys are the bare field keys, matching
@@ -255,7 +260,11 @@ function saveRecord(values: Record<string, any>): Promise<void> {
   // but saving against the partial row mid-`/show` (or after it failed) could
   // overwrite a not-yet-loaded detail field with an empty value — the built-in
   // fields avoid this by not rendering until the record is ready.
-  if (props.loading || props.error || !props.record || !edit) {
+  //
+  // Also honor the per-record edit gate: a custom slot editor funnels through
+  // here, so a row a `editable` predicate rejects must not be saved through the
+  // slot any more than through the built-in cell / field editors.
+  if (props.loading || props.error || !props.record || !edit || !edit.canEdit(props.record)) {
     return Promise.resolve()
   }
   edit.save(props.record, values)
@@ -270,6 +279,10 @@ const slotProps = computed(() => ({
   // record has loaded; `save` also hard-refuses while loading/error as a guard.
   loading: props.loading ?? false,
   error: props.error ?? false,
+  // Whether a per-record `editable` predicate allows editing this row, so a slot
+  // editor can disable its own controls for a rejected row; `save` enforces it
+  // regardless, but otherwise the refusal is only visible as a silent no-op.
+  canEdit: !!props.record && !!edit?.canEdit(props.record),
   save: saveRecord
 }))
 </script>
@@ -338,7 +351,7 @@ const slotProps = computed(() => ({
             @click="onCreate"
           />
         </template>
-        <template v-else-if="record && !loading && !error">
+        <template v-else-if="record && !loading && !error && deletable">
           <template v-if="confirmingDelete.state.value">
             <span class="confirm-text">{{ t.confirm_delete }}</span>
             <SButton size="medium" :label="t.cancel" @click="confirmingDelete.off" />
@@ -455,6 +468,10 @@ const slotProps = computed(() => ({
   gap: 8px;
   padding: 16px 24px;
   border-top: 1px solid var(--c-divider);
+}
+
+.footer:empty {
+  display: none;
 }
 
 .confirm-text {
