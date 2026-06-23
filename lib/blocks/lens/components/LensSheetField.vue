@@ -121,6 +121,14 @@ async function apply() {
     return
   }
 
+  // A per-record `editable` predicate can flip to reject this row while the editor
+  // is open (e.g. a refresh marks it locked). Re-check before persisting so an
+  // already-open editor can't save a row the policy now rejects.
+  if (!canEdit.value) {
+    editing.value = false
+    return
+  }
+
   // Optimistic: patch + persist in the background, then close immediately.
   edit!.save(props.record, {
     [props.fieldKey]: props.field.inputToPayload(model.value)

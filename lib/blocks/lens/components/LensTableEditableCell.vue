@@ -9,6 +9,7 @@ import SState, { type Mode as StateMode } from '../../../components/SState.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
+import { day } from '../../../support/Day'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -106,6 +107,14 @@ const displayValue = computed(() => {
     return resolved.value ?? ''
   }
 
+  // A `day` cell (e.g. a DateField) carries a Day value plus a format; render the
+  // formatted day — mirroring the read-only STableCellDay — so an inline-editable
+  // date column shows e.g. `YYYY-MM-DD` rather than the raw ISO/timestamp string
+  // the generic fallback below would otherwise surface.
+  if (resolved && resolved.type === 'day') {
+    return resolved.value ? day(resolved.value).format(resolved.format ?? 'YYYY-MM-DD HH:mm:ss') : ''
+  }
+
   const v = props.value
   if (v == null) {
     return ''
@@ -179,6 +188,19 @@ async function apply() {
   // but it flushes asynchronously and can't abort this already-running save, so
   // re-check here against the snapshot rather than relying on its ordering.
   if (props.value !== editedValue) {
+    return
+  }
+
+  // A per-record `editable` predicate can flip to reject this row while the editor
+  // is open (e.g. a refresh marks it locked) — `start()` only gates opening, so
+  // re-check before persisting. Without this an already-open editor could save a
+  // row the policy now rejects. Close only if this cell is still the active one
+  // (mirrors the post-save close below) so bailing can't wipe an editor the user
+  // opened on another cell during the `await validate()`.
+  if (!canEdit.value) {
+    if (inline?.activeKey.value === myKey.value) {
+      inline.stop()
+    }
     return
   }
 
