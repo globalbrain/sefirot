@@ -143,11 +143,13 @@ const columns = computedAsync(async () => {
           return cell
         }
         return {
-          ...(cell as TableCell<any, any>),
+          ...cell,
           link: null,
+          // @ts-expect-error avatar and day cells don't have info as color,
+          // but we don't use those for the index field anyway, so it's safe to force it here
           color: 'info',
           onClick: () => edit.openSheet(r)
-        } as TableCell<any, any>
+        }
       }
     } else if (
       props.inlineEditable
