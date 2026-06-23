@@ -125,6 +125,13 @@ const columns = computedAsync(async () => {
     // off the configured index field for any field type — a slug/code identifier
     // opens the sheet just like an `id` — so other id-type columns (e.g. a
     // `company_id` reference link) keep their own navigation.
+    //
+    // Exception: an `id` field whose server value carries a `path` renders that
+    // path as a link; respect it so those rows navigate to the details page instead
+    // of opening the sheet (decided per row, so id's without a path still open it).
+    // Scoped to `id` fields — a custom index field that itself renders a link (e.g.
+    // a `link` / `slack_message` identifier) is still turned into the sheet opener,
+    // as is a column whose `cell` is undefined (falls straight through to the opener).
     if (
       edit?.editable
       && key === edit.indexField
@@ -132,12 +139,17 @@ const columns = computedAsync(async () => {
       const original = column.cell
       column.cell = (v: any, r: any): TableCell<any, any> => {
         const cell = typeof original === 'function' ? original(v, r) : original
+        if (overriddenFieldData.type === 'id' && cell && 'link' in cell && cell.link) {
+          return cell
+        }
         return {
-          ...(cell as TableCell<any, any>),
+          ...cell,
           link: null,
+          // @ts-expect-error avatar and day cells don't have info as color,
+          // but we don't use those for the index field anyway, so it's safe to force it here
           color: 'info',
           onClick: () => edit.openSheet(r)
-        } as TableCell<any, any>
+        }
       }
     } else if (
       props.inlineEditable
