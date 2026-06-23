@@ -125,15 +125,23 @@ const columns = computedAsync(async () => {
     // off the configured index field for any field type — a slug/code identifier
     // opens the sheet just like an `id` — so other id-type columns (e.g. a
     // `company_id` reference link) keep their own navigation.
+    //
+    // Exception: when the server gives the id cell its own link (the id's `path`),
+    // respect it — that row's id navigates to the path and does not open the sheet.
+    // Decided per row, so id's with a path link out while id's without one still
+    // open the sheet.
     if (
       edit?.editable
       && key === edit.indexField
     ) {
       const original = column.cell
       column.cell = (v: any, r: any): TableCell<any, any> => {
-        const cell = typeof original === 'function' ? original(v, r) : original
+        const cell = (typeof original === 'function' ? original(v, r) : original) as TableCell<any, any>
+        if ('link' in cell && cell.link) {
+          return cell
+        }
         return {
-          ...(cell as TableCell<any, any>),
+          ...cell,
           link: null,
           color: 'info',
           onClick: () => edit.openSheet(r)
