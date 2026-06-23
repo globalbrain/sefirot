@@ -126,22 +126,24 @@ const columns = computedAsync(async () => {
     // opens the sheet just like an `id` — so other id-type columns (e.g. a
     // `company_id` reference link) keep their own navigation.
     //
-    // Exception: when the server gives the id cell its own link (the id's `path`),
-    // respect it — that row's id navigates to the path and does not open the sheet.
-    // Decided per row, so id's with a path link out while id's without one still
-    // open the sheet.
+    // Exception: an `id` field whose server value carries a `path` renders that
+    // path as a link; respect it so those rows navigate to the details page instead
+    // of opening the sheet (decided per row, so id's without a path still open it).
+    // Scoped to `id` fields — a custom index field that itself renders a link (e.g.
+    // a `link` / `slack_message` identifier) is still turned into the sheet opener,
+    // as is a column whose `cell` is undefined (falls straight through to the opener).
     if (
       edit?.editable
       && key === edit.indexField
     ) {
       const original = column.cell
       column.cell = (v: any, r: any): TableCell<any, any> => {
-        const cell = (typeof original === 'function' ? original(v, r) : original) as TableCell<any, any>
-        if ('link' in cell && cell.link) {
+        const cell = typeof original === 'function' ? original(v, r) : original
+        if (overriddenFieldData.type === 'id' && cell && 'link' in cell && cell.link) {
           return cell
         }
         return {
-          ...cell,
+          ...(cell as TableCell<any, any>),
           link: null,
           color: 'info',
           onClick: () => edit.openSheet(r)
