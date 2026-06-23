@@ -1167,14 +1167,18 @@ function editEnabled(): boolean {
 }
 
 // Per-record refinement: a predicate `editable`/`deletable` decides each row, a
-// boolean applies to all. Delete rides the editable sheet, so `canDelete` also
-// requires editing enabled; `deletable` is on unless explicitly `false`.
+// boolean applies to all.
 function canEdit(record: Record<string, any>): boolean {
   return editEnabled() && (typeof props.editable === 'function' ? props.editable(record) : true)
 }
 
+// Delete is a stronger action than edit and rides the same editable sheet, so a
+// row must be editable before it can be deleted — building on `canEdit` makes a
+// per-record `editable` predicate gate delete too (a row it rejects is never
+// deletable). `deletable` then refines further: on unless explicitly `false`, or
+// its own per-record predicate.
 function canDelete(record: Record<string, any>): boolean {
-  return editEnabled() && (typeof props.deletable === 'function' ? props.deletable(record) : props.deletable)
+  return canEdit(record) && (typeof props.deletable === 'function' ? props.deletable(record) : props.deletable)
 }
 
 provideLensEdit({

@@ -260,7 +260,11 @@ function saveRecord(values: Record<string, any>): Promise<void> {
   // but saving against the partial row mid-`/show` (or after it failed) could
   // overwrite a not-yet-loaded detail field with an empty value — the built-in
   // fields avoid this by not rendering until the record is ready.
-  if (props.loading || props.error || !props.record || !edit) {
+  //
+  // Also honor the per-record edit gate: a custom slot editor funnels through
+  // here, so a row a `editable` predicate rejects must not be saved through the
+  // slot any more than through the built-in cell / field editors.
+  if (props.loading || props.error || !props.record || !edit || !edit.canEdit(props.record)) {
     return Promise.resolve()
   }
   edit.save(props.record, values)
@@ -275,6 +279,10 @@ const slotProps = computed(() => ({
   // record has loaded; `save` also hard-refuses while loading/error as a guard.
   loading: props.loading ?? false,
   error: props.error ?? false,
+  // Whether a per-record `editable` predicate allows editing this row, so a slot
+  // editor can disable its own controls for a rejected row; `save` enforces it
+  // regardless, but otherwise the refusal is only visible as a silent no-op.
+  canEdit: !!props.record && !!edit?.canEdit(props.record),
   save: saveRecord
 }))
 </script>

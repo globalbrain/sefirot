@@ -3,6 +3,7 @@ import IconPencilSimple from '~icons/ph/pencil-simple'
 import { useElementBounding } from '@vueuse/core'
 import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
+import SLink from '../../../components/SLink.vue'
 import SPill, { type Mode as PillMode } from '../../../components/SPill.vue'
 import SState, { type Mode as StateMode } from '../../../components/SState.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
@@ -83,6 +84,18 @@ const displayPills = computed<{ label: string; color?: PillMode }[] | null>(() =
 const displayState = computed<{ label: string; mode?: StateMode } | null>(() => {
   const cell = resolvedCell.value
   return cell && cell.type === 'state' ? { label: cell.label, mode: cell.mode } : null
+})
+
+// A text cell carrying a `link` (or `onClick`) — e.g. a LinkField — renders as a
+// link rather than bare text, mirroring the read-only STableCellText so a column
+// that was clickable before inline editing was enabled stays clickable instead of
+// degrading to plain text. The text itself comes from `displayValue` below.
+const displayLink = computed<{ link: string | null; onClick?: (v: any, r: any) => void } | null>(() => {
+  const cell = resolvedCell.value
+  if (cell && cell.type === 'text' && (cell.link != null || typeof cell.onClick === 'function')) {
+    return { link: cell.link ?? null, onClick: cell.onClick }
+  }
+  return null
 })
 
 // Falls back to a plain representation for non-text displays (pills and state
@@ -225,6 +238,15 @@ function isTextLikeInput(target: EventTarget | null): boolean {
       :mode="displayState.mode"
       :label="displayState.label"
     />
+    <SLink
+      v-else-if="displayLink"
+      class="value link"
+      :href="displayLink.link"
+      :role="displayLink.onClick ? 'button' : null"
+      @click="() => displayLink?.onClick?.(value, record)"
+    >
+      {{ displayValue }}
+    </SLink>
     <span v-else class="value">{{ displayValue }}</span>
     <button
       v-if="canEdit"
@@ -273,6 +295,15 @@ function isTextLikeInput(target: EventTarget | null): boolean {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.value.link {
+  color: var(--c-text-info-1);
+  transition: color 0.1s;
+}
+
+.value.link:hover {
+  color: var(--c-text-info-2);
 }
 
 .pills {
