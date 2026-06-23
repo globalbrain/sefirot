@@ -13,6 +13,12 @@ export interface LensEditContext {
   /** Whether new records may be created. */
   creatable: boolean
 
+  /** Whether the given record may be edited, inline or in the sheet. */
+  canEdit: (record: Record<string, any>) => boolean
+
+  /** Whether the given record may be deleted from the sheet. */
+  canDelete: (record: Record<string, any>) => boolean
+
   /** The entity key being edited (e.g. `topic`, `user`). */
   entity: string
 

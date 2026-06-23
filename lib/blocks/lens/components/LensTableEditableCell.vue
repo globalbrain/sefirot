@@ -31,6 +31,10 @@ const inline = useLensInlineEdit()
 const myKey = computed(() => `${edit?.resolveId(props.record)}:${props.fieldKey}`)
 const editing = computed(() => inline?.activeKey.value === myKey.value)
 
+// A predicate `editable` on the catalog can disable editing per row; hide the
+// affordance and refuse to open the editor when this record is rejected.
+const canEdit = computed(() => !!edit?.canEdit(props.record))
+
 // If the backing value is replaced while this editor is open — a refresh banner
 // apply, a parent `refresh()`, or a requery that keeps this row visible — the
 // `model` captured back in `start()` is now stale, and saving it would overwrite
@@ -123,6 +127,10 @@ const editorStyle = computed(() => ({
 }))
 
 function start() {
+  if (!canEdit.value) {
+    return
+  }
+
   inputComponent.value = props.field.formInputComponent()
   model.value = props.field.payloadToInput(props.value ?? props.field.inputEmptyValue())
   reset()
@@ -219,6 +227,7 @@ function isTextLikeInput(target: EventTarget | null): boolean {
     />
     <span v-else class="value">{{ displayValue }}</span>
     <button
+      v-if="canEdit"
       class="edit"
       type="button"
       :aria-label="`${t.edit} ${field.label()}`"

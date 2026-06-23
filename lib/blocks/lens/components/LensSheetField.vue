@@ -22,7 +22,7 @@ const { t } = useTrans({
 
 const edit = useLensEdit()
 
-const editable = computed(() => !!edit && (props.field as any).data?.showOnUpdate === true)
+const editable = computed(() => !!edit?.canEdit(props.record) && (props.field as any).data?.showOnUpdate === true)
 
 // Some field types do not implement a detail renderer or an editable input
 // (they `throw new Error('Not implemented.')`). Resolve them defensively so a

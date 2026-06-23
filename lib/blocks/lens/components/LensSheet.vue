@@ -126,6 +126,11 @@ const saving = ref(false)
 // sheet opened; `onCreate` re-checks it too.
 const creatable = computed(() => !!edit?.creatable)
 
+// Whether the open record may be deleted. Reactive (a getter on the edit
+// context) so the delete button hides if a per-record `deletable` predicate, or
+// a permission change, rejects it after the sheet has opened.
+const deletable = computed(() => !!props.record && !!edit?.canDelete(props.record))
+
 // Backend-only validation errors (e.g. `unique`) returned by a rejected
 // create, fed to Vuelidate via `$externalResults` so they surface on the
 // offending field. The create form's keys are the bare field keys, matching
@@ -338,7 +343,7 @@ const slotProps = computed(() => ({
             @click="onCreate"
           />
         </template>
-        <template v-else-if="record && !loading && !error">
+        <template v-else-if="record && !loading && !error && deletable">
           <template v-if="confirmingDelete.state.value">
             <span class="confirm-text">{{ t.confirm_delete }}</span>
             <SButton size="medium" :label="t.cancel" @click="confirmingDelete.off" />
@@ -455,6 +460,10 @@ const slotProps = computed(() => ({
   gap: 8px;
   padding: 16px 24px;
   border-top: 1px solid var(--c-divider);
+}
+
+.footer:empty {
+  display: none;
 }
 
 .confirm-text {
