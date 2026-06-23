@@ -7,6 +7,7 @@ import { useMutation, useQuery } from '../../../composables/Api'
 import { useLang, useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
 import { useSnackbars } from '../../../stores/Snackbars'
+import { day } from '../../../support/Day'
 import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
@@ -760,6 +761,14 @@ function guardBusy(): boolean {
   return false
 }
 
+// `updated_at` is a server-managed timestamp that bumps on every write, so a
+// reconciled row's value always differs from the optimistic one even when nothing
+// else changed. It's excluded from the diff below (and patched to ~now on save) so
+// an edit never surfaces the refresh banner just for its own timestamp — the user
+// shouldn't be asked to reload the whole view over a change that obviously follows
+// from their edit. Always a datetime column, never user-editable.
+const UPDATED_AT_KEY = 'updated_at'
+
 // Value-level comparison (rows in order + total) deciding whether a reconcile
 // surfaced anything newer than the optimistic state on screen. `fresh` is the
 // canonical search-shaped result; `shown` is what's displayed, which may carry
@@ -774,6 +783,9 @@ function isSameResult(fresh: LensResult | null, shown: LensResult | null): boole
     const freshRow = fresh.data[i]
     const shownRow = shown.data[i]
     for (const key of Object.keys(freshRow)) {
+      // The always-bumped timestamp would make every edited row look "changed";
+      // skip it so it alone can't surface the refresh banner (see UPDATED_AT_KEY).
+      if (key === UPDATED_AT_KEY) { continue }
       if (JSON.stringify(freshRow[key]) !== JSON.stringify(shownRow?.[key])) {
         return false
       }
@@ -978,6 +990,14 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   }
   if (Object.keys(values).length === 0) { return }
   Object.assign(record, values)
+  // Optimistically advance the row's `updated_at` to ~now so the displayed
+  // timestamp reflects the edit immediately. The server sets the authoritative
+  // value; a little skew is fine and never surfaces the refresh banner, since the
+  // reconcile diff ignores this column. Display-only — deliberately not added to
+  // the persisted `values` (the server owns its own timestamping).
+  if (UPDATED_AT_KEY in record) {
+    record[UPDATED_AT_KEY] = day().toISOString()
+  }
   // Serialize per record+field so two quick edits to the same cell apply in
   // order; edits to disjoint fields run concurrently.
   const fields = Object.keys(values)
