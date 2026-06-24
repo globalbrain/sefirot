@@ -207,17 +207,25 @@ const emit = defineEmits<{
 
 const { t } = useTrans({
   en: {
-    write_error: 'We couldn’t save your change. Please reload and try again.',
-    write_error_recover: 'Please reload to see the latest.',
+    save_failed: (label: string) => `We couldn’t save “${label}”.`,
+    save_failed_anon: 'We couldn’t save your change.',
+    delete_failed: (label: string) => `We couldn’t delete “${label}”.`,
+    delete_failed_anon: 'We couldn’t delete this record.',
+    write_error_reload: 'Please reload and try again.',
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
+    refresh_failed_text: 'Some changes couldn’t be saved. Refresh to restore the latest values.',
     refresh_action: 'Refresh'
   },
   ja: {
-    write_error: '変更を保存できませんでした。ページを再読み込みして、もう一度お試しください。',
-    write_error_recover: 'ページを再読み込みして最新の状態をご確認ください。',
+    save_failed: (label: string) => `「${label}」を保存できませんでした。`,
+    save_failed_anon: '変更を保存できませんでした。',
+    delete_failed: (label: string) => `「${label}」を削除できませんでした。`,
+    delete_failed_anon: 'レコードを削除できませんでした。',
+    write_error_reload: 'ページを再読み込みして、もう一度お試しください。',
     busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
+    refresh_failed_text: '保存できなかった変更があります。更新して最新の値に戻してください。',
     refresh_action: '更新'
   }
 })
@@ -238,9 +246,12 @@ const hasInitialResults = ref(false)
 
 // A fresher server result fetched after the optimistic writes settled, awaiting
 // the user's explicit opt-in via the refresh button — never auto-applied (that
-// would momentarily revert the optimistic edits to stale data). Declared here
-// (ahead of the query handlers that clear it) so they can reference it.
-const latestState = ref<LensResult | null>(null)
+// would momentarily revert the optimistic edits to stale data). `fromError` marks
+// a stash produced by a *failed* write (the optimistic value diverged from the
+// canonical one), so the banner can explain it's a recovery rather than just
+// newer data. Declared here (ahead of the query handlers that clear it) so they
+// can reference it.
+const latestState = ref<{ result: LensResult; fromError: boolean } | null>(null)
 
 // Count of optimistic background writes currently in flight. Declared here
 // (ahead of the debounced refetch that consults it) so a queued refetch can bail
@@ -694,8 +705,9 @@ const sheetError = ref(false)
 const reconciling = ref(false)
 const busy = computed(() => pendingWrites.value > 0 || reconciling.value)
 
-// Whether any write in the current in-flight batch failed; when so the reconcile
-// is skipped (the snackbar already told the user to reload).
+// Whether any write in the current in-flight batch failed; passed to the
+// post-batch reconcile so the refresh banner can label itself as a recovery for
+// the failed write's diverged row rather than just "newer data".
 let batchErrored = false
 
 // In-flight write chains keyed by record+field, so repeated writes to the same
@@ -722,6 +734,16 @@ let reconcileToken = 0
 function resolveId(record: Record<string, any>): any {
   const v = record?.[props.indexField ?? 'id']
   return v !== null && typeof v === 'object' ? v.value : v
+}
+
+// Resolve a human-facing label for a record — the index field's display value
+// (the id object's `{ value, display, path }` shape) falling back to the bare
+// identifier — to name the affected row in a write-failure snackbar. Null when
+// no usable label exists, so the snackbar can fall back to anonymous copy.
+function resolveLabel(record: Record<string, any>): string | null {
+  const v = record?.[props.indexField ?? 'id']
+  const label = v !== null && typeof v === 'object' ? (v.display ?? v.value) : v
+  return label != null && label !== '' ? String(label) : null
 }
 
 const { execute: executeUpdate } = useMutation((http, id: any, values: Record<string, any>) =>
@@ -799,8 +821,11 @@ function isSameResult(fresh: LensResult | null, shown: LensResult | null): boole
 
 // After the last in-flight write settles, fetch the canonical state for the
 // current query and, only if it differs from what's shown, stash it behind the
-// refresh button. The server is fresh by now (the write completed).
-async function reconcile(): Promise<void> {
+// refresh button. The server is fresh by now (the write completed). `afterError`
+// is set when a write in the batch *failed*: its optimistic edit wasn't rolled
+// back, so the canonical state diverges and the stash becomes the user's one-click
+// path to restore it — the banner labels it accordingly.
+async function reconcile(afterError = false): Promise<void> {
   const token = ++reconcileToken
   reconciling.value = true
   try {
@@ -813,9 +838,13 @@ async function reconcile(): Promise<void> {
     // Authoritative: stash the canonical result when it differs from what's
     // shown, otherwise clear any (possibly stale) stash — an earlier overlapping
     // reconcile may have left a pre-edit result behind.
-    latestState.value = result.value && !isSameResult(fresh, result.value) ? fresh : null
+    latestState.value = result.value && !isSameResult(fresh, result.value)
+      ? { result: fresh, fromError: afterError }
+      : null
   } catch {
-    // Ignore — keep the optimistic state, offer no refresh.
+    // Ignore — keep the optimistic state, offer no refresh. After a failed write
+    // this means no recovery banner, so the failure snackbar's reload guidance is
+    // the fallback.
   } finally {
     if (token === reconcileToken) {
       reconciling.value = false
@@ -825,7 +854,7 @@ async function reconcile(): Promise<void> {
 
 function applyLatest(): void {
   if (!latestState.value) { return }
-  result.value = latestState.value
+  result.value = latestState.value.result
   latestState.value = null
   prevFetchInput = null
   rebindOpenSheet()
@@ -920,14 +949,35 @@ watch(
 )
 
 // Track an optimistic background write: count it as pending, surface a snackbar
-// on failure, and once the whole batch settles (with no failures) reconcile.
+// on failure, and once the whole batch settles reconcile (so a failed write's
+// diverged row can be restored via the refresh banner).
 function hasPendingWrite(recordId: any): boolean {
   return pendingByRecord.has(recordId)
 }
 
+// Compose the failure snackbar: name the affected row when we have a label, then
+// append the server's reason (a policy / business-rule / validation message)
+// when present — it explains the failure and reloading wouldn't change it — or a
+// generic reload hint otherwise (network / 5xx / opaque, where reloading is the
+// actionable advice). The refresh banner, when it appears, handles restoring the
+// row's canonical value either way.
+function writeErrorText(op: 'save' | 'delete', label: string | null, reason: string | null): string {
+  const subject = op === 'delete'
+    ? (label != null ? t.delete_failed(label) : t.delete_failed_anon)
+    : (label != null ? t.save_failed(label) : t.save_failed_anon)
+  return `${subject} ${reason ?? t.write_error_reload}`
+}
+
 // Track an optimistic background write for `recordId`, serialized per `key` so
-// writes to the same cell reach the server in edit order.
-function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): void {
+// writes to the same cell reach the server in edit order. `op` / `label` name the
+// affected row in the failure snackbar.
+function trackWrite(
+  recordId: any,
+  key: string,
+  op: 'save' | 'delete',
+  label: string | null,
+  run: () => Promise<unknown>
+): void {
   // A new write changes the displayed state. Clear any stashed reconcile result
   // and invalidate an in-flight reconcile (advance the token so its result is
   // dropped; clear its busy flag — `pendingWrites` keeps us busy), so neither
@@ -951,16 +1001,14 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
   current
     .catch((e) => {
       batchErrored = true
-      // Prefer a server-provided reason (a policy / business-rule deny, a
-      // validation message) so a rejected write explains itself instead of the
-      // generic copy. The optimistic edit was already applied and isn't rolled
-      // back here, so keep the reload-to-resync guidance alongside the reason.
-      // Fall back to write_error (which carries its own guidance) for network /
-      // 5xx / opaque / auth failures, where extractServerMessage returns null.
-      const reason = extractServerMessage(e)
+      // Name the affected row and prefer a server-provided reason (a policy /
+      // business-rule deny, a validation message) so a rejected write explains
+      // itself and the user can tell which edit failed when several are in flight.
+      // The optimistic edit isn't rolled back here; the post-batch reconcile
+      // surfaces the refresh banner to restore it.
       snackbars.push({
         mode: 'danger',
-        text: reason ? `${reason} ${t.write_error_recover}` : t.write_error
+        text: writeErrorText(op, label, extractServerMessage(e))
       })
     })
     .finally(() => {
@@ -978,9 +1026,12 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
       if (pendingWrites.value === 0) {
         const errored = batchErrored
         batchErrored = false
-        if (!errored) {
-          reconcile()
-        }
+        // Reconcile on error too: a failed write left its optimistic edit on the
+        // row, so the canonical state now diverges and the refresh banner becomes
+        // the user's one-click path to restore it (labelled as a recovery). If the
+        // reconcile itself fails, no banner shows and the snackbar's reload
+        // guidance is the fallback.
+        reconcile(errored)
       }
     })
 }
@@ -1028,7 +1079,7 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
       && k.slice(prefix.length).split(',').some((f) => fieldSet.has(f)))
     .map(([, chain]) => chain)
   const gate = Promise.allSettled(overlapping)
-  trackWrite(id, key, () => gate.then(() => executeUpdate(id, values)))
+  trackWrite(id, key, 'save', resolveLabel(record), () => gate.then(() => executeUpdate(id, values)))
 }
 
 // Create — blocking. The slow POST runs to completion, then the catalog is
@@ -1122,7 +1173,7 @@ function remove(record: Record<string, any>): void {
   // `Promise.allSettled([])` resolves immediately, so this is a no-op gate when
   // the record has no in-flight writes.
   const gate = Promise.allSettled(pendingForRecord)
-  trackWrite(id, `${id}:__delete__`, () => gate.then(() => executeDelete(id)))
+  trackWrite(id, `${id}:__delete__`, 'delete', resolveLabel(record), () => gate.then(() => executeDelete(id)))
 }
 
 async function openSheet(record: Record<string, any>): Promise<void> {
@@ -1356,7 +1407,7 @@ defineExpose({
       </div>
       <SDivider />
       <div v-if="latestState && !busy" class="refresh-banner">
-        <span class="refresh-banner-text">{{ t.refresh_text }}</span>
+        <span class="refresh-banner-text">{{ latestState.fromError ? t.refresh_failed_text : t.refresh_text }}</span>
         <SButton size="mini" mode="info" :label="t.refresh_action" @click="applyLatest" />
       </div>
       <div class="list" :style="tableMaxHeight">
