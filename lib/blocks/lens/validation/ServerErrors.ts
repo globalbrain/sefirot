@@ -23,3 +23,21 @@ export function extractServerErrors(error: unknown): Record<string, string[]> | 
 
   return errors
 }
+
+/**
+ * Extract a human-readable top-level message from a failed request, when the
+ * server provides one worth showing the user. Laravel includes a `message` on
+ * most error responses — policy denials (`Response::deny('…')`), business-rule
+ * rejections, and 422 summaries. Limited to 4xx so internal 5xx detail never
+ * leaks to the UI; 5xx / network / opaque failures return `null` so the caller
+ * can fall back to its own generic copy.
+ */
+export function extractServerMessage(error: unknown): string | null {
+  if (!isFetchError(error) || error.status == null || error.status < 400 || error.status >= 500) {
+    return null
+  }
+
+  const message = (error.data as any)?.message
+
+  return typeof message === 'string' && message.trim() !== '' ? message : null
+}

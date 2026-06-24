@@ -9,10 +9,11 @@ import { provideDataListState } from '../../../composables/DataList'
 import { useTrans } from '../../../composables/Lang'
 import { usePower } from '../../../composables/Power'
 import { useValidation } from '../../../composables/Validation'
+import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
-import { extractServerErrors } from '../validation/ServerErrors'
+import { extractServerErrors, extractServerMessage } from '../validation/ServerErrors'
 import LensSheetField from './LensSheetField.vue'
 
 const props = withDefaults(defineProps<{
@@ -61,6 +62,7 @@ const { t } = useTrans({
 
 const edit = useLensEdit()
 const factory = useFieldFactory()
+const snackbars = useSnackbars()
 
 // Provide the data-list label width directly (instead of wrapping rows in
 // SDataList) so each LensSheetField wrapper doesn't make its SDataListItem a
@@ -202,13 +204,23 @@ async function onCreate() {
     await edit!.create(values)
     emit('close')
   } catch (e) {
-    // Surface backend validation errors (e.g. a duplicate `unique` value) on
-    // the offending fields; rethrow anything that isn't a 422.
+    // Surface backend validation errors (e.g. a duplicate `unique` value) on the
+    // offending fields. Failing that, surface a server-provided message (a policy
+    // / business-rule deny, or a form-level 422) as a snackbar and keep the sheet
+    // open with the input intact — rather than rethrowing into the global
+    // full-page error handler. Only genuinely unexpected failures (no usable
+    // message: network, 5xx, opaque) propagate.
     const errors = extractServerErrors(e)
-    if (!errors) {
-      throw e
+    if (errors) {
+      serverErrors.value = errors
+      return
     }
-    serverErrors.value = errors
+    const message = extractServerMessage(e)
+    if (message) {
+      snackbars.push({ mode: 'danger', text: message })
+      return
+    }
+    throw e
   } finally {
     saving.value = false
   }

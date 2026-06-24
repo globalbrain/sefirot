@@ -33,6 +33,12 @@ export function useResourceFetcher(): ResourceFetcher {
         data.value[key] = response
         delete pendingList[key]
         return response
+      },
+      (error) => {
+        // Clear the pending entry on failure too — otherwise the rejected promise
+        // stays cached under `key` and every retry returns the same rejection.
+        delete pendingList[key]
+        throw error
       }
     )
 

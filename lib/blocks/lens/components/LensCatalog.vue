@@ -13,6 +13,7 @@ import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
 import { provideLensEdit } from '../composables/LensEdit'
+import { extractServerMessage } from '../validation/ServerErrors'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
@@ -946,9 +947,13 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
   writeChains.set(key, current)
 
   current
-    .catch(() => {
+    .catch((e) => {
       batchErrored = true
-      snackbars.push({ mode: 'danger', text: t.write_error })
+      // Prefer a server-provided reason (a policy / business-rule deny, a
+      // validation message) so a rejected write explains itself instead of the
+      // generic "reload" copy — which also wouldn't fix a deliberate 4xx denial.
+      // Fall back to write_error for network / 5xx / opaque failures.
+      snackbars.push({ mode: 'danger', text: extractServerMessage(e) ?? t.write_error })
     })
     .finally(() => {
       // Only drop the chain entry if a newer write hasn't replaced it.
