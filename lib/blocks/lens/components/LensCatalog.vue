@@ -382,17 +382,22 @@ let searchRunSeq = 0
 
 // Run the main table search, tracking whether it failed. Clears the flag up
 // front so a retry / new search drops the error immediately (showing the loading
-// state), and only a genuine fetch failure from the *latest* run re-raises it — a
-// superseded search resolves successfully (the fetcher returns the current
-// result), so racing writes / queries don't trip it. Drives the initial load (the
-// query's `immediate` is off so this owns it) and every `doRefresh`.
+// state), and only a genuine fetch failure raises it. Drives the initial load
+// (the query's `immediate` is off so this owns it) and every `doRefresh`.
 async function runSearch(): Promise<void> {
   const seq = ++searchRunSeq
+  // Snapshot `searchToken` too: a write / create / forced refresh / index-field
+  // change bumps it to supersede an in-flight search (so even on success the
+  // fetcher discards that search's rows). If such a superseded search *rejects*
+  // instead, its failure is for a request we already decided to drop — and a
+  // follow-up (the write's reconcile, the forced result) replaces the state — so
+  // don't surface it as an error over the rows now shown.
+  const token = searchToken
   searchError.value = false
   try {
     await refresh()
   } catch {
-    if (seq === searchRunSeq) {
+    if (seq === searchRunSeq && token === searchToken) {
       searchError.value = true
     }
   }
@@ -900,6 +905,10 @@ function applyLatest(): void {
   if (!latestState.value) { return }
   result.value = latestState.value.result
   latestState.value = null
+  // These are fresh authoritative rows for the current query, so drop any
+  // search-error state — e.g. a search failed, then a sheet save's reconcile
+  // surfaced this banner; applying it must reveal the rows, not stay on the retry.
+  searchError.value = false
   prevFetchInput = null
   rebindOpenSheet()
 }
