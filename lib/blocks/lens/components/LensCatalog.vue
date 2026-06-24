@@ -212,6 +212,7 @@ const { t } = useTrans({
     delete_failed: (label: string) => `We couldn’t delete “${label}”.`,
     delete_failed_anon: 'We couldn’t delete this record.',
     write_error_reload: 'Please reload and try again.',
+    write_error_recover: 'Please reload to see the latest.',
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_failed_text: 'Some changes couldn’t be saved. Refresh to restore the latest values.',
@@ -223,6 +224,7 @@ const { t } = useTrans({
     delete_failed: (label: string) => `「${label}」を削除できませんでした。`,
     delete_failed_anon: 'レコードを削除できませんでした。',
     write_error_reload: 'ページを再読み込みして、もう一度お試しください。',
+    write_error_recover: 'ページを再読み込みして最新の状態をご確認ください。',
     busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
     refresh_failed_text: '保存できなかった変更があります。更新して最新の値に戻してください。',
@@ -963,16 +965,21 @@ function hasPendingWrite(recordId: any): boolean {
 }
 
 // Compose the failure snackbar: name the affected row when we have a label, then
-// append the server's reason (a policy / business-rule / validation message)
-// when present — it explains the failure and reloading wouldn't change it — or a
-// generic reload hint otherwise (network / 5xx / opaque, where reloading is the
-// actionable advice). The refresh banner, when it appears, handles restoring the
-// row's canonical value either way.
+// the server's reason (a policy / business-rule / validation message) when
+// present, and always a recovery hint. The optimistic value isn't rolled back, so
+// the user needs a way back to canonical state — the refresh banner offers a
+// one-click path when it appears, but it can't always (a failed recovery reconcile
+// shows none, and `isSameResult` can't see detail-only sheet fields absent from
+// the search), so the reload hint stays as the guaranteed fallback. With a reason
+// present, "reload to see the latest" (the change didn't take; reload to resync);
+// without one (network / 5xx / opaque), "reload and try again".
 function writeErrorText(op: 'save' | 'delete', label: string | null, reason: string | null): string {
   const subject = op === 'delete'
     ? (label != null ? t.delete_failed(label) : t.delete_failed_anon)
     : (label != null ? t.save_failed(label) : t.save_failed_anon)
-  return `${subject} ${reason ?? t.write_error_reload}`
+  return reason
+    ? `${subject} ${reason} ${t.write_error_recover}`
+    : `${subject} ${t.write_error_reload}`
 }
 
 // Track an optimistic background write for `recordId`, serialized per `key` so
