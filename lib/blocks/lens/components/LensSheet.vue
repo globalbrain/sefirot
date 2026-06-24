@@ -47,7 +47,7 @@ const { t } = useTrans({
     confirm_delete: 'Delete this record?',
     new_record: 'New record',
     load_error:
-      'Couldn’t load this record. Please reload the page, and contact support if the problem persists.'
+      'We couldn’t load this record. Please reload the page and try again.'
   },
   ja: {
     create: '作成',
@@ -56,7 +56,7 @@ const { t } = useTrans({
     confirm_delete: 'このレコードを削除しますか？',
     new_record: '新規作成',
     load_error:
-      'このレコードを読み込めませんでした。ページを再読み込みし、問題が解決しない場合はサポートにお問い合わせください。'
+      'このレコードを読み込めませんでした。ページを再読み込みして、もう一度お試しください。'
   }
 })
 

@@ -7,7 +7,7 @@ export function useFileDownloader(): FileDownloader {
   const snackbars = useSnackbars()
 
   const { t } = useTrans({
-    en: { download_error: 'Couldn’t download this file. Please try again.' },
+    en: { download_error: 'We couldn’t download this file. Please try again.' },
     ja: { download_error: 'ファイルをダウンロードできませんでした。もう一度お試しください。' }
   })
 

@@ -207,14 +207,14 @@ const emit = defineEmits<{
 
 const { t } = useTrans({
   en: {
-    write_error: 'Your latest changes might not be saved. Please reload the page, and contact support if the problem persists.',
-    busy_warning: 'A save is still in progress — changes you make now may not be saved.',
+    write_error: 'We couldn’t save your change. Please reload and try again.',
+    busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_action: 'Refresh'
   },
   ja: {
-    write_error: '最新の変更が保存されていない可能性があります。ページを再読み込みし、問題が解決しない場合はサポートにお問い合わせください。',
-    busy_warning: '保存処理中です。ここでの変更は保存されない可能性があります。',
+    write_error: '変更を保存できませんでした。ページを再読み込みして、もう一度お試しください。',
+    busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
     refresh_action: '更新'
   }
