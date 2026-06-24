@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.52.1](https://github.com/globalbrain/sefirot/compare/v4.52.0...v4.52.1) (2026-06-24)
+
+
+### Bug Fixes
+
+* **lens:** complete the incomplete write-recovery snackbar copy ([5117fbd](https://github.com/globalbrain/sefirot/commit/5117fbdb132102600229e01bf922b137a5a13fb1))
+
 # [4.52.0](https://github.com/globalbrain/sefirot/compare/v4.51.0...v4.52.0) (2026-06-24)
 
 
