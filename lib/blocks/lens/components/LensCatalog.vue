@@ -393,9 +393,15 @@ async function runSearch(): Promise<void> {
   // follow-up (the write's reconcile, the forced result) replaces the state — so
   // don't surface it as an error over the rows now shown.
   const token = searchToken
-  searchError.value = false
   try {
     await refresh()
+    // Clear only on the latest run's success — an older run resolving late must
+    // not wipe a newer run's error. Not cleared up front: keeping the error state
+    // visible until the retry actually succeeds avoids flashing the previous
+    // query's (interactable) rows back on screen mid-retry.
+    if (seq === searchRunSeq) {
+      searchError.value = false
+    }
   } catch {
     if (seq === searchRunSeq && token === searchToken) {
       searchError.value = true
@@ -715,14 +721,33 @@ function onResetSelection() {
 
 function onPrev() {
   if (guardBusy()) { return }
-  page.value--
-  refetch()
+  void changePage(page.value - 1)
 }
 
 function onNext() {
   if (guardBusy()) { return }
-  page.value++
-  refetch()
+  void changePage(page.value + 1)
+}
+
+// Move to `next`, reverting on failure. A failed page load otherwise strands the
+// user on a page that won't load: the error state hides the footer, so there's no
+// Prev to go back, and a retry just repeats the same failing page. Restoring the
+// previous page keeps the catalog state aligned with the rows still shown, so a
+// retry re-runs the page they came from. (`guardBusy` already blocked this while a
+// write is in flight, so the search here can't read pre-write rows.)
+//
+// Runs the search undebounced, so it relies on its caller being disabled while
+// `loading` — the footer's Prev/Next are (`:disabled="loading"` via SPagination),
+// which keeps overlapping page fetches from landing out of order. Preserve that
+// for any new caller.
+async function changePage(next: number): Promise<void> {
+  const restore = page.value
+  page.value = next
+  latestState.value = null
+  await runSearch()
+  if (searchError.value) {
+    page.value = restore
+  }
 }
 
 // --- CRUD editing ----------------------------------------------------------
@@ -1479,7 +1504,14 @@ defineExpose({
       <div class="list" :style="tableMaxHeight">
         <div v-if="searchError" class="list-error">
           <p class="list-error-text">{{ t.search_error }}</p>
-          <SButton size="small" mode="info" :label="t.search_retry" @click="runSearch" />
+          <SButton
+            size="small"
+            mode="info"
+            :label="t.search_retry"
+            :loading
+            :disabled="busy"
+            @click="refetch"
+          />
         </div>
         <template v-else>
           <LensTable
