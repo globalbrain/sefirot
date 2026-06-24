@@ -496,6 +496,13 @@ const tableSelect = computed(() => {
   return withoutIndexField(result.value?.query.select ?? [])
 })
 
+// The effective row identifier when resolving / editing a row: the configured
+// `indexField`, or `id` by default. Distinct from the raw `props.indexField`,
+// whose `undefined` means "no index field configured" — `withIndexField` /
+// `withoutIndexField` rely on that to leave a non-editable catalog's columns
+// alone, so they deliberately keep using the prop directly rather than this.
+const idField = computed(() => props.indexField ?? 'id')
+
 // Whether the currently loaded rows actually carry the effective row identifier.
 // Editing / opening a row needs it (`resolveId`), but rows fetched while
 // `editable` was still false — or before an `indexField` change settled — won't
@@ -505,7 +512,7 @@ const tableSelect = computed(() => {
 const rowsCarryIndexField = computed(() => {
   const rows = result.value?.data
   if (!rows || rows.length === 0) { return true }
-  return (props.indexField ?? 'id') in rows[0]
+  return idField.value in rows[0]
 })
 
 // The row-identifier the table uses as its selection key. An explicit
@@ -732,7 +739,7 @@ let reconcileToken = 0
 // Resolve a record's identifier, unwrapping the id field's object shape
 // (`{ value, display, path }`) when present.
 function resolveId(record: Record<string, any>): any {
-  const v = record?.[props.indexField ?? 'id']
+  const v = record?.[idField.value]
   return v !== null && typeof v === 'object' ? v.value : v
 }
 
@@ -741,7 +748,7 @@ function resolveId(record: Record<string, any>): any {
 // identifier — to name the affected row in a write-failure snackbar. Null when
 // no usable label exists, so the snackbar can fall back to anonymous copy.
 function resolveLabel(record: Record<string, any>): string | null {
-  const v = record?.[props.indexField ?? 'id']
+  const v = record?.[idField.value]
   const label = v !== null && typeof v === 'object' ? (v.display ?? v.value) : v
   return label != null && label !== '' ? String(label) : null
 }
@@ -934,7 +941,7 @@ async function refreshCatalog(): Promise<void> {
 // `resolveId` would be `undefined`), which would let a delete/save act on the
 // wrong — or no — id during and after the refetch.
 watch(
-  () => (props.editable ? (props.indexField ?? 'id') : null),
+  () => (props.editable ? idField.value : null),
   (field, prev) => {
     if (!field || field === prev) { return }
     if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
@@ -1047,7 +1054,7 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   // row, so a follow-up save / delete would resolve to the new, not-yet-synced id
   // and miss the in-flight record. Strip it so the invariant holds for every
   // caller. (The identifier is still settable on create, which uses `create()`.)
-  const indexField = props.indexField ?? 'id'
+  const indexField = idField.value
   if (indexField in values) {
     values = { ...values }
     delete values[indexField]
@@ -1283,7 +1290,7 @@ provideLensEdit({
   // sheet opener and to block identifier edits, so it must track a prop that
   // resolves (or changes) after mount — otherwise the new identifier column stays
   // non-clickable while the old field is still treated as the id.
-  get indexField() { return props.indexField ?? 'id' },
+  get indexField() { return idField.value },
   canEdit,
   canDelete,
   resolveId,
@@ -1468,7 +1475,7 @@ defineExpose({
       :loading="sheetLoading"
       :error="sheetError"
       :fields="result.fields"
-      :index-field="indexField ?? 'id'"
+      :index-field="idField"
       :width="sheetWidth"
       @close="sheet.off"
     >
