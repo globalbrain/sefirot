@@ -208,8 +208,9 @@ async function onCreate() {
     // offending fields. Failing that, surface a server-provided message (a policy
     // / business-rule deny, or a form-level 422) as a snackbar and keep the sheet
     // open with the input intact — rather than rethrowing into the global
-    // full-page error handler. Only genuinely unexpected failures (no usable
-    // message: network, 5xx, opaque) propagate.
+    // full-page error handler. Failures without a displayable message — network,
+    // 5xx, opaque, and auth / session expiry (which extractServerMessage excludes
+    // so the app can prompt re-auth) — still propagate.
     const errors = extractServerErrors(e)
     if (errors) {
       serverErrors.value = errors

@@ -208,12 +208,14 @@ const emit = defineEmits<{
 const { t } = useTrans({
   en: {
     write_error: 'We couldn’t save your change. Please reload and try again.',
+    write_error_recover: 'Please reload to see the latest.',
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_action: 'Refresh'
   },
   ja: {
     write_error: '変更を保存できませんでした。ページを再読み込みして、もう一度お試しください。',
+    write_error_recover: 'ページを再読み込みして最新の状態をご確認ください。',
     busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
     refresh_action: '更新'
@@ -951,9 +953,15 @@ function trackWrite(recordId: any, key: string, run: () => Promise<unknown>): vo
       batchErrored = true
       // Prefer a server-provided reason (a policy / business-rule deny, a
       // validation message) so a rejected write explains itself instead of the
-      // generic "reload" copy — which also wouldn't fix a deliberate 4xx denial.
-      // Fall back to write_error for network / 5xx / opaque failures.
-      snackbars.push({ mode: 'danger', text: extractServerMessage(e) ?? t.write_error })
+      // generic copy. The optimistic edit was already applied and isn't rolled
+      // back here, so keep the reload-to-resync guidance alongside the reason.
+      // Fall back to write_error (which carries its own guidance) for network /
+      // 5xx / opaque / auth failures, where extractServerMessage returns null.
+      const reason = extractServerMessage(e)
+      snackbars.push({
+        mode: 'danger',
+        text: reason ? `${reason} ${t.write_error_recover}` : t.write_error
+      })
     })
     .finally(() => {
       // Only drop the chain entry if a newer write hasn't replaced it.

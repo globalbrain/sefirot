@@ -2,6 +2,7 @@ import { useGet } from '../../../composables/Api'
 import { useTrans } from '../../../composables/Lang'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { type FileDownloader } from '../FileDownloader'
+import { isAuthError } from '../validation/ServerErrors'
 
 export function useFileDownloader(): FileDownloader {
   const snackbars = useSnackbars()
@@ -23,7 +24,13 @@ export function useFileDownloader(): FileDownloader {
   return async (url) => {
     try {
       return await fileDownloader(url)
-    } catch {
+    } catch (e) {
+      // Let auth / session-expiry failures (401 / 419) propagate to the app's
+      // error flow so it can prompt re-authentication — the click path doesn't
+      // await this, so the rejection reaches the global handler as it did before.
+      if (isAuthError(e)) {
+        throw e
+      }
       snackbars.push({ mode: 'danger', text: t.download_error })
     }
   }
