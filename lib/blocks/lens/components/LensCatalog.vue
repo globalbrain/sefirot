@@ -402,6 +402,12 @@ async function runSearch(): Promise<void> {
     // query's (interactable) rows back on screen mid-retry.
     if (seq === searchRunSeq && token === searchToken) {
       searchError.value = false
+      // These fresh rows for the current query supersede any pending recovery
+      // banner (a reconcile stash), so its button can't later overwrite them with
+      // an older snapshot. Query-change refetches already drop it; the retry path
+      // (doRefresh, which keeps the banner for a failed retry) doesn't, so a
+      // successful retry must clear it here.
+      latestState.value = null
     }
   } catch (e) {
     // Auth / session-expiry (401 / 419) must reach the app's re-auth flow, not be
