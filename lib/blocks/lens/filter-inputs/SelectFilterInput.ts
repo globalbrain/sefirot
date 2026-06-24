@@ -2,6 +2,7 @@ import { type ValidationArgs } from '@vuelidate/core'
 import { defineAsyncComponent } from 'vue'
 import SInputDropdown, { type Option } from '../../../components/SInputDropdown.vue'
 import { required } from '../../../validation/rules'
+import { isAuthError } from '../validation/ServerErrors'
 import { FilterInput } from './FilterInput'
 
 export class SelectFilterInput extends FilterInput {
@@ -53,10 +54,25 @@ export class SelectFilterInput extends FilterInput {
   }
 
   async valueToText(value: any): Promise<string> {
-    const options = await this.resolveOptions()
+    // Degrade gracefully: if the options can't be fetched, or the applied filter
+    // value isn't among them (the option set changed, or the referenced record was
+    // deleted), fall back to the raw value instead of asserting — a throw here
+    // leaves the filter chip stuck on its loading placeholder forever.
+    let options: Option[] = []
+    try {
+      options = await this.resolveOptions()
+    } catch (e) {
+      // Let auth / session-expiry failures reach the app's error / re-auth flow
+      // instead of silently degrading to raw values. Other failures — an option
+      // miss or a non-auth fetch error — fall back so the chip stays readable.
+      if (isAuthError(e)) {
+        throw e
+      }
+      options = []
+    }
 
     return this.valueAsArray(value)
-      .map((v) => options.find((o) => o.value === v)!.label)
+      .map((v) => options.find((o) => o.value === v)?.label ?? String(v))
       .join(', ')
   }
 
