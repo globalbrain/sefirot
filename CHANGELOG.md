@@ -1,5 +1,21 @@
 # Changelog
 
+# [4.52.0](https://github.com/globalbrain/sefirot/compare/v4.51.0...v4.52.0) (2026-06-24)
+
+
+### Bug Fixes
+
+* **lens:** don't prompt a refresh for an updated_at-only change ([#746](https://github.com/globalbrain/sefirot/issues/746)) ([5b3739d](https://github.com/globalbrain/sefirot/commit/5b3739d66915cebb219e08acd677e403d4fb2dd8))
+* **lens:** only render a table column once its definition is built ([#747](https://github.com/globalbrain/sefirot/issues/747)) ([c565d97](https://github.com/globalbrain/sefirot/commit/c565d975ac98dcd1ec5648463df032d59174523c))
+* **lens:** respect a server-provided id link in editable catalogs ([#745](https://github.com/globalbrain/sefirot/issues/745)) ([348c7cd](https://github.com/globalbrain/sefirot/commit/348c7cd86a7f30a0fcdf0917c6674c8981e9a95b))
+* **lens:** surface server error messages instead of generic or silent failures ([#748](https://github.com/globalbrain/sefirot/issues/748)) ([aea0ee3](https://github.com/globalbrain/sefirot/commit/aea0ee34fbc7561befa19f0ab6a560d27759afb5))
+
+
+### Features
+
+* **lens:** recover from failed optimistic writes and name the failed row ([#749](https://github.com/globalbrain/sefirot/issues/749)) ([77bcd03](https://github.com/globalbrain/sefirot/commit/77bcd03ee952217bd3c88f2cdc923ddaff3fa31a))
+* **lens:** show an error state with retry when a search fails ([#750](https://github.com/globalbrain/sefirot/issues/750)) ([3a53078](https://github.com/globalbrain/sefirot/commit/3a530784234bf4a47340238e4b4b286e2a74b9ca))
+
 # [4.51.0](https://github.com/globalbrain/sefirot/compare/v4.50.0...v4.51.0) (2026-06-23)
 
 
