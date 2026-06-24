@@ -380,26 +380,27 @@ const searchError = ref(false)
 // one succeeded must not flash an error over the good rows now on screen.
 let searchRunSeq = 0
 
-// Run the main table search, tracking whether it failed. Clears the flag up
-// front so a retry / new search drops the error immediately (showing the loading
-// state), and only a genuine fetch failure raises it. Drives the initial load
+// Run the main table search, tracking whether it failed. Drives the initial load
 // (the query's `immediate` is off so this owns it) and every `doRefresh`.
 async function runSearch(): Promise<void> {
   const seq = ++searchRunSeq
   // Snapshot `searchToken` too: a write / create / forced refresh / index-field
   // change bumps it to supersede an in-flight search (so even on success the
-  // fetcher discards that search's rows). If such a superseded search *rejects*
-  // instead, its failure is for a request we already decided to drop — and a
-  // follow-up (the write's reconcile, the forced result) replaces the state — so
-  // don't surface it as an error over the rows now shown.
+  // fetcher discards that search's rows and returns the current result instead).
+  // Such a superseded run must neither raise the error (its rejection is for a
+  // request we already decided to drop) nor clear it (its "success" is the stale
+  // current result, not the requested rows) — the follow-up (the write's
+  // reconcile, the forced result) settles the state instead.
   const token = searchToken
   try {
     await refresh()
-    // Clear only on the latest run's success — an older run resolving late must
-    // not wipe a newer run's error. Not cleared up front: keeping the error state
-    // visible until the retry actually succeeds avoids flashing the previous
+    // Clear only on the latest, non-superseded run's success — an older run
+    // resolving late must not wipe a newer run's error, and a write-invalidated
+    // run resolving with the current result must not dismiss the error over rows
+    // that aren't the requested ones. Not cleared up front either: keeping the
+    // error visible until a retry actually succeeds avoids flashing the previous
     // query's (interactable) rows back on screen mid-retry.
-    if (seq === searchRunSeq) {
+    if (seq === searchRunSeq && token === searchToken) {
       searchError.value = false
     }
   } catch {
@@ -721,33 +722,14 @@ function onResetSelection() {
 
 function onPrev() {
   if (guardBusy()) { return }
-  void changePage(page.value - 1)
+  page.value--
+  refetch()
 }
 
 function onNext() {
   if (guardBusy()) { return }
-  void changePage(page.value + 1)
-}
-
-// Move to `next`, reverting on failure. A failed page load otherwise strands the
-// user on a page that won't load: the error state hides the footer, so there's no
-// Prev to go back, and a retry just repeats the same failing page. Restoring the
-// previous page keeps the catalog state aligned with the rows still shown, so a
-// retry re-runs the page they came from. (`guardBusy` already blocked this while a
-// write is in flight, so the search here can't read pre-write rows.)
-//
-// Runs the search undebounced, so it relies on its caller being disabled while
-// `loading` — the footer's Prev/Next are (`:disabled="loading"` via SPagination),
-// which keeps overlapping page fetches from landing out of order. Preserve that
-// for any new caller.
-async function changePage(next: number): Promise<void> {
-  const restore = page.value
-  page.value = next
-  latestState.value = null
-  await runSearch()
-  if (searchError.value) {
-    page.value = restore
-  }
+  page.value++
+  refetch()
 }
 
 // --- CRUD editing ----------------------------------------------------------
@@ -1504,13 +1486,16 @@ defineExpose({
       <div class="list" :style="tableMaxHeight">
         <div v-if="searchError" class="list-error">
           <p class="list-error-text">{{ t.search_error }}</p>
+          <!-- Retry the same query via the busy-guarded `doRefresh` (not `refetch`,
+               which would clear a `latestState` recovery banner before the retry
+               resolves — a failed retry would then lose that known-good stash). -->
           <SButton
             size="small"
             mode="info"
             :label="t.search_retry"
             :loading
             :disabled="busy"
-            @click="refetch"
+            @click="doRefresh"
           />
         </div>
         <template v-else>
