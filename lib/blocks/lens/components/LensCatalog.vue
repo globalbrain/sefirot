@@ -644,6 +644,12 @@ function createInputFilters(queryFilters: any[], filters: any[]) {
 // reconcile result (the refreshed state supersedes it).
 function refetch(): void {
   latestState.value = null
+  // Supersede any in-flight search now, not only once the debounced run starts:
+  // a retry/search still loading for the previous query state would otherwise
+  // remain "latest" through the debounce window and, on resolving, clear the error
+  // or assign its rows after the query has already moved on. The next run captures
+  // the bumped token, so it isn't self-suppressed.
+  searchToken++
   doRefresh()
 }
 
@@ -940,6 +946,9 @@ function applyLatest(): void {
   // search-error state — e.g. a search failed, then a sheet save's reconcile
   // surfaced this banner; applying it must reveal the rows, not stay on the retry.
   searchError.value = false
+  // Supersede any in-flight retry started from that error state, so it can't
+  // assign over these rows or re-raise the error after they've been applied.
+  searchToken++
   prevFetchInput = null
   rebindOpenSheet()
 }
@@ -981,13 +990,19 @@ async function forceRefresh(): Promise<void> {
   // fresh result when it resolves — same token mechanism as the write/create
   // races. This refetch captures the bumped token, so it isn't self-suppressed.
   searchToken++
+  const token = searchToken
   prevFetchInput = null
   latestState.value = null
   await refresh()
   // A deliberate reload landed fresh rows — clear any prior search-error state so
-  // the list shows them instead of a stale error. (On failure this rethrows and
-  // the flag is left untouched; the create path handles its own fallback.)
-  searchError.value = false
+  // the list shows them instead of a stale error. But only if this reload wasn't
+  // itself invalidated mid-flight (a write bumping `searchToken` makes the fetcher
+  // return the current result, not freshly-assigned rows) — otherwise we'd dismiss
+  // the error over the previous query's rows. (On failure this rethrows and the
+  // flag is left untouched; the create path handles its own fallback.)
+  if (token === searchToken) {
+    searchError.value = false
+  }
   rebindOpenSheet()
 }
 
