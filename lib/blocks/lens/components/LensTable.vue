@@ -68,11 +68,6 @@ const columnKeys = computed(() => {
   return visible.map((k) => (k === '__empty__' ? `__empty__::${emptyIndex++}` : k))
 })
 
-const orders = computed(() => [
-  ...columnKeys.value,
-  '__last_empty__'
-])
-
 const columns = computedAsync(async () => {
   const r = props.result
 
@@ -193,6 +188,18 @@ const columns = computedAsync(async () => {
 
   return columns
 }, {})
+
+// Render a column only once its definition exists. `columns` resolves
+// asynchronously (computedAsync), so when a column is toggled back on its key
+// lands in `columnKeys` a tick before `columns` rebuilds to include it. Emitting
+// that key in `orders` during the gap makes STable render the column with no cell
+// definition — STableCell then falls back to STableCellText with the raw value
+// (e.g. the `id` field's `{ value, display, path }` object), tripping a Vue
+// prop-type warning. Gating on presence in `columns` keeps the two in lockstep.
+const orders = computed(() => [
+  ...columnKeys.value.filter((key) => key in columns.value),
+  '__last_empty__'
+])
 
 const table = useTable({
   records,
