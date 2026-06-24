@@ -419,6 +419,16 @@ async function runSearch(): Promise<void> {
 
 onMounted(runSearch)
 
+// When a search fails, the error state replaces the table but the control bar —
+// including its selected-actions (bulk) slot — stays mounted. Clear any selection
+// on entering the error so the user can't act on now-hidden rows from the previous
+// result while the UI says the current query failed.
+watch(searchError, (err) => {
+  if (err && selected.value?.length) {
+    selected.value = []
+  }
+})
+
 const doRefresh = useDebounceFn(() => {
   // A write or a blocking create may have started during the debounce window: the
   // busy lock guards the query handlers at click time, but not this deferred
@@ -447,7 +457,14 @@ if (props.urlSync) {
 }
 
 const _showEmptyState = computed(() => {
-  return props.showEmptyState && !hasInitialResults.value && result.value?.data.length === 0
+  // Exclude `searchError`: when a re-search fails the result still holds the
+  // previous (possibly zero-row) data, which would otherwise keep the empty-state
+  // slot showing — and it sits in this branch's `v-else`, so the inline error +
+  // retry would never render. Yield to the error state instead.
+  return props.showEmptyState
+    && !searchError.value
+    && !hasInitialResults.value
+    && result.value?.data.length === 0
 })
 
 const hasConditions = computed(() => {
@@ -1183,10 +1200,11 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
     // during the create (doRefresh bails on `creating`); create's own forceRefresh
     // bypasses that by calling refresh directly.
     searchToken++
-    // The create landed a valid record, so clear any prior search-error state —
-    // both refresh paths below leave the list populated (forceRefresh, or the
-    // optimistic prepend), so the new row must show instead of a stale error.
-    searchError.value = false
+    // Don't clear `searchError` here: only a successful current-query refresh
+    // should (forceRefresh does so on success). The fallbacks below show the
+    // previous query's rows plus the new record — not the requested query — so
+    // dismissing the error there would present stale rows as if they matched.
+    //
     // From here a refresh failure must not reject (the caller would treat the
     // create as failed and re-submit a duplicate); fall back to showing the new
     // record optimistically.
