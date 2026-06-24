@@ -13,7 +13,7 @@ import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
 import { provideLensEdit } from '../composables/LensEdit'
-import { extractServerMessage } from '../validation/ServerErrors'
+import { extractServerMessage, isAuthError } from '../validation/ServerErrors'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
@@ -403,7 +403,14 @@ async function runSearch(): Promise<void> {
     if (seq === searchRunSeq && token === searchToken) {
       searchError.value = false
     }
-  } catch {
+  } catch (e) {
+    // Auth / session-expiry (401 / 419) must reach the app's re-auth flow, not be
+    // parked on the inline retry state — matches the download / filter paths and
+    // the ServerErrors contract. Rethrow so the rejection propagates to the global
+    // handler as it did before this wrapper caught it.
+    if (isAuthError(e)) {
+      throw e
+    }
     if (seq === searchRunSeq && token === searchToken) {
       searchError.value = true
     }
