@@ -13,7 +13,7 @@ import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
 import { provideLensEdit } from '../composables/LensEdit'
-import { extractServerMessage } from '../validation/ServerErrors'
+import { extractServerMessage, isAuthError } from '../validation/ServerErrors'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
 import LensCatalogFooter from './LensCatalogFooter.vue'
 import LensCatalogStateFilter from './LensCatalogStateFilter.vue'
@@ -216,7 +216,9 @@ const { t } = useTrans({
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_failed_text: 'Some changes couldn’t be saved. Refresh to restore the latest values.',
-    refresh_action: 'Refresh'
+    refresh_action: 'Refresh',
+    search_error: 'We couldn’t load the records.',
+    search_retry: 'Try again'
   },
   ja: {
     save_failed: (label: string) => `「${label}」を保存できませんでした。`,
@@ -228,7 +230,9 @@ const { t } = useTrans({
     busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
     refresh_failed_text: '保存できなかった変更があります。更新して最新の値に戻してください。',
-    refresh_action: '更新'
+    refresh_action: '更新',
+    search_error: 'レコードを読み込めませんでした。',
+    search_retry: '再試行'
   }
 })
 
@@ -358,12 +362,78 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   prevFetchResult = res
 
   return res
-})
+}, { immediate: false })
 
 // Keep `currentResult` pointing at the shown result. The reference changes only
 // on a wholesale replace; optimistic in-place edits keep the same object, so this
 // mirror always reflects them.
 watch(result, (r) => { currentResult = r ?? undefined }, { immediate: true })
+
+// Whether the most recent table search (initial load or a user-driven re-search)
+// failed. A failed fetch otherwise leaves the previous rows on screen with the
+// controls re-enabled — indistinguishable from the new query legitimately
+// returning them — so the list shows an inline error + retry instead.
+const searchError = ref(false)
+
+// Monotonic token so only the latest search may raise the error flag: with the
+// slow backend two searches can overlap, and an older one failing *after* a newer
+// one succeeded must not flash an error over the good rows now on screen.
+let searchRunSeq = 0
+
+// Run the main table search, tracking whether it failed. Drives the initial load
+// (the query's `immediate` is off so this owns it) and every `doRefresh`.
+async function runSearch(): Promise<void> {
+  const seq = ++searchRunSeq
+  // Snapshot `searchToken` too: a write / create / forced refresh / index-field
+  // change bumps it to supersede an in-flight search (so even on success the
+  // fetcher discards that search's rows and returns the current result instead).
+  // Such a superseded run must neither raise the error (its rejection is for a
+  // request we already decided to drop) nor clear it (its "success" is the stale
+  // current result, not the requested rows) — the follow-up (the write's
+  // reconcile, the forced result) settles the state instead.
+  const token = searchToken
+  try {
+    await refresh()
+    // Clear only on the latest, non-superseded run's success — an older run
+    // resolving late must not wipe a newer run's error, and a write-invalidated
+    // run resolving with the current result must not dismiss the error over rows
+    // that aren't the requested ones. Not cleared up front either: keeping the
+    // error visible until a retry actually succeeds avoids flashing the previous
+    // query's (interactable) rows back on screen mid-retry.
+    if (seq === searchRunSeq && token === searchToken) {
+      searchError.value = false
+      // These fresh rows for the current query supersede any pending recovery
+      // banner (a reconcile stash), so its button can't later overwrite them with
+      // an older snapshot. Query-change refetches already drop it; the retry path
+      // (doRefresh, which keeps the banner for a failed retry) doesn't, so a
+      // successful retry must clear it here.
+      latestState.value = null
+    }
+  } catch (e) {
+    // Auth / session-expiry (401 / 419) must reach the app's re-auth flow, not be
+    // parked on the inline retry state — matches the download / filter paths and
+    // the ServerErrors contract. Rethrow so the rejection propagates to the global
+    // handler as it did before this wrapper caught it.
+    if (isAuthError(e)) {
+      throw e
+    }
+    if (seq === searchRunSeq && token === searchToken) {
+      searchError.value = true
+    }
+  }
+}
+
+onMounted(runSearch)
+
+// When a search fails, the error state replaces the table but the control bar —
+// including its selected-actions (bulk) slot — stays mounted. Clear any selection
+// on entering the error so the user can't act on now-hidden rows from the previous
+// result while the UI says the current query failed.
+watch(searchError, (err) => {
+  if (err && selected.value?.length) {
+    selected.value = []
+  }
+})
 
 const doRefresh = useDebounceFn(() => {
   // A write or a blocking create may have started during the debounce window: the
@@ -374,7 +444,7 @@ const doRefresh = useDebounceFn(() => {
   // (Deliberate refreshes go through `forceRefresh`, which calls `refresh`
   // directly to bypass this guard.)
   if (pendingWrites.value > 0 || creating.value) { return }
-  return refresh()
+  return runSearch()
 }, 50)
 
 if (props.urlSync) {
@@ -393,7 +463,14 @@ if (props.urlSync) {
 }
 
 const _showEmptyState = computed(() => {
-  return props.showEmptyState && !hasInitialResults.value && result.value?.data.length === 0
+  // Exclude `searchError`: when a re-search fails the result still holds the
+  // previous (possibly zero-row) data, which would otherwise keep the empty-state
+  // slot showing — and it sits in this branch's `v-else`, so the inline error +
+  // retry would never render. Yield to the error state instead.
+  return props.showEmptyState
+    && !searchError.value
+    && !hasInitialResults.value
+    && result.value?.data.length === 0
 })
 
 const hasConditions = computed(() => {
@@ -573,6 +650,12 @@ function createInputFilters(queryFilters: any[], filters: any[]) {
 // reconcile result (the refreshed state supersedes it).
 function refetch(): void {
   latestState.value = null
+  // Supersede any in-flight search now, not only once the debounced run starts:
+  // a retry/search still loading for the previous query state would otherwise
+  // remain "latest" through the debounce window and, on resolving, clear the error
+  // or assign its rows after the query has already moved on. The next run captures
+  // the bumped token, so it isn't self-suppressed.
+  searchToken++
   doRefresh()
 }
 
@@ -865,6 +948,13 @@ function applyLatest(): void {
   if (!latestState.value) { return }
   result.value = latestState.value.result
   latestState.value = null
+  // These are fresh authoritative rows for the current query, so drop any
+  // search-error state — e.g. a search failed, then a sheet save's reconcile
+  // surfaced this banner; applying it must reveal the rows, not stay on the retry.
+  searchError.value = false
+  // Supersede any in-flight retry started from that error state, so it can't
+  // assign over these rows or re-raise the error after they've been applied.
+  searchToken++
   prevFetchInput = null
   rebindOpenSheet()
 }
@@ -906,9 +996,19 @@ async function forceRefresh(): Promise<void> {
   // fresh result when it resolves — same token mechanism as the write/create
   // races. This refetch captures the bumped token, so it isn't self-suppressed.
   searchToken++
+  const token = searchToken
   prevFetchInput = null
   latestState.value = null
   await refresh()
+  // A deliberate reload landed fresh rows — clear any prior search-error state so
+  // the list shows them instead of a stale error. But only if this reload wasn't
+  // itself invalidated mid-flight (a write bumping `searchToken` makes the fetcher
+  // return the current result, not freshly-assigned rows) — otherwise we'd dismiss
+  // the error over the previous query's rows. (On failure this rethrows and the
+  // flag is left untouched; the create path handles its own fallback.)
+  if (token === searchToken) {
+    searchError.value = false
+  }
   rebindOpenSheet()
 }
 
@@ -1121,6 +1221,11 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
     // during the create (doRefresh bails on `creating`); create's own forceRefresh
     // bypasses that by calling refresh directly.
     searchToken++
+    // Don't clear `searchError` here: only a successful current-query refresh
+    // should (forceRefresh does so on success). The fallbacks below show the
+    // previous query's rows plus the new record — not the requested query — so
+    // dismissing the error there would present stale rows as if they matched.
+    //
     // From here a refresh failure must not reject (the caller would treat the
     // create as failed and re-submit a duplicate); fall back to showing the new
     // record optimistically.
@@ -1425,28 +1530,44 @@ defineExpose({
         <SButton size="mini" mode="info" :label="t.refresh_action" @click="applyLatest" />
       </div>
       <div class="list" :style="tableMaxHeight">
-        <LensTable
-          :result
-          :loading
-          :overrides="_overrides"
-          :select="tableSelect"
-          :index-field="tableIndexField"
-          :selected
-          :clickable-fields
-          :inline-editable
-          @filter-updated="onInlineFilterUpdated"
-          @sort-updated="onSortUpdated"
-          @update:selected="onUpdateSelected"
-          @cell-clicked="(v, r) => emit('cell-clicked', v, r)"
-        />
-        <LensCatalogFooter
-          v-if="result && result?.pagination.total > 0"
-          :class="{ 'is-busy': busy }"
-          :result
-          :loading
-          @prev="onPrev"
-          @next="onNext"
-        />
+        <div v-if="searchError" class="list-error">
+          <p class="list-error-text">{{ t.search_error }}</p>
+          <!-- Retry the same query via the busy-guarded `doRefresh` (not `refetch`,
+               which would clear a `latestState` recovery banner before the retry
+               resolves — a failed retry would then lose that known-good stash). -->
+          <SButton
+            size="small"
+            mode="info"
+            :label="t.search_retry"
+            :loading
+            :disabled="busy"
+            @click="doRefresh"
+          />
+        </div>
+        <template v-else>
+          <LensTable
+            :result
+            :loading
+            :overrides="_overrides"
+            :select="tableSelect"
+            :index-field="tableIndexField"
+            :selected
+            :clickable-fields
+            :inline-editable
+            @filter-updated="onInlineFilterUpdated"
+            @sort-updated="onSortUpdated"
+            @update:selected="onUpdateSelected"
+            @cell-clicked="(v, r) => emit('cell-clicked', v, r)"
+          />
+          <LensCatalogFooter
+            v-if="result && result?.pagination.total > 0"
+            :class="{ 'is-busy': busy }"
+            :result
+            :loading
+            @prev="onPrev"
+            @next="onNext"
+          />
+        </template>
       </div>
     </div>
 
@@ -1557,6 +1678,23 @@ defineExpose({
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.list-error {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.list-error-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--c-text-2);
 }
 
 .control-skeleton {
