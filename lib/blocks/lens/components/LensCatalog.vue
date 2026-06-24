@@ -216,7 +216,9 @@ const { t } = useTrans({
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_failed_text: 'Some changes couldn’t be saved. Refresh to restore the latest values.',
-    refresh_action: 'Refresh'
+    refresh_action: 'Refresh',
+    search_error: 'We couldn’t load the records.',
+    search_retry: 'Try again'
   },
   ja: {
     save_failed: (label: string) => `「${label}」を保存できませんでした。`,
@@ -228,7 +230,9 @@ const { t } = useTrans({
     busy_warning: '保存中です。表示を変更する前に少しお待ちください。',
     refresh_text: '新しい結果があります。',
     refresh_failed_text: '保存できなかった変更があります。更新して最新の値に戻してください。',
-    refresh_action: '更新'
+    refresh_action: '更新',
+    search_error: 'レコードを読み込めませんでした。',
+    search_retry: '再試行'
   }
 })
 
@@ -358,12 +362,43 @@ const { data: result, execute: refresh, loading } = useQuery(async (http) => {
   prevFetchResult = res
 
   return res
-})
+}, { immediate: false })
 
 // Keep `currentResult` pointing at the shown result. The reference changes only
 // on a wholesale replace; optimistic in-place edits keep the same object, so this
 // mirror always reflects them.
 watch(result, (r) => { currentResult = r ?? undefined }, { immediate: true })
+
+// Whether the most recent table search (initial load or a user-driven re-search)
+// failed. A failed fetch otherwise leaves the previous rows on screen with the
+// controls re-enabled — indistinguishable from the new query legitimately
+// returning them — so the list shows an inline error + retry instead.
+const searchError = ref(false)
+
+// Monotonic token so only the latest search may raise the error flag: with the
+// slow backend two searches can overlap, and an older one failing *after* a newer
+// one succeeded must not flash an error over the good rows now on screen.
+let searchRunSeq = 0
+
+// Run the main table search, tracking whether it failed. Clears the flag up
+// front so a retry / new search drops the error immediately (showing the loading
+// state), and only a genuine fetch failure from the *latest* run re-raises it — a
+// superseded search resolves successfully (the fetcher returns the current
+// result), so racing writes / queries don't trip it. Drives the initial load (the
+// query's `immediate` is off so this owns it) and every `doRefresh`.
+async function runSearch(): Promise<void> {
+  const seq = ++searchRunSeq
+  searchError.value = false
+  try {
+    await refresh()
+  } catch {
+    if (seq === searchRunSeq) {
+      searchError.value = true
+    }
+  }
+}
+
+onMounted(runSearch)
 
 const doRefresh = useDebounceFn(() => {
   // A write or a blocking create may have started during the debounce window: the
@@ -374,7 +409,7 @@ const doRefresh = useDebounceFn(() => {
   // (Deliberate refreshes go through `forceRefresh`, which calls `refresh`
   // directly to bypass this guard.)
   if (pendingWrites.value > 0 || creating.value) { return }
-  return refresh()
+  return runSearch()
 }, 50)
 
 if (props.urlSync) {
@@ -909,6 +944,10 @@ async function forceRefresh(): Promise<void> {
   prevFetchInput = null
   latestState.value = null
   await refresh()
+  // A deliberate reload landed fresh rows — clear any prior search-error state so
+  // the list shows them instead of a stale error. (On failure this rethrows and
+  // the flag is left untouched; the create path handles its own fallback.)
+  searchError.value = false
   rebindOpenSheet()
 }
 
@@ -1121,6 +1160,10 @@ async function create(values: Record<string, any>): Promise<Record<string, any>>
     // during the create (doRefresh bails on `creating`); create's own forceRefresh
     // bypasses that by calling refresh directly.
     searchToken++
+    // The create landed a valid record, so clear any prior search-error state —
+    // both refresh paths below leave the list populated (forceRefresh, or the
+    // optimistic prepend), so the new row must show instead of a stale error.
+    searchError.value = false
     // From here a refresh failure must not reject (the caller would treat the
     // create as failed and re-submit a duplicate); fall back to showing the new
     // record optimistically.
@@ -1425,28 +1468,34 @@ defineExpose({
         <SButton size="mini" mode="info" :label="t.refresh_action" @click="applyLatest" />
       </div>
       <div class="list" :style="tableMaxHeight">
-        <LensTable
-          :result
-          :loading
-          :overrides="_overrides"
-          :select="tableSelect"
-          :index-field="tableIndexField"
-          :selected
-          :clickable-fields
-          :inline-editable
-          @filter-updated="onInlineFilterUpdated"
-          @sort-updated="onSortUpdated"
-          @update:selected="onUpdateSelected"
-          @cell-clicked="(v, r) => emit('cell-clicked', v, r)"
-        />
-        <LensCatalogFooter
-          v-if="result && result?.pagination.total > 0"
-          :class="{ 'is-busy': busy }"
-          :result
-          :loading
-          @prev="onPrev"
-          @next="onNext"
-        />
+        <div v-if="searchError" class="list-error">
+          <p class="list-error-text">{{ t.search_error }}</p>
+          <SButton size="small" mode="info" :label="t.search_retry" @click="runSearch" />
+        </div>
+        <template v-else>
+          <LensTable
+            :result
+            :loading
+            :overrides="_overrides"
+            :select="tableSelect"
+            :index-field="tableIndexField"
+            :selected
+            :clickable-fields
+            :inline-editable
+            @filter-updated="onInlineFilterUpdated"
+            @sort-updated="onSortUpdated"
+            @update:selected="onUpdateSelected"
+            @cell-clicked="(v, r) => emit('cell-clicked', v, r)"
+          />
+          <LensCatalogFooter
+            v-if="result && result?.pagination.total > 0"
+            :class="{ 'is-busy': busy }"
+            :result
+            :loading
+            @prev="onPrev"
+            @next="onNext"
+          />
+        </template>
       </div>
     </div>
 
@@ -1557,6 +1606,23 @@ defineExpose({
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+.list-error {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.list-error-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--c-text-2);
 }
 
 .control-skeleton {
