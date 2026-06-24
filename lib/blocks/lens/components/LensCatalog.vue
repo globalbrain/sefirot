@@ -212,7 +212,7 @@ const { t } = useTrans({
     delete_failed: (label: string) => `We couldn’t delete “${label}”.`,
     delete_failed_anon: 'We couldn’t delete this record.',
     write_error_reload: 'Please reload and try again.',
-    write_error_recover: 'Please reload to see the latest.',
+    write_error_recover: 'Please reload to see the latest data.',
     busy_warning: 'Still saving — please wait a moment before changing the view.',
     refresh_text: 'Newer results are available.',
     refresh_failed_text: 'Some changes couldn’t be saved. Refresh to restore the latest values.',
@@ -1071,8 +1071,8 @@ function hasPendingWrite(recordId: any): boolean {
 // one-click path when it appears, but it can't always (a failed recovery reconcile
 // shows none, and `isSameResult` can't see detail-only sheet fields absent from
 // the search), so the reload hint stays as the guaranteed fallback. With a reason
-// present, "reload to see the latest" (the change didn't take; reload to resync);
-// without one (network / 5xx / opaque), "reload and try again".
+// present, "reload to see the latest data" (the change didn't take; reload to
+// resync); without one (network / 5xx / opaque), "reload and try again".
 function writeErrorText(op: 'save' | 'delete', label: string | null, reason: string | null): string {
   const subject = op === 'delete'
     ? (label != null ? t.delete_failed(label) : t.delete_failed_anon)
