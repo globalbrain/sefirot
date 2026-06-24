@@ -2,6 +2,7 @@ import { type ValidationArgs } from '@vuelidate/core'
 import { defineAsyncComponent } from 'vue'
 import SInputDropdown, { type Option } from '../../../components/SInputDropdown.vue'
 import { required } from '../../../validation/rules'
+import { isAuthError } from '../validation/ServerErrors'
 import { FilterInput } from './FilterInput'
 
 export class SelectFilterInput extends FilterInput {
@@ -60,7 +61,13 @@ export class SelectFilterInput extends FilterInput {
     let options: Option[] = []
     try {
       options = await this.resolveOptions()
-    } catch {
+    } catch (e) {
+      // Let auth / session-expiry failures reach the app's error / re-auth flow
+      // instead of silently degrading to raw values. Other failures — an option
+      // miss or a non-auth fetch error — fall back so the chip stays readable.
+      if (isAuthError(e)) {
+        throw e
+      }
       options = []
     }
 
