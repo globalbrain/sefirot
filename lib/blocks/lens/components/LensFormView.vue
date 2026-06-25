@@ -87,6 +87,8 @@ const selectOptions = ref(createSelectOptions())
 
 const selectedOption = ref<SelectOption | null>(null)
 
+const hasSelection = computed(() => selectOptions.value.some((s) => s.value))
+
 useDraggable(el, selectOptions, {
   handle: '.handle'
 })
@@ -262,6 +264,7 @@ async function onApply() {
         size="md"
         mode="info"
         :label="t.a_apply"
+        :disabled="!hasSelection"
         @click="onApply"
       />
     </SCardFooter>
