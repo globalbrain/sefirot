@@ -142,8 +142,47 @@ describe('blocks/lens/fields/AvatarField', () => {
   })
 
   describe('formInputComponent', () => {
-    it('throws because avatars are display-only', () => {
-      expect(() => make().formInputComponent()).toThrow()
+    it('returns an avatar input component without throwing', () => {
+      expect(() => make().formInputComponent()).not.toThrow()
+      expect(make().formInputComponent()).toBeTruthy()
+    })
+  })
+
+  describe('write behavior', () => {
+    it('is not submittable — avatars persist out-of-band, not through the lens write', () => {
+      expect(make().isSubmittable()).toBe(false)
+    })
+
+    it('does not support the generic optimistic cell/field editors', () => {
+      expect(make().supportsOptimisticUpdate()).toBe(false)
+    })
+
+    it('uses null as the empty input value', () => {
+      expect(make().inputEmptyValue()).toBeNull()
+    })
+  })
+
+  describe('config', () => {
+    it('defaults accept to image/* and imageType to circle', () => {
+      expect(make().accept()).toBe('image/*')
+      expect(make().imageType()).toBe('circle')
+    })
+
+    it('honors a configured accept and imageType', () => {
+      const field = make({ accept: 'image/png', imageType: 'rectangle' })
+      expect(field.accept()).toBe('image/png')
+      expect(field.imageType()).toBe('rectangle')
+    })
+
+    it('exposes the configured display-name companion keys', () => {
+      const field = make({ nameEn: 'name_en', nameJa: 'name_ja' })
+      expect(field.nameKeys()).toEqual({ en: 'name_en', ja: 'name_ja' })
+      expect(field.nameKey()).toBe('name_en')
+    })
+
+    it('resolves the Japanese name key when the language is "ja"', () => {
+      const field = make({ nameEn: 'name_en', nameJa: 'name_ja' }, 'ja')
+      expect(field.nameKey()).toBe('name_ja')
     })
   })
 })

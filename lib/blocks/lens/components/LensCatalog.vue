@@ -12,6 +12,7 @@ import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
+import { type LensAvatarUploadHandler, provideLensAvatarUpload } from '../composables/LensAvatarUpload'
 import { provideLensEdit } from '../composables/LensEdit'
 import { extractServerMessage, isAuthError } from '../validation/ServerErrors'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
@@ -178,6 +179,15 @@ export interface Props {
   // CRUD edit context). Defaults to enabled when the catalog is `editable`; pass
   // `false` to restrict editing to the record sheet.
   inlineEditable?: boolean
+
+  // Persist an avatar image change for an `avatar` field. Avatars are stored
+  // out-of-band (a multipart upload the consuming app owns) rather than through
+  // the Lens create/update write, so the catalog delegates the actual upload to
+  // this handler and reflects the URL it returns on the row. Without it, avatar
+  // fields stay read-only (the inline/sheet image affordance is hidden). The
+  // handler receives the picked file (or `null` on removal) and the record's id
+  // (`null` while creating) and resolves to the new image URL (or `null`).
+  avatarUpload?: LensAvatarUploadHandler
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -1196,6 +1206,20 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   trackWrite(id, key, 'save', resolveLabel(record), () => gate.then(() => executeUpdate(id, values)))
 }
 
+// Reflect an out-of-band change (e.g. an avatar uploaded via the consumer's
+// handler) on the in-memory record — no Lens write, no reconcile. The catalog
+// row and any open sheet share the object, so the change shows immediately. The
+// row identifier is stripped so a patch can never re-key the row.
+function patch(record: Record<string, any>, values: Record<string, any>): void {
+  const indexField = idField.value
+  if (indexField in values) {
+    values = { ...values }
+    delete values[indexField]
+  }
+  if (Object.keys(values).length === 0) { return }
+  Object.assign(record, values)
+}
+
 // Create — blocking. The slow POST runs to completion, then the catalog is
 // refreshed with the now-synced canonical state (preserving the active query).
 // The create sheet shows a button spinner meanwhile.
@@ -1407,10 +1431,19 @@ provideLensEdit({
   canDelete,
   resolveId,
   save,
+  patch,
   create,
   remove,
   openSheet,
-  openCreate
+  openCreate,
+  refresh: refreshCatalog
+})
+
+// Avatars are persisted out-of-band (the consumer's upload handler), not through
+// the Lens write. Expose the handler to the avatar cell / sheet field / create
+// form via a thin accessor so a prop that resolves after mount is read live.
+provideLensAvatarUpload({
+  get handler() { return props.avatarUpload ?? null }
 })
 
 // Warn the user (native prompt) if they try to leave while a write is still
