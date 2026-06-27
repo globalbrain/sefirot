@@ -37,6 +37,12 @@ const editable = computed(() =>
   && !!avatarUpload?.handler
 )
 
+// Materialize the read-only display component once (computed off `props.field`):
+// `dataListItemComponent()` mints a fresh definition each call, so resolving it
+// inline in the template would unmount/remount the avatar on every reactive row
+// update (e.g. an out-of-band `patch`), causing flicker.
+const displayComponent = computed(() => props.field.dataListItemComponent())
+
 const uploading = ref(false)
 
 // The value the picker shows: the row's current image URL, except while an
@@ -94,7 +100,7 @@ async function onChange(value: File | string | null | undefined) {
         />
       </template>
     </SDataListItem>
-    <component :is="field.dataListItemComponent()" v-else :value="record[fieldKey]" />
+    <component :is="displayComponent" v-else :value="record[fieldKey]" />
   </div>
 </template>
 

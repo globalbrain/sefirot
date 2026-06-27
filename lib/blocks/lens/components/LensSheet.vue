@@ -95,6 +95,11 @@ const createFields = computed(() => entries.value.filter((e) => e.fieldData.show
 // form rather than letting one unsupported field crash the create sheet.
 const createFieldViews = computed(() =>
   createFields.value
+    // An avatar field is editable only when an upload handler is wired (avatars
+    // persist out-of-band); without one, drop its picker from the form rather
+    // than present a control whose picked file would be silently discarded —
+    // mirroring the inline cell / sheet field, which hide the affordance too.
+    .filter((e) => e.fieldData.type !== 'avatar' || !!avatarUpload?.handler)
     .map((e) => ({ key: e.key, field: e.field, component: resolveInput(e.field) }))
     .filter((v) => v.component != null)
 )
@@ -112,7 +117,7 @@ const createInputViews = computed(() =>
 // new id), not sent in the create payload. Tracked separately so the form seeds
 // their model and the post-create step can upload whatever was picked.
 const createAvatarViews = computed(() =>
-  createFields.value.filter((e) => e.fieldData.type === 'avatar')
+  createFields.value.filter((e) => e.fieldData.type === 'avatar' && !!avatarUpload?.handler)
 )
 
 function resolveInput(field: { formInputComponent: () => any }): any {
@@ -265,12 +270,19 @@ async function uploadCreateAvatars(created: Record<string, any>): Promise<void> 
       continue
     }
     try {
-      await handler({ id, record: created, field: key, file })
+      const url = await handler({ id, record: created, field: key, file })
+      // Reflect the uploaded image on the created record immediately. When other
+      // writes are pending, `create()` shows the new row optimistically (no
+      // refetch) and `refresh()` below no-ops — so without this patch the row
+      // would sit with a blank avatar until the user hits the refresh banner.
+      edit?.patch(created, { [key]: url })
       uploaded = true
     } catch {
       snackbars.push({ mode: 'danger', text: t.avatar_upload_error })
     }
   }
+  // Best-effort full resync (no-ops while writes/creates are in flight); the
+  // per-record patch above already surfaced the avatar in that case.
   if (uploaded) {
     await edit?.refresh()
   }

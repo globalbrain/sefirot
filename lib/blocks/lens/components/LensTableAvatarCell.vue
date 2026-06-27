@@ -224,7 +224,7 @@ function onEditorKeydown(event: KeyboardEvent) {
 
 <template>
   <div ref="anchor" class="LensTableAvatarCell" :class="{ editing: editingNames }">
-    <div v-if="displayImage || displayName" class="avatar">
+    <div v-if="displayImage || displayName || canEditImage" class="avatar">
       <button
         class="image"
         type="button"
