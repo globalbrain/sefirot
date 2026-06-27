@@ -1217,7 +1217,38 @@ function patch(record: Record<string, any>, values: Record<string, any>): void {
     delete values[indexField]
   }
   if (Object.keys(values).length === 0) { return }
+  // An out-of-band change supersedes any stashed / in-flight reconcile or search,
+  // exactly like a normal write (see trackWrite): otherwise clicking a stale
+  // refresh banner — or a search resolving with pre-patch rows — would revert the
+  // value we just patched (e.g. drop a freshly uploaded avatar).
+  latestState.value = null
+  reconcileToken++
+  searchToken++
+  reconciling.value = false
   Object.assign(record, values)
+}
+
+// Persist an avatar image out-of-band (via the consumer's `avatar-upload`
+// handler) and reflect the returned URL on the record. Accounted for like an
+// optimistic write — `pendingWrites` locks the query controls while it's in
+// flight (a refetch then would read pre-upload data) and a reconcile resyncs
+// once it settles — so a concurrent query change can't land stale rows over it.
+// Patches the `record` passed at call time (the sheet may rebind to another row
+// mid-upload). Resolves to the new URL, or null when no handler is wired.
+async function uploadAvatar(record: Record<string, any>, field: string, file: File | null): Promise<string | null> {
+  if (!props.avatarUpload) { return null }
+  const id = resolveId(record)
+  pendingWrites.value++
+  try {
+    const url = await props.avatarUpload({ id, record, field, file })
+    patch(record, { [field]: url })
+    return url
+  } finally {
+    pendingWrites.value--
+    if (pendingWrites.value === 0) {
+      reconcile()
+    }
+  }
 }
 
 // Create — blocking. The slow POST runs to completion, then the catalog is
@@ -1431,7 +1462,7 @@ provideLensEdit({
   canDelete,
   resolveId,
   save,
-  patch,
+  uploadAvatar,
   create,
   remove,
   openSheet,

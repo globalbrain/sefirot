@@ -64,23 +64,32 @@ async function onChange(value: File | string | null | undefined) {
     return
   }
   const file = value ?? null
+  // Capture the record being edited: the sheet can be closed and reopened on
+  // another row while this upload is in flight (only the input is disabled, not
+  // the sheet), so `props.record` may point elsewhere by the time we resolve.
+  const record = props.record
   // Show the picked file (or the cleared empty state) immediately.
   model.value = file
   uploading.value = true
   try {
-    const url = await avatarUpload.handler({
-      id: edit?.resolveId(props.record) ?? null,
-      record: props.record,
-      field: props.fieldKey,
-      file
-    })
-    edit?.patch(props.record, { [props.fieldKey]: url })
-    model.value = url
+    // The catalog uploads and patches the captured record's URL itself (with
+    // write accounting); only touch this component's picker if it still shows it.
+    const url = await edit?.uploadAvatar(record, props.fieldKey, file) ?? null
+    if (props.record === record) {
+      model.value = url
+    }
   } catch {
-    model.value = props.record[props.fieldKey] ?? null
+    if (props.record === record) {
+      model.value = record[props.fieldKey] ?? null
+    }
     snackbars.push({ mode: 'danger', text: t.upload_error })
   } finally {
     uploading.value = false
+    // If the sheet rebound to another row mid-upload, resync the picker to it
+    // (the `props.record` watcher skipped re-seeding while `uploading` was true).
+    if (props.record !== record) {
+      model.value = props.record[props.fieldKey] ?? null
+    }
   }
 }
 </script>

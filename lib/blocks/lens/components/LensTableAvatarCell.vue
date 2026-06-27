@@ -51,12 +51,20 @@ const canEditImage = computed(() => canEdit.value && !!avatarUpload?.handler)
 
 const nameEntries = computed(() => {
   const entries: { key: string; field: Field<FieldData> }[] = []
-  if (props.nameEnKey && props.nameFieldEn) {
-    entries.push({ key: props.nameEnKey, field: props.nameFieldEn })
+  const seen = new Set<string>()
+  const add = (key: string | null | undefined, field: Field<FieldData> | null | undefined): void => {
+    // Skip a companion that isn't fetched on this row — editing the visible name
+    // would otherwise send an empty value for the unfetched sibling and clear it
+    // (e.g. `loadSelectable` exposes `name_ja` in `fields` while the select omits
+    // it). De-duplicate too: both languages may point at one shared name column.
+    if (!key || !field || seen.has(key) || !(key in props.record)) {
+      return
+    }
+    seen.add(key)
+    entries.push({ key, field })
   }
-  if (props.nameJaKey && props.nameFieldJa) {
-    entries.push({ key: props.nameJaKey, field: props.nameFieldJa })
-  }
+  add(props.nameEnKey, props.nameFieldEn)
+  add(props.nameJaKey, props.nameFieldJa)
   return entries
 })
 
@@ -96,22 +104,16 @@ async function onFilePicked(event: Event) {
 }
 
 async function upload(file: File | null) {
-  if (!avatarUpload?.handler) {
+  if (!canEditImage.value) {
     return
   }
   uploading.value = true
   previewSrc.value = file ? URL.createObjectURL(file) : null
   try {
-    const url = await avatarUpload.handler({
-      id: edit?.resolveId(props.record) ?? null,
-      record: props.record,
-      field: props.fieldKey,
-      file
-    })
-    // Reflect the new image on the row (the catalog row and any open sheet share
-    // this object) via the edit context — out-of-band, not a Lens write. The
-    // value is a URL, never the raw file, so it renders safely.
-    edit?.patch(props.record, { [props.fieldKey]: url })
+    // The catalog uploads (out-of-band) and patches the row's URL itself, with
+    // write accounting so a concurrent query change can't land stale rows over
+    // it; the value is a URL, never the raw file, so it renders safely.
+    await edit?.uploadAvatar(props.record, props.fieldKey, file)
   } catch {
     // The handler is expected to surface its own failure, but guard with a
     // generic message so a thrown upload never fails silently.
@@ -194,9 +196,26 @@ function cancelNames() {
 }
 
 async function applyNames() {
+  // Snapshot the companion values we're editing so we can detect the backing row
+  // being replaced (a refresh apply, a parent refresh, a requery, or a sibling
+  // save) during the async validate, and avoid clobbering the fresh state.
+  const edited = nameEntries.value.map((entry) => props.record[entry.key])
+
   if (!(await validate())) {
     return
   }
+
+  // A refresh / requery can swap a companion value during the validate microtask;
+  // the watcher above closes the editor but flushes asynchronously and can't abort
+  // this running apply, so re-check against the snapshot. If any changed, `model`
+  // predates the fresh value — bail rather than overwrite it.
+  if (nameEntries.value.some((entry, i) => props.record[entry.key] !== edited[i])) {
+    if (inline?.activeKey.value === myKey.value) {
+      inline.stop()
+    }
+    return
+  }
+
   // The editable predicate can flip to reject this row while the editor is open.
   if (!canEditNames.value) {
     if (inline?.activeKey.value === myKey.value) {

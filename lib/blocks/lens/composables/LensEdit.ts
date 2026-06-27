@@ -36,14 +36,17 @@ export interface LensEditContext {
   save: (record: Record<string, any>, values: Record<string, any>) => void
 
   /**
-   * Reflect an out-of-band change on a record in memory, without persisting it
-   * through the Lens create/update write. Used for values the Lens write does
-   * not carry — e.g. an avatar uploaded via the consumer's handler, which is
-   * stored separately and only its resulting URL needs to show on the row. The
-   * catalog row and any open sheet share the record object, so the change
-   * appears immediately. The row identifier is never patched.
+   * Persist an avatar image for a record out-of-band — via the catalog's
+   * `avatar-upload` handler — and reflect the resulting URL on the row. The
+   * value the Lens create/update write doesn't carry (it's a `File` on edit, a
+   * URL on read), so it's uploaded separately and only the URL is patched onto
+   * the shared record object. Accounted for like a write: the query controls
+   * lock while it's in flight and a reconcile resyncs once it settles, so a
+   * concurrent refetch can't land stale rows over it. Patches the `record`
+   * passed at call time. Resolves to the new URL (or null when removed / no
+   * handler is wired); rejects if the handler throws.
    */
-  patch: (record: Record<string, any>, values: Record<string, any>) => void
+  uploadAvatar: (record: Record<string, any>, field: string, file: File | null) => Promise<string | null>
 
   /**
    * Create a new record. Blocking: resolves once the record is persisted and

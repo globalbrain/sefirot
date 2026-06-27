@@ -224,9 +224,15 @@ async function onCreate() {
     for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])
     }
+    // Snapshot the picked avatar file(s) before the slow create: the picker stays
+    // interactive during it, so the user could swap the image mid-flight — upload
+    // what was submitted, not whatever the model holds when create resolves.
+    const avatarFiles = createAvatarViews.value
+      .map(({ key }) => ({ key, file: createModel[key] }))
+      .filter((a): a is { key: string; file: File } => a.file instanceof File)
     const created = await edit!.create(values)
     // The record now exists, so its avatar(s) can be uploaded to the new id.
-    await uploadCreateAvatars(created)
+    await uploadCreateAvatars(created, avatarFiles)
     emit('close')
   } catch (e) {
     // Surface backend validation errors (e.g. a duplicate `unique` value) on the
@@ -252,39 +258,41 @@ async function onCreate() {
   }
 }
 
-// Upload any avatar image picked on the create form to the just-created record.
-// Avatars aren't part of the create payload (they need the new id and persist
-// out-of-band), so they're uploaded here via the consumer's handler and the
-// catalog is refreshed to reflect them. A failed upload doesn't fail the create
-// — the record exists — it just surfaces a snackbar.
-async function uploadCreateAvatars(created: Record<string, any>): Promise<void> {
-  const handler = avatarUpload?.handler
-  if (!handler || !created) {
+// Upload the avatar image(s) picked on the create form to the just-created
+// record. Avatars aren't part of the create payload (they need the new id and
+// persist out-of-band), so they're uploaded here via the catalog's handler,
+// which also patches the created record's URL. A failed upload doesn't fail the
+// create — the record exists — it just surfaces a snackbar. `files` is the set
+// snapshotted at submit time so a mid-flight picker change can't swap them.
+async function uploadCreateAvatars(
+  created: Record<string, any>,
+  files: { key: string; file: File }[]
+): Promise<void> {
+  if (!created || files.length === 0) {
     return
   }
-  const id = edit?.resolveId(created) ?? null
   let uploaded = false
-  for (const { key } of createAvatarViews.value) {
-    const file = createModel[key]
-    if (!(file instanceof File)) {
-      continue
-    }
+  for (const { key, file } of files) {
     try {
-      const url = await handler({ id, record: created, field: key, file })
-      // Reflect the uploaded image on the created record immediately. When other
-      // writes are pending, `create()` shows the new row optimistically (no
-      // refetch) and `refresh()` below no-ops — so without this patch the row
-      // would sit with a blank avatar until the user hits the refresh banner.
-      edit?.patch(created, { [key]: url })
+      // Uploads to the new id and patches `created`'s URL; when other writes are
+      // pending, `create()` shows the new row optimistically (no refetch) and the
+      // refresh below no-ops, so the patch is what surfaces the avatar then.
+      await edit?.uploadAvatar(created, key, file)
       uploaded = true
     } catch {
       snackbars.push({ mode: 'danger', text: t.avatar_upload_error })
     }
   }
-  // Best-effort full resync (no-ops while writes/creates are in flight); the
-  // per-record patch above already surfaced the avatar in that case.
+  // Best-effort full resync so the avatar shows on the (possibly refetched) row.
+  // It MUST NOT reject: the record + avatar already persisted, so letting a failed
+  // refresh throw would make `onCreate` treat the create as failed and risk a
+  // duplicate on retry. The per-record patch above already reflected the avatar.
   if (uploaded) {
-    await edit?.refresh()
+    try {
+      await edit?.refresh()
+    } catch {
+      // Ignore — best-effort.
+    }
   }
 }
 
