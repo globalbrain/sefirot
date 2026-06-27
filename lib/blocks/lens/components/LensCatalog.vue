@@ -818,6 +818,12 @@ let batchErrored = false
 // cells run concurrently; the backend persists only the changed columns.
 const writeChains = new Map<string, Promise<unknown>>()
 
+// In-flight avatar-upload chains keyed by record+field, so two uploads to the
+// same avatar (e.g. from the inline cell then the reopened sheet) are serialized
+// — the later-issued one's request is sent after the earlier resolves and it
+// patches last, so the newest image wins instead of a slower earlier upload.
+const avatarChains = new Map<string, Promise<unknown>>()
+
 // Count of in-flight writes per record id, so `/show` for a record that's
 // mid-write can avoid overwriting its optimistic values with stale data.
 const pendingByRecord = new Map<any, number>()
@@ -1206,10 +1212,10 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   trackWrite(id, key, 'save', resolveLabel(record), () => gate.then(() => executeUpdate(id, values)))
 }
 
-// Reflect an out-of-band change (e.g. an avatar uploaded via the consumer's
-// handler) on the in-memory record — no Lens write, no reconcile. The catalog
-// row and any open sheet share the object, so the change shows immediately. The
-// row identifier is stripped so a patch can never re-key the row.
+// Reflect an out-of-band change on the in-memory record. Pure in-memory
+// mutation: the caller (`uploadAvatar`) owns the write accounting (invalidation,
+// reconcile). The catalog row and any open sheet share the object, so the change
+// shows immediately. The row identifier is stripped so it can never re-key.
 function patch(record: Record<string, any>, values: Record<string, any>): void {
   const indexField = idField.value
   if (indexField in values) {
@@ -1217,36 +1223,70 @@ function patch(record: Record<string, any>, values: Record<string, any>): void {
     delete values[indexField]
   }
   if (Object.keys(values).length === 0) { return }
-  // An out-of-band change supersedes any stashed / in-flight reconcile or search,
-  // exactly like a normal write (see trackWrite): otherwise clicking a stale
-  // refresh banner — or a search resolving with pre-patch rows — would revert the
-  // value we just patched (e.g. drop a freshly uploaded avatar).
-  latestState.value = null
-  reconcileToken++
-  searchToken++
-  reconciling.value = false
   Object.assign(record, values)
 }
 
 // Persist an avatar image out-of-band (via the consumer's `avatar-upload`
-// handler) and reflect the returned URL on the record. Accounted for like an
-// optimistic write — `pendingWrites` locks the query controls while it's in
-// flight (a refetch then would read pre-upload data) and a reconcile resyncs
-// once it settles — so a concurrent query change can't land stale rows over it.
-// Patches the `record` passed at call time (the sheet may rebind to another row
-// mid-upload). Resolves to the new URL, or null when no handler is wired.
+// handler) and reflect the returned URL on the row, with the same accounting as
+// an optimistic write so it stays consistent with concurrent reads/writes:
+//   - an up-front invalidation preamble (mirroring `trackWrite`) supersedes any
+//     stashed / in-flight reconcile or search, so a request that predates the
+//     upload can't reassign pre-upload rows mid-flight and a stale refresh banner
+//     can't revert the patched URL;
+//   - `pendingWrites` locks the query controls while it's in flight, and
+//     `pendingByRecord` arms `openSheet`'s `/show` stale-read guard;
+//   - uploads to the same record+field are serialized (last issued wins);
+//   - the URL lands on the live displayed row (resolved by id), not only the
+//     passed `record` (which can be an orphan after a create refetched);
+//   - a reconcile resyncs once the batch settles.
+// Resolves to the new URL (rejects if the handler throws), or null when no
+// handler is wired.
 async function uploadAvatar(record: Record<string, any>, field: string, file: File | null): Promise<string | null> {
   if (!props.avatarUpload) { return null }
+  const handler = props.avatarUpload
   const id = resolveId(record)
+
+  latestState.value = null
+  reconcileToken++
+  searchToken++
+  reconciling.value = false
   pendingWrites.value++
+  pendingByRecord.set(id, (pendingByRecord.get(id) ?? 0) + 1)
+
+  // Serialize uploads to the same record+field: chain after any in-flight one so
+  // its request is sent (and patched) only once the earlier resolves.
+  const key = `${id}:${field}`
+  const prev = avatarChains.get(key) ?? Promise.resolve()
+  const run = prev.catch(() => {}).then(() => handler({ id, record, field, file }))
+  avatarChains.set(key, run)
+
   try {
-    const url = await props.avatarUpload({ id, record, field, file })
-    patch(record, { [field]: url })
+    const url = await run
+    const values = { [field]: url }
+    // Patch the passed record (e.g. the sheet's detail record) and, when it's a
+    // different object, the live displayed row resolved by id (e.g. a create that
+    // refetched replaced `created` with a fresh row object).
+    patch(record, values)
+    const row = result.value?.data.find((r) => resolveId(r) === id)
+    if (row && row !== record) {
+      patch(row, values)
+    }
     return url
   } finally {
+    if (avatarChains.get(key) === run) {
+      avatarChains.delete(key)
+    }
+    const remaining = (pendingByRecord.get(id) ?? 1) - 1
+    remaining > 0 ? pendingByRecord.set(id, remaining) : pendingByRecord.delete(id)
     pendingWrites.value--
     if (pendingWrites.value === 0) {
-      reconcile()
+      // Drive the post-batch reconcile like trackWrite does — this upload shares
+      // the `pendingWrites` batch, so when it settles last it must forward (and
+      // reset) `batchErrored` so a concurrent failed write's diverged row still
+      // gets the recovery banner, and the flag doesn't leak into the next batch.
+      const errored = batchErrored
+      batchErrored = false
+      reconcile(errored)
     }
   }
 }

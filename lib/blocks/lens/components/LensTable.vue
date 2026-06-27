@@ -266,11 +266,12 @@ function hasFormInput(field: Field<FieldData>): boolean {
 }
 
 // Build a sibling field instance for inline editing from the current result's
-// field set — but only when it exists, is itself editable (`showOnUpdate`), and
-// actually has a form input. Used by the avatar cell to edit its display-name
-// companions alongside the image; a non-editable or input-less companion (e.g.
-// an `id` / `slack_message` field, whose `formInputComponent()` throws) is
-// omitted so the name editor can't instantiate a broken input and crash.
+// field set — but only when it's editable (`showOnUpdate`) and safe to edit the
+// same way the generic inline cell requires: submittable, optimistically
+// patchable, and with a real form input. Used by the avatar cell to edit its
+// display-name companions; this omits a companion that is non-editable, display
+// only (`content`), holds raw files (`file_upload`), or has no input (`id` /
+// `slack_message`), so the name editor can't send an unsafe value or crash.
 function makeEditableField(r: LensResult, key?: string | null): Field<FieldData> | null {
   if (!key) {
     return null
@@ -281,7 +282,10 @@ function makeEditableField(r: LensResult, key?: string | null): Field<FieldData>
   }
   const data = Object.assign(cloneDeep(fieldData), props.overrides?.[key] ?? {})
   const field = fieldFactory.make(data)
-  return hasFormInput(field) ? field : null
+  if (!field.isSubmittable() || !field.supportsOptimisticUpdate() || !hasFormInput(field)) {
+    return null
+  }
+  return field
 }
 </script>
 
