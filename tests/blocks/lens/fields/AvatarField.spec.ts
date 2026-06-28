@@ -149,8 +149,8 @@ describe('blocks/lens/fields/AvatarField', () => {
   })
 
   describe('write behavior', () => {
-    it('is not submittable — avatars persist out-of-band, not through the lens write', () => {
-      expect(make().isSubmittable()).toBe(false)
+    it('is submittable — its File rides the lens create/update payload', () => {
+      expect(make().isSubmittable()).toBe(true)
     })
 
     it('does not support the generic optimistic cell/field editors', () => {

@@ -156,10 +156,10 @@ const columns = computedAsync(async () => {
       && overriddenFieldData.showOnUpdate === true
     ) {
       // Avatars get a dedicated cell: a hover overlay to change the image
-      // (uploaded out-of-band via the catalog's avatar-upload handler) plus an
-      // optional pencil that edits the display-name companions inline. The image
-      // and names are persisted differently, so the generic editable cell (a
-      // single optimistic field write) can't serve them.
+      // (written through a blocking Lens update) plus an optional pencil that
+      // edits the display-name companions inline (optimistic). The image and
+      // names are persisted differently, so the generic editable cell (a single
+      // optimistic field write) can't serve them.
       const avatarData = overriddenFieldData as AvatarFieldData
       column.cell = {
         type: 'component',

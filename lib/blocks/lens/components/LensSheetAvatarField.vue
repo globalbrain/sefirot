@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
+import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
-import { useLensAvatarUpload } from '../composables/LensAvatarUpload'
 import { useLensEdit } from '../composables/LensEdit'
 import { type AvatarField } from '../fields/AvatarField'
 import { type Field } from '../fields/Field'
@@ -21,72 +21,89 @@ const props = defineProps<{
 const avatarField = computed(() => props.field as AvatarField)
 
 const { t } = useTrans({
-  en: { upload_error: 'We couldn’t upload the image. Please try again.' },
-  ja: { upload_error: '画像をアップロードできませんでした。もう一度お試しください。' }
+  en: { save_error: 'We couldn’t save the image. Please try again.' },
+  ja: { save_error: '画像を保存できませんでした。もう一度お試しください。' }
 })
 
 const edit = useLensEdit()
-const avatarUpload = useLensAvatarUpload()
 const snackbars = useSnackbars()
 
-// Editable only when the row passes the edit gate and an upload handler is wired
-// (avatars persist out-of-band); otherwise the avatar is shown read-only.
+// Editable only when the row passes the edit gate and the field is marked
+// editable; the image is written through the Lens update (a blocking save).
 const editable = computed(() =>
   !!edit?.canEdit(props.record)
   && (props.field as any).data?.showOnUpdate === true
-  && !!avatarUpload?.handler
 )
 
 // Materialize the read-only display component once (computed off `props.field`):
 // `dataListItemComponent()` mints a fresh definition each call, so resolving it
 // inline in the template would unmount/remount the avatar on every reactive row
-// update (e.g. an out-of-band `patch`), causing flicker.
+// update (e.g. a write's `patch`), causing flicker.
 const displayComponent = computed(() => props.field.dataListItemComponent())
 
-const uploading = ref(false)
+const saving = ref(false)
 
-// The value the picker shows: the row's current image URL, except while an
-// upload is in flight (then the local file preview the change handler set).
+// The value the picker shows: the row's current image URL, except while a save
+// is in flight (then the local file preview the change handler set).
 const model = ref<File | string | null>(props.record[props.fieldKey] ?? null)
 
 watch(
   () => props.record[props.fieldKey],
-  (value) => { if (!uploading.value) { model.value = value ?? null } }
+  (value) => { if (!saving.value) { model.value = value ?? null } }
+)
+
+// Validate the picked value (a File, or null on removal) against the field rules
+// before the blocking save. The model usually holds the existing image URL — a
+// string the file rules reject — so validation runs on what's submitted, here,
+// rather than inline on the input (which would flag the unchanged URL).
+const pending = reactive<{ value: File | null }>({ value: null })
+const { validation, validate } = useValidation(
+  () => pending,
+  () => ({ value: avatarField.value.generateValidationRules() })
 )
 
 async function onChange(value: File | string | null | undefined) {
-  // A string is the existing URL still selected — nothing to upload.
+  // A string is the existing URL still selected — nothing to save.
   if (typeof value === 'string') {
     model.value = value
     return
   }
-  if (!avatarUpload?.handler) {
-    return
-  }
   const file = value ?? null
   // Capture the record being edited: the sheet can be closed and reopened on
-  // another row while this upload is in flight (only the input is disabled, not
+  // another row while this save is in flight (only the input is disabled, not
   // the sheet), so `props.record` may point elsewhere by the time we resolve.
   const record = props.record
   // Show the picked file (or the cleared empty state) immediately.
   model.value = file
-  uploading.value = true
-  try {
-    // The catalog uploads and patches the captured record's URL itself (with
-    // write accounting); only touch this component's picker if it still shows it.
-    const url = await edit?.uploadAvatar(record, props.fieldKey, file) ?? null
+
+  pending.value = file
+  if (!(await validate())) {
+    const message = validation.value.$errors[0]?.$message
+    snackbars.push({ mode: 'danger', text: message ? String(message) : t.save_error })
     if (props.record === record) {
-      model.value = url
+      model.value = record[props.fieldKey] ?? null
+    }
+    return
+  }
+
+  saving.value = true
+  try {
+    // The catalog writes through the Lens update and patches the captured
+    // record's column itself (with write accounting); reflect the canonical
+    // value on this picker if it still shows the same record.
+    await edit?.saveBlocking(record, { [props.fieldKey]: file })
+    if (props.record === record) {
+      model.value = record[props.fieldKey] ?? null
     }
   } catch {
     if (props.record === record) {
       model.value = record[props.fieldKey] ?? null
     }
-    snackbars.push({ mode: 'danger', text: t.upload_error })
+    snackbars.push({ mode: 'danger', text: t.save_error })
   } finally {
-    uploading.value = false
-    // If the sheet rebound to another row mid-upload, resync the picker to it
-    // (the `props.record` watcher skipped re-seeding while `uploading` was true).
+    saving.value = false
+    // If the sheet rebound to another row mid-save, resync the picker to it
+    // (the `props.record` watcher skipped re-seeding while `saving` was true).
     if (props.record !== record) {
       model.value = props.record[props.fieldKey] ?? null
     }
@@ -104,7 +121,7 @@ async function onChange(value: File | string | null | undefined) {
           :accept="avatarField.accept()"
           :image-type="avatarField.imageType()"
           :help="field.help() || undefined"
-          :disabled="uploading"
+          :disabled="saving"
           @update:model-value="onChange"
         />
       </template>
