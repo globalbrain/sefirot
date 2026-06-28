@@ -1,5 +1,14 @@
 # Changelog
 
+# [4.53.0](https://github.com/globalbrain/sefirot/compare/v4.52.1...v4.53.0) (2026-06-28)
+
+
+### Features
+
+* **lens:** disable apply button when no selection is made ([2a23574](https://github.com/globalbrain/sefirot/commit/2a2357421122be19010f77f2d9afc03652181edf))
+* **lens:** make avatar fields editable and creatable ([#751](https://github.com/globalbrain/sefirot/issues/751)) ([2679d7e](https://github.com/globalbrain/sefirot/commit/2679d7e8ae13598e32c6a7d6e45588002828ee84))
+* **lens:** write avatar fields through the native lens write ([#752](https://github.com/globalbrain/sefirot/issues/752)) ([61ae2fd](https://github.com/globalbrain/sefirot/commit/61ae2fde6d750c73ff900380a49cfaf7ca9bbc31))
+
 ## [4.52.1](https://github.com/globalbrain/sefirot/compare/v4.52.0...v4.52.1) (2026-06-24)
 
 
