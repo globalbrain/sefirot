@@ -1262,7 +1262,13 @@ async function uploadAvatar(record: Record<string, any>, field: string, file: Fi
 
   try {
     const url = await run
-    const values = { [field]: url }
+    const values: Record<string, any> = { [field]: url }
+    // Advance `updated_at` to ~now like save() does: the upload endpoint bumps the
+    // server timestamp, but the reconcile ignores `updated_at` (so it never
+    // surfaces it), so without this the displayed timestamp would stay stale.
+    if (UPDATED_AT_KEY in record) {
+      values[UPDATED_AT_KEY] = day().toISOString()
+    }
     // Patch the passed record (e.g. the sheet's detail record) and, when it's a
     // different object, the live displayed row resolved by id (e.g. a create that
     // refetched replaced `created` with a fresh row object).
@@ -1381,11 +1387,13 @@ function remove(record: Record<string, any>): void {
   // already-deleted row (spurious save-failed snackbar) or resurrect/clobber
   // it. Gate on the record's current write chains (settled, success or not —
   // the row is being deleted regardless) before issuing the delete.
-  const pendingForRecord = [...writeChains.entries()]
+  const pendingForRecord = [...writeChains.entries(), ...avatarChains.entries()]
     .filter(([key]) => key.startsWith(`${id}:`))
     .map(([, chain]) => chain)
   // `Promise.allSettled([])` resolves immediately, so this is a no-op gate when
-  // the record has no in-flight writes.
+  // the record has no in-flight writes. Avatar uploads are gated too (they live
+  // in their own chain map) so a delete can't race an in-flight upload — the
+  // upload would otherwise fail against a removed row or write after the delete.
   const gate = Promise.allSettled(pendingForRecord)
   trackWrite(id, `${id}:__delete__`, 'delete', resolveLabel(record), () => gate.then(() => executeDelete(id)))
 }

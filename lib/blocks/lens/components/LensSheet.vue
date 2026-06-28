@@ -120,6 +120,14 @@ const createAvatarViews = computed(() =>
   createFields.value.filter((e) => e.fieldData.type === 'avatar' && !!avatarUpload?.handler)
 )
 
+// Every avatar create field regardless of whether the upload handler is wired
+// yet — used to clear the model on open. The handler may resolve after mount, so
+// clearing only the wired (`createAvatarViews`) subset could leave a stale `File`
+// from a prior canceled create that resurfaces (and uploads) once it appears.
+const createAvatarFields = computed(() =>
+  createFields.value.filter((e) => e.fieldData.type === 'avatar')
+)
+
 function resolveInput(field: { formInputComponent: () => any }): any {
   try {
     return field.formInputComponent()
@@ -185,9 +193,10 @@ watch(
       for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
-      // Seed avatar pickers too (not submittable, so excluded above) and clear
-      // any file left from a previous create.
-      for (const { key, field } of createAvatarViews.value) {
+      // Clear every avatar field's model (not submittable, so excluded above) —
+      // including ones whose handler hasn't resolved yet — so a file left from a
+      // previous create can't resurface and upload when the handler appears.
+      for (const { key, field } of createAvatarFields.value) {
         createModel[key] = field.inputEmptyValue()
       }
       serverErrors.value = {}
