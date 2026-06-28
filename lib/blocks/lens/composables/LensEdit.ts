@@ -36,17 +36,19 @@ export interface LensEditContext {
   save: (record: Record<string, any>, values: Record<string, any>) => void
 
   /**
-   * Persist an avatar image for a record out-of-band — via the catalog's
-   * `avatar-upload` handler — and reflect the resulting URL on the row. The
-   * value the Lens create/update write doesn't carry (it's a `File` on edit, a
-   * URL on read), so it's uploaded separately and only the URL is patched onto
-   * the shared record object. Accounted for like a write: the query controls
-   * lock while it's in flight and a reconcile resyncs once it settles, so a
-   * concurrent refetch can't land stale rows over it. Patches the `record`
-   * passed at call time. Resolves to the new URL (or null when removed / no
-   * handler is wired); rejects if the handler throws.
+   * Apply an update that can't be shown optimistically and wait for it. Some
+   * fields hold a value whose shape differs from what the row renders — a file
+   * input holds a raw `File`, not the displayed image URL — so the row can only
+   * reflect the change once the write returns the canonical value. Awaits the
+   * Lens update (sent multipart when a `File` is present) and patches the
+   * submitted columns from the response. Accounted for like an optimistic write
+   * (the query controls lock while it's in flight and a reconcile resyncs once it
+   * settles), so a concurrent refetch can't land stale rows over it. Patches the
+   * live displayed row (resolved by id) as well as the `record` passed at call
+   * time. Rejects if the write fails (the caller surfaces it and keeps the
+   * previous value).
    */
-  uploadAvatar: (record: Record<string, any>, field: string, file: File | null) => Promise<string | null>
+  saveBlocking: (record: Record<string, any>, values: Record<string, any>) => Promise<void>
 
   /**
    * Create a new record. Blocking: resolves once the record is persisted and
@@ -68,9 +70,8 @@ export interface LensEditContext {
 
   /**
    * Re-run the current query against the server, preserving the catalog's
-   * in-memory state. Used to reflect an out-of-band change (e.g. an avatar
-   * uploaded through the consumer's handler, which the Lens write doesn't
-   * carry) once it has settled. No-ops while a write or create is in flight.
+   * in-memory state. Used to reflect an external change once it has settled.
+   * No-ops while a write or create is in flight.
    */
   refresh: () => Promise<void>
 }

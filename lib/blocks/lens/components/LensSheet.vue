@@ -12,7 +12,6 @@ import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
 import { useFieldFactory } from '../composables/FieldFactory'
-import { useLensAvatarUpload } from '../composables/LensAvatarUpload'
 import { useLensEdit } from '../composables/LensEdit'
 import { extractServerErrors, extractServerMessage } from '../validation/ServerErrors'
 import LensSheetAvatarField from './LensSheetAvatarField.vue'
@@ -49,8 +48,7 @@ const { t } = useTrans({
     confirm_delete: 'Delete this record?',
     new_record: 'New record',
     load_error:
-      'We couldn’t load this record. Please reload the page and try again.',
-    avatar_upload_error: 'The record was created, but we couldn’t upload the image.'
+      'We couldn’t load this record. Please reload the page and try again.'
   },
   ja: {
     create: '作成',
@@ -59,14 +57,12 @@ const { t } = useTrans({
     confirm_delete: 'このレコードを削除しますか？',
     new_record: '新規作成',
     load_error:
-      'このレコードを読み込めませんでした。ページを再読み込みして、もう一度お試しください。',
-    avatar_upload_error: 'レコードは作成されましたが、画像をアップロードできませんでした。'
+      'このレコードを読み込めませんでした。ページを再読み込みして、もう一度お試しください。'
   }
 })
 
 const edit = useLensEdit()
 const factory = useFieldFactory()
-const avatarUpload = useLensAvatarUpload()
 const snackbars = useSnackbars()
 
 // Provide the data-list label width directly (instead of wrapping rows in
@@ -95,11 +91,6 @@ const createFields = computed(() => entries.value.filter((e) => e.fieldData.show
 // form rather than letting one unsupported field crash the create sheet.
 const createFieldViews = computed(() =>
   createFields.value
-    // An avatar field is editable only when an upload handler is wired (avatars
-    // persist out-of-band); without one, drop its picker from the form rather
-    // than present a control whose picked file would be silently discarded —
-    // mirroring the inline cell / sheet field, which hide the affordance too.
-    .filter((e) => e.fieldData.type !== 'avatar' || !!avatarUpload?.handler)
     .map((e) => ({ key: e.key, field: e.field, component: resolveInput(e.field) }))
     .filter((v) => v.component != null)
 )
@@ -107,25 +98,11 @@ const createFieldViews = computed(() =>
 // The subset of create views that actually contribute a value. Display-only
 // fields (e.g. a `content` field showing instructions) still render, but
 // `formInputComponent()` returns static markup with no value, so they must not
-// be seeded, validated, or submitted.
+// be seeded, validated, or submitted. An avatar field is submittable (its `File`
+// rides the create payload as a multipart part), so it's seeded and validated
+// here like any other input.
 const createInputViews = computed(() =>
   createFieldViews.value.filter((v) => v.field.isSubmittable())
-)
-
-// Avatar fields render in the create form but aren't submittable — their value
-// is a raw `File`, uploaded out-of-band after the record exists (it needs the
-// new id), not sent in the create payload. Tracked separately so the form seeds
-// their model and the post-create step can upload whatever was picked.
-const createAvatarViews = computed(() =>
-  createFields.value.filter((e) => e.fieldData.type === 'avatar' && !!avatarUpload?.handler)
-)
-
-// Every avatar create field regardless of whether the upload handler is wired
-// yet — used to clear the model on open. The handler may resolve after mount, so
-// clearing only the wired (`createAvatarViews`) subset could leave a stale `File`
-// from a prior canceled create that resurfaces (and uploads) once it appears.
-const createAvatarFields = computed(() =>
-  createFields.value.filter((e) => e.fieldData.type === 'avatar')
 )
 
 function resolveInput(field: { formInputComponent: () => any }): any {
@@ -193,12 +170,6 @@ watch(
       for (const { key, field } of createInputViews.value) {
         createModel[key] = field.inputEmptyValue()
       }
-      // Clear every avatar field's model (not submittable, so excluded above) —
-      // including ones whose handler hasn't resolved yet — so a file left from a
-      // previous create can't resurface and upload when the handler appears.
-      for (const { key, field } of createAvatarFields.value) {
-        createModel[key] = field.inputEmptyValue()
-      }
       serverErrors.value = {}
       reset()
     }
@@ -233,15 +204,9 @@ async function onCreate() {
     for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])
     }
-    // Snapshot the picked avatar file(s) before the slow create: the picker stays
-    // interactive during it, so the user could swap the image mid-flight — upload
-    // what was submitted, not whatever the model holds when create resolves.
-    const avatarFiles = createAvatarViews.value
-      .map(({ key }) => ({ key, file: createModel[key] }))
-      .filter((a): a is { key: string; file: File } => a.file instanceof File)
-    const created = await edit!.create(values)
-    // The record now exists, so its avatar(s) can be uploaded to the new id.
-    await uploadCreateAvatars(created, avatarFiles)
+    // A picked avatar `File` rides `values`; `edit.create` sends the payload
+    // multipart when one is present, so the avatar persists with the new record.
+    await edit!.create(values)
     emit('close')
   } catch (e) {
     // Surface backend validation errors (e.g. a duplicate `unique` value) on the
@@ -264,44 +229,6 @@ async function onCreate() {
     throw e
   } finally {
     saving.value = false
-  }
-}
-
-// Upload the avatar image(s) picked on the create form to the just-created
-// record. Avatars aren't part of the create payload (they need the new id and
-// persist out-of-band), so they're uploaded here via the catalog's handler,
-// which also patches the created record's URL. A failed upload doesn't fail the
-// create — the record exists — it just surfaces a snackbar. `files` is the set
-// snapshotted at submit time so a mid-flight picker change can't swap them.
-async function uploadCreateAvatars(
-  created: Record<string, any>,
-  files: { key: string; file: File }[]
-): Promise<void> {
-  if (!created || files.length === 0) {
-    return
-  }
-  let uploaded = false
-  for (const { key, file } of files) {
-    try {
-      // Uploads to the new id and patches `created`'s URL; when other writes are
-      // pending, `create()` shows the new row optimistically (no refetch) and the
-      // refresh below no-ops, so the patch is what surfaces the avatar then.
-      await edit?.uploadAvatar(created, key, file)
-      uploaded = true
-    } catch {
-      snackbars.push({ mode: 'danger', text: t.avatar_upload_error })
-    }
-  }
-  // Best-effort full resync so the avatar shows on the (possibly refetched) row.
-  // It MUST NOT reject: the record + avatar already persisted, so letting a failed
-  // refresh throw would make `onCreate` treat the create as failed and risk a
-  // duplicate on retry. The per-record patch above already reflected the avatar.
-  if (uploaded) {
-    try {
-      await edit?.refresh()
-    } catch {
-      // Ignore — best-effort.
-    }
   }
 }
 

@@ -137,6 +137,23 @@ describe('blocks/lens/validation/RuleMapper', () => {
     expect(args.checked.$validator(false, null, null)).toBe(false)
   })
 
+  it('maps file_extension rule', () => {
+    const args = map([{ type: 'file_extension', extensions: ['jpg', 'png'] }]) as any
+
+    expect(args.file_extension.$validator(new File(['x'], 'a.png'), null, null)).toBe(true)
+    expect(args.file_extension.$validator(new File(['x'], 'a.gif'), null, null)).toBe(false)
+    // Optional: an empty value defers to `required`, so the rule alone passes it.
+    expect(args.file_extension.$validator(null, null, null)).toBe(true)
+  })
+
+  it('maps max_file_size rule', () => {
+    const args = map([{ type: 'max_file_size', size: '1kb' }]) as any
+
+    expect(args.max_file_size.$validator(new File(['x'.repeat(500)], 'a.png'), null, null)).toBe(true)
+    expect(args.max_file_size.$validator(new File(['x'.repeat(2000)], 'a.png'), null, null)).toBe(false)
+    expect(args.max_file_size.$validator(null, null, null)).toBe(true)
+  })
+
   it('maps each rule, validating every array element', () => {
     const args = map([
       { type: 'each', rules: [{ type: 'max_length', length: 5 }] }

@@ -20,6 +20,8 @@ export type Rule =
   | BeforeOrEqualRule
   | AfterRule
   | AfterOrEqualRule
+  | FileExtensionRule
+  | MaxFileSizeRule
   | EachRule
 
 export interface MaxLengthRule {
@@ -113,6 +115,16 @@ export interface AfterRule {
 export interface AfterOrEqualRule {
   type: 'after_or_equal'
   date: string
+}
+
+export interface FileExtensionRule {
+  type: 'file_extension'
+  extensions: string[]
+}
+
+export interface MaxFileSizeRule {
+  type: 'max_file_size'
+  size: string
 }
 
 /**

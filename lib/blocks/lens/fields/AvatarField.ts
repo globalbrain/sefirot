@@ -38,18 +38,13 @@ export class AvatarField extends Field<AvatarFieldData> {
     })
   }
 
-  // The avatar value is an image URL on read but a raw `File` on edit, and it's
-  // persisted out-of-band (the consumer's upload handler stores the file and
-  // returns a URL) rather than through the Lens create/update write. So it never
-  // contributes a value to those payloads — the dedicated avatar cell / sheet
-  // field / create form drive the upload themselves.
-  override isSubmittable(): boolean {
-    return false
-  }
-
-  // Editing routes through the dedicated avatar cell and sheet field (which call
-  // the upload handler), never the generic optimistic cell/field editors — those
-  // would patch the row with a raw `File` and crash the URL renderer.
+  // The avatar value is a raw `File` on edit (or null on removal), submitted
+  // through the Lens create/update write as a multipart part — so it stays
+  // submittable (the base default). On read it's the image URL, a different
+  // shape that can't be shown optimistically: the write must complete before the
+  // row can reflect the new URL. So editing routes through the dedicated avatar
+  // cell / sheet field (a blocking save), never the generic optimistic cell/field
+  // editors, which would patch the row with a raw `File` and crash the URL renderer.
   override supportsOptimisticUpdate(): boolean {
     return false
   }

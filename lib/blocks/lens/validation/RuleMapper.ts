@@ -9,6 +9,8 @@ import {
   decimal,
   decimalOrHyphen,
   email,
+  fileExtension,
+  maxFileSize,
   maxLength,
   maxValue,
   minLength,
@@ -126,6 +128,10 @@ function mapRule(rule: Exclude<Rule, EachRule>): ValidationRuleWithParams | null
       return after(resolveDate(rule.date))
     case 'after_or_equal':
       return afterOrEqual(resolveDate(rule.date))
+    case 'file_extension':
+      return fileExtension(rule.extensions)
+    case 'max_file_size':
+      return maxFileSize(rule.size)
     default: {
       const _exhaustive: never = rule
       throw new Error(`Unsupported rule type: ${(_exhaustive as Rule).type}`)

@@ -11,7 +11,6 @@ import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
-import { useLensAvatarUpload } from '../composables/LensAvatarUpload'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
 import { type AvatarField } from '../fields/AvatarField'
@@ -40,14 +39,13 @@ const { t } = useTrans({
 
 const edit = useLensEdit()
 const inline = useLensInlineEdit()
-const avatarUpload = useLensAvatarUpload()
 const snackbars = useSnackbars()
 
 const canEdit = computed(() => !!edit?.canEdit(props.record))
 
-// The image can be changed only when an upload handler is wired (avatars are
-// persisted out-of-band); without one the overlay affordance is hidden.
-const canEditImage = computed(() => canEdit.value && !!avatarUpload?.handler)
+// The image is written through the Lens update (a blocking save); the overlay
+// affordance is shown whenever the row is editable.
+const canEditImage = computed(() => canEdit.value)
 
 const nameEntries = computed(() => {
   const entries: { key: string; field: Field<FieldData> }[] = []
@@ -80,10 +78,18 @@ const previewSrc = ref<string | null>(null)
 const displayImage = computed(() => previewSrc.value ?? base.value.image ?? null)
 const displayName = computed(() => base.value.name || null)
 
-// --- Image edit (file picker -> upload handler) -----------------------------
+// --- Image edit (file picker -> blocking Lens update) -----------------------
 
 const fileInput = ref<HTMLInputElement | null>(null)
 const uploading = ref(false)
+
+// Validate the picked image against the field rules before the blocking save.
+// The picked value is a raw `File` (or null), so the file rules apply directly.
+const imagePending = reactive<{ value: File | null }>({ value: null })
+const { validation: imageValidation, validate: validateImage } = useValidation(
+  () => imagePending,
+  () => ({ value: props.field.generateValidationRules() })
+)
 
 function pickImage() {
   if (!canEditImage.value || uploading.value) {
@@ -97,7 +103,7 @@ async function onFilePicked(event: Event) {
   const file = (input.files ?? [])[0] ?? null
   // Reset the input so picking the same file again still fires `change`.
   input.value = ''
-  if (!file || !avatarUpload?.handler) {
+  if (!file) {
     return
   }
   await upload(file)
@@ -107,16 +113,22 @@ async function upload(file: File | null) {
   if (!canEditImage.value) {
     return
   }
+  imagePending.value = file
+  if (!(await validateImage())) {
+    const message = imageValidation.value.$errors[0]?.$message
+    snackbars.push({ mode: 'danger', text: message ? String(message) : t.upload_error })
+    return
+  }
   uploading.value = true
   previewSrc.value = file ? URL.createObjectURL(file) : null
   try {
-    // The catalog uploads (out-of-band) and patches the row's URL itself, with
-    // write accounting so a concurrent query change can't land stale rows over
-    // it; the value is a URL, never the raw file, so it renders safely.
-    await edit?.uploadAvatar(props.record, props.fieldKey, file)
+    // The catalog writes through the Lens update and patches the row's column
+    // itself, with write accounting so a concurrent query change can't land
+    // stale rows over it; the patched value is the URL, never the raw file.
+    await edit?.saveBlocking(props.record, { [props.fieldKey]: file })
   } catch {
-    // The handler is expected to surface its own failure, but guard with a
-    // generic message so a thrown upload never fails silently.
+    // saveBlocking rejects on a failed write; guard with a generic message so a
+    // failure never goes unreported.
     snackbars.push({ mode: 'danger', text: t.upload_error })
   } finally {
     if (previewSrc.value) {
