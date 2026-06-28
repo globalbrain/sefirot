@@ -5,13 +5,14 @@ import { computed, markRaw } from 'vue'
 import STable from '../../../components/STable.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'
 import { type TableCell, type TableColumns, useTable } from '../../../composables/Table'
-import { type FieldData } from '../FieldData'
+import { type AvatarFieldData, type FieldData } from '../FieldData'
 import { type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
 import { provideLensInlineEdit } from '../composables/LensInlineEdit'
 import { type Field } from '../fields/Field'
+import LensTableAvatarCell from './LensTableAvatarCell.vue'
 import LensTableEditableCell from './LensTableEditableCell.vue'
 
 const props = defineProps<{
@@ -44,6 +45,7 @@ const edit = useLensEdit()
 provideLensInlineEdit()
 
 const editableCellComponent = markRaw(LensTableEditableCell)
+const avatarCellComponent = markRaw(LensTableAvatarCell)
 
 const records = computed(() => props.result?.data ?? [])
 
@@ -150,6 +152,31 @@ const columns = computedAsync(async () => {
       props.inlineEditable
       && edit?.editable
       && key !== edit.indexField
+      && overriddenFieldData.type === 'avatar'
+      && overriddenFieldData.showOnUpdate === true
+    ) {
+      // Avatars get a dedicated cell: a hover overlay to change the image
+      // (uploaded out-of-band via the catalog's avatar-upload handler) plus an
+      // optional pencil that edits the display-name companions inline. The image
+      // and names are persisted differently, so the generic editable cell (a
+      // single optimistic field write) can't serve them.
+      const avatarData = overriddenFieldData as AvatarFieldData
+      column.cell = {
+        type: 'component',
+        component: avatarCellComponent,
+        props: {
+          field,
+          fieldKey: key,
+          nameEnKey: avatarData.nameEn ?? null,
+          nameJaKey: avatarData.nameJa ?? null,
+          nameFieldEn: makeEditableField(r, avatarData.nameEn),
+          nameFieldJa: makeEditableField(r, avatarData.nameJa)
+        }
+      }
+    } else if (
+      props.inlineEditable
+      && edit?.editable
+      && key !== edit.indexField
       && overriddenFieldData.showOnUpdate === true
       && field.isSubmittable()
       && field.supportsOptimisticUpdate()
@@ -236,6 +263,29 @@ function hasFormInput(field: Field<FieldData>): boolean {
   } catch {
     return false
   }
+}
+
+// Build a sibling field instance for inline editing from the current result's
+// field set — but only when it's editable (`showOnUpdate`) and safe to edit the
+// same way the generic inline cell requires: submittable, optimistically
+// patchable, and with a real form input. Used by the avatar cell to edit its
+// display-name companions; this omits a companion that is non-editable, display
+// only (`content`), holds raw files (`file_upload`), or has no input (`id` /
+// `slack_message`), so the name editor can't send an unsafe value or crash.
+function makeEditableField(r: LensResult, key?: string | null): Field<FieldData> | null {
+  if (!key) {
+    return null
+  }
+  const fieldData = r.fields[key]
+  if (!fieldData || fieldData.showOnUpdate !== true) {
+    return null
+  }
+  const data = Object.assign(cloneDeep(fieldData), props.overrides?.[key] ?? {})
+  const field = fieldFactory.make(data)
+  if (!field.isSubmittable() || !field.supportsOptimisticUpdate() || !hasFormInput(field)) {
+    return null
+  }
+  return field
 }
 </script>
 

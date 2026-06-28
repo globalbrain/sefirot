@@ -70,9 +70,23 @@ export interface AvatarFieldData extends FieldDataBase {
    * avatar uses the name (resolved against the active language) for the
    * initials fallback / tooltip when the image is unavailable. The field
    * value itself is the image URL.
+   *
+   * When the field is editable, these companion keys also become editable from
+   * the inline cell (the pencil affordance beside the avatar edits both names),
+   * so the avatar and its names can be updated together.
    */
   nameEn?: string | null
   nameJa?: string | null
+  /**
+   * The `accept` attribute for the file picker (e.g. `image/jpeg,image/png`).
+   * Defaults to `image/*`.
+   */
+  accept?: string | null
+  /** Help text shown beneath the picker, per language. */
+  helpEn?: string | null
+  helpJa?: string | null
+  /** Picker preview shape. Defaults to `circle` (avatars are round). */
+  imageType?: 'circle' | 'rectangle' | null
 }
 
 export interface BooleanFieldData extends FieldDataBase {

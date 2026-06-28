@@ -3,6 +3,7 @@ import SAvatar from '../../../components/SAvatar.vue'
 import { type TableCell } from '../../../composables/Table'
 import { type AvatarFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
+import LensAvatarInput from '../components/LensAvatarInput.vue'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { Field } from './Field'
 
@@ -10,7 +11,7 @@ export class AvatarField extends Field<AvatarFieldData> {
   override tableCell(v: any, r: any): TableCell {
     // The display name lives on a sibling key of the record (resolved by the
     // active language), not on the field value, which is the image URL.
-    const nameKey = this.ctx.lang === 'ja' ? this.data.nameJa : this.data.nameEn
+    const nameKey = this.nameKey()
     return {
       type: 'avatar',
       // The field value is the image URL itself. A missing value renders an
@@ -37,7 +38,59 @@ export class AvatarField extends Field<AvatarFieldData> {
     })
   }
 
+  // The avatar value is an image URL on read but a raw `File` on edit, and it's
+  // persisted out-of-band (the consumer's upload handler stores the file and
+  // returns a URL) rather than through the Lens create/update write. So it never
+  // contributes a value to those payloads — the dedicated avatar cell / sheet
+  // field / create form drive the upload themselves.
+  override isSubmittable(): boolean {
+    return false
+  }
+
+  // Editing routes through the dedicated avatar cell and sheet field (which call
+  // the upload handler), never the generic optimistic cell/field editors — those
+  // would patch the row with a raw `File` and crash the URL renderer.
+  override supportsOptimisticUpdate(): boolean {
+    return false
+  }
+
+  override inputEmptyValue(): any {
+    return null
+  }
+
   override formInputComponent(): any {
-    throw new Error('Not implemented.')
+    return this.defineFormInputComponent((props, { emit }) => {
+      return () => h(LensAvatarInput, {
+        'label': this.formInputLabel(),
+        'help': this.help() || undefined,
+        'accept': this.accept(),
+        'imageType': this.imageType(),
+        'modelValue': props.modelValue,
+        'validation': props.validation,
+        'onUpdate:modelValue': (value: any) => {
+          emit('update:modelValue', value)
+        }
+      })
+    })
+  }
+
+  /** The `accept` attribute for the file picker. */
+  accept(): string {
+    return this.data.accept || 'image/*'
+  }
+
+  /** The picker preview shape. */
+  imageType(): 'circle' | 'rectangle' {
+    return this.data.imageType || 'circle'
+  }
+
+  /** The companion name key resolved against the active language, if any. */
+  nameKey(): string | null {
+    return (this.ctx.lang === 'ja' ? this.data.nameJa : this.data.nameEn) ?? null
+  }
+
+  /** The configured English / Japanese display-name keys. */
+  nameKeys(): { en: string | null; ja: string | null } {
+    return { en: this.data.nameEn ?? null, ja: this.data.nameJa ?? null }
   }
 }

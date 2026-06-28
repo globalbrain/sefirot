@@ -12,6 +12,7 @@ import { type FieldData } from '../FieldData'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
+import { type LensAvatarUploadHandler, provideLensAvatarUpload } from '../composables/LensAvatarUpload'
 import { provideLensEdit } from '../composables/LensEdit'
 import { extractServerMessage, isAuthError } from '../validation/ServerErrors'
 import LensCatalogControl, { type FilterPresets } from './LensCatalogControl.vue'
@@ -178,6 +179,15 @@ export interface Props {
   // CRUD edit context). Defaults to enabled when the catalog is `editable`; pass
   // `false` to restrict editing to the record sheet.
   inlineEditable?: boolean
+
+  // Persist an avatar image change for an `avatar` field. Avatars are stored
+  // out-of-band (a multipart upload the consuming app owns) rather than through
+  // the Lens create/update write, so the catalog delegates the actual upload to
+  // this handler and reflects the URL it returns on the row. Without it, avatar
+  // fields stay read-only (the inline/sheet image affordance is hidden). The
+  // handler receives the picked file (or `null` on removal) and the record's id
+  // (`null` while creating) and resolves to the new image URL (or `null`).
+  avatarUpload?: LensAvatarUploadHandler
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -808,6 +818,12 @@ let batchErrored = false
 // cells run concurrently; the backend persists only the changed columns.
 const writeChains = new Map<string, Promise<unknown>>()
 
+// In-flight avatar-upload chains keyed by record+field, so two uploads to the
+// same avatar (e.g. from the inline cell then the reopened sheet) are serialized
+// — the later-issued one's request is sent after the earlier resolves and it
+// patches last, so the newest image wins instead of a slower earlier upload.
+const avatarChains = new Map<string, Promise<unknown>>()
+
 // Count of in-flight writes per record id, so `/show` for a record that's
 // mid-write can avoid overwriting its optimistic values with stale data.
 const pendingByRecord = new Map<any, number>()
@@ -1196,6 +1212,91 @@ function save(record: Record<string, any>, values: Record<string, any>): void {
   trackWrite(id, key, 'save', resolveLabel(record), () => gate.then(() => executeUpdate(id, values)))
 }
 
+// Reflect an out-of-band change on the in-memory record. Pure in-memory
+// mutation: the caller (`uploadAvatar`) owns the write accounting (invalidation,
+// reconcile). The catalog row and any open sheet share the object, so the change
+// shows immediately. The row identifier is stripped so it can never re-key.
+function patch(record: Record<string, any>, values: Record<string, any>): void {
+  const indexField = idField.value
+  if (indexField in values) {
+    values = { ...values }
+    delete values[indexField]
+  }
+  if (Object.keys(values).length === 0) { return }
+  Object.assign(record, values)
+}
+
+// Persist an avatar image out-of-band (via the consumer's `avatar-upload`
+// handler) and reflect the returned URL on the row, with the same accounting as
+// an optimistic write so it stays consistent with concurrent reads/writes:
+//   - an up-front invalidation preamble (mirroring `trackWrite`) supersedes any
+//     stashed / in-flight reconcile or search, so a request that predates the
+//     upload can't reassign pre-upload rows mid-flight and a stale refresh banner
+//     can't revert the patched URL;
+//   - `pendingWrites` locks the query controls while it's in flight, and
+//     `pendingByRecord` arms `openSheet`'s `/show` stale-read guard;
+//   - uploads to the same record+field are serialized (last issued wins);
+//   - the URL lands on the live displayed row (resolved by id), not only the
+//     passed `record` (which can be an orphan after a create refetched);
+//   - a reconcile resyncs once the batch settles.
+// Resolves to the new URL (rejects if the handler throws), or null when no
+// handler is wired.
+async function uploadAvatar(record: Record<string, any>, field: string, file: File | null): Promise<string | null> {
+  if (!props.avatarUpload) { return null }
+  const handler = props.avatarUpload
+  const id = resolveId(record)
+
+  latestState.value = null
+  reconcileToken++
+  searchToken++
+  reconciling.value = false
+  pendingWrites.value++
+  pendingByRecord.set(id, (pendingByRecord.get(id) ?? 0) + 1)
+
+  // Serialize uploads to the same record+field: chain after any in-flight one so
+  // its request is sent (and patched) only once the earlier resolves.
+  const key = `${id}:${field}`
+  const prev = avatarChains.get(key) ?? Promise.resolve()
+  const run = prev.catch(() => {}).then(() => handler({ id, record, field, file }))
+  avatarChains.set(key, run)
+
+  try {
+    const url = await run
+    const values: Record<string, any> = { [field]: url }
+    // Advance `updated_at` to ~now like save() does: the upload endpoint bumps the
+    // server timestamp, but the reconcile ignores `updated_at` (so it never
+    // surfaces it), so without this the displayed timestamp would stay stale.
+    if (UPDATED_AT_KEY in record) {
+      values[UPDATED_AT_KEY] = day().toISOString()
+    }
+    // Patch the passed record (e.g. the sheet's detail record) and, when it's a
+    // different object, the live displayed row resolved by id (e.g. a create that
+    // refetched replaced `created` with a fresh row object).
+    patch(record, values)
+    const row = result.value?.data.find((r) => resolveId(r) === id)
+    if (row && row !== record) {
+      patch(row, values)
+    }
+    return url
+  } finally {
+    if (avatarChains.get(key) === run) {
+      avatarChains.delete(key)
+    }
+    const remaining = (pendingByRecord.get(id) ?? 1) - 1
+    remaining > 0 ? pendingByRecord.set(id, remaining) : pendingByRecord.delete(id)
+    pendingWrites.value--
+    if (pendingWrites.value === 0) {
+      // Drive the post-batch reconcile like trackWrite does — this upload shares
+      // the `pendingWrites` batch, so when it settles last it must forward (and
+      // reset) `batchErrored` so a concurrent failed write's diverged row still
+      // gets the recovery banner, and the flag doesn't leak into the next batch.
+      const errored = batchErrored
+      batchErrored = false
+      reconcile(errored)
+    }
+  }
+}
+
 // Create — blocking. The slow POST runs to completion, then the catalog is
 // refreshed with the now-synced canonical state (preserving the active query).
 // The create sheet shows a button spinner meanwhile.
@@ -1286,11 +1387,13 @@ function remove(record: Record<string, any>): void {
   // already-deleted row (spurious save-failed snackbar) or resurrect/clobber
   // it. Gate on the record's current write chains (settled, success or not —
   // the row is being deleted regardless) before issuing the delete.
-  const pendingForRecord = [...writeChains.entries()]
+  const pendingForRecord = [...writeChains.entries(), ...avatarChains.entries()]
     .filter(([key]) => key.startsWith(`${id}:`))
     .map(([, chain]) => chain)
   // `Promise.allSettled([])` resolves immediately, so this is a no-op gate when
-  // the record has no in-flight writes.
+  // the record has no in-flight writes. Avatar uploads are gated too (they live
+  // in their own chain map) so a delete can't race an in-flight upload — the
+  // upload would otherwise fail against a removed row or write after the delete.
   const gate = Promise.allSettled(pendingForRecord)
   trackWrite(id, `${id}:__delete__`, 'delete', resolveLabel(record), () => gate.then(() => executeDelete(id)))
 }
@@ -1407,10 +1510,19 @@ provideLensEdit({
   canDelete,
   resolveId,
   save,
+  uploadAvatar,
   create,
   remove,
   openSheet,
-  openCreate
+  openCreate,
+  refresh: refreshCatalog
+})
+
+// Avatars are persisted out-of-band (the consumer's upload handler), not through
+// the Lens write. Expose the handler to the avatar cell / sheet field / create
+// form via a thin accessor so a prop that resolves after mount is read live.
+provideLensAvatarUpload({
+  get handler() { return props.avatarUpload ?? null }
 })
 
 // Warn the user (native prompt) if they try to leave while a write is still

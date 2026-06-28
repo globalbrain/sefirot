@@ -63,12 +63,20 @@ function openFileSelect() {
 }
 
 function onFileSelect(e: Event) {
-  const file = ((e.target as HTMLInputElement).files ?? [])[0]
+  const input = e.target as HTMLInputElement
+  const file = (input.files ?? [])[0]
 
   emit('update:model-value', file ?? null)
   emit('change', file ?? null)
 
   file && props.validation?.$touch()
+
+  // Clear the native input after capturing the file, so re-selecting the *same*
+  // file fires `change` again (the browser suppresses it when the value is
+  // unchanged). Matters when a consumer rejects/undoes a pick (e.g. a failed
+  // upload) and the user re-picks the same image. The preview reads the model,
+  // not the input, so clearing it is safe.
+  input.value = ''
 }
 
 function onFileDelete() {
