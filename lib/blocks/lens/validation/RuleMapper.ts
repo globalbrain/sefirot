@@ -13,6 +13,7 @@ import {
   maxFileSize,
   maxLength,
   maxValue,
+  mimeTypes,
   minLength,
   minValue,
   negativeInteger,
@@ -130,6 +131,8 @@ function mapRule(rule: Exclude<Rule, EachRule>): ValidationRuleWithParams | null
       return afterOrEqual(resolveDate(rule.date))
     case 'file_extension':
       return fileExtension(rule.extensions)
+    case 'mime_types':
+      return mimeTypes(rule.mimeTypes)
     case 'max_file_size':
       return maxFileSize(rule.size)
     default: {

@@ -21,6 +21,7 @@ export type Rule =
   | AfterRule
   | AfterOrEqualRule
   | FileExtensionRule
+  | MimeTypesRule
   | MaxFileSizeRule
   | EachRule
 
@@ -120,6 +121,11 @@ export interface AfterOrEqualRule {
 export interface FileExtensionRule {
   type: 'file_extension'
   extensions: string[]
+}
+
+export interface MimeTypesRule {
+  type: 'mime_types'
+  mimeTypes: string[]
 }
 
 export interface MaxFileSizeRule {
