@@ -82,11 +82,24 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
+   * The field key sorts are emitted under — the catalog sends it to the backend,
+   * which orders by that field's column. Defaults to the field's own key; a
+   * subtype whose own value isn't meaningful to sort on can redirect it (e.g. an
+   * avatar sorts by its display-name companion). A `null` makes the field
+   * unsortable, so no sort menu is shown.
+   */
+  protected sortKey(): string | null {
+    return this.data.key
+  }
+
+  /**
    * Renders the table sort menu for the field. The sort maybe null when
-   * the field `sortable` option is false.
+   * the field `sortable` option is false (or it has no sortable key).
    */
   tableSortMenu(onSortUpdated: (sort: LensQuerySort) => void): DropdownSection | null {
-    if (!this.data.sortable) {
+    const sortKey = this.sortKey()
+
+    if (!this.data.sortable || sortKey === null) {
       return null
     }
 
@@ -100,8 +113,8 @@ export abstract class Field<T extends FieldData> {
     return {
       type: 'menu',
       options: [
-        { label: t.sort_asc, onClick: () => onSortUpdated?.([this.data.key, 'asc']) },
-        { label: t.sort_desc, onClick: () => onSortUpdated?.([this.data.key, 'desc']) }
+        { label: t.sort_asc, onClick: () => onSortUpdated?.([sortKey, 'asc']) },
+        { label: t.sort_desc, onClick: () => onSortUpdated?.([sortKey, 'desc']) }
       ]
     }
   }
