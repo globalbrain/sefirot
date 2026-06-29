@@ -117,8 +117,30 @@ describe('blocks/lens/fields/AvatarField', () => {
       expect(make().tableSortMenu(() => {})).toBeNull()
     })
 
-    it('exposes a sort menu when the field opts in via sortable', () => {
-      expect(make({ sortable: true }).tableSortMenu(() => {})).not.toBeNull()
+    it('has no sort menu when sortable but no name companion is configured', () => {
+      // The avatar value is the image URL; with no name companion there is
+      // nothing meaningful to sort on.
+      expect(make({ sortable: true }).tableSortMenu(() => {})).toBeNull()
+    })
+
+    it('sorts by the name companion (active language) when sortable', () => {
+      const captured: any[] = []
+      const menu = make({ sortable: true, nameEn: 'name_en', nameJa: 'name_ja' })
+        .tableSortMenu((s) => captured.push(s)) as any
+
+      expect(menu).not.toBeNull()
+      menu.options[0].onClick()
+      menu.options[1].onClick()
+      expect(captured).toEqual([['name_en', 'asc'], ['name_en', 'desc']])
+    })
+
+    it('sorts by the Japanese companion when the language is "ja"', () => {
+      const captured: any[] = []
+      const menu = make({ sortable: true, nameEn: 'name_en', nameJa: 'name_ja' }, 'ja')
+        .tableSortMenu((s) => captured.push(s)) as any
+
+      menu.options[0].onClick()
+      expect(captured).toEqual([['name_ja', 'asc']])
     })
   })
 

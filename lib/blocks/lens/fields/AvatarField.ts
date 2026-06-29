@@ -29,6 +29,13 @@ export class AvatarField extends Field<AvatarFieldData> {
     return {}
   }
 
+  // Sort by the display-name companion (resolved by the active language), since
+  // the field value itself is the image URL. With no companion configured there's
+  // nothing meaningful to sort on, so the field stays unsortable (no sort menu).
+  protected override sortKey(): string | null {
+    return this.nameKey()
+  }
+
   override dataListItemComponent(): any {
     return this.defineDataListItemComponent((value) => {
       // Render nothing for a missing image so SDataListItem shows its empty
