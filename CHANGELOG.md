@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.55.0](https://github.com/globalbrain/sefirot/compare/v4.54.0...v4.55.0) (2026-06-29)
+
+
+### Features
+
+* **lens:** add a mime_types validation rule ([#755](https://github.com/globalbrain/sefirot/issues/755)) ([86494d0](https://github.com/globalbrain/sefirot/commit/86494d0428293e1655bc41c215b550e2c5919953))
+
 # [4.54.0](https://github.com/globalbrain/sefirot/compare/v4.53.0...v4.54.0) (2026-06-29)
 
 
