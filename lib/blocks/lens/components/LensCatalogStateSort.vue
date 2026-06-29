@@ -39,9 +39,17 @@ const orderTextDict = {
 }
 
 function getFieldName(sort: LensQuerySort): string {
-  return lang === 'ja'
-    ? props.fields[sort[0]].labelJa
-    : props.fields[sort[0]].labelEn
+  // A still-applied sort can reference a field that's not in the field set — a
+  // stale saved/URL sort, or a sort emitted under a companion key (e.g. an
+  // avatar sorting by its display-name field). Fall back to the raw key rather
+  // than crash, mirroring how the filter chip handles an unknown field.
+  const field = props.fields[sort[0]]
+
+  if (!field) {
+    return sort[0]
+  }
+
+  return lang === 'ja' ? field.labelJa : field.labelEn
 }
 
 function getOrderText(sort: LensQuerySort): string {
