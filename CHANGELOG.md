@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.54.0](https://github.com/globalbrain/sefirot/compare/v4.53.0...v4.54.0) (2026-06-29)
+
+
+### Bug Fixes
+
+* **lens:** guard the sort chip against an unknown field key ([#754](https://github.com/globalbrain/sefirot/issues/754)) ([4907f9b](https://github.com/globalbrain/sefirot/commit/4907f9b1c58fafee7c1b04de581d876e79e7435c))
+
+
+### Features
+
+* **lens:** sort the avatar column by its name companion ([#753](https://github.com/globalbrain/sefirot/issues/753)) ([38d04e8](https://github.com/globalbrain/sefirot/commit/38d04e8740322414a7e764c646fd298e2332e812))
+
 # [4.53.0](https://github.com/globalbrain/sefirot/compare/v4.52.1...v4.53.0) (2026-06-28)
 
 
