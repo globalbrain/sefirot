@@ -70,4 +70,18 @@ describe('support/Dom', () => {
       expect(Dom.isEditorSubmitKeydown(keydown(input('text'), { key: 'Tab' } as Partial<KeyboardEvent>))).toBe(false)
     })
   })
+
+  describe('isEditorCancelKeydown', () => {
+    it('cancels on Escape', () => {
+      expect(Dom.isEditorCancelKeydown(keydown(input('text'), { key: 'Escape' } as Partial<KeyboardEvent>))).toBe(true)
+    })
+
+    it('does not cancel while an IME is composing (Escape reverts the candidate)', () => {
+      expect(Dom.isEditorCancelKeydown(keydown(input('text'), { key: 'Escape', isComposing: true } as Partial<KeyboardEvent>))).toBe(false)
+    })
+
+    it('does not cancel on other keys', () => {
+      expect(Dom.isEditorCancelKeydown(keydown(input('text'), { key: 'Enter' }))).toBe(false)
+    })
+  })
 })

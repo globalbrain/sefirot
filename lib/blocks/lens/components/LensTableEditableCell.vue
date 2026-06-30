@@ -10,7 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { day } from '../../../support/Day'
-import { isEditorSubmitKeydown } from '../../../support/Dom'
+import { isEditorCancelKeydown, isEditorSubmitKeydown } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -219,7 +219,7 @@ async function apply() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
+  if (isEditorCancelKeydown(event)) {
     event.preventDefault()
     cancel()
     return

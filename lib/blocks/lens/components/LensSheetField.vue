@@ -5,7 +5,7 @@ import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
-import { isEditorSubmitKeydown } from '../../../support/Dom'
+import { isEditorCancelKeydown, isEditorSubmitKeydown } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
@@ -144,11 +144,10 @@ function onEditorKeydown(event: KeyboardEvent) {
   // the editor open and only shield the sheet.
   if (event.key === 'Escape') {
     event.stopPropagation()
-    if (event.isComposing) {
-      return
+    if (isEditorCancelKeydown(event)) {
+      event.preventDefault()
+      cancel()
     }
-    event.preventDefault()
-    cancel()
     return
   }
   // Enter saves, matching the table editors.

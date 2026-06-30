@@ -41,3 +41,12 @@ export function isEditorSubmitKeydown(event: KeyboardEvent): boolean {
 
   return event.ctrlKey || event.metaKey || isTextLikeInput(event.target)
 }
+
+/**
+ * Whether a keydown should cancel an inline editor: Escape, except the Escape
+ * that cancels an in-progress IME composition (which reverts the candidate and
+ * should leave the editor open).
+ */
+export function isEditorCancelKeydown(event: KeyboardEvent): boolean {
+  return event.key === 'Escape' && !event.isComposing
+}
