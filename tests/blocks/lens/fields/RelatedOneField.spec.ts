@@ -210,7 +210,7 @@ describe('blocks/lens/fields/RelatedOneField', () => {
   })
 
   describe('resourceEndpointBody forwarding', () => {
-    const body = { entity: 'country', select: ['id', 'name'], perPage: 1000 }
+    const body = { entity: 'country', select: ['id', 'name'], perPage: 100 }
 
     it('forwards the configured body to the fetcher in tableFilterMenu', async () => {
       const { fetcher, calls } = captureFetcher([])
