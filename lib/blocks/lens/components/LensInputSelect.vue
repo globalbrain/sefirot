@@ -3,6 +3,7 @@ import SInputSelectSearch, { type Option } from '../../../components/SInputSelec
 import { useMutation } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
+import { isAuthError } from '../validation/ServerErrors'
 
 export type { Color, Size } from '../../../components/SInputBase.vue'
 export type { Option }
@@ -85,7 +86,7 @@ async function fetch(query: string): Promise<Option[]> {
 </script>
 
 <template>
-  <SInputSelectSearch v-model="model" :fetch v-bind="$attrs">
+  <SInputSelectSearch v-model="model" :fetch :rethrow="isAuthError" v-bind="$attrs">
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputSelectSearch>
 </template>

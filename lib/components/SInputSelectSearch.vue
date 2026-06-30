@@ -39,6 +39,10 @@ export interface Props extends BaseProps {
   // debounced, on each keystroke. Out-of-order responses are discarded, so it does
   // not need to guard against races itself.
   fetch: (query: string) => Promise<Option[]>
+  // Decide whether a `fetch` rejection should propagate (be re-thrown) instead of
+  // being swallowed into an empty list — e.g. to let auth/session failures reach
+  // the app's re-auth flow. By default every rejection is swallowed.
+  rethrow?: (error: unknown) => boolean
   // Whether multiple options can be selected. The model is then an array of the
   // selected options; otherwise it is a single option or `null`.
   multiple?: boolean
@@ -123,10 +127,17 @@ async function runFetch(q: string): Promise<void> {
     if (seq === fetchSeq) {
       options.value = res
     }
-  } catch {
-    // Swallow: a failed search just yields no options (the empty state shows).
+  } catch (e) {
+    // A failed search yields no options (the empty state shows)…
     if (seq === fetchSeq) {
       options.value = []
+    }
+    // …unless the consumer wants this failure propagated (e.g. an auth/session
+    // error that must reach the app's re-auth flow rather than look like "no
+    // results"). Re-throw regardless of `seq`: the failure is real even if a
+    // newer search has since superseded this one.
+    if (props.rethrow?.(e)) {
+      throw e
     }
   } finally {
     if (seq === fetchSeq) {
