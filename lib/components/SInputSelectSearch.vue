@@ -57,7 +57,10 @@ export interface Props extends BaseProps {
   debounce?: number
 }
 
-const props = defineProps<Props>()
+// `closeOnSelect` defaults to `undefined` (not Vue's usual absent-Boolean → false)
+// so the `?? !multiple` fallback in onSelect can tell "omitted" from an explicit
+// `false`, keeping the single-select-closes / multiple-stays-open default.
+const props = withDefaults(defineProps<Props>(), { closeOnSelect: undefined })
 
 // The selected option(s). A single `Option | null`, or an `Option[]` when
 // `multiple`. Typed loosely (like SInputDropdown) so a consumer can bind a ref of
