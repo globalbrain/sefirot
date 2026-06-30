@@ -138,8 +138,20 @@ async function apply() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  // Enter saves, matching the table editors. Escape is left to the surrounding
-  // sheet, which closes on it.
+  // Escape cancels this field's edit, and is stopped from bubbling to the sheet
+  // — which otherwise closes on Escape (via SSheet's window-level handler).
+  // While an IME is composing, Escape cancels the composition instead, so keep
+  // the editor open and only shield the sheet.
+  if (event.key === 'Escape') {
+    event.stopPropagation()
+    if (event.isComposing) {
+      return
+    }
+    event.preventDefault()
+    cancel()
+    return
+  }
+  // Enter saves, matching the table editors.
   if (isEditorSubmitKeydown(event)) {
     event.preventDefault()
     apply()
