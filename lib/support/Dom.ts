@@ -26,9 +26,16 @@ export function isTextLikeInput(target: EventTarget | null): boolean {
  *
  * Shift+Enter is left for newlines, and Alt/Option+Enter has no consistent
  * submit meaning (Excel uses it for an in-cell newline), so neither submits.
+ * The Enter that commits an IME composition (e.g. CJK input) never submits.
  */
 export function isEditorSubmitKeydown(event: KeyboardEvent): boolean {
   if (event.key !== 'Enter') {
+    return false
+  }
+
+  // Ignore the Enter that commits an IME composition (e.g. CJK input): it
+  // confirms the candidate rather than submitting.
+  if (event.isComposing) {
     return false
   }
 

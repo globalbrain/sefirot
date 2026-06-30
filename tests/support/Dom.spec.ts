@@ -10,7 +10,7 @@ function keydown(
   target: EventTarget | null,
   init: Partial<KeyboardEvent> = {}
 ): KeyboardEvent {
-  return { key: 'Enter', ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, target, ...init } as KeyboardEvent
+  return { key: 'Enter', ctrlKey: false, metaKey: false, altKey: false, shiftKey: false, isComposing: false, target, ...init } as KeyboardEvent
 }
 
 describe('support/Dom', () => {
@@ -58,6 +58,11 @@ describe('support/Dom', () => {
       const textarea = document.createElement('textarea')
       expect(Dom.isEditorSubmitKeydown(keydown(textarea, { shiftKey: true }))).toBe(false)
       expect(Dom.isEditorSubmitKeydown(keydown(textarea, { altKey: true }))).toBe(false)
+    })
+
+    it('does not submit while an IME is composing (the committing Enter), even with a modifier', () => {
+      expect(Dom.isEditorSubmitKeydown(keydown(input('text'), { isComposing: true }))).toBe(false)
+      expect(Dom.isEditorSubmitKeydown(keydown(input('text'), { isComposing: true, metaKey: true }))).toBe(false)
     })
 
     it('does not submit on non-Enter keys', () => {
