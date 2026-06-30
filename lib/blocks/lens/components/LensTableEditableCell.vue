@@ -10,7 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { day } from '../../../support/Day'
-import { isTextLikeInput } from '../../../support/Dom'
+import { isEditorSubmitKeydown } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -224,11 +224,7 @@ function onEditorKeydown(event: KeyboardEvent) {
     cancel()
     return
   }
-  // Enter saves only from a plain text-like input. A textarea inserts a
-  // newline, and controls that handle Enter themselves (e.g. a dropdown that
-  // opens its menu on Enter) must keep it — otherwise a keyboard user submits
-  // the old value instead of choosing an option.
-  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
+  if (isEditorSubmitKeydown(event)) {
     event.preventDefault()
     apply()
   }

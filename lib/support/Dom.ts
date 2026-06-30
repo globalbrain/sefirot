@@ -16,3 +16,21 @@ export function isTextLikeInput(target: EventTarget | null): boolean {
 
   return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
 }
+
+/**
+ * Whether an Enter keydown should submit an inline editor. Ctrl/Cmd+Enter
+ * submits from any control — it's the near-universal "submit" gesture (GitHub,
+ * Gmail, Slack, …) and never clashes with a textarea's newline or a control that
+ * handles bare Enter itself (e.g. a dropdown opening its menu). Bare Enter
+ * submits only from a plain text-like input (see {@link isTextLikeInput}).
+ *
+ * Shift+Enter is left for newlines, and Alt/Option+Enter has no consistent
+ * submit meaning (Excel uses it for an in-cell newline), so neither submits.
+ */
+export function isEditorSubmitKeydown(event: KeyboardEvent): boolean {
+  if (event.key !== 'Enter') {
+    return false
+  }
+
+  return event.ctrlKey || event.metaKey || isTextLikeInput(event.target)
+}
