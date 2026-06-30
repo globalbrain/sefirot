@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.56.0](https://github.com/globalbrain/sefirot/compare/v4.55.0...v4.56.0) (2026-06-30)
+
+
+### Bug Fixes
+
+* **lens:** inline-editor keyboard handling — Enter/Cmd+Enter saves, Esc cancels ([#756](https://github.com/globalbrain/sefirot/issues/756)) ([1f151b6](https://github.com/globalbrain/sefirot/commit/1f151b6ec13a9f9152cb7c02cc5dd3e353400e8b))
+
+
+### Features
+
+* **lens:** let create-form slots contribute extra payload keys ([#757](https://github.com/globalbrain/sefirot/issues/757)) ([c675417](https://github.com/globalbrain/sefirot/commit/c675417cdc86df03a2b684f7e069e054c070e1ea))
+
 # [4.55.0](https://github.com/globalbrain/sefirot/compare/v4.54.0...v4.55.0) (2026-06-29)
 
 
