@@ -210,6 +210,15 @@ watch(isOpen, (value) => {
 
 onUnmounted(cancelPendingFetch)
 
+// Close the dropdown if the control becomes disabled while open (e.g. a form
+// submission starts), so its options can't be selected until it re-enables.
+// `onSelect` also re-checks `props.disabled` as a belt-and-braces guard.
+watch(() => props.disabled, (disabled) => {
+  if (disabled) {
+    close()
+  }
+})
+
 function isActive(value: any): boolean {
   if (props.multiple) {
     return (selected.value as Option[]).some((o) => o.value === value)
@@ -218,7 +227,7 @@ function isActive(value: any): boolean {
 }
 
 function onSelect(option: Option): void {
-  if (option.disabled) {
+  if (props.disabled || option.disabled) {
     return
   }
 
