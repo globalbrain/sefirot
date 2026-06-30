@@ -10,7 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { day } from '../../../support/Day'
-import { isEditorCancelKeydown, isEditorSubmitKeydown } from '../../../support/Dom'
+import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -160,10 +160,7 @@ function start() {
   inline?.start(myKey.value)
   nextTick(() => {
     update()
-    const el = editorEl.value?.querySelector(
-      'input, textarea, [contenteditable], [tabindex]'
-    ) as HTMLElement | null
-    el?.focus()
+    focusFirstEditable(editorEl.value)
   })
 }
 
@@ -219,15 +216,7 @@ async function apply() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  if (isEditorCancelKeydown(event)) {
-    event.preventDefault()
-    cancel()
-    return
-  }
-  if (isEditorSubmitKeydown(event)) {
-    event.preventDefault()
-    apply()
-  }
+  dispatchEditorKeydown(event, { cancel, submit: apply })
 }
 </script>
 

@@ -5,7 +5,7 @@ import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
-import { isEditorCancelKeydown, isEditorSubmitKeydown } from '../../../support/Dom'
+import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
@@ -101,12 +101,7 @@ function start() {
   // Focus the input on open (matching the inline table editor): better UX, and
   // it routes the editor's keydowns — notably Escape — through the form handler
   // so Escape cancels the edit rather than closing the sheet.
-  nextTick(() => {
-    const el = formEl.value?.querySelector(
-      'input, textarea, [contenteditable], [tabindex]'
-    ) as HTMLElement | null
-    el?.focus()
-  })
+  nextTick(() => focusFirstEditable(formEl.value))
 }
 
 function cancel() {
@@ -149,23 +144,9 @@ async function apply() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  // Escape cancels this field's edit, and is stopped from bubbling to the sheet
-  // — which otherwise closes on Escape (via SSheet's window-level handler).
-  // While an IME is composing, Escape cancels the composition instead, so keep
-  // the editor open and only shield the sheet.
-  if (event.key === 'Escape') {
-    event.stopPropagation()
-    if (isEditorCancelKeydown(event)) {
-      event.preventDefault()
-      cancel()
-    }
-    return
-  }
-  // Enter saves, matching the table editors.
-  if (isEditorSubmitKeydown(event)) {
-    event.preventDefault()
-    apply()
-  }
+  // `shield` keeps Escape from reaching the surrounding sheet, which otherwise
+  // closes on it (via SSheet's window-level handler).
+  dispatchEditorKeydown(event, { cancel, submit: apply, shield: true })
 }
 </script>
 

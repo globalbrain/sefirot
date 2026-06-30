@@ -50,3 +50,50 @@ export function isEditorSubmitKeydown(event: KeyboardEvent): boolean {
 export function isEditorCancelKeydown(event: KeyboardEvent): boolean {
   return event.key === 'Escape' && !event.isComposing
 }
+
+/**
+ * Dispatch a keydown for an inline editor (opened from a cell or sheet field):
+ * cancel on Escape, submit on Enter — using the IME- and modifier-aware rules
+ * in {@link isEditorCancelKeydown} / {@link isEditorSubmitKeydown}.
+ *
+ * `shield` is for an editor nested in a surface that itself closes on Escape
+ * (e.g. a sheet): Escape is always kept from propagating to that surface — even
+ * the Escape that only cancels an IME composition (where the edit stays open) —
+ * so the surface can't close underneath the editor.
+ *
+ * NOTE for future inline/sheet-editable fields: several field types currently
+ * throw on `formInputComponent()` (not yet editable). When making one editable,
+ * if its input is a composite control with its own nested text input (e.g. a
+ * dropdown's search filter), that nested input must keep Enter/Escape from
+ * bubbling to this handler — see `SDropdownSectionFilter` — otherwise typing a
+ * value and pressing Enter would submit/cancel the whole editor.
+ */
+export function dispatchEditorKeydown(
+  event: KeyboardEvent,
+  handlers: { cancel: () => void; submit: () => void; shield?: boolean }
+): void {
+  if (event.key === 'Escape') {
+    if (handlers.shield) {
+      event.stopPropagation()
+    }
+    if (isEditorCancelKeydown(event)) {
+      event.preventDefault()
+      handlers.cancel()
+    }
+    return
+  }
+
+  if (isEditorSubmitKeydown(event)) {
+    event.preventDefault()
+    handlers.submit()
+  }
+}
+
+/**
+ * Focus the first focusable editor control (an input, textarea, contenteditable,
+ * or any `[tabindex]`) inside the container — used to focus an inline editor
+ * when it opens.
+ */
+export function focusFirstEditable(container: HTMLElement | null): void {
+  container?.querySelector<HTMLElement>('input, textarea, [contenteditable], [tabindex]')?.focus()
+}

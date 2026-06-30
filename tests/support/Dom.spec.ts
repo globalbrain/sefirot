@@ -84,4 +84,67 @@ describe('support/Dom', () => {
       expect(Dom.isEditorCancelKeydown(keydown(input('text'), { key: 'Enter' }))).toBe(false)
     })
   })
+
+  describe('dispatchEditorKeydown', () => {
+    function dispatch(init: Partial<KeyboardEvent> & { shield?: boolean } = {}) {
+      const { shield, ...eventInit } = init
+      const calls = { cancel: 0, submit: 0, preventDefault: 0, stopPropagation: 0 }
+      const event = {
+        ...keydown(input('text'), eventInit),
+        preventDefault: () => { calls.preventDefault++ },
+        stopPropagation: () => { calls.stopPropagation++ }
+      } as KeyboardEvent
+      Dom.dispatchEditorKeydown(event, {
+        cancel: () => { calls.cancel++ },
+        submit: () => { calls.submit++ },
+        shield
+      })
+      return calls
+    }
+
+    it('submits on Enter from a text input', () => {
+      expect(dispatch({ key: 'Enter' })).toMatchObject({ submit: 1, cancel: 0, preventDefault: 1 })
+    })
+
+    it('cancels on Escape', () => {
+      expect(dispatch({ key: 'Escape' } as Partial<KeyboardEvent>)).toMatchObject({ cancel: 1, submit: 0, preventDefault: 1 })
+    })
+
+    it('does not cancel on Escape while composing, and does not shield by default', () => {
+      expect(dispatch({ key: 'Escape', isComposing: true } as Partial<KeyboardEvent>))
+        .toMatchObject({ cancel: 0, preventDefault: 0, stopPropagation: 0 })
+    })
+
+    it('shields Escape from the surrounding surface, cancelling when not composing', () => {
+      expect(dispatch({ key: 'Escape', shield: true } as Partial<KeyboardEvent> & { shield?: boolean }))
+        .toMatchObject({ stopPropagation: 1, cancel: 1, preventDefault: 1 })
+    })
+
+    it('shields the composing Escape too, without cancelling the edit', () => {
+      expect(dispatch({ key: 'Escape', isComposing: true, shield: true } as Partial<KeyboardEvent> & { shield?: boolean }))
+        .toMatchObject({ stopPropagation: 1, cancel: 0, preventDefault: 0 })
+    })
+
+    it('ignores other keys', () => {
+      expect(dispatch({ key: 'a' } as Partial<KeyboardEvent>)).toMatchObject({ cancel: 0, submit: 0 })
+    })
+  })
+
+  describe('focusFirstEditable', () => {
+    it('focuses the first focusable control in the container', () => {
+      const container = document.createElement('div')
+      const el = document.createElement('input')
+      container.append(el)
+      document.body.append(container)
+
+      Dom.focusFirstEditable(container)
+      expect(document.activeElement).toBe(el)
+
+      container.remove()
+    })
+
+    it('does nothing for a null container', () => {
+      expect(() => Dom.focusFirstEditable(null)).not.toThrow()
+    })
+  })
 })
