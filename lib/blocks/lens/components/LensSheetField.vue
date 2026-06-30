@@ -5,6 +5,7 @@ import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
+import { isTextLikeInput } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
@@ -135,6 +136,16 @@ async function apply() {
   })
   editing.value = false
 }
+
+function onEditorKeydown(event: KeyboardEvent) {
+  // Enter saves from a plain text-like input, matching the table editors — a
+  // textarea or a control that handles Enter itself keeps it. Escape is left to
+  // the surrounding sheet, which closes on it.
+  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
+    event.preventDefault()
+    apply()
+  }
+}
 </script>
 
 <template>
@@ -156,7 +167,7 @@ async function apply() {
       </button>
     </div>
 
-    <div v-else class="form">
+    <div v-else class="form" @keydown="onEditorKeydown">
       <component :is="inputComponent" v-model="model" :validation="validation.input" />
       <div class="actions">
         <SButton size="mini" :label="t.cancel" @click="cancel" />

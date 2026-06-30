@@ -10,6 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { day } from '../../../support/Day'
+import { isTextLikeInput } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -231,15 +232,6 @@ function onEditorKeydown(event: KeyboardEvent) {
     event.preventDefault()
     apply()
   }
-}
-
-function isTextLikeInput(target: EventTarget | null): boolean {
-  const el = target as HTMLElement | null
-  if (!el || el.tagName !== 'INPUT') {
-    return false
-  }
-  const type = (el as HTMLInputElement).type
-  return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
 }
 </script>
 

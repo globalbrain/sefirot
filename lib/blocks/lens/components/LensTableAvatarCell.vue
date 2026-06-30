@@ -10,6 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
+import { isTextLikeInput } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -249,6 +250,14 @@ function onEditorKeydown(event: KeyboardEvent) {
   if (event.key === 'Escape') {
     event.preventDefault()
     cancelNames()
+    return
+  }
+  // Enter saves only from a plain text-like input (the name fields), matching the
+  // generic editable cell — a textarea or a control that handles Enter itself
+  // keeps it.
+  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
+    event.preventDefault()
+    applyNames()
   }
 }
 </script>
