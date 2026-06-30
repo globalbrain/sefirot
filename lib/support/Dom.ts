@@ -91,9 +91,19 @@ export function dispatchEditorKeydown(
 
 /**
  * Focus the first focusable editor control (an input, textarea, contenteditable,
- * or any `[tabindex]`) inside the container — used to focus an inline editor
- * when it opens.
+ * or any `[tabindex]`) inside the container — used to focus an inline editor when
+ * it opens.
+ *
+ * Candidates inside `skip` (default `.actions`, the editor's action row) are
+ * ignored, so focus never lands on a Cancel/Save button — those are `[tabindex]`
+ * elements too — when the field input has no focusable control of its own (e.g.
+ * a radio/checkbox group). In that case nothing is focused. Pass `skip: ''` to
+ * disable.
  */
-export function focusFirstEditable(container: HTMLElement | null): void {
-  container?.querySelector<HTMLElement>('input, textarea, [contenteditable], [tabindex]')?.focus()
+export function focusFirstEditable(container: HTMLElement | null, skip = '.actions'): void {
+  const candidates = Array.from(
+    container?.querySelectorAll<HTMLElement>('input, textarea, [contenteditable], [tabindex]') ?? []
+  )
+
+  candidates.find((el) => !skip || !el.closest(skip))?.focus()
 }

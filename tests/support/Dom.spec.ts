@@ -146,5 +146,38 @@ describe('support/Dom', () => {
     it('does nothing for a null container', () => {
       expect(() => Dom.focusFirstEditable(null)).not.toThrow()
     })
+
+    it('skips candidates inside the default `.actions` row (e.g. Cancel/Save)', () => {
+      const container = document.createElement('div')
+      const action = document.createElement('div')
+      action.className = 'actions'
+      const button = document.createElement('div')
+      button.setAttribute('tabindex', '0')
+      action.append(button)
+      container.append(action)
+      document.body.append(container)
+
+      Dom.focusFirstEditable(container)
+      expect(document.activeElement).not.toBe(button)
+
+      container.remove()
+    })
+
+    it('focuses the field input before the skipped action row', () => {
+      const container = document.createElement('div')
+      const el = document.createElement('input')
+      const action = document.createElement('div')
+      action.className = 'actions'
+      const button = document.createElement('div')
+      button.setAttribute('tabindex', '0')
+      action.append(button)
+      container.append(el, action)
+      document.body.append(container)
+
+      Dom.focusFirstEditable(container)
+      expect(document.activeElement).toBe(el)
+
+      container.remove()
+    })
   })
 })
