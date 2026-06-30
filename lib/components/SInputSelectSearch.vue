@@ -183,11 +183,16 @@ function onOpen() {
 }
 
 watch(isOpen, (value) => {
-  // Reset the query, drop any pending refetch, and clear the loading flag when the
-  // dropdown closes, so the next open starts fresh.
+  // On close: drop any pending refetch, invalidate any in-flight fetch (so a late
+  // response can't repopulate the list while closed), and clear the query /
+  // options / loading. Reopening then starts fresh instead of briefly rendering
+  // the previous query's results (which would be selectable). The selected chips
+  // are unaffected — they render from the model, not from `options`.
   if (!value) {
     cancelPendingFetch()
+    fetchSeq++
     query.value = ''
+    options.value = []
     loading.value = false
   }
 })

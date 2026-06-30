@@ -47,7 +47,7 @@ function emitRemove(value: any) {
       <template v-for="(el, i) in item" :key="i">
         <div v-if="el.type === undefined || el.type === 'text'" class="many-text">
           <div class="many-text-value">{{ el.label }}</div>
-          <button v-if="removable" class="many-text-close" @click.stop="emitRemove(el.value)">
+          <button v-if="removable" type="button" class="many-text-close" @click.stop="emitRemove(el.value)">
             <IconX class="many-text-close-icon" />
           </button>
         </div>
@@ -56,7 +56,7 @@ function emitRemove(value: any) {
             <div class="many-avatar-image"><SAvatar size="fill" :avatar="el.image" /></div>
             <div class="many-avatar-name">{{ el.label }}</div>
           </div>
-          <button v-if="removable" class="many-avatar-close" @click.stop="emitRemove(el.value)">
+          <button v-if="removable" type="button" class="many-avatar-close" @click.stop="emitRemove(el.value)">
             <IconX class="many-avatar-close-icon" />
           </button>
         </div>
@@ -70,7 +70,7 @@ function emitRemove(value: any) {
         <div class="one-avatar-image"><SAvatar size="fill" :avatar="item.image" /></div>
         <div class="one-avatar-name">{{ item.label }}</div>
       </div>
-      <button v-if="removable" class="one-close" @click.stop="emitRemove(item.value)">
+      <button v-if="removable" type="button" class="one-close" @click.stop="emitRemove(item.value)">
         <IconX class="one-close-icon" />
       </button>
     </div>

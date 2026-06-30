@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import SInputSelectSearch, { type Option } from '../../../components/SInputSelectSearch.vue'
 import { useMutation } from '../../../composables/Api'
+import { useLang } from '../../../composables/Lang'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
 
 export type { Color, Size } from '../../../components/SInputBase.vue'
@@ -56,6 +57,11 @@ const model = defineModel<any>({ required: true })
 // child; only the explicitly-forwarded selection props (via `$attrs`) should.
 defineOptions({ inheritAttrs: false })
 
+// Default the request language to the active app language (like LensCatalog), so
+// server-localized fields come back in the right locale even when HttpConfig /
+// request headers differ; explicit `settings` (incl. `lang`) overrides it.
+const lang = useLang()
+
 const { execute } = useMutation((http, query: string) =>
   http.post<{ data: Record<string, any>[] }>(props.endpoint, {
     entity: props.entity,
@@ -66,7 +72,7 @@ const { execute } = useMutation((http, query: string) =>
     sort: props.sort ?? [],
     page: 1,
     perPage: props.perPage ?? 25,
-    ...(props.settings ? { settings: props.settings } : {})
+    settings: { lang, ...props.settings }
   })
 )
 
