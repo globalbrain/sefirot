@@ -70,7 +70,9 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
 <template>
   <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
-      <input ref="input" v-model="query" class="input" :placeholder="t.i_ph">
+      <!-- Keep Enter inside the filter: it drives the dropdown, and must not
+           bubble to an enclosing editor/form as a submit. -->
+      <input ref="input" v-model="query" class="input" :placeholder="t.i_ph" @keydown.enter.stop>
     </div>
 
     <ul v-if="filteredOptions.length" class="list">
