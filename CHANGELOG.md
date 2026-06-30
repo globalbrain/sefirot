@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.57.0](https://github.com/globalbrain/sefirot/compare/v4.56.0...v4.57.0) (2026-06-30)
+
+
+### Features
+
+* **lens:** add LensInputSelect — a server-search select for lens entities ([#758](https://github.com/globalbrain/sefirot/issues/758)) ([39d5a75](https://github.com/globalbrain/sefirot/commit/39d5a7577135ba8cc44af8e76255cdab4ca2b797))
+
 # [4.56.0](https://github.com/globalbrain/sefirot/compare/v4.55.0...v4.56.0) (2026-06-30)
 
 
