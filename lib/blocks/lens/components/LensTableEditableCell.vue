@@ -10,6 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { day } from '../../../support/Day'
+import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -159,10 +160,7 @@ function start() {
   inline?.start(myKey.value)
   nextTick(() => {
     update()
-    const el = editorEl.value?.querySelector(
-      'input, textarea, [contenteditable], [tabindex]'
-    ) as HTMLElement | null
-    el?.focus()
+    focusFirstEditable(editorEl.value)
   })
 }
 
@@ -218,28 +216,7 @@ async function apply() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
-    event.preventDefault()
-    cancel()
-    return
-  }
-  // Enter saves only from a plain text-like input. A textarea inserts a
-  // newline, and controls that handle Enter themselves (e.g. a dropdown that
-  // opens its menu on Enter) must keep it — otherwise a keyboard user submits
-  // the old value instead of choosing an option.
-  if (event.key === 'Enter' && isTextLikeInput(event.target)) {
-    event.preventDefault()
-    apply()
-  }
-}
-
-function isTextLikeInput(target: EventTarget | null): boolean {
-  const el = target as HTMLElement | null
-  if (!el || el.tagName !== 'INPUT') {
-    return false
-  }
-  const type = (el as HTMLInputElement).type
-  return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
+  dispatchEditorKeydown(event, { cancel, submit: apply })
 }
 </script>
 

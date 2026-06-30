@@ -273,6 +273,15 @@ export abstract class Field<T extends FieldData> {
 
   /**
    * Returns the form input component for the field.
+   *
+   * Several field types currently `throw new Error('Not implemented.')` here —
+   * they're shown read-only and have no inline/sheet editor yet. When making one
+   * editable, mind the inline editor's keyboard handling: if the input is a
+   * composite control with its own nested text input (e.g. a dropdown search
+   * filter), that nested input must keep Enter/Escape from bubbling to the
+   * editor (see `SDropdownSectionFilter` and `support/Dom`'s
+   * `dispatchEditorKeydown`), or typing a value and pressing Enter would
+   * submit/cancel the whole editor.
    */
   abstract formInputComponent(): any
 

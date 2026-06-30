@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
+import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
@@ -90,11 +91,17 @@ const { validation, validate, reset } = useValidation(
   () => ({ input: props.field.generateValidationRules() })
 )
 
+const formEl = ref<HTMLElement | null>(null)
+
 function start() {
   const raw = props.record[props.fieldKey]
   model.value = props.field.payloadToInput(raw ?? props.field.inputEmptyValue())
   reset()
   editing.value = true
+  // Focus the input on open (matching the inline table editor): better UX, and
+  // it routes the editor's keydowns — notably Escape — through the form handler
+  // so Escape cancels the edit rather than closing the sheet.
+  nextTick(() => focusFirstEditable(formEl.value))
 }
 
 function cancel() {
@@ -135,6 +142,12 @@ async function apply() {
   })
   editing.value = false
 }
+
+function onEditorKeydown(event: KeyboardEvent) {
+  // `shield` keeps Escape from reaching the surrounding sheet, which otherwise
+  // closes on it (via SSheet's window-level handler).
+  dispatchEditorKeydown(event, { cancel, submit: apply, shield: true })
+}
 </script>
 
 <template>
@@ -156,7 +169,7 @@ async function apply() {
       </button>
     </div>
 
-    <div v-else class="form">
+    <div v-else ref="formEl" class="form" @keydown="onEditorKeydown">
       <component :is="inputComponent" v-model="model" :validation="validation.input" />
       <div class="actions">
         <SButton size="mini" :label="t.cancel" @click="cancel" />

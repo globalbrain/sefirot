@@ -10,6 +10,7 @@ import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
+import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { useLensInlineEdit } from '../composables/LensInlineEdit'
@@ -198,8 +199,7 @@ function startNames() {
   inline?.start(myKey.value)
   nextTick(() => {
     update()
-    const el = editorEl.value?.querySelector('input, textarea, [contenteditable], [tabindex]') as HTMLElement | null
-    el?.focus()
+    focusFirstEditable(editorEl.value)
   })
 }
 
@@ -246,10 +246,7 @@ async function applyNames() {
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape') {
-    event.preventDefault()
-    cancelNames()
-  }
+  dispatchEditorKeydown(event, { cancel: cancelNames, submit: applyNames })
 }
 </script>
 
