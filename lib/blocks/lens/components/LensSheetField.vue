@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
@@ -91,11 +91,22 @@ const { validation, validate, reset } = useValidation(
   () => ({ input: props.field.generateValidationRules() })
 )
 
+const formEl = ref<HTMLElement | null>(null)
+
 function start() {
   const raw = props.record[props.fieldKey]
   model.value = props.field.payloadToInput(raw ?? props.field.inputEmptyValue())
   reset()
   editing.value = true
+  // Focus the input on open (matching the inline table editor): better UX, and
+  // it routes the editor's keydowns — notably Escape — through the form handler
+  // so Escape cancels the edit rather than closing the sheet.
+  nextTick(() => {
+    const el = formEl.value?.querySelector(
+      'input, textarea, [contenteditable], [tabindex]'
+    ) as HTMLElement | null
+    el?.focus()
+  })
 }
 
 function cancel() {
@@ -177,7 +188,7 @@ function onEditorKeydown(event: KeyboardEvent) {
       </button>
     </div>
 
-    <div v-else class="form" @keydown="onEditorKeydown">
+    <div v-else ref="formEl" class="form" @keydown="onEditorKeydown">
       <component :is="inputComponent" v-model="model" :validation="validation.input" />
       <div class="actions">
         <SButton size="mini" :label="t.cancel" @click="cancel" />
