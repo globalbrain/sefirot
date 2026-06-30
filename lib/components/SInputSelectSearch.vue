@@ -155,6 +155,14 @@ watch(query, (q) => {
     return
   }
   cancelPendingFetch()
+  // Supersede any in-flight fetch right away — not only once the timer fires. A
+  // previous query's request that resolves during the debounce window would
+  // otherwise still pass runFetch's `seq === fetchSeq` check and replace the
+  // options (and clear loading) for a query the input has already moved past.
+  // Bumping the token invalidates it; keep `loading` on so the pending search
+  // stays indicated until the new fetch resolves.
+  fetchSeq++
+  loading.value = true
   debounceTimer = setTimeout(() => {
     debounceTimer = undefined
     runFetch(q)
@@ -175,11 +183,12 @@ function onOpen() {
 }
 
 watch(isOpen, (value) => {
-  // Reset the query and drop any pending refetch when the dropdown closes, so the
-  // next open starts fresh.
+  // Reset the query, drop any pending refetch, and clear the loading flag when the
+  // dropdown closes, so the next open starts fresh.
   if (!value) {
     cancelPendingFetch()
     query.value = ''
+    loading.value = false
   }
 })
 
@@ -318,14 +327,15 @@ function focusNext(event: any): void {
         <div class="dropdown-content">
           <div class="search">
             <!-- Keep Enter inside the search field: it drives the dropdown and
-                 must not bubble to an enclosing form as a submit. ArrowDown moves
+                 must neither bubble to an enclosing form (`.stop`) nor trigger the
+                 browser's implicit form submission (`.prevent`). ArrowDown moves
                  focus into the option list. -->
             <input
               ref="input"
               v-model="query"
               class="search-input"
               :placeholder="t.ph"
-              @keydown.enter.stop
+              @keydown.enter.stop.prevent
               @keydown.down.prevent
               @keyup.down.prevent="focusFirstOption"
             >
@@ -339,6 +349,7 @@ function focusNext(event: any): void {
               <button
                 class="button"
                 :class="{ active: isActive(option.value) }"
+                type="button"
                 :disabled="option.disabled"
                 tabindex="0"
                 @keyup.up.prevent="focusPrev"
