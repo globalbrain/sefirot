@@ -11,6 +11,7 @@ import { usePower } from '../../../composables/Power'
 import { useValidation } from '../../../composables/Validation'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { type FieldData } from '../FieldData'
+import { type LensCreateExtension } from '../LensCreateExtension'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
 import { extractServerErrors, extractServerMessage } from '../validation/ServerErrors'
@@ -177,6 +178,19 @@ watch(
   { immediate: true }
 )
 
+// Create-form extensions registered by sheet slots (`#before` / `#after`) — a
+// page's custom inputs that aren't Lens fields (e.g. social links written
+// server-side alongside the record). On submit each is run to validate its own
+// inputs and contribute extra keys to the create payload. Registered on mount and
+// disposed on unmount; the create slot content unmounts with the sheet, so a
+// component-lifecycle cleanup keeps this empty between creates.
+const createExtensions = new Set<LensCreateExtension>()
+
+function registerCreateExtension(extension: LensCreateExtension): () => void {
+  createExtensions.add(extension)
+  return () => { createExtensions.delete(extension) }
+}
+
 async function onCreate() {
   // Guard re-entry: set `saving` before the first await so a fast double-click on
   // Create can't start a second submission (and create a duplicate record) while
@@ -197,12 +211,31 @@ async function onCreate() {
   serverErrors.value = {}
 
   try {
-    if (!(await validate())) {
+    // Validate the built-in fields and every registered slot extension, running
+    // them all even when something already failed, so each section surfaces its
+    // own errors on a single submit rather than one at a time. A valid extension
+    // contributes extra keys to the payload; any failure aborts the create.
+    const fieldsValid = await validate()
+    const contributions: Record<string, any>[] = []
+    let extensionsValid = true
+    for (const extend of createExtensions) {
+      const { valid, values } = await extend()
+      if (valid) {
+        contributions.push(values)
+      } else {
+        extensionsValid = false
+      }
+    }
+    if (!fieldsValid || !extensionsValid) {
       return
     }
     const values: Record<string, any> = {}
     for (const { key, field } of createInputViews.value) {
       values[key] = field.inputToPayload(createModel[key])
+    }
+    // Merge each extension's contribution (e.g. `social_links`) into the payload.
+    for (const extra of contributions) {
+      Object.assign(values, extra)
     }
     // A picked avatar `File` rides `values`; `edit.create` sends the payload
     // multipart when one is present, so the avatar persists with the new record.
@@ -266,9 +299,11 @@ function requestClose() {
 // that hosts the catalog, so it cannot `inject` the edit context (which is
 // provided inside `LensCatalog`, a child of that page). Expose the pieces a
 // slot needs as slot props instead: the resolved record id, a record-bound
-// partial `save`, and the entity key. This keeps the generic sheet free of
-// one-off concerns (avatar upload, social links, linked records) while still
-// letting a page implement them.
+// partial `save`, the entity key, the sheet `mode` (so a slot can render
+// different content for create vs view), and `registerCreateExtension` (so a
+// create-mode slot can contribute extra keys to the create payload). This keeps
+// the generic sheet free of one-off concerns (avatar upload, social links,
+// linked records) while still letting a page implement them.
 
 const resolvedId = computed(() => (props.record && edit ? edit.resolveId(props.record) : null))
 
@@ -293,6 +328,9 @@ const slotProps = computed(() => ({
   record: props.record ?? null,
   id: resolvedId.value,
   entity: props.entity,
+  // The sheet's current mode, so a slot can branch its content (e.g. show
+  // editable inputs only while creating, and a read/edit view otherwise).
+  mode: props.mode,
   // Surfaced so custom editors can disable their save controls until the full
   // record has loaded; `save` also hard-refuses while loading/error as a guard.
   loading: props.loading ?? false,
@@ -301,7 +339,11 @@ const slotProps = computed(() => ({
   // editor can disable its own controls for a rejected row; `save` enforces it
   // regardless, but otherwise the refusal is only visible as a silent no-op.
   canEdit: !!props.record && !!edit?.canEdit(props.record),
-  save: saveRecord
+  save: saveRecord,
+  // Let a create-mode slot register inputs that contribute extra keys to the
+  // create payload (see LensCreateExtension). Stable identity; a no-op in view
+  // mode (a slot only registers while the create form is shown).
+  registerCreateExtension
 }))
 </script>
 
