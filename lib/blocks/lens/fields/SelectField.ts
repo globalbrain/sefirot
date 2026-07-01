@@ -167,11 +167,14 @@ export class SelectField extends Field<SelectFieldData> {
 
   defineDropdownInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
-      return () => h(SInputDropdown, {
+      // `as any`: SInputDropdown is generic, so `h` can't infer `Multiple` from a
+      // runtime boolean (it defaults to `false`, which rejects `multiple`).
+      return () => h(SInputDropdown as any, {
         'size': 'md',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,
+        'multiple': this.data.multiple,
         'options': this.data.options.map((o) => ({
           label: this.labelForOption(o),
           value: o.value

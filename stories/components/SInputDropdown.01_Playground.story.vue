@@ -86,6 +86,7 @@ function initState() {
           />
           <SInputDropdown
             v-model="multiValue"
+            multiple
             :size="state.size"
             :position="state.position === '' ? undefined : state.position"
             label="Multi select"

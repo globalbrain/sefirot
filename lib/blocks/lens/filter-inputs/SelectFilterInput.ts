@@ -86,6 +86,7 @@ export class SelectFilterInput extends FilterInput {
       const options = await this.resolveOptions()
       return this.defineComponent(SInputDropdown, {
         size: 'sm',
+        multiple: this._multiple,
         options
       })
     })
