@@ -1,20 +1,13 @@
-<script
-  setup
-  lang="ts"
-  generic="
-    ValueType extends string | number | boolean = string | number | boolean,
-    Nullable extends boolean = false
-  "
->
+<script setup lang="ts" generic="T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import { type Color, type Size } from '../support/InputBase'
 import SInputBase from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
-export interface Option<ValueType extends string | number | boolean = string | number | boolean> {
+export interface Option<T extends string | number | boolean = string | number | boolean> {
   label: string
-  value: ValueType
+  value: T
   disabled?: boolean
 }
 
@@ -30,11 +23,11 @@ const props = withDefaults(defineProps<{
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
-  options: Option<ValueType>[]
-  nullable?: Nullable
+  options: Option<T>[]
+  nullable?: boolean & Nullable
   disabled?: boolean
-  value?: ValueType | null
-  modelValue?: ValueType | null
+  value?: T | null
+  modelValue?: T | null
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -43,8 +36,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  'update:model-value': [value: ValueType | NullValue]
-  'change': [value: ValueType | NullValue]
+  'update:model-value': [value: T | NullValue]
+  'change': [value: T | NullValue]
 }>()
 
 const _value = computed(() => {
@@ -55,11 +48,11 @@ const _value = computed(() => {
       : null
 })
 
-function isChecked(value: ValueType) {
+function isChecked(value: T) {
   return value === _value.value
 }
 
-function onUpdate(value: ValueType) {
+function onUpdate(value: T) {
   if (value !== _value.value) {
     emit('update:model-value', value)
     return
@@ -70,7 +63,7 @@ function onUpdate(value: ValueType) {
   }
 }
 
-function onChange(value: ValueType) {
+function onChange(value: T) {
   if (value !== _value.value) {
     emit('change', value)
     return

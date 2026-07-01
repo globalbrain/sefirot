@@ -125,4 +125,26 @@ describe('components/SInputRadios', () => {
     assertEmitted(wrapper, 'update:model-value', 1, null)
     assertEmitted(wrapper, 'change', 1, null)
   })
+
+  // `nullable` is a generic-typed prop (`boolean & Nullable`); the intersection is
+  // what preserves Vue's Boolean casting. A bare attribute arrives as '', which must
+  // still be read as `true` — otherwise deselecting silently stops working.
+  it('treats a bare `nullable` attribute as true (Boolean casting)', async () => {
+    const wrapper = mount(SInputRadios, {
+      props: {
+        options: [
+          { label: 'item 001', value: 1 },
+          { label: 'item 002', value: 2 },
+          { label: 'item 003', value: 3 }
+        ],
+        value: 1,
+        nullable: ''
+      } as any
+    })
+
+    await wrapper.find('.SInputRadios .col:nth-child(1) .SInputRadio .input').trigger('click')
+
+    assertEmitted(wrapper, 'update:model-value', 1, null)
+    assertEmitted(wrapper, 'change', 1, null)
+  })
 })
