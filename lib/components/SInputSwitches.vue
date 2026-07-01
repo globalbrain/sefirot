@@ -1,13 +1,13 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = any">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import { type Color, type Size } from '../support/InputBase'
 import SInputBase from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
-export interface Option {
+export interface Option<T = any> {
   label: string
-  value: any
+  value: T
 }
 
 const props = defineProps<{
@@ -20,26 +20,26 @@ const props = defineProps<{
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
-  options: Option[]
+  options: Option<T>[]
   disabled?: boolean
-  modelValue: any[]
+  modelValue: T[]
   hideError?: boolean
   validation?: Validatable
 }>()
 
 const emit = defineEmits<{
-  'update:model-value': [value: any[]]
+  'update:model-value': [value: T[]]
 }>()
 
 const classes = computed(() => [
   props.size ?? 'small'
 ])
 
-function isChecked(value: any): boolean {
+function isChecked(value: T): boolean {
   return props.modelValue.includes(value)
 }
 
-function onChange(value: any): void {
+function onChange(value: T): void {
   const difference = props.modelValue
     .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
