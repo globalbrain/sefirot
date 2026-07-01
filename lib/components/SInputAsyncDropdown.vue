@@ -6,31 +6,11 @@ import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { type Option } from '../support/InputDropdown'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 import SSpinner from './SSpinner.vue'
-
-export type { Color, Size } from './SInputBase.vue'
-
-export type Option = OptionText | OptionAvatar
-
-export interface OptionBase {
-  type?: 'text' | 'avatar'
-  value: any
-  disabled?: boolean
-}
-
-export interface OptionText extends OptionBase {
-  type?: 'text'
-  label: string
-}
-
-export interface OptionAvatar extends OptionBase {
-  type: 'avatar'
-  label: string
-  image?: string | null
-}
 
 export interface Props<T = any, Multiple extends boolean = false> extends BaseProps {
   placeholder?: string
@@ -334,7 +314,7 @@ function focusNext(event: any): void {
 
 <template>
   <SInputBase
-    class="SInputSelectSearch"
+    class="SInputAsyncDropdown"
     :class="classes"
     :size
     :name
@@ -674,8 +654,8 @@ function focusNext(event: any): void {
   color: var(--c-text-2);
 }
 
-.SInputSelectSearch.sm,
-.SInputSelectSearch.mini {
+.SInputAsyncDropdown.sm,
+.SInputAsyncDropdown.mini {
   .box {
     min-height: 32px;
   }
@@ -696,7 +676,7 @@ function focusNext(event: any): void {
   }
 }
 
-.SInputSelectSearch.md {
+.SInputAsyncDropdown.md {
   .box {
     min-height: 36px;
   }
@@ -717,7 +697,7 @@ function focusNext(event: any): void {
   }
 }
 
-.SInputSelectSearch.small {
+.SInputAsyncDropdown.small {
   .box {
     min-height: 40px;
   }
@@ -738,7 +718,7 @@ function focusNext(event: any): void {
   }
 }
 
-.SInputSelectSearch.medium {
+.SInputAsyncDropdown.medium {
   .box {
     min-height: 48px;
   }
@@ -759,7 +739,7 @@ function focusNext(event: any): void {
   }
 }
 
-.SInputSelectSearch.disabled {
+.SInputAsyncDropdown.disabled {
   .box {
     border-color: var(--input-disabled-border-color);
     background-color: var(--input-disabled-bg-color);
@@ -773,7 +753,7 @@ function focusNext(event: any): void {
   }
 }
 
-.SInputSelectSearch.has-error {
+.SInputAsyncDropdown.has-error {
   .box {
     border-color: var(--input-error-border-color);
   }

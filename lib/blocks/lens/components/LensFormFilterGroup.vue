@@ -2,9 +2,9 @@
 import IconPlusCircle from '~icons/ph/plus-circle'
 import IconTrash from '~icons/ph/trash'
 import SButton from '../../../components/SButton.vue'
-import { type Option } from '../../../components/SInputDropdown.vue'
 import SInputSegments from '../../../components/SInputSegments.vue'
 import { useTrans } from '../../../composables/Lang'
+import { type Option } from '../../../support/InputDropdown'
 import { type FieldData } from '../FieldData'
 import LensFormFilterCondition, { type FilterCondition } from './LensFormFilterCondition.vue'
 

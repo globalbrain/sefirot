@@ -1,15 +1,13 @@
 <script setup lang="ts" generic="T, Multiple extends boolean = false">
-import SInputSelectSearch, { type Option } from '../../../components/SInputSelectSearch.vue'
+import SInputAsyncDropdown from '../../../components/SInputAsyncDropdown.vue'
 import { useMutation } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
+import { type Option } from '../../../support/InputDropdown'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
 import { isAuthError } from '../validation/ServerErrors'
 
-export type { Color, Size } from '../../../components/SInputBase.vue'
-export type { Option }
-
 // A lens-backed search-select that works entirely in the consumer's own model
-// type. It searches the server as the user types (via SInputSelectSearch): each
+// type. It searches the server as the user types (via SInputAsyncDropdown): each
 // result row is turned into a model by `toModel`, and each model is rendered as
 // its dropdown/chip option by `toOption`. The v-model is those models — a `T[]`
 // when `multiple`, otherwise `T | null`.
@@ -44,7 +42,7 @@ export interface Props<T = any, Multiple extends boolean = false> {
 
   // Whether multiple models can be selected. Typed `boolean & Multiple` (equal to
   // `Multiple`) so Vue keeps runtime Boolean casting for a bare `multiple` while
-  // `Multiple` still drives the arity-conditional model type. See SInputSelectSearch.
+  // `Multiple` still drives the arity-conditional model type. See SInputAsyncDropdown.
   multiple?: boolean & Multiple
 
   // Build a model from a raw result row.
@@ -91,7 +89,7 @@ async function fetch(query: string): Promise<T[]> {
 </script>
 
 <template>
-  <SInputSelectSearch
+  <SInputAsyncDropdown
     v-model="model"
     :fetch
     :to-option
@@ -100,5 +98,5 @@ async function fetch(query: string): Promise<T[]> {
     v-bind="$attrs"
   >
     <template v-if="$slots.info" #info><slot name="info" /></template>
-  </SInputSelectSearch>
+  </SInputAsyncDropdown>
 </template>

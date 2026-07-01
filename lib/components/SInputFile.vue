@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size }
-
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
+export interface Props extends BaseProps {
   text?: string
   placeholder?: string
   accept?: string
   multiple?: boolean
   tabindex?: -1 | 0 | number
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   value?: File | File[] | null
   modelValue?: File | File[] | null
-  hideError?: boolean
-  validation?: Validatable
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:model-value': [file: File | File[] | null]
@@ -69,6 +58,7 @@ function onChange(e: Event) {
     class="SInputFile"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -77,7 +67,9 @@ function onChange(e: Event) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <input
       ref="input"

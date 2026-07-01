@@ -3,11 +3,11 @@ import IconCaretLeft from '~icons/ph/caret-left-bold'
 import IconCaretRight from '~icons/ph/caret-right-bold'
 import { computed } from 'vue'
 import { useTrans } from '../composables/Lang'
+import { type Align } from '../support/InputText'
 import { format } from '../support/Num'
 import SButton from './SButton.vue'
 
 export type Size = 'xs' | 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type Align = 'left' | 'center' | 'right'
 
 const props = withDefaults(defineProps<{
   size?: Size

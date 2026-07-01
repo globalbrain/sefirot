@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SInputNumber, { type Align, type TextColor } from 'sefirot/components/SInputNumber.vue'
+import SInputNumber from 'sefirot/components/SInputNumber.vue'
+import { type Align, type TextColor } from 'sefirot/support/InputText'
 import { ref } from 'vue'
 
 const title = 'Components / SInputNumber / 01. Playground'

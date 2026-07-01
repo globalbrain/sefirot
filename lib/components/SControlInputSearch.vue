@@ -4,9 +4,10 @@ import { type Component, computed } from 'vue'
 import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
-import SInputText, { type Align, type TextColor } from './SInputText.vue'
+import { type Align, type TextColor } from '../support/InputText'
+import SInputText from './SInputText.vue'
 
-const props = defineProps<{
+export interface Props {
   placeholder?: string
   unitAfter?: Component | string
   textColor?: TextColor | ((value: string | null) => TextColor)
@@ -16,7 +17,9 @@ const props = defineProps<{
   modelValue?: string | null
   displayValue?: string | null
   validation?: Validatable
-}>()
+}
+
+const props = defineProps<Props>()
 
 defineEmits<{
   'update:model-value': [value: string | null]

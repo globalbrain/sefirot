@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Component, type MaybeRef, computed, unref, useSlots } from 'vue'
 import { type Position } from '../composables/Tooltip'
+import { type ColorMode } from '../support/Color'
 import SFragment from './SFragment.vue'
 import SLink from './SLink.vue'
 import SSpinner from './SSpinner.vue'
@@ -20,16 +21,7 @@ export type Size =
 
 export type Type = 'fill' | 'outline' | 'text'
 
-export type Mode =
-  | 'default'
-  | 'mute'
-  | 'neutral'
-  | 'white'
-  | 'black'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
+export type Mode = ColorMode | 'white' | 'black'
 
 export interface Tooltip {
   tag?: Component | string

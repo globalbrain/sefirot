@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { type ColorMode } from '../support/Color'
 import SDescEmpty from './SDescEmpty.vue'
-import SPill, { type Mode } from './SPill.vue'
+import SPill from './SPill.vue'
 
 export interface Pill {
-  mode?: Mode
+  mode?: ColorMode
   label: string
 }
 

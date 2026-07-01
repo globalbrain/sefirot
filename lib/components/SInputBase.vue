@@ -2,6 +2,7 @@
 import IconQuestion from '~icons/ph/question'
 import { type Component, computed, unref, useSlots } from 'vue'
 import { type Validatable } from '../composables/Validation'
+import { type Color, type Size } from '../support/InputBase'
 import STooltip from './STooltip.vue'
 
 export interface Props {
@@ -19,9 +20,6 @@ export interface Props {
   hideError?: boolean
   hideWarning?: boolean
 }
-
-export type Size = 'sm' | 'md' | 'mini' | 'small' | 'medium'
-export type Color = 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<Props>()
 

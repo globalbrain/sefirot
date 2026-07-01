@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import SInputTextarea, { type Size } from 'sefirot/components/SInputTextarea.vue'
+import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { useData } from 'sefirot/composables/Data'
 import { useValidation } from 'sefirot/composables/Validation'
+import { type Size } from 'sefirot/support/InputBase'
 import { maxLength } from 'sefirot/validation/rules'
 
 const title = 'Components / SInputTextarea / 01. Playground'

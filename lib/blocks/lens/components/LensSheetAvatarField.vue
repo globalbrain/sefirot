@@ -8,7 +8,7 @@ import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type AvatarField } from '../fields/AvatarField'
 import { type Field } from '../fields/Field'
-import LensAvatarInput from './LensAvatarInput.vue'
+import LensInputAvatar from './LensInputAvatar.vue'
 
 const props = defineProps<{
   field: Field<FieldData>
@@ -116,7 +116,7 @@ async function onChange(value: File | string | null | undefined) {
     <SDataListItem v-if="editable">
       <template #label>{{ field.label() }}</template>
       <template #value>
-        <LensAvatarInput
+        <LensInputAvatar
           :model-value="model"
           :accept="avatarField.accept()"
           :image-type="avatarField.imageType()"

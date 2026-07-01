@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size }
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
+export interface Props extends BaseProps {
   text?: string
   color?: ActiveColor
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   disabled?: boolean
   value?: boolean
   modelValue?: boolean
-  hideError?: boolean
-  validation?: Validatable
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   value: undefined,
   modelValue: undefined
 })
@@ -64,12 +53,14 @@ function emitChange(): void {
     :label
     :note
     :info
+    :help
     :check-icon
     :check-text
     :check-color
-    :help
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container">
       <div class="input" :class="{ on: _value }" role="button" @click="emitChange">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { type Hms } from '../support/Day'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   placeholder?: Placeholder
   noHour?: boolean
@@ -13,11 +13,7 @@ export interface Props extends BaseProps {
   modelValue?: Value
 }
 
-export interface Value {
-  hour: string | null
-  minute: string | null
-  second: string | null
-}
+export type Value = Hms
 
 export interface Placeholder {
   hour?: string
@@ -136,6 +132,7 @@ function createRequiredTouched(): boolean[] {
     class="SInputHMS"
     :class="[size ?? 'small', { disabled }]"
     :size
+    :name
     :label
     :note
     :info
@@ -143,8 +140,10 @@ function createRequiredTouched(): boolean[] {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container" :class="{ focus: isFocused }">
       <input

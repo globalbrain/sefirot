@@ -2,8 +2,9 @@
 import IconLink from '~icons/ph/link-bold'
 import IconYouTubeLogo from '~icons/ph/youtube-logo-bold'
 import SButton from 'sefirot/components/SButton.vue'
-import SInputTextarea, { type Size } from 'sefirot/components/SInputTextarea.vue'
+import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { useMarkdown } from 'sefirot/composables/Markdown'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputTextarea / 03. Actions'

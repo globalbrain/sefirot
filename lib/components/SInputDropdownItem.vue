@@ -1,34 +1,17 @@
 <script setup lang="ts">
 import IconX from '~icons/ph/x'
+import { type Size } from '../support/InputBase'
+import { type Option } from '../support/InputDropdown'
 import SAvatar from './SAvatar.vue'
-import { type Size } from './SInputBase.vue'
 
-export type { Size }
-
-export type Item = ItemText | ItemAvatar
-
-export interface ItemBase {
-  type?: 'text' | 'avatar'
-  value: any
-}
-
-export interface ItemText extends ItemBase {
-  type?: 'text'
-  label: string
-}
-
-export interface ItemAvatar extends ItemBase {
-  type: 'avatar'
-  label: string
-  image?: string | null
-}
-
-const props = defineProps<{
-  item: Item | Item[]
+export interface Props {
+  item: Option | Option[]
   size: Size
   removable: boolean
   disabled: boolean
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   remove: [value: any]

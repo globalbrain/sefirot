@@ -1,29 +1,17 @@
 <script setup lang="ts">
 import { DatePicker } from 'v-calendar'
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
+import { computed } from 'vue'
 import { type Day, day } from '../support/Day'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size }
-
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props extends BaseProps {
   block?: boolean
   disabled?: boolean
   tabindex?: -1 | 0 | number
   modelValue: Day | null
-  validation?: Validatable
-  hideError?: boolean
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:model-value': [value: Day | null]
@@ -61,8 +49,10 @@ function onBlur() {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container">
       <DatePicker

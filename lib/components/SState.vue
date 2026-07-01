@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { type ColorMode } from '../support/Color'
 
 export type Size = 'mini' | 'small' | 'medium' | 'large'
-export type Mode = 'default' | 'neutral' | 'mute' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{
   as?: string
   size?: Size
-  mode?: Mode
+  mode?: ColorMode
   label: string
 }>()
 

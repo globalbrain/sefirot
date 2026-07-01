@@ -1,7 +1,9 @@
 import { type Component, type MaybeRef, type MaybeRefOrGetter } from 'vue'
 import { type Mode as ButtonMode } from '../components/SButton.vue'
 import { type State as IndicatorState } from '../components/SIndicator.vue'
+import { type ColorMode } from '../support/Color'
 import { type Day } from '../support/Day'
+import { type Align } from '../support/InputText'
 import { type DropdownSection } from './Dropdown'
 import { type Position } from './Tooltip'
 
@@ -85,22 +87,13 @@ export type TableCellType =
   | 'component'
   | 'actions'
 
-export type ColorModes =
-  | 'default'
-  | 'mute'
-  | 'neutral'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'danger'
-
 export interface TableCellBase {
   type: TableCellType
 }
 
 export interface TableCellText<V = any, R = any> extends TableCellBase {
   type: 'text'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   icon?: Component
   value?: string | null
   link?: string | null
@@ -111,7 +104,7 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
 
 export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   type: 'number'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   icon?: Component
   value?: number | null
   separator?: boolean
@@ -139,11 +132,11 @@ export interface TableCellPathSegment {
   onClick?(): void
 }
 
-export type TableCellValueColor = ColorModes | 'soft'
+export type TableCellValueColor = ColorMode | 'soft'
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   value?: Day | null
   format?: string
   color?: 'neutral' | 'soft' | 'mute'
@@ -155,7 +148,7 @@ export interface TableCellPill extends TableCellBase {
   color?: TableCellPillColor
 }
 
-export type TableCellPillColor = ColorModes
+export type TableCellPillColor = ColorMode
 
 export interface TableCellPills extends TableCellBase {
   type: 'pills'
@@ -207,7 +200,7 @@ export interface TableCellComponent extends TableCellBase {
 export interface TableCellState extends TableCellBase {
   type: 'state'
   label: string
-  mode?: ColorModes
+  mode?: ColorMode
 }
 
 export interface TableCellIndicator extends TableCellBase {

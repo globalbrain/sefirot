@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SState, { type Mode, type Size } from 'sefirot/components/SState.vue'
+import SState, { type Size } from 'sefirot/components/SState.vue'
+import { type ColorMode } from 'sefirot/support/Color'
 
 const title = 'Components / SState / 01. Playground'
 const docs = '/components/state'
@@ -11,7 +12,7 @@ function initState() {
     label: 'State'
   } satisfies {
     size: Size
-    mode: Mode
+    mode: ColorMode
     label: string
   }
 }

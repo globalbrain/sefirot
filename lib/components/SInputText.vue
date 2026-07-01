@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
+import { type Align, type TextColor } from '../support/InputText'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   type?: string
   placeholder?: string
@@ -15,9 +15,6 @@ export interface Props extends BaseProps {
   modelValue: string | null
   displayValue?: string | null
 }
-
-export type Align = 'left' | 'center' | 'right'
-export type TextColor = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<Props>()
 

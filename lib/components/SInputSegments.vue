@@ -1,36 +1,23 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
-import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
+import { computed } from 'vue'
+import { type ColorMode } from '../support/Color'
+import { type Option as BaseOption } from '../support/InputOption'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
+import SInputSegmentsOption from './SInputSegmentsOption.vue'
 
-export type { Color, Size }
-
-export interface Option<T extends string | number | boolean> {
-  label: string
-  value: T
-  mode?: Mode
-  disabled?: boolean
+export interface Option<T extends string | number | boolean> extends BaseOption<T> {
+  mode?: ColorMode
 }
 
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props<T extends string | number | boolean> extends BaseProps {
   options: Option<T>[]
   block?: boolean
   disabled?: boolean
   value?: T
   modelValue?: T
-  validation?: Validatable
-  hideError?: boolean
-}>()
+}
+
+const props = defineProps<Props<T>>()
 
 const emit = defineEmits<{
   'update:model-value': [value: T]
@@ -66,8 +53,10 @@ function onSelect(value: T) {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box">
       <SInputSegmentsOption

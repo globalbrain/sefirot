@@ -1,28 +1,17 @@
 <script setup lang="ts">
 import IconCheck from '~icons/ph/check-bold'
 import IconMinus from '~icons/ph/minus-bold'
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size }
-
-const props = withDefaults(defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props extends BaseProps {
   text?: string
   disabled?: boolean
   value?: boolean | 'indeterminate'
   modelValue?: boolean | 'indeterminate'
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   value: undefined,
   modelValue: undefined
 })
@@ -62,6 +51,7 @@ function onClick() {
     class="SInputCheckbox"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -70,7 +60,9 @@ function onClick() {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div class="container">
       <div

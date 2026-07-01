@@ -1,43 +1,24 @@
-<script setup lang="ts">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+<script setup lang="ts" generic="T = any">
+import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
-export type { Color, Size }
-
-export type Value = any
-
-export interface Option {
-  label: string
-  value: Value
-  disabled?: boolean
-}
-
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option[]
+export interface Props<T = any> extends BaseProps {
+  options: Option<T>[]
   nullable?: boolean
   disabled?: boolean
-  value?: Value[]
-  modelValue?: Value[]
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+  value?: T[]
+  modelValue?: T[]
+}
+
+const props = withDefaults(defineProps<Props<T>>(), {
   nullable: true
 })
 
 const emit = defineEmits<{
-  'update:model-value': [value: Value[]]
-  'change': [value: Value[]]
+  'update:model-value': [value: T[]]
+  'change': [value: T[]]
 }>()
 
 const _value = computed(() => {
@@ -48,11 +29,11 @@ const _value = computed(() => {
       : []
 })
 
-function isChecked(value: Value): boolean {
+function isChecked(value: T): boolean {
   return _value.value.includes(value)
 }
 
-function onChange(value: Value): void {
+function onChange(value: T): void {
   const distinct = _value.value
     .filter((v) => v !== value)
     .concat(_value.value.includes(value) ? [] : [value])
@@ -80,7 +61,9 @@ function onChange(value: Value): void {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div class="container">
       <div class="row">

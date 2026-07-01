@@ -1,20 +1,18 @@
 <script setup lang="ts" generic="T extends ModelType = 'file'">
 import { type ValidationRuleWithParams } from '@vuelidate/core'
 import { useDropZone } from '@vueuse/core'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useTrans } from '../composables/Lang'
-import { type Validatable } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton, { type Mode as ButtonMode } from './SButton.vue'
+import { type FileObject } from '../support/InputFileUpload'
+import SButton from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
-import { type State as IndicatorState } from './SIndicator.vue'
-import SInputBase, { type Color } from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputFileUploadItem from './SInputFileUploadItem.vue'
 import STrans from './STrans.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type { Color }
 
 export type ModelType = 'file' | 'object'
 
@@ -26,44 +24,20 @@ export type ModelType = 'file' | 'object'
  */
 export type ModelValue<T extends ModelType> = T extends 'file' ? File | string : FileObject
 
-export interface FileObject {
-  file: File
-  indicatorState?: IndicatorState | null
-  canRemove?: boolean
-  action?: Action
-  errorMessage?: string | null
-}
-
-export interface Action {
-  mode?: ButtonMode
-  icon?: Component
-  leadIcon?: Component
-  trailIcon?: Component
-  label?: string
-  onClick(): void
-}
-
-const props = withDefaults(defineProps<{
+export interface Props<T extends ModelType = 'file'> extends BaseProps {
   size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
   text?: string
   placeholder?: string
   emptyText?: string
   accept?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   droppable?: boolean
   value?: ModelValue<T>[]
   modelType?: T
   modelValue?: ModelValue<T>[]
   rules?: Record<string, ValidationRuleWithParams>
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props<T>>(), {
   modelType: 'file' as any // `ModelType` doesn't work so stubbing it.
 })
 
@@ -171,6 +145,8 @@ function toFileObjects(files: File[]) {
   <SInputBase
     class="SInputFileUpload"
     :class="classes"
+    :size
+    :name
     :label
     :note
     :info
@@ -179,7 +155,9 @@ function toFileObjects(files: File[]) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <template #default="{ hasError }">
       <input

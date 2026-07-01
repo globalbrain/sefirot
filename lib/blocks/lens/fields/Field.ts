@@ -50,9 +50,11 @@ export abstract class Field<T extends FieldData> {
    * on the current app language.
    */
   placeholder(): string | null {
-    return this.ctx.lang === 'ja'
-      ? (this.data as any).placeholderJa ?? null
-      : (this.data as any).placeholderEn ?? null
+    return this.ctx.lang === 'ja' && 'placeholderJa' in this.data
+      ? this.data.placeholderJa ?? null
+      : this.ctx.lang === 'en' && 'placeholderEn' in this.data
+        ? this.data.placeholderEn ?? null
+        : null
   }
 
   /**
@@ -60,9 +62,11 @@ export abstract class Field<T extends FieldData> {
    * on the current app language.
    */
   help(): string | null {
-    return this.ctx.lang === 'ja'
-      ? (this.data as any).helpJa ?? null
-      : (this.data as any).helpEn ?? null
+    return this.ctx.lang === 'ja' && 'helpJa' in this.data
+      ? this.data.helpJa ?? null
+      : this.ctx.lang === 'en' && 'helpEn' in this.data
+        ? this.data.helpEn ?? null
+        : null
   }
 
   /**

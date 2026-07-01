@@ -2,34 +2,20 @@
 import IconFileText from '~icons/ph/file-text'
 import IconTrash from '~icons/ph/trash'
 import { type ValidationRuleWithParams } from '@vuelidate/core'
-import { type Component, computed, watch } from 'vue'
+import { computed, watch } from 'vue'
 import { useValidation } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton, { type Mode as ButtonMode } from './SButton.vue'
+import { type Action, type FileObject } from '../support/InputFileUpload'
+import SButton from './SButton.vue'
 import SCardBlock from './SCardBlock.vue'
 import SIndicator, { type State as IndicatorState } from './SIndicator.vue'
 
-export interface FileObject {
-  file: File
-  indicatorState?: IndicatorState | null
-  canRemove?: boolean
-  action?: Action | null
-  errorMessage?: string | null
-}
-
-export interface Action {
-  mode?: ButtonMode
-  icon?: Component
-  leadIcon?: Component
-  trailIcon?: Component
-  label?: string
-  onClick(): void
-}
-
-const props = defineProps<{
+export interface Props {
   file: File | FileObject | string
   rules?: Record<string, ValidationRuleWithParams>
-}>()
+}
+
+const props = defineProps<Props>()
 
 defineEmits<{
   remove: []

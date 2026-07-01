@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import SInputTextarea, { type Size } from 'sefirot/components/SInputTextarea.vue'
+import SInputTextarea from 'sefirot/components/SInputTextarea.vue'
 import { useMarkdown } from 'sefirot/composables/Markdown'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputTextarea / 02. Preview'

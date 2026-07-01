@@ -1,46 +1,30 @@
-<script setup lang="ts">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+<script setup lang="ts" generic="T = any">
+import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
-export type { Color, Size }
-
-export interface Option {
-  label: string
-  value: any
+export interface Props<T = any> extends BaseProps {
+  options: Option<T>[]
+  disabled?: boolean
+  modelValue: T[]
 }
 
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option[]
-  disabled?: boolean
-  modelValue: any[]
-  hideError?: boolean
-  validation?: Validatable
-}>()
+const props = defineProps<Props<T>>()
 
 const emit = defineEmits<{
-  'update:model-value': [value: any[]]
+  'update:model-value': [value: T[]]
 }>()
 
 const classes = computed(() => [
   props.size ?? 'small'
 ])
 
-function isChecked(value: any): boolean {
+function isChecked(value: T): boolean {
   return props.modelValue.includes(value)
 }
 
-function onChange(value: any): void {
+function onChange(value: T): void {
   const difference = props.modelValue
     .filter((v) => v !== value)
     .concat(props.modelValue.includes(value) ? [] : [value])
@@ -62,8 +46,10 @@ function onChange(value: any): void {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container">
       <div class="row">
@@ -71,7 +57,7 @@ function onChange(value: any): void {
           <SInputSwitch
             size="sm"
             :text="option.label"
-            :disabled
+            :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="onChange(option.value)"
           />

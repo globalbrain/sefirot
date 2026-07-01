@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputFile, { type Size } from 'sefirot/components/SInputFile.vue'
+import SInputFile from 'sefirot/components/SInputFile.vue'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputFile / 01. Playground'

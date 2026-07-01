@@ -1,24 +1,15 @@
 <script setup lang="ts">
 import IconImage from '~icons/ph/image-bold'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
-import { type Validatable } from '../composables/Validation'
 import SButton from './SButton.vue'
-import SInputBase, { type Color } from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type { Color }
 export type ImageType = 'rectangle' | 'circle'
 
-const props = withDefaults(defineProps<{
+export interface Props extends BaseProps {
   size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   imageType?: ImageType
   imageWidth?: string
   imageAspectRatio?: string
@@ -29,9 +20,9 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   value?: File | string | null
   modelValue?: File | string | null
-  hideError?: boolean
-  validation?: Validatable
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   size: 'small',
   imageType: 'rectangle',
   imageWidth: '96px',
@@ -91,14 +82,18 @@ function onFileDelete() {
   <SInputBase
     class="SInputImage"
     :class="[size]"
+    :size
+    :name
     :label
     :note
     :info
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <template #default>
       <input

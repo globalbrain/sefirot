@@ -1,51 +1,27 @@
-<script
-  setup
-  lang="ts"
-  generic="
-    ValueType extends string | number | boolean = string | number | boolean,
-    Nullable extends boolean = false
-  "
->
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+<script setup lang="ts" generic="T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
+import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
-export type { Color, Size }
-
-export interface Option<ValueType extends string | number | boolean = string | number | boolean> {
-  label: string
-  value: ValueType
+export interface Props<T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false> extends BaseProps {
+  options: Option<T>[]
+  nullable?: boolean & Nullable
   disabled?: boolean
+  value?: T | null
+  modelValue?: T | null
 }
 
 type NullValue = Nullable extends true ? null : never
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
-  options: Option<ValueType>[]
-  nullable?: Nullable
-  disabled?: boolean
-  value?: ValueType | null
-  modelValue?: ValueType | null
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+const props = withDefaults(defineProps<Props<T, Nullable>>(), {
   value: undefined,
   modelValue: undefined
 })
 
 const emit = defineEmits<{
-  'update:model-value': [value: ValueType | NullValue]
-  'change': [value: ValueType | NullValue]
+  'update:model-value': [value: T | NullValue]
+  'change': [value: T | NullValue]
 }>()
 
 const _value = computed(() => {
@@ -56,11 +32,11 @@ const _value = computed(() => {
       : null
 })
 
-function isChecked(value: ValueType) {
+function isChecked(value: T) {
   return value === _value.value
 }
 
-function onUpdate(value: ValueType) {
+function onUpdate(value: T) {
   if (value !== _value.value) {
     emit('update:model-value', value)
     return
@@ -71,7 +47,7 @@ function onUpdate(value: ValueType) {
   }
 }
 
-function onChange(value: ValueType) {
+function onChange(value: T) {
   if (value !== _value.value) {
     emit('change', value)
     return
@@ -96,8 +72,10 @@ function onChange(value: ValueType) {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container">
       <div class="row">

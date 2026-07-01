@@ -9,14 +9,16 @@ import {
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
 
-const props = withDefaults(defineProps<{
+export interface Props {
   label?: Component | string
   clickable?: boolean
   dropdown?: DropdownSection[]
   dropdownCaret?: boolean
   dropdownPosition?: 'top' | 'bottom'
   disabled?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   clickable: true,
   dropdown: () => [],
   dropdownCaret: true

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = any">
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
@@ -6,14 +6,14 @@ import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { type Option } from '../support/InputDropdown'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-export type { Color, Size } from './SInputBase.vue'
-export interface Props extends BaseProps {
+export interface Props<T = any> extends BaseProps {
   placeholder?: string
-  options: Option[]
+  options: Option<T>[]
   position?: 'top' | 'bottom'
   noSearch?: boolean
   nullable?: boolean
@@ -21,32 +21,12 @@ export interface Props extends BaseProps {
   disabled?: boolean
 }
 
-export type PrimitiveValue = any
-export type ArrayValue = any[]
-export type OptionValue = any
+const props = defineProps<Props<T>>()
 
-export type Option = OptionText | OptionAvatar
-
-export interface OptionBase {
-  type?: 'text' | 'avatar'
-  value: OptionValue
-  disabled?: boolean
-}
-
-export interface OptionText extends OptionBase {
-  type?: 'text'
-  label: string
-}
-
-export interface OptionAvatar extends OptionBase {
-  type: 'avatar'
-  label: string
-  image?: string | null
-}
-
-const props = defineProps<Props>()
-
-const model = defineModel<PrimitiveValue | ArrayValue>({ required: true })
+// Single- vs multi-select is inferred from the bound model at runtime: an array
+// model selects multiple values, anything else a single value (or `null`) — so no
+// `multiple` prop is needed (unlike SInputAsyncDropdown).
+const model = defineModel<T | T[] | null>({ required: true })
 
 const { t } = useTrans({
   en: {
@@ -78,14 +58,12 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
   onClick: onSelect
 }])
 
-const selected = computed(() => {
+const selected = computed<Option<T> | Option<T>[] | null>(() => {
   if (Array.isArray(model.value)) {
-    return props.options.filter((o) => (model.value as ArrayValue).includes(o.value))
+    return props.options.filter((o) => (model.value as T[]).includes(o.value))
   }
 
-  const item = props.options.find((o) => o.value === model.value)
-
-  return item ?? null
+  return props.options.find((o) => o.value === model.value) ?? null
 })
 
 const hasSelected = computed(() => {
@@ -94,7 +72,7 @@ const hasSelected = computed(() => {
 
 const removable = computed(() => {
   if (Array.isArray(model.value)) {
-    return props.nullable || (selected.value as Option[]).length > 1
+    return !!props.nullable || (selected.value as Option<T>[]).length > 1
   }
 
   return !!props.nullable
@@ -107,20 +85,18 @@ async function onOpen() {
   }
 }
 
-function onSelect(value: OptionValue) {
+function onSelect(value: T) {
   props.validation?.$touch()
 
   if (Array.isArray(model.value)) {
-    const toggled = xor(model.value, [value])
+    const toggled = xor(model.value as T[], [value])
     if (toggled.length !== 0 || props.nullable) {
       model.value = toggled
     }
-  } else {
-    if (value !== model.value) {
-      model.value = value
-    } else if (props.nullable) {
-      model.value = null
-    }
+  } else if (value !== model.value) {
+    model.value = value
+  } else if (props.nullable) {
+    model.value = null
   }
 
   props.closeOnClick && close()
@@ -132,6 +108,7 @@ function onSelect(value: OptionValue) {
     class="SInputDropdown"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -140,7 +117,9 @@ function onSelect(value: OptionValue) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div ref="container" class="container">
       <div

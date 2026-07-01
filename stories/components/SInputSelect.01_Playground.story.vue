@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SInputSelect, { type Size } from 'sefirot/components/SInputSelect.vue'
+import SInputSelect from 'sefirot/components/SInputSelect.vue'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputSelect / 01. Playground'
