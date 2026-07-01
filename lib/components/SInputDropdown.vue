@@ -6,7 +6,7 @@ import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
-import { type Option } from '../support/Option'
+import { type Option } from '../support/InputDropdown'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
@@ -17,7 +17,7 @@ export interface Props<T = any, Multiple extends boolean = false> extends BasePr
   // Whether multiple options can be selected. The model is then an array of the
   // selected values; otherwise a single value or `null`. Typed `boolean & Multiple`
   // (equal to `Multiple`) so Vue keeps runtime Boolean casting while `Multiple`
-  // drives the arity-conditional model type — see SInputSelectSearch.
+  // drives the arity-conditional model type — see SInputAsyncDropdown.
   multiple?: boolean & Multiple
   position?: 'top' | 'bottom'
   noSearch?: boolean

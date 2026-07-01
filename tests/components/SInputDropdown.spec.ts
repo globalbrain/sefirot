@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import SInputDropdown from 'sefirot/components/SInputDropdown.vue'
-import { type Option } from 'sefirot/support/Option'
+import { type Option } from 'sefirot/support/InputDropdown'
 
 const options: Option[] = [
   { value: 'a', label: 'Alpha' },

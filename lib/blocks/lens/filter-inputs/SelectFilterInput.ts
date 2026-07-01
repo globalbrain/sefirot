@@ -1,7 +1,7 @@
 import { type ValidationArgs } from '@vuelidate/core'
 import { defineAsyncComponent } from 'vue'
 import SInputDropdown from '../../../components/SInputDropdown.vue'
-import { type Option } from '../../../support/Option'
+import { type Option } from '../../../support/InputDropdown'
 import { required } from '../../../validation/rules'
 import { isAuthError } from '../validation/ServerErrors'
 import { FilterInput } from './FilterInput'

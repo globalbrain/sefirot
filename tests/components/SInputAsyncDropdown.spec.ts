@@ -1,6 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import SInputSelectSearch from 'sefirot/components/SInputSelectSearch.vue'
-import { type Option } from 'sefirot/support/Option'
+import SInputAsyncDropdown from 'sefirot/components/SInputAsyncDropdown.vue'
+import { type Option } from 'sefirot/support/InputDropdown'
 
 interface Foo { id: number; name: string }
 
@@ -20,7 +20,7 @@ const toOption = (foo: any): Option => ({ value: foo.id, label: foo.name })
 // required model + a self-referential update handler) is more trouble than it's
 // worth here — the assertions below exercise the runtime behavior.
 function factory(props: Record<string, unknown>) {
-  const wrapper = mount(SInputSelectSearch, {
+  const wrapper = mount(SInputAsyncDropdown, {
     props: {
       fetch,
       toOption,
@@ -38,7 +38,7 @@ async function open(wrapper: ReturnType<typeof factory>) {
   await flushPromises()
 }
 
-describe('components/SInputSelectSearch', () => {
+describe('components/SInputAsyncDropdown', () => {
   // `multiple` is a generic-typed prop (`boolean & Multiple`); the intersection is
   // what preserves Vue's Boolean casting. A bare attribute arrives as '', which must
   // still be read as `true` — otherwise the control silently falls back to single.

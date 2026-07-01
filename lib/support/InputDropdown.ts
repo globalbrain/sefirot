@@ -1,8 +1,5 @@
-// The option shape shared by the dropdown-style inputs (SInputDropdown,
-// SInputSelectSearch, …) and anything that renders their selection. An option is
-// either a plain text row or an avatar row, identified by its `value`. The value
-// type is generic — inputs keyed by their value (SInputDropdown) parameterize it;
-// others leave it as the default `any`.
+// The option shape (text or avatar row) shared by the dropdown inputs
+// (SInputDropdown, SInputAsyncDropdown). The value type is generic, default `any`.
 
 export type Option<T = any> = OptionText<T> | OptionAvatar<T>
 
