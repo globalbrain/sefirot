@@ -172,7 +172,6 @@ export class SelectField extends Field<SelectFieldData> {
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,
-        'multiple': this.data.multiple,
         'options': this.data.options.map((o) => ({
           label: this.labelForOption(o),
           value: o.value

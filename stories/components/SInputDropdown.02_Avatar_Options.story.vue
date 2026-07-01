@@ -43,7 +43,6 @@ function initState() {
       <Board :title>
         <SInputDropdown
           v-model="value"
-          multiple
           :size="state.size"
           label="Users"
           placeholder="Select users"

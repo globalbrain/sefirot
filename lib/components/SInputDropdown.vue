@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="T, Multiple extends boolean = false">
+<script setup lang="ts" generic="T = any">
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
@@ -11,14 +11,9 @@ import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-export interface Props<T = any, Multiple extends boolean = false> extends BaseProps {
+export interface Props<T = any> extends BaseProps {
   placeholder?: string
   options: Option<T>[]
-  // Whether multiple options can be selected. The model is then an array of the
-  // selected values; otherwise a single value or `null`. Typed `boolean & Multiple`
-  // (equal to `Multiple`) so Vue keeps runtime Boolean casting while `Multiple`
-  // drives the arity-conditional model type — see SInputAsyncDropdown.
-  multiple?: boolean & Multiple
   position?: 'top' | 'bottom'
   noSearch?: boolean
   nullable?: boolean
@@ -26,17 +21,12 @@ export interface Props<T = any, Multiple extends boolean = false> extends BasePr
   disabled?: boolean
 }
 
-const props = defineProps<Props<T, Multiple>>()
+const props = defineProps<Props<T>>()
 
-// The selected value(s): an array when `multiple`, otherwise a single value or
-// `null`. Values are the consumer's option values (`Option.value`).
-const model = defineModel<Multiple extends true ? T[] : T | null>({ required: true })
-
-// Write the model regardless of arity; the public type is arity-conditional, so
-// the concrete array / single value is cast at this single boundary.
-function commit(value: T[] | T | null): void {
-  model.value = value as typeof model.value
-}
+// Single- vs multi-select is inferred from the bound model at runtime: an array
+// model selects multiple values, anything else a single value (or `null`) — so no
+// `multiple` prop is needed (unlike SInputAsyncDropdown).
+const model = defineModel<T | T[] | null>({ required: true })
 
 const { t } = useTrans({
   en: {
@@ -69,9 +59,8 @@ const dropdownOptions = computed<DropdownSectionFilter[]>(() => [{
 }])
 
 const selected = computed<Option<T> | Option<T>[] | null>(() => {
-  if (props.multiple) {
-    const values = (model.value as T[] | null) ?? []
-    return props.options.filter((o) => values.includes(o.value))
+  if (Array.isArray(model.value)) {
+    return props.options.filter((o) => (model.value as T[]).includes(o.value))
   }
 
   return props.options.find((o) => o.value === model.value) ?? null
@@ -82,8 +71,8 @@ const hasSelected = computed(() => {
 })
 
 const removable = computed(() => {
-  if (props.multiple) {
-    return props.nullable || (selected.value as Option<T>[]).length > 1
+  if (Array.isArray(model.value)) {
+    return !!props.nullable || (selected.value as Option<T>[]).length > 1
   }
 
   return !!props.nullable
@@ -99,15 +88,15 @@ async function onOpen() {
 function onSelect(value: T) {
   props.validation?.$touch()
 
-  if (props.multiple) {
-    const toggled = xor((model.value as T[] | null) ?? [], [value])
+  if (Array.isArray(model.value)) {
+    const toggled = xor(model.value as T[], [value])
     if (toggled.length !== 0 || props.nullable) {
-      commit(toggled)
+      model.value = toggled
     }
   } else if (value !== model.value) {
-    commit(value)
+    model.value = value
   } else if (props.nullable) {
-    commit(null)
+    model.value = null
   }
 
   props.closeOnClick && close()

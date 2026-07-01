@@ -8,19 +8,18 @@ const options: Option[] = [
 ]
 
 describe('components/SInputDropdown', () => {
-  // `multiple` is a generic-typed prop (`boolean & Multiple`); the intersection is
-  // what preserves Vue's Boolean casting. A bare attribute arrives as '', which must
-  // still be read as `true` — otherwise the control silently falls back to single.
-  it('casts a bare `multiple` attribute to true and renders the selection as a chip list', () => {
+  // Single vs multi is inferred from the model at runtime: an array model selects
+  // multiple (rendered as a chip list), anything else a single value.
+  it('treats an array model as multi-select (chip list)', () => {
     const wrapper = mount(SInputDropdown, {
-      props: { options, modelValue: ['a', 'b'], multiple: '' } as any
+      props: { options, modelValue: ['a', 'b'] } as any
     })
 
     expect(wrapper.find('.SInputDropdownItem .many').exists()).toBe(true)
     expect(wrapper.find('.SInputDropdownItem .one').exists()).toBe(false)
   })
 
-  it('defaults to single select and renders a single chip', () => {
+  it('treats a non-array model as single-select', () => {
     const wrapper = mount(SInputDropdown, {
       props: { options, modelValue: 'a' } as any
     })
