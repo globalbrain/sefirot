@@ -1,21 +1,15 @@
-// The option shape (text or avatar row) shared by the dropdown inputs
-// (SInputDropdown, SInputAsyncDropdown). The value type is generic, default `any`.
+// The dropdown option (text or avatar row) shared by SInputDropdown and
+// SInputAsyncDropdown — the base choice option (InputOption) plus a render type.
+
+import { type Option as BaseOption } from './InputOption'
 
 export type Option<T = any> = OptionText<T> | OptionAvatar<T>
 
-export interface OptionBase<T = any> {
-  type?: 'text' | 'avatar'
-  value: T
-  disabled?: boolean
-}
-
-export interface OptionText<T = any> extends OptionBase<T> {
+export interface OptionText<T = any> extends BaseOption<T> {
   type?: 'text'
-  label: string
 }
 
-export interface OptionAvatar<T = any> extends OptionBase<T> {
+export interface OptionAvatar<T = any> extends BaseOption<T> {
   type: 'avatar'
-  label: string
   image?: string | null
 }
