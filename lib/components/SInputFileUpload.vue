@@ -5,16 +5,16 @@ import { type Component, computed, ref } from 'vue'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import SButton, { type Mode as ButtonMode } from './SButton.vue'
+import { type Color } from '../support/InputBase'
+import { type FileObject } from '../support/InputFileUpload'
+import SButton from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
-import { type State as IndicatorState } from './SIndicator.vue'
-import SInputBase, { type Color } from './SInputBase.vue'
+import SInputBase from './SInputBase.vue'
 import SInputFileUploadItem from './SInputFileUploadItem.vue'
 import STrans from './STrans.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type { Color }
 
 export type ModelType = 'file' | 'object'
 
@@ -25,23 +25,6 @@ export type ModelType = 'file' | 'object'
  * mode wraps a `File` with display metadata.
  */
 export type ModelValue<T extends ModelType> = T extends 'file' ? File | string : FileObject
-
-export interface FileObject {
-  file: File
-  indicatorState?: IndicatorState | null
-  canRemove?: boolean
-  action?: Action
-  errorMessage?: string | null
-}
-
-export interface Action {
-  mode?: ButtonMode
-  icon?: Component
-  leadIcon?: Component
-  trailIcon?: Component
-  label?: string
-  onClick(): void
-}
 
 const props = withDefaults(defineProps<{
   size?: Size

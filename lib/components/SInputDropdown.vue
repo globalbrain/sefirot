@@ -11,7 +11,6 @@ import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 
-export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   placeholder?: string
   options: Option[]

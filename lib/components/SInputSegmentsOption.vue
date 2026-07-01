@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { type Size } from './SInputBase.vue'
+import { type Size } from '../support/InputBase'
 
-export type { Size }
 export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 const props = defineProps<{

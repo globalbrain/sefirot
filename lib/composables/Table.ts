@@ -2,6 +2,7 @@ import { type Component, type MaybeRef, type MaybeRefOrGetter } from 'vue'
 import { type Mode as ButtonMode } from '../components/SButton.vue'
 import { type State as IndicatorState } from '../components/SIndicator.vue'
 import { type Day } from '../support/Day'
+import { type Align } from '../support/InputText'
 import { type DropdownSection } from './Dropdown'
 import { type Position } from './Tooltip'
 
@@ -100,7 +101,7 @@ export interface TableCellBase {
 
 export interface TableCellText<V = any, R = any> extends TableCellBase {
   type: 'text'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   icon?: Component
   value?: string | null
   link?: string | null
@@ -111,7 +112,7 @@ export interface TableCellText<V = any, R = any> extends TableCellBase {
 
 export interface TableCellNumber<V = any, R = any> extends TableCellBase {
   type: 'number'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   icon?: Component
   value?: number | null
   separator?: boolean
@@ -143,7 +144,7 @@ export type TableCellValueColor = ColorModes | 'soft'
 
 export interface TableCellDay extends TableCellBase {
   type: 'day'
-  align?: 'left' | 'center' | 'right'
+  align?: Align
   value?: Day | null
   format?: string
   color?: 'neutral' | 'soft' | 'mute'

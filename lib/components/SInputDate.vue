@@ -3,9 +3,8 @@ import { DatePicker } from 'v-calendar'
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import { type Day, day } from '../support/Day'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
-
-export type { Color, Size }
+import { type Color, type Size } from '../support/InputBase'
+import SInputBase from './SInputBase.vue'
 
 const props = defineProps<{
   size?: Size

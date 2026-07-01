@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputSegments, { type Size } from 'sefirot/components/SInputSegments.vue'
+import SInputSegments from 'sefirot/components/SInputSegments.vue'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputSegments / 01. Playground'

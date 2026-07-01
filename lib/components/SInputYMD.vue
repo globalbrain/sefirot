@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+import { type Ymd } from '../support/Day'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export type { Color, Size } from './SInputBase.vue'
 export interface Props extends BaseProps {
   placeholder?: Placeholder
   noYear?: boolean
@@ -14,11 +14,7 @@ export interface Props extends BaseProps {
   modelValue?: Value
 }
 
-export interface Value {
-  year: number | null
-  month: number | null
-  date: number | null
-}
+export type Value = Ymd
 
 export type ValueType = 'year' | 'month' | 'date'
 

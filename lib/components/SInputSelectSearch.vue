@@ -12,8 +12,6 @@ import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 import SSpinner from './SSpinner.vue'
 
-export type { Color, Size } from './SInputBase.vue'
-
 export interface Props<T = any, Multiple extends boolean = false> extends BaseProps {
   placeholder?: string
   // Fetch the items matching `query` from the server. Called when the dropdown

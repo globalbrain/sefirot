@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputDate, { type Size } from 'sefirot/components/SInputDate.vue'
+import SInputDate from 'sefirot/components/SInputDate.vue'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDate / 01. Playground'

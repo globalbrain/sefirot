@@ -4,7 +4,8 @@ import { type Component, computed } from 'vue'
 import { useControlSize } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
-import SInputText, { type Align, type TextColor } from './SInputText.vue'
+import { type Align, type TextColor } from '../support/InputText'
+import SInputText from './SInputText.vue'
 
 const props = defineProps<{
   placeholder?: string

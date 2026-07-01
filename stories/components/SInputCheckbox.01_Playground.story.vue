@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputCheckbox, { type Size } from 'sefirot/components/SInputCheckbox.vue'
+import SInputCheckbox from 'sefirot/components/SInputCheckbox.vue'
+import { type Size } from 'sefirot/support/InputBase'
 import { ref } from 'vue'
 
 const title = 'Components / SInputCheckbox / 01. Playground'

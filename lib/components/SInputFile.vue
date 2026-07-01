@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { type Component, computed, ref } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
-
-export type { Color, Size }
+import { type Color, type Size } from '../support/InputBase'
+import SInputBase from './SInputBase.vue'
 
 const props = defineProps<{
   size?: Size

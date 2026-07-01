@@ -3,11 +3,11 @@ import IconImage from '~icons/ph/image-bold'
 import { type Component, computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
 import { type Validatable } from '../composables/Validation'
+import { type Color } from '../support/InputBase'
 import SButton from './SButton.vue'
-import SInputBase, { type Color } from './SInputBase.vue'
+import SInputBase from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
-export type { Color }
 export type ImageType = 'rectangle' | 'circle'
 
 const props = withDefaults(defineProps<{

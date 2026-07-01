@@ -6,8 +6,6 @@ import { type Option } from '../../../support/Option'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
 import { isAuthError } from '../validation/ServerErrors'
 
-export type { Color, Size } from '../../../components/SInputBase.vue'
-
 // A lens-backed search-select that works entirely in the consumer's own model
 // type. It searches the server as the user types (via SInputSelectSearch): each
 // result row is turned into a model by `toModel`, and each model is rendered as

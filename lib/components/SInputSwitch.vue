@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import { type Color, type Size } from '../support/InputBase'
+import SInputBase from './SInputBase.vue'
 
-export type { Color, Size }
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 
 const props = withDefaults(defineProps<{

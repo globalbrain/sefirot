@@ -4,8 +4,6 @@ import SDivider from './SDivider.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSegments from './SInputSegments.vue'
 
-export type { Color, Size } from './SInputBase.vue'
-
 export interface Props extends BaseProps {
   placeholder?: string
   disabled?: boolean

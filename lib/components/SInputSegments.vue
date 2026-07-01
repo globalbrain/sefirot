@@ -1,10 +1,9 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
+import { type Color, type Size } from '../support/InputBase'
+import SInputBase from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
-
-export type { Color, Size }
 
 export interface Option<T extends string | number | boolean> {
   label: string

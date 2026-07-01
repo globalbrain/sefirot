@@ -3,9 +3,8 @@ import IconCheck from '~icons/ph/check-bold'
 import IconMinus from '~icons/ph/minus-bold'
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
-import SInputBase, { type Color, type Size } from './SInputBase.vue'
-
-export type { Color, Size }
+import { type Color, type Size } from '../support/InputBase'
+import SInputBase from './SInputBase.vue'
 
 const props = withDefaults(defineProps<{
   size?: Size
