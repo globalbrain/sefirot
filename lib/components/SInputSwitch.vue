@@ -53,13 +53,13 @@ function emitChange(): void {
     :label
     :note
     :info
+    :help
     :check-icon
     :check-text
     :check-color
-    :help
-    :hide-error
     :validation
     :warning
+    :hide-error
     :hide-warning
   >
     <div class="container">

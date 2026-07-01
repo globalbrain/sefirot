@@ -90,9 +90,9 @@ function onFileDelete() {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
     :warning
+    :hide-error
     :hide-warning
   >
     <template #default>
