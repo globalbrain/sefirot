@@ -42,8 +42,10 @@ export interface Props<T = any, Multiple extends boolean = false> {
   // negotiates language from the request headers.
   settings?: LensQuerySettings
 
-  // Whether multiple models can be selected.
-  multiple?: Multiple
+  // Whether multiple models can be selected. Typed `boolean & Multiple` (equal to
+  // `Multiple`) so Vue keeps runtime Boolean casting for a bare `multiple` while
+  // `Multiple` still drives the arity-conditional model type. See SInputSelectSearch.
+  multiple?: boolean & Multiple
 
   // Build a model from a raw result row.
   toModel: (row: Record<string, any>) => T

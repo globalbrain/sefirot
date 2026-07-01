@@ -49,8 +49,12 @@ export interface Props<T = any, Multiple extends boolean = false> extends BasePr
   // the app's re-auth flow. By default every rejection is swallowed.
   rethrow?: (error: unknown) => boolean
   // Whether multiple items can be selected. The model is then an array of items;
-  // otherwise it is a single item or `null`.
-  multiple?: Multiple
+  // otherwise it is a single item or `null`. Typed `boolean & Multiple` (equal to
+  // `Multiple`, since it extends `boolean`) rather than a bare `Multiple`: the
+  // intersection keeps Vue's runtime Boolean casting (a bare `multiple` attribute
+  // would otherwise arrive as `''` and read as false), while `Multiple` still
+  // drives the arity-conditional model type.
+  multiple?: boolean & Multiple
   // Whether the (single) value can be cleared, or the (multiple) selection emptied.
   nullable?: boolean
   disabled?: boolean
