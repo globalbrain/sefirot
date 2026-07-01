@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T = any">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
 export interface Option<T = any> {
@@ -11,24 +9,15 @@ export interface Option<T = any> {
   disabled?: boolean
 }
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props<T = any> extends BaseProps {
   options: Option<T>[]
   nullable?: boolean
   disabled?: boolean
   value?: T[]
   modelValue?: T[]
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props<T>>(), {
   nullable: true
 })
 

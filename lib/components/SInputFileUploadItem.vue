@@ -10,10 +10,12 @@ import SButton from './SButton.vue'
 import SCardBlock from './SCardBlock.vue'
 import SIndicator, { type State as IndicatorState } from './SIndicator.vue'
 
-const props = defineProps<{
+export interface Props {
   file: File | FileObject | string
   rules?: Record<string, ValidationRuleWithParams>
-}>()
+}
+
+const props = defineProps<Props>()
 
 defineEmits<{
   remove: []

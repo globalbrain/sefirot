@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
 
 export interface Option<T extends string | number | boolean> {
@@ -12,24 +10,15 @@ export interface Option<T extends string | number | boolean> {
   disabled?: boolean
 }
 
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props<T extends string | number | boolean> extends BaseProps {
   options: Option<T>[]
   block?: boolean
   disabled?: boolean
   value?: T
   modelValue?: T
-  validation?: Validatable
-  hideError?: boolean
-}>()
+}
+
+const props = defineProps<Props<T>>()
 
 const emit = defineEmits<{
   'update:model-value': [value: T]

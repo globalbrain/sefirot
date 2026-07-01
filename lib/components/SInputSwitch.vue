@@ -1,29 +1,18 @@
 <script setup lang="ts">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export type ActiveColor = 'info' | 'success' | 'warning' | 'danger'
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
+export interface Props extends BaseProps {
   text?: string
   color?: ActiveColor
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   disabled?: boolean
   value?: boolean
   modelValue?: boolean
-  hideError?: boolean
-  validation?: Validatable
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   value: undefined,
   modelValue: undefined
 })

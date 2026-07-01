@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
 
 export interface Option<T extends string | number | boolean = string | number | boolean> {
@@ -11,26 +9,17 @@ export interface Option<T extends string | number | boolean = string | number | 
   disabled?: boolean
 }
 
-type NullValue = Nullable extends true ? null : never
-
-const props = withDefaults(defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props<T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false> extends BaseProps {
   options: Option<T>[]
   nullable?: boolean & Nullable
   disabled?: boolean
   value?: T | null
   modelValue?: T | null
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+type NullValue = Nullable extends true ? null : never
+
+const props = withDefaults(defineProps<Props<T, Nullable>>(), {
   value: undefined,
   modelValue: undefined
 })

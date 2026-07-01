@@ -1,16 +1,14 @@
 <script setup lang="ts" generic="T extends ModelType = 'file'">
 import { type ValidationRuleWithParams } from '@vuelidate/core'
 import { useDropZone } from '@vueuse/core'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useTrans } from '../composables/Lang'
-import { type Validatable } from '../composables/Validation'
 import { formatSize } from '../support/File'
-import { type Color } from '../support/InputBase'
 import { type FileObject } from '../support/InputFileUpload'
 import SButton from './SButton.vue'
 import SCard from './SCard.vue'
 import SCardBlock from './SCardBlock.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputFileUploadItem from './SInputFileUploadItem.vue'
 import STrans from './STrans.vue'
 
@@ -26,27 +24,20 @@ export type ModelType = 'file' | 'object'
  */
 export type ModelValue<T extends ModelType> = T extends 'file' ? File | string : FileObject
 
-const props = withDefaults(defineProps<{
+export interface Props<T extends ModelType = 'file'> extends BaseProps {
   size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
   text?: string
   placeholder?: string
   emptyText?: string
   accept?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   droppable?: boolean
   value?: ModelValue<T>[]
   modelType?: T
   modelValue?: ModelValue<T>[]
   rules?: Record<string, ValidationRuleWithParams>
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props<T>>(), {
   modelType: 'file' as any // `ModelType` doesn't work so stubbing it.
 })
 

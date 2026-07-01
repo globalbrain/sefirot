@@ -21,12 +21,14 @@ export interface ItemAvatar extends ItemBase {
   image?: string | null
 }
 
-const props = defineProps<{
+export interface Props {
   item: Item | Item[]
   size: Size
   removable: boolean
   disabled: boolean
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   remove: [value: any]

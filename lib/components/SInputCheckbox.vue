@@ -1,27 +1,17 @@
 <script setup lang="ts">
 import IconCheck from '~icons/ph/check-bold'
 import IconMinus from '~icons/ph/minus-bold'
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-const props = withDefaults(defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props extends BaseProps {
   text?: string
   disabled?: boolean
   value?: boolean | 'indeterminate'
   modelValue?: boolean | 'indeterminate'
-  validation?: Validatable
-  hideError?: boolean
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   value: undefined,
   modelValue: undefined
 })

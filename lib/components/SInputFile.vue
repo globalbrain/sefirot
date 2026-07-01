@@ -1,28 +1,18 @@
 <script setup lang="ts">
-import { type Component, computed, ref } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed, ref } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-const props = defineProps<{
-  size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
+export interface Props extends BaseProps {
   text?: string
   placeholder?: string
   accept?: string
   multiple?: boolean
   tabindex?: -1 | 0 | number
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   value?: File | File[] | null
   modelValue?: File | File[] | null
-  hideError?: boolean
-  validation?: Validatable
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:model-value': [file: File | File[] | null]

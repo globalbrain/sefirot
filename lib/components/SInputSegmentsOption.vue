@@ -3,13 +3,15 @@ import { type Size } from '../support/InputBase'
 
 export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
-const props = defineProps<{
+export interface Props {
   size: Size
   label: string
   mode: Mode
   active: boolean
   disabled: boolean
-}>()
+}
+
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   click: []

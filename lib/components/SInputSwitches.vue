@@ -1,8 +1,6 @@
 <script setup lang="ts" generic="T = any">
-import { type Component, computed } from 'vue'
-import { type Validatable } from '../composables/Validation'
-import { type Color, type Size } from '../support/InputBase'
-import SInputBase from './SInputBase.vue'
+import { computed } from 'vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
 
 export interface Option<T = any> {
@@ -10,22 +8,13 @@ export interface Option<T = any> {
   value: T
 }
 
-const props = defineProps<{
-  size?: Size
-  name?: string
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
+export interface Props<T = any> extends BaseProps {
   options: Option<T>[]
   disabled?: boolean
   modelValue: T[]
-  hideError?: boolean
-  validation?: Validatable
-}>()
+}
+
+const props = defineProps<Props<T>>()
 
 const emit = defineEmits<{
   'update:model-value': [value: T[]]

@@ -1,24 +1,15 @@
 <script setup lang="ts">
 import IconImage from '~icons/ph/image-bold'
-import { type Component, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useImageSrcFromFile } from '../composables/Image'
-import { type Validatable } from '../composables/Validation'
-import { type Color } from '../support/InputBase'
 import SButton from './SButton.vue'
-import SInputBase from './SInputBase.vue'
+import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export type Size = 'mini' | 'small' | 'medium'
 export type ImageType = 'rectangle' | 'circle'
 
-const props = withDefaults(defineProps<{
+export interface Props extends BaseProps {
   size?: Size
-  label?: string
-  info?: string
-  note?: string
-  help?: string
-  checkIcon?: Component
-  checkText?: string
-  checkColor?: Color
   imageType?: ImageType
   imageWidth?: string
   imageAspectRatio?: string
@@ -29,9 +20,9 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   value?: File | string | null
   modelValue?: File | string | null
-  hideError?: boolean
-  validation?: Validatable
-}>(), {
+}
+
+const props = withDefaults(defineProps<Props>(), {
   size: 'small',
   imageType: 'rectangle',
   imageWidth: '96px',
