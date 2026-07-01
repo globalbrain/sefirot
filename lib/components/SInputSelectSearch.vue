@@ -1,8 +1,8 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T, Multiple extends boolean = false">
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import IconCheck from '~icons/ph/check'
-import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
+import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
@@ -32,20 +32,29 @@ export interface OptionAvatar extends OptionBase {
   image?: string | null
 }
 
-export interface Props extends BaseProps {
+export interface Props<T = any, Multiple extends boolean = false> extends BaseProps {
   placeholder?: string
-  // Fetch the options matching `query` from the server. Called when the dropdown
+  // Fetch the items matching `query` from the server. Called when the dropdown
   // opens (with the current query, usually empty for the initial list) and again,
-  // debounced, on each keystroke. Out-of-order responses are discarded, so it does
-  // not need to guard against races itself.
-  fetch: (query: string) => Promise<Option[]>
+  // debounced, on each keystroke. Out-of-order responses are discarded, so it
+  // does not need to guard against races itself.
+  fetch: (query: string) => Promise<T[]>
+  // Render an item as its dropdown option and, once selected, as its chip. The
+  // option's `value` is the item's identity — selection, de-duplication and
+  // removal all key off it. Applied to fetched items and to the bound model
+  // alike, so a seeded selection renders without appearing in any fetch.
+  toOption: (item: T) => Option
   // Decide whether a `fetch` rejection should propagate (be re-thrown) instead of
   // being swallowed into an empty list — e.g. to let auth/session failures reach
   // the app's re-auth flow. By default every rejection is swallowed.
   rethrow?: (error: unknown) => boolean
-  // Whether multiple options can be selected. The model is then an array of the
-  // selected options; otherwise it is a single option or `null`.
-  multiple?: boolean
+  // Whether multiple items can be selected. The model is then an array of items;
+  // otherwise it is a single item or `null`. Typed `boolean & Multiple` (equal to
+  // `Multiple`, since it extends `boolean`) rather than a bare `Multiple`: the
+  // intersection keeps Vue's runtime Boolean casting (a bare `multiple` attribute
+  // would otherwise arrive as `''` and read as false), while `Multiple` still
+  // drives the arity-conditional model type.
+  multiple?: boolean & Multiple
   // Whether the (single) value can be cleared, or the (multiple) selection emptied.
   nullable?: boolean
   disabled?: boolean
@@ -60,12 +69,18 @@ export interface Props extends BaseProps {
 // `closeOnSelect` defaults to `undefined` (not Vue's usual absent-Boolean → false)
 // so the `?? !multiple` fallback in onSelect can tell "omitted" from an explicit
 // `false`, keeping the single-select-closes / multiple-stays-open default.
-const props = withDefaults(defineProps<Props>(), { closeOnSelect: undefined })
+const props = withDefaults(defineProps<Props<T, Multiple>>(), { closeOnSelect: undefined })
 
-// The selected option(s). A single `Option | null`, or an `Option[]` when
-// `multiple`. Typed loosely (like SInputDropdown) so a consumer can bind a ref of
-// its own richer option type without v-model variance friction.
-const model = defineModel<any>({ required: true })
+// The selection: an array of items when `multiple`, otherwise a single item or
+// `null`. Items are the consumer's own model type; the option rendered for each
+// is derived on demand via `toOption`, so nothing extra is stored on the model.
+const model = defineModel<Multiple extends true ? T[] : T | null>({ required: true })
+
+// Write the model regardless of arity. The public type is arity-conditional, so
+// the concrete array / single value is cast at this single boundary.
+function commit(value: T[] | T | null): void {
+  model.value = value as typeof model.value
+}
 
 const { t } = useTrans({
   en: {
@@ -91,10 +106,10 @@ const { inset, update: updatePosition } = useManualDropdownPosition(
 )
 
 const query = ref('')
-const options = ref<Option[]>([])
+const items = ref([]) as Ref<T[]>
 const loading = ref(false)
 
-// Monotonic token so only the latest fetch may assign `options` / clear `loading`.
+// Monotonic token so only the latest fetch may assign `items` / clear `loading`.
 // With a debounced, user-driven search several requests can overlap; an older one
 // resolving late must not clobber the newer result.
 let fetchSeq = 0
@@ -104,20 +119,38 @@ const classes = computed(() => [
   { disabled: props.disabled }
 ])
 
-const selected = computed<Option | Option[] | null>(() => {
+// The selected items as a flat array, regardless of arity, for internal handling.
+const selectedItems = computed<T[]>(() => {
   if (props.multiple) {
-    return Array.isArray(model.value) ? (model.value as Option[]) : []
+    return Array.isArray(model.value) ? (model.value as T[]) : []
   }
-  return (model.value as Option | null) ?? null
+  return model.value != null ? [model.value as T] : []
 })
 
-const hasSelected = computed(() =>
-  props.multiple ? (selected.value as Option[]).length > 0 : selected.value !== null
+// The identities currently selected, for O(1) active / de-dup checks.
+const selectedValues = computed(
+  () => new Set(selectedItems.value.map((item) => props.toOption(item).value))
 )
+
+// The option(s) rendered for the current selection: an array of chips when
+// multiple, a single chip otherwise (matching SInputDropdownItem's `item`).
+const selectedOptions = computed<Option | Option[] | null>(() => {
+  if (props.multiple) {
+    return selectedItems.value.map((item) => props.toOption(item))
+  }
+  return model.value != null ? props.toOption(model.value as T) : null
+})
+
+// The fetched items paired with their rendered option, for the dropdown list.
+const optionItems = computed(() =>
+  items.value.map((item) => ({ item, option: props.toOption(item) }))
+)
+
+const hasSelected = computed(() => selectedItems.value.length > 0)
 
 const removable = computed(() => {
   if (props.multiple) {
-    return !!props.nullable || (selected.value as Option[]).length > 1
+    return !!props.nullable || selectedItems.value.length > 1
   }
   return !!props.nullable
 })
@@ -128,12 +161,12 @@ async function runFetch(q: string): Promise<void> {
   try {
     const res = await props.fetch(q)
     if (seq === fetchSeq) {
-      options.value = res
+      items.value = res
     }
   } catch (e) {
     // A failed search yields no options (the empty state shows)…
     if (seq === fetchSeq) {
-      options.value = []
+      items.value = []
     }
     // …unless the consumer wants this failure propagated (e.g. an auth/session
     // error that must reach the app's re-auth flow rather than look like "no
@@ -199,14 +232,14 @@ function onOpen() {
 watch(isOpen, (value) => {
   // On close: drop any pending refetch, invalidate any in-flight fetch (so a late
   // response can't repopulate the list while closed), and clear the query /
-  // options / loading. Reopening then starts fresh instead of briefly rendering
+  // items / loading. Reopening then starts fresh instead of briefly rendering
   // the previous query's results (which would be selectable). The selected chips
-  // are unaffected — they render from the model, not from `options`.
+  // are unaffected — they render from the model, not from the fetched `items`.
   if (!value) {
     cancelPendingFetch()
     fetchSeq++
     query.value = ''
-    options.value = []
+    items.value = []
     loading.value = false
   }
 })
@@ -223,36 +256,32 @@ watch(() => props.disabled, (disabled) => {
 })
 
 function isActive(value: any): boolean {
-  if (props.multiple) {
-    return (selected.value as Option[]).some((o) => o.value === value)
-  }
-  return (selected.value as Option | null)?.value === value
+  return selectedValues.value.has(value)
 }
 
-function onSelect(option: Option): void {
+function onSelect(item: T): void {
+  const option = props.toOption(item)
   if (props.disabled || option.disabled) {
     return
   }
 
   props.validation?.$touch()
 
+  const value = option.value
+
   if (props.multiple) {
-    const current = (model.value as Option[] | null) ?? []
-    const exists = current.some((o) => o.value === option.value)
-    const next = exists
-      ? current.filter((o) => o.value !== option.value)
-      : [...current, option]
+    const current = selectedItems.value
+    const next = selectedValues.value.has(value)
+      ? current.filter((i) => props.toOption(i).value !== value)
+      : [...current, item]
     // Keep at least one unless clearing is allowed (mirrors SInputDropdown).
     if (next.length !== 0 || props.nullable) {
-      model.value = next
+      commit(next)
     }
-  } else {
-    const currentValue = (model.value as Option | null)?.value
-    if (currentValue !== option.value) {
-      model.value = option
-    } else if (props.nullable) {
-      model.value = null
-    }
+  } else if (!selectedValues.value.has(value)) {
+    commit(item)
+  } else if (props.nullable) {
+    commit(null)
   }
 
   if (props.closeOnSelect ?? !props.multiple) {
@@ -265,10 +294,9 @@ function onRemove(value: any): void {
   props.validation?.$touch()
 
   if (props.multiple) {
-    const current = (model.value as Option[] | null) ?? []
-    model.value = current.filter((o) => o.value !== value)
+    commit(selectedItems.value.filter((item) => props.toOption(item).value !== value))
   } else {
-    model.value = null
+    commit(null)
   }
 }
 
@@ -335,7 +363,7 @@ function focusNext(event: any): void {
         <div class="box-content">
           <SInputDropdownItem
             v-if="hasSelected"
-            :item="selected!"
+            :item="selectedOptions!"
             :size="size ?? 'small'"
             :removable
             :disabled="disabled ?? false"
@@ -369,11 +397,11 @@ function focusNext(event: any): void {
             >
             <!-- A refetch while options are already shown keeps the (stale) list
                  visible; this spinner signals that newer results are loading. -->
-            <SSpinner v-if="loading && options.length" class="search-spinner" />
+            <SSpinner v-if="loading && items.length" class="search-spinner" />
           </div>
 
-          <ul v-if="options.length" ref="list" class="list">
-            <li v-for="option in options" :key="option.value" class="item">
+          <ul v-if="items.length" ref="list" class="list">
+            <li v-for="{ item, option } in optionItems" :key="option.value" class="item">
               <button
                 class="button"
                 :class="{ active: isActive(option.value) }"
@@ -382,7 +410,7 @@ function focusNext(event: any): void {
                 tabindex="0"
                 @keyup.up.prevent="focusPrev"
                 @keyup.down.prevent="focusNext"
-                @click="onSelect(option)"
+                @click="onSelect(item)"
               >
                 <span v-if="multiple" class="checkbox">
                   <span class="checkbox-box">
