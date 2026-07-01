@@ -49,8 +49,10 @@ function onBlur() {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container">
       <DatePicker

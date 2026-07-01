@@ -145,6 +145,8 @@ function toFileObjects(files: File[]) {
   <SInputBase
     class="SInputFileUpload"
     :class="classes"
+    :size
+    :name
     :label
     :note
     :info
@@ -153,7 +155,9 @@ function toFileObjects(files: File[]) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <template #default="{ hasError }">
       <input

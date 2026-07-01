@@ -71,6 +71,7 @@ function emitChange(e: any): void {
     class="SInputSelect"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -78,8 +79,10 @@ function emitChange(e: any): void {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="box" :class="{ focus: isFocused }">
       <select

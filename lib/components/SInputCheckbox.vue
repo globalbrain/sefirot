@@ -51,6 +51,7 @@ function onClick() {
     class="SInputCheckbox"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -59,7 +60,9 @@ function onClick() {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div class="container">
       <div

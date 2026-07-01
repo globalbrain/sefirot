@@ -42,7 +42,9 @@ function onClick() {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div class="container">
       <div

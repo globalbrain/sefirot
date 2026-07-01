@@ -79,6 +79,8 @@ function onChange(value: T) {
     :check-color
     :hide-error
     :validation
+    :warning
+    :hide-warning
   >
     <div class="container">
       <div class="row">

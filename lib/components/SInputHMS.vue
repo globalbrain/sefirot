@@ -132,6 +132,7 @@ function createRequiredTouched(): boolean[] {
     class="SInputHMS"
     :class="[size ?? 'small', { disabled }]"
     :size
+    :name
     :label
     :note
     :info
@@ -139,8 +140,10 @@ function createRequiredTouched(): boolean[] {
     :check-icon
     :check-text
     :check-color
-    :hide-error
     :validation
+    :warning
+    :hide-error
+    :hide-warning
   >
     <div class="container" :class="{ focus: isFocused }">
       <input

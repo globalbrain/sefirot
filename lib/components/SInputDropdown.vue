@@ -119,6 +119,7 @@ function onSelect(value: T) {
     class="SInputDropdown"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -127,7 +128,9 @@ function onSelect(value: T) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <div ref="container" class="container">
       <div

@@ -56,6 +56,8 @@ function onSelect(value: T) {
     :check-color
     :hide-error
     :validation
+    :warning
+    :hide-warning
   >
     <div class="box">
       <SInputSegmentsOption

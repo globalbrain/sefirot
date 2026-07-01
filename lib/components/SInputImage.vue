@@ -82,6 +82,8 @@ function onFileDelete() {
   <SInputBase
     class="SInputImage"
     :class="[size]"
+    :size
+    :name
     :label
     :note
     :info
@@ -90,6 +92,8 @@ function onFileDelete() {
     :check-color
     :hide-error
     :validation
+    :warning
+    :hide-warning
   >
     <template #default>
       <input

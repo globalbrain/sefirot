@@ -59,6 +59,8 @@ function emitChange(): void {
     :help
     :hide-error
     :validation
+    :warning
+    :hide-warning
   >
     <div class="container">
       <div class="input" :class="{ on: _value }" role="button" @click="emitChange">

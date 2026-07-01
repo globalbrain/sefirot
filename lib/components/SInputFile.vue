@@ -58,6 +58,7 @@ function onChange(e: Event) {
     class="SInputFile"
     :class="classes"
     :size
+    :name
     :label
     :note
     :info
@@ -66,7 +67,9 @@ function onChange(e: Event) {
     :check-text
     :check-color
     :validation
+    :warning
     :hide-error
+    :hide-warning
   >
     <input
       ref="input"
