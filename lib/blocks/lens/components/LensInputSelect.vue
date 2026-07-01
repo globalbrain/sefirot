@@ -1,8 +1,8 @@
 <script setup lang="ts" generic="T, Multiple extends boolean = false">
-import { type Option } from '../../../components/Option'
 import SInputSelectSearch from '../../../components/SInputSelectSearch.vue'
 import { useMutation } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
+import { type Option } from '../../../support/Option'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
 import { isAuthError } from '../validation/ServerErrors'
 

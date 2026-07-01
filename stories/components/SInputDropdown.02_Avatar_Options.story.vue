@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { type OptionAvatar } from 'sefirot/components/Option'
 import SInputDropdown, { type Size } from 'sefirot/components/SInputDropdown.vue'
+import { type OptionAvatar } from 'sefirot/support/Option'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 02. Avatar Options'
