@@ -2,6 +2,7 @@
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import { computed, ref } from 'vue'
+import { type Option } from '../support/InputOption'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
 export interface Props<T = any> extends BaseProps {
@@ -12,12 +13,6 @@ export interface Props<T = any> extends BaseProps {
   tabindex?: -1 | 0 | number
   value?: T | null
   modelValue?: T | null
-}
-
-export interface Option<T = any> {
-  label: string
-  value: T
-  disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props<T>>(), {

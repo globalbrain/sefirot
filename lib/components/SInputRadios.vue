@@ -1,13 +1,8 @@
 <script setup lang="ts" generic="T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false">
 import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputRadio from './SInputRadio.vue'
-
-export interface Option<T extends string | number | boolean = string | number | boolean> {
-  label: string
-  value: T
-  disabled?: boolean
-}
 
 export interface Props<T extends string | number | boolean = string | number | boolean, Nullable extends boolean = false> extends BaseProps {
   options: Option<T>[]

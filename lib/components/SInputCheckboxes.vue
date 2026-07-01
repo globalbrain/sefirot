@@ -1,13 +1,8 @@
 <script setup lang="ts" generic="T = any">
 import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
-
-export interface Option<T = any> {
-  label: string
-  value: T
-  disabled?: boolean
-}
 
 export interface Props<T = any> extends BaseProps {
   options: Option<T>[]

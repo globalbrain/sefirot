@@ -1,12 +1,8 @@
 <script setup lang="ts" generic="T = any">
 import { computed } from 'vue'
+import { type Option } from '../support/InputOption'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputSwitch from './SInputSwitch.vue'
-
-export interface Option<T = any> {
-  label: string
-  value: T
-}
 
 export interface Props<T = any> extends BaseProps {
   options: Option<T>[]
@@ -61,7 +57,7 @@ function onChange(value: T): void {
           <SInputSwitch
             size="sm"
             :text="option.label"
-            :disabled
+            :disabled="option.disabled ?? disabled"
             :model-value="isChecked(option.value)"
             @update:model-value="onChange(option.value)"
           />
