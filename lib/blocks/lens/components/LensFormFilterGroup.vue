@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import IconPlusCircle from '~icons/ph/plus-circle'
 import IconTrash from '~icons/ph/trash'
+import { type Option } from '../../../components/Option'
 import SButton from '../../../components/SButton.vue'
-import { type Option } from '../../../components/SInputDropdown.vue'
 import SInputSegments from '../../../components/SInputSegments.vue'
 import { useTrans } from '../../../composables/Lang'
 import { type FieldData } from '../FieldData'

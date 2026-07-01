@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import IconTrash from '~icons/ph/trash'
 import { type Ref, computed, markRaw, ref, watch } from 'vue'
+import { type Option } from '../../../components/Option'
 import SButton from '../../../components/SButton.vue'
-import SInputDropdown, { type Option } from '../../../components/SInputDropdown.vue'
+import SInputDropdown from '../../../components/SInputDropdown.vue'
 import SSpinner from '../../../components/SSpinner.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'

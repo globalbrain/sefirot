@@ -1,5 +1,6 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import SInputSelectSearch, { type Option } from 'sefirot/components/SInputSelectSearch.vue'
+import { type Option } from 'sefirot/components/Option'
+import SInputSelectSearch from 'sefirot/components/SInputSelectSearch.vue'
 
 interface Foo { id: number; name: string }
 

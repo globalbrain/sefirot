@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import SInputDropdown, { type OptionText, type Size } from 'sefirot/components/SInputDropdown.vue'
+import { type OptionText } from 'sefirot/components/Option'
+import SInputDropdown, { type Size } from 'sefirot/components/SInputDropdown.vue'
 import { ref } from 'vue'
 
 const title = 'Components / SInputDropdown / 01. Playground'

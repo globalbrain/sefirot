@@ -6,31 +6,13 @@ import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { type Option } from './Option'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
 import SSpinner from './SSpinner.vue'
 
 export type { Color, Size } from './SInputBase.vue'
-
-export type Option = OptionText | OptionAvatar
-
-export interface OptionBase {
-  type?: 'text' | 'avatar'
-  value: any
-  disabled?: boolean
-}
-
-export interface OptionText extends OptionBase {
-  type?: 'text'
-  label: string
-}
-
-export interface OptionAvatar extends OptionBase {
-  type: 'avatar'
-  label: string
-  image?: string | null
-}
 
 export interface Props<T = any, Multiple extends boolean = false> extends BaseProps {
   placeholder?: string

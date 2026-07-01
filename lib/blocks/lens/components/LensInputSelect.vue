@@ -1,12 +1,12 @@
 <script setup lang="ts" generic="T, Multiple extends boolean = false">
-import SInputSelectSearch, { type Option } from '../../../components/SInputSelectSearch.vue'
+import { type Option } from '../../../components/Option'
+import SInputSelectSearch from '../../../components/SInputSelectSearch.vue'
 import { useMutation } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
 import { type LensQuerySettings, type LensQuerySort } from '../LensQuery'
 import { isAuthError } from '../validation/ServerErrors'
 
 export type { Color, Size } from '../../../components/SInputBase.vue'
-export type { Option }
 
 // A lens-backed search-select that works entirely in the consumer's own model
 // type. It searches the server as the user types (via SInputSelectSearch): each

@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { type Option, type OptionValue } from './Option'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 import SInputDropdownItem from './SInputDropdownItem.vue'
@@ -23,26 +24,6 @@ export interface Props extends BaseProps {
 
 export type PrimitiveValue = any
 export type ArrayValue = any[]
-export type OptionValue = any
-
-export type Option = OptionText | OptionAvatar
-
-export interface OptionBase {
-  type?: 'text' | 'avatar'
-  value: OptionValue
-  disabled?: boolean
-}
-
-export interface OptionText extends OptionBase {
-  type?: 'text'
-  label: string
-}
-
-export interface OptionAvatar extends OptionBase {
-  type: 'avatar'
-  label: string
-  image?: string | null
-}
 
 const props = defineProps<Props>()
 
