@@ -1,15 +1,13 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = any">
 import { type Component, computed } from 'vue'
 import { type Validatable } from '../composables/Validation'
 import { type Color, type Size } from '../support/InputBase'
 import SInputBase from './SInputBase.vue'
 import SInputCheckbox from './SInputCheckbox.vue'
 
-export type Value = any
-
-export interface Option {
+export interface Option<T = any> {
   label: string
-  value: Value
+  value: T
   disabled?: boolean
 }
 
@@ -23,11 +21,11 @@ const props = withDefaults(defineProps<{
   checkIcon?: Component
   checkText?: string
   checkColor?: Color
-  options: Option[]
+  options: Option<T>[]
   nullable?: boolean
   disabled?: boolean
-  value?: Value[]
-  modelValue?: Value[]
+  value?: T[]
+  modelValue?: T[]
   validation?: Validatable
   hideError?: boolean
 }>(), {
@@ -35,8 +33,8 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  'update:model-value': [value: Value[]]
-  'change': [value: Value[]]
+  'update:model-value': [value: T[]]
+  'change': [value: T[]]
 }>()
 
 const _value = computed(() => {
@@ -47,11 +45,11 @@ const _value = computed(() => {
       : []
 })
 
-function isChecked(value: Value): boolean {
+function isChecked(value: T): boolean {
   return _value.value.includes(value)
 }
 
-function onChange(value: Value): void {
+function onChange(value: T): void {
   const distinct = _value.value
     .filter((v) => v !== value)
     .concat(_value.value.includes(value) ? [] : [value])

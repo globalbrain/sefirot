@@ -1,35 +1,33 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T = any">
 import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import { computed, ref } from 'vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
 
-export interface Props extends BaseProps {
+export interface Props<T = any> extends BaseProps {
   placeholder?: string
-  options: Option[]
+  options: Option<T>[]
   nullable?: boolean
   disabled?: boolean
   tabindex?: -1 | 0 | number
-  value?: Value
-  modelValue?: Value
+  value?: T | null
+  modelValue?: T | null
 }
 
-export type Value = any
-
-export interface Option {
+export interface Option<T = any> {
   label: string
-  value: any
+  value: T
   disabled?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props<T>>(), {
   value: undefined,
   modelValue: undefined
 })
 
 const emit = defineEmits<{
-  'update:model-value': [value: Value]
-  'change': [value: Value]
+  'update:model-value': [value: T | null]
+  'change': [value: T | null]
 }>()
 
 const _value = computed(() => {
@@ -51,7 +49,7 @@ const isNotSelected = computed(() => {
   return _value.value == null || _value.value === ''
 })
 
-function isSelectedOption(option: Option): boolean {
+function isSelectedOption(option: Option<T>): boolean {
   return option.value === _value.value
 }
 
