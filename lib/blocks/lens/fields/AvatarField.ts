@@ -3,7 +3,7 @@ import SAvatar from '../../../components/SAvatar.vue'
 import { type TableCell } from '../../../composables/Table'
 import { type AvatarFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
-import LensAvatarInput from '../components/LensAvatarInput.vue'
+import LensInputAvatar from '../components/LensInputAvatar.vue'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { Field } from './Field'
 
@@ -62,7 +62,7 @@ export class AvatarField extends Field<AvatarFieldData> {
 
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
-      return () => h(LensAvatarInput, {
+      return () => h(LensInputAvatar, {
         'label': this.formInputLabel(),
         'help': this.help() || undefined,
         'accept': this.accept(),

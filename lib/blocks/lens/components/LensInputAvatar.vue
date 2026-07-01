@@ -3,7 +3,7 @@ import SInputImage, { type ImageType, type Size } from '../../../components/SInp
 import { useTrans } from '../../../composables/Lang'
 import { type Validatable } from '../../../composables/Validation'
 
-withDefaults(defineProps<{
+export interface Props {
   label?: string
   help?: string
   accept?: string
@@ -11,7 +11,9 @@ withDefaults(defineProps<{
   size?: Size
   disabled?: boolean
   validation?: Validatable
-}>(), {
+}
+
+withDefaults(defineProps<Props>(), {
   imageType: 'circle',
   size: 'small'
 })
@@ -30,7 +32,7 @@ const { t } = useTrans({
 <template>
   <SInputImage
     v-model="model"
-    class="LensAvatarInput"
+    class="LensInputAvatar"
     :label
     :help
     :accept
