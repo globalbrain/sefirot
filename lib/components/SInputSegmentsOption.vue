@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import { type ColorMode } from '../support/Color'
 import { type Size } from '../support/InputBase'
-
-export type Mode = 'default' | 'mute' | 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
 export interface Props {
   size: Size
   label: string
-  mode: Mode
+  mode: ColorMode
   active: boolean
   disabled: boolean
 }

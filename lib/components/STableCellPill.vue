@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import SPill, { type Mode } from './SPill.vue'
+import { type ColorMode } from '../support/Color'
+import SPill from './SPill.vue'
 
 defineProps<{
   pill?: string
-  color?: Mode
+  color?: ColorMode
 }>()
 </script>
 

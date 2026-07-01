@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { type ColorMode } from '../support/Color'
 import SDescEmpty from './SDescEmpty.vue'
-import SState, { type Mode } from './SState.vue'
+import SState from './SState.vue'
 
 export interface State {
-  mode?: Mode
+  mode?: ColorMode
   label: string
 }
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { logEvent as log } from 'histoire/client'
-import SPill, { type Mode } from 'sefirot/components/SPill.vue'
+import SPill from 'sefirot/components/SPill.vue'
+import { type ColorMode } from 'sefirot/support/Color'
 
 const title = 'Components / SPill / 02. Sizes'
 const docs = '/components/pill'
@@ -20,7 +21,7 @@ function initState() {
     label: 'Pill',
     clickable: false
   } satisfies {
-    mode: Mode
+    mode: ColorMode
     label: string
     clickable: boolean
   }

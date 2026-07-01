@@ -4,11 +4,12 @@ import { useElementBounding } from '@vueuse/core'
 import { computed, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SLink from '../../../components/SLink.vue'
-import SPill, { type Mode as PillMode } from '../../../components/SPill.vue'
-import SState, { type Mode as StateMode } from '../../../components/SState.vue'
+import SPill from '../../../components/SPill.vue'
+import SState from '../../../components/SState.vue'
 import { useManualDropdownPosition } from '../../../composables/Dropdown'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
+import { type ColorMode } from '../../../support/Color'
 import { day } from '../../../support/Day'
 import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
@@ -75,7 +76,7 @@ const resolvedCell = computed<any>(() => {
 
 // A `pills` cell (e.g. a multi-select with displayAs: 'pills') renders as pills
 // rather than text, mirroring the read-only `STableCellPills` column.
-const displayPills = computed<{ label: string; color?: PillMode }[] | null>(() => {
+const displayPills = computed<{ label: string; color?: ColorMode }[] | null>(() => {
   const cell = resolvedCell.value
   return cell && cell.type === 'pills' ? cell.pills : null
 })
@@ -83,7 +84,7 @@ const displayPills = computed<{ label: string; color?: PillMode }[] | null>(() =
 // A `state` cell (e.g. a select with displayAs: 'state') renders as a status
 // badge rather than its bare label, mirroring the read-only `STableCellState`
 // column.
-const displayState = computed<{ label: string; mode?: StateMode } | null>(() => {
+const displayState = computed<{ label: string; mode?: ColorMode } | null>(() => {
   const cell = resolvedCell.value
   return cell && cell.type === 'state' ? { label: cell.label, mode: cell.mode } : null
 })

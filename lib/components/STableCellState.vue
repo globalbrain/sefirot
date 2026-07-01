@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import SState, { type Mode } from './SState.vue'
+import { type ColorMode } from '../support/Color'
+import SState from './SState.vue'
 
 defineProps<{
   state?: string
-  mode?: Mode
+  mode?: ColorMode
 }>()
 </script>
 

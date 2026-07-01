@@ -1,12 +1,13 @@
 <script setup lang="ts" generic="T extends string | number | boolean">
 import { computed } from 'vue'
+import { type ColorMode } from '../support/Color'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
-import SInputSegmentsOption, { type Mode } from './SInputSegmentsOption.vue'
+import SInputSegmentsOption from './SInputSegmentsOption.vue'
 
 export interface Option<T extends string | number | boolean> {
   label: string
   value: T
-  mode?: Mode
+  mode?: ColorMode
   disabled?: boolean
 }
 
