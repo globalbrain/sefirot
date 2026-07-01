@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="T, Multiple extends boolean = false">
 import SInputSelectSearch, { type Option } from '../../../components/SInputSelectSearch.vue'
 import { useMutation } from '../../../composables/Api'
 import { useLang } from '../../../composables/Lang'
@@ -8,26 +8,26 @@ import { isAuthError } from '../validation/ServerErrors'
 export type { Color, Size } from '../../../components/SInputBase.vue'
 export type { Option }
 
-// A lens-backed search-select. Combines the search (a lens query), the fetch (no
-// repo needed), and the row → option mapping (no ops needed) into one component:
-// the consumer configures the entity and how a row becomes an option, and the
-// component searches the server as the user types via SInputSelectSearch.
+// A lens-backed search-select that works entirely in the consumer's own model
+// type. It searches the server as the user types (via SInputSelectSearch): each
+// result row is turned into a model by `toModel`, and each model is rendered as
+// its dropdown/chip option by `toOption`. The v-model is those models — a `T[]`
+// when `multiple`, otherwise `T | null`.
 //
-// Selection UI props (multiple, nullable, disabled, placeholder, size, label,
-// validation, position, closeOnSelect, debounce, …) fall through to
-// SInputSelectSearch as attributes.
-export interface Props {
+// Remaining selection UI props (nullable, disabled, placeholder, size, label,
+// validation, position, closeOnSelect, debounce, …) fall through as attributes.
+export interface Props<T = any, Multiple extends boolean = false> {
   // The lens search endpoint (e.g. `/api/admin/lens/search`).
   endpoint: string
 
   // The entity to search.
   entity: string
 
-  // Columns to fetch for each row, projected into an option by `toOption`.
+  // Columns to fetch for each row, passed to `toModel`.
   select: string[]
 
-  // Columns matched against the typed query — OR-ed together with `contains`.
-  // An empty query fetches the initial (unfiltered) page. Named to match
+  // Columns matched against the typed query — OR-ed together with `contains`. An
+  // empty query fetches the initial (unfiltered) page. Named to match
   // LensCatalog's `queryKeys`.
   queryKeys: string[]
 
@@ -38,24 +38,27 @@ export interface Props {
   // Page size of each search. The server enforces its own perPage ceiling.
   perPage?: number
 
-  // Per-request settings (e.g. language). Usually unneeded — the server negotiates
-  // language from the request headers.
+  // Per-request settings (e.g. language). Usually unneeded — the server
+  // negotiates language from the request headers.
   settings?: LensQuerySettings
 
-  // Map a raw result row to an option. The selected option(s) are the model, so
-  // include everything the consumer needs back (e.g. a related record), plus the
-  // `value` / `label` (and `image` for an avatar option) the select renders.
-  toOption: (row: Record<string, any>) => Option
+  // Whether multiple models can be selected.
+  multiple?: Multiple
+
+  // Build a model from a raw result row.
+  toModel: (row: Record<string, any>) => T
+
+  // Render a model as its dropdown/chip option (`value` is the identity).
+  toOption: (item: T) => Option
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props<T, Multiple>>()
 
-// Pass the selection through to SInputSelectSearch. Typed loosely so a consumer
-// can bind a ref of its own richer option type (see SInputSelectSearch).
-const model = defineModel<any>({ required: true })
+// The selected model(s): a `T[]` when `multiple`, otherwise `T | null`.
+const model = defineModel<Multiple extends true ? T[] : T | null>({ required: true })
 
-// Don't let lens-config attributes that happen to share a name leak onto the
-// child; only the explicitly-forwarded selection props (via `$attrs`) should.
+// Don't let lens-config attributes leak onto the child; only the explicitly
+// forwarded selection props (via `$attrs`) should.
 defineOptions({ inheritAttrs: false })
 
 // Default the request language to the active app language (like LensCatalog), so
@@ -77,16 +80,23 @@ const { execute } = useMutation((http, query: string) =>
   })
 )
 
-// Read every config field through `props` at call time so a reactive change
-// (e.g. a locale-dependent sort or label) takes effect on the next search.
-async function fetch(query: string): Promise<Option[]> {
+// Read every config field through `props` at call time so a reactive change (e.g.
+// a locale-dependent sort or label) takes effect on the next search.
+async function fetch(query: string): Promise<T[]> {
   const res = await execute(query)
-  return res.data.map(props.toOption)
+  return res.data.map(props.toModel)
 }
 </script>
 
 <template>
-  <SInputSelectSearch v-model="model" :fetch :rethrow="isAuthError" v-bind="$attrs">
+  <SInputSelectSearch
+    v-model="model"
+    :fetch
+    :to-option
+    :multiple
+    :rethrow="isAuthError"
+    v-bind="$attrs"
+  >
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputSelectSearch>
 </template>
