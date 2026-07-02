@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.59.0](https://github.com/globalbrain/sefirot/compare/v4.58.0...v4.59.0) (2026-07-02)
+
+
+### Bug Fixes
+
+* **lens:** adjust padding and border-radius for improved layout consistency ([2a0ed60](https://github.com/globalbrain/sefirot/commit/2a0ed604f13e0e089dae8a109f4049944e4c2da0))
+
+
+### Features
+
+* **lens:** show the record sheet read-only by default ([#761](https://github.com/globalbrain/sefirot/issues/761)) ([936db32](https://github.com/globalbrain/sefirot/commit/936db3270ff3f6f8c0bb165d473b89508cb52812))
+
 # [4.58.0](https://github.com/globalbrain/sefirot/compare/v4.57.0...v4.58.0) (2026-07-01)
 
 # [4.57.0](https://github.com/globalbrain/sefirot/compare/v4.56.0...v4.57.0) (2026-06-30)
