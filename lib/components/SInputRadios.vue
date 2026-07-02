@@ -94,3 +94,9 @@ function onChange(value: T) {
     <template v-if="$slots.info" #info><slot name="info" /></template>
   </SInputBase>
 </template>
+
+<style scoped>
+.container {
+  padding-left: 2px;
+}
+</style>

@@ -424,9 +424,9 @@ function onEditorKeydown(event: KeyboardEvent) {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid var(--c-border);
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: var(--c-bg-1);
   box-shadow: var(--shadow-depth-3);
 }

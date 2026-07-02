@@ -147,7 +147,7 @@ const { validation, validate, reset } = useValidation(
 
 const editorStyle = computed(() => ({
   ...inset.value,
-  width: `${Math.max(bounds.width.value, 240)}px`
+  width: `${Math.max(bounds.width.value, 224)}px`
 }))
 
 function start() {
@@ -352,9 +352,9 @@ function onEditorKeydown(event: KeyboardEvent) {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid var(--c-border);
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: var(--c-bg-1);
   box-shadow: var(--shadow-depth-3);
 }
