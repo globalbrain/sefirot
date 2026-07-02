@@ -1031,6 +1031,19 @@ async function refreshCatalog(): Promise<void> {
   await forceRefresh()
 }
 
+// Close an open *view* sheet when the effective identifier itself changes (an
+// async `indexField` resolving from the `id` default to `slug`, say): the open
+// record was keyed under the old field and can't be re-matched to the new one
+// (its row lacks the new key, so `resolveId` would be `undefined`), which would
+// let a delete/save act on the wrong — or no — id. Watched on `idField` alone,
+// not the editable-gated source below: that source can't tell an identifier
+// change from `editable` merely switching on when both happen in the same flush,
+// and `editable` flipping on with the identifier unchanged must leave an open
+// read-only sheet alone (viewing is the default; its record is still valid).
+watch(idField, () => {
+  if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
+})
+
 // When the effective row identifier appears or changes while editing is enabled,
 // the loaded rows won't carry it until a refetch runs — so refetch here. Two
 // cases: `editable` resolving true after mount (async permissions), so
@@ -1039,20 +1052,10 @@ async function refreshCatalog(): Promise<void> {
 // identifier, `rowsCarryIndexField` keeps editing gated off, and selection keys
 // go `undefined` until an unrelated query change. A no-op when the identifier was
 // already present (same request input → cached result reused).
-//
-// Close an open *view* sheet only when the identifier field genuinely changed
-// (an existing field → a different one): its open record was keyed under the old
-// field and can't be re-matched to the new one (its row lacks the new key, so
-// `resolveId` would be `undefined`), which would let a delete/save act on the
-// wrong — or no — id. Skip the close when `prev` is null: that's `editable`
-// flipping on with the field unchanged, and since viewing is the default the
-// rows already carry the id, so any open read-only sheet is still valid and must
-// not be yanked shut mid-view (only the refetch below is wanted there).
 watch(
   () => (props.editable ? idField.value : null),
   (field, prev) => {
     if (!field || field === prev) { return }
-    if (prev !== null && sheet.state.value && sheetMode.value === 'view') { sheet.off() }
     // Supersede any search still in flight under the previous identifier state: it
     // was issued before the new id/index field, so its rows won't carry the new
     // key. If it resolved after this refetch it would assign those id-less rows
