@@ -117,11 +117,14 @@ const columns = computedAsync(async () => {
 
     const column = field.tableColumn()
 
-    // When editing is enabled, clicking the row-identifier cell opens the record
-    // sheet (view + per-field edit + delete) instead of following a link. Keyed
-    // off the configured index field for any field type — a slug/code identifier
-    // opens the sheet just like an `id` — so other id-type columns (e.g. a
-    // `company_id` reference link) keep their own navigation.
+    // The detail sheet is reachable on any catalog once the rows carry the index
+    // field (`edit.viewable`) — viewing is the default; `editable` only adds the
+    // per-field edit / delete affordances inside it. So clicking the row-identifier
+    // cell opens the record sheet (read-only, or editable when the catalog is)
+    // instead of following a link. Keyed off the configured index field for any
+    // field type — a slug/code identifier opens the sheet just like an `id` — so
+    // other id-type columns (e.g. a `company_id` reference link) keep their own
+    // navigation.
     //
     // Exception: an `id` field whose server value carries a `path` renders that
     // path as a link; respect it so those rows navigate to the details page instead
@@ -130,7 +133,7 @@ const columns = computedAsync(async () => {
     // a `link` / `slack_message` identifier) is still turned into the sheet opener,
     // as is a column whose `cell` is undefined (falls straight through to the opener).
     if (
-      edit?.editable
+      edit?.viewable
       && key === edit.indexField
     ) {
       const original = column.cell
