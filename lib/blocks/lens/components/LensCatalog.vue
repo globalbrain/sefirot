@@ -126,12 +126,16 @@ export interface Props {
   // setup, so toggling it afterwards has no effect.
   urlSync?: boolean
 
-  // Enable CRUD editing for the catalog. When set, fields the backend
-  // marks `showOnUpdate` become inline-editable, clicking a row's id cell
-  // opens the record sheet (view + per-field edit + delete), and the
-  // `openCreate()` method / sheet create mode become available. The CRUD
-  // endpoints are derived from `endpoint` by replacing the trailing
-  // `/search` with `/update`, `/create`, and `/delete`.
+  // Enable CRUD editing for the catalog.
+  //
+  // Every catalog already renders a **read-only detail sheet**: clicking a
+  // row's index-field cell opens the record for viewing (each `showOnDetail`
+  // field, read-only). `editable` builds on that same sheet. When set, fields
+  // the backend marks `showOnUpdate` become inline-editable in the table, the
+  // sheet gains per-field editing and a delete button, and the `openCreate()`
+  // method / sheet create mode become available. The CRUD endpoints are derived
+  // from `endpoint` by replacing the trailing `/search` with `/update`,
+  // `/create`, and `/delete`.
   //
   // The row identifier (`indexField`, defaulting to `id`) is never
   // inline- or sheet-editable on an existing row: optimistically changing
@@ -139,27 +143,28 @@ export interface Props {
   // follow-up save/delete would address the not-yet-synced new id. It can
   // still be set on creation (via a `showOnCreate` field).
   //
-  // An editable catalog must keep its index field among the rendered columns,
-  // because the row's sheet opener — and therefore the only way to view or
-  // delete a record — is the index-field cell. The default `id` identifier is
-  // kept when `select` is empty (server defaults), so that case works as-is; a
-  // *custom* `indexField`, however, must be listed in `select` explicitly (an
-  // empty/default `select` drops it from the rendered columns, leaving the rows
-  // with no opener).
+  // The sheet opener — and therefore the only way to view, edit, or delete a
+  // record — is the index-field cell, so that field must be a rendered column.
+  // The default `id` identifier is kept when `select` is empty (server
+  // defaults), so that case works as-is; a *custom* `indexField`, or `id`
+  // alongside an explicit `select`, must be listed in `select` explicitly (an
+  // empty/default `select` otherwise drops it, leaving the rows with no opener).
   //
   // Turning this on also enables `creatable`, `deletable`, and `inlineEditable`
   // by default; pass `false` to any of them to opt out.
   //
   // Pass a predicate `(record) => boolean` instead of `true` to allow editing
   // only some rows (e.g. from a per-record policy): the inline affordance and
-  // the sheet's per-field edit are hidden for the rows it rejects.
+  // the sheet's per-field edit are hidden for the rows it rejects (the sheet
+  // still opens read-only).
   editable?: boolean | ((record: Record<string, any>) => boolean)
 
   // Whether records can be deleted from the sheet. Defaults to enabled for an
   // editable catalog. Pass `false` to hide the delete button entirely, or a
   // predicate `(record) => boolean` to allow deleting only some rows (e.g. from
-  // a per-record policy). Delete is reachable only through the sheet, so this
-  // has no effect unless the catalog is `editable`.
+  // a per-record policy). The delete button lives in the record sheet — which
+  // opens for read-only viewing on any catalog — but stays gated behind edit
+  // permission, so this has no effect unless the catalog is `editable`.
   deletable?: boolean | ((record: Record<string, any>) => boolean)
 
   // Whether new records can be created (enables create mode in the sheet and
@@ -619,7 +624,8 @@ const tableIndexField = computed(() => {
 // address each row; when no `indexField` is configured the identifier
 // defaults to `id`. When the caller has no concrete select list, nothing
 // is added either — leaving the request empty lets the server use its own
-// defaults. See `indexField` prop docs above.
+// defaults (which include `id`, so the read-only sheet still opens). See
+// `indexField` prop docs above.
 function withIndexField(fields: string[]): string[] {
   if (fields.length === 0) { return [] }
   const field = props.indexField ?? (props.editable ? 'id' : null)
@@ -1034,15 +1040,19 @@ async function refreshCatalog(): Promise<void> {
 // go `undefined` until an unrelated query change. A no-op when the identifier was
 // already present (same request input → cached result reused).
 //
-// Close an open record sheet first: it was identified under the old field and
-// can't be reliably re-matched to the new one (its row lacks the new key, so
+// Close an open *view* sheet only when the identifier field genuinely changed
+// (an existing field → a different one): its open record was keyed under the old
+// field and can't be re-matched to the new one (its row lacks the new key, so
 // `resolveId` would be `undefined`), which would let a delete/save act on the
-// wrong — or no — id during and after the refetch.
+// wrong — or no — id. Skip the close when `prev` is null: that's `editable`
+// flipping on with the field unchanged, and since viewing is the default the
+// rows already carry the id, so any open read-only sheet is still valid and must
+// not be yanked shut mid-view (only the refetch below is wanted there).
 watch(
   () => (props.editable ? idField.value : null),
   (field, prev) => {
     if (!field || field === prev) { return }
-    if (sheet.state.value && sheetMode.value === 'view') { sheet.off() }
+    if (prev !== null && sheet.state.value && sheetMode.value === 'view') { sheet.off() }
     // Supersede any search still in flight under the previous identifier state: it
     // was issued before the new id/index field, so its rows won't carry the new
     // key. If it resolved after this refetch it would assign those id-less rows
@@ -1464,14 +1474,24 @@ function editEnabled(): boolean {
   return !!props.editable && rowsCarryIndexField.value
 }
 
+// Catalog-level sheet gate: the read-only detail sheet is reachable on any
+// catalog — viewing is the default — as soon as the rows carry the index field
+// the opener resolves an id from. Editing, create, and delete stay gated on
+// `editable` (via `canEdit` / `canDelete` / the `creatable` getter), so a
+// non-editable catalog opens the same sheet read-only.
+function viewEnabled(): boolean {
+  return rowsCarryIndexField.value
+}
+
 // Per-record refinement: a predicate `editable`/`deletable` decides each row, a
 // boolean applies to all.
 function canEdit(record: Record<string, any>): boolean {
   return editEnabled() && (typeof props.editable === 'function' ? props.editable(record) : true)
 }
 
-// Delete is a stronger action than edit and rides the same editable sheet, so a
-// row must be editable before it can be deleted — building on `canEdit` makes a
+// Delete is a stronger action than edit and lives in the record sheet (whose
+// delete button only renders when editable), so a row must be editable before it
+// can be deleted — building on `canEdit` makes a
 // per-record `editable` predicate gate delete too (a row it rejects is never
 // deletable). `deletable` then refines further: on unless explicitly `false`, or
 // its own per-record predicate.
@@ -1482,13 +1502,18 @@ function canDelete(record: Record<string, any>): boolean {
 provideLensEdit({
   // Getters so the injected context tracks prop changes after mount (e.g.
   // permissions resolving async, or a flag toggling `editable` off): LensTable
-  // gates inline editing and the id-cell sheet on `edit.editable`.
+  // gates inline editing on `edit.editable` and the id-cell sheet opener on the
+  // broader `edit.viewable`.
   //
   // Also gated on `rowsCarryIndexField`: when `editable` flips true after mount we
   // trigger a refetch to pull in the identifier, but it lands asynchronously —
   // keep editing off until the rows actually carry it, so a save in that window
   // can't `resolveId()` to `undefined`.
   get editable() { return editEnabled() },
+  // `LensTable` gates the id-cell sheet opener on this: the read-only sheet is
+  // reachable on any catalog once the rows carry the index field, independent of
+  // `editable`.
+  get viewable() { return viewEnabled() },
   get creatable() { return !!props.editable && props.creatable },
   // Use the same `__no_entity__` fallback as the search / CRUD requests so slot
   // side-channel saves (which read this) target the same entity, not an empty one.
@@ -1691,7 +1716,7 @@ defineExpose({
     </SModal>
 
     <LensSheet
-      v-if="editable && result?.fields"
+      v-if="(editable || rowsCarryIndexField) && result?.fields"
       :open="sheet.state.value"
       :mode="sheetMode"
       :entity="entityName"

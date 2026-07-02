@@ -10,6 +10,15 @@ export interface LensEditContext {
   /** Whether the catalog has editing enabled at all. */
   editable: boolean
 
+  /**
+   * Whether the detail sheet is reachable. Viewing is the default: true on any
+   * catalog once the rows carry the index field the opener resolves an id from,
+   * independent of `editable`. The index-field cell opens the sheet on this gate,
+   * while the mutation affordances inside stay gated on `canEdit` / `canDelete` /
+   * `creatable`, so a non-editable catalog opens a read-only sheet.
+   */
+  viewable: boolean
+
   /** Whether new records may be created. */
   creatable: boolean
 
