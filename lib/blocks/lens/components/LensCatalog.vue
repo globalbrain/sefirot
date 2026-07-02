@@ -63,9 +63,6 @@ export interface Props {
   // Whether to show advanced filters.
   canFilter?: boolean
 
-  // Whether to show advanced sorting options.
-  canSort?: boolean
-
   // Whether to hide the condition blocks.
   hideConditions?: boolean
 
@@ -182,7 +179,6 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   canFilter: true,
-  canSort: true,
   // Default these on so an editable catalog gets create / delete / inline edit
   // without opting in to each. A boolean prop can't tell "omitted" from `false`
   // (Vue casts an absent boolean to `false`), so they default on here and the
@@ -1575,7 +1571,6 @@ defineExpose({
         :selected
         :show-query="!!(queryKeys && queryKeys.length > 0)"
         :show-filters="canFilter"
-        :show-sort="canSort"
         :is-condition-active="!hideConditions"
         :is-condition-disabled="!hasConditions"
         @search="onQuery"
