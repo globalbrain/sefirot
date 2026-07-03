@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.59.1](https://github.com/globalbrain/sefirot/compare/v4.59.0...v4.59.1) (2026-07-03)
+
+
+### Bug Fixes
+
+* **lens:** render exact labels for single select values ([#763](https://github.com/globalbrain/sefirot/issues/763)) ([343641c](https://github.com/globalbrain/sefirot/commit/343641c38054a16012114786c78ee000e3140ec5))
+
 # [4.59.0](https://github.com/globalbrain/sefirot/compare/v4.58.0...v4.59.0) (2026-07-02)
 
 
