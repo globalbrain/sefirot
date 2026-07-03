@@ -145,9 +145,7 @@ export class SelectField extends Field<SelectFieldData> {
   }
 
   protected renderDataListItemValueForText(value: any): any {
-    if (this.data.multiple) {
-      value = Array.isArray(value) ? value : [value]
-    }
+    value = Array.isArray(value) ? value : [value]
 
     return this.optionsForValues(value).map((o) => this.labelForOption(o)).join(', ')
   }
