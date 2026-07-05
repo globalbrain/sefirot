@@ -74,4 +74,18 @@ describe('blocks/lens/fields/SelectField', () => {
       expect(wrapper.text()).not.toContain('First')
     })
   })
+
+  describe('inputEmptyValue', () => {
+    it('trusts the definition for the blank — the server owns it', () => {
+      // A multiple select's definition carries `emptyValue: []`; without a
+      // declared value the blank is null, with no client-side type fallback.
+      expect(make().inputEmptyValue()).toBeNull()
+      expect(make({ multiple: true, emptyValue: [] }).inputEmptyValue()).toEqual([])
+    })
+
+    it('starts from a server-declared initial value', () => {
+      expect(make({ emptyValue: 'foobar' }).inputEmptyValue()).toBe('foobar')
+      expect(make({ multiple: true, emptyValue: ['foo'] }).inputEmptyValue()).toEqual(['foo'])
+    })
+  })
 })

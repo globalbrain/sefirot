@@ -150,10 +150,6 @@ export class SelectField extends Field<SelectFieldData> {
     return this.optionsForValues(value).map((o) => this.labelForOption(o)).join(', ')
   }
 
-  override inputEmptyValue(): any {
-    return this.data.multiple ? [] : null
-  }
-
   override formInputComponent(): any {
     switch (this.data.inputAs) {
       case 'dropdown':

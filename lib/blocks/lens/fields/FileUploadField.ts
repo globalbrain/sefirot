@@ -49,10 +49,6 @@ export class FileUploadField extends Field<FileUploadFieldData> {
     })
   }
 
-  override inputEmptyValue(): any {
-    return []
-  }
-
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputFileUpload, {

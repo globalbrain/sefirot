@@ -56,10 +56,6 @@ export class AvatarField extends Field<AvatarFieldData> {
     return false
   }
 
-  override inputEmptyValue(): any {
-    return null
-  }
-
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(LensInputAvatar, {

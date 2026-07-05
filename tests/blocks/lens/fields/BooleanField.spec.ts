@@ -133,4 +133,12 @@ describe('blocks/lens/fields/BooleanField', () => {
       expect(() => make().dataListItemComponent()).not.toThrow()
     })
   })
+
+  describe('inputEmptyValue', () => {
+    it('starts from a falsy server-declared emptyValue instead of falling back', () => {
+      // Only null/undefined defer to the type blank — `false` is a real seed.
+      expect(make({ emptyValue: false }).inputEmptyValue()).toBe(false)
+      expect(make().inputEmptyValue()).toBeNull()
+    })
+  })
 })
