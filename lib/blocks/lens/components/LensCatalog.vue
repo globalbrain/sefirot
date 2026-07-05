@@ -74,6 +74,11 @@ export interface Props {
   // normally. The value remains accessible via `record[indexField]` in
   // `cell-clicked` events and through the `selected` model regardless.
   //
+  // When omitted, the identifier defaults to `id`, and the `selected`
+  // model is keyed by it on any catalog — editable or not — whenever the
+  // loaded rows carry it (server-default selects typically do). Only rows
+  // without the identifier fall back to positional selection keys.
+  //
   // If the caller's `select` is empty or `null` (i.e. "use server
   // defaults"), the index field is **not** auto-appended — that would
   // narrow the result to just that single column on backends that treat
@@ -584,33 +589,59 @@ const tableSelect = computed(() => {
 const idField = computed(() => props.indexField ?? 'id')
 
 // Whether the currently loaded rows actually carry the effective row identifier.
-// Editing / opening a row needs it (`resolveId`), but rows fetched while
-// `editable` was still false — or before an `indexField` change settled — won't
-// have it until the triggered refetch lands. Editing is gated on this (see the
-// `editable` getter) so a quick save in that window can't post `id: undefined`.
-// An empty result has nothing to edit, so it doesn't block.
+// Editing / opening a row needs it (`resolveId`), and the table's selection key
+// only switches onto it when present (`tableIndexField` below). Rows fetched
+// while `editable` was still false — or before an `indexField` change settled —
+// won't have it until the triggered refetch lands. Editing is gated on this (see
+// the `editable` getter) so a quick save in that window can't post
+// `id: undefined`. An empty result has nothing to edit or select, so it
+// doesn't block.
 const rowsCarryIndexField = computed(() => {
   const rows = result.value?.data
   if (!rows || rows.length === 0) { return true }
   return idField.value in rows[0]
 })
 
-// The row-identifier the table uses as its selection key. An explicit
-// `indexField`, or `id` for editable catalogs (which always carry it). Without
-// this, an editable catalog that relies on the default would leave the table on
-// positional selection keys, so an optimistic create/delete that shifts rows
-// would leave `selected` pointing at the wrong records. Mirrors `edit.indexField`.
+// The row-identifier the table uses as its selection key: the effective
+// `idField`, on any catalog whose loaded rows carry it. Without this, a catalog
+// relying on the default `id` would leave the table on positional selection
+// keys, so anything that shifts rows — an optimistic create/delete, a page
+// change, a re-sort, a refresh-banner apply — would leave `selected` pointing
+// at the wrong records. Editable or not: a read-only catalog with
+// `v-model:selected` (a picker dialog, say) needs identity keys just as much,
+// and a server-default select typically already carries `id`. Mirrors
+// `edit.indexField`.
 //
-// Gated on `rowsCarryIndexField`: when `editable` flips true (or `indexField`
-// changes) the on-screen rows don't carry the new key until the triggered refetch
-// lands. Switching STable onto it during that window keys every row's selection to
-// `undefined` — wiping the current selection and making any row-select emit
-// `[undefined]` (so parent bulk actions act on no/wrong records). Stay on the
-// previous positional key until the loaded rows carry it, matching the
-// `edit.editable` gate so selection and editing flip together.
+// Gated on `rowsCarryIndexField`: while the loaded rows don't carry the key —
+// an explicit `select` that omits it, or an `indexField` change (on an editable
+// catalog the triggered refetch below brings the new key in; a read-only
+// catalog stays positional until a fetch happens to include it) — switching
+// STable onto it would key every row's selection to `undefined`, wiping the
+// current selection and making any row-select emit `[undefined]` (so parent
+// bulk actions act on no/wrong records). Stay on the positional key until the
+// loaded rows carry it.
 const tableIndexField = computed(() => {
-  const field = props.indexField ?? (props.editable ? 'id' : undefined)
-  return field && rowsCarryIndexField.value ? field : undefined
+  return rowsCarryIndexField.value ? idField.value : undefined
+})
+
+// `selected` keys live in `tableIndexField`'s domain — record identity vs row
+// position. If that domain changes while rows are on screen (a view change
+// dropping the identifier column, one re-adding it, a runtime `indexField`
+// swap), the held keys mean nothing under the new domain — but STable's
+// selection pruning keeps any that happen to *collide* with it (a numeric id
+// surviving as a row position, or vice versa), silently re-pointing the
+// selection at wrong rows for the parent's bulk actions. Clear it instead.
+//
+// A flip settling on a fetch that follows an empty table (`hadRows` false —
+// first load, or a filter state with no matches) doesn't count: nothing was
+// selectable under the previous domain, so anything already in `selected` is a
+// parent-provided seed targeting the domain being settled, and must survive it.
+let hadRows = false
+watch([tableIndexField, () => result.value?.data], ([field], [prevField]) => {
+  if (field !== prevField && hadRows && selected.value?.length) {
+    selected.value = []
+  }
+  hadRows = (result.value?.data?.length ?? 0) > 0
 })
 
 // The `indexField` is appended to the request `select` so the server
@@ -622,10 +653,16 @@ const tableIndexField = computed(() => {
 //
 // Editable catalogs must carry a row identifier so updates / deletes can
 // address each row; when no `indexField` is configured the identifier
-// defaults to `id`. When the caller has no concrete select list, nothing
-// is added either — leaving the request empty lets the server use its own
-// defaults (which include `id`, so the read-only sheet still opens). See
-// `indexField` prop docs above.
+// defaults to `id`. Read-only catalogs get no *default* identifier appended
+// (an explicit `indexField` is always included, per its prop doc): the
+// selection key (`tableIndexField` above) is opportunistic — it keys by the
+// identifier when the rows already carry it (server defaults typically
+// include `id`) and stays positional when an explicit `select` omits it,
+// rather than growing every read-only request by an extra column. When the
+// caller has no concrete select list, nothing is added either — leaving the
+// request empty lets the server use its own defaults (which typically
+// include `id`, so the read-only sheet still opens). See `indexField` prop
+// docs above.
 function withIndexField(fields: string[]): string[] {
   if (fields.length === 0) { return [] }
   const field = props.indexField ?? (props.editable ? 'id' : null)

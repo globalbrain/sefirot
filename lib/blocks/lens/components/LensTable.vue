@@ -236,9 +236,10 @@ const table = useTable({
   orders,
   columns,
   // A getter (not a snapshot) so the selection key stays reactive: `indexField`
-  // can change after mount — e.g. an editable catalog resolves permissions async
-  // and flips from positional keys to `id`. STable reads this inside a computed,
-  // so the getter establishes the dependency and selection re-keys correctly.
+  // can change after mount — e.g. rows landing without the identifier flip the
+  // catalog from identity keys back to positional, and an `indexField` change
+  // settling re-keys it. STable reads this inside a computed, so the getter
+  // establishes the dependency and selection re-keys correctly.
   get indexField() { return props.indexField },
   borderless: true
 })
