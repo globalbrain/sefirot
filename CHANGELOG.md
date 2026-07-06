@@ -1,5 +1,17 @@
 # Changelog
 
+# [4.60.0](https://github.com/globalbrain/sefirot/compare/v4.59.1...v4.60.0) (2026-07-06)
+
+
+### Bug Fixes
+
+* **lens:** key selection by record identity on read-only catalogs ([#764](https://github.com/globalbrain/sefirot/issues/764)) ([7d9ba22](https://github.com/globalbrain/sefirot/commit/7d9ba221a06a35b25539fcbfdc86da2f63b17c43))
+
+
+### Features
+
+* **lens:** trust the definition for the input blank ([#765](https://github.com/globalbrain/sefirot/issues/765)) ([64c5889](https://github.com/globalbrain/sefirot/commit/64c5889b9f67435482f28c039630b33fdf0f8329))
+
 ## [4.59.1](https://github.com/globalbrain/sefirot/compare/v4.59.0...v4.59.1) (2026-07-03)
 
 
