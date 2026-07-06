@@ -156,11 +156,8 @@ function start() {
   }
 
   inputComponent.value = props.field.formInputComponent()
-  // `inputEmptyValue()` is already input-format; only a real cell value
-  // converts (see LensSheetField for the same split).
-  model.value = props.value != null
-    ? props.field.payloadToInput(props.value)
-    : props.field.inputEmptyValue()
+  const raw = props.value
+  model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
   reset()
   inline?.start(myKey.value)
   nextTick(() => {

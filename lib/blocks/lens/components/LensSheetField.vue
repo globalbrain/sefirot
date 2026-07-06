@@ -94,9 +94,6 @@ const { validation, validate, reset } = useValidation(
 const formEl = ref<HTMLElement | null>(null)
 
 function start() {
-  // `inputEmptyValue()` is already input-format (the definition's blank runs
-  // through `payloadToInput` inside it), so only a real stored value converts —
-  // re-converting the blank would double-run non-idempotent converters.
   const raw = props.record[props.fieldKey]
   model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
   reset()

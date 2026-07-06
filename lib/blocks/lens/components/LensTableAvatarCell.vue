@@ -193,8 +193,6 @@ function startNames() {
     return
   }
   for (const entry of nameEntries.value) {
-    // `inputEmptyValue()` is already input-format; only a real stored value
-    // converts (see LensSheetField for the same split).
     const raw = props.record[entry.key]
     nameModel[entry.key] = raw != null ? entry.field.payloadToInput(raw) : entry.field.inputEmptyValue()
   }
