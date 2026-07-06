@@ -255,10 +255,21 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
-   * Returns the value should be used when the input is empty.
+   * The value an empty input starts from: the definition's `emptyValue`, a
+   * wire-format payload value run through `payloadToInput`. The server owns
+   * the blank entirely — field types with a non-null blank (a multiple
+   * select's `[]`, say) declare it in their definition, so there are no
+   * per-type overrides here. Only null/undefined fall back to a null blank,
+   * so `false` and `0` are real values.
+   *
+   * Feeds the create-form seeding and the editors' null fallback alike, so
+   * a non-blank `emptyValue` also pre-fills the editor of a record whose
+   * stored value is null.
    */
   inputEmptyValue(): any {
-    return null
+    return this.data.emptyValue != null
+      ? this.payloadToInput(this.data.emptyValue)
+      : null
   }
 
   /**

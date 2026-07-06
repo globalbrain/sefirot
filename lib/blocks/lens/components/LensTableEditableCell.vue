@@ -156,7 +156,8 @@ function start() {
   }
 
   inputComponent.value = props.field.formInputComponent()
-  model.value = props.field.payloadToInput(props.value ?? props.field.inputEmptyValue())
+  const raw = props.value
+  model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
   reset()
   inline?.start(myKey.value)
   nextTick(() => {

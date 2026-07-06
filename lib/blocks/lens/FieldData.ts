@@ -61,6 +61,16 @@ export interface FieldDataBase {
   showOnDetail?: boolean
   showOnCreate?: boolean
   showOnUpdate?: boolean
+  /**
+   * The server-declared blank for the field's input, as a wire-format
+   * payload value — the server owns this entirely: types whose blank isn't
+   * null (a multiple select's `[]`) declare it here, and an entity may set
+   * its own (e.g. `'draft'` for a status select). Feeds `inputEmptyValue`:
+   * the create form seeds from it, and an editor opening on a null stored
+   * value falls back to it. Null or absent (backends predating the key)
+   * means a null blank.
+   */
+  emptyValue?: any
 }
 
 export interface AvatarFieldData extends FieldDataBase {

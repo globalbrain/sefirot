@@ -193,7 +193,8 @@ function startNames() {
     return
   }
   for (const entry of nameEntries.value) {
-    nameModel[entry.key] = entry.field.payloadToInput(props.record[entry.key] ?? entry.field.inputEmptyValue())
+    const raw = props.record[entry.key]
+    nameModel[entry.key] = raw != null ? entry.field.payloadToInput(raw) : entry.field.inputEmptyValue()
   }
   reset()
   inline?.start(myKey.value)

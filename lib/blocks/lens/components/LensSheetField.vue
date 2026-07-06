@@ -95,7 +95,7 @@ const formEl = ref<HTMLElement | null>(null)
 
 function start() {
   const raw = props.record[props.fieldKey]
-  model.value = props.field.payloadToInput(raw ?? props.field.inputEmptyValue())
+  model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
   reset()
   editing.value = true
   // Focus the input on open (matching the inline table editor): better UX, and
