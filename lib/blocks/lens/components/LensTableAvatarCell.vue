@@ -193,7 +193,10 @@ function startNames() {
     return
   }
   for (const entry of nameEntries.value) {
-    nameModel[entry.key] = entry.field.payloadToInput(props.record[entry.key] ?? entry.field.inputEmptyValue())
+    // `inputEmptyValue()` is already input-format; only a real stored value
+    // converts (see LensSheetField for the same split).
+    const raw = props.record[entry.key]
+    nameModel[entry.key] = raw != null ? entry.field.payloadToInput(raw) : entry.field.inputEmptyValue()
   }
   reset()
   inline?.start(myKey.value)
