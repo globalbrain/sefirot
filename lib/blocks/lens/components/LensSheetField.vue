@@ -345,11 +345,10 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
 }
 
 .editor {
-  position: absolute;
-  top: -8px;
-  left: -16px;
-  right: 0;
+  position: relative;
   z-index: 2;
+  margin: -8px 0 0 -16px;
+  width: calc(100% + 16px);
   border: 1px solid var(--c-border);
   border-radius: 8px;
   background-color: var(--c-bg-1);
