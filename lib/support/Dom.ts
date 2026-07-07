@@ -17,6 +17,50 @@ export function isTextLikeInput(target: EventTarget | null): boolean {
   return ['text', 'search', 'url', 'email', 'tel', 'password', 'number'].includes(type)
 }
 
+export type EditorSubmitShortcut = 'enter' | 'command-enter' | 'control-enter'
+
+/**
+ * The user-facing shortcut to show for the currently focused editor control.
+ * Plain Enter is truthful only for simple text-like inputs; other controls need
+ * the platform's primary modifier to avoid clashing with their own Enter key
+ * behavior.
+ */
+export function editorSubmitShortcutForTarget(
+  target: EventTarget | null,
+  platform = currentPlatform()
+): EditorSubmitShortcut {
+  if (isTextLikeInput(target)) {
+    return 'enter'
+  }
+
+  return hasCommandShortcutModifier(platform) ? 'command-enter' : 'control-enter'
+}
+
+const commandShortcutPlatforms = new Set([
+  'ios',
+  'ipados',
+  'macos',
+
+  // `navigator.platform` fallback values.
+  'ipad',
+  'iphone',
+  'macintel'
+])
+
+function hasCommandShortcutModifier(platform: string): boolean {
+  return commandShortcutPlatforms.has(platform.toLowerCase())
+}
+
+function currentPlatform(): string {
+  if (typeof navigator === 'undefined') {
+    return ''
+  }
+
+  const nav = navigator as Navigator & { userAgentData?: { platform?: string } }
+
+  return nav.userAgentData?.platform ?? nav.platform ?? ''
+}
+
 /**
  * Whether an Enter keydown should submit an inline editor. Ctrl/Cmd+Enter
  * submits from any control — it's the near-universal "submit" gesture (GitHub,

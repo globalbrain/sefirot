@@ -37,6 +37,23 @@ describe('support/Dom', () => {
     })
   })
 
+  describe('editorSubmitShortcutForTarget', () => {
+    it('shows plain Enter for text-like inputs', () => {
+      expect(Dom.editorSubmitShortcutForTarget(input('text'), 'macOS')).toBe('enter')
+      expect(Dom.editorSubmitShortcutForTarget(input('number'), 'Windows')).toBe('enter')
+    })
+
+    it('shows Command+Enter on Apple keyboard platforms for non-text controls', () => {
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('textarea'), 'macOS')).toBe('command-enter')
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('div'), 'iPadOS')).toBe('command-enter')
+    })
+
+    it('shows Control+Enter on other platforms for non-text controls', () => {
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('textarea'), 'Windows')).toBe('control-enter')
+      expect(Dom.editorSubmitShortcutForTarget(null, 'Linux')).toBe('control-enter')
+    })
+  })
+
   describe('isEditorSubmitKeydown', () => {
     it('submits on bare Enter from a text-like input', () => {
       expect(Dom.isEditorSubmitKeydown(keydown(input('text')))).toBe(true)

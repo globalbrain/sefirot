@@ -222,13 +222,20 @@ export abstract class Field<T extends FieldData> {
    * Helper function to define the data list item component.
    */
   protected defineDataListItemComponent(fn: (value: any) => any, options: any = null): any {
-    return defineComponent((props) => {
-      return () => h(SDataListItem, options, {
+    return defineComponent((props, { emit }) => {
+      return () => h(SDataListItem, {
+        ...(options ?? {}),
+        'valueAction': props.valueAction,
+        'onClick:value': (event: MouseEvent) => {
+          emit('click:value', event)
+        }
+      }, {
         label: () => this.label(),
         value: () => fn(props.value)
       })
     }, {
-      props: ['value']
+      props: ['value', 'valueAction'],
+      emits: ['click:value']
     })
   }
 
@@ -305,7 +312,7 @@ export abstract class Field<T extends FieldData> {
    */
   protected defineFormInputComponent(fn: (props: any, emit: any) => any): any {
     return defineComponent(fn, {
-      props: ['modelValue', 'validation'],
+      props: ['modelValue', 'validation', 'size'],
       emits: ['update:modelValue']
     })
   }

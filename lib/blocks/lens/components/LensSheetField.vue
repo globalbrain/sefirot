@@ -1,11 +1,19 @@
 <script setup lang="ts">
+import IconArrowBendDownLeft from '~icons/ph/arrow-bend-down-left'
+import IconCommand from '~icons/ph/command'
+import IconControl from '~icons/ph/control'
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { computed, nextTick, ref, watch } from 'vue'
+import { type Component, computed, nextTick, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
-import { dispatchEditorKeydown, focusFirstEditable } from '../../../support/Dom'
+import {
+  type EditorSubmitShortcut,
+  dispatchEditorKeydown,
+  editorSubmitShortcutForTarget,
+  focusFirstEditable
+} from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
 import { type Field } from '../fields/Field'
@@ -73,6 +81,7 @@ const canEdit = computed(() =>
 
 const editing = ref(false)
 const model = ref<any>(null)
+const activeEditorTarget = ref<EventTarget | null>(null)
 
 // If the backing record is replaced/rebound while this editor is open (the
 // refresh banner, a parent `refresh()`, or a `/show` merge filling detail keys),
@@ -93,6 +102,16 @@ const { validation, validate, reset } = useValidation(
 
 const formEl = ref<HTMLElement | null>(null)
 
+const submitShortcut = computed(() => editorSubmitShortcutForTarget(activeEditorTarget.value))
+const submitShortcutModifierIcon = computed<Component | null>(() => {
+  return submitShortcut.value === 'command-enter'
+    ? IconCommand
+    : submitShortcut.value === 'control-enter'
+      ? IconControl
+      : null
+})
+const submitShortcutLabel = computed(() => shortcutLabel(submitShortcut.value))
+
 function start() {
   const raw = props.record[props.fieldKey]
   model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
@@ -101,7 +120,10 @@ function start() {
   // Focus the input on open (matching the inline table editor): better UX, and
   // it routes the editor's keydowns — notably Escape — through the form handler
   // so Escape cancels the edit rather than closing the sheet.
-  nextTick(() => focusFirstEditable(formEl.value))
+  nextTick(() => {
+    focusFirstEditable(formEl.value)
+    syncActiveEditorTarget()
+  })
 }
 
 function cancel() {
@@ -148,13 +170,44 @@ function onEditorKeydown(event: KeyboardEvent) {
   // closes on it (via SSheet's window-level handler).
   dispatchEditorKeydown(event, { cancel, submit: apply, shield: true })
 }
+
+function onEditorFocusin(event: FocusEvent) {
+  if (event.target instanceof HTMLElement && event.target.closest('.actions')) {
+    return
+  }
+
+  activeEditorTarget.value = event.target
+}
+
+function syncActiveEditorTarget() {
+  const activeElement = document.activeElement
+  activeEditorTarget.value = activeElement instanceof HTMLElement
+    && formEl.value?.contains(activeElement)
+    && !activeElement.closest('.actions')
+    ? activeElement
+    : null
+}
+
+function shortcutLabel(shortcut: EditorSubmitShortcut): string {
+  return shortcut === 'enter'
+    ? 'Enter'
+    : shortcut === 'command-enter'
+      ? 'Command+Enter'
+      : 'Control+Enter'
+}
 </script>
 
 <template>
-  <div class="LensSheetField" :class="{ editing }">
+  <div class="LensSheetField" :class="{ editing, 'is-editable': canEdit }">
     <div v-if="!editing" class="display">
-      <component :is="displayComponent" v-if="displayComponent" :value="record[fieldKey]" />
-      <SDataListItem v-else>
+      <component
+        :is="displayComponent"
+        v-if="displayComponent"
+        :value="record[fieldKey]"
+        :value-action="canEdit"
+        @click:value="start"
+      />
+      <SDataListItem v-else :value-action="canEdit" @click:value="start">
         <template #label>{{ field.label() }}</template>
         <template v-if="displayValue !== null" #value>{{ displayValue }}</template>
       </SDataListItem>
@@ -163,18 +216,50 @@ function onEditorKeydown(event: KeyboardEvent) {
         class="edit"
         type="button"
         :aria-label="`${t.edit} ${field.label()}`"
-        @click="start"
+        @click.stop="start"
       >
         <IconPencilSimple class="edit-icon" />
       </button>
     </div>
 
-    <div v-else ref="formEl" class="form" @keydown="onEditorKeydown">
-      <component :is="inputComponent" v-model="model" :validation="validation.input" />
-      <div class="actions">
-        <SButton size="mini" :label="t.cancel" @click="cancel" />
-        <SButton size="mini" mode="info" :label="t.apply" @click="apply" />
-      </div>
+    <div v-else ref="formEl" class="form" @keydown="onEditorKeydown" @focusin="onEditorFocusin">
+      <SDataListItem>
+        <template #label>{{ field.label() }}</template>
+        <template #value>
+          <div class="editor">
+            <div class="editor-input">
+              <component
+                :is="inputComponent"
+                v-model="model"
+                size="mini"
+                :validation="validation.input"
+              />
+            </div>
+            <div class="actions">
+              <SButton size="mini" :label="t.cancel" @click="cancel" />
+              <button
+                class="apply-action"
+                type="button"
+                :aria-label="`${t.apply} (${submitShortcutLabel})`"
+                @click="apply"
+              >
+                <span class="apply-content">
+                  <span class="apply-label">{{ t.apply }}</span>
+                  <span class="shortcut" :title="submitShortcutLabel" aria-hidden="true">
+                    <component
+                      :is="submitShortcutModifierIcon"
+                      v-if="submitShortcutModifierIcon"
+                      class="shortcut-icon"
+                    />
+                    <span v-if="submitShortcutModifierIcon" class="shortcut-plus">+</span>
+                    <IconArrowBendDownLeft class="shortcut-icon" />
+                  </span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </template>
+      </SDataListItem>
     </div>
   </div>
 </template>
@@ -186,33 +271,66 @@ function onEditorKeydown(event: KeyboardEvent) {
 }
 
 .form {
-  padding: 8px 0;
+  position: relative;
 }
 
 .display {
   position: relative;
+  isolation: isolate;
+}
+
+.display :deep(.value),
+.display :deep(.empty) {
+  position: relative;
+  z-index: 0;
+}
+
+.LensSheetField.is-editable .display :deep(.value)::before,
+.LensSheetField.is-editable .display :deep(.empty)::before {
+  content: "";
+  position: absolute;
+  inset: -6px 0 -6px -16px;
+  z-index: -1;
+  pointer-events: none;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background-color: var(--c-bg-1);
+  box-shadow: var(--shadow-depth-2);
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+.LensSheetField.is-editable:hover .display :deep(.value)::before,
+.LensSheetField.is-editable:hover .display :deep(.empty)::before {
+  opacity: 1;
 }
 
 .edit {
   position: absolute;
-  top: 10px;
-  right: 0;
+  top: 50%;
+  right: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  transform: translateY(-50%);
+  border: 1px solid var(--input-border-color);
+  border-radius: 8px;
   color: var(--c-text-2);
+  background-color: var(--c-bg-1);
+  box-shadow: var(--shadow-depth-1);
   opacity: 0;
-  transition: opacity 0.1s, background-color 0.1s, color 0.1s;
+  transition: opacity 0.1s, border-color 0.1s, background-color 0.1s, color 0.1s;
 }
 
-.LensSheetField:hover .edit {
+.LensSheetField.is-editable:hover .edit {
   opacity: 1;
 }
 
 .edit:hover {
+  border-color: var(--input-hover-border-color);
   background-color: var(--c-bg-mute-1);
   color: var(--c-text-1);
 }
@@ -222,10 +340,113 @@ function onEditorKeydown(event: KeyboardEvent) {
   height: 16px;
 }
 
+.form :deep(.value) {
+  position: relative;
+}
+
+.editor {
+  position: absolute;
+  top: -8px;
+  left: -16px;
+  right: 0;
+  z-index: 2;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background-color: var(--c-bg-1);
+  box-shadow: var(--shadow-depth-2);
+  overflow: visible;
+}
+
+.editor-input {
+  position: relative;
+  z-index: 2;
+  padding: 8px;
+}
+
+.editor-input :deep(.SInputBase > .label) {
+  display: none;
+}
+
 .actions {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   gap: 8px;
-  margin-top: 8px;
+  padding: 8px;
+  border-top: 1px solid var(--c-divider);
+}
+
+.apply-action {
+  --button-border-color: var(--button-fill-info-border-color);
+  --button-text-color: var(--button-fill-info-text-color);
+  --button-content-color: var(--button-fill-info-content-color);
+  --button-bg-color: var(--button-fill-info-bg-color);
+  --button-hover-border-color: var(--button-fill-info-hover-border-color);
+  --button-hover-text-color: var(--button-fill-info-hover-text-color);
+  --button-hover-bg-color: var(--button-fill-info-hover-bg-color);
+  --button-active-border-color: var(--button-fill-info-active-border-color);
+  --button-active-text-color: var(--button-fill-info-active-text-color);
+  --button-active-bg-color: var(--button-fill-info-active-bg-color);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  min-width: 28px;
+  min-height: 28px;
+  border: 1px solid var(--button-border-color);
+  border-radius: 8px;
+  color: var(--button-text-color);
+  background-color: var(--button-bg-color);
+  font-size: var(--button-font-size, var(--button-mini-font-size));
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+.apply-action:hover {
+  border-color: var(--button-hover-border-color);
+  color: var(--button-hover-text-color);
+  background-color: var(--button-hover-bg-color);
+}
+
+.apply-action:active {
+  border-color: var(--button-active-border-color);
+  color: var(--button-active-text-color);
+  background-color: var(--button-active-bg-color);
+}
+
+.apply-content {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  gap: 6px;
+  color: var(--button-content-color);
+}
+
+.apply-label {
+  line-height: 20px;
+}
+
+.shortcut {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: currentColor;
+}
+
+.shortcut-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.shortcut-plus {
+  line-height: 16px;
+  font-size: 11px;
+  font-weight: 600;
 }
 </style>

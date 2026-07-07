@@ -52,7 +52,7 @@ export class FileUploadField extends Field<FileUploadFieldData> {
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputFileUpload, {
-        'size': 'mini',
+        'size': props.size ?? 'mini',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,

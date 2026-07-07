@@ -9,10 +9,15 @@ const props = withDefaults(defineProps<{
   preWrap?: boolean
   lineClamp?: string | number
   tnum?: boolean
+  valueAction?: boolean
 }>(), {
   dir: 'row',
   maxWidth: '100%'
 })
+
+const emit = defineEmits<{
+  'click:value': [event: MouseEvent]
+}>()
 
 const { labelWidth } = useDataListState()
 
@@ -48,6 +53,31 @@ function hasSlotContent(name = 'default'): boolean {
     return true
   })
 }
+
+function onValueClick(event: MouseEvent): void {
+  if (!props.valueAction || isInteractiveEventTarget(event.target)) {
+    return
+  }
+
+  emit('click:value', event)
+}
+
+function isInteractiveEventTarget(target: EventTarget | null): boolean {
+  return target instanceof HTMLElement && !!target.closest([
+    'a',
+    'button',
+    'input',
+    'textarea',
+    'select',
+    '[contenteditable="true"]',
+    '[role="button"]',
+    '[role="link"]',
+    '[role="checkbox"]',
+    '[role="radio"]',
+    '[role="switch"]',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(','))
+}
 </script>
 
 <template>
@@ -56,10 +86,10 @@ function hasSlotContent(name = 'default'): boolean {
       <div class="label" :style="labelStyles">
         <slot name="label" />
       </div>
-      <div v-if="!hasValue" class="empty">
+      <div v-if="!hasValue" class="empty" :class="{ action: valueAction }" @click="onValueClick">
         —
       </div>
-      <div v-else-if="hasValue" class="value" :style="valueStyles">
+      <div v-else-if="hasValue" class="value" :class="{ action: valueAction }" :style="valueStyles" @click="onValueClick">
         <slot name="value" />
       </div>
     </div>
@@ -100,6 +130,11 @@ function hasSlotContent(name = 'default'): boolean {
   line-height: 24px;
   font-size: 14px;
   color: var(--c-text-1);
+}
+
+.empty.action,
+.value.action {
+  cursor: pointer;
 }
 
 .SDataListItem.row .content {
