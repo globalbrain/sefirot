@@ -24,7 +24,7 @@ export type EditorSubmitShortcut = 'enter' | 'command-enter' | 'control-enter'
  * Plain Enter is truthful only for simple text-like inputs; other controls need
  * the platform's primary modifier to avoid clashing with their own Enter key
  * behavior. A text input nested inside a dropdown (its search filter, see
- * `SDropdownSectionFilter` / `SInputAsyncDropdown`) keeps bare Enter to itself
+ * `SDropdownSectionFilter` / `SInputAsyncDropdown`) keeps Enter to itself
  * too, so only the modifier gesture reaches the editor from there.
  */
 export function editorSubmitShortcutForTarget(
@@ -64,6 +64,21 @@ function currentPlatform(): string {
   const nav = navigator as Navigator & { userAgentData?: { platform?: string } }
 
   return nav.userAgentData?.platform ?? nav.platform ?? ''
+}
+
+/**
+ * Keydown handler for a text input nested inside a dropdown-like control (a
+ * search filter): Enter operates the control, not an enclosing inline editor,
+ * so it is stopped — with its default prevented — unless it carries the
+ * universal submit modifier (Cmd/Ctrl, see {@link isEditorSubmitKeydown}).
+ * Shift/Alt+Enter are contained too: the editor's submit predicate would read
+ * them off a text-like input as a plain submitting Enter.
+ */
+export function stopNonSubmitEnterKeydown(event: KeyboardEvent): void {
+  if (event.key === 'Enter' && !event.metaKey && !event.ctrlKey) {
+    event.stopPropagation()
+    event.preventDefault()
+  }
 }
 
 /**
@@ -114,8 +129,9 @@ export function isEditorCancelKeydown(event: KeyboardEvent): boolean {
  * throw on `formInputComponent()` (not yet editable). When making one editable,
  * if its input is a composite control with its own nested text input (e.g. a
  * dropdown's search filter), that nested input must keep Enter/Escape from
- * bubbling to this handler — see `SDropdownSectionFilter` — otherwise typing a
- * value and pressing Enter would submit/cancel the whole editor.
+ * bubbling to this handler — {@link stopNonSubmitEnterKeydown} is the Enter
+ * half; see `SDropdownSectionFilter` — otherwise typing a value and pressing
+ * Enter would submit/cancel the whole editor.
  */
 export function dispatchEditorKeydown(
   event: KeyboardEvent,

@@ -88,7 +88,10 @@ async function onOpen() {
 
 // Clicking (or Enter on) the box toggles the flyout — closing returns focus to
 // the box so keyboard interaction continues from the control instead of
-// falling to `document.body`. ArrowDown stays open-only (see the template).
+// falling to `document.body`. ArrowDown stays open-only, and the Enter binding
+// is `.exact`: a Cmd/Ctrl+Enter submit starts on keydown, and if the editor
+// stays open (failed validation), the same gesture's keyup must not reopen the
+// flyout (see the template).
 function onToggle() {
   if (isOpen.value) {
     close()
@@ -163,7 +166,7 @@ function onSelect(value: T) {
         tabindex="0"
         @click="onToggle"
         @keydown.down.prevent
-        @keyup.enter="onToggle"
+        @keyup.enter.exact="onToggle"
         @keyup.down="onOpen"
       >
         <div class="box-content">

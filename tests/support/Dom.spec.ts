@@ -37,6 +37,36 @@ describe('support/Dom', () => {
     })
   })
 
+  describe('stopNonSubmitEnterKeydown', () => {
+    function enter(init: KeyboardEventInit = {}): KeyboardEvent {
+      return new KeyboardEvent('keydown', { key: 'Enter', cancelable: true, ...init })
+    }
+
+    it('contains Enter without the submit modifier', () => {
+      for (const event of [enter(), enter({ shiftKey: true }), enter({ altKey: true })]) {
+        const stop = vi.spyOn(event, 'stopPropagation')
+        Dom.stopNonSubmitEnterKeydown(event)
+        expect(stop).toHaveBeenCalled()
+        expect(event.defaultPrevented).toBe(true)
+      }
+    })
+
+    it('lets Cmd/Ctrl+Enter pass through to the editor', () => {
+      for (const event of [enter({ metaKey: true }), enter({ ctrlKey: true })]) {
+        const stop = vi.spyOn(event, 'stopPropagation')
+        Dom.stopNonSubmitEnterKeydown(event)
+        expect(stop).not.toHaveBeenCalled()
+        expect(event.defaultPrevented).toBe(false)
+      }
+    })
+
+    it('ignores non-Enter keys', () => {
+      const event = new KeyboardEvent('keydown', { key: 'a', cancelable: true })
+      Dom.stopNonSubmitEnterKeydown(event)
+      expect(event.defaultPrevented).toBe(false)
+    })
+  })
+
   describe('editorSubmitShortcutForTarget', () => {
     it('shows plain Enter for text-like inputs', () => {
       expect(Dom.editorSubmitShortcutForTarget(input('text'), 'macOS')).toBe('enter')

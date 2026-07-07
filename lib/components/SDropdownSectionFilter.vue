@@ -7,6 +7,7 @@ import {
   type DropdownSectionFilterSelectedValue
 } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
+import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
 const props = defineProps<{
@@ -79,17 +80,12 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
 <template>
   <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
-      <!-- Keep bare Enter inside the filter: it drives the dropdown, and must
-           not bubble to an enclosing editor/form as a submit. Modified Enter
-           (`.exact`) passes through — Cmd/Ctrl+Enter is the universal submit
-           gesture and should reach the editor. ArrowDown moves focus into the
-           option list. -->
       <input
         ref="input"
         v-model="query"
         class="input"
         :placeholder="t.i_ph"
-        @keydown.enter.exact.stop.prevent
+        @keydown.enter="stopNonSubmitEnterKeydown"
         @keydown.down.prevent
         @keyup.down.prevent="focusFirstOption"
       >

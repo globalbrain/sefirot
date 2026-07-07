@@ -6,6 +6,7 @@ import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import { type Option } from '../support/InputDropdown'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
@@ -212,7 +213,10 @@ function onOpen() {
 
 // Clicking (or Enter on) the box toggles the flyout — closing returns focus to
 // the box so keyboard interaction continues from the control instead of
-// falling to `document.body`. ArrowDown stays open-only (see the template).
+// falling to `document.body`. ArrowDown stays open-only, and the Enter binding
+// is `.exact`: a Cmd/Ctrl+Enter submit starts on keydown, and if the editor
+// stays open (failed validation), the same gesture's keyup must not reopen the
+// flyout (see the template).
 function onToggle() {
   if (isOpen.value) {
     close()
@@ -370,7 +374,7 @@ function focusNext(event: any): void {
         tabindex="0"
         @click="onToggle"
         @keydown.down.prevent
-        @keyup.enter="onToggle"
+        @keyup.enter.exact="onToggle"
         @keyup.down="onOpen"
       >
         <div class="box-content">
@@ -395,18 +399,12 @@ function focusNext(event: any): void {
       <div v-if="isOpen" class="dropdown" :style="inset">
         <div class="dropdown-content">
           <div class="search">
-            <!-- Keep bare Enter inside the search field: it drives the dropdown
-                 and must neither bubble to an enclosing editor/form (`.stop`) nor
-                 trigger the browser's implicit form submission (`.prevent`).
-                 Modified Enter (`.exact`) passes through — Cmd/Ctrl+Enter is the
-                 universal submit gesture and should reach the editor. ArrowDown
-                 moves focus into the option list. -->
             <input
               ref="input"
               v-model="query"
               class="search-input"
               :placeholder="t.ph"
-              @keydown.enter.exact.stop.prevent
+              @keydown.enter="stopNonSubmitEnterKeydown"
               @keydown.down.prevent
               @keyup.down.prevent="focusFirstOption"
             >
