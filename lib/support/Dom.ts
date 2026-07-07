@@ -23,13 +23,18 @@ export type EditorSubmitShortcut = 'enter' | 'command-enter' | 'control-enter'
  * The user-facing shortcut to show for the currently focused editor control.
  * Plain Enter is truthful only for simple text-like inputs; other controls need
  * the platform's primary modifier to avoid clashing with their own Enter key
- * behavior.
+ * behavior. A text input nested inside a dropdown (its search filter, see
+ * `SDropdownSectionFilter` / `SInputAsyncDropdown`) keeps bare Enter to itself
+ * too, so only the modifier gesture reaches the editor from there.
  */
 export function editorSubmitShortcutForTarget(
   target: EventTarget | null,
   platform = currentPlatform()
 ): EditorSubmitShortcut {
-  if (isTextLikeInput(target)) {
+  if (
+    isTextLikeInput(target)
+    && !(target as HTMLElement).closest('.SDropdown, .SInputAsyncDropdown')
+  ) {
     return 'enter'
   }
 

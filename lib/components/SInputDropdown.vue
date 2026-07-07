@@ -38,6 +38,7 @@ const { t } = useTrans({
 })
 
 const container = ref<HTMLDivElement>()
+const box = ref<HTMLDivElement>()
 
 const { isOpen, open, close } = useFlyout(container)
 const { inset, update: updatePosition } = useManualDropdownPosition(
@@ -85,6 +86,33 @@ async function onOpen() {
   }
 }
 
+// Clicking (or Enter on) the box toggles the flyout — closing returns focus to
+// the box so keyboard interaction continues from the control instead of
+// falling to `document.body`. ArrowDown stays open-only (see the template).
+function onToggle() {
+  if (isOpen.value) {
+    close()
+    box.value?.focus()
+    return
+  }
+  onOpen()
+}
+
+// Escape while the flyout is open belongs to the flyout: close it and return
+// focus to the box, keeping the keydown from an enclosing surface (an inline
+// editor would cancel, a sheet would close). A closed dropdown leaves Escape
+// to those surfaces. The Escape that cancels an IME composition never
+// operates the flyout.
+function onEscapeKeydown(event: KeyboardEvent) {
+  if (!isOpen.value || event.isComposing) {
+    return
+  }
+  event.stopPropagation()
+  event.preventDefault()
+  close()
+  box.value?.focus()
+}
+
 function onSelect(value: T) {
   props.validation?.$touch()
 
@@ -99,7 +127,13 @@ function onSelect(value: T) {
     model.value = null
   }
 
-  props.closeOnClick && close()
+  // Return focus to the box on a selection that closes the flyout, so
+  // keyboard interaction (reopening, an editor's submit shortcut) continues
+  // from the control rather than falling to `document.body`.
+  if (props.closeOnClick) {
+    close()
+    box.value?.focus()
+  }
 }
 </script>
 
@@ -121,14 +155,15 @@ function onSelect(value: T) {
     :hide-error
     :hide-warning
   >
-    <div ref="container" class="container">
+    <div ref="container" class="container" @keydown.esc="onEscapeKeydown">
       <div
+        ref="box"
         class="box"
         role="button"
         tabindex="0"
-        @click="onOpen"
+        @click="onToggle"
         @keydown.down.prevent
-        @keyup.enter="onOpen"
+        @keyup.enter="onToggle"
         @keyup.down="onOpen"
       >
         <div class="box-content">
@@ -181,6 +216,13 @@ function onSelect(value: T) {
 
   &:hover {
     border-color: var(--input-hover-border-color);
+  }
+
+  /* Keyboard focus shows via the border (the input-family idiom), not the
+     UA's default ring. */
+  &:focus-visible {
+    outline: none;
+    border-color: var(--input-focus-border-color);
   }
 }
 

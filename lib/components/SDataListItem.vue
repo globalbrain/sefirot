@@ -55,15 +55,27 @@ function hasSlotContent(name = 'default'): boolean {
 }
 
 function onValueClick(event: MouseEvent): void {
-  if (!props.valueAction || isInteractiveEventTarget(event.target)) {
+  if (!props.valueAction || isInteractiveClick(event)) {
     return
   }
 
   emit('click:value', event)
 }
 
-function isInteractiveEventTarget(target: EventTarget | null): boolean {
-  return target instanceof HTMLElement && !!target.closest([
+// Whether the click landed on interactive content (a link, button, input, …)
+// inside the cell, which handles the click itself. The `closest()` match is
+// bounded to the cell (`currentTarget`): an interactive *ancestor* of the
+// whole list — a tabindexed scroll container, say — must not swallow every
+// cell click.
+function isInteractiveClick(event: MouseEvent): boolean {
+  const cell = event.currentTarget
+  const target = event.target
+
+  if (!(cell instanceof HTMLElement) || !(target instanceof HTMLElement)) {
+    return false
+  }
+
+  const interactive = target.closest([
     'a',
     'button',
     'input',
@@ -77,6 +89,8 @@ function isInteractiveEventTarget(target: EventTarget | null): boolean {
     '[role="switch"]',
     '[tabindex]:not([tabindex="-1"])'
   ].join(','))
+
+  return !!interactive && cell.contains(interactive)
 }
 </script>
 

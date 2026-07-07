@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import IconArrowBendDownLeft from '~icons/ph/arrow-bend-down-left'
-import IconCommand from '~icons/ph/command'
-import IconControl from '~icons/ph/control'
+import IconChevronUp from '~icons/lucide/chevron-up'
+import IconCommand from '~icons/lucide/command'
+import IconCornerDownLeft from '~icons/lucide/corner-down-left'
 import IconPencilSimple from '~icons/ph/pencil-simple'
-import { type Component, computed, nextTick, ref, watch } from 'vue'
+import { type Component, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import SButton from '../../../components/SButton.vue'
 import SDataListItem from '../../../components/SDataListItem.vue'
 import { useTrans } from '../../../composables/Lang'
@@ -16,6 +16,7 @@ import {
 } from '../../../support/Dom'
 import { type FieldData } from '../FieldData'
 import { useLensEdit } from '../composables/LensEdit'
+import { useLensInlineEdit } from '../composables/LensInlineEdit'
 import { type Field } from '../fields/Field'
 
 const props = defineProps<{
@@ -79,20 +80,40 @@ const canEdit = computed(() =>
   && props.field.supportsOptimisticUpdate()
 )
 
-const editing = ref(false)
+// The editor's visible label. The input's own label — the one that carries the
+// required marker — is visually hidden (the row label stands in for it), so
+// re-attach the marker here.
+const editorLabel = computed(() =>
+  (props.field as any).data?.required ? `${props.field.label()} *` : props.field.label()
+)
+
+// One sheet editor open at a time: `editing` derives from the sheet-scoped
+// inline-edit context (provided by LensSheet), so opening another field's
+// editor closes this one — mirroring the table's inline cells.
+const inline = useLensInlineEdit()
+const editing = computed(() => inline?.activeKey.value === props.fieldKey)
 const model = ref<any>(null)
 const activeEditorTarget = ref<EventTarget | null>(null)
+
+// The sheet can close (or flip to create mode) while an editor is open; the
+// field unmounts but the shared key would survive and reopen this field's
+// editor on the next mount. Release it if it's still ours.
+onUnmounted(() => {
+  if (editing.value) {
+    inline?.stop()
+  }
+})
 
 // If the backing record is replaced/rebound while this editor is open (the
 // refresh banner, a parent `refresh()`, or a `/show` merge filling detail keys),
 // the `model` captured in `start()` is stale; applying it would overwrite the
 // freshly bound value. Close the editor so the user re-opens against the current
-// value. Our own optimistic save also mutates this value, but `apply()` sets
-// `editing = false` synchronously right after, so this async watcher sees it
-// already closed; user typing only touches the local `model`, never the record.
+// value. Our own optimistic save also mutates this value, but `apply()` stops
+// the edit synchronously right after, so this async watcher sees it already
+// closed; user typing only touches the local `model`, never the record.
 watch(
   () => props.record[props.fieldKey],
-  () => { if (editing.value) { editing.value = false } }
+  () => { if (editing.value) { inline?.stop() } }
 )
 
 const { validation, validate, reset } = useValidation(
@@ -102,21 +123,28 @@ const { validation, validate, reset } = useValidation(
 
 const formEl = ref<HTMLElement | null>(null)
 
-const submitShortcut = computed(() => editorSubmitShortcutForTarget(activeEditorTarget.value))
+// No hint while nothing inside the form is focused (e.g. a radio-group editor,
+// whose options aren't keyboard-focusable): keydowns don't route through the
+// form then, so no shortcut would actually work.
+const submitShortcut = computed(() =>
+  activeEditorTarget.value ? editorSubmitShortcutForTarget(activeEditorTarget.value) : null
+)
 const submitShortcutModifierIcon = computed<Component | null>(() => {
   return submitShortcut.value === 'command-enter'
     ? IconCommand
     : submitShortcut.value === 'control-enter'
-      ? IconControl
+      ? IconChevronUp
       : null
 })
-const submitShortcutLabel = computed(() => shortcutLabel(submitShortcut.value))
+const submitShortcutLabel = computed(() =>
+  submitShortcut.value ? shortcutLabel(submitShortcut.value) : null
+)
 
 function start() {
   const raw = props.record[props.fieldKey]
   model.value = raw != null ? props.field.payloadToInput(raw) : props.field.inputEmptyValue()
   reset()
-  editing.value = true
+  inline?.start(props.fieldKey)
   // Focus the input on open (matching the inline table editor): better UX, and
   // it routes the editor's keydowns — notably Escape — through the form handler
   // so Escape cancels the edit rather than closing the sheet.
@@ -127,7 +155,7 @@ function start() {
 }
 
 function cancel() {
-  editing.value = false
+  inline?.stop()
 }
 
 async function apply() {
@@ -154,7 +182,11 @@ async function apply() {
   // is open (e.g. a refresh marks it locked). Re-check before persisting so an
   // already-open editor can't save a row the policy now rejects.
   if (!canEdit.value) {
-    editing.value = false
+    // Only release the shared key if it's still ours: another field's editor
+    // may have opened during the awaited validation above.
+    if (editing.value) {
+      inline?.stop()
+    }
     return
   }
 
@@ -162,7 +194,9 @@ async function apply() {
   edit!.save(props.record, {
     [props.fieldKey]: props.field.inputToPayload(model.value)
   })
-  editing.value = false
+  if (editing.value) {
+    inline?.stop()
+  }
 }
 
 function onEditorKeydown(event: KeyboardEvent) {
@@ -177,6 +211,15 @@ function onEditorFocusin(event: FocusEvent) {
   }
 
   activeEditorTarget.value = event.target
+}
+
+function onEditorFocusout(event: FocusEvent) {
+  // Focus moving within the form (including onto the action buttons) keeps the
+  // hint stable; focus leaving the editor entirely clears it, so the hint can't
+  // keep advertising a control that's no longer focused.
+  if (!(event.relatedTarget instanceof HTMLElement && formEl.value?.contains(event.relatedTarget))) {
+    activeEditorTarget.value = null
+  }
 }
 
 function syncActiveEditorTarget() {
@@ -222,9 +265,16 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
       </button>
     </div>
 
-    <div v-else ref="formEl" class="form" @keydown="onEditorKeydown" @focusin="onEditorFocusin">
+    <div
+      v-else
+      ref="formEl"
+      class="form"
+      @keydown="onEditorKeydown"
+      @focusin="onEditorFocusin"
+      @focusout="onEditorFocusout"
+    >
       <SDataListItem>
-        <template #label>{{ field.label() }}</template>
+        <template #label>{{ editorLabel }}</template>
         <template #value>
           <div class="editor">
             <div class="editor-input">
@@ -237,25 +287,22 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
             </div>
             <div class="actions">
               <SButton size="mini" :label="t.cancel" @click="cancel" />
-              <button
-                class="apply-action"
-                type="button"
-                :aria-label="`${t.apply} (${submitShortcutLabel})`"
-                @click="apply"
-              >
+              <SButton size="mini" mode="info" @click="apply">
                 <span class="apply-content">
-                  <span class="apply-label">{{ t.apply }}</span>
-                  <span class="shortcut" :title="submitShortcutLabel" aria-hidden="true">
-                    <component
-                      :is="submitShortcutModifierIcon"
-                      v-if="submitShortcutModifierIcon"
-                      class="shortcut-icon"
-                    />
-                    <span v-if="submitShortcutModifierIcon" class="shortcut-plus">+</span>
-                    <IconArrowBendDownLeft class="shortcut-icon" />
-                  </span>
+                  <span>{{ t.apply }}</span>
+                  <template v-if="submitShortcut">
+                    <span class="visually-hidden">({{ submitShortcutLabel }})</span>
+                    <span class="shortcut" :title="submitShortcutLabel ?? undefined" aria-hidden="true">
+                      <component
+                        :is="submitShortcutModifierIcon"
+                        v-if="submitShortcutModifierIcon"
+                        class="shortcut-icon"
+                      />
+                      <IconCornerDownLeft class="shortcut-icon" />
+                    </span>
+                  </template>
                 </span>
-              </button>
+              </SButton>
             </div>
           </div>
         </template>
@@ -279,14 +326,17 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
   isolation: isolate;
 }
 
-.display :deep(.value),
-.display :deep(.empty) {
+/* Scope the hover chrome to the data-list row's own cell: display renderers
+   can nest their own `.value` (e.g. `SDescPill`), which must not grow a second
+   hover border. */
+.display :deep(.SDataListItem > .content > .value),
+.display :deep(.SDataListItem > .content > .empty) {
   position: relative;
   z-index: 0;
 }
 
-.LensSheetField.is-editable .display :deep(.value)::before,
-.LensSheetField.is-editable .display :deep(.empty)::before {
+.LensSheetField.is-editable .display :deep(.SDataListItem > .content > .value)::before,
+.LensSheetField.is-editable .display :deep(.SDataListItem > .content > .empty)::before {
   content: "";
   position: absolute;
   inset: -6px 0 -6px -16px;
@@ -300,8 +350,8 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
   transition: opacity 0.1s;
 }
 
-.LensSheetField.is-editable:hover .display :deep(.value)::before,
-.LensSheetField.is-editable:hover .display :deep(.empty)::before {
+.LensSheetField.is-editable:hover .display :deep(.SDataListItem > .content > .value)::before,
+.LensSheetField.is-editable:hover .display :deep(.SDataListItem > .content > .empty)::before {
   opacity: 1;
 }
 
@@ -316,13 +366,12 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
   width: 32px;
   height: 32px;
   transform: translateY(-50%);
-  border: 1px solid var(--input-border-color);
   border-radius: 8px;
   color: var(--c-text-2);
   background-color: var(--c-bg-1);
   box-shadow: var(--shadow-depth-1);
   opacity: 0;
-  transition: opacity 0.1s, border-color 0.1s, background-color 0.1s, color 0.1s;
+  transition: opacity 0.1s, background-color 0.1s, color 0.1s;
 }
 
 .LensSheetField.is-editable:hover .edit {
@@ -330,7 +379,6 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
 }
 
 .edit:hover {
-  border-color: var(--input-hover-border-color);
   background-color: var(--c-bg-mute-1);
   color: var(--c-text-1);
 }
@@ -362,8 +410,22 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
   padding: 8px;
 }
 
-.editor-input :deep(.SInputBase > .label) {
-  display: none;
+/* Visually hidden but kept in the accessibility tree (`display: none` would
+   drop it): the input's own label keeps naming the input for screen readers
+   while the row label stands in for it visually, and the shortcut text keeps
+   reaching screen readers alongside the icon-only hint. */
+.editor-input :deep(.SInputBase > .label),
+.visually-hidden {
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  border: 0;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .actions {
@@ -376,76 +438,24 @@ function shortcutLabel(shortcut: EditorSubmitShortcut): string {
   border-top: 1px solid var(--c-divider);
 }
 
-.apply-action {
-  --button-border-color: var(--button-fill-info-border-color);
-  --button-text-color: var(--button-fill-info-text-color);
-  --button-content-color: var(--button-fill-info-content-color);
-  --button-bg-color: var(--button-fill-info-bg-color);
-  --button-hover-border-color: var(--button-fill-info-hover-border-color);
-  --button-hover-text-color: var(--button-fill-info-hover-text-color);
-  --button-hover-bg-color: var(--button-fill-info-hover-bg-color);
-  --button-active-border-color: var(--button-fill-info-active-border-color);
-  --button-active-text-color: var(--button-fill-info-active-text-color);
-  --button-active-bg-color: var(--button-fill-info-active-bg-color);
-
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0 10px;
-  min-width: 28px;
-  min-height: 28px;
-  border: 1px solid var(--button-border-color);
-  border-radius: 8px;
-  color: var(--button-text-color);
-  background-color: var(--button-bg-color);
-  font-size: var(--button-font-size, var(--button-mini-font-size));
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0;
-  text-align: center;
-  white-space: nowrap;
-  transition: color 0.25s, border-color 0.25s, background-color 0.25s;
-}
-
-.apply-action:hover {
-  border-color: var(--button-hover-border-color);
-  color: var(--button-hover-text-color);
-  background-color: var(--button-hover-bg-color);
-}
-
-.apply-action:active {
-  border-color: var(--button-active-border-color);
-  color: var(--button-active-text-color);
-  background-color: var(--button-active-bg-color);
-}
-
 .apply-content {
   display: inline-flex;
   align-items: center;
-  height: 100%;
   gap: 6px;
-  color: var(--button-content-color);
-}
-
-.apply-label {
-  line-height: 20px;
 }
 
 .shortcut {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  color: currentColor;
+  gap: 1px;
+  padding: 2px 3px;
+  border-radius: 5px;
+  background-color: color-mix(in oklab, currentColor 16%, transparent);
 }
 
 .shortcut-icon {
-  width: 16px;
-  height: 16px;
-}
-
-.shortcut-plus {
-  line-height: 16px;
-  font-size: 11px;
-  font-weight: 600;
+  width: 12px;
+  height: 12px;
+  opacity: 0.9;
 }
 </style>
