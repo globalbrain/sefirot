@@ -162,7 +162,7 @@ export class SelectField extends Field<SelectFieldData> {
   defineDropdownInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputDropdown, {
-        'size': 'md',
+        'size': props.size ?? 'md',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,
@@ -184,7 +184,7 @@ export class SelectField extends Field<SelectFieldData> {
       const Comp = this.data.multiple ? SInputCheckboxes : SInputRadios
 
       return () => h(Comp as any, {
-        'size': 'md',
+        'size': props.size ?? 'md',
         'label': this.formInputLabel(),
         'help': this.help() || undefined,
         'options': this.data.options.map((o) => ({

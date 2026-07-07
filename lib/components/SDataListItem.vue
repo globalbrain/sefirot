@@ -9,10 +9,15 @@ const props = withDefaults(defineProps<{
   preWrap?: boolean
   lineClamp?: string | number
   tnum?: boolean
+  valueAction?: boolean
 }>(), {
   dir: 'row',
   maxWidth: '100%'
 })
+
+const emit = defineEmits<{
+  'click:value': [event: MouseEvent]
+}>()
 
 const { labelWidth } = useDataListState()
 
@@ -48,6 +53,45 @@ function hasSlotContent(name = 'default'): boolean {
     return true
   })
 }
+
+function onValueClick(event: MouseEvent): void {
+  if (!props.valueAction || isInteractiveClick(event)) {
+    return
+  }
+
+  emit('click:value', event)
+}
+
+// Whether the click landed on interactive content (a link, button, input, …)
+// inside the cell, which handles the click itself. The `closest()` match is
+// bounded to the cell (`currentTarget`): an interactive *ancestor* of the
+// whole list — a tabindexed scroll container, say — must not swallow every
+// cell click.
+function isInteractiveClick(event: MouseEvent): boolean {
+  const cell = event.currentTarget
+  const target = event.target
+
+  if (!(cell instanceof HTMLElement) || !(target instanceof HTMLElement)) {
+    return false
+  }
+
+  const interactive = target.closest([
+    'a',
+    'button',
+    'input',
+    'textarea',
+    'select',
+    '[contenteditable="true"]',
+    '[role="button"]',
+    '[role="link"]',
+    '[role="checkbox"]',
+    '[role="radio"]',
+    '[role="switch"]',
+    '[tabindex]:not([tabindex="-1"])'
+  ].join(','))
+
+  return !!interactive && cell.contains(interactive)
+}
 </script>
 
 <template>
@@ -56,10 +100,10 @@ function hasSlotContent(name = 'default'): boolean {
       <div class="label" :style="labelStyles">
         <slot name="label" />
       </div>
-      <div v-if="!hasValue" class="empty">
+      <div v-if="!hasValue" class="empty" :class="{ action: valueAction }" @click="onValueClick">
         —
       </div>
-      <div v-else-if="hasValue" class="value" :style="valueStyles">
+      <div v-else-if="hasValue" class="value" :class="{ action: valueAction }" :style="valueStyles" @click="onValueClick">
         <slot name="value" />
       </div>
     </div>
@@ -100,6 +144,11 @@ function hasSlotContent(name = 'default'): boolean {
   line-height: 24px;
   font-size: 14px;
   color: var(--c-text-1);
+}
+
+.empty.action,
+.value.action {
+  cursor: pointer;
 }
 
 .SDataListItem.row .content {

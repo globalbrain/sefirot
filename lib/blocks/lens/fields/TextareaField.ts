@@ -36,7 +36,7 @@ export class TextareaField extends Field<TextareaFieldData> {
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputTextarea, {
-        'size': 'md',
+        'size': props.size ?? 'md',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,

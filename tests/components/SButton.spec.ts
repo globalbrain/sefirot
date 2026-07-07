@@ -44,6 +44,25 @@ describe('components/SButton', () => {
     expect(wrapper.find('.SButton').element.tagName).toBe('DIV')
   })
 
+  it('renders default slot content as the label', () => {
+    const wrapper = mount(SButton, {
+      props: { label: 'Prop label' },
+      slots: { default: '<span class="x">Slot label</span>' }
+    })
+
+    expect(wrapper.find('.label .x').text()).toBe('Slot label')
+    expect(wrapper.find('.SButton').classes()).toContain('has-label')
+  })
+
+  it('falls back to the `label` prop when the slot renders empty', () => {
+    const wrapper = mount(SButton, {
+      props: { label: 'Prop label' },
+      slots: { default: '' }
+    })
+
+    expect(wrapper.find('.label').text()).toBe('Prop label')
+  })
+
   it('emits click event on click', () => {
     const wrapper = mount(SButton)
 

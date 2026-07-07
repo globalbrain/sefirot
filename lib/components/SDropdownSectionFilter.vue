@@ -7,6 +7,7 @@ import {
   type DropdownSectionFilterSelectedValue
 } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
+import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
 const props = defineProps<{
@@ -28,6 +29,7 @@ const { t } = useTrans({
 })
 
 const input = ref<HTMLElement | null>(null)
+const list = ref<HTMLUListElement | null>(null)
 const query = ref('')
 
 const enabledOptions = computed(() => {
@@ -53,8 +55,16 @@ function isActive(value: any) {
   return Array.isArray(selected) ? selected.includes(value) : selected === value
 }
 
+// Move focus from the search input into the first option (ArrowDown from the
+// search field).
+function focusFirstOption() {
+  list.value?.querySelector<HTMLElement>('.button')?.focus()
+}
+
 function focusPrev(event: any) {
-  event.target.parentNode.previousElementSibling?.firstElementChild?.focus()
+  // ArrowUp from the first option returns focus to the search input (if any).
+  const prev = event.target.parentNode.previousElementSibling?.firstElementChild
+  prev ? prev.focus() : input.value?.focus()
 }
 
 function focusNext(event: any) {
@@ -70,12 +80,18 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
 <template>
   <div class="SDropdownSectionFilter">
     <div v-if="search" class="search">
-      <!-- Keep Enter inside the filter: it drives the dropdown, and must not
-           bubble to an enclosing editor/form as a submit. -->
-      <input ref="input" v-model="query" class="input" :placeholder="t.i_ph" @keydown.enter.stop>
+      <input
+        ref="input"
+        v-model="query"
+        class="input"
+        :placeholder="t.i_ph"
+        @keydown.enter="stopNonSubmitEnterKeydown"
+        @keydown.down.prevent
+        @keyup.down.prevent="focusFirstOption"
+      >
     </div>
 
-    <ul v-if="filteredOptions.length" class="list">
+    <ul v-if="filteredOptions.length" ref="list" class="list">
       <li v-for="option in filteredOptions" :key="option.label" class="item">
         <button
           class="button"
@@ -153,6 +169,13 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
 
   &:hover {
     background-color: var(--c-bg-mute-1);
+  }
+
+  /* The global reset strips `button:focus` outlines, so keyboard focus
+     (arrowing through the options) needs its own visible ring. */
+  &:focus-visible {
+    outline: 2px solid var(--input-focus-border-color);
+    outline-offset: -2px;
   }
 }
 

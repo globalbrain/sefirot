@@ -37,6 +37,62 @@ describe('support/Dom', () => {
     })
   })
 
+  describe('stopNonSubmitEnterKeydown', () => {
+    function enter(init: KeyboardEventInit = {}): KeyboardEvent {
+      return new KeyboardEvent('keydown', { key: 'Enter', cancelable: true, ...init })
+    }
+
+    it('contains Enter without the submit modifier', () => {
+      for (const event of [enter(), enter({ shiftKey: true }), enter({ altKey: true })]) {
+        const stop = vi.spyOn(event, 'stopPropagation')
+        Dom.stopNonSubmitEnterKeydown(event)
+        expect(stop).toHaveBeenCalled()
+        expect(event.defaultPrevented).toBe(true)
+      }
+    })
+
+    it('lets Cmd/Ctrl+Enter pass through to the editor', () => {
+      for (const event of [enter({ metaKey: true }), enter({ ctrlKey: true })]) {
+        const stop = vi.spyOn(event, 'stopPropagation')
+        Dom.stopNonSubmitEnterKeydown(event)
+        expect(stop).not.toHaveBeenCalled()
+        expect(event.defaultPrevented).toBe(false)
+      }
+    })
+
+    it('ignores non-Enter keys', () => {
+      const event = new KeyboardEvent('keydown', { key: 'a', cancelable: true })
+      Dom.stopNonSubmitEnterKeydown(event)
+      expect(event.defaultPrevented).toBe(false)
+    })
+
+    it('leaves the Enter that commits an IME composition alone', () => {
+      const event = enter()
+      Object.defineProperty(event, 'isComposing', { value: true })
+      const stop = vi.spyOn(event, 'stopPropagation')
+      Dom.stopNonSubmitEnterKeydown(event)
+      expect(stop).not.toHaveBeenCalled()
+      expect(event.defaultPrevented).toBe(false)
+    })
+  })
+
+  describe('editorSubmitShortcutForTarget', () => {
+    it('shows plain Enter for text-like inputs', () => {
+      expect(Dom.editorSubmitShortcutForTarget(input('text'), 'macOS')).toBe('enter')
+      expect(Dom.editorSubmitShortcutForTarget(input('number'), 'Windows')).toBe('enter')
+    })
+
+    it('shows Command+Enter on Apple keyboard platforms for non-text controls', () => {
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('textarea'), 'macOS')).toBe('command-enter')
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('div'), 'iPadOS')).toBe('command-enter')
+    })
+
+    it('shows Control+Enter on other platforms for non-text controls', () => {
+      expect(Dom.editorSubmitShortcutForTarget(document.createElement('textarea'), 'Windows')).toBe('control-enter')
+      expect(Dom.editorSubmitShortcutForTarget(null, 'Linux')).toBe('control-enter')
+    })
+  })
+
   describe('isEditorSubmitKeydown', () => {
     it('submits on bare Enter from a text-like input', () => {
       expect(Dom.isEditorSubmitKeydown(keydown(input('text')))).toBe(true)

@@ -1,5 +1,6 @@
+import { mount } from '@vue/test-utils'
 import * as Utils from 'sefirot/composables/Utils'
-import { ref } from 'vue'
+import { type ComputedRef, defineComponent, h, ref } from 'vue'
 
 describe('composables/Utils', () => {
   describe('computedWhen', () => {
@@ -53,6 +54,46 @@ describe('composables/Utils', () => {
       state.value = false
 
       expect(arr.value[0]).toBe('b')
+    })
+  })
+
+  describe('useHasSlotContent', () => {
+    function hasSlotContent(slot?: any): boolean {
+      let has!: ComputedRef<boolean>
+
+      const Comp = defineComponent({
+        setup(_, { slots }) {
+          has = Utils.useHasSlotContent()
+          return () => h('div', slots.default?.())
+        }
+      })
+
+      mount(Comp, { slots: slot != null ? { default: slot } : {} })
+
+      return has.value
+    }
+
+    it('counts childless elements and components, whose children are not text', () => {
+      // An icon-like element / a bare component: `children` is `null`, not a string.
+      expect(hasSlotContent(() => h('span'))).toBe(true)
+      expect(hasSlotContent(() => h(defineComponent({ render: () => null })))).toBe(true)
+    })
+
+    it('counts only non-blank text, of a text node or an element', () => {
+      expect(hasSlotContent(() => 'label')).toBe(true)
+      expect(hasSlotContent(() => '   ')).toBe(false)
+      expect(hasSlotContent(() => h('div', 'label'))).toBe(true)
+      expect(hasSlotContent(() => h('div', ''))).toBe(false)
+    })
+
+    it('does not count comments (a `v-if` rendering nothing) or an absent slot', () => {
+      expect(hasSlotContent('<span v-if="false">x</span>')).toBe(false)
+      expect(hasSlotContent()).toBe(false)
+    })
+
+    it('looks through fragments, so an empty `v-for` does not count', () => {
+      expect(hasSlotContent('<span v-for="i in 0" :key="i">x</span>')).toBe(false)
+      expect(hasSlotContent('<span v-for="i in 2" :key="i">x</span>')).toBe(true)
     })
   })
 })

@@ -59,7 +59,7 @@ export class DateField extends Field<DateFieldData> {
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputDate, {
-        'size': 'md',
+        'size': props.size ?? 'md',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,

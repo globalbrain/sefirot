@@ -38,7 +38,7 @@ export class LinkField extends Field<LinkFieldData> {
   override formInputComponent(): any {
     return this.defineFormInputComponent((props, { emit }) => {
       return () => h(SInputText, {
-        'size': 'md',
+        'size': props.size ?? 'md',
         'label': this.formInputLabel(),
         'placeholder': this.placeholder() || undefined,
         'help': this.help() || undefined,

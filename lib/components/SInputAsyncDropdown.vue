@@ -6,6 +6,7 @@ import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import { type Option } from '../support/InputDropdown'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
@@ -76,6 +77,7 @@ const { t } = useTrans({
 })
 
 const container = ref<HTMLDivElement>()
+const box = ref<HTMLDivElement | null>(null)
 const input = ref<HTMLInputElement | null>(null)
 const list = ref<HTMLUListElement | null>(null)
 
@@ -209,6 +211,44 @@ function onOpen() {
   nextTick(() => input.value?.focus())
 }
 
+// Clicking (or Enter on — see onEnterToggle) the box toggles the flyout —
+// closing returns focus to the box so keyboard interaction continues from the
+// control instead of falling to `document.body`. ArrowDown stays open-only.
+function onToggle() {
+  if (isOpen.value) {
+    close()
+    box.value?.focus()
+    return
+  }
+  onOpen()
+}
+
+// Bare Enter toggles on keydown, not keyup: a Cmd/Ctrl+Enter submit (handled
+// on keydown by an enclosing editor) sheds its modifier before the Enter keyup
+// when the modifier is released first, and that keyup must not reopen the
+// flyout — acting on keydown sidesteps release order entirely. Key repeat is
+// ignored so holding Enter doesn't flap the flyout.
+function onEnterToggle(event: KeyboardEvent) {
+  if (!event.repeat) {
+    onToggle()
+  }
+}
+
+// Escape while the flyout is open belongs to the flyout: close it and return
+// focus to the box, keeping the keydown from an enclosing surface (an inline
+// editor would cancel, a sheet would close). A closed dropdown leaves Escape
+// to those surfaces. The Escape that cancels an IME composition never
+// operates the flyout.
+function onEscapeKeydown(event: KeyboardEvent) {
+  if (!isOpen.value || event.isComposing) {
+    return
+  }
+  event.stopPropagation()
+  event.preventDefault()
+  close()
+  box.value?.focus()
+}
+
 watch(isOpen, (value) => {
   // On close: drop any pending refetch, invalidate any in-flight fetch (so a late
   // response can't repopulate the list while closed), and clear the query /
@@ -264,8 +304,12 @@ function onSelect(item: T): void {
     commit(null)
   }
 
+  // Return focus to the box on a selection that closes the flyout, so keyboard
+  // interaction (reopening, an editor's submit shortcut) continues from the
+  // control rather than falling to `document.body`.
   if (props.closeOnSelect ?? !props.multiple) {
     close()
+    box.value?.focus()
   }
 }
 
@@ -330,14 +374,15 @@ function focusNext(event: any): void {
     :hide-error
     :hide-warning
   >
-    <div ref="container" class="container">
+    <div ref="container" class="container" @keydown.esc="onEscapeKeydown">
       <div
+        ref="box"
         class="box"
         role="button"
         tabindex="0"
-        @click="onOpen"
+        @click="onToggle"
         @keydown.down.prevent
-        @keyup.enter="onOpen"
+        @keydown.enter.exact="onEnterToggle"
         @keyup.down="onOpen"
       >
         <div class="box-content">
@@ -362,16 +407,12 @@ function focusNext(event: any): void {
       <div v-if="isOpen" class="dropdown" :style="inset">
         <div class="dropdown-content">
           <div class="search">
-            <!-- Keep Enter inside the search field: it drives the dropdown and
-                 must neither bubble to an enclosing form (`.stop`) nor trigger the
-                 browser's implicit form submission (`.prevent`). ArrowDown moves
-                 focus into the option list. -->
             <input
               ref="input"
               v-model="query"
               class="search-input"
               :placeholder="t.ph"
-              @keydown.enter.stop.prevent
+              @keydown.enter="stopNonSubmitEnterKeydown"
               @keydown.down.prevent
               @keyup.down.prevent="focusFirstOption"
             >
@@ -441,6 +482,13 @@ function focusNext(event: any): void {
 
   &:hover {
     border-color: var(--input-hover-border-color);
+  }
+
+  /* Keyboard focus shows via the border (the input-family idiom), not the
+     UA's default ring. */
+  &:focus-visible {
+    outline: none;
+    border-color: var(--input-focus-border-color);
   }
 }
 
@@ -542,6 +590,13 @@ function focusNext(event: any): void {
 
   &:hover:not(:disabled) {
     background-color: var(--c-bg-mute-1);
+  }
+
+  /* The global reset strips `button:focus` outlines, so keyboard focus
+     (arrowing through the options) needs its own visible ring. */
+  &:focus-visible {
+    outline: 2px solid var(--input-focus-border-color);
+    outline-offset: -2px;
   }
 
   &:disabled {
