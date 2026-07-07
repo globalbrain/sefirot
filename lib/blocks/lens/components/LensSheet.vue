@@ -14,6 +14,7 @@ import { type FieldData } from '../FieldData'
 import { type LensCreateExtension } from '../LensCreateExtension'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { useLensEdit } from '../composables/LensEdit'
+import { provideLensInlineEdit } from '../composables/LensInlineEdit'
 import { extractServerErrors, extractServerMessage } from '../validation/ServerErrors'
 import LensSheetAvatarField from './LensSheetAvatarField.vue'
 import LensSheetField from './LensSheetField.vue'
@@ -65,6 +66,11 @@ const { t } = useTrans({
 const edit = useLensEdit()
 const factory = useFieldFactory()
 const snackbars = useSnackbars()
+
+// One field editor open at a time across the sheet: fields derive their
+// `editing` state from this shared context (mirroring the table's inline
+// cells), so opening an editor closes any other.
+provideLensInlineEdit()
 
 // Provide the data-list label width directly (instead of wrapping rows in
 // SDataList) so each LensSheetField wrapper doesn't make its SDataListItem a

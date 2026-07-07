@@ -1,14 +1,16 @@
 import { type InjectionKey, type Ref, inject, provide, ref } from 'vue'
 
 /**
- * Tracks which table cell currently has its inline editor open, so that
- * opening one editor closes any other. The key is `${recordId}:${fieldKey}`.
+ * Tracks which inline editor is currently open within the providing scope, so
+ * that opening one editor closes any other. The table provides an instance for
+ * its cells (keyed `${recordId}:${fieldKey}`) and the record sheet provides
+ * its own for its fields (keyed by field key) — the scopes are independent.
  */
 export interface LensInlineEditContext {
-  /** The key of the cell currently being edited, or null. */
+  /** The key of the editor currently open, or null. */
   activeKey: Ref<string | null>
 
-  /** Open the editor for the given cell key (closing any other). */
+  /** Open the editor for the given key (closing any other). */
   start: (key: string) => void
 
   /** Close the active editor. */

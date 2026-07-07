@@ -23,13 +23,18 @@ export type EditorSubmitShortcut = 'enter' | 'command-enter' | 'control-enter'
  * The user-facing shortcut to show for the currently focused editor control.
  * Plain Enter is truthful only for simple text-like inputs; other controls need
  * the platform's primary modifier to avoid clashing with their own Enter key
- * behavior.
+ * behavior. A text input nested inside a dropdown (its search filter, see
+ * `SDropdownSectionFilter` / `SInputAsyncDropdown`) keeps Enter to itself
+ * too, so only the modifier gesture reaches the editor from there.
  */
 export function editorSubmitShortcutForTarget(
   target: EventTarget | null,
   platform = currentPlatform()
 ): EditorSubmitShortcut {
-  if (isTextLikeInput(target)) {
+  if (
+    isTextLikeInput(target)
+    && !(target as HTMLElement).closest('.SDropdown, .SInputAsyncDropdown')
+  ) {
     return 'enter'
   }
 
@@ -59,6 +64,26 @@ function currentPlatform(): string {
   const nav = navigator as Navigator & { userAgentData?: { platform?: string } }
 
   return nav.userAgentData?.platform ?? nav.platform ?? ''
+}
+
+/**
+ * Keydown handler for a text input nested inside a dropdown-like control (a
+ * search filter): Enter operates the control, not an enclosing inline editor,
+ * so it is stopped — with its default prevented — unless it carries the
+ * universal submit modifier (Cmd/Ctrl, see {@link isEditorSubmitKeydown}).
+ * Shift/Alt+Enter are contained too: the editor's submit predicate would read
+ * them off a text-like input as a plain submitting Enter. The Enter that
+ * commits an IME composition belongs to the IME — swallowing its default would
+ * drop the composed text — so it passes untouched (the editor ignores it).
+ */
+export function stopNonSubmitEnterKeydown(event: KeyboardEvent): void {
+  if (event.isComposing) {
+    return
+  }
+  if (event.key === 'Enter' && !event.metaKey && !event.ctrlKey) {
+    event.stopPropagation()
+    event.preventDefault()
+  }
 }
 
 /**
@@ -109,8 +134,9 @@ export function isEditorCancelKeydown(event: KeyboardEvent): boolean {
  * throw on `formInputComponent()` (not yet editable). When making one editable,
  * if its input is a composite control with its own nested text input (e.g. a
  * dropdown's search filter), that nested input must keep Enter/Escape from
- * bubbling to this handler — see `SDropdownSectionFilter` — otherwise typing a
- * value and pressing Enter would submit/cancel the whole editor.
+ * bubbling to this handler — {@link stopNonSubmitEnterKeydown} is the Enter
+ * half; see `SDropdownSectionFilter` — otherwise typing a value and pressing
+ * Enter would submit/cancel the whole editor.
  */
 export function dispatchEditorKeydown(
   event: KeyboardEvent,
