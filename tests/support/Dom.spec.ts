@@ -65,6 +65,15 @@ describe('support/Dom', () => {
       Dom.stopNonSubmitEnterKeydown(event)
       expect(event.defaultPrevented).toBe(false)
     })
+
+    it('leaves the Enter that commits an IME composition alone', () => {
+      const event = enter()
+      Object.defineProperty(event, 'isComposing', { value: true })
+      const stop = vi.spyOn(event, 'stopPropagation')
+      Dom.stopNonSubmitEnterKeydown(event)
+      expect(stop).not.toHaveBeenCalled()
+      expect(event.defaultPrevented).toBe(false)
+    })
   })
 
   describe('editorSubmitShortcutForTarget', () => {

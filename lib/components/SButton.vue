@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type Component, type MaybeRef, computed, unref, useSlots } from 'vue'
 import { type Position } from '../composables/Tooltip'
+import { useHasSlotContent } from '../composables/Utils'
 import { type ColorMode } from '../support/Color'
 import SFragment from './SFragment.vue'
 import SLink from './SLink.vue'
@@ -60,13 +61,15 @@ const emit = defineEmits<{
 
 const _leadIcon = computed(() => props.leadIcon ?? props.icon)
 
-const slots = useSlots()
+// Rendered content, not slot presence: a slot that renders empty falls back
+// to the `label` prop (and an icon-only button keeps its icon-only padding).
+const hasDefaultSlot = useHasSlotContent()
 
 const classes = computed(() => [
   props.size ?? 'medium',
   props.type ?? 'fill',
   props.mode ?? 'default',
-  { 'has-label': !!props.label || !!slots.default },
+  { 'has-label': !!props.label || hasDefaultSlot.value },
   { 'has-lead-icon': !!_leadIcon.value },
   { 'has-trail-icon': !!props.trailIcon },
   { loading: props.loading },
@@ -78,6 +81,8 @@ const classes = computed(() => [
 const computedTag = computed(() => {
   return props.tag ? props.tag : props.href ? SLink : 'button'
 })
+
+const slots = useSlots()
 
 const hasTooltip = computed(() => {
   return !!(
@@ -118,7 +123,7 @@ function onClick(): void {
         <span v-if="_leadIcon" class="icon" :class="iconMode">
           <component :is="_leadIcon" class="icon-svg" />
         </span>
-        <span v-if="$slots.default" class="label" :class="labelMode"><slot /></span>
+        <span v-if="hasDefaultSlot" class="label" :class="labelMode"><slot /></span>
         <span v-else-if="label" class="label" :class="labelMode" v-html="label" />
         <span v-if="trailIcon" class="icon" :class="iconMode">
           <component :is="trailIcon" class="icon-svg" />

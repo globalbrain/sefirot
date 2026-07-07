@@ -72,9 +72,14 @@ function currentPlatform(): string {
  * so it is stopped — with its default prevented — unless it carries the
  * universal submit modifier (Cmd/Ctrl, see {@link isEditorSubmitKeydown}).
  * Shift/Alt+Enter are contained too: the editor's submit predicate would read
- * them off a text-like input as a plain submitting Enter.
+ * them off a text-like input as a plain submitting Enter. The Enter that
+ * commits an IME composition belongs to the IME — swallowing its default would
+ * drop the composed text — so it passes untouched (the editor ignores it).
  */
 export function stopNonSubmitEnterKeydown(event: KeyboardEvent): void {
+  if (event.isComposing) {
+    return
+  }
   if (event.key === 'Enter' && !event.metaKey && !event.ctrlKey) {
     event.stopPropagation()
     event.preventDefault()
