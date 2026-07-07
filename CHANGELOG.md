@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.61.0](https://github.com/globalbrain/sefirot/compare/v4.60.0...v4.61.0) (2026-07-07)
+
+
+### Features
+
+* **lens:** improve sheet inline editing controls ([#766](https://github.com/globalbrain/sefirot/issues/766)) ([753977a](https://github.com/globalbrain/sefirot/commit/753977adf4eed2d58708180c791a54238f14d5fe))
+
 # [4.60.0](https://github.com/globalbrain/sefirot/compare/v4.59.1...v4.60.0) (2026-07-06)
 
 
