@@ -49,6 +49,14 @@ const avatarCellComponent = markRaw(LensTableAvatarCell)
 
 const records = computed(() => props.result?.data ?? [])
 
+function createBaseColumns(): TableColumns<any, any, any> {
+  return {
+    __last_empty__: {
+      cell: { type: 'empty' }
+    }
+  }
+}
+
 // Resolve the list of columns to render. We intersect the caller's
 // requested `select` with what the latest response actually fetched so
 // that toggling a column on through "Manage table view" doesn't surface
@@ -70,11 +78,17 @@ const columnKeys = computed(() => {
   return visible.map((k) => (k === '__empty__' ? `__empty__::${emptyIndex++}` : k))
 })
 
-const columns = computedAsync(async () => {
+interface ColumnBuild {
+  result?: LensResult
+  columns: TableColumns<any, any, any>
+}
+
+const columnBuild = computedAsync<ColumnBuild>(async () => {
   const r = props.result
+  const columns = createBaseColumns()
 
   if (!r) {
-    return {}
+    return { result: r, columns }
   }
 
   // Snapshot the column keys at the start of the run. `columnKeys` is a
@@ -84,13 +98,6 @@ const columns = computedAsync(async () => {
   // produce `undefined` for indices past the new length — crashing
   // `Object.assign(_fieldData, ...)` below.
   const keys = [...columnKeys.value]
-
-  // Prepare base columns that has `__last_empty__` to fill the end space.
-  const columns: TableColumns<any, any, any> = {
-    __last_empty__: {
-      cell: { type: 'empty' }
-    }
-  }
 
   // Build the list of columns based on the resolved column key list.
   for (const key of keys) {
@@ -216,8 +223,11 @@ const columns = computedAsync(async () => {
     }
   }
 
-  return columns
-}, {})
+  return { result: r, columns }
+}, { result: undefined, columns: createBaseColumns() })
+
+const columns = computed(() => columnBuild.value.columns)
+const columnsLoading = computed(() => columnBuild.value.result !== props.result)
 
 // Render a column only once its definition exists. `columns` resolves
 // asynchronously (computedAsync), so when a column is toggled back on its key
@@ -241,6 +251,7 @@ const table = useTable({
   // settling re-keys it. STable reads this inside a computed, so the getter
   // establishes the dependency and selection re-keys correctly.
   get indexField() { return props.indexField },
+  get loading() { return props.loading || columnsLoading.value },
   borderless: true
 })
 
@@ -299,7 +310,6 @@ function makeEditableField(r: LensResult, key?: string | null): Field<FieldData>
     :class="{ 'is-loading': loading, 'is-empty': (result?.data.length ?? 0) === 0 }"
   >
     <STable
-      v-if="Object.keys(columns).length > 0"
       class="table"
       :options="table"
       :selected
