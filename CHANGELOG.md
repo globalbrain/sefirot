@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.61.1](https://github.com/globalbrain/sefirot/compare/v4.61.0...v4.61.1) (2026-07-14)
+
+
+### Bug Fixes
+
+* **lens:** show catalog table loading state ([#768](https://github.com/globalbrain/sefirot/issues/768)) ([41d1d8e](https://github.com/globalbrain/sefirot/commit/41d1d8e332a90eaf25c48b3abd6712737855c0e1))
+
 # [4.61.0](https://github.com/globalbrain/sefirot/compare/v4.60.0...v4.61.0) (2026-07-07)
 
 
