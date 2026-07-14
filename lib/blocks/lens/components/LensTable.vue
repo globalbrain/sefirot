@@ -78,12 +78,17 @@ const columnKeys = computed(() => {
   return visible.map((k) => (k === '__empty__' ? `__empty__::${emptyIndex++}` : k))
 })
 
-const columns = computedAsync(async () => {
+interface ColumnBuild {
+  result?: LensResult
+  columns: TableColumns<any, any, any>
+}
+
+const columnBuild = computedAsync<ColumnBuild>(async () => {
   const r = props.result
   const columns = createBaseColumns()
 
   if (!r) {
-    return columns
+    return { result: r, columns }
   }
 
   // Snapshot the column keys at the start of the run. `columnKeys` is a
@@ -218,8 +223,11 @@ const columns = computedAsync(async () => {
     }
   }
 
-  return columns
-}, createBaseColumns())
+  return { result: r, columns }
+}, { result: undefined, columns: createBaseColumns() })
+
+const columns = computed(() => columnBuild.value.columns)
+const columnsLoading = computed(() => columnBuild.value.result !== props.result)
 
 // Render a column only once its definition exists. `columns` resolves
 // asynchronously (computedAsync), so when a column is toggled back on its key
@@ -243,7 +251,7 @@ const table = useTable({
   // settling re-keys it. STable reads this inside a computed, so the getter
   // establishes the dependency and selection re-keys correctly.
   get indexField() { return props.indexField },
-  get loading() { return props.loading },
+  get loading() { return props.loading || columnsLoading.value },
   borderless: true
 })
 
