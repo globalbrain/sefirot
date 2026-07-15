@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.61.2](https://github.com/globalbrain/sefirot/compare/v4.61.1...v4.61.2) (2026-07-15)
+
+
+### Bug Fixes
+
+* ignore webkit.messageHandlers errors from in-app browsers ([#769](https://github.com/globalbrain/sefirot/issues/769)) ([a85762d](https://github.com/globalbrain/sefirot/commit/a85762dc683adc34588350c716bd74cb4034194a))
+
 ## [4.61.1](https://github.com/globalbrain/sefirot/compare/v4.61.0...v4.61.1) (2026-07-14)
 
 
