@@ -141,7 +141,8 @@ const ignoreErrors = [
   /Non-Error (?:exception|promise rejection) captured/,
   /ResizeObserver loop/,
   /Can't find variable: gmo/,
-  /\[Cloudflare Turnstile\] Error: (?:10[2-46]|1106[02]|[36]00)/
+  /\[Cloudflare Turnstile\] Error: (?:10[2-46]|1106[02]|[36]00)/,
+  /window\.webkit\.messageHandlers/
 ]
 
 const stringifiers: readonly ((e: unknown) => string | false)[] = [
