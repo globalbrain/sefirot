@@ -1,4 +1,5 @@
 import isEqual from 'lodash-es/isEqual'
+import isPlainObject from 'lodash-es/isPlainObject'
 import { type MaybeRef, computed, nextTick, unref, watch } from 'vue'
 import { type LocationQuery, useRoute, useRouter } from 'vue-router'
 
@@ -143,7 +144,15 @@ function unflattenObject(obj: Record<string, any>): Record<string, any> {
 
     for (let i = 0; i < keys.length - 1; i++) {
       const k = keys[i]
-      target = target[k] = target[k] || {}
+
+      // When a scalar key conflicts with a nested key (e.g. `page` and
+      // `page.page`), drop the scalar and let the nested key win. Otherwise
+      // assigning a property on the scalar below would throw a `TypeError`.
+      if (!isPlainObject(target[k])) {
+        target[k] = {}
+      }
+
+      target = target[k]
     }
 
     target[keys[keys.length - 1]] = value
@@ -163,7 +172,9 @@ function deepAssign(target: Record<string, any>, source: Record<string, any>) {
         target[key] = value
       }
     } else if (value && typeof value === 'object') {
-      target[key] = deepAssign(target[key] || {}, value)
+      // Same scalar vs. nested conflict handling as `unflattenObject`:
+      // assigning nested values onto an existing scalar would throw.
+      target[key] = deepAssign(isPlainObject(target[key]) ? target[key] : {}, value)
     } else {
       target[key] = value
     }

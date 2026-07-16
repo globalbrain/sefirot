@@ -440,5 +440,65 @@ describe('composables/Url', () => {
 
       wrapper.unmount()
     })
+
+    it('handles a scalar query param conflicting with a nested one', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        // Old style `?page=5` and new style `?page.page=7` params mixed in
+        // the same URL (e.g. via an outdated bookmark). Unflattening the
+        // nested key on top of the scalar used to throw `TypeError: Cannot
+        // create property 'page' on number '1'`.
+        router.replace({ query: { 'page': '5', 'page.page': '7' } })
+
+        const data = reactive({ page: 1 })
+        useUrlQuerySync(data)
+
+        return { data }
+      })
+
+      // The nested key should win over the scalar prefix.
+      await expect.poll(() => vm.data.page).toEqual({ page: '7' })
+
+      wrapper.unmount()
+    })
+
+    it('keeps the scalar when it comes after the conflicting nested key', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        router.replace({ query: { page: '5' } })
+
+        const data = reactive({ page: { page: 1 } })
+        useUrlQuerySync(data)
+
+        return { data }
+      })
+
+      // The nested default state gets flattened to `page.page` before the
+      // scalar `page` query param is merged on top of it, so here the
+      // scalar comes last and wins.
+      await expect.poll(() => vm.data.page).toBe('5')
+
+      wrapper.unmount()
+    })
+
+    it('handles a nested query param conflicting with an array', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        router.replace({ query: { 'tags.0': 'z' } })
+
+        const data = reactive({ tags: ['a', 'b'] })
+        useUrlQuerySync(data)
+
+        return { data }
+      })
+
+      // The nested key should win over the array prefix as well.
+      await expect.poll(() => vm.data.tags).toEqual({ 0: 'z' })
+
+      wrapper.unmount()
+    })
   })
 })
