@@ -488,6 +488,31 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
+    it('lets a scalar param sync when the shadowing nested param is excluded', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        router.replace({ query: { 'page': '2', 'page.page': 'debug' } })
+
+        const data = reactive({ page: 1 })
+        useUrlQuerySync(data, {
+          exclude: ['page.page']
+        })
+
+        const route = useRoute()
+        return { data, route }
+      })
+
+      // The excluded nested param is invisible to the sync, so it should
+      // not shadow the scalar param.
+      await expect.poll(() => vm.data.page).toBe('2')
+
+      // The excluded param itself should stay in the URL untouched.
+      expect(vm.route.query).toEqual({ 'page': '2', 'page.page': 'debug' })
+
+      wrapper.unmount()
+    })
+
     it('handles a nested query param conflicting with an array', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
