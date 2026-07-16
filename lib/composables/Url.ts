@@ -103,10 +103,16 @@ export function useUrlQuerySync(
 
   function normalizeQuery(query: LocationQuery): Record<string, any> {
     const flattenedQuery = flattenObject(query)
+    const keys = Object.keys(flattenedQuery)
     const result: Record<string, any> = {}
 
     for (const key in flattenedQuery) {
-      if (!exclude.includes(key)) {
+      // When a param is shadowed by a nested param with the same prefix
+      // (e.g. `page` and `page.page`), drop the shadowed one: the pair can
+      // never be represented in a single state object, and keeping it here
+      // would make `setQuery` rewrite the URL just to remove it, breaking
+      // recovery of the remaining params on reload.
+      if (!exclude.includes(key) && !keys.some((k) => k.startsWith(`${key}.`))) {
         result[key] = casts[key] ? casts[key](flattenedQuery[key]) : flattenedQuery[key]
       }
     }

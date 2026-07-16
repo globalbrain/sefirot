@@ -454,11 +454,16 @@ describe('composables/Url', () => {
         const data = reactive({ page: 1 })
         useUrlQuerySync(data)
 
-        return { data }
+        const route = useRoute()
+        return { data, route }
       })
 
       // The nested key should win over the scalar prefix.
       await expect.poll(() => vm.data.page).toEqual({ page: '7' })
+
+      // The conflicting params should be left in the URL untouched so that
+      // reloading the page recovers the same state again.
+      expect(vm.route.query).toEqual({ 'page': '5', 'page.page': '7' })
 
       wrapper.unmount()
     })
