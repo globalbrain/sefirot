@@ -103,12 +103,16 @@ export function useUrlQuerySync(
 
   function normalizeQuery(query: LocationQuery): Record<string, any> {
     const flattenedQuery = flattenObject(query)
-    const keys = Object.keys(flattenedQuery).filter((key) => !exclude.includes(key))
+
+    const keys = Object.keys(flattenedQuery).filter((key) => {
+      return !exclude.includes(key) && fitsDefaultState(key)
+    })
+
     const result: Record<string, any> = {}
 
     for (const key of keys) {
       // When a param is shadowed by a nested param with the same prefix
-      // (e.g. `page` and `page.page`), drop the shadowed one: the pair can
+      // (e.g. `foo` and `foo.bar`), drop the shadowed one: the pair can
       // never be represented in a single state object, and keeping it here
       // would make `setQuery` rewrite the URL just to remove it, breaking
       // recovery of the remaining params on reload. Excluded params are
@@ -119,6 +123,24 @@ export function useUrlQuerySync(
     }
 
     return result
+  }
+
+  // The default state acts as the schema for the sync. A param that does
+  // not fit its shape — a nested param under a scalar or array default
+  // (`page.page` vs `{ page: 1 }`), or a scalar param over a nested
+  // default (`page` vs `{ page: { page: 1 } }`) — cannot be assigned to
+  // the state without corrupting the shape the app expects, so it is
+  // ignored as malformed input, exactly as if the param was absent, and
+  // left in the URL untouched. Params unrelated to any default key are
+  // still synced into the state as is.
+  function fitsDefaultState(key: string): boolean {
+    if (Object.hasOwn(flattenedDefaultState, key)) {
+      return true
+    }
+
+    return !Object.keys(flattenedDefaultState).some((k) => {
+      return k.startsWith(`${key}.`) || key.startsWith(`${k}.`)
+    })
   }
 }
 

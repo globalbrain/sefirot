@@ -458,17 +458,18 @@ describe('composables/Url', () => {
         return { data, route }
       })
 
-      // The nested key should win over the scalar prefix.
-      await expect.poll(() => vm.data.page).toEqual({ page: '7' })
+      // The default state is scalar, so the nested param does not fit its
+      // shape and is ignored as malformed input, while the scalar applies.
+      await expect.poll(() => vm.data.page).toBe('5')
 
-      // The conflicting params should be left in the URL untouched so that
-      // reloading the page recovers the same state again.
+      // The params should be left in the URL untouched so that reloading
+      // the page recovers the same state again.
       expect(vm.route.query).toEqual({ 'page': '5', 'page.page': '7' })
 
       wrapper.unmount()
     })
 
-    it('keeps the scalar when it comes after the conflicting nested key', async () => {
+    it('ignores a scalar param that conflicts with a nested default', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -477,13 +478,16 @@ describe('composables/Url', () => {
         const data = reactive({ page: { page: 1 } })
         useUrlQuerySync(data)
 
-        return { data }
+        const route = useRoute()
+        return { data, route }
       })
 
-      // The nested default state gets flattened to `page.page` before the
-      // scalar `page` query param is merged on top of it, so here the
-      // scalar comes last and wins.
-      await expect.poll(() => vm.data.page).toBe('5')
+      // The scalar param cannot be assigned over the nested default
+      // without corrupting the state shape, so it is ignored and the URL
+      // is left untouched.
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      expect(vm.data.page).toEqual({ page: 1 })
+      expect(vm.route.query).toEqual({ page: '5' })
 
       wrapper.unmount()
     })
@@ -513,7 +517,7 @@ describe('composables/Url', () => {
       wrapper.unmount()
     })
 
-    it('handles a nested query param conflicting with an array', async () => {
+    it('ignores a nested param that conflicts with an array default', async () => {
       const { wrapper, vm } = setupWithWrapper(() => {
         const router = useRouter()
 
@@ -522,11 +526,37 @@ describe('composables/Url', () => {
         const data = reactive({ tags: ['a', 'b'] })
         useUrlQuerySync(data)
 
-        return { data }
+        const route = useRoute()
+        return { data, route }
       })
 
-      // The nested key should win over the array prefix as well.
-      await expect.poll(() => vm.data.tags).toEqual({ 0: 'z' })
+      // Arrays sync as whole values, so a nested param under an array
+      // default does not fit the state shape and is ignored.
+      await new Promise((resolve) => setTimeout(resolve, 100))
+      expect(vm.data.tags).toEqual(['a', 'b'])
+      expect(vm.route.query).toEqual({ 'tags.0': 'z' })
+
+      wrapper.unmount()
+    })
+
+    it('handles conflicting params that are unrelated to the state', async () => {
+      const { wrapper, vm } = setupWithWrapper(() => {
+        const router = useRouter()
+
+        router.replace({ query: { 'foo': '1', 'foo.bar': '2' } })
+
+        const data = reactive<Record<string, any>>({ search: '' })
+        useUrlQuerySync(data)
+
+        const route = useRoute()
+        return { data, route }
+      })
+
+      // Params unrelated to any default key are synced into the state as
+      // is. The nested param wins over the shadowed scalar prefix, and
+      // unflattening it must not throw.
+      await expect.poll(() => vm.data.foo).toEqual({ bar: '2' })
+      expect(vm.route.query).toEqual({ 'foo': '1', 'foo.bar': '2' })
 
       wrapper.unmount()
     })
