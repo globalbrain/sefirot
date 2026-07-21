@@ -301,15 +301,15 @@ function requestClose() {
 
 // --- Slot context -----------------------------------------------------------
 //
-// Content passed to the `#before` / `#after` slots is declared in the page
+// Content passed to the `#title-after` / `#before` / `#after` slots is declared in the page
 // that hosts the catalog, so it cannot `inject` the edit context (which is
 // provided inside `LensCatalog`, a child of that page). Expose the pieces a
-// slot needs as slot props instead: the resolved record id, a record-bound
-// partial `save`, the entity key, the sheet `mode` (so a slot can render
-// different content for create vs view), and `registerCreateExtension` (so a
-// create-mode slot can contribute extra keys to the create payload). This keeps
-// the generic sheet free of one-off concerns (avatar upload, social links,
-// linked records) while still letting a page implement them.
+// slot needs as slot props instead: the rendered title, resolved record id, a
+// record-bound partial `save`, the entity key, the sheet `mode` (so a slot can
+// render different content for create vs view), and `registerCreateExtension`
+// (so a create-mode slot can contribute extra keys to the create payload). This
+// keeps the generic sheet free of one-off concerns (badges, avatar upload,
+// social links, linked records) while still letting a page implement them.
 
 const resolvedId = computed(() => (props.record && edit ? edit.resolveId(props.record) : null))
 
@@ -331,6 +331,7 @@ function saveRecord(values: Record<string, any>): Promise<void> {
 }
 
 const slotProps = computed(() => ({
+  title: title.value,
   record: props.record ?? null,
   id: resolvedId.value,
   entity: props.entity,
@@ -357,7 +358,12 @@ const slotProps = computed(() => ({
   <SSheet :open :closable="!saving" :width="width ?? '480px'" @close="requestClose">
     <div class="LensSheet">
       <div class="header">
-        <div class="title">{{ title }}</div>
+        <div class="heading">
+          <div class="title">{{ title }}</div>
+          <div v-if="$slots['title-after']" class="title-after">
+            <slot name="title-after" v-bind="slotProps" />
+          </div>
+        </div>
         <button
           class="close"
           type="button"
@@ -462,6 +468,15 @@ const slotProps = computed(() => ({
   border-bottom: 1px solid var(--c-divider);
 }
 
+.heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
 .title {
   font-size: 16px;
   font-weight: 500;
@@ -469,10 +484,17 @@ const slotProps = computed(() => ({
   color: var(--c-text-1);
 }
 
+.title-after {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
 .close {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex: none;
   width: 32px;
   height: 32px;
   border-radius: 6px;
