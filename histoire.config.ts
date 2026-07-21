@@ -12,6 +12,7 @@ function getDocsHost(): string {
 export default defineConfig({
   plugins: [hstVue()],
   setupFile: 'stories/histoire.setup.ts',
+  storyIgnored: ['**/node_modules/**', '**/dist/**', '**/.git/**'],
   defaultStoryProps: { autoPropsDisabled: true },
 
   theme: { title: 'Sefirot', colors: { primary: defaultColors.neutral } },

@@ -1768,6 +1768,9 @@ defineExpose({
       :width="sheetWidth"
       @close="sheet.off"
     >
+      <template v-if="$slots['sheet-title-after']" #title-after="s">
+        <slot name="sheet-title-after" v-bind="s" />
+      </template>
       <template v-if="$slots['sheet-before']" #before="s">
         <slot name="sheet-before" v-bind="s" />
       </template>
