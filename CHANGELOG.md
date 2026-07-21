@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.62.0](https://github.com/globalbrain/sefirot/compare/v4.61.2...v4.62.0) (2026-07-21)
+
+
+### Features
+
+* **lens:** support content after sheet title ([#773](https://github.com/globalbrain/sefirot/issues/773)) ([2303737](https://github.com/globalbrain/sefirot/commit/2303737ccb2233b6a1f3b58b8c0b90ce32ad9e8c))
+
 ## [4.61.2](https://github.com/globalbrain/sefirot/compare/v4.61.1...v4.61.2) (2026-07-15)
 
 
