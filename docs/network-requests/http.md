@@ -140,7 +140,9 @@ Sanctum behavior applies only when the effective request URL matches the
 configured `baseUrl` origin. A per-request `baseURL` override is applied before
 this comparison. When the configured `baseUrl` is unset, requests must resolve
 to the current page origin. Other origins receive neither the XSRF token nor
-automatic `401` or `419` recovery.
+automatic `401` or `419` recovery. During SSR, if no origin is available,
+relative base and request URLs are treated as application-local, while absolute
+request URLs are not.
 
 Requests with a `ReadableStream` body are not retried because their body cannot
 be sent a second time. The original `401` or `419` remains observable.

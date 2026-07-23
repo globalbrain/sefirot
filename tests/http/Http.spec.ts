@@ -11,6 +11,10 @@ describe('http/Http', () => {
     document.cookie = 'XSRF-TOKEN=; Max-Age=0; Path=/'
   })
 
+  afterEach(() => {
+    vi.unstubAllGlobals()
+  })
+
   it('refreshes a stale Sanctum CSRF token and retries once after a 419', async () => {
     document.cookie = 'XSRF-TOKEN=stale; Path=/'
     let requestCount = 0
@@ -400,6 +404,54 @@ describe('http/Http', () => {
 
     expect(recoverSession).toHaveBeenCalledOnce()
     expect(client).toHaveBeenCalledTimes(2)
+  })
+
+  it('recovers relative application URLs with a relative base URL during SSR', async () => {
+    vi.stubGlobal('location', undefined)
+    let requestCount = 0
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      requestCount++
+      if (requestCount === 1) {
+        throw httpError(401)
+      }
+      return 'ok'
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: '/api',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(http.get('/items')).resolves.toBe('ok')
+
+    expect(recoverSession).toHaveBeenCalledOnce()
+    expect(client).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not recover absolute URLs when the application origin is unavailable during SSR', async () => {
+    vi.stubGlobal('location', undefined)
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      throw error
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: '/api',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.get('https://example.com/items')
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
   })
 
   it('leaves callback errors observable', async () => {

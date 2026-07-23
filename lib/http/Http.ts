@@ -24,6 +24,10 @@ function getSessionRecoveryGeneration(config: Config): number {
   return sessionRecoveryGenerations.get(config) ?? 0
 }
 
+function isAbsoluteUrl(url: string): boolean {
+  return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url)
+}
+
 function isReplayableBody(body: unknown): boolean {
   if (!body || typeof body !== 'object') {
     return true
@@ -94,8 +98,13 @@ export class Http {
     const pageUrl = typeof location === 'undefined' ? undefined : location.href
     const applicationBaseUrl = this.config.baseUrl ?? pageUrl
     if (!applicationBaseUrl) {
-      return options.baseURL == null
-        && !/^(?:[a-z][a-z\d+\-.]*:)?\/\//i.test(url)
+      return !isAbsoluteUrl(url)
+        && (options.baseURL == null || !isAbsoluteUrl(options.baseURL))
+    }
+
+    if (!pageUrl && !isAbsoluteUrl(applicationBaseUrl)) {
+      return !isAbsoluteUrl(url)
+        && (options.baseURL == null || !isAbsoluteUrl(options.baseURL))
     }
 
     try {
