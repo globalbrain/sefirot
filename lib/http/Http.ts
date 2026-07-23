@@ -18,6 +18,33 @@ export type HttpRequestOptions = FetchOptions & {
 
 const xsrfRefreshes = new WeakMap<Config, Promise<void>>()
 const sessionRecoveries = new WeakMap<Config, Promise<boolean>>()
+const sessionRecoveryGenerations = new WeakMap<Config, number>()
+
+function getSessionRecoveryGeneration(config: Config): number {
+  return sessionRecoveryGenerations.get(config) ?? 0
+}
+
+function isReplayableBody(body: unknown): boolean {
+  if (!body || typeof body !== 'object') {
+    return true
+  }
+
+  const stream = body as {
+    constructor?: { name?: string }
+    pipeTo?: unknown
+    pipe?: unknown
+    toJSON?: unknown
+  }
+  if (
+    Array.isArray(body)
+    || stream.constructor?.name === 'Object'
+    || typeof stream.toJSON === 'function'
+  ) {
+    return true
+  }
+
+  return typeof stream.pipeTo !== 'function' && typeof stream.pipe !== 'function'
+}
 
 async function runSingleFlight<T>(
   activeRequests: WeakMap<Config, Promise<T>>,
@@ -63,6 +90,26 @@ export class Http {
     return xsrfToken
   }
 
+  private isApplicationRequest(url: string, options: HttpRequestOptions = {}): boolean {
+    const pageUrl = typeof location === 'undefined' ? undefined : location.href
+    const applicationBaseUrl = this.config.baseUrl ?? pageUrl
+    if (!applicationBaseUrl) {
+      return options.baseURL == null
+        && !/^(?:[a-z][a-z\d+\-.]*:)?\/\//i.test(url)
+    }
+
+    try {
+      const applicationUrl = new URL(applicationBaseUrl, pageUrl)
+      const requestBaseUrl = options.baseURL == null
+        ? applicationUrl
+        : new URL(options.baseURL, pageUrl)
+
+      return new URL(url, requestBaseUrl).origin === applicationUrl.origin
+    } catch {
+      return false
+    }
+  }
+
   private async refreshXsrfToken(): Promise<void> {
     const xsrfUrl = this.config.xsrfUrl
     if (!xsrfUrl) {
@@ -84,7 +131,14 @@ export class Http {
     }
 
     return runSingleFlight(sessionRecoveries, this.config, async () => {
-      return recoverSession()
+      const recovered = await recoverSession()
+      if (recovered) {
+        sessionRecoveryGenerations.set(
+          this.config,
+          getSessionRecoveryGeneration(this.config) + 1
+        )
+      }
+      return recovered
     })
   }
 
@@ -92,7 +146,8 @@ export class Http {
     const { method, params, query, ...options } = _options
     delete options.sessionRecovery
 
-    const xsrfToken = ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
+    const xsrfToken = this.isApplicationRequest(url, _options)
+      && ['POST', 'PUT', 'PATCH', 'DELETE'].includes(method || '')
       && (await this.ensureXsrfToken())
 
     const queryString = stringify(
@@ -123,27 +178,43 @@ export class Http {
     options: HttpRequestOptions,
     send: (request: BuiltRequest) => Promise<T>
   ): Promise<T> {
+    const applicationRequest = this.isApplicationRequest(url, options)
+    const replayable = isReplayableBody(options.body)
+
     const attempt = async (
       xsrfRecovered = false,
       sessionRecovered = false
     ): Promise<T> => {
+      const sessionRecoveryGeneration = getSessionRecoveryGeneration(this.config)
+
       try {
         return await send(await this.buildRequest(url, options))
       } catch (error) {
         const status = getHttpStatusCode(error)
 
-        if (status === 419 && this.config.xsrfUrl && !xsrfRecovered) {
+        if (
+          status === 419
+          && applicationRequest
+          && replayable
+          && this.config.xsrfUrl
+          && !xsrfRecovered
+        ) {
           await this.refreshXsrfToken()
           return attempt(true, sessionRecovered)
         }
 
         const canRecoverSession =
-          options.sessionRecovery !== false
+          applicationRequest
+          && replayable
+          && options.sessionRecovery !== false
           && this.config.recoverSession != null
           && !sessionRecovered
 
         if (status === 401 && canRecoverSession) {
-          if (await this.recoverSession()) {
+          const alreadyRecovered =
+            sessionRecoveryGeneration !== getSessionRecoveryGeneration(this.config)
+
+          if (alreadyRecovered || await this.recoverSession()) {
             return attempt(xsrfRecovered, true)
           }
         }

@@ -131,9 +131,19 @@ await http.post('/api/auth/exchange', body, {
 
 A `419` and a `401` are recovered independently. Sefirot can refresh CSRF after
 a `419`, then recover the session if the retried request returns a `401`. Each
-recovery stage runs at most once, and concurrent requests share the same
-in-progress recovery. Returning `false` from `recoverSession` leaves the
+recovery stage runs at most once. Concurrent requests share the same in-progress
+recovery, and delayed `401` responses reuse a successful recovery completed
+after their request began. Returning `false` from `recoverSession` leaves the
 original `401` error observable to the caller.
+
+Sanctum behavior applies only when the effective request URL matches the
+configured `baseUrl` origin. A per-request `baseURL` override is applied before
+this comparison. When the configured `baseUrl` is unset, requests must resolve
+to the current page origin. Other origins receive neither the XSRF token nor
+automatic `401` or `419` recovery.
+
+Requests with a `ReadableStream` body are not retried because their body cannot
+be sent a second time. The original `401` or `419` remains observable.
 
 ### `get`
 

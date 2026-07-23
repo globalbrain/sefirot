@@ -1,3 +1,4 @@
+import { Readable } from 'node:stream'
 import { type FetchOptions, type FetchResponse, Http } from 'sefirot/http/Http'
 import { type HttpClient, useHttpConfig } from 'sefirot/stores/HttpConfig'
 
@@ -280,6 +281,125 @@ describe('http/Http', () => {
 
     await expect(requests).resolves.toEqual(['/api/one', '/api/two'])
     expect(client).toHaveBeenCalledTimes(4)
+  })
+
+  it('reuses a completed recovery for a delayed 401 from the same session', async () => {
+    const attempts = new Map<string, number>()
+    let releaseDelayedResponse: () => void
+    const delayedResponse = new Promise<void>((resolve) => {
+      releaseDelayedResponse = resolve
+    })
+    const recoverSession = vi.fn(async () => true)
+
+    const client = vi.fn(async (request) => {
+      const url = String(request)
+      const attempt = (attempts.get(url) ?? 0) + 1
+      attempts.set(url, attempt)
+
+      if (url === '/api/two' && attempt === 1) {
+        await delayedResponse
+      }
+
+      if (attempt === 1) {
+        throw httpError(401)
+      }
+
+      return url
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    const firstRequest = http.get('/api/one')
+    const delayedRequest = http.get('/api/two')
+
+    await expect(firstRequest).resolves.toBe('/api/one')
+    releaseDelayedResponse!()
+    await expect(delayedRequest).resolves.toBe('/api/two')
+
+    expect(recoverSession).toHaveBeenCalledOnce()
+  })
+
+  it.each([401, 419])('does not retry a %i response with a one-shot body', async (status) => {
+    const error = httpError(status)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      throw error
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    await expect(
+      http.put('/api/items', new ReadableStream())
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not retry a response with a Node stream body', async () => {
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      throw error
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    await expect(
+      http.put('/api/items', Readable.from('content'))
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not apply Sanctum behavior to third-party URLs', async () => {
+    document.cookie = 'XSRF-TOKEN=secret; Path=/'
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      expect(xsrfHeader(options)).toBeNull()
+      throw error
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: 'https://app.example.com',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.post('/items', undefined, {
+        baseURL: 'https://example.com'
+      })
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('recovers absolute URLs on the configured application origin', async () => {
+    let requestCount = 0
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      requestCount++
+      if (requestCount === 1) {
+        throw httpError(401)
+      }
+      return 'ok'
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: 'https://app.example.com/api',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.get('https://app.example.com/items')
+    ).resolves.toBe('ok')
+
+    expect(recoverSession).toHaveBeenCalledOnce()
+    expect(client).toHaveBeenCalledTimes(2)
   })
 
   it('leaves callback errors observable', async () => {
