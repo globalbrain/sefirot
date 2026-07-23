@@ -25,7 +25,7 @@ function getSessionRecoveryGeneration(config: Config): number {
 }
 
 function isAbsoluteUrl(url: string): boolean {
-  return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url)
+  return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url.trimStart())
 }
 
 function isReplayableBody(body: unknown): boolean {
@@ -194,10 +194,11 @@ export class Http {
       xsrfRecovered = false,
       sessionRecovered = false
     ): Promise<T> => {
+      const request = await this.buildRequest(url, options)
       const sessionRecoveryGeneration = getSessionRecoveryGeneration(this.config)
 
       try {
-        return await send(await this.buildRequest(url, options))
+        return await send(request)
       } catch (error) {
         const status = getHttpStatusCode(error)
 

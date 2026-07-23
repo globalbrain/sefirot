@@ -322,6 +322,74 @@ describe('http/Http', () => {
     expect(recoverSession).toHaveBeenCalledOnce()
   })
 
+  it('samples the recovery generation after asynchronous request construction', async () => {
+    let releaseHeaders: () => void
+    const delayedHeaders = new Promise<void>((resolve) => {
+      releaseHeaders = resolve
+    })
+    let headerRequestCount = 0
+    const headers = vi.fn(async () => {
+      headerRequestCount++
+      if (headerRequestCount === 1) {
+        await delayedHeaders
+      }
+      return {}
+    })
+    const recoverSession = vi.fn(async () => true)
+    let recoveryRequestCount = 0
+    const client = vi.fn(async (request) => {
+      const url = String(request)
+
+      if (url === '/api/recover') {
+        recoveryRequestCount++
+        if (recoveryRequestCount === 1) {
+          throw httpError(401)
+        }
+        return url
+      }
+
+      if (recoverSession.mock.calls.length < 2) {
+        throw httpError(401)
+      }
+
+      return url
+    })
+    const config = useHttpConfig()
+    config.apply({ client, headers, recoverSession })
+    const http = new Http(config)
+
+    const requestBuiltAfterRecovery = http.get('/api/after-recovery')
+    await vi.waitFor(() => {
+      expect(headers).toHaveBeenCalledOnce()
+    })
+
+    await expect(http.get('/api/recover')).resolves.toBe('/api/recover')
+    expect(recoverSession).toHaveBeenCalledOnce()
+
+    releaseHeaders!()
+
+    await expect(requestBuiltAfterRecovery).resolves.toBe('/api/after-recovery')
+    expect(recoverSession).toHaveBeenCalledTimes(2)
+  })
+
+  it('does not recover status-shaped errors thrown while building a request', async () => {
+    const error = httpError(401)
+    const headers = vi.fn(async () => {
+      throw error
+    })
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn()
+    const config = useHttpConfig()
+    config.apply({ client, headers, recoverSession })
+    const http = new Http(config)
+
+    await expect(http.get('/api/items')).rejects.toBe(error)
+
+    expect(headers).toHaveBeenCalledOnce()
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).not.toHaveBeenCalled()
+  })
+
   it.each([401, 419])('does not retry a %i response with a one-shot body', async (status) => {
     const error = httpError(status)
     const recoverSession = vi.fn(async () => true)
@@ -448,6 +516,31 @@ describe('http/Http', () => {
 
     await expect(
       http.get('https://example.com/items')
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not recover whitespace-prefixed absolute URLs during SSR', async () => {
+    vi.stubGlobal('location', undefined)
+    document.cookie = 'XSRF-TOKEN=secret; Path=/'
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      expect(xsrfHeader(options)).toBeNull()
+      throw error
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: '/api',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.post(' https://example.com/items')
     ).rejects.toBe(error)
 
     expect(recoverSession).not.toHaveBeenCalled()
