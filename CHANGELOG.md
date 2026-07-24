@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.63.0](https://github.com/globalbrain/sefirot/compare/v4.62.0...v4.63.0) (2026-07-24)
+
+
+### Features
+
+* **http:** support Sanctum authentication recovery ([#774](https://github.com/globalbrain/sefirot/issues/774)) ([168ab85](https://github.com/globalbrain/sefirot/commit/168ab8577510b475465dd7f4e6d3b75d257d768c))
+
 # [4.62.0](https://github.com/globalbrain/sefirot/compare/v4.61.2...v4.62.0) (2026-07-21)
 
 
