@@ -19,13 +19,24 @@ export type HttpRequestOptions = FetchOptions & {
 const xsrfRefreshes = new WeakMap<Config, Promise<void>>()
 const sessionRecoveries = new WeakMap<Config, Promise<boolean>>()
 const sessionRecoveryGenerations = new WeakMap<Config, number>()
+const relativeUrlBases = [
+  new URL('http://a.sefirot.invalid'),
+  new URL('http://b.sefirot.invalid')
+]
 
 function getSessionRecoveryGeneration(config: Config): number {
   return sessionRecoveryGenerations.get(config) ?? 0
 }
 
-function isAbsoluteUrl(url: string): boolean {
-  return /^(?:[a-z][a-z\d+\-.]*:|\/\/)/i.test(url.trimStart())
+function isLocalUrlReference(url: string): boolean {
+  if (URL.canParse(url)) {
+    return false
+  }
+
+  return relativeUrlBases.every(
+    (base) => URL.canParse(url, base)
+      && new URL(url, base).origin === base.origin
+  )
 }
 
 function isReplayableBody(body: unknown): boolean {
@@ -33,21 +44,17 @@ function isReplayableBody(body: unknown): boolean {
     return true
   }
 
-  const stream = body as {
-    constructor?: { name?: string }
+  const source = body as {
     pipeTo?: unknown
     pipe?: unknown
-    toJSON?: unknown
-  }
-  if (
-    Array.isArray(body)
-    || stream.constructor?.name === 'Object'
-    || typeof stream.toJSON === 'function'
-  ) {
-    return true
+    next?: unknown
+    [Symbol.asyncIterator]?: unknown
   }
 
-  return typeof stream.pipeTo !== 'function' && typeof stream.pipe !== 'function'
+  return typeof source.pipeTo !== 'function'
+    && typeof source.pipe !== 'function'
+    && typeof source.next !== 'function'
+    && typeof source[Symbol.asyncIterator] !== 'function'
 }
 
 async function runSingleFlight<T>(
@@ -96,24 +103,25 @@ export class Http {
 
   private isApplicationRequest(url: string, options: HttpRequestOptions = {}): boolean {
     const pageUrl = typeof location === 'undefined' ? undefined : location.href
-    const applicationBaseUrl = this.config.baseUrl ?? pageUrl
-    if (!applicationBaseUrl) {
-      return !isAbsoluteUrl(url)
-        && (options.baseURL == null || !isAbsoluteUrl(options.baseURL))
-    }
-
-    if (!pageUrl && !isAbsoluteUrl(applicationBaseUrl)) {
-      return !isAbsoluteUrl(url)
-        && (options.baseURL == null || !isAbsoluteUrl(options.baseURL))
+    const applicationBaseUrl = this.config.baseUrl || pageUrl
+    const requestBaseUrl = Object.hasOwn(options, 'baseURL')
+      ? options.baseURL
+      : this.config.baseUrl
+    if (
+      !applicationBaseUrl
+      || (!pageUrl && isLocalUrlReference(applicationBaseUrl))
+    ) {
+      return isLocalUrlReference(url)
+        && (requestBaseUrl == null || isLocalUrlReference(requestBaseUrl))
     }
 
     try {
       const applicationUrl = new URL(applicationBaseUrl, pageUrl)
-      const requestBaseUrl = options.baseURL == null
-        ? applicationUrl
-        : new URL(options.baseURL, pageUrl)
+      const resolvedRequestBaseUrl = requestBaseUrl
+        ? new URL(requestBaseUrl, pageUrl)
+        : pageUrl
 
-      return new URL(url, requestBaseUrl).origin === applicationUrl.origin
+      return new URL(url, resolvedRequestBaseUrl).origin === applicationUrl.origin
     } catch {
       return false
     }

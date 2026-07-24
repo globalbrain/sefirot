@@ -134,7 +134,8 @@ a `419`, then recover the session if the retried request returns a `401`. Each
 recovery stage runs at most once. Concurrent requests share the same in-progress
 recovery, and delayed `401` responses reuse a successful recovery completed
 after their request began. Returning `false` from `recoverSession` leaves the
-original `401` error observable to the caller.
+original `401` error observable to the caller. If the callback throws, its error
+remains observable instead.
 
 Sanctum behavior applies only when the effective request URL matches the
 configured `baseUrl` origin. A per-request `baseURL` override is applied before
@@ -144,8 +145,9 @@ automatic `401` or `419` recovery. During SSR, if no origin is available,
 relative base and request URLs are treated as application-local, while absolute
 request URLs are not.
 
-Requests with a `ReadableStream` body are not retried because their body cannot
-be sent a second time. The original `401` or `419` remains observable.
+Requests with a Web stream, Node stream, async iterable, or one-shot iterator
+body are not retried because their body may be consumed by the first send. The
+original `401` or `419` remains observable.
 
 ### `get`
 

@@ -391,6 +391,7 @@ describe('http/Http', () => {
   })
 
   it.each([401, 419])('does not retry a %i response with a one-shot body', async (status) => {
+    document.cookie = 'XSRF-TOKEN=valid; Path=/'
     const error = httpError(status)
     const recoverSession = vi.fn(async () => true)
     const client = vi.fn(async () => {
@@ -407,6 +408,7 @@ describe('http/Http', () => {
   })
 
   it('does not retry a response with a Node stream body', async () => {
+    document.cookie = 'XSRF-TOKEN=valid; Path=/'
     const error = httpError(401)
     const recoverSession = vi.fn(async () => true)
     const client = vi.fn(async () => {
@@ -416,6 +418,84 @@ describe('http/Http', () => {
 
     await expect(
       http.put('/api/items', Readable.from('content'))
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not retry a response with an async iterable body', async () => {
+    document.cookie = 'XSRF-TOKEN=valid; Path=/'
+
+    async function* body(): AsyncGenerator<string> {
+      yield 'content'
+    }
+
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      for await (const chunk of options?.body as AsyncIterable<string>) {
+        expect(chunk).toBe('content')
+      }
+      throw error
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    await expect(
+      http.put('/api/items', body())
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not retry a response with a one-shot sync iterator body', async () => {
+    document.cookie = 'XSRF-TOKEN=valid; Path=/'
+
+    function* body(): Generator<string> {
+      yield 'content'
+    }
+
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      for (const chunk of options?.body as Iterable<string>) {
+        expect(chunk).toBe('content')
+      }
+      throw error
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    await expect(
+      http.put('/api/items', body())
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
+  it('does not retry a response with a bare one-shot iterator body', async () => {
+    document.cookie = 'XSRF-TOKEN=valid; Path=/'
+
+    const values = ['content']
+    const body = {
+      next: (): IteratorResult<string> => values.length
+        ? { done: false, value: values.shift()! }
+        : { done: true, value: undefined }
+    }
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      const iterator = options?.body as Iterator<string>
+      while (!iterator.next().done) {
+        // Consume the one-shot body before returning the response.
+      }
+      throw error
+    })
+    const http = setupHttp(client, { recoverSession })
+
+    await expect(
+      http.put('/api/items', body)
     ).rejects.toBe(error)
 
     expect(recoverSession).not.toHaveBeenCalled()
@@ -448,6 +528,31 @@ describe('http/Http', () => {
     expect(client).toHaveBeenCalledOnce()
   })
 
+  it('matches request scoping when baseURL is explicitly undefined', async () => {
+    document.cookie = 'XSRF-TOKEN=secret; Path=/'
+    const error = httpError(401)
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async (_request, options) => {
+      expect(options?.baseURL).toBeUndefined()
+      expect(xsrfHeader(options)).toBeNull()
+      throw error
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: 'https://app.example.com',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.post('/items', undefined, { baseURL: undefined })
+    ).rejects.toBe(error)
+
+    expect(recoverSession).not.toHaveBeenCalled()
+    expect(client).toHaveBeenCalledOnce()
+  })
+
   it('recovers absolute URLs on the configured application origin', async () => {
     let requestCount = 0
     const recoverSession = vi.fn(async () => true)
@@ -468,6 +573,32 @@ describe('http/Http', () => {
 
     await expect(
       http.get('https://app.example.com/items')
+    ).resolves.toBe('ok')
+
+    expect(recoverSession).toHaveBeenCalledOnce()
+    expect(client).toHaveBeenCalledTimes(2)
+  })
+
+  it('uses the page origin when the configured base URL is empty', async () => {
+    let requestCount = 0
+    const recoverSession = vi.fn(async () => true)
+    const client = vi.fn(async () => {
+      requestCount++
+      if (requestCount === 1) {
+        throw httpError(401)
+      }
+      return 'ok'
+    })
+    const config = useHttpConfig()
+    config.apply({
+      baseUrl: '',
+      client,
+      recoverSession
+    })
+    const http = new Http(config)
+
+    await expect(
+      http.get(new URL('/items', location.href).href)
     ).resolves.toBe('ok')
 
     expect(recoverSession).toHaveBeenCalledOnce()
@@ -522,7 +653,11 @@ describe('http/Http', () => {
     expect(client).toHaveBeenCalledOnce()
   })
 
-  it('does not recover whitespace-prefixed absolute URLs during SSR', async () => {
+  it.each([
+    ' https://example.com/items',
+    '\0https://example.com/items',
+    '//sefirot.invalid/items'
+  ])('does not recover externally resolving URL %j during SSR', async (url) => {
     vi.stubGlobal('location', undefined)
     document.cookie = 'XSRF-TOKEN=secret; Path=/'
     const error = httpError(401)
@@ -540,7 +675,7 @@ describe('http/Http', () => {
     const http = new Http(config)
 
     await expect(
-      http.post(' https://example.com/items')
+      http.post(url)
     ).rejects.toBe(error)
 
     expect(recoverSession).not.toHaveBeenCalled()
