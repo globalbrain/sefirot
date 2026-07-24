@@ -51,7 +51,8 @@ interface HttpOptions {
   /**
    * Attempts to recover the application's server session after a `401`.
    * Return `true` to rebuild and retry the request. Return `false` when
-   * the session cannot be recovered.
+   * the session cannot be recovered. Set to `false` to disable a
+   * previously configured callback.
    *
    * @default undefined
    */
@@ -111,9 +112,17 @@ type HttpRequestOptions = FetchOptions & {
 }
 ```
 
-The recovery callback is authentication-provider agnostic. Applications can
-recover their Laravel session through any identity provider. It is configured
-once and applies to all requests by default:
+### Authentication recovery
+
+`Http` has two automatic recovery paths:
+
+- After a `419`, it refreshes the Sanctum CSRF token and retries the request.
+- After a `401`, it calls `recoverSession` and retries the request if the
+  callback returns `true`.
+
+Configure `recoverSession` once to apply it to all application requests by
+default. The callback can restore the Laravel session through any identity
+provider:
 
 ```ts
 httpConfig.apply({
@@ -121,9 +130,9 @@ httpConfig.apply({
 })
 ```
 
-Set `recoverSession` to `false` to disable a previously configured callback
-globally. Omitting it or passing `undefined` leaves the current configuration
-unchanged.
+Returning `false` leaves the original `401` unchanged. If the callback throws,
+its error is propagated. Set `recoverSession` to `false` to remove a previously
+configured callback.
 
 Requests used by the recovery flow itself should opt out:
 
@@ -133,26 +142,13 @@ await http.post('/api/auth/exchange', body, {
 })
 ```
 
-A `419` and a `401` are recovered independently. Sefirot can refresh CSRF after
-a `419`, then recover the session if the retried request returns a `401`. Each
-recovery stage runs at most once. Concurrent requests share the same in-progress
-recovery, and delayed `401` responses reuse a successful recovery completed
-after their request began. Returning `false` from `recoverSession` leaves the
-original `401` error observable to the caller. If the callback throws, its error
-remains observable instead.
+`sessionRecovery: false` disables `401` recovery for that request without
+disabling CSRF recovery.
 
-Sanctum behavior applies only when the effective request URL matches the
-configured `baseUrl` origin. A per-request `baseURL` override is applied before
-this comparison. When the configured `baseUrl` is unset, requests must resolve
-to the current page origin. Other origins receive neither the XSRF token nor
-automatic `401` or `419` recovery. During SSR, if no origin is available,
-relative base and request URLs are treated as application-local, while absolute
-request URLs are not.
-
-Automatic recovery retries only bodies Sefirot can identify as replayable, such
-as JSON values and standard reusable `BodyInit` values. Streams, iterators, and
-unknown object bodies are not retried because they may be consumed by the first
-send. The original `401` or `419` remains observable.
+Each recovery path retries at most once. Automatic recovery applies only to
+requests sent to the application origin (`baseUrl`, or the current page origin
+when unset). Concurrent `401` responses share one recovery attempt. Requests
+whose bodies cannot be safely sent again, such as streams, are not retried.
 
 ### `get`
 
