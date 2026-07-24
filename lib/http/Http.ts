@@ -40,21 +40,47 @@ function isLocalUrlReference(url: string): boolean {
 }
 
 function isReplayableBody(body: unknown): boolean {
-  if (!body || typeof body !== 'object') {
+  if (body == null) {
+    return true
+  }
+
+  if (typeof body !== 'object') {
+    return ['string', 'number', 'boolean'].includes(typeof body)
+  }
+
+  if (
+    Array.isArray(body)
+    || body instanceof Blob
+    || body instanceof FormData
+    || body instanceof URLSearchParams
+    || body instanceof ArrayBuffer
+    || ArrayBuffer.isView(body)
+  ) {
     return true
   }
 
   const source = body as {
+    constructor?: { name?: string }
     pipeTo?: unknown
     pipe?: unknown
     next?: unknown
+    toJSON?: unknown
+    [Symbol.iterator]?: unknown
     [Symbol.asyncIterator]?: unknown
   }
 
-  return typeof source.pipeTo !== 'function'
-    && typeof source.pipe !== 'function'
-    && typeof source.next !== 'function'
-    && typeof source[Symbol.asyncIterator] !== 'function'
+  if (
+    typeof source.pipeTo === 'function'
+    || typeof source.pipe === 'function'
+    || typeof source.next === 'function'
+    || typeof source[Symbol.iterator] === 'function'
+    || typeof source[Symbol.asyncIterator] === 'function'
+  ) {
+    return false
+  }
+
+  return source.constructor?.name === 'Object'
+    || typeof source.toJSON === 'function'
 }
 
 async function runSingleFlight<T>(

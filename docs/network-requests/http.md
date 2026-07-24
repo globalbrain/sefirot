@@ -55,7 +55,7 @@ interface HttpOptions {
    *
    * @default undefined
    */
-  recoverSession?: () => boolean | PromiseLike<boolean>
+  recoverSession?: false | (() => boolean | PromiseLike<boolean>)
   /**
    * Returns additional headers for each request.
    *
@@ -121,6 +121,10 @@ httpConfig.apply({
 })
 ```
 
+Set `recoverSession` to `false` to disable a previously configured callback
+globally. Omitting it or passing `undefined` leaves the current configuration
+unchanged.
+
 Requests used by the recovery flow itself should opt out:
 
 ```ts
@@ -145,9 +149,10 @@ automatic `401` or `419` recovery. During SSR, if no origin is available,
 relative base and request URLs are treated as application-local, while absolute
 request URLs are not.
 
-Requests with a Web stream, Node stream, async iterable, or one-shot iterator
-body are not retried because their body may be consumed by the first send. The
-original `401` or `419` remains observable.
+Automatic recovery retries only bodies Sefirot can identify as replayable, such
+as JSON values and standard reusable `BodyInit` values. Streams, iterators, and
+unknown object bodies are not retried because they may be consumed by the first
+send. The original `401` or `419` remains observable.
 
 ### `get`
 

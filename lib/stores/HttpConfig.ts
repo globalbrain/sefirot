@@ -15,7 +15,7 @@ export interface HttpOptions {
   baseUrl?: string
   xsrfUrl?: string | false
   client?: HttpClient
-  recoverSession?: () => Awaitable<boolean>
+  recoverSession?: false | (() => Awaitable<boolean>)
   lang?: Lang
   payloadKey?: string
   headers?: () => Awaitable<Record<string, string>>
@@ -36,7 +36,9 @@ export const useHttpConfig = defineStore('sefirot-http-config', () => {
     if (options.baseUrl != null) { baseUrl.value = options.baseUrl }
     if (options.xsrfUrl != null) { xsrfUrl.value = options.xsrfUrl }
     if (options.client != null) { client.value = options.client }
-    if (options.recoverSession != null) { recoverSession.value = options.recoverSession }
+    if (options.recoverSession != null) {
+      recoverSession.value = options.recoverSession || undefined
+    }
     if (options.lang != null) { lang.value = options.lang }
     if (options.payloadKey != null) { payloadKey.value = options.payloadKey }
     if (options.headers != null) { headers.value = options.headers }
