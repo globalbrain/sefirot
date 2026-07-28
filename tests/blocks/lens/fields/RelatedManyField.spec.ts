@@ -134,13 +134,18 @@ describe('blocks/lens/fields/RelatedManyField', () => {
   })
 
   describe('availableFilters', () => {
-    it('exposes "=", "!=", "in", "empty", and "notEmpty" operators when an endpoint is configured', () => {
+    it('keeps the default "=", "!=", and "in" operators when empty operator support is not declared', () => {
       const filters = make().availableFilters()
+      expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'in'])
+    })
+
+    it('exposes "empty" and "notEmpty" operators when the field data declares support', () => {
+      const filters = make({ emptyOperators: true }).availableFilters()
       expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'empty', 'in', 'notEmpty'])
     })
 
     it('maps the valueless operators to an EmptyFilterInput', () => {
-      const filters = make().availableFilters()
+      const filters = make({ emptyOperators: true }).availableFilters()
       expect(filters.empty).toBeInstanceOf(EmptyFilterInput)
       expect(filters.notEmpty).toBeInstanceOf(EmptyFilterInput)
     })

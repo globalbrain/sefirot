@@ -26,6 +26,27 @@ const fields: Record<string, FieldData> = {
     resourceEndpointDataKey: null,
     resourceTitle: 'name',
     resourceImage: null,
+    displayAs: null,
+    emptyOperators: true
+  },
+  reviewers: {
+    type: 'related_many',
+    key: 'reviewers',
+    labelEn: 'Reviewers',
+    labelJa: 'レビュアー',
+    filterKey: 'id',
+    sortable: false,
+    freeze: false,
+    width: 0,
+    required: false,
+    rules: [],
+    title: 'name',
+    image: null,
+    resourceEndpointMethod: 'get',
+    resourceEndpointPath: '/api/reviewers',
+    resourceEndpointDataKey: null,
+    resourceTitle: 'name',
+    resourceImage: null,
     displayAs: null
   }
 }
@@ -40,7 +61,10 @@ function mountCondition(condition: FilterCondition) {
   const wrapper = mount(LensFormFilterCondition, {
     props: {
       fields,
-      fieldOptions: [{ label: 'Members', value: 'members' }],
+      fieldOptions: [
+        { label: 'Members', value: 'members' },
+        { label: 'Reviewers', value: 'reviewers' }
+      ],
       canRemove: false,
       modelValue: condition
     },
@@ -55,7 +79,7 @@ function mountCondition(condition: FilterCondition) {
 }
 
 describe('blocks/lens/components/LensFormFilterCondition', () => {
-  it('offers the valueless operators for a related field', () => {
+  it('offers the valueless operators for a related field that declares support', () => {
     const condition = reactive({ field: 'members', operator: '=' as const, value: null })
     const wrapper = mountCondition(condition)
 
@@ -63,6 +87,17 @@ describe('blocks/lens/components/LensFormFilterCondition', () => {
 
     expect(operatorOptions).toContainEqual({ label: 'is empty', value: 'empty' })
     expect(operatorOptions).toContainEqual({ label: 'is not empty', value: 'notEmpty' })
+
+    wrapper.unmount()
+  })
+
+  it('keeps the default operators for a related field without the declaration', () => {
+    const condition = reactive({ field: 'reviewers', operator: '=' as const, value: null })
+    const wrapper = mountCondition(condition)
+
+    const operatorOptions = (wrapper.findAllComponents(SInputDropdown)[1] as any).props('options')
+
+    expect(operatorOptions.map((o: any) => o.value)).toEqual(['=', '!=', 'in'])
 
     wrapper.unmount()
   })

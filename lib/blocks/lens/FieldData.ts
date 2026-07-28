@@ -71,6 +71,14 @@ export interface FieldDataBase {
    * means a null blank.
    */
   emptyValue?: any
+  /**
+   * Whether the backend translates the valueless `empty` / `notEmpty`
+   * filter operators for this field. The operators are strictly opt-in:
+   * the filter UI offers them only when the backend's field definition
+   * declares support, so applications whose backends don't understand
+   * the operators see no change. Absent means unsupported.
+   */
+  emptyOperators?: boolean
 }
 
 export interface AvatarFieldData extends FieldDataBase {

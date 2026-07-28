@@ -106,13 +106,20 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     const selectOne = new SelectFilterInput().options(optionsResolver)
     const selectMany = new SelectFilterInput().options(optionsResolver).multiple()
 
-    return {
+    const filters: Partial<Record<FilterOperator, FilterInput>> = {
       '=': selectOne,
       '!=': selectOne,
-      'in': selectMany,
-      'empty': new EmptyFilterInput(),
-      'notEmpty': new EmptyFilterInput()
+      'in': selectMany
     }
+
+    // The valueless operators are strictly opt-in via the backend's field
+    // definition — see `FieldDataBase.emptyOperators`.
+    if (this.data.emptyOperators) {
+      filters.empty = new EmptyFilterInput()
+      filters.notEmpty = new EmptyFilterInput()
+    }
+
+    return filters
   }
 
   // Lens id fields serialize as `{ value, display, path? }`; filters need the
