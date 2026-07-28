@@ -9,6 +9,8 @@ export type FilterOperator =
   | 'contains'
   | 'startsWith'
   | 'endsWith'
+  | 'empty'
+  | 'notEmpty'
 
 export const FilterOperatorLabelDict: Record<FilterOperator, string> = {
   '=': 'is',
@@ -20,5 +22,7 @@ export const FilterOperatorLabelDict: Record<FilterOperator, string> = {
   'in': 'in',
   'contains': 'contains',
   'startsWith': 'starts with',
-  'endsWith': 'ends with'
+  'endsWith': 'ends with',
+  'empty': 'is empty',
+  'notEmpty': 'is not empty'
 }

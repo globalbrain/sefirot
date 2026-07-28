@@ -66,8 +66,12 @@ const operatorOptions = computed(() => {
 
 const input = ref(null) as Ref<FilterInput | null>
 
+// A valueless input (e.g. the `empty` / `notEmpty` operators) has no
+// value control: the value cell renders nothing instead of an input.
+const valueless = computed(() => input.value?.valueless() ?? false)
+
 const inputComponent = computed(() => {
-  return input.value ? markRaw(input.value.component()) : null
+  return input.value && !valueless.value ? markRaw(input.value.component()) : null
 })
 
 const { validation, reset: resetValidation } = useValidation(() => ({
@@ -160,7 +164,7 @@ async function resolveInput() {
     </div>
     <div class="value">
       <div v-if="input === null" class="skeleton" />
-      <Suspense v-else :key="model.field ?? '__empty__'">
+      <Suspense v-else-if="!valueless" :key="model.field ?? '__empty__'">
         <component :is="inputComponent" v-model="model.value" />
         <template #fallback>
           <div class="resolving">

@@ -123,6 +123,30 @@ describe('blocks/lens/composables/CatalogUrlQuerySync', () => {
     wrapper.unmount()
   })
 
+  it('round-trips valueless operator conditions', async () => {
+    const { wrapper, vm } = setupCatalog()
+
+    vm.filters = [['assignees', 'empty', null], ['reviewers', 'notEmpty', null]]
+
+    await expect.poll(() => vm.route.query.filters)
+      .toBe('[["assignees","empty",null],["reviewers","notEmpty",null]]')
+
+    wrapper.unmount()
+  })
+
+  it('restores valueless operator conditions from the URL', async () => {
+    const { wrapper, vm } = setupCatalog({
+      filters: '[["assignees","empty",null],["$or",[["reviewers","notEmpty",null]]]]'
+    })
+
+    await expect.poll(() => vm.filters).toEqual([
+      ['assignees', 'empty', null],
+      ['$or', [['reviewers', 'notEmpty', null]]]
+    ])
+
+    wrapper.unmount()
+  })
+
   it('rejects filters with an unknown shape or operator', async () => {
     const { wrapper, vm } = setupCatalog({
       filters: '[["name","~","foo"]]'

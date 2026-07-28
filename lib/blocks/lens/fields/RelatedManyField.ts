@@ -7,6 +7,7 @@ import { type TableCell } from '../../../composables/Table'
 import { type RelatedManyFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
 import { type ResourceFetcher } from '../ResourceFetcher'
+import { EmptyFilterInput } from '../filter-inputs/EmptyFilterInput'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { SelectFilterInput } from '../filter-inputs/SelectFilterInput'
 import { Field } from './Field'
@@ -108,7 +109,9 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     return {
       '=': selectOne,
       '!=': selectOne,
-      'in': selectMany
+      'in': selectMany,
+      'empty': new EmptyFilterInput(),
+      'notEmpty': new EmptyFilterInput()
     }
   }
 

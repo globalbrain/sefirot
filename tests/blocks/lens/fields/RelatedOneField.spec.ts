@@ -3,6 +3,7 @@ import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type RelatedOneFieldData } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
 import { RelatedOneField } from 'sefirot/blocks/lens/fields/RelatedOneField'
+import { EmptyFilterInput } from 'sefirot/blocks/lens/filter-inputs/EmptyFilterInput'
 import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
 import { DataListStateKey } from 'sefirot/composables/DataList'
 import { computed } from 'vue'
@@ -138,9 +139,15 @@ describe('blocks/lens/fields/RelatedOneField', () => {
   })
 
   describe('availableFilters', () => {
-    it('exposes "=", "!=", and "in" operators when an endpoint is configured', () => {
+    it('exposes "=", "!=", "in", "empty", and "notEmpty" operators when an endpoint is configured', () => {
       const filters = make().availableFilters()
-      expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'in'])
+      expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'empty', 'in', 'notEmpty'])
+    })
+
+    it('maps the valueless operators to an EmptyFilterInput', () => {
+      const filters = make().availableFilters()
+      expect(filters.empty).toBeInstanceOf(EmptyFilterInput)
+      expect(filters.notEmpty).toBeInstanceOf(EmptyFilterInput)
     })
 
     it('returns no filters when the resource endpoint is empty', () => {

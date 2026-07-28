@@ -33,6 +33,10 @@ const input = computed(() => {
   return field.value?.filterInputByOperator(props.condition.operator) ?? null
 })
 
+// A valueless condition (e.g. the `empty` / `notEmpty` operators) has no
+// value to show, so the chip hides the value segment entirely.
+const valueless = computed(() => input.value?.valueless() ?? false)
+
 const fieldText = computed(() => {
   // Fall back to the raw field key when the field has no definition.
   return field.value ? field.value.label() : props.condition.field
@@ -54,7 +58,7 @@ const valueText = computedAsync(async () => {
   <div class="LensCatalogStateFilterCondition">
     <div class="field">{{ fieldText }}</div>
     <div class="operator">{{ operatorText }}</div>
-    <div class="value">
+    <div v-if="!valueless" class="value">
       {{ valueText }}
     </div>
   </div>

@@ -3,6 +3,15 @@ import { defineComponent, h } from 'vue'
 
 export abstract class FilterInput {
   /**
+   * Whether the filter input represents a valueless condition (e.g. the
+   * `empty` / `notEmpty` operators). Valueless inputs render no value
+   * control, and the condition always carries `null` as its value.
+   */
+  valueless(): boolean {
+    return false
+  }
+
+  /**
    * Returns the validation rules for the filter input.
    */
   abstract rules(): Record<string, ValidationArgs>
