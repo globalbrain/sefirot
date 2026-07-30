@@ -11,6 +11,7 @@ import { useData } from '../../../composables/Data'
 import { useLang, useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
+import { isValuelessFilterOperator } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { type FilterCondition } from './LensFormFilterCondition.vue'
 import LensFormFilterGroup, { type FilterGroup } from './LensFormFilterGroup.vue'
@@ -142,7 +143,10 @@ function groupToLensFilters(conditions: (FilterGroup | FilterCondition)[]): any[
     if ('connector' in c) {
       return [c.connector, groupToLensFilters(c.conditions)]
     }
-    return [c.field, c.operator, c.value]
+    // A valueless condition always emits `null`: an initially loaded
+    // condition may carry a stray value (e.g. from a hand-edited URL)
+    // that the operator-change cast never saw.
+    return [c.field, c.operator, isValuelessFilterOperator(c.operator) ? null : c.value]
   })
 }
 

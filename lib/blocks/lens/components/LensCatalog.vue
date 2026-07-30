@@ -9,7 +9,7 @@ import { usePower } from '../../../composables/Power'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { day } from '../../../support/Day'
 import { type FieldData } from '../FieldData'
-import { isClearedFilterCondition } from '../FilterOperator'
+import { isClearedFilterCondition, normalizeValuelessFilterConditions } from '../FilterOperator'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
@@ -677,13 +677,16 @@ function withoutIndexField(fields: string[]): string[] {
 }
 
 // Create lens filters option by combining query (free search) filters,
-// user selected filters, and fixed filters.
+// user selected filters, and fixed filters. Filters coming from outside
+// the form UI (the `filters` prop, a hand-edited URL query) may carry a
+// stray value on a valueless condition, so normalize those to `null`
+// before they reach the wire.
 function createInputFilters(queryFilters: any[], filters: any[]) {
-  return [
+  return normalizeValuelessFilterConditions([
     ...(props.fixedFilters ?? []),
     queryFilters,
     ...filters
-  ].filter((f) => f?.length > 0)
+  ].filter((f) => f?.length > 0))
 }
 
 // Re-run the search for the new query state, dropping any stashed

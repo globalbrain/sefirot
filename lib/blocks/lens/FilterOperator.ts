@@ -50,3 +50,26 @@ export function isClearedFilterCondition(condition: any[]): boolean {
   }
   return condition[2] == null || (Array.isArray(condition[2]) && condition[2].length === 0)
 }
+
+/**
+ * Normalizes the value of valueless operator conditions to `null` across
+ * a filters array, groups included. Filters can enter from outside the
+ * form UI — the `filters` prop or a hand-edited URL query — where a
+ * valueless condition may carry a stray value, so the catalog normalizes
+ * them before sending a search, preserving the `[field, operator, null]`
+ * wire shape.
+ */
+export function normalizeValuelessFilterConditions(filters: any[]): any[] {
+  return filters.map((f) => {
+    if (!Array.isArray(f)) {
+      return f
+    }
+    const entry = f as any[]
+    if (entry[0] === '$and' || entry[0] === '$or') {
+      return [entry[0], normalizeValuelessFilterConditions(entry[1] ?? [])]
+    }
+    return isValuelessFilterOperator(entry[1]) && entry[2] !== null
+      ? [entry[0], entry[1], null]
+      : f
+  })
+}
