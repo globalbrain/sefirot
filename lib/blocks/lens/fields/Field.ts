@@ -17,6 +17,13 @@ import * as RuleMapper from '../validation/RuleMapper'
  */
 const DEFAULT_COLUMN_WIDTH = 168
 
+/**
+ * The option value of the pinned "empty" option in column filter
+ * dropdowns. A sentinel that can never collide with real option values
+ * coming from backend resources.
+ */
+export const EmptyFilterOption = Symbol('empty-filter-option')
+
 export abstract class Field<T extends FieldData> {
   /**
    * The field context, that holds global app context
@@ -161,6 +168,35 @@ export abstract class Field<T extends FieldData> {
       }
     }
     return null
+  }
+
+  /**
+   * Whether an `empty` condition for the given key is present in the
+   * filters array.
+   */
+  protected emptyFilterActiveFor(key: string, filters: any[]): boolean {
+    return filters.some((f) => f[0] === key && f[1] === 'empty')
+  }
+
+  /**
+   * Whether the backend declares the valueless `empty` / `notEmpty`
+   * filter operators for this field. See `FieldDataBase.emptyOperators`.
+   */
+  protected emptyOperatorsEnabled(): boolean {
+    return !!this.data.emptyOperators
+  }
+
+  /**
+   * The label for the pinned "empty" option in the column filter
+   * dropdown. The backend's declaration may customize it per language
+   * (e.g. "No assignees"); the fallback is a generic localized "None".
+   */
+  protected emptyOptionLabel(): string {
+    const declaration = this.data.emptyOperators
+    const label = typeof declaration === 'object' && declaration !== null
+      ? (this.ctx.lang === 'ja' ? declaration.labelJa : declaration.labelEn)
+      : null
+    return label ?? (this.ctx.lang === 'ja' ? 'なし' : 'None')
   }
 
   /**

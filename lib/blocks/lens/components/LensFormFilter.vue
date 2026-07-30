@@ -11,6 +11,7 @@ import { useData } from '../../../composables/Data'
 import { useLang, useTrans } from '../../../composables/Lang'
 import { useValidation } from '../../../composables/Validation'
 import { type FieldData } from '../FieldData'
+import { isValuelessFilterOperator } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { type FilterCondition } from './LensFormFilterCondition.vue'
 import LensFormFilterGroup, { type FilterGroup } from './LensFormFilterGroup.vue'
@@ -96,7 +97,7 @@ const fieldOptions = computed(() => {
 // }
 function lensFiltersToGroup() {
   const conditions = props.filters.length > 0
-    ? pruneMissingFields(props.filters.map(lensConditionToCondition))
+    ? pruneUneditableConditions(props.filters.map(lensConditionToCondition))
     : []
 
   return {
@@ -105,15 +106,32 @@ function lensFiltersToGroup() {
   }
 }
 
-// Drop conditions that reference a field absent from `props.fields` (for
-// example a stale saved filter pointing at a field that no longer
-// exists). Such a condition can't be rendered or edited, and would
-// otherwise pass validation with a null input and silently re-emit the
-// stale filter on Apply. Groups left empty by pruning are removed too.
-function pruneMissingFields(conditions: any[]): any[] {
+// Drop conditions the form cannot render or edit: ones referencing a
+// field absent from `props.fields` (a stale saved filter pointing at a
+// field that no longer exists), and ones whose operator the field does
+// not offer (e.g. a hand-edited URL pairing `empty` with a field that
+// doesn't declare support). Mounting such a condition would throw in its
+// input resolution, and it would otherwise pass validation with a null
+// input and silently re-emit the stale filter on Apply. Groups left
+// empty by pruning are removed too.
+function pruneUneditableConditions(conditions: any[]): any[] {
   return conditions
-    .map((c) => ('connector' in c ? { ...c, conditions: pruneMissingFields(c.conditions) } : c))
-    .filter((c) => ('connector' in c ? c.conditions.length > 0 : c.field === null || props.fields[c.field]))
+    .map((c) => ('connector' in c ? { ...c, conditions: pruneUneditableConditions(c.conditions) } : c))
+    .filter((c) => ('connector' in c ? c.conditions.length > 0 : isEditableCondition(c)))
+}
+
+function isEditableCondition(c: any): boolean {
+  if (c.field === null) {
+    return true
+  }
+  const fieldData = props.fields[c.field]
+  if (!fieldData) {
+    return false
+  }
+  if (c.operator === null) {
+    return true
+  }
+  return fieldFactory.make(fieldData).availableFilterOperators().includes(c.operator)
 }
 
 function lensConditionToCondition(filter: any[]) {
@@ -142,7 +160,10 @@ function groupToLensFilters(conditions: (FilterGroup | FilterCondition)[]): any[
     if ('connector' in c) {
       return [c.connector, groupToLensFilters(c.conditions)]
     }
-    return [c.field, c.operator, c.value]
+    // A valueless condition always emits `null`: an initially loaded
+    // condition may carry a stray value (e.g. from a hand-edited URL)
+    // that the operator-change cast never saw.
+    return [c.field, c.operator, isValuelessFilterOperator(c.operator) ? null : c.value]
   })
 }
 

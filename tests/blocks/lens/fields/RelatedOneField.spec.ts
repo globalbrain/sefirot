@@ -2,7 +2,9 @@ import { mount } from '@vue/test-utils'
 import { type FieldContext } from 'sefirot/blocks/lens/FieldContext'
 import { type RelatedOneFieldData } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
+import { EmptyFilterOption } from 'sefirot/blocks/lens/fields/Field'
 import { RelatedOneField } from 'sefirot/blocks/lens/fields/RelatedOneField'
+import { EmptyFilterInput } from 'sefirot/blocks/lens/filter-inputs/EmptyFilterInput'
 import SDescAvatar from 'sefirot/components/SDescAvatar.vue'
 import { DataListStateKey } from 'sefirot/composables/DataList'
 import { computed } from 'vue'
@@ -138,9 +140,20 @@ describe('blocks/lens/fields/RelatedOneField', () => {
   })
 
   describe('availableFilters', () => {
-    it('exposes "=", "!=", and "in" operators when an endpoint is configured', () => {
+    it('keeps the default "=", "!=", and "in" operators when empty operator support is not declared', () => {
       const filters = make().availableFilters()
       expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'in'])
+    })
+
+    it('exposes "empty" and "notEmpty" operators when the field data declares support', () => {
+      const filters = make({ emptyOperators: true }).availableFilters()
+      expect(Object.keys(filters).sort()).toEqual(['!=', '=', 'empty', 'in', 'notEmpty'])
+    })
+
+    it('maps the valueless operators to an EmptyFilterInput', () => {
+      const filters = make({ emptyOperators: true }).availableFilters()
+      expect(filters.empty).toBeInstanceOf(EmptyFilterInput)
+      expect(filters.notEmpty).toBeInstanceOf(EmptyFilterInput)
     })
 
     it('returns no filters when the resource endpoint is empty', () => {
@@ -165,6 +178,24 @@ describe('blocks/lens/fields/RelatedOneField', () => {
         { label: 'Japan', value: 1 },
         { label: 'USA', value: 2 }
       ])
+    })
+
+    it('does not add the empty option without the declaration', async () => {
+      const fetcher = makeFetcher([{ id: 1, name: 'Japan' }])
+      const menu = (await make({}, fetcher).tableFilterMenu([], () => {})) as any
+      expect(menu.options.map((o: any) => o.label)).toEqual(['Japan'])
+    })
+
+    it('prepends the empty option and toggles the valueless condition when declared', async () => {
+      const updated: any[] = []
+      const fetcher = makeFetcher([{ id: 1, name: 'Japan' }])
+      const menu = (await make({ emptyOperators: true }, fetcher)
+        .tableFilterMenu([], (f) => updated.push(f))) as any
+
+      expect(menu.options[0]).toEqual({ label: 'None', value: EmptyFilterOption })
+
+      menu.onClick(EmptyFilterOption)
+      expect(updated).toEqual([['country', 'empty', null]])
     })
 
     it('builds avatar-style options when displayAs is "avatar"', async () => {

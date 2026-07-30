@@ -7,9 +7,10 @@ import { type TableCell } from '../../../composables/Table'
 import { type RelatedManyFieldData } from '../FieldData'
 import { type FilterOperator } from '../FilterOperator'
 import { type ResourceFetcher } from '../ResourceFetcher'
+import { EmptyFilterInput } from '../filter-inputs/EmptyFilterInput'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { SelectFilterInput } from '../filter-inputs/SelectFilterInput'
-import { Field } from './Field'
+import { EmptyFilterOption, Field } from './Field'
 
 export class RelatedManyField extends Field<RelatedManyFieldData> {
   fetcher: ResourceFetcher
@@ -31,7 +32,11 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
       return null
     }
 
-    const selected = this.inFilterValueFor(this.data.key, filters)
+    const emptyActive = this.emptyFilterActiveFor(this.data.key, filters)
+
+    const selected = emptyActive
+      ? [EmptyFilterOption]
+      : this.inFilterValueFor(this.data.key, filters)
 
     const res = await this.fetcher(method, url, this.data.resourceEndpointBody)
     const data = key ? res[key] : res
@@ -50,12 +55,26 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
           value: this.resolveValue(item[this.data.filterKey])
         })
 
+    // The pinned "empty" option filters records with no related items at
+    // all. It is mutually exclusive with the value options: selecting it
+    // swaps the whole condition to a valueless `empty`, and selecting a
+    // value swaps back to `in`.
+    if (this.emptyOperatorsEnabled()) {
+      options.unshift({ label: this.emptyOptionLabel(), value: EmptyFilterOption })
+    }
+
     return {
       type: 'filter',
       search: true,
       selected,
       options,
-      onClick: (v) => { onFilterUpdated?.([this.data.key, 'in', xor(selected, [v])]) }
+      onClick: (v) => {
+        if (v === EmptyFilterOption) {
+          onFilterUpdated?.(emptyActive ? [this.data.key, 'in', []] : [this.data.key, 'empty', null])
+          return
+        }
+        onFilterUpdated?.([this.data.key, 'in', xor(emptyActive ? [] : selected, [v])])
+      }
     }
   }
 
@@ -105,11 +124,20 @@ export class RelatedManyField extends Field<RelatedManyFieldData> {
     const selectOne = new SelectFilterInput().options(optionsResolver)
     const selectMany = new SelectFilterInput().options(optionsResolver).multiple()
 
-    return {
+    const filters: Partial<Record<FilterOperator, FilterInput>> = {
       '=': selectOne,
       '!=': selectOne,
       'in': selectMany
     }
+
+    // The valueless operators are strictly opt-in via the backend's field
+    // definition — see `FieldDataBase.emptyOperators`.
+    if (this.data.emptyOperators) {
+      filters.empty = new EmptyFilterInput()
+      filters.notEmpty = new EmptyFilterInput()
+    }
+
+    return filters
   }
 
   // Lens id fields serialize as `{ value, display, path? }`; filters need the

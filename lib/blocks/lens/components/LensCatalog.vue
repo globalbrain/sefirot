@@ -9,6 +9,7 @@ import { usePower } from '../../../composables/Power'
 import { useSnackbars } from '../../../stores/Snackbars'
 import { day } from '../../../support/Day'
 import { type FieldData } from '../FieldData'
+import { isClearedFilterCondition, normalizeValuelessFilterConditions } from '../FilterOperator'
 import { type LensQuery, type LensQuerySort } from '../LensQuery'
 import { type LensResult } from '../LensResult'
 import { useCatalogUrlQuerySync } from '../composables/CatalogUrlQuerySync'
@@ -676,13 +677,16 @@ function withoutIndexField(fields: string[]): string[] {
 }
 
 // Create lens filters option by combining query (free search) filters,
-// user selected filters, and fixed filters.
+// user selected filters, and fixed filters. Filters coming from outside
+// the form UI (the `filters` prop, a hand-edited URL query) may carry a
+// stray value on a valueless condition, so normalize those to `null`
+// before they reach the wire.
 function createInputFilters(queryFilters: any[], filters: any[]) {
-  return [
+  return normalizeValuelessFilterConditions([
     ...(props.fixedFilters ?? []),
     queryFilters,
     ...filters
-  ].filter((f) => f?.length > 0)
+  ].filter((f) => f?.length > 0))
 }
 
 // Re-run the search for the new query state, dropping any stashed
@@ -723,21 +727,14 @@ function onInlineFilterUpdated(filter: any[]) {
   emit('filters-updated', _filters.value)
 }
 
-// A filter value "clears" the filter when it's nullish or an empty
-// array. Scalar operators (e.g. a boolean `=`) carry a single value, so
-// `false` is a real value to keep — only `null` clears.
-function isEmptyFilterValue(value: any): boolean {
-  return value == null || (Array.isArray(value) && value.length === 0)
-}
-
 function applyNewFilter(filter: any[]) {
-  if (!isEmptyFilterValue(filter[2])) {
+  if (!isClearedFilterCondition(filter)) {
     _filters.value.push(filter)
   }
 }
 
 function replaceFilter(index: number, filter: any[]) {
-  if (isEmptyFilterValue(filter[2])) {
+  if (isClearedFilterCondition(filter)) {
     _filters.value.splice(index, 1)
     return
   }
