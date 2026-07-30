@@ -2,7 +2,7 @@
 import { computedAsync } from '@vueuse/core'
 import { computed } from 'vue'
 import { type FieldData } from '../FieldData'
-import { type FilterOperator, FilterOperatorLabelDict } from '../FilterOperator'
+import { type FilterOperator, FilterOperatorLabelDict, isValuelessFilterOperator } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 
 export interface Props {
@@ -29,13 +29,17 @@ const field = computed(() => {
   return fieldData ? fieldFactory.make(fieldData) : null
 })
 
+// A valueless condition (the `empty` / `notEmpty` operators) has no
+// value to show, so the chip hides the value segment entirely and never
+// resolves the input.
+const valueless = computed(() => isValuelessFilterOperator(props.condition.operator))
+
 const input = computed(() => {
+  if (valueless.value) {
+    return null
+  }
   return field.value?.filterInputByOperator(props.condition.operator) ?? null
 })
-
-// A valueless condition (e.g. the `empty` / `notEmpty` operators) has no
-// value to show, so the chip hides the value segment entirely.
-const valueless = computed(() => input.value?.valueless() ?? false)
 
 const fieldText = computed(() => {
   // Fall back to the raw field key when the field has no definition.

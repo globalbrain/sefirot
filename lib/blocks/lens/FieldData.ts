@@ -77,8 +77,17 @@ export interface FieldDataBase {
    * the filter UI offers them only when the backend's field definition
    * declares support, so applications whose backends don't understand
    * the operators see no change. Absent means unsupported.
+   *
+   * The object form also customizes the label of the pinned "empty"
+   * option in the column filter dropdown (e.g. "No assignees"); a plain
+   * `true` keeps the generic default label.
    */
-  emptyOperators?: boolean
+  emptyOperators?: boolean | EmptyOperatorsDeclaration
+}
+
+export interface EmptyOperatorsDeclaration {
+  labelEn?: string
+  labelJa?: string
 }
 
 export interface AvatarFieldData extends FieldDataBase {

@@ -1,10 +1,6 @@
 import { EmptyFilterInput } from 'sefirot/blocks/lens/filter-inputs/EmptyFilterInput'
 
 describe('blocks/lens/filter-inputs/EmptyFilterInput', () => {
-  it('is valueless', () => {
-    expect(new EmptyFilterInput().valueless()).toBe(true)
-  })
-
   it('requires no value', () => {
     expect(new EmptyFilterInput().rules()).toEqual({})
   })

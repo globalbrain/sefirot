@@ -9,7 +9,7 @@ import { useValidation } from '../../../composables/Validation'
 import { type Option } from '../../../support/InputDropdown'
 import { required } from '../../../validation/rules'
 import { type FieldData } from '../FieldData'
-import { type FilterOperator, FilterOperatorLabelDict } from '../FilterOperator'
+import { type FilterOperator, FilterOperatorLabelDict, isValuelessFilterOperator } from '../FilterOperator'
 import { useFieldFactory } from '../composables/FieldFactory'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 
@@ -66,9 +66,9 @@ const operatorOptions = computed(() => {
 
 const input = ref(null) as Ref<FilterInput | null>
 
-// A valueless input (e.g. the `empty` / `notEmpty` operators) has no
+// A valueless condition (the `empty` / `notEmpty` operators) has no
 // value control: the value cell renders nothing instead of an input.
-const valueless = computed(() => input.value?.valueless() ?? false)
+const valueless = computed(() => isValuelessFilterOperator(model.value.operator))
 
 const inputComponent = computed(() => {
   return input.value && !valueless.value ? markRaw(input.value.component()) : null
