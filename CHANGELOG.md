@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.64.0](https://github.com/globalbrain/sefirot/compare/v4.63.0...v4.64.0) (2026-07-30)
+
+
+### Features
+
+* **lens:** add empty / not empty filter operators ([#777](https://github.com/globalbrain/sefirot/issues/777)) ([1e11540](https://github.com/globalbrain/sefirot/commit/1e115405b054964c8e438de867c8980c9159bba8))
+
 # [4.63.0](https://github.com/globalbrain/sefirot/compare/v4.62.0...v4.63.0) (2026-07-24)
 
 
