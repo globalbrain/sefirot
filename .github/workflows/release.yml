@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    # Must match the environment configured in the npm trusted publisher
+    # settings for @globalbrain/sefirot.
+    environment: npm
+
+    permissions:
+      contents: read
+      id-token: write # required for npm trusted publishing (OIDC)
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          # No caches in the publish job: keeps restored artifacts out of the
+          # supply chain of what gets published.
+          package-manager-cache: false
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+      # pnpm exchanges the OIDC token with the registry itself; provenance is
+      # generated automatically for public packages. --no-git-checks because
+      # the release event checks out a detached tag, not a branch.
+      - run: pnpm publish --no-git-checks
