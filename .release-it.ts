@@ -13,6 +13,12 @@ export default {
       return context.changelog.split('\n').slice(1).join('\n').trim()
     }
   },
+  npm: {
+    // The registry publish happens in CI via npm trusted publishing (OIDC) —
+    // see .github/workflows/release.yml. release-it only bumps the version,
+    // tags, and creates the GitHub release that triggers it.
+    publish: false
+  },
   plugins: {
     '@release-it/conventional-changelog': {
       preset: 'angular',
