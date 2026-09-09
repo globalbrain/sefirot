@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+# Queue, never cancel: a publish must not be killed mid-flight.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Release PRs opened with GITHUB_TOKEN don't trigger ci.yml — pass a PAT via `with: token` if they
+  # need checks.
+  release-please:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      releases_created: ${{ steps.release.outputs.releases_created }}
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+
+  # Trusted publishing (OIDC): tokenless, provenance automatic. The package ships its `.vue` / `.ts`
+  # sources, so the tarball is packed straight from the checkout: `install: false` keeps node_modules
+  # and its lifecycle scripts out of the job holding the id-token, `cache: false` keeps restored
+  # artifacts out of what gets published.
+  publish:
+    needs: release-please
+    if: needs.release-please.outputs.releases_created == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    # Named in the npm trusted-publisher config; required reviewers gate publishes on a human.
+    environment: npm
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Setup pnpm and node
+        uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b # v2.1.0
+        with:
+          cache: false
+          install: false
+
+      # MAINTAINER: fails until npmjs.com lists globalbrain/sefirot + `.github/workflows/release.yml`
+      # + the `npm` environment as a trusted publisher for `@globalbrain/sefirot`.
+      - name: Publish to npm
+        run: pnpm publish --no-git-checks --ignore-scripts
+
+      # The tag and GitHub release already exist at this point, so say what is missing rather than
+      # leaving a bare 404 from the registry as the only signal.
+      - name: Explain a failed publish
+        if: failure()
+        run: |
+          cat >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          ### npm publish failed
+
+          The release tag and GitHub release were created; only the npm upload failed.
+          If this is the first release, configure trusted publishing on npmjs.com for
+          `@globalbrain/sefirot`, pointing at this repository,
+          `.github/workflows/release.yml` and the `npm` environment — then re-run this job.
+          EOF
+          echo '::error title=npm publish failed::Configure npm trusted publishing for @globalbrain/sefirot, then re-run this job.'

@@ -3,7 +3,7 @@
 
 import { stripVTControlCharacters } from 'node:util'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from './config/vite'
+import { defineConfig } from './config/vite.js'
 
 const ignore = [
   '[Vue warn]: inject() can only be used inside setup() or functional components.',

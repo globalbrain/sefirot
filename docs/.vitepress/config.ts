@@ -1,5 +1,5 @@
 import { type DefaultTheme, defineConfig } from 'vitepress'
-import { baseConfig } from '../../config/vite'
+import { baseConfig } from '../../config/vite.js'
 
 function getStoryHost(): string {
   if (process.env.CONTEXT !== 'production' && process.env.DEPLOY_PRIME_URL) {
