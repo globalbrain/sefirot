@@ -1,9 +1,9 @@
 # Sefirot
 
-[![npm version](https://img.shields.io/npm/v/@globalbrain/sefirot?logo=npm&label=npm)](https://www.npmjs.com/package/@globalbrain/sefirot)
-[![CI](https://img.shields.io/github/actions/workflow/status/globalbrain/sefirot/ci.yml?branch=main&logo=github&label=CI)](https://github.com/globalbrain/sefirot/actions/workflows/ci.yml)
-[![docs](https://img.shields.io/badge/docs-sefirot.globalbrains.com-5c73e7)](https://sefirot.globalbrains.com/)
-[![license](https://img.shields.io/github/license/globalbrain/sefirot?label=license)](LICENSE.md)
+[![npm](https://shieldcn.dev/npm/v/@globalbrain/sefirot.svg)](https://npmx.dev/package/@globalbrain/sefirot)
+[![CI](https://shieldcn.dev/github/ci/globalbrain/sefirot.svg?workflow=ci.yml&branch=main)](https://github.com/globalbrain/sefirot/actions/workflows/ci.yml)
+[![docs](https://shieldcn.dev/badge/docs-sefirot.globalbrains.com-5c73e7.svg)](https://sefirot.globalbrains.com/)
+[![license](https://shieldcn.dev/github/license/globalbrain/sefirot.svg)](LICENSE.md)
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
@@ -63,10 +63,6 @@ $ pnpm check
 ```
 
 Run the type check, lint, tests and [publint](https://publint.dev) together — the same set CI runs.
-
-### Release
-
-Releases are automated. [release-please](https://github.com/googleapis/release-please) keeps a release PR open against `main`, built from the conventional commit history; merging it bumps `package.json`, updates `CHANGELOG.md`, tags `v<version>` and publishes the GitHub release. That release then publishes `@globalbrain/sefirot` to npm from CI through [trusted publishing](https://docs.npmjs.com/trusted-publishers/) with provenance, once the `npm` environment is approved. Do not bump the version or edit the changelog by hand.
 
 ## License
 
