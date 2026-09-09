@@ -9,7 +9,6 @@ overrides:
 
 strictDepBuilds: true
 allowBuilds:
-  esbuild: true
   vue-demi: false
 
 trustLockfile: false
