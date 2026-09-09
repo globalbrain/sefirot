@@ -1,9 +1,8 @@
 # Sefirot
 
-[![npm](https://shieldcn.dev/npm/v/@globalbrain/sefirot.svg)](https://npmx.dev/package/@globalbrain/sefirot)
-[![CI](https://shieldcn.dev/github/ci/globalbrain/sefirot.svg?workflow=ci.yml&branch=main)](https://github.com/globalbrain/sefirot/actions/workflows/ci.yml)
-[![docs](https://shieldcn.dev/badge/docs-sefirot.globalbrains.com-5c73e7.svg)](https://sefirot.globalbrains.com/)
-[![license](https://shieldcn.dev/github/license/globalbrain/sefirot.svg)](LICENSE.md)
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/npm/@globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=dark"><img alt="npm Version" src="https://www.shieldcn.dev/npm/@globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=light"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/ci/globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=dark"><img alt="CI" src="https://www.shieldcn.dev/github/ci/globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=light"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/license/globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=dark"><img alt="License" src="https://www.shieldcn.dev/github/license/globalbrain/sefirot.svg?variant=ghost&amp;size=sm&amp;mode=light"></picture>
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
