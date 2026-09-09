@@ -1,7 +1,8 @@
 # Sefirot
 
-[![GitHub Actions](https://github.com/globalbrain/sefirot/workflows/Test/badge.svg)](https://github.com/globalbrain/sefirot/actions)
-[![License](https://img.shields.io/npm/l/@globalbrain/sefirot.svg)](https://github.com/globalbrain/sefirot/blob/main/LICENSE.md)
+<a href="https://npmx.dev/package/@globalbrain/sefirot"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/npm/@globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=dark"><img alt="npm Version" src="https://www.shieldcn.dev/npm/@globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=light"></picture></a>
+<a href="https://github.com/globalbrain/sefirot/actions/workflows/ci.yml?query=branch%3Amain"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/ci/globalbrain/sefirot.svg?workflow=ci.yml&amp;branch=main&amp;variant=secondary&amp;size=sm&amp;mode=dark"><img alt="CI" src="https://www.shieldcn.dev/github/ci/globalbrain/sefirot.svg?workflow=ci.yml&amp;branch=main&amp;variant=secondary&amp;size=sm&amp;mode=light"></picture></a>
+<a href="https://github.com/globalbrain/sefirot/blob/main/LICENSE.md"><picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/license/globalbrain/sefirot.svg?variant=secondary&amp;size=sm&amp;mode=dark"><img alt="License" src="https://www.shieldcn.dev/github/license/globalbrain/sefirot.svg?variant=ghost&amp;size=sm&amp;mode=light"></picture></a>
 
 Sefirot is a collection of Vue Components for Global Brain Design System. Components are meant to be clean, sophisticated, and scalable.
 
@@ -51,10 +52,16 @@ $ pnpm test
 Run the tests.
 
 ```bash
-$ pnpm coverage
+$ pnpm test:coverage
 ```
 
 Output test coverage in `coverage` directory.
+
+```bash
+$ pnpm check
+```
+
+Run the type check, lint, tests and [publint](https://publint.dev) together — the same set CI runs.
 
 ## License
 

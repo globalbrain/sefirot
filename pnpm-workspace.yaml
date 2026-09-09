@@ -1,14 +1,28 @@
 autoInstallPeers: false
 strictPeerDependencies: true
+verifyDepsBeforeRun: install
 
+overrides:
+  jsdom: latest
+  # histoire 1.0.0-beta.1 still declares vite ^7.3 as a peer while working on 8.
+  vite: ^8.2.2
+
+strictDepBuilds: true
 allowBuilds:
-  esbuild: true
   vue-demi: false
 
+trustLockfile: false
+blockExoticSubdeps: true
+
 minimumReleaseAge: 2880
+minimumReleaseAgeStrict: true
+minimumReleaseAgeIgnoreMissingTime: false
 minimumReleaseAgeExclude:
   - '@globalbrain/*'
   - '@types/*'
 
-overrides:
-  jsdom: latest
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 525600
+
+update:
+  githubActions: true
