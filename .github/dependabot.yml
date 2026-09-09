@@ -1,8 +1,6 @@
 version: 2
 
 updates:
-  # The workflows pin actions by commit SHA; dependabot is what keeps those pins current, rewriting
-  # both the SHA and its `# vX.Y.Z` comment.
   - package-ecosystem: github-actions
     directory: /
     schedule:
@@ -11,7 +9,6 @@ updates:
       time: '06:00'
       timezone: Etc/UTC
     open-pull-requests-limit: 5
-    # A week is what zizmor's dependabot-cooldown audit asks for, and it covers `minimumReleaseAge`.
     cooldown:
       default-days: 7
     commit-message:
