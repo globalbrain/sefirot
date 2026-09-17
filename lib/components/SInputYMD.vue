@@ -334,4 +334,20 @@ function createRequiredTouched(): boolean[] {
   color: var(--c-text-3);
   content: "/";
 }
+.SInputYMD[data-layout="mobile"] {
+  .container {
+    align-items: center;
+    min-height: var(--input-touch-height);
+    max-width: 100%;
+  }
+
+  .input {
+    min-width: 0;
+    min-height: calc(var(--input-touch-height) - 2px);
+    width: 2ch;
+    flex-shrink: 1;
+  }
+
+  .input.year { width: 4ch; }
+}
 </style>

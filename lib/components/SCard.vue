@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { provideCardState } from '../composables/Card'
+import { useLayout } from '../composables/Layout'
 
 export interface Props {
   size?: Size
@@ -16,6 +17,8 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'neutral'
 })
 
+const layout = useLayout()
+
 const { isCollapsed } = provideCardState()
 
 const classes = computed(() => [
@@ -27,7 +30,7 @@ const classes = computed(() => [
 </script>
 
 <template>
-  <div class="SCard" :class="classes">
+  <div class="SCard" :class="classes" :data-layout="layout">
     <slot />
   </div>
 </template>
@@ -75,4 +78,5 @@ const classes = computed(() => [
   right: 8px;
   z-index: 10;
 }
+.SCard[data-layout="mobile"] { min-width: 0; max-width: 100%; }
 </style>

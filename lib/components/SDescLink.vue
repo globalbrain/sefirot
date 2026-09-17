@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+import { useResponsive } from '../composables/Layout'
 import { useSlotValue } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
 import SLink from './SLink.vue'
+
+const wrap = inject('sefirot-desc-wrap', useResponsive(() => ({ desktop: false, mobile: true })))
 
 const props = defineProps<{
   value?: string | null
@@ -18,7 +21,7 @@ const link = computed(() => {
 </script>
 
 <template>
-  <div v-if="slotValue || value" class="SDescLink">
+  <div v-if="slotValue || value" class="SDescLink" :class="{ wrap }">
     <SLink class="value" :href="link">
       <slot v-if="slotValue" />
       <template v-else>{{ value }}</template>
@@ -42,5 +45,14 @@ const link = computed(() => {
   &:hover {
     color: var(--c-text-info-2);
   }
+}
+.SDescLink.wrap {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.SDescLink.wrap .value {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 </style>

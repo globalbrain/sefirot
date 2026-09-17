@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import IconMagnifyingGlass from '~icons/ph/magnifying-glass-bold'
 import { type Component, computed } from 'vue'
-import { useControlSize } from '../composables/Control'
+import { useControlSize, useControlWrap } from '../composables/Control'
 import { useTrans } from '../composables/Lang'
 import { type Validatable } from '../composables/Validation'
 import { type Align, type TextColor } from '../support/InputText'
@@ -33,6 +33,7 @@ const { t } = useTrans({
   ja: { placeholder: '検索する' }
 })
 
+const wrap = useControlWrap()
 const size = useControlSize()
 
 const sizeDict = {
@@ -49,7 +50,7 @@ const _value = computed(() => {
 </script>
 
 <template>
-  <div class="SControlInputSearch">
+  <div class="SControlInputSearch" :class="{ wrap }">
     <SInputText
       :size="sizeDict[size]"
       type="search"
@@ -75,5 +76,10 @@ const _value = computed(() => {
 .SControlInputSearch {
   flex-grow: 1;
   flex-shrink: 0;
+}
+.SControlInputSearch.wrap {
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 </style>

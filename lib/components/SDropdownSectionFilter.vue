@@ -7,6 +7,7 @@ import {
   type DropdownSectionFilterSelectedValue
 } from '../composables/Dropdown'
 import { useTrans } from '../composables/Lang'
+import { useLayout } from '../composables/Layout'
 import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
 
@@ -75,10 +76,11 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
   option.onClick?.(value)
   props.onClick?.(value)
 }
+const layout = useLayout()
 </script>
 
 <template>
-  <div class="SDropdownSectionFilter">
+  <div class="SDropdownSectionFilter" :data-layout="layout">
     <div v-if="search" class="search">
       <input
         ref="input"
@@ -263,5 +265,11 @@ function onClick(option: DropdownSectionFilterOption, value: any) {
   padding: 14px 16px;
   font-size: 12px;
   color: var(--c-text-2);
+}
+.SDropdownSectionFilter[data-layout="mobile"] {
+  .input { min-height: var(--control-touch-size, 44px); font-size: 16px; }
+  .button { min-height: var(--control-touch-size, 44px); align-items: center; }
+  .checkbox { flex-shrink: 0; }
+  .option-item { min-width: 0; }
 }
 </style>

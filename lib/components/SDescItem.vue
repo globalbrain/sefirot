@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
+import { type Responsive, layoutLength } from '../composables/Layout'
 import SGridItem from './SGridItem.vue'
 
 defineProps<{
-  span?: string | number
+  span?: Responsive<string | number>
 }>()
 
 const labelWidthProp = inject<() => string | number | undefined>(
@@ -13,7 +14,7 @@ const labelWidthProp = inject<() => string | number | undefined>(
 
 const labelWidth = computed(() => {
   const w = labelWidthProp?.()
-  return w ? `${w}px` : '1fr'
+  return layoutLength(w) ?? '1fr'
 })
 </script>
 
@@ -46,5 +47,19 @@ const labelWidth = computed(() => {
 .SDesc.divider > .SDescItem:not(:has(> .SDescFile)) {
   border-bottom: 1px dashed var(--c-divider);
   padding-bottom: 7px;
+}
+.SDesc.wrap > .SDescItem {
+  min-width: 0;
+  align-content: start;
+  overflow-wrap: anywhere;
+}
+
+.SDesc.wrap > .SDescItem > :deep(.SDescLabel) { height: auto; }
+.SDesc.wrap > .SDescItem > :deep(.SDescLabel .value) {
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  overflow: visible;
+  text-overflow: clip;
 }
 </style>

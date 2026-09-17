@@ -158,4 +158,9 @@ function onClick() {
     background-color: var(--c-blue-9);
   }
 }
+.SInputRadio[data-layout="mobile"] {
+  .input { height: auto; min-height: var(--input-touch-height); padding-block: 8px; min-width: 0; }
+  .box { flex-shrink: 0; }
+  .text { min-width: 0; overflow-wrap: anywhere; }
+}
 </style>

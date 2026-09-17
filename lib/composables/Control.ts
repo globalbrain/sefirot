@@ -3,6 +3,12 @@ import { type ComputedRef, computed, inject, provide, toValue } from 'vue'
 export type ControlSize = 'xs' | 'sm' | 'md' | 'small' | 'medium'
 export type ControlPosition = 'left' | 'center' | 'right'
 
+export const ControlWrapKey = 'sefirot-control-wrap-key'
+
+export function useControlWrap(): ComputedRef<boolean> {
+  return inject<ComputedRef<boolean>>(ControlWrapKey, computed(() => false))
+}
+
 export const ControlSizeKey = 'sefirot-control-size-key'
 export const ControlPositionKey = 'sefirot-control-position-key'
 
