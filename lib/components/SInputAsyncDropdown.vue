@@ -6,6 +6,7 @@ import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
 import { useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { useOverlayPosition, useOverlays } from '../composables/Overlays'
 import { stopNonSubmitEnterKeydown } from '../support/Dom'
 import { type Option } from '../support/InputDropdown'
 import SDropdownSectionFilterItem from './SDropdownSectionFilterItem.vue'
@@ -82,10 +83,18 @@ const input = ref<HTMLInputElement | null>(null)
 const list = ref<HTMLUListElement | null>(null)
 
 const { isOpen, open, close } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(
+const legacyPosition = useManualDropdownPosition(
   container,
   () => props.position
 )
+const managed = useOverlays()
+const dropdown = ref<HTMLElement>()
+const overlay = useOverlayPosition(container, dropdown, { position: () => props.position })
+const inset = computed(() => managed.value ? overlay.inset.value : legacyPosition.inset.value)
+
+function updatePosition() {
+  managed.value ? overlay.update() : legacyPosition.update()
+}
 
 const query = ref('')
 const items = ref([]) as Ref<T[]>
@@ -97,6 +106,7 @@ const loading = ref(false)
 let fetchSeq = 0
 
 const classes = computed(() => [
+  { managed: managed.value },
   props.size ?? 'small',
   { disabled: props.disabled }
 ])
@@ -404,7 +414,7 @@ function focusNext(event: any): void {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :style="inset">
+      <div v-if="isOpen" ref="dropdown" class="dropdown" :style="inset">
         <div class="dropdown-content">
           <div class="search">
             <input
@@ -821,5 +831,10 @@ function focusNext(event: any): void {
 .SInputAsyncDropdown[data-layout="mobile"] {
   .search-input { min-height: var(--input-touch-height); font-size: var(--input-font-size); }
   .button { min-height: var(--input-touch-height); }
+}
+.SInputAsyncDropdown.managed .dropdown-content {
+  max-width: var(--dropdown-max-width);
+  max-height: var(--dropdown-max-height);
+  overflow-y: auto;
 }
 </style>

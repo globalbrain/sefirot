@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
+import { useOverlayPosition, useOverlays } from '../composables/Overlays'
 import { type Option } from '../support/InputDropdown'
 import SDropdown from './SDropdown.vue'
 import SInputBase, { type Props as BaseProps } from './SInputBase.vue'
@@ -41,12 +42,21 @@ const container = ref<HTMLDivElement>()
 const box = ref<HTMLDivElement>()
 
 const { isOpen, open, close } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(
+const legacyPosition = useManualDropdownPosition(
   container,
   () => props.position
 )
+const managed = useOverlays()
+const dropdown = ref<HTMLElement>()
+const overlay = useOverlayPosition(container, dropdown, { position: () => props.position })
+const inset = computed(() => managed.value ? overlay.inset.value : legacyPosition.inset.value)
+
+function updatePosition() {
+  managed.value ? overlay.update() : legacyPosition.update()
+}
 
 const classes = computed(() => [
+  { managed: managed.value },
   props.size ?? 'small',
   { disabled: props.disabled }
 ])
@@ -196,7 +206,7 @@ function onSelect(value: T) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :style="inset">
+      <div v-if="isOpen" ref="dropdown" class="dropdown" :style="inset">
         <div class="dropdown-content">
           <SDropdown :sections="dropdownOptions" />
         </div>

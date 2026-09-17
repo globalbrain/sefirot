@@ -118,6 +118,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'Api', link: '/composables/api' },
         { text: 'Image', link: '/composables/image' },
         { text: 'Layout', link: '/composables/layout' },
+        { text: 'Overlays', link: '/composables/overlays' },
         { text: 'Power', link: '/composables/power' },
         { text: 'Url', link: '/composables/url' },
         { text: 'Utils', link: '/composables/utils' }
