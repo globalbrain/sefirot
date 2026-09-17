@@ -3,6 +3,7 @@ import IconDotsThree from '~icons/ph/dots-three'
 import { computed, nextTick, ref, unref, watch } from 'vue'
 import { type DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
+import { useOverlayPosition, useOverlays } from '../composables/Overlays'
 import SDropdown from './SDropdown.vue'
 
 const props = withDefaults(defineProps<{
@@ -22,7 +23,7 @@ const emit = defineEmits<{
   'resize-end': [data: { columnName: string; finalWidth: string }]
 }>()
 
-const { container, isOpen, toggle } = useFlyout()
+const { container, isOpen, toggle, close } = useFlyout()
 
 let startWidth = 0
 let startPoint = 0
@@ -32,6 +33,8 @@ const column = ref<HTMLElement | null>(null)
 const dialog = ref<HTMLElement | null>(null)
 const top = ref('')
 const left = ref('')
+const managed = useOverlays()
+const overlay = useOverlayPosition(container, dialog)
 
 const active = computed(() => {
   return props.dropdown?.some((item) => {
@@ -66,9 +69,22 @@ const classes = computed(() => [
   `col-${props.name}`
 ])
 
-watch(isOpen, (value) => {
-  value ? adjustDialogPosition() : stopDialogPositionListener()
+watch([isOpen, managed], ([open, enabled]) => {
+  if (enabled) {
+    stopDialogPositionListener()
+    if (open) { overlay.update() }
+  } else {
+    open ? adjustDialogPosition() : stopDialogPositionListener()
+  }
 })
+
+function onEscape(event: KeyboardEvent) {
+  if (!managed.value || !isOpen.value || event.isComposing) { return }
+  event.preventDefault()
+  event.stopPropagation()
+  close()
+  container.value?.querySelector('button')?.focus()
+}
 
 function grip(e: MouseEvent) {
   startWidth = column.value?.offsetWidth ?? 0
@@ -147,13 +163,13 @@ function stopDialogPositionListener() {
       <slot>
         <p class="label">{{ label }}</p>
 
-        <div v-if="dropdown" ref="container" class="action">
+        <div v-if="dropdown" ref="container" class="action" @keydown.esc="onEscape">
           <button class="button" :class="{ active: buttonActive }" @click="toggle">
             <IconDotsThree class="icon" />
           </button>
 
           <Transition name="fade">
-            <div v-if="isOpen" ref="dialog" class="dialog" :style="{ top, left }">
+            <div v-if="isOpen" ref="dialog" class="dialog" :style="managed ? overlay.inset.value : { top, left }">
               <SDropdown :sections="dropdown" />
             </div>
           </Transition>

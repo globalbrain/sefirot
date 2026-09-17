@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { type Component, ref, useTemplateRef } from 'vue'
+import { type Component, computed, ref, useTemplateRef } from 'vue'
 import { type DropdownSection, useManualDropdownPosition } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
+import { useOverlayPosition, useOverlays } from '../composables/Overlays'
 import SButton, { type Mode, type Size, type Tooltip, type Type } from './SButton.vue'
 import SDropdown from './SDropdown.vue'
 
@@ -32,11 +33,23 @@ const props = withDefaults(defineProps<{
 const containerRef = useTemplateRef('container')
 const dropdownRef = useTemplateRef('dropdown')
 
-const { isOpen, toggle } = useFlyout(containerRef)
+const { isOpen, toggle, close } = useFlyout(containerRef)
 const { position: verticalPlacement, update: updateVerticalPlacement } =
   useManualDropdownPosition(containerRef)
 
 const actualAlign = ref(props.dropdownAlign)
+const managed = useOverlays()
+const overlay = useOverlayPosition(containerRef, dropdownRef, { align: () => props.dropdownAlign })
+const placement = computed(() => managed.value ? overlay.position.value : verticalPlacement.value)
+const align = computed(() => managed.value ? overlay.align.value : actualAlign.value)
+
+function onEscape(event: KeyboardEvent) {
+  if (!managed.value || !isOpen.value || event.isComposing) { return }
+  event.preventDefault()
+  event.stopPropagation()
+  close()
+  containerRef.value?.querySelector<HTMLElement>('[role="button"]')?.focus()
+}
 
 function calculateOptimalAlign(dropdownElement: HTMLElement): 'left' | 'right' {
   // Temporarily show the dropdown to measure it (similar to tooltip approach)
@@ -62,10 +75,13 @@ function calculateOptimalAlign(dropdownElement: HTMLElement): 'left' | 'right' {
 
 async function onOpen() {
   if (!props.disabled) {
-    updateVerticalPlacement()
-
-    if (dropdownRef.value) {
-      actualAlign.value = calculateOptimalAlign(dropdownRef.value)
+    if (managed.value) {
+      overlay.update()
+    } else {
+      updateVerticalPlacement()
+      if (dropdownRef.value) {
+        actualAlign.value = calculateOptimalAlign(dropdownRef.value)
+      }
     }
 
     toggle()
@@ -74,7 +90,7 @@ async function onOpen() {
 </script>
 
 <template>
-  <div ref="container" class="SActionMenu" :class="[{ block }, actualAlign]">
+  <div ref="container" class="SActionMenu" :class="[{ block, managed }, align]" @keydown.esc="onEscape">
     <div class="button">
       <SButton
         :tag
@@ -98,8 +114,8 @@ async function onOpen() {
     <div
       ref="dropdown"
       class="dropdown"
-      :class="verticalPlacement"
-      :style="{ display: isOpen ? 'block' : 'none' }"
+      :class="placement"
+      :style="{ ...(managed ? overlay.inset.value : {}), display: isOpen ? 'block' : 'none' }"
     >
       <SDropdown :sections="options" />
     </div>
@@ -126,4 +142,5 @@ async function onOpen() {
 
 .SActionMenu.left .dropdown  { left: 0; }
 .SActionMenu.right .dropdown { right: 0; }
+.SActionMenu.managed .dropdown { position: fixed; }
 </style>

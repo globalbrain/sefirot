@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import IconCaretDown from '~icons/ph/caret-down-bold'
+import { ref } from 'vue'
 import { type DropdownSection } from '../composables/Dropdown'
 import { useFlyout } from '../composables/Flyout'
+import { useOverlayPosition, useOverlays } from '../composables/Overlays'
 import SDropdown from './SDropdown.vue'
 
 defineProps<{
@@ -10,12 +12,28 @@ defineProps<{
   dropdown: DropdownSection[]
 }>()
 
-const { container, isOpen, toggle } = useFlyout()
+const { container, isOpen, toggle, close } = useFlyout()
+const managed = useOverlays()
+const dialog = ref<HTMLElement>()
+const overlay = useOverlayPosition(container, dialog, { align: 'right' })
+
+function onOpen() {
+  if (managed.value) { overlay.update() }
+  toggle()
+}
+
+function onEscape(event: KeyboardEvent) {
+  if (!managed.value || !isOpen.value || event.isComposing) { return }
+  event.preventDefault()
+  event.stopPropagation()
+  close()
+  container.value?.querySelector('button')?.focus()
+}
 </script>
 
 <template>
-  <div ref="container" class="STableHeaderMenuItem">
-    <button class="button" :class="[state]" @click="toggle">
+  <div ref="container" class="STableHeaderMenuItem" :class="{ managed }" @keydown.esc="onEscape">
+    <button class="button" :class="[state]" @click="onOpen">
       <span class="label">{{ label }}</span>
       <span v-if="state !== 'indicate'" class="caret">
         <IconCaretDown class="caret-svg" />
@@ -25,7 +43,7 @@ const { container, isOpen, toggle } = useFlyout()
       </span>
     </button>
     <Transition name="fade">
-      <div v-if="isOpen" class="dialog">
+      <div v-if="isOpen" ref="dialog" class="dialog" :style="managed ? overlay.inset.value : undefined">
         <SDropdown :sections="dropdown" />
       </div>
     </Transition>
@@ -105,4 +123,5 @@ const { container, isOpen, toggle } = useFlyout()
   opacity: 0;
   transform: translateY(-4px);
 }
+.STableHeaderMenuItem.managed .dialog { position: fixed; }
 </style>
