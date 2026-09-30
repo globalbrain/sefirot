@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     branches: [main]
-    paths: [deno.json, package.json]
+    paths: [package.json, .github/workflows/release.yaml]
   workflow_dispatch:
     inputs:
       version:
@@ -16,7 +16,7 @@ concurrency: release
 jobs:
   release:
     if: github.repository == 'globalbrain/sefirot'
-    uses: globalbrain/hado/.github/workflows/release.reusable.yaml@3e16a2830e9bbdc8e08662ccea4ec5a2a2907697 # v0.22.9
+    uses: globalbrain/hado/.github/workflows/release.reusable.yaml@556458ffbe94c080414cd22a7d905cb9fa2c81cc # v0.22.10
     with:
       version: ${{ inputs.version }}
       publish: pnpm publish --access public
