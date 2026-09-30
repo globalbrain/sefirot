@@ -77,6 +77,33 @@ export abstract class Field<T extends FieldData> {
   }
 
   /**
+   * Returns the text shown in place of a blank table cell depending on the
+   * current app language. See `FieldDataBase.emptyTextEn`.
+   */
+  emptyText(): string | null {
+    const text = this.ctx.lang === 'ja' ? this.data.emptyTextJa : this.data.emptyTextEn
+    return text || null
+  }
+
+  /**
+   * Whether the given cell value counts as blank for the empty text. Null,
+   * undefined, an empty string, and an empty list (a multiple select or a
+   * to-many relation) are blank; `false` and `0` are real values.
+   */
+  protected isEmptyTableValue(v: any, _r: any): boolean {
+    return v == null || v === '' || (Array.isArray(v) && v.length === 0)
+  }
+
+  /**
+   * Returns the empty text to render for the given cell, or `null` when the
+   * cell has a value or the definition declares no empty text.
+   */
+  tableEmptyText(v: any, r: any): string | null {
+    const text = this.emptyText()
+    return text !== null && this.isEmptyTableValue(v, r) ? text : null
+  }
+
+  /**
    * Renders the table column configuration for the field.
    */
   tableColumn(): TableColumn<any, any, any, any> {
@@ -88,7 +115,17 @@ export abstract class Field<T extends FieldData> {
       // definition omits an explicit width would render as a 0px (hidden)
       // column until the user manually drag-resizes it.
       width: `${this.data.width || DEFAULT_COLUMN_WIDTH}px`,
-      cell: (v, r) => this.tableCell(v, r)
+      cell: (v, r) => {
+        const cell = this.tableCell(v, r)
+        const emptyText = this.tableEmptyText(v, r)
+        if (emptyText === null) {
+          return cell
+        }
+        // Keep the column's alignment (e.g. right-aligned numbers) so the
+        // empty text lines up with the values around it.
+        const align = 'align' in cell ? cell.align : undefined
+        return { type: 'text', align, value: emptyText, color: 'mute' }
+      }
     }
   }
 

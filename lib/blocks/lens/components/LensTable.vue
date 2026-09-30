@@ -152,9 +152,11 @@ const columnBuild = computedAsync<ColumnBuild>(async () => {
         return {
           ...cell,
           link: null,
+          // Keep the empty text muted so a blank identifier still reads as
+          // blank, while remaining clickable to open the sheet.
           // @ts-expect-error avatar and day cells don't have info as color,
           // but we don't use those for the index field anyway, so it's safe to force it here
-          color: 'info',
+          color: field.tableEmptyText(v, r) !== null ? 'mute' : 'info',
           onClick: () => edit.openSheet(r)
         }
       }

@@ -19,6 +19,11 @@ export class ContentField extends Field<ContentFieldData> {
     return { type: 'empty' }
   }
 
+  // The column never carries a value, so it never shows the empty text.
+  protected override isEmptyTableValue(_v: any, _r: any): boolean {
+    return false
+  }
+
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     return {}
   }

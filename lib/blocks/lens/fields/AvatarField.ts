@@ -25,6 +25,13 @@ export class AvatarField extends Field<AvatarFieldData> {
     }
   }
 
+  // An avatar renders its own blank state (the initials fallback, or nothing),
+  // and the editable avatar cell draws the avatar itself, so the empty text
+  // would only show on read-only columns. Keep avatars out of it altogether.
+  protected override isEmptyTableValue(_v: any, _r: any): boolean {
+    return false
+  }
+
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     return {}
   }

@@ -83,6 +83,15 @@ export interface FieldDataBase {
    * `true` keeps the generic default label.
    */
   emptyOperators?: boolean | EmptyOperatorsDeclaration
+  /**
+   * Display-only text the catalog table renders, in a muted color, in place
+   * of a blank cell (e.g. "Untitled" for a draft whose name is still empty),
+   * per language. It never becomes the record's value: filters, sorts,
+   * payloads, and inline editors all keep working on the real blank value.
+   * Null or absent (backends predating the key) keeps the cell blank.
+   */
+  emptyTextEn?: string | null
+  emptyTextJa?: string | null
 }
 
 export interface EmptyOperatorsDeclaration {

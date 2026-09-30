@@ -74,6 +74,10 @@ const resolvedCell = computed<any>(() => {
   }
 })
 
+// The definition's empty text for a blank value. Display only: the editor still
+// opens on the real blank value (see `start()`), never on this text.
+const emptyText = computed(() => props.field.tableEmptyText(props.value, props.record))
+
 // A `pills` cell (e.g. a multi-select with displayAs: 'pills') renders as pills
 // rather than text, mirroring the read-only `STableCellPills` column.
 const displayPills = computed<{ label: string; color?: ColorMode }[] | null>(() => {
@@ -224,7 +228,8 @@ function onEditorKeydown(event: KeyboardEvent) {
 
 <template>
   <div ref="anchor" class="LensTableEditableCell" :class="{ editing }">
-    <div v-if="displayPills" class="pills">
+    <span v-if="emptyText !== null" class="value empty">{{ emptyText }}</span>
+    <div v-else-if="displayPills" class="pills">
       <SPill
         v-for="(pill, i) in displayPills"
         :key="i"
@@ -296,6 +301,10 @@ function onEditorKeydown(event: KeyboardEvent) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.value.empty {
+  color: var(--c-text-3);
 }
 
 .value.link {
