@@ -6,7 +6,7 @@ import LensFormOverrideNumber from '../components/LensFormOverrideNumber.vue'
 import { type FilterInput } from '../filter-inputs/FilterInput'
 import { NumberFilterInput } from '../filter-inputs/NumberFilterInput'
 import { Field } from './Field'
-import { renderNumberLikeEmptyTableCell, renderNumberLikeTableCell } from './support/Renderers'
+import { isNumberLikeEmpty, renderNumberLikeEmptyTableCell, renderNumberLikeTableCell } from './support/Renderers'
 
 /**
  * A decimal field is rendered identically to a number field on the
@@ -18,6 +18,11 @@ import { renderNumberLikeEmptyTableCell, renderNumberLikeTableCell } from './sup
 export class DecimalField extends Field<DecimalFieldData> {
   override tableCell(v: any, _r: any): TableCell {
     return renderNumberLikeTableCell(this.data, v)
+  }
+
+  // Blank and non-numeric values both render as a blank cell.
+  protected override isEmptyTableValue(v: any, _r: any): boolean {
+    return isNumberLikeEmpty(v)
   }
 
   protected override tableEmptyCell(text: string, _v: any, _r: any): TableCell {

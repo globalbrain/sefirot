@@ -7,6 +7,7 @@ import {
   type IdFieldData,
   type NumberFieldData,
   type RelatedManyFieldData,
+  type RelatedOneFieldData,
   type SelectFieldData,
   type TextFieldData
 } from 'sefirot/blocks/lens/FieldData'
@@ -18,6 +19,7 @@ import { type Field } from 'sefirot/blocks/lens/fields/Field'
 import { IdField } from 'sefirot/blocks/lens/fields/IdField'
 import { NumberField } from 'sefirot/blocks/lens/fields/NumberField'
 import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
+import { RelatedOneField } from 'sefirot/blocks/lens/fields/RelatedOneField'
 import { SelectField } from 'sefirot/blocks/lens/fields/SelectField'
 import { TextField } from 'sefirot/blocks/lens/fields/TextField'
 
@@ -116,6 +118,10 @@ describe('blocks/lens/fields/Field', () => {
       expect(cellFor(boolean, null)).toEqual({ type: 'text', value: 'Untitled', color: 'mute' })
       // The empty text keeps the column's alignment.
       expect(cellFor(number, null)).toEqual({ type: 'text', align: 'right', value: 'Untitled', color: 'mute' })
+      // Blank and non-numeric strings render blank, so they show the empty text too.
+      expect(cellFor(number, '  ').value).toBe('Untitled')
+      expect(cellFor(number, 'abc').value).toBe('Untitled')
+      expect(cellFor(number, '12').value).toBe(12)
     })
 
     it('treats an empty list as blank', () => {
@@ -169,6 +175,35 @@ describe('blocks/lens/fields/Field', () => {
         .toEqual({ type: 'text', value: 'Untitled', link: null, color: 'mute' })
       expect(cellFor(field, { value: 1, display: 'DOC-1', path: '/documents/1' }))
         .toEqual({ type: 'text', value: 'DOC-1', link: '/documents/1', color: 'info' })
+    })
+
+    it('treats a related record without a title as blank', () => {
+      function relatedOne(overrides: Partial<RelatedOneFieldData> = {}): RelatedOneField {
+        return new RelatedOneField(ctx(), {
+          ...base({ key: 'owner', filterKey: 'id' }),
+          ...emptyText,
+          type: 'related_one',
+          title: 'name',
+          image: 'photo',
+          resourceEndpointMethod: 'get',
+          resourceEndpointPath: '/api/users',
+          resourceEndpointDataKey: null,
+          resourceTitle: 'name',
+          ...overrides
+        } satisfies RelatedOneFieldData, (async () => ({})) as unknown as ResourceFetcher)
+      }
+
+      const text = relatedOne({ displayAs: 'text' })
+      expect(cellFor(text, { id: 1 })).toEqual({ type: 'text', value: 'Untitled', color: 'mute' })
+      expect(cellFor(text, { id: 1, name: '' }).value).toBe('Untitled')
+      // The image isn't rendered as text, so it doesn't count as a value here.
+      expect(cellFor(text, { id: 1, name: null, photo: '/a.png' }).value).toBe('Untitled')
+      expect(cellFor(text, { id: 1, name: 'Alice' })).toEqual({ type: 'text', value: 'Alice' })
+
+      const avatar = relatedOne({ displayAs: 'avatar' })
+      expect(cellFor(avatar, { id: 1, name: null, photo: null }).value).toBe('Untitled')
+      expect(cellFor(avatar, { id: 1, name: null, photo: '/a.png' }))
+        .toEqual({ type: 'avatar', image: '/a.png', name: '' })
     })
 
     it('does not apply to content and avatar fields', () => {

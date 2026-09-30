@@ -105,6 +105,17 @@ export class RelatedOneField extends Field<RelatedOneFieldData> {
     }
   }
 
+  // The cell renders the related record's `title` (plus its `image` as an
+  // avatar), so a related record without them is as blank as no relation.
+  protected override isEmptyTableValue(v: any, _r: any): boolean {
+    if (v == null) {
+      return true
+    }
+    const title = v[this.data.title]
+    const image = this.data.displayAs === 'avatar' && this.data.image ? v[this.data.image] : null
+    return (title == null || title === '') && !image
+  }
+
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const method = this.data.resourceEndpointMethod
     const url = this.data.resourceEndpointPath

@@ -78,6 +78,14 @@ export function renderNumberLikeTableCell(
 }
 
 /**
+ * Whether a `number` or `decimal` cell value renders blank: missing, blank,
+ * or non-numeric (see `toNumberOrNull`).
+ */
+export function isNumberLikeEmpty(v: any): boolean {
+  return toNumberOrNull(v) === null
+}
+
+/**
  * Renders the definition's empty text for a blank `number` or `decimal`
  * cell, keeping the column's alignment so it lines up with the values.
  */
