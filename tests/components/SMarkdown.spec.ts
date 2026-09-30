@@ -25,6 +25,28 @@ describe('components/SMarkdown', () => {
     expect(content.text()).toBe('text')
   })
 
+  it('renders fenced code with a language class', () => {
+    const wrapper = mount(SMarkdown, {
+      props: {
+        content: '```js\nconst a = 1\n```'
+      }
+    })
+
+    const code = wrapper.find('.SMarkdown-container > pre > code')
+    expect(code.classes()).toContain('language-js')
+  })
+
+  it('renders smart quotes when `typographer` is set', () => {
+    const wrapper = mount(SMarkdown, {
+      props: {
+        content: 'say "hi"',
+        typographer: true
+      }
+    })
+
+    expect(wrapper.find('.SMarkdown-container > p').text()).toBe('say “hi”')
+  })
+
   it('renders component tag', () => {
     const wrapper = mount(SMarkdown, {
       propsData: {

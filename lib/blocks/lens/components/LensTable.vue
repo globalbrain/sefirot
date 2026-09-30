@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computedAsync } from '@vueuse/core'
-import { cloneDeep } from 'lodash-es'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { computed, markRaw } from 'vue'
 import STable from '../../../components/STable.vue'
 import { type DropdownSection } from '../../../composables/Dropdown'

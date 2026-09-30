@@ -1,4 +1,4 @@
-import { xor } from 'lodash-es'
+import xor from 'lodash-es/xor'
 import { h } from 'vue'
 import SDescPill from '../../../components/SDescPill.vue'
 import SInputCheckboxes from '../../../components/SInputCheckboxes.vue'

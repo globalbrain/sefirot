@@ -29,12 +29,6 @@ import {
 import { useError } from '../stores/Error'
 import { getHttpStatusCode } from '../support/Http'
 
-export interface User {
-  id?: string | number
-  email?: string
-  username?: string
-}
-
 type TraceEntry = { vnode: VNode; recurseCount: number }
 
 type ComponentTraceStack = TraceEntry[]
@@ -172,7 +166,7 @@ export function useErrorHandler({
 }: {
   dsn?: string
   environment?: string
-  user?: MaybeRefOrGetter<User | null>
+  user?: MaybeRefOrGetter<Sentry.User | null>
 }) {
   const error = useError()
 

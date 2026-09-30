@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
+import cloneDeep from 'lodash-es/cloneDeep'
 import { computed, markRaw } from 'vue'
 import { type FieldData } from '../FieldData'
 import { useFieldFactory } from '../composables/FieldFactory'

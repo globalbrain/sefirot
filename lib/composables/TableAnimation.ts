@@ -1,3 +1,4 @@
+import { type VirtualItem } from '@tanstack/vue-virtual'
 import { nextTick, onBeforeUnmount, ref } from 'vue'
 
 const SKELETON_DELAY = 160 // Delay before showing skeleton on subsequent loads (ms)
@@ -5,13 +6,6 @@ const STAGGER_DELAY_PER_ROW = 12 // Delay between each row in stagger animation 
 const STAGGER_MAX_DELAY = 120 // Maximum total delay for stagger animation (ms)
 const FADE_RESET_DELAY = 280 // Time to keep fade-in class active (160ms fade + 120ms stagger)
 const ROW_ENTER_OFFSET = 6 // Vertical offset for row enter animation (px)
-
-export interface VirtualRow {
-  index: number
-  key: number | string
-  size: number
-  start: number
-}
 
 interface StaggerContext {
   firstVisibleIndex: number
@@ -110,7 +104,7 @@ export function useTableAnimation(
    * Generate CSS custom properties for row animation.
    * Each row gets a progressive delay based on its position relative to the first visible row.
    */
-  function getRowStyle(row: VirtualRow): Record<string, string> {
+  function getRowStyle(row: VirtualItem): Record<string, string> {
     const styles: Record<string, string> = {
       '--row-enter-offset': '0px',
       '--row-fade-delay': '0ms'

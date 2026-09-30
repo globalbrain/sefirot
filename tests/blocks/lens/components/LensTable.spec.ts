@@ -15,6 +15,8 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
   observe: vi.fn()
 })))
 
+vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(1000)
+
 describe('blocks/lens/components/LensTable', () => {
   it('renders the table during initial loading and forwards loading updates', async () => {
     const wrapper = mount(LensTable, {
