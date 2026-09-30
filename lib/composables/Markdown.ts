@@ -3,25 +3,11 @@ import {
   type DOMPurifyI,
   createDompurify
 } from '@globalbrain/sefirot/dompurify'
-import mdit, { type MarkdownIt } from 'markdown-it'
+import isUndefined from 'lodash-es/isUndefined'
+import omitBy from 'lodash-es/omitBy'
+import mdit, { type MarkdownIt, type MarkdownItOptions } from 'markdown-it'
 
-export interface UseMarkdownOptions {
-  /** @default true */
-  html?: boolean
-  /** @default true */
-  xhtmlOut?: boolean
-  /** @default false */
-  breaks?: boolean
-  /** @default 'language-' */
-  langPrefix?: string
-  /** @default true */
-  linkify?: boolean
-  /** @default false */
-  typographer?: boolean
-  /** @default '“”‘’' */
-  quotes?: string | string[]
-  /** @default null */
-  highlight?: ((str: string, lang: string, attrs: string) => string) | null
+export interface UseMarkdownOptions extends MarkdownItOptions {
   config?: (md: MarkdownIt) => void
   /** @default false */
   inline?: boolean
@@ -73,7 +59,7 @@ export function useMarkdown({
   domPurifyOptions,
   ...options
 }: UseMarkdownOptions = {}) {
-  const md = mdit({ html: true, xhtmlOut: true, linkify: true, ...options })
+  const md = mdit({ html: true, xhtmlOut: true, linkify: true, ...omitBy(options, isUndefined) })
   configureLinkify(md.linkify)
 
   md.renderer.rules.ordered_list_open = (tokens, idx, options, env, self) => {
