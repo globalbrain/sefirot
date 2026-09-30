@@ -1,0 +1,29 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    paths: [deno.json, package.json]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: patch, minor, major, prepatch, preminor, premajor, prerelease, or an explicit version
+        required: true
+        type: string
+
+concurrency: release
+
+jobs:
+  release:
+    if: github.repository == 'globalbrain/sefirot'
+    uses: globalbrain/hado/.github/workflows/release.reusable.yaml@3e16a2830e9bbdc8e08662ccea4ec5a2a2907697 # v0.22.9
+    with:
+      version: ${{ inputs.version }}
+      publish: pnpm publish --access public
+      environment: npm
+      environment_url: https://npmx.dev/package/@globalbrain/sefirot/v/{0}
+    permissions:
+      actions: read
+      contents: write
+      id-token: write
+      pull-requests: write

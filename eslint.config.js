@@ -5,6 +5,9 @@ import { defineConfig, globalIgnores } from 'eslint/config'
 export default defineConfig([
   globalIgnores(['**/*.md']),
   await globalbrain({
+    formatters: { markdown: true },
+    ignores: ['!CHANGELOG.md']
+  }, {
     rules: {
       'antfu/consistent-list-newline': 'off',
       'no-console': 'warn',
