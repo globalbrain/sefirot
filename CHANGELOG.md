@@ -1,5 +1,12 @@
 # Changelog
 
+# [4.65.0](https://github.com/globalbrain/sefirot/compare/v4.64.0...v4.65.0) (2026-09-30)
+
+
+### Features
+
+* **lens:** render placeholder text for empty cells ([#788](https://github.com/globalbrain/sefirot/issues/788)) ([b9f0bb9](https://github.com/globalbrain/sefirot/commit/b9f0bb906e0230e3ad02498cbbb07693dfa8586b))
+
 # [4.64.0](https://github.com/globalbrain/sefirot/compare/v4.63.0...v4.64.0) (2026-07-30)
 
 
