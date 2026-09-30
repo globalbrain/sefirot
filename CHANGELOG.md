@@ -14,6 +14,6 @@
 
 - **deps:** upgrade dependencies to latest majors ([#789](https://github.com/globalbrain/sefirot/issues/789))
 
-## [4.65.0] (2026-09-30)
+## 4.65.0 (2026-09-30)
 
 See [4.x changelog](https://github.com/globalbrain/sefirot/blob/4.x/CHANGELOG.md).
