@@ -23,16 +23,16 @@ export default defineConfig({
   ],
 
   vite: {
-    define: {
-      __DOCS_HOST__: JSON.stringify(getDocsHost())
-    },
+    define: { __DOCS_HOST__: JSON.stringify(getDocsHost()) },
+    server: { preTransformRequests: false },
+    build: { rolldownOptions: { checks: { importIsUndefined: false } } },
     plugins: [
       {
         name: 'revert-vue-core-12141',
         transform(code, id) {
           if (/node_modules\/@vue\/reactivity\/dist\/reactivity.esm-bundler.js(?:\?|$)/.test(id)) {
             const s = new MagicString(code)
-            s.replace(/(isOldValueReadonly.*?)return true;/s, '$1return false;')
+            s.replace(/(if \(isOldValueReadonly\) \{).*?return true;/s, '$1 return false;')
             return { code: s.toString(), map: s.generateMap() }
           }
         }
@@ -40,10 +40,17 @@ export default defineConfig({
       {
         name: 'prevent-unnecessary-reloads',
         config() {
-          return {
-            optimizeDeps: {
-              noDiscovery: true
-            }
+          return { optimizeDeps: { noDiscovery: true } }
+        }
+      },
+      {
+        name: 'drop-unreachable-histoire-includes',
+        enforce: 'post',
+        config(config) {
+          const unreachable = ['flexsearch', 'shiki', 'vscode-oniguruma', 'vscode-textmate']
+          const include = config.optimizeDeps?.include
+          if (include) {
+            config.optimizeDeps!.include = include.filter((dep) => !unreachable.includes(dep))
           }
         }
       }

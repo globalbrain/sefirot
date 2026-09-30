@@ -2,13 +2,13 @@ autoInstallPeers: false
 strictPeerDependencies: true
 
 allowBuilds:
-  esbuild: true
   vue-demi: false
 
-minimumReleaseAge: 2880
+minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
   - '@globalbrain/*'
-  - '@types/*'
+
+trustPolicy: no-downgrade
 
 overrides:
-  jsdom: latest
+  vite: ^8.3.1

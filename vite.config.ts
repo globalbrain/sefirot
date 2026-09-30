@@ -3,7 +3,7 @@
 
 import { stripVTControlCharacters } from 'node:util'
 import vue from '@vitejs/plugin-vue'
-import { defineConfig } from './config/vite'
+import { defineConfig } from './config/vite.js'
 
 const ignore = [
   '[Vue warn]: inject() can only be used inside setup() or functional components.',
@@ -25,6 +25,12 @@ export default defineConfig({
     environment: 'happy-dom',
     testTimeout: 2000,
     setupFiles: ['./tests/vitest.setup.ts'],
+
+    // Vitest's diagnostics suggest `pool: 'vmThreads'` or `isolate: false` to
+    // reuse workers across files. Neither fits this suite: the VM realm breaks
+    // `instanceof File` in the validators, and shared module state installs
+    // the test router more than once.
+    experimental: { diagnostics: false },
 
     coverage: {
       provider: 'v8',

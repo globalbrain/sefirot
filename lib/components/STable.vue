@@ -1,10 +1,10 @@
 <script setup lang="ts" generic="S extends any = undefined">
-import { useVirtualizer } from '@tanstack/vue-virtual'
+import { type VirtualItem, useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import isEqual from 'lodash-es/isEqual'
 import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
 import { type Table } from '../composables/Table'
-import { type VirtualRow, useTableAnimation } from '../composables/TableAnimation'
+import { useTableAnimation } from '../composables/TableAnimation'
 import { smartComputed } from '../support/Reactivity'
 import { scrollTableIntoView } from '../support/Scroll'
 import { getTextSize } from '../support/Text'
@@ -306,7 +306,7 @@ watch(actionsColumnWidth, (newValue) => {
   }
 }, { immediate: true, flush: 'post' })
 
-function getVirtualRowStyle(item: VirtualRow): CSSProperties {
+function getVirtualRowStyle(item: VirtualItem): CSSProperties {
   return {
     position: 'absolute',
     top: '0px',
@@ -585,7 +585,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
           >
             <div
               v-for="item in virtualItems"
-              :key="item.key"
+              :key="item.index"
             >
               <div
                 class="row"

@@ -1,72 +1,27 @@
-import { type DOMPurifyConfig, type DOMPurifyI, createDompurify } from '@globalbrain/sefirot/dompurify'
-import MarkdownIt from 'markdown-it'
+import {
+  type DOMPurifyConfig,
+  type DOMPurifyI,
+  createDompurify
+} from '@globalbrain/sefirot/dompurify'
+import mdit, { type MarkdownIt } from 'markdown-it'
 
-export type UseMarkdown = (source: string, inline?: boolean) => string
-
-// vendored for vue compatibility
-export interface MarkdownItOptions {
-  /**
-   * Set `true` to enable HTML tags in source. Be careful!
-   * That's not safe! You may need external sanitizer to protect output from XSS.
-   * It's better to extend features via plugins, instead of enabling HTML.
-   * @default false
-   */
-  html?: boolean | undefined
-
-  /**
-   * Set `true` to add '/' when closing single tags
-   * (`<br />`). This is needed only for full CommonMark compatibility. In real
-   * world you will need HTML output.
-   * @default false
-   */
-  xhtmlOut?: boolean | undefined
-
-  /**
-   * Set `true` to convert `\n` in paragraphs into `<br>`.
-   * @default false
-   */
-  breaks?: boolean | undefined
-
-  /**
-   * CSS language class prefix for fenced blocks.
-   * Can be useful for external highlighters.
-   * @default 'language-'
-   */
-  langPrefix?: string | undefined
-
-  /**
-   * Set `true` to autoconvert URL-like text to links.
-   * @default false
-   */
-  linkify?: boolean | undefined
-
-  /**
-   * Set `true` to enable [some language-neutral replacement](https://github.com/markdown-it/markdown-it/blob/master/lib/rules_core/replacements.js) +
-   * quotes beautification (smartquotes).
-   * @default false
-   */
-  typographer?: boolean | undefined
-
-  /**
-   * Double + single quotes replacement
-   * pairs, when typographer enabled and smartquotes on. For example, you can
-   * use `'«»„“'` for Russian, `'„“‚‘'` for German, and
-   * `['«\xA0', '\xA0»', '‹\xA0', '\xA0›']` for French (including nbsp).
-   * @default '“”‘’'
-   */
+export interface UseMarkdownOptions {
+  /** @default true */
+  html?: boolean
+  /** @default true */
+  xhtmlOut?: boolean
+  /** @default false */
+  breaks?: boolean
+  /** @default 'language-' */
+  langPrefix?: string
+  /** @default true */
+  linkify?: boolean
+  /** @default false */
+  typographer?: boolean
+  /** @default '“”‘’' */
   quotes?: string | string[]
-
-  /**
-   * Highlighter function for fenced code blocks.
-   * Highlighter `function (str, lang, attrs)` should return escaped HTML. It can
-   * also return empty string if the source was not changed and should be escaped
-   * externally. If result starts with <pre... internal wrapper is skipped.
-   * @default null
-   */
-  highlight?: ((str: string, lang: string, attrs: string) => string) | null | undefined
-}
-
-export interface UseMarkdownOptions extends MarkdownItOptions {
+  /** @default null */
+  highlight?: ((str: string, lang: string, attrs: string) => string) | null
   config?: (md: MarkdownIt) => void
   /** @default false */
   inline?: boolean
@@ -100,16 +55,26 @@ export function getDomPurifySingleton(): DOMPurifyI {
   return DOMPurify
 }
 
+export function configureLinkify(linkify: MarkdownIt['linkify']): void {
+  // linkify-it only treats `｜` (U+FF5C) as a full-width link boundary. Treat
+  // every full-width form as one so that links and emails are also detected
+  // next to full-width punctuation, letters and digits, as in Japanese text.
+  linkify.re.get_text_separators = () => /[><\uFF00-\uFFEF]/
+
+  // linkify-it 6 no longer detects schemeless URLs such as `example.com` by
+  // default. Keep detecting them as before.
+  linkify.set({ fuzzyLink: true })
+}
+
 export function useMarkdown({
   config,
   inline: _inline,
   domPurifyInstance,
   domPurifyOptions,
   ...options
-}: UseMarkdownOptions = {}): UseMarkdown {
-  //
-
-  const md = new MarkdownIt({ html: true, linkify: true, ...options })
+}: UseMarkdownOptions = {}) {
+  const md = mdit({ html: true, xhtmlOut: true, linkify: true, ...options })
+  configureLinkify(md.linkify)
 
   md.renderer.rules.ordered_list_open = (tokens, idx, options, env, self) => {
     const token = tokens[idx]
@@ -122,7 +87,7 @@ export function useMarkdown({
 
   config?.(md)
 
-  return (source, inline = _inline) => {
+  return (source: string, inline = _inline) => {
     const html = inline ? md.renderInline(source) : md.render(source)
     return (domPurifyInstance || getDomPurifySingleton()).sanitize(html, {
       USE_PROFILES: { html: true },
@@ -133,8 +98,9 @@ export function useMarkdown({
 }
 
 export function useLinkifyIt() {
-  const md = new MarkdownIt('zero', { linkify: true })
+  const md = mdit('zero', { linkify: true })
   md.enable('linkify')
+  configureLinkify(md.linkify)
 
   md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
     const token = tokens[idx]

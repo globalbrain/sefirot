@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import STable from 'sefirot/components/STable.vue'
 import { useTable } from 'sefirot/composables/Table'
 
@@ -6,6 +6,8 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
   disconnect: vi.fn(),
   observe: vi.fn()
 })))
+
+vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(1000)
 
 describe('components/STable', () => {
   describe('basics', () => {
@@ -153,7 +155,7 @@ describe('components/STable', () => {
   })
 
   describe('cell number', () => {
-    it('displays `0` value', () => {
+    it('displays `0` value', async () => {
       const table = useTable({
         orders: ['num'],
         columns: {
@@ -170,12 +172,14 @@ describe('components/STable', () => {
         }
       })
 
+      await flushPromises()
+
       expect(wrapper.find('.STableCellNumber .value').text()).toBe('0')
     })
   })
 
   describe('summary', () => {
-    it('displays a summary row at the bottom', () => {
+    it('displays a summary row at the bottom', async () => {
       const table = useTable({
         orders: ['name', 'amount'],
         columns: {
@@ -196,6 +200,8 @@ describe('components/STable', () => {
           options: table
         }
       })
+
+      await flushPromises()
 
       expect(wrapper.find('.summary .col-name').text()).toBe('Total')
       expect(wrapper.find('.summary .col-amount').text()).toBe('100')
