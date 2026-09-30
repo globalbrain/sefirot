@@ -86,6 +86,34 @@ describe('components/SDesc', () => {
       expect(wrapper.find('.SDescText').exists()).toBe(false)
       expect(wrapper.find('.SDescEmpty').exists()).toBe(true)
     })
+
+    it('links URLs and emails in `:value` when `:linkify` is set', () => {
+      const wrapper = mount(SDescText, {
+        props: {
+          value: 'Visit example.com or mail hi@example.com',
+          linkify: true
+        }
+      })
+
+      const links = wrapper.findAll('.SDescText .value a')
+      expect(links.length).toBe(2)
+      expect(links[0].text()).toBe('example.com')
+      expect(links[0].attributes('href')).toBe('http://example.com')
+      expect(links[0].attributes('target')).toBe('_blank')
+      expect(links[0].attributes('rel')).toBe('noreferrer')
+      expect(links[1].attributes('href')).toBe('mailto:hi@example.com')
+    })
+
+    it('renders `:value` as is when `:linkify` is not set', () => {
+      const wrapper = mount(SDescText, {
+        props: {
+          value: 'Visit example.com'
+        }
+      })
+
+      expect(wrapper.find('.SDescText .value a').exists()).toBe(false)
+      expect(wrapper.find('.SDescText .value').text()).toBe('Visit example.com')
+    })
   })
 
   describe('SDescNumber', () => {
