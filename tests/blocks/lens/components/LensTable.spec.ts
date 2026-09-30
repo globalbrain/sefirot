@@ -1,10 +1,11 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { type TextFieldData } from 'sefirot/blocks/lens/FieldData'
+import { type IdFieldData, type TextFieldData } from 'sefirot/blocks/lens/FieldData'
 import { FieldRegistry } from 'sefirot/blocks/lens/FieldRegistry'
 import { type LensResult } from 'sefirot/blocks/lens/LensResult'
 import LensTable from 'sefirot/blocks/lens/components/LensTable.vue'
 import { FieldRegistryKey } from 'sefirot/blocks/lens/composables/FieldRegistry'
 import { type LensEditContext, provideLensEdit } from 'sefirot/blocks/lens/composables/LensEdit'
+import { IdField } from 'sefirot/blocks/lens/fields/IdField'
 import { TextField } from 'sefirot/blocks/lens/fields/TextField'
 import { SefirotLangKey } from 'sefirot/composables/Lang'
 import { defineComponent, h } from 'vue'
@@ -89,6 +90,7 @@ describe('blocks/lens/components/LensTable', () => {
 describe('blocks/lens/components/LensTable empty text', () => {
   function makeRegistry(): FieldRegistry {
     const registry = new FieldRegistry()
+    registry.register('id', (ctx, field) => new IdField(ctx, field))
     registry.register('text', (ctx, field) => new TextField(ctx, field))
     return registry
   }
@@ -117,11 +119,11 @@ describe('blocks/lens/components/LensTable empty text', () => {
     }
   }
 
-  function makeResult(data: Record<string, any>[]): LensResult {
+  function makeResult(data: Record<string, any>[], select = ['code', 'name', 'memo']): LensResult {
     return {
       query: {
         entity: 'documents',
-        select: ['code', 'name', 'memo'],
+        select,
         filters: [],
         sort: [],
         page: 1,
@@ -130,14 +132,29 @@ describe('blocks/lens/components/LensTable empty text', () => {
       fields: {
         code: textField('code', { emptyTextEn: 'No code', emptyTextJa: 'コードなし' }),
         name: textField('name', { emptyTextEn: 'Untitled', emptyTextJa: '無題' }),
-        memo: textField('memo')
+        memo: textField('memo'),
+        id: {
+          type: 'id',
+          key: 'id',
+          labelEn: 'ID',
+          labelJa: 'ID',
+          filterKey: 'id',
+          sortable: false,
+          freeze: false,
+          width: 0,
+          required: false,
+          rules: [],
+          prefix: 'DOC',
+          emptyTextEn: 'No number',
+          emptyTextJa: '番号なし'
+        } satisfies IdFieldData
       },
       data,
       pagination: { total: data.length, page: 1, perPage: 100 }
     } as unknown as LensResult
   }
 
-  function makeEdit(editable: boolean) {
+  function makeEdit(editable: boolean, indexField: string) {
     return {
       editable,
       viewable: true,
@@ -145,8 +162,8 @@ describe('blocks/lens/components/LensTable empty text', () => {
       canEdit: () => editable,
       canDelete: () => false,
       entity: 'documents',
-      indexField: 'code',
-      resolveId: (record: any) => record.code,
+      indexField,
+      resolveId: (record: any) => record[indexField],
       save: vi.fn(),
       saveBlocking: vi.fn(),
       create: vi.fn(),
@@ -159,15 +176,20 @@ describe('blocks/lens/components/LensTable empty text', () => {
 
   async function mountTable(
     data: Record<string, any>[],
-    { editable = false, lang = 'en' }: { editable?: boolean; lang?: 'en' | 'ja' } = {}
+    {
+      editable = false,
+      lang = 'en',
+      indexField = 'code',
+      select
+    }: { editable?: boolean; lang?: 'en' | 'ja'; indexField?: string; select?: string[] } = {}
   ) {
-    const edit = makeEdit(editable)
+    const edit = makeEdit(editable, indexField)
     const Host = defineComponent({
       setup() {
         provideLensEdit(edit)
         return () => h(LensTable, {
           loading: false,
-          result: makeResult(data),
+          result: makeResult(data, select),
           inlineEditable: editable
         })
       }
@@ -235,6 +257,30 @@ describe('blocks/lens/components/LensTable empty text', () => {
 
     await cell(wrapper, 'code').find('.STableCellText .container').trigger('click')
     expect(edit.openSheet).toHaveBeenCalledWith(record)
+
+    wrapper.unmount()
+  })
+
+  it('keeps a blank id display muted, following its path or opening the sheet', async () => {
+    const linked = { id: { value: 1, display: null, path: '/documents/1' }, name: 'Draft' }
+    const unlinked = { id: { value: 2, display: '', path: null }, name: 'Draft' }
+    const { wrapper, edit } = await mountTable([linked, unlinked], {
+      indexField: 'id',
+      select: ['id', 'name']
+    })
+
+    const [first, second] = wrapper.findAll('.container.body .STableCell.col-id')
+
+    // A path still navigates to the record's page, as a displayed id would.
+    expect(first.find('.text').text()).toBe('No number')
+    expect(first.find('.text').classes()).toContain('mute')
+    expect(first.find('a.container').attributes('href')).toBe('/documents/1')
+
+    // Without a path, the index cell still opens the sheet.
+    expect(second.find('.text').text()).toBe('No number')
+    expect(second.find('.text').classes()).toContain('mute')
+    await second.find('.container').trigger('click')
+    expect(edit.openSheet).toHaveBeenCalledWith(unlinked)
 
     wrapper.unmount()
   })

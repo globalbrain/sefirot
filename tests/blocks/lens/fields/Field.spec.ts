@@ -4,6 +4,7 @@ import {
   type BooleanFieldData,
   type ContentFieldData,
   type FieldDataBase,
+  type IdFieldData,
   type NumberFieldData,
   type RelatedManyFieldData,
   type SelectFieldData,
@@ -14,6 +15,7 @@ import { AvatarField } from 'sefirot/blocks/lens/fields/AvatarField'
 import { BooleanField } from 'sefirot/blocks/lens/fields/BooleanField'
 import { ContentField } from 'sefirot/blocks/lens/fields/ContentField'
 import { type Field } from 'sefirot/blocks/lens/fields/Field'
+import { IdField } from 'sefirot/blocks/lens/fields/IdField'
 import { NumberField } from 'sefirot/blocks/lens/fields/NumberField'
 import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
 import { SelectField } from 'sefirot/blocks/lens/fields/SelectField'
@@ -151,6 +153,22 @@ describe('blocks/lens/fields/Field', () => {
 
       expect(cellFor(field, undefined)).toEqual({ type: 'text', value: 'Untitled', color: 'mute' })
       expect(cellFor(field, 'open')).toEqual({ type: 'state', mode: 'info', label: 'Open' })
+    })
+
+    it('treats an id without a display as blank and keeps its link', () => {
+      const field = new IdField(ctx(), {
+        ...base({ key: 'id' }),
+        ...emptyText,
+        type: 'id',
+        prefix: 'DOC'
+      } satisfies IdFieldData)
+
+      expect(cellFor(field, { value: 1, display: null, path: '/documents/1' }))
+        .toEqual({ type: 'text', value: 'Untitled', link: '/documents/1', color: 'mute' })
+      expect(cellFor(field, { value: 1, display: '', path: null }))
+        .toEqual({ type: 'text', value: 'Untitled', link: null, color: 'mute' })
+      expect(cellFor(field, { value: 1, display: 'DOC-1', path: '/documents/1' }))
+        .toEqual({ type: 'text', value: 'DOC-1', link: '/documents/1', color: 'info' })
     })
 
     it('does not apply to content and avatar fields', () => {

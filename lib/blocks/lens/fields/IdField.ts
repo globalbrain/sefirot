@@ -15,6 +15,17 @@ export class IdField extends Field<IdFieldData> {
     }
   }
 
+  // The value is a `{ value, display, path }` object and the cell renders only
+  // its `display`, so a record whose identifier has no display yet is blank.
+  protected override isEmptyTableValue(v: any, _r: any): boolean {
+    return v == null || v.display == null || v.display === ''
+  }
+
+  // Keep the `path` link, so the empty text still navigates to the record.
+  protected override tableEmptyCell(text: string, v: any, _r: any): TableCell {
+    return { type: 'text', value: text, link: v?.path ?? null, color: 'mute' }
+  }
+
   override availableFilters(): Partial<Record<FilterOperator, FilterInput>> {
     const number = new NumberFilterInput()
 

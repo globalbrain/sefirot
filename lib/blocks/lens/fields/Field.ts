@@ -119,17 +119,17 @@ export abstract class Field<T extends FieldData> {
       // renderers can't handle a blank (e.g. a `state` select on `undefined`).
       cell: (v, r) => {
         const emptyText = this.tableEmptyText(v, r)
-        return emptyText !== null ? this.tableEmptyCell(emptyText) : this.tableCell(v, r)
+        return emptyText !== null ? this.tableEmptyCell(emptyText, v, r) : this.tableCell(v, r)
       }
     }
   }
 
   /**
    * Returns the table cell that renders the empty text in a muted color.
-   * Field types with a column alignment override this to keep the text
-   * lined up with the values around it.
+   * Field types override this to keep what the blank cell still carries,
+   * such as a column alignment or a link.
    */
-  protected tableEmptyCell(text: string): TableCell {
+  protected tableEmptyCell(text: string, _v: any, _r: any): TableCell {
     return { type: 'text', value: text, color: 'mute' }
   }
 

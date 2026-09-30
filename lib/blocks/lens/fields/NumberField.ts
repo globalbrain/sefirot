@@ -13,7 +13,7 @@ export class NumberField extends Field<NumberFieldData> {
     return renderNumberLikeTableCell(this.data, v)
   }
 
-  protected override tableEmptyCell(text: string): TableCell {
+  protected override tableEmptyCell(text: string, _v: any, _r: any): TableCell {
     return renderNumberLikeEmptyTableCell(this.data, text)
   }
 
