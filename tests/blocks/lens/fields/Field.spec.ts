@@ -6,6 +6,7 @@ import {
   type FieldDataBase,
   type NumberFieldData,
   type RelatedManyFieldData,
+  type SelectFieldData,
   type TextFieldData
 } from 'sefirot/blocks/lens/FieldData'
 import { type ResourceFetcher } from 'sefirot/blocks/lens/ResourceFetcher'
@@ -15,6 +16,7 @@ import { ContentField } from 'sefirot/blocks/lens/fields/ContentField'
 import { type Field } from 'sefirot/blocks/lens/fields/Field'
 import { NumberField } from 'sefirot/blocks/lens/fields/NumberField'
 import { RelatedManyField } from 'sefirot/blocks/lens/fields/RelatedManyField'
+import { SelectField } from 'sefirot/blocks/lens/fields/SelectField'
 import { TextField } from 'sefirot/blocks/lens/fields/TextField'
 
 function ctx(lang: 'en' | 'ja' = 'en'): FieldContext {
@@ -129,6 +131,26 @@ describe('blocks/lens/fields/Field', () => {
 
       expect(cellFor(field, [])).toEqual({ type: 'text', value: 'Untitled', color: 'mute' })
       expect(cellFor(field, [{ id: 1, name: 'Alice' }]).type).toBe('pills')
+    })
+
+    it('renders the empty text without calling a renderer that rejects blanks', () => {
+      // A `state` select can't resolve an option for `undefined`.
+      const field = new SelectField(ctx(), {
+        ...base({ key: 'status' }),
+        ...emptyText,
+        type: 'select',
+        displayAs: 'state',
+        inputAs: 'dropdown',
+        placeholderEn: null,
+        placeholderJa: null,
+        helpEn: null,
+        helpJa: null,
+        options: [{ mode: 'info', value: 'open', labelEn: 'Open', labelJa: 'Open' }],
+        multiple: false
+      } satisfies SelectFieldData)
+
+      expect(cellFor(field, undefined)).toEqual({ type: 'text', value: 'Untitled', color: 'mute' })
+      expect(cellFor(field, 'open')).toEqual({ type: 'state', mode: 'info', label: 'Open' })
     })
 
     it('does not apply to content and avatar fields', () => {

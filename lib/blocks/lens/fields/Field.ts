@@ -115,18 +115,22 @@ export abstract class Field<T extends FieldData> {
       // definition omits an explicit width would render as a 0px (hidden)
       // column until the user manually drag-resizes it.
       width: `${this.data.width || DEFAULT_COLUMN_WIDTH}px`,
+      // Check for the empty text before rendering the field's own cell: some
+      // renderers can't handle a blank (e.g. a `state` select on `undefined`).
       cell: (v, r) => {
-        const cell = this.tableCell(v, r)
         const emptyText = this.tableEmptyText(v, r)
-        if (emptyText === null) {
-          return cell
-        }
-        // Keep the column's alignment (e.g. right-aligned numbers) so the
-        // empty text lines up with the values around it.
-        const align = 'align' in cell ? cell.align : undefined
-        return { type: 'text', align, value: emptyText, color: 'mute' }
+        return emptyText !== null ? this.tableEmptyCell(emptyText) : this.tableCell(v, r)
       }
     }
+  }
+
+  /**
+   * Returns the table cell that renders the empty text in a muted color.
+   * Field types with a column alignment override this to keep the text
+   * lined up with the values around it.
+   */
+  protected tableEmptyCell(text: string): TableCell {
+    return { type: 'text', value: text, color: 'mute' }
   }
 
   /**

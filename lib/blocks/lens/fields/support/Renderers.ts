@@ -76,3 +76,19 @@ export function renderNumberLikeTableCell(
     maximumFractionDigits: cap
   }
 }
+
+/**
+ * Renders the definition's empty text for a blank `number` or `decimal`
+ * cell, keeping the column's alignment so it lines up with the values.
+ */
+export function renderNumberLikeEmptyTableCell(
+  data: NumberFieldData | DecimalFieldData,
+  text: string
+): TableCell {
+  return {
+    type: 'text',
+    align: data.align ?? 'left',
+    value: text,
+    color: 'mute'
+  }
+}
