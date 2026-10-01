@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import IconQuestion from '~icons/ph/question'
 import { type Component, computed, unref, useSlots } from 'vue'
+import { useLayout } from '../composables/Layout'
 import { type Validatable } from '../composables/Validation'
 import { type Color, type Size } from '../support/InputBase'
 import STooltip from './STooltip.vue'
@@ -22,6 +23,8 @@ export interface Props {
 }
 
 const props = defineProps<Props>()
+
+const layout = useLayout()
 
 const slots = useSlots()
 
@@ -63,7 +66,7 @@ function getErrorMsg(validation: Validatable) {
 </script>
 
 <template>
-  <div class="SInputBase" :class="classes">
+  <div class="SInputBase" :class="classes" :data-layout="layout">
     <label v-if="label" class="label" :for="name">
       <span class="label-text">{{ label }}</span>
 
@@ -252,5 +255,16 @@ function getErrorMsg(validation: Validatable) {
   margin: -4px;
   width: 24px;
   height: 24px;
+}
+.SInputBase[data-layout="mobile"] {
+  --input-touch-height: var(--control-touch-size, 44px);
+  --input-font-size: 16px;
+  min-width: 0;
+  max-width: 100%;
+
+  .label { flex-wrap: wrap; }
+  .label, .help { overflow-wrap: anywhere; }
+  .label-text, .label-note, .check { min-width: 0; max-width: 100%; }
+  .label-note, .check { flex-shrink: 1; }
 }
 </style>

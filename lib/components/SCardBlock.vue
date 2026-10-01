@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { type CardBlockSize, provideCardBlockSize } from '../composables/Card'
+import { type Responsive, layoutLength, useLayout, useResponsive } from '../composables/Layout'
 
 export type { CardBlockSize as Size }
 
@@ -17,9 +18,16 @@ export type Bg =
 const props = withDefaults(defineProps<{
   size?: CardBlockSize
   bg?: Bg
+  padding?: Responsive<string | number>
+  fluid?: Responsive<boolean>
 }>(), {
-  bg: '1'
+  bg: '1',
+  fluid: undefined
 })
+
+const layout = useLayout()
+const padding = useResponsive(() => props.padding)
+const fluid = useResponsive(() => props.fluid ?? { desktop: false, mobile: true })
 
 const _bg = computed(() => {
   return props.bg !== 'none' ? `s-bg-${props.bg}` : null
@@ -29,7 +37,7 @@ provideCardBlockSize(computed(() => props.size ?? null))
 </script>
 
 <template>
-  <div class="SCardBlock" :class="[size, _bg]">
+  <div class="SCardBlock" :class="[size, _bg, { fluid }]" :data-layout="layout" :style="{ padding: layoutLength(padding) }">
     <slot />
   </div>
 </template>
@@ -56,4 +64,8 @@ provideCardBlockSize(computed(() => props.size ?? null))
 .SCardBlock.medium { height: 56px; min-height: 56px; }
 .SCardBlock.large  { height: 64px; min-height: 64px; }
 .SCardBlock.xlarge { height: 80px; min-height: 80px; }
+.SCardBlock.fluid {
+  height: auto;
+  min-width: 0;
+}
 </style>

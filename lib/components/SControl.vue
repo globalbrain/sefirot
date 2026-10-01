@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, provide } from 'vue'
 import { useCardBlockSize } from '../composables/Card'
-import { type ControlSize, provideControlSize } from '../composables/Control'
+import { type ControlSize, ControlWrapKey, provideControlSize } from '../composables/Control'
+import { type Responsive, useResponsive } from '../composables/Layout'
 
 export type { ControlSize as Size }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   size?: ControlSize
-}>()
+  wrap?: Responsive<boolean>
+}>(), { wrap: undefined })
+
+const wrap = useResponsive(() => props.wrap ?? { desktop: false, mobile: true })
+provide(ControlWrapKey, wrap)
 
 const cardSize = useCardBlockSize()
 
@@ -29,6 +34,7 @@ const _size = computed(() => {
 
 const classes = computed(() => [
   _size.value,
+  { wrap: wrap.value },
   cardSize.value ? `card-size-${cardSize.value}` : null
 ])
 
@@ -56,4 +62,10 @@ provideControlSize(_size)
 
 .SControl.small  { gap: 8px; height: 32px; }
 .SControl.medium { gap: 12px; height: 40px; }
+.SControl.wrap {
+  flex-wrap: wrap;
+  height: auto;
+  min-width: 0;
+  max-width: 100%;
+}
 </style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Component } from 'vue'
+import { useLayout } from '../composables/Layout'
 import SLink from './SLink.vue'
 
 export interface MenuItem {
@@ -12,10 +13,11 @@ export interface MenuItem {
 defineProps<{
   menu: MenuItem[][]
 }>()
+const layout = useLayout()
 </script>
 
 <template>
-  <div class="SLocalNavMenu">
+  <div class="SLocalNavMenu" :data-layout="layout">
     <div v-for="(nav, i) in menu" :key="i" class="group">
       <div v-for="item in nav" :key="item.text" class="item">
         <SLink class="link" :class="{ active: item.active }" :href="item.link">
@@ -88,4 +90,5 @@ defineProps<{
   width: 16px;
   height: 16px;
 }
+.SLocalNavMenu[data-layout="mobile"] .link { min-height: var(--control-touch-size, 44px); }
 </style>

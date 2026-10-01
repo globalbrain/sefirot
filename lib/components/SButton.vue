@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Component, type MaybeRef, computed, unref, useSlots } from 'vue'
+import { type Responsive, useLayout, useResponsive } from '../composables/Layout'
 import { type Position } from '../composables/Tooltip'
 import { useHasSlotContent } from '../composables/Utils'
 import { type ColorMode } from '../support/Color'
@@ -34,7 +35,7 @@ export interface Tooltip {
   timeout?: number
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   tag?: Component | string
   size?: Size
   type?: Type
@@ -52,12 +53,16 @@ const props = defineProps<{
   loading?: boolean
   disabled?: boolean
   tooltip?: string | Tooltip
-}>()
+  wrap?: Responsive<boolean>
+}>(), { wrap: undefined })
 
 const emit = defineEmits<{
   'click': []
   'disabled-click': []
 }>()
+
+const layout = useLayout()
+const wrap = useResponsive(() => props.wrap ?? { desktop: false, mobile: true })
 
 const _leadIcon = computed(() => props.leadIcon ?? props.icon)
 
@@ -72,6 +77,7 @@ const classes = computed(() => [
   { 'has-label': !!props.label || hasDefaultSlot.value },
   { 'has-lead-icon': !!_leadIcon.value },
   { 'has-trail-icon': !!props.trailIcon },
+  { wrap: wrap.value },
   { loading: props.loading },
   { rounded: props.rounded },
   { block: props.block },
@@ -113,6 +119,7 @@ function onClick(): void {
     <component
       :is="computedTag"
       class="SButton"
+      :data-layout="layout"
       :class="classes"
       :href
       role="button"
@@ -845,5 +852,23 @@ function onClick(): void {
     opacity: 0;
     transform: scale(0.9);
   }
+}
+.SButton[data-layout="mobile"] {
+  min-height: max(var(--control-touch-size, 44px), 44px);
+  min-width: var(--control-touch-size, 44px);
+  max-width: 100%;
+}
+
+.SButton.xl[data-layout="mobile"],
+.SButton.jumbo[data-layout="mobile"] { min-height: max(var(--control-touch-size, 44px), 48px); }
+
+.SButton.wrap {
+  max-width: 100%;
+  white-space: normal;
+
+  .content { min-width: 0; height: auto; padding-block: 6px; }
+  .label { min-width: 0; overflow-wrap: anywhere; }
+  .icon, .count { flex-shrink: 0; }
+  .icon { display: flex; align-items: center; }
 }
 </style>

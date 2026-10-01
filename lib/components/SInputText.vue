@@ -163,10 +163,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 <style scoped lang="postcss">
 .SInputText.sm,
 .SInputText.mini {
-  .box   { min-height: 32px; }
-  .value { min-height: 30px; }
-  .area  { min-height: 30px; }
-  .unit  { min-height: 30px; }
+  .box   { min-height: max(32px, var(--input-touch-height, 0px)); }
+  .value { min-height: max(30px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .area  { min-height: max(30px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .unit  { min-height: max(30px, calc(var(--input-touch-height, 0px) - 2px)); }
 
   .input {
     padding: 3px 8px;
@@ -212,10 +212,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.md {
-  .box   { min-height: 36px; }
-  .value { min-height: 34px; }
-  .area  { min-height: 34px; }
-  .unit  { min-height: 34px; }
+  .box   { min-height: max(36px, var(--input-touch-height, 0px)); }
+  .value { min-height: max(34px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .area  { min-height: max(34px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .unit  { min-height: max(34px, calc(var(--input-touch-height, 0px) - 2px)); }
 
   .input {
     padding: 5px 10px;
@@ -261,10 +261,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.small {
-  .box   { min-height: 40px; }
-  .value { min-height: 38px; }
-  .area  { min-height: 38px; }
-  .unit  { min-height: 38px; }
+  .box   { min-height: max(40px, var(--input-touch-height, 0px)); }
+  .value { min-height: max(38px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .area  { min-height: max(38px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .unit  { min-height: max(38px, calc(var(--input-touch-height, 0px) - 2px)); }
 
   .input {
     padding: 7px 12px;
@@ -310,10 +310,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
 }
 
 .SInputText.medium {
-  .box   { min-height: 48px; }
-  .value { min-height: 46px; }
-  .area  { min-height: 46px; }
-  .unit  { min-height: 46px; }
+  .box   { min-height: max(48px, var(--input-touch-height, 0px)); }
+  .value { min-height: max(46px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .area  { min-height: max(46px, calc(var(--input-touch-height, 0px) - 2px)); }
+  .unit  { min-height: max(46px, calc(var(--input-touch-height, 0px) - 2px)); }
 
   .input {
     padding: 11px 12px;
@@ -503,5 +503,10 @@ function getValue(e: Event | FocusEvent | KeyboardEvent): string | null {
   .dialog {
     right: 0;
   }
+}
+.SInputText[data-layout="mobile"] {
+  .value, .area { min-width: 0; }
+  .unit { flex-shrink: 0; }
+  .display { display: flex; align-items: center; }
 }
 </style>

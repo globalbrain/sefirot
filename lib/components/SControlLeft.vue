@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { provideControlPosition } from '../composables/Control'
+import { provideControlPosition, useControlWrap } from '../composables/Control'
+
+const wrap = useControlWrap()
 
 provideControlPosition('left')
 </script>
 
 <template>
-  <div class="SControlLeft">
+  <div class="SControlLeft" :class="{ wrap }">
     <slot />
   </div>
 </template>
@@ -27,4 +29,16 @@ provideControlPosition('left')
 
 .SControl.small .SControlLeft  { gap: 8px; }
 .SControl.medium .SControlLeft { gap: 12px; }
+.SControl .SControlLeft.wrap {
+  flex-wrap: wrap;
+  flex-shrink: 1;
+  height: auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.SControlLeft.wrap > :deep(*) {
+  min-width: 0;
+  max-width: 100%;
+}
 </style>

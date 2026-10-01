@@ -1,5 +1,7 @@
 import { type Ref, onMounted, onUnmounted, ref, watchEffect } from 'vue'
 
+export const GridColumnsKey = 'sefirot-grid-columns-key'
+
 export interface Grid {
   container: Ref<HTMLElement | null>
 }

@@ -331,4 +331,8 @@ function createRequiredTouched(): boolean[] {
   color: var(--c-text-3);
   content: ":";
 }
+.SInputHMS[data-layout="mobile"] {
+  .container { min-height: var(--input-touch-height); max-width: 100%; align-items: center; }
+  .input { flex-shrink: 1; min-width: 0; min-height: calc(var(--input-touch-height) - 2px); width: 2ch; }
+}
 </style>

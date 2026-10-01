@@ -126,7 +126,7 @@ function emitChange(e: any): void {
   line-height: 30px;
   font-size: var(--input-font-size, var(--input-mini-font-size));
 
-  .box      { height: 32px; }
+  .box      { height: max(32px, var(--input-touch-height, 0px)); }
   .select   { padding: 0 30px 0 10px; }
   .icon     { top: 5px; right: 8px; }
   .icon-svg { width: 12px; height: 12px; }
@@ -136,7 +136,7 @@ function emitChange(e: any): void {
   line-height: 34px;
   font-size: var(--input-font-size, 14px);
 
-  .box      { height: 36px; }
+  .box      { height: max(36px, var(--input-touch-height, 0px)); }
   .select   { padding: 0 30px 0 10px; }
   .icon     { top: 5px; right: 8px; }
   .icon-svg { width: 14px; height: 14px; }
@@ -146,7 +146,7 @@ function emitChange(e: any): void {
   line-height: 38px;
   font-size: var(--input-font-size, var(--input-small-font-size));
 
-  .box      { height: 40px; }
+  .box      { height: max(40px, var(--input-touch-height, 0px)); }
   .select   { padding: 0 30px 0 12px; }
   .icon     { top: 7px; right: 10px; }
   .icon-svg { width: 14px; height: 14px; }
@@ -156,7 +156,7 @@ function emitChange(e: any): void {
   line-height: 46px;
   font-size: var(--input-font-size, var(--input-medium-font-size));
 
-  .box      { height: 48px; }
+  .box      { height: max(48px, var(--input-touch-height, 0px)); }
   .select   { padding: 0 44px 0 16px; }
   .icon     { top: 11px; right: 12px; }
   .icon-svg { width: 14px; height: 14px; }
@@ -224,5 +224,9 @@ function emitChange(e: any): void {
 
 .icon-svg.up {
   margin-bottom: -4px;
+}
+.SInputSelect[data-layout="mobile"] {
+  .select { height: 100%; line-height: normal; }
+  .icon { top: 50%; transform: translateY(-50%); }
 }
 </style>

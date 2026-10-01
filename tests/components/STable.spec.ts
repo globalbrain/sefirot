@@ -1,6 +1,8 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import STable from 'sefirot/components/STable.vue'
+import { type LayoutMode, provideLayout } from 'sefirot/composables/Layout'
 import { useTable } from 'sefirot/composables/Table'
+import { defineComponent, h, nextTick, ref } from 'vue'
 
 vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
   disconnect: vi.fn(),
@@ -10,6 +12,30 @@ vi.stubGlobal('IntersectionObserver', vi.fn(() => ({
 vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(1000)
 
 describe('components/STable', () => {
+  it('recalculates virtual row offsets when the line budget or layout changes', async () => {
+    const mode = ref<LayoutMode>('desktop')
+    const wrapper = mount(defineComponent({
+      setup() {
+        provideLayout(mode)
+        return () => h(STable, {
+          options: { orders: ['value'], columns: { value: { label: 'Value' } }, records: [{ value: 'One' }, { value: 'Two' }] },
+          textLines: { desktop: 1, mobile: 3 }
+        })
+      }
+    }))
+    const rows = () => wrapper.findAll('.body .row')
+    expect(rows()[0].attributes('style')).toContain('height: 41px')
+    mode.value = 'mobile'
+    await nextTick()
+    expect(rows()[0].attributes('style')).toContain('height: 89px')
+    expect(rows()[1].attributes('style')).toContain('translateY(89px)')
+    expect(wrapper.find('[role="grid"]').exists()).toBe(true)
+    mode.value = 'desktop'
+    await nextTick()
+    expect(rows()[1].attributes('style')).toContain('translateY(41px)')
+    wrapper.unmount()
+  })
+
   describe('basics', () => {
     it('displays columns in order', () => {
       const table = useTable({

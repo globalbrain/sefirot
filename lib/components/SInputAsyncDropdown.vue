@@ -562,7 +562,7 @@ function focusNext(event: any): void {
   width: 100%;
   font-size: 14px;
   font-family: var(--input-value-font-family);
-  line-height: 32px;
+  line-height: max(32px, var(--input-touch-height, 0px));
   background-color: var(--input-bg-color);
   transition: border-color 0.25s;
 
@@ -712,7 +712,7 @@ function focusNext(event: any): void {
 .SInputAsyncDropdown.sm,
 .SInputAsyncDropdown.mini {
   .box {
-    min-height: 32px;
+    min-height: max(32px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -733,7 +733,7 @@ function focusNext(event: any): void {
 
 .SInputAsyncDropdown.md {
   .box {
-    min-height: 36px;
+    min-height: max(36px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -754,7 +754,7 @@ function focusNext(event: any): void {
 
 .SInputAsyncDropdown.small {
   .box {
-    min-height: 40px;
+    min-height: max(40px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -775,7 +775,7 @@ function focusNext(event: any): void {
 
 .SInputAsyncDropdown.medium {
   .box {
-    min-height: 48px;
+    min-height: max(48px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -812,5 +812,14 @@ function focusNext(event: any): void {
   .box {
     border-color: var(--input-error-border-color);
   }
+}
+.SInputAsyncDropdown[data-layout="mobile"] {
+  .box-content { min-width: 0; }
+  .box-icon { top: 50%; transform: translateY(-50%); }
+}
+
+.SInputAsyncDropdown[data-layout="mobile"] {
+  .search-input { min-height: var(--input-touch-height); font-size: var(--input-font-size); }
+  .button { min-height: var(--input-touch-height); }
 }
 </style>

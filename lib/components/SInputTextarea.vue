@@ -151,7 +151,7 @@ function emitBlur(e: FocusEvent): void {
   .prose {
     padding: 3px 8px;
     width: 100%;
-    min-height: 30px;
+    min-height: max(30px, calc(var(--input-touch-height, 0px) - 2px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
@@ -162,7 +162,7 @@ function emitBlur(e: FocusEvent): void {
   .prose {
     padding: 5px 10px;
     width: 100%;
-    min-height: 34px;
+    min-height: max(34px, calc(var(--input-touch-height, 0px) - 2px));
     line-height: 24px;
     font-size: var(--input-font-size, 14px);
   }
@@ -173,7 +173,7 @@ function emitBlur(e: FocusEvent): void {
   .prose {
     padding: 7px 12px;
     width: 100%;
-    min-height: 38px;
+    min-height: max(38px, calc(var(--input-touch-height, 0px) - 2px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
@@ -184,7 +184,7 @@ function emitBlur(e: FocusEvent): void {
   .prose {
     padding: 11px 16px;
     width: 100%;
-    min-height: 46px;
+    min-height: max(46px, calc(var(--input-touch-height, 0px) - 2px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }

@@ -276,7 +276,7 @@ function onSelect(value: T) {
 .SInputDropdown.sm,
 .SInputDropdown.mini {
   .box {
-    min-height: 32px;
+    min-height: max(32px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -297,7 +297,7 @@ function onSelect(value: T) {
 
 .SInputDropdown.md {
   .box {
-    min-height: 36px;
+    min-height: max(36px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -318,7 +318,7 @@ function onSelect(value: T) {
 
 .SInputDropdown.small {
   .box {
-    min-height: 40px;
+    min-height: max(40px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -339,7 +339,7 @@ function onSelect(value: T) {
 
 .SInputDropdown.medium {
   .box {
-    min-height: 48px;
+    min-height: max(48px, var(--input-touch-height, 0px));
   }
 
   .box-content {
@@ -377,5 +377,9 @@ function onSelect(value: T) {
   .box {
     border-color: var(--input-error-border-color);
   }
+}
+.SInputDropdown[data-layout="mobile"] {
+  .box-content { min-width: 0; }
+  .box-icon { top: 50%; transform: translateY(-50%); }
 }
 </style>

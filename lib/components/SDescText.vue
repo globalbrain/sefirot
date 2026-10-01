@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
+import { useResponsive } from '../composables/Layout'
 import { useLinkifyIt } from '../composables/Markdown'
 import { useHasSlotContent } from '../composables/Utils'
 import SDescEmpty from './SDescEmpty.vue'
+
+const wrap = inject('sefirot-desc-wrap', useResponsive(() => ({ desktop: false, mobile: true })))
 
 const props = defineProps<{
   value?: string | null
@@ -31,7 +34,7 @@ const _value = computed(() => {
 </script>
 
 <template>
-  <div v-if="hasSlot || _value" class="SDescText" :class="classes">
+  <div v-if="hasSlot || _value" class="SDescText" :class="[classes, { wrap }]">
     <div v-if="hasSlot" class="value">
       <slot />
     </div>
@@ -70,5 +73,13 @@ const _value = computed(() => {
   &:hover {
     color: var(--c-text-info-2);
   }
+}
+.SDescText.wrap {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.SDescText.wrap .value {
+  overflow-wrap: anywhere;
 }
 </style>

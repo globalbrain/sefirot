@@ -3,6 +3,7 @@ import { type VirtualItem, useVirtualizer } from '@tanstack/vue-virtual'
 import { useResizeObserver } from '@vueuse/core'
 import isEqual from 'lodash-es/isEqual'
 import { type CSSProperties, computed, nextTick, reactive, ref, toValue, unref, useTemplateRef, watch } from 'vue'
+import { type Responsive, useLayout, useResponsive } from '../composables/Layout'
 import { type Table } from '../composables/Table'
 import { useTableAnimation } from '../composables/TableAnimation'
 import { smartComputed } from '../support/Reactivity'
@@ -16,7 +17,20 @@ import STableFooter from './STableFooter.vue'
 import STableHeader from './STableHeader.vue'
 import STableItem from './STableItem.vue'
 
-const props = defineProps<{ options: Table }>()
+const props = withDefaults(defineProps<{
+  options: Table
+  contain?: Responsive<boolean>
+  textLines?: Responsive<number>
+}>(), { contain: undefined })
+const layout = useLayout()
+const contain = useResponsive(() => props.contain ?? { desktop: false, mobile: true })
+const textLines = useResponsive(() => props.textLines ?? 1)
+const lines = computed(() => Math.max(1, Math.trunc(textLines.value)))
+const rowSize = computed(() => Math.max(
+  unref(props.options.rowSize) ?? 40,
+  lines.value > 1 ? 16 + lines.value * 24 : 0,
+  layout.value === 'mobile' ? 44 : 0
+))
 const selected = defineModel<S>('selected')
 
 const tableRoot = useTemplateRef<HTMLElement>('tableRoot')
@@ -140,7 +154,9 @@ const showMissing = computed(() => {
 const classes = computed(() => ({
   'has-header': showHeader.value,
   'has-footer': showFooter.value,
-  'borderless': unref(props.options.borderless)
+  'borderless': unref(props.options.borderless),
+  'contain': contain.value,
+  'wrap-text': lines.value > 1
 }))
 
 const recordsWithSummary = computed(() => {
@@ -195,14 +211,14 @@ const virtualizerOptions = computed(() => ({
   count: recordsWithSummary.value.length,
   getScrollElement: () => body.value,
   estimateSize: (index: number) => {
-    const rowSize = unref(props.options.rowSize) ?? 40
     const borderSize = unref(props.options.borderSize) ?? 1
-    return lastRow(index) ? rowSize : rowSize + borderSize
+    return lastRow(index) ? rowSize.value : rowSize.value + borderSize
   },
   overscan: 10
 }))
 
 const rowVirtualizer = useVirtualizer(virtualizerOptions)
+watch(rowSize, () => rowVirtualizer.value.measure())
 const virtualItems = computed(() => rowVirtualizer.value.getVirtualItems())
 
 let isSyncingHead = false
@@ -509,7 +525,7 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
 </script>
 
 <template>
-  <div ref="tableRoot" class="STable" :class="classes">
+  <div ref="tableRoot" class="STable" :class="classes" :style="{ '--table-text-lines': lines }">
     <div class="box">
       <STableHeader
         v-if="showHeader"
@@ -871,5 +887,16 @@ function onResizeEnd(data: { columnName: string; finalWidth: string }) {
   :deep(.container) {
     padding: 0;
   }
+}
+.STable.contain { min-width: 0; max-width: 100%; }
+
+/* Wrapping has a fixed line budget, also used by the virtualizer's row estimate. */
+.STable.wrap-text :deep(.STableCellText .text) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--table-text-lines);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 </style>

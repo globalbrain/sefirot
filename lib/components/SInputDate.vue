@@ -90,7 +90,7 @@ function onBlur() {
   .input {
     padding: 3px 8px;
     max-width: 114px;
-    height: 32px;
+    height: max(32px, var(--input-touch-height, 0px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-mini-font-size));
   }
@@ -104,7 +104,7 @@ function onBlur() {
   .input {
     padding: 6px 10px;
     max-width: 128px;
-    height: 36px;
+    height: max(36px, var(--input-touch-height, 0px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-small-font-size));
   }
@@ -118,7 +118,7 @@ function onBlur() {
   .input {
     padding: 5px 12px;
     max-width: 136px;
-    height: 40px;
+    height: max(40px, var(--input-touch-height, 0px));
     line-height: 24px;
     font-size: var(--input-font-size, 14px);
   }
@@ -132,7 +132,7 @@ function onBlur() {
   .input {
     padding: 11px 12px;
     max-width: 136px;
-    height: 48px;
+    height: max(48px, var(--input-touch-height, 0px));
     line-height: 24px;
     font-size: var(--input-font-size, var(--input-medium-font-size));
   }
@@ -181,4 +181,8 @@ function onBlur() {
     cursor: not-allowed;
   }
 }
+.SInputDate[data-layout="mobile"] .input {
+  max-width: min(100%, 160px);
+}
+.SInputDate[data-layout="mobile"] .input.block { max-width: 100%; }
 </style>
