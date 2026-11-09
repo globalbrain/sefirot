@@ -95,7 +95,8 @@ function onClick() {
   position: relative;
   display: flex;
   align-items: center;
-  height: 32px;
+  min-height: 32px;
+  min-width: 0;
   cursor: pointer;
 
   &:hover {
@@ -119,6 +120,7 @@ function onClick() {
 
 .box {
   position: relative;
+  flex-shrink: 0;
   border: 1px solid var(--c-border-mute-1);
   border-radius: 4px;
   width: 16px;
@@ -147,6 +149,8 @@ function onClick() {
 }
 
 .text {
+  min-width: 0;
+  overflow-wrap: anywhere;
   margin: 0;
   padding-left: 10px;
   line-height: 20px;
@@ -156,7 +160,7 @@ function onClick() {
 
 .SInputCheckbox.md {
   .input {
-    height: 36px;
+    min-height: 36px;
   }
 }
 
