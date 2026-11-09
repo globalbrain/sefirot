@@ -3,7 +3,7 @@ import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import IconCheck from '~icons/ph/check'
 import { type Ref, computed, nextTick, onUnmounted, ref, watch } from 'vue'
-import { useManualDropdownPosition } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
 import { stopNonSubmitEnterKeydown } from '../support/Dom'
@@ -82,10 +82,8 @@ const input = ref<HTMLInputElement | null>(null)
 const list = ref<HTMLUListElement | null>(null)
 
 const { isOpen, open, close } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(
-  container,
-  () => props.position
-)
+const dropdown = ref<HTMLElement>()
+useDropdownPosition(container, dropdown, isOpen, { position: () => props.position })
 
 const query = ref('')
 const items = ref([]) as Ref<T[]>
@@ -202,7 +200,6 @@ function onOpen() {
   if (props.disabled) {
     return
   }
-  updatePosition()
   open()
   // Fetch the current (initial) list immediately — dropping any keystroke timer
   // left armed from a previous open — and focus the search input.
@@ -404,7 +401,7 @@ function focusNext(event: any): void {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :style="inset">
+      <div v-if="isOpen" ref="dropdown" class="dropdown">
         <div class="dropdown-content">
           <div class="search">
             <input
@@ -529,11 +526,13 @@ function focusNext(event: any): void {
 }
 
 .dropdown-content {
+  max-width: var(--dropdown-max-width);
+  max-height: var(--dropdown-max-height);
   border: 1px solid var(--c-border-mute-1);
   border-radius: 8px;
   background-color: var(--c-bg-elv-3);
   box-shadow: var(--shadow-depth-3);
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .search {
