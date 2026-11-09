@@ -104,6 +104,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: 'SLocalNav', link: '/components/local-nav' },
         { text: 'SLoginPage', link: '/components/login-page' },
         { text: 'SM', link: '/components/m' },
+        { text: 'SModal', link: '/components/modal' },
         { text: 'SPill', link: '/components/pill' },
         { text: 'SState', link: '/components/state' },
         { text: 'STable', link: '/components/table' },

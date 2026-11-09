@@ -17,6 +17,14 @@ export function useFlyout(container?: Ref<any>) {
     isOpen.value ? close() : open()
   }
 
+  function onEscape(event: KeyboardEvent) {
+    if (event.key !== 'Escape' || event.defaultPrevented || event.isComposing) { return }
+    event.preventDefault()
+    event.stopPropagation()
+    close()
+    el.value?.querySelector('button, [role="button"]')?.focus()
+  }
+
   function closeOnClickOutside(event: any) {
     if (!el.value?.contains(event.target) && isVisible(el.value)) {
       isOpen.value = false
@@ -27,14 +35,16 @@ export function useFlyout(container?: Ref<any>) {
     return !!el && !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length)
   }
 
-  watch(isOpen, (value) => {
-    if (value) {
-      document.addEventListener('click', closeOnClickOutside)
-      return
-    }
-
-    document.removeEventListener('click', closeOnClickOutside)
-  })
+  watch([el, isOpen], ([container, opened], _, onCleanup) => {
+    if (!container || !opened) { return }
+    const doc = container.ownerDocument as Document
+    doc.addEventListener('click', closeOnClickOutside)
+    container.addEventListener('keydown', onEscape)
+    onCleanup(() => {
+      doc.removeEventListener('click', closeOnClickOutside)
+      container.removeEventListener('keydown', onEscape)
+    })
+  }, { flush: 'post' })
 
   return {
     container: el,

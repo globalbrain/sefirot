@@ -12,7 +12,7 @@ export const setupVue3 = defineSetupVue3(({ app }) => {
   setupRouter({ app })
 })
 
-if (typeof document !== 'undefined' && window.self !== window.top) {
+if (typeof document !== 'undefined') {
   const target = document.getElementById('sefirot-modals')
   if (!target) {
     const el = document.createElement('div')
