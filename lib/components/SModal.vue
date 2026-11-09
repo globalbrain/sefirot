@@ -1,9 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useModalFocus } from '../composables/ModalFocus'
 
 export interface Props {
   open: boolean
   closable?: boolean
+  manageFocus?: boolean
+  ariaLabel?: string
+  ariaLabelledby?: string
+  ariaDescribedby?: string
+  initialFocus?: string
+  focusContainers?: (HTMLElement | null | undefined)[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -14,7 +21,14 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const el = ref<any>(null)
+const el = ref<HTMLElement | null>(null)
+
+useModalFocus(computed(() => props.open && props.manageFocus ? el.value : null), {
+  initialFocus: () => props.initialFocus,
+  containers: () => props.focusContainers ?? [],
+  closable: () => props.closable,
+  close: () => emit('close')
+})
 
 function onClick(e: MouseEvent) {
   if (!props.closable) {
@@ -30,7 +44,18 @@ function onClick(e: MouseEvent) {
 <template>
   <Teleport to="#sefirot-modals">
     <Transition name="fade">
-      <div v-if="open" ref="el" class="SModal" @mousedown="onClick">
+      <div
+        v-if="open"
+        ref="el"
+        class="SModal"
+        :role="manageFocus ? 'dialog' : undefined"
+        :aria-modal="manageFocus ? true : undefined"
+        :aria-label
+        :aria-labelledby
+        :aria-describedby
+        :tabindex="manageFocus ? -1 : undefined"
+        @mousedown="onClick"
+      >
         <slot />
       </div>
     </Transition>

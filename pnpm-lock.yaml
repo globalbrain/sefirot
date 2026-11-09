@@ -232,6 +232,9 @@ importers:
       dompurify:
         specifier: ^3.4.16
         version: 3.4.16
+      focus-trap:
+        specifier: ^8.2.2
+        version: 8.2.2
       fuse.js:
         specifier: ^7.5.0
         version: 7.5.0
