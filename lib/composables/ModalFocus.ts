@@ -23,7 +23,6 @@ export function useModalFocus(
         return selector ? root.querySelector<HTMLElement>(selector) ?? undefined : undefined
       },
       fallbackFocus: root,
-      preventScroll: true,
       delayInitialFocus: false,
       delayReturnFocus: false,
       // SModal emits close; its controlled `open` prop decides when to deactivate.
