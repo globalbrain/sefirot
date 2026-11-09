@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { type Component, ref, useTemplateRef } from 'vue'
-import { type DropdownSection, useManualDropdownPosition } from '../composables/Dropdown'
+import { type Component, useTemplateRef } from 'vue'
+import { type DropdownSection } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import SButton, { type Mode, type Size, type Tooltip, type Type } from './SButton.vue'
 import SDropdown from './SDropdown.vue'
@@ -33,48 +34,15 @@ const containerRef = useTemplateRef('container')
 const dropdownRef = useTemplateRef('dropdown')
 
 const { isOpen, toggle } = useFlyout(containerRef)
-const { position: verticalPlacement, update: updateVerticalPlacement } =
-  useManualDropdownPosition(containerRef)
+useDropdownPosition(containerRef, dropdownRef, isOpen, { align: () => props.dropdownAlign })
 
-const actualAlign = ref(props.dropdownAlign)
-
-function calculateOptimalAlign(dropdownElement: HTMLElement): 'left' | 'right' {
-  // Temporarily show the dropdown to measure it (similar to tooltip approach)
-  const originalDisplay = dropdownElement.style.display
-  dropdownElement.style.display = 'block'
-  const dropdownRect = dropdownElement.getBoundingClientRect()
-  dropdownElement.style.display = originalDisplay
-
-  const dropdownWidth = dropdownRect.width
-
-  const viewportWidth = window.innerWidth
-  const containerRect = containerRef.value!.getBoundingClientRect()
-
-  const spaceOnRight = viewportWidth - containerRect.left
-  const spaceOnLeft = containerRect.right
-
-  if (props.dropdownAlign === 'left') {
-    return spaceOnRight >= dropdownWidth ? 'left' : 'right'
-  }
-
-  return spaceOnLeft >= dropdownWidth ? 'right' : 'left'
-}
-
-async function onOpen() {
-  if (!props.disabled) {
-    updateVerticalPlacement()
-
-    if (dropdownRef.value) {
-      actualAlign.value = calculateOptimalAlign(dropdownRef.value)
-    }
-
-    toggle()
-  }
+function onOpen() {
+  if (!props.disabled) { toggle() }
 }
 </script>
 
 <template>
-  <div ref="container" class="SActionMenu" :class="[{ block }, actualAlign]">
+  <div ref="container" class="SActionMenu" :class="{ block }">
     <div class="button">
       <SButton
         :tag
@@ -98,7 +66,6 @@ async function onOpen() {
     <div
       ref="dropdown"
       class="dropdown"
-      :class="verticalPlacement"
       :style="{ display: isOpen ? 'block' : 'none' }"
     >
       <SDropdown :sections="options" />
@@ -113,17 +80,12 @@ async function onOpen() {
 }
 
 .dropdown {
-  position: absolute;
+  position: fixed;
   z-index: var(--z-index-dropdown);
 
-  &.top    { bottom: calc(100% + 8px); }
-  &.bottom { top: calc(100% + 8px); }
 }
 
 .SActionMenu.block {
   display: block;
 }
-
-.SActionMenu.left .dropdown  { left: 0; }
-.SActionMenu.right .dropdown { right: 0; }
 </style>

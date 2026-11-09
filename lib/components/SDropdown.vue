@@ -21,8 +21,9 @@ defineProps<{
 .SDropdown {
   border: 1px solid var(--c-divider);
   border-radius: 6px;
-  min-width: 288px;
-  max-height: 364px;
+  min-width: min(288px, var(--dropdown-max-width, 288px));
+  max-width: var(--dropdown-max-width);
+  max-height: min(364px, var(--dropdown-max-height, 364px));
   overflow-y: auto;
   white-space: normal;
 

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import IconDotsThree from '~icons/ph/dots-three'
-import { computed, nextTick, ref, unref, watch } from 'vue'
+import { computed, ref, unref } from 'vue'
 import { type DropdownSection } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
 
@@ -30,8 +31,7 @@ let originalUserSelect = ''; let originalPointerEvents = ''
 
 const column = ref<HTMLElement | null>(null)
 const dialog = ref<HTMLElement | null>(null)
-const top = ref('')
-const left = ref('')
+useDropdownPosition(container, dialog, isOpen)
 
 const active = computed(() => {
   return props.dropdown?.some((item) => {
@@ -65,10 +65,6 @@ const classes = computed(() => [
   props.className,
   `col-${props.name}`
 ])
-
-watch(isOpen, (value) => {
-  value ? adjustDialogPosition() : stopDialogPositionListener()
-})
 
 function grip(e: MouseEvent) {
   startWidth = column.value?.offsetWidth ?? 0
@@ -108,37 +104,6 @@ function stopResizeListener(e: MouseEvent) {
     finalWidth
   })
 }
-
-async function adjustDialogPosition() {
-  const rect = container.value?.getBoundingClientRect()
-
-  if (!props.dropdown || !isOpen.value || !rect) {
-    return
-  }
-
-  startDialogPositionListener()
-
-  await nextTick()
-
-  const dialogWidth = dialog.value?.offsetWidth ?? 0
-  const position = window.innerWidth - rect.right > dialogWidth ? 'right' : 'left'
-
-  top.value = `${rect.top + rect.height - 8}px`
-  left.value = `${Math.max(
-    16,
-    position === 'right' ? rect.left - 4 : rect.right - dialogWidth - 4
-  )}px`
-}
-
-function startDialogPositionListener() {
-  window.addEventListener('scroll', adjustDialogPosition)
-  window.addEventListener('resize', adjustDialogPosition)
-}
-
-function stopDialogPositionListener() {
-  window.removeEventListener('scroll', adjustDialogPosition)
-  window.removeEventListener('resize', adjustDialogPosition)
-}
 </script>
 
 <template>
@@ -153,7 +118,7 @@ function stopDialogPositionListener() {
           </button>
 
           <Transition name="fade">
-            <div v-if="isOpen" ref="dialog" class="dialog" :style="{ top, left }">
+            <div v-if="isOpen" ref="dialog" class="dialog">
               <SDropdown :sections="dropdown" />
             </div>
           </Transition>
@@ -245,7 +210,7 @@ function stopDialogPositionListener() {
   position: fixed;
   z-index: var(--z-index-dropdown);
   border-radius: 12px;
-  width: 256px;
+  width: max-content;
   box-shadow: var(--shadow-depth-3);
   transition: opacity 0.25s, transform 0.25s;
 }

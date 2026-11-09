@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import IconCaretDown from '~icons/ph/caret-down-bold'
+import { ref } from 'vue'
 import { type DropdownSection } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
 
@@ -11,6 +13,8 @@ defineProps<{
 }>()
 
 const { container, isOpen, toggle } = useFlyout()
+const dialog = ref<HTMLElement>()
+useDropdownPosition(container, dialog, isOpen, { align: 'right' })
 </script>
 
 <template>
@@ -25,7 +29,7 @@ const { container, isOpen, toggle } = useFlyout()
       </span>
     </button>
     <Transition name="fade">
-      <div v-if="isOpen" class="dialog">
+      <div v-if="isOpen" ref="dialog" class="dialog">
         <SDropdown :sections="dropdown" />
       </div>
     </Transition>
@@ -93,9 +97,7 @@ const { container, isOpen, toggle } = useFlyout()
 }
 
 .dialog {
-  position: absolute;
-  top: 32px;
-  right: 0;
+  position: fixed;
   z-index: var(--z-index-dropdown);
   transition: opacity 0.25s, transform 0.25s;
 }

@@ -3,7 +3,8 @@ import IconCaretDown from '~icons/ph/caret-down'
 import IconCaretUp from '~icons/ph/caret-up'
 import xor from 'lodash-es/xor'
 import { computed, ref } from 'vue'
-import { type DropdownSectionFilter, useManualDropdownPosition } from '../composables/Dropdown'
+import { type DropdownSectionFilter } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import { useTrans } from '../composables/Lang'
 import { type Option } from '../support/InputDropdown'
@@ -41,10 +42,8 @@ const container = ref<HTMLDivElement>()
 const box = ref<HTMLDivElement>()
 
 const { isOpen, open, close } = useFlyout(container)
-const { inset, update: updatePosition } = useManualDropdownPosition(
-  container,
-  () => props.position
-)
+const dropdown = ref<HTMLElement>()
+useDropdownPosition(container, dropdown, isOpen, { position: () => props.position })
 
 const classes = computed(() => [
   props.size ?? 'small',
@@ -81,7 +80,6 @@ const removable = computed(() => {
 
 async function onOpen() {
   if (!props.disabled) {
-    updatePosition()
     open()
   }
 }
@@ -196,7 +194,7 @@ function onSelect(value: T) {
         </div>
       </div>
 
-      <div v-if="isOpen" class="dropdown" :style="inset">
+      <div v-if="isOpen" ref="dropdown" class="dropdown">
         <div class="dropdown-content">
           <SDropdown :sections="dropdownOptions" />
         </div>

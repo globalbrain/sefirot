@@ -3,9 +3,9 @@ import IconCaretDown from '~icons/ph/caret-down-bold'
 import { type Component, computed, ref } from 'vue'
 import {
   type DropdownSection,
-  getSelectedOption,
-  useManualDropdownPosition
+  getSelectedOption
 } from '../composables/Dropdown'
+import { useDropdownPosition } from '../composables/DropdownPosition'
 import { useFlyout } from '../composables/Flyout'
 import SDropdown from './SDropdown.vue'
 
@@ -43,10 +43,8 @@ const selectedOptionLabel = computed(() => {
 })
 
 const { isOpen, open } = useFlyout(container)
-const { position, update: updatePosition } = useManualDropdownPosition(
-  container,
-  () => props.dropdownPosition
-)
+const dialog = ref<HTMLElement>()
+useDropdownPosition(container, dialog, isOpen, { position: () => props.dropdownPosition })
 
 function onFocus() {
   if (!props.disabled) {
@@ -65,7 +63,6 @@ function onClickButton() {
     emit('click')
 
     if (props.dropdown.length) {
-      updatePosition()
       open()
     }
   }
@@ -99,7 +96,7 @@ function onClickButton() {
       />
     </component>
 
-    <div v-if="isOpen" class="dialog" :class="position">
+    <div v-if="isOpen" ref="dialog" class="dialog">
       <SDropdown :sections="dropdown" />
     </div>
   </div>
@@ -136,10 +133,8 @@ function onClickButton() {
 }
 
 .dialog {
-  position: absolute;
+  position: fixed;
   z-index: var(--z-index-dropdown);
 
-  &.top    { bottom: calc(100% + 8px); }
-  &.bottom { top: calc(100% + 8px); }
 }
 </style>
